@@ -1,0 +1,9 @@
+{
+  "kind": "gguf",
+  "llama_cpp_commit": "b1234",
+  "model": "ft",
+  "parent_key": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "path": "artifacts/export/ft-Q4_K_M.gguf",
+  "quant": "Q4_K_M",
+  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+}

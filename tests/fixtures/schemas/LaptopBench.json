@@ -1,0 +1,22 @@
+{
+  "answer_latency_ms_p50": 3500,
+  "answer_latency_ms_p95": 5200,
+  "chip": "Apple M3",
+  "gen_tps_p50": 45.0,
+  "gen_tps_p95": 40.0,
+  "llama_bench": {
+    "pp512": 950.0,
+    "tg128": 47.0
+  },
+  "llama_cpp_commit": "b1234",
+  "model_file_mb": 3100.0,
+  "n_prompts": 50,
+  "os": "macOS 26.1",
+  "peak_rss_mb": 3400.0,
+  "power": "ac",
+  "prompt_tps_p50": 900.0,
+  "quant": "Q4_K_M",
+  "ram_gb": 16,
+  "repetitions": 3,
+  "ttft_ms_p50": 600
+}

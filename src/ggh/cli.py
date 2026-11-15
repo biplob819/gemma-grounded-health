@@ -1,6 +1,7 @@
 """Command-line interface: `ggh`.
 
-stdlib argparse keeps the install light. Later nodes add `data`, `serve`, `bench`, `eval`,
+stdlib argparse keeps the install light. `ggh lineage verify` walks a manifest
+back through its parents (Tech Spec §2.1). Later nodes add `data`, `serve`, `bench`, `eval`,
 `export` and `release` (Tech Spec §2.2). Exit codes: 0 success, 2 configuration or runtime error.
 """
 
@@ -10,6 +11,7 @@ import argparse
 import os
 import platform
 import sys
+from pathlib import Path
 
 from ggh import __version__
 
@@ -46,6 +48,19 @@ def _cmd_doctor(_: argparse.Namespace) -> int:
     return 0 if ok else EXIT_ERROR
 
 
+def _cmd_lineage_verify(args: argparse.Namespace) -> int:
+    from ggh.lineage import verify
+
+    problems = verify(Path(args.manifest), Path(args.root))
+    if problems:
+        print("lineage: FAIL")
+        for p in problems:
+            print(f"  - {p}")
+        return EXIT_ERROR
+    print("lineage: OK")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(
         prog="ggh",
@@ -55,6 +70,12 @@ def build_parser() -> argparse.ArgumentParser:
     sub = ap.add_subparsers(dest="command")
     doctor = sub.add_parser("doctor", help="check this machine is ready")
     doctor.set_defaults(func=_cmd_doctor)
+    lineage = sub.add_parser("lineage", help="check artifact lineage manifests")
+    lsub = lineage.add_subparsers(dest="lineage_command", required=True)
+    lverify = lsub.add_parser("verify", help="walk a manifest back through its parents")
+    lverify.add_argument("manifest", help="path to a stage's manifest.json")
+    lverify.add_argument("--root", default=".", help="repo root that holds every manifest")
+    lverify.set_defaults(func=_cmd_lineage_verify)
     return ap
 
 

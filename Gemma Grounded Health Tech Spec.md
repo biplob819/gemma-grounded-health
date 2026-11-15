@@ -10,7 +10,7 @@ A loophole review of the PRD came first. Its findings (C = critical, H = high, E
 
 ## 1. Design decisions
 
-Each decision below seeds `docs/decisions.md` as D-1 to D-31. `OWNER` marks a ruling the owner made in the askme sitting of 15 November 2026 (§15). Decisions marked *default* took the recommended option because they were not asked; the owner can overturn them at any node's spec step.
+Each decision below seeds `docs/decisions.md` as D-1 to D-33. `OWNER` marks a ruling the owner made in the askme sitting of 15 November 2026 (§15). Decisions marked *default* took the recommended option because they were not asked; the owner can overturn them at any node's spec step.
 
 | ID | Decision | Alternatives considered | Why |
 | --- | --- | --- | --- |
@@ -45,6 +45,8 @@ Each decision below seeds `docs/decisions.md` as D-1 to D-31. `OWNER` marks a ru
 | D-29 | Gate self-tests must cover, for every gate, its primary failure mode with the defect named, a PASS case where one is meaningful, and every defect a verifier has demonstrated; they need not kill every conceivable mutation. A node stops looping on verification when a fresh verifier round disproves no criterion as written; remaining should-fix items are fixed or ruled here. The golden gate's minimum-Python branch is self-tested from E3.3, when golden tests first exist | Require full mutation adequacy; stop after a fixed number of rounds | Three W0.1 rounds showed mutation coverage can always be extended; the rule keeps every real finding fixed without an endless loop |
 | D-30 | The secret scan is a heuristic backstop: its criterion enumerates the forms it must catch and must not flag, each with a test, and never promises "any form"; GitHub secret scanning and push protection on the public repo cover the rest. Ledger criteria likewise enumerate the error cases | Keep universal criteria ("any form", "any OS error") and keep extending patterns | Six W0.1 verifier rounds showed a regex scanner can always be given a new shape; an enumerated, tested contract plus the provider backstop is honest and finite |
 | D-31 | HAR-07's contract is detection, not reporting: every listed form must yield at least one hit naming its file (and notebook cell). Per-secret hit counts (collapsing duplicates, separating distinct secrets) are best-effort, kept and tested where cheap, but not criteria | Keep per-secret reporting clauses and continue verifier rounds | Rounds 11–16 each disproved only reporting clauses the builder had added; none let a secret pass. The scan exists to fail the file; exact counts do not change that outcome |
+| D-32 | A stage key covers its inputs as sorted (path, hash) pairs, not hashes alone; `verify` judges only manifests on the chain and checks that each child input matches what its parent recorded as output | Hashes alone, so moving a file keeps the key; verify every manifest under the root | With hashes alone, swapping train and val gave the same key and a rerun would be wrongly skipped; judging the whole tree failed intact chains over an unrelated `manifest.json`; without the input check a parent edited and re-hashed after the child ran passed (N1.1 verifier) |
+| OWNER D-33 | Verifier rounds are capped at 3 per node. After round 3 a node goes green if converge passes twice: remaining findings are fixed when cheap, otherwise logged with realism and severity in `docs/known-issues.md` and the node's RUN-STATE. A realistic finding that would let a secret leak or publish a wrong number is still fixed before green | Loop until a round is clean (D-29's stopping rule) | The owner chose speed after W0.1 took 17 rounds; the exception keeps the two harms the harness exists to prevent |
 
 ---
 
@@ -62,9 +64,10 @@ class Stage(Protocol):
     def run(self, cfg) -> list[Path]: ...
 ```
 
+- **Paths.** Manifest paths are canonical relative POSIX paths, one spelling per file; sources outside the repo are named by URI (`hf://`, `cache://`).
 - **Manifest.** Every stage writes `artifacts/<stage>/manifest.json`: `{stage, code_version, key, inputs: {path: sha256}, outputs: {path: sha256}, params, seed, parents: [keys], started_at, finished_at, host}`.
-- **Key.** `key = sha256(stage, code_version, sorted input hashes, params, seed)`. If an output folder already holds a manifest with the same key, the stage is skipped. `make` targets call `ggh <stage>`, so a rerun only does what changed.
-- **Chain check.** `ggh lineage verify <artifact>` walks parents back to the dataset revision. `make release` refuses to publish if any link is missing, for example a model card whose numbers came from an EvalKit run on a different GGUF hash.
+- **Key.** `key = sha256(stage, code_version, sorted (input path, hash) pairs, params, seed)` (D-32). If an output folder already holds a manifest with the same key, the stage is skipped. `make` targets call `ggh <stage>`, so a rerun only does what changed.
+- **Chain check.** `ggh lineage verify <artifact>` walks parents back to the dataset revision, judging only manifests on that chain and checking that each child's inputs carry the hashes its parents recorded as outputs (D-32). `make release` refuses to publish if any link is missing, for example a model card whose numbers came from an EvalKit run on a different GGUF hash.
 - **Remote stages.** Training runs on Kaggle. Its manifest is written there, downloaded with the outputs, and checked locally against the committed data manifest hash (D-10).
 
 ### 2.2 Graph
@@ -577,7 +580,7 @@ Status vocabulary: `not-started | spec | building | green`.
 
 | Node | Title | Depends on | Deliverable (what exists when it is green) | Stories |
 | --- | --- | --- | --- | --- |
-| **W0.1** | Repo and harness | — | Public repo with open-source community files, uv project, CI, ported harness scripts with `--self-test`, records seeded (D-1 to D-31, lessons from Appendix B) | — |
+| **W0.1** | Repo and harness | — | Public repo with open-source community files, uv project, CI, ported harness scripts with `--self-test`, records seeded (D-1 to D-33, lessons from Appendix B) | — |
 | **N1.1** | Schemas and config | W0.1 | `ggh.schemas` (§3), config loaders, fixtures, EvalKit import contract | US1, US3 |
 | **N1.2** | Data build and leakage check | N1.1 | `make data`: pinned load, overlap check, splits, EvalKit rendering, off-scope evaluation set frozen, `DATA_CARD.md` | US1, US3 |
 | **N1.3** | Targets and hand audit | N1.2 | Answer and citation targets, filters, label mix, insufficient and off-scope examples (as ruled), provenance check, 50-example audit passed | US1, US4 |
@@ -691,7 +694,7 @@ Each row becomes one line in `docs/graph/catalog.tsv` with status `not-started`.
 | HAR-03 | `verify_graph_eligibility.py` ported, with self-test | D-11 |
 | HAR-04 | `node_start.py` ported, with self-test | D-11 |
 | HAR-05 | `node_converge.py` with the 13 gates of §13.6, each with a self-test that requires the planted defect's identity in the output | D-11, L-1, L-4 |
-| HAR-06 | Records: `graph.md` (18 nodes), `catalog.tsv`, `decisions.md` (D-1 to D-31), `lessons.md` seeded from Appendix B, `changelog.md`, `scripts/status.py` | D-11 |
+| HAR-06 | Records: `graph.md` (18 nodes), `catalog.tsv`, `decisions.md` (D-1 to D-33), `lessons.md` seeded from Appendix B, `changelog.md`, `scripts/status.py` | D-11 |
 | HAR-07 | Secret scan covering Anthropic, OpenAI, Hugging Face and Kaggle tokens and private keys | NFR1, §12 |
 | HAR-08 | Spend and GPU ledgers with a writer helper; totals printed by `status.py` | D-22 |
 | HAR-09 | Open-source community files: user-facing README, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY (key and token handling), issue and PR templates, CITATION.cff | OWNER D-27 |
@@ -895,7 +898,7 @@ Each row becomes one line in `docs/graph/catalog.tsv` with status `not-started`.
 | 3. Build | Implement until tests pass | code |
 | 4. Read the sample | For nodes touching real data or a real model: read at least 20 real outputs and record what they showed (D-18) | `RUN-STATE.md` |
 | 5. Verify twice | Full gate set twice in a row with clean caches | `scripts/node_converge.py <node>` |
-| 6. Skeptical verify | A fresh-context verifier tries to disprove each criterion. Findings are fixed or ruled on in `decisions.md`; each disproval becomes a lesson | verifier report in `RUN-STATE.md`, `lessons.md` |
+| 6. Skeptical verify | A fresh-context verifier tries to disprove each criterion, at most 3 rounds (OWNER D-33). Findings are fixed or ruled on in `decisions.md`, or logged in `docs/known-issues.md` after round 3; each disproval becomes a lesson | verifier report in `RUN-STATE.md`, `lessons.md` |
 | 7. Flip green | Proof cells in `catalog.tsv`, changelog line, one local commit for the node (EvalKit OWNER D-17) | `catalog.tsv`, `changelog.md` |
 
 **The five proof dimensions.**

@@ -1,0 +1,12 @@
+{
+  "metric": "maybe_recall",
+  "model": "gemma-e2b-grounded-q4",
+  "n": 110,
+  "rule": "B3",
+  "source": "ggh:b3",
+  "value": {
+    "hi": 0.6,
+    "lo": 0.4,
+    "point": 0.5
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "counts": {
+    "train": {
+      "no": 6,
+      "yes": 10
+    }
+  },
+  "dataset": "qiaojin/PubMedQA",
+  "dataset_revision": "9001f2853fb87cab8d220904e0de81ac6973b318",
+  "drops": {
+    "too_long": 2
+  },
+  "evalkit_version": "0.1.0+06591f8",
+  "files": {
+    "artifacts/data/train.jsonl": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "offscope_eval_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "schema_version": "1.0",
+  "seed": 7,
+  "splitter_version": "06591f8",
+  "template_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+}

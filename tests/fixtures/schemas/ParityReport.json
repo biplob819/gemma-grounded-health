@@ -1,0 +1,16 @@
+{
+  "citation_exact_match": 0.9,
+  "judged_headline_delta": {
+    "opus": {
+      "hi": 0.6,
+      "lo": 0.4,
+      "point": 0.5
+    }
+  },
+  "label_agreement": 0.97,
+  "n": 500,
+  "schema_valid": {
+    "bf16": 1.0,
+    "q4": 1.0
+  }
+}

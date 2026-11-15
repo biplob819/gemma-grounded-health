@@ -1,0 +1,21 @@
+# Training recipe (Tech Spec §5.1). Starting values; the T2.1 pilot may change them, and every
+# change is logged as a decision before the full run.
+base_model: google/gemma-4-E2B-it                       # instruction-tuned checkpoint (D-1), Apache-2.0
+base_revision: 4adf15748de9e1a0097b6274cee9c15836c41c37  # Hub commit, checked 2026-11-15
+tool: unsloth                                           # TRL + PEFT fallback (D-9)
+load_in_4bit: true                                      # QLoRA, NF4 base
+compute_dtype: float16                                  # T4 and P100 have no bf16 (D-9)
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+learning_rate: 0.0002                                   # write decimals: PyYAML reads 2e-4 as text
+scheduler: cosine
+warmup_ratio: 0.03
+per_device_batch: 4
+grad_accum: 4                                           # effective batch 16
+max_seq_len: 1024                                       # re-measured at N1.2 / T2.1 (MIX-R3)
+epochs: 1                                               # a second only if val loss still falls
+eval_every_steps: 250
+seed: 7
+completion_only_loss: true                              # prompt tokens masked

@@ -1,0 +1,13 @@
+{
+  "citation_valid": 0.99,
+  "has_citation": 1.0,
+  "label_accuracy": {
+    "no": 0.7,
+    "yes": 0.8
+  },
+  "mean_words": 42.0,
+  "n": 500,
+  "over_80_words": 0.0,
+  "schema_valid": 0.99,
+  "schema_valid_unconstrained": 0.9
+}

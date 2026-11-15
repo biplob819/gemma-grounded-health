@@ -7,7 +7,12 @@ license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
 authors = [{ name = "Biplob Chakraborty" }]
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "pydantic>=2.7",
+    "pyyaml>=6",
+    # EvalKit is not on PyPI yet; pinned to an exact commit (D-28)
+    "evalkit-harness @ git+https://github.com/biplob819/evalkit@06591f8de9b178078c971940a83019a6530fd119",
+]
 
 [project.scripts]
 ggh = "ggh.cli:main"
@@ -18,11 +23,15 @@ dev = [
     "hypothesis>=6",
     "ruff>=0.6",
     "pyright>=1.1.380",
+    "types-pyyaml>=6.0.12",
 ]
 
 [build-system]
 requires = ["hatchling>=1.26"]
 build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true  # the EvalKit git pin (D-28)
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/ggh"]

@@ -1,0 +1,27 @@
+{
+  "context": [
+    "Sentence one.",
+    "Sentence two."
+  ],
+  "id": "pqa-a-21645374",
+  "kind": "answer",
+  "nli_entail": 0.9,
+  "pmid": "21645374",
+  "prompt": "rendered prompt",
+  "question": "Does X improve Y?",
+  "rule_ids": [
+    "TGT-R2",
+    "TGT-R6"
+  ],
+  "source_label": "yes",
+  "split": "train",
+  "support": 0.8,
+  "target": {
+    "answer": "It does.",
+    "citations": [
+      1,
+      2
+    ],
+    "label": "yes"
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "artifacts": [
+    {
+      "kind": "gguf",
+      "llama_cpp_commit": "b1234",
+      "model": "ft",
+      "parent_key": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "path": "artifacts/export/ft-Q4_K_M.gguf",
+      "quant": "Q4_K_M",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ],
+  "audit_pass_rate": 0.94,
+  "behaviour": [
+    {
+      "metric": "schema_valid",
+      "model": "m",
+      "n": 1000,
+      "rule": "B1",
+      "source": "evalkit:n_errors",
+      "value": 0.99
+    }
+  ],
+  "bench": {
+    "answer_latency_ms_p50": 3500,
+    "answer_latency_ms_p95": 5200,
+    "chip": "Apple M3",
+    "gen_tps_p50": 45.0,
+    "gen_tps_p95": 40.0,
+    "llama_bench": {
+      "pp512": 950.0,
+      "tg128": 47.0
+    },
+    "llama_cpp_commit": "b1234",
+    "model_file_mb": 3100.0,
+    "n_prompts": 50,
+    "os": "macOS 26.1",
+    "peak_rss_mb": 3400.0,
+    "power": "ac",
+    "prompt_tps_p50": 900.0,
+    "quant": "Q4_K_M",
+    "ram_gb": 16,
+    "repetitions": 3,
+    "ttft_ms_p50": 600
+  },
+  "calibration_status": "calibrated",
+  "evalkit_run_ids": [
+    "r-1"
+  ],
+  "evalkit_version": "0.1.0+06591f8",
+  "gemma_family_check": {
+    "opus": 0.9,
+    "sol": 0.85
+  },
+  "judge_mode": "dual",
+  "lineage_ok": true,
+  "parity": {
+    "citation_exact_match": 0.9,
+    "judged_headline_delta": {
+      "opus": {
+        "hi": 0.6,
+        "lo": 0.4,
+        "point": 0.5
+      }
+    },
+    "label_agreement": 0.97,
+    "n": 500,
+    "schema_valid": {
+      "bf16": 1.0,
+      "q4": 1.0
+    }
+  },
+  "primary": {
+    "ft_minus_base:opus": {
+      "hi": 0.6,
+      "lo": 0.4,
+      "point": 0.5
+    }
+  },
+  "schema_version": "1.0",
+  "summary_paths": [
+    "docs/results/summary.json"
+  ],
+  "train": {
+    "config_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "data_manifest_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "dev_metrics": {
+      "citation_valid": 0.99,
+      "has_citation": 1.0,
+      "label_accuracy": {
+        "no": 0.7,
+        "yes": 0.8
+      },
+      "mean_words": 42.0,
+      "n": 500,
+      "over_80_words": 0.0,
+      "schema_valid": 0.99,
+      "schema_valid_unconstrained": 0.9
+    },
+    "gpu": "Tesla T4",
+    "kaggle_kernel_version": "3",
+    "peak_vram_gb": 11.5,
+    "repo_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "selected_step": 1000,
+    "steps": 1250,
+    "val_loss_curve": [
+      [
+        250,
+        1.2
+      ],
+      [
+        500,
+        1.0
+      ],
+      [
+        750,
+        0.95
+      ],
+      [
+        1000,
+        0.94
+      ]
+    ],
+    "wall_clock_s": 9000.0
+  }
+}
