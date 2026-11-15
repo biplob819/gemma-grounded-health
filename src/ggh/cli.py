@@ -61,6 +61,26 @@ def _cmd_lineage_verify(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_data(args: argparse.Namespace) -> int:
+    from ggh.data import build, fetch
+
+    try:
+        m = build.build(
+            Path(args.root),
+            seed=args.seed,
+            download=not args.offline,
+            refreeze_offscope=args.refreeze_offscope,
+        )
+    except (fetch.DataError, ValueError, OSError) as exc:
+        print(f"data: FAIL: {exc}")
+        return EXIT_ERROR
+    for split, counts in m.counts.items():
+        print(f"{split:<14} {sum(counts.values()):>7}  {dict(counts)}")
+    print(f"dropped for PQA-L overlap: {dict(m.drops) or 'none'}")
+    print(f"manifest: {build.MANIFEST_PATH}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(
         prog="ggh",
@@ -70,6 +90,16 @@ def build_parser() -> argparse.ArgumentParser:
     sub = ap.add_subparsers(dest="command")
     doctor = sub.add_parser("doctor", help="check this machine is ready")
     doctor.set_defaults(func=_cmd_doctor)
+    data = sub.add_parser("data", help="build the training pool and dev splits (N1.2)")
+    data.add_argument("--root", default=".", help="repo root")
+    data.add_argument("--seed", type=int, default=7)
+    data.add_argument("--offline", action="store_true", help="use the cache only; never download")
+    data.add_argument(
+        "--refreeze-offscope",
+        action="store_true",
+        help="accept a changed off-scope set (only after the owner approves it)",
+    )
+    data.set_defaults(func=_cmd_data)
     lineage = sub.add_parser("lineage", help="check artifact lineage manifests")
     lsub = lineage.add_subparsers(dest="lineage_command", required=True)
     lverify = lsub.add_parser("verify", help="walk a manifest back through its parents")

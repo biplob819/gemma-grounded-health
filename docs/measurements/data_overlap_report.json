@@ -1,0 +1,11 @@
+{
+  "dropped_from_pqa_a": {
+    "context": 0,
+    "pmid": 0,
+    "question": 0
+  },
+  "max_context_jaccard": 0.035,
+  "pqa_a_rows_checked": 211269,
+  "pqa_l_rows": 1000,
+  "rule": "pmid, normalised question, or context 8-gram Jaccard >= 0.5"
+}

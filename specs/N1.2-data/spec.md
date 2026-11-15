@@ -3,7 +3,7 @@
 **Wave 1. Depends on:** N1.1. **Unblocks:** N1.3, E3.1.
 
 ## Goal
-`make data` turns the pinned PubMedQA files into rendered train-pool, dev and off-scope evaluation files, proves the expert set (PQA-L) cannot leak into training, and writes a manifest that reproduces byte for byte.
+`make data` turns the pinned PubMedQA files into a train pool (rows with numbered, section-labelled sentences; N1.3 renders the examples it draws), rendered dev files and a frozen off-scope evaluation file, proves the expert set (PQA-L) cannot leak into training, and writes a manifest that reproduces byte for byte.
 
 ## Pinned inputs (measured 2026-11-15)
 - Dataset `qiaojin/PubMedQA` at revision `9001f2853fb87cab8d220904e0de81ac6973b318`.
@@ -14,8 +14,8 @@
 
 ## Outputs (`src/ggh/data/`)
 - `fetch.py`: download to `~/.cache/ggh/pubmedqa-<rev7>/`, verify sha256 before use, refuse a mismatch (never re-download silently over a bad file).
-- `build.py` (`ggh data`): load with pyarrow; leakage check (DAT-R3: PMID, normalised question, context 8-gram Jaccard ≥ 0.5 against any PQA-L context, computed with MinHash-free exact shingles over a PQA-L index); seeded split (seed 7): `dev` 2,500 rows (`val` 2,000 + `dev_eval` 500) and `train_pool` (the rest); EvalKit rendering through `evalkit.text.number_sentences` and `evalkit.tasks.render_prompt` with the built-in `pubmedqa` task; outputs `artifacts/data/{train_pool,val,dev_eval}.jsonl` with per-sentence section labels, `overlap_report.json`, `length_report.json`; `docs/measurements/data_manifest.json` (committed).
-- `offscope.py` + `data/offscope_eval.jsonl` (committed, 20 rows): personal-advice questions paired with `dev_eval` abstracts; hash frozen in the manifest; a test fails if it changes.
+- `build.py` (`ggh data`): load with pyarrow; leakage check (DAT-R3: PMID, normalised question, context 8-gram Jaccard ≥ 0.5 against any PQA-L context, computed with MinHash-free exact shingles over a PQA-L index); seeded split (seed 7): `dev` 2,500 rows (`val` 2,000 + `dev_eval` 500) and `train_pool` (the rest); EvalKit rendering through `evalkit.text.number_sentences` and `evalkit.tasks.render_prompt` with the built-in `pubmedqa` task; outputs `artifacts/data/{train_pool,val,dev_eval}.jsonl` with per-sentence section labels (`val` and `dev_eval` also carry the rendered `prompt`), `overlap_report.json` (explicit zero counts, rows checked, highest context Jaccard), `length_report.json`, both also copied to `docs/measurements/` as committed evidence; `docs/measurements/data_manifest.json` (committed).
+- `data/offscope_eval.jsonl` (committed, 20 rows, owner-approved): personal-advice questions paired with `dev_eval` abstracts, loaded and checked by `build.load_offscope` (no separate module needed); its sha256 is pinned in a test and in the manifest, and `ggh data` refuses to write anything if it changed unless `--refreeze-offscope` is passed.
 - `DATA_CARD.md`.
 - `Makefile` target `data`.
 

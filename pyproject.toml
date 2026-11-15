@@ -10,6 +10,7 @@ requires-python = ">=3.11"
 dependencies = [
     "pydantic>=2.7",
     "pyyaml>=6",
+    "pyarrow>=15",
     # EvalKit is not on PyPI yet; pinned to an exact commit (D-28)
     "evalkit-harness @ git+https://github.com/biplob819/evalkit@06591f8de9b178078c971940a83019a6530fd119",
 ]

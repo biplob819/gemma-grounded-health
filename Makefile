@@ -1,6 +1,6 @@
-# Pipeline targets (data, eval, export, bench, release) are added by the nodes that build them
-# (Tech Spec §2.2). Until then, these targets run the build harness.
-.PHONY: check status converge selftest
+# Pipeline targets are added by the nodes that build them (Tech Spec §2.2): `data` (N1.2) so far.
+# The other targets run the build harness.
+.PHONY: check status converge selftest data
 
 # check runs every CI step except the self-tests, which selftest runs
 check:
@@ -11,6 +11,9 @@ check:
 	uv run python scripts/secret_scan.py
 	uv run python scripts/verify_graph_eligibility.py
 	uv build
+
+data:
+	uv run ggh data
 
 status:
 	uv run python scripts/status.py

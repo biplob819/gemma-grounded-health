@@ -293,7 +293,7 @@ Every rule has an ID that is stamped into `TrainExample.rule_ids`, pinned by a t
 - **TGT-R1.** Split `long_answer` into sentences with EvalKit's splitter.
 - **TGT-R2.** Drop a conclusion sentence that matches the recommendation and implication patterns (`should`, `recommend`, `must`, `we suggest`, `clinicians`, `further studies`, `warrant`, …; the list is a pinned constant with tests).
 - **TGT-R3.** Lexical support: keep a sentence only if at least 50% of its content words (lower-cased, stopwords removed, light stemming) appear in the sentences it will cite (TGT-R6).
-- **TGT-R4.** Entailment: keep a sentence only if an open NLI cross-encoder (chosen at N1.3 from Apache-2.0 or MIT models, licence recorded; never a Claude, OpenAI or Gemini model) gives entailment probability of at least 0.5 with the cited sentences as the premise. The premise is exactly what EvalKit's judges see, so training and judging check the same thing.
+- **TGT-R4.** Entailment: keep a sentence only if an open NLI cross-encoder (`cross-encoder/nli-deberta-v3-base` at revision `6c749ce`, Apache-2.0, chosen at N1.3; never a Claude, OpenAI or Gemini model) gives entailment probability of at least 0.5 with the cited sentences as the premise. The premise is exactly what EvalKit's judges see, so training and judging check the same thing.
 - **TGT-R5.** Drop the example if no sentence survives or the kept answer exceeds 80 words (B4).
 - **TGT-R6.** Citations: for each kept sentence, cite the context sentence with the highest content-word overlap, plus any other sentence scoring at least 0.8 of that top score. Merge, sort ascending, cap at 4, all within 1 to n. Zero-overlap sentences are dropped, not cited at random (E1).
 - **TGT-R7.** Label: the PQA-A `final_decision`.
@@ -307,7 +307,7 @@ Every rule has an ID that is stamped into `TrainExample.rule_ids`, pinned by a t
 
 ### 4.4 Insufficient examples (OWNER D-15)
 
-- **INS-R1.** Take a kept `answer` example. Remove every sentence its target cites, plus every sentence scoring at least 0.5 of the top overlap with the conclusion. Renumber.
+- **INS-R1.** Take a kept `answer` example. Remove every sentence labelled RESULTS or CONCLUSIONS (PubMedQA keeps a section label per paragraph, carried per sentence since N1.2) and every sentence its target cites. Skip rows with no RESULTS-labelled sentence. Renumber.
 - **INS-R2.** Skip the example if fewer than 2 sentences remain.
 - **INS-R3.** Target: label `maybe`; answer drawn by seed from 4 fixed templates of the form "The sentences describe the study's aim and methods but report no result that settles this question."; citations are the 1 or 2 remaining sentences with the highest overlap with the question.
 - **INS-R4.** Reported honestly: these examples teach "results missing → maybe", which is narrower than PQA-L's "results inconclusive → maybe". The B3 row reports "maybe" recall and precision with and without them (if both variants exist).
