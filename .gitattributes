@@ -1,0 +1,4 @@
+# Same bytes on every OS: the harness compares files byte-for-byte (L-7)
+* text=auto eol=lf
+*.png binary
+*.whl binary

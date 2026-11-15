@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use this project (the recipe from build node T2.1, the benchmark from E3.2 or the model from R4.2, once released), please cite it as below."
+title: "Gemma Grounded Health: a small open model that answers only from the abstract and cites it"
+type: software
+authors:
+  - family-names: Chakraborty
+    given-names: Biplob
+license: Apache-2.0
+repository-code: "https://github.com/biplob819/gemma-grounded-health"
+version: 0.0.1
+keywords:
+  - gemma
+  - grounded question answering
+  - citations
+  - pubmedqa
+  - evaluation
+references:
+  - type: article
+    title: "PubMedQA: A Dataset for Biomedical Research Question Answering"
+    authors:
+      - family-names: Jin
+        given-names: Qiao
+      - family-names: Dhingra
+        given-names: Bhuwan
+      - family-names: Liu
+        given-names: Zhengping
+      - family-names: Cohen
+        given-names: William
+      - family-names: Lu
+        given-names: Xinghua
+    year: 2019
+    conference:
+      name: "EMNLP-IJCNLP 2019"

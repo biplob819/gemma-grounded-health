@@ -1,0 +1,38 @@
+name: Model behaviour
+description: The model answered from memory, cited the wrong sentence, or gave medical advice
+labels: [model-behaviour]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Reports like this will feed later evaluation sets (evaluation sets will be frozen before training, at node N1.2). Please do not include personal health information.
+  - type: textarea
+    id: input
+    attributes:
+      label: The question and the abstract you gave the model
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: The model's answer (JSON)
+      render: json
+    validations:
+      required: true
+  - type: dropdown
+    id: rule
+    attributes:
+      label: Which rule did it break?
+      options:
+        - Added facts not in the abstract (B6)
+        - Cited a sentence that does not exist or does not support it (B7)
+        - Gave personal medical or dosing advice (B8)
+        - Did not say maybe when the abstract was insufficient (B3)
+        - Invalid JSON or over 80 words (B1, B4)
+        - Something else
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where you ran it (Space, GGUF with llama.cpp or Ollama, Transformers) and the model revision

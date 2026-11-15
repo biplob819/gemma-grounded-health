@@ -1,0 +1,14 @@
+Gemma Grounded Health
+Copyright 2026 Biplob Chakraborty
+
+This product includes software and model weights licensed under the Apache License,
+Version 2.0 (see LICENSE).
+
+The fine-tuned model is a derivative of Google DeepMind's Gemma 4 E2B, released under the
+Apache License, Version 2.0. Any NOTICE text distributed with Gemma 4 is reproduced with
+the released model weights.
+
+Training and evaluation data: PubMedQA (Jin et al., 2019), MIT licence,
+https://pubmedqa.github.io/
+
+Research only. Not medical advice.

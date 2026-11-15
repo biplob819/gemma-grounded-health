@@ -1,0 +1,33 @@
+.venv/
+.venv-py*/
+__pycache__/
+*.pyc
+dist/
+build/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.harness/
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# pipeline outputs: large or derived; manifests are committed under docs/measurements/
+artifacts/
+*.gguf
+*.safetensors
+
+# EvalKit run state (top-level only: docs/results/ is committed)
+.evalkit/
+/results/
+
+# Kaggle and Hugging Face credentials, never committed
+kaggle*.json
+
+# Claude Code local settings
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+
+# original PRD with application framing; kept local (owner ruling D-26)
+Gemma Grounded Health PRD (application).md
