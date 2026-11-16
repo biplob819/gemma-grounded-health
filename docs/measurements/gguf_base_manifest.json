@@ -1,0 +1,32 @@
+{
+  "built_at": "2026-11-16T17:44:30Z",
+  "files": {
+    "base-Q4_K_M.gguf": {
+      "bytes": 3427874880,
+      "sha256": "c1f9a87cbd9a62eecd592748be99f59d83fa6dd0bff2019ce52c7a73d7a5099c"
+    },
+    "base-Q8_0.gguf": {
+      "bytes": 4967491648,
+      "sha256": "e4c44bc02248a9a688dbc2df4a48e62c5e0607eb2464fa7ea21e1ceb0d634bb3"
+    },
+    "base-f16.gguf": {
+      "bytes": 9311299648,
+      "sha256": "3603ca946c831e445491397ba39f3b391802f678f7efbaee5127e82407341097"
+    }
+  },
+  "llama_cpp": {
+    "release_sha256": "bdeff25d862f1c9b9526ce2c373492e67656659b2ac386308c28b4808f4d074d",
+    "source_sha256": "5ff59287cab5dd3d9c90444f7d3692db5b51e5e4a4c6d3eb086cfa3b834ff9de",
+    "tag": "b12421"
+  },
+  "name": "base",
+  "source": {
+    "id": "google/gemma-4-E2B-it",
+    "revision": "4adf15748de9e1a0097b6274cee9c15836c41c37"
+  },
+  "steps": [
+    "convert_hf_to_gguf.py --outtype f16",
+    "llama-quantize Q4_K_M",
+    "llama-quantize Q8_0"
+  ]
+}

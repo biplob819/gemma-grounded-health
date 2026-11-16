@@ -2,7 +2,11 @@
 
 Format: `[TYPE] [NODE] — summary`. Types: FEAT, FIX, DOCS, HARNESS, RELEASE.
 
+## 2026-11-17
+- [DOCS] [R4.3, R4.5] — owner rulings: OWNER D-36 passkey protection on every live demo action, even when visitors bring their own API keys (per-person, hashed, revocable, rate-limited; SPC-08); OWNER D-37 a complete README at release with real screenshots, a step-by-step guide and every important link, checked by a test (OSS-06)
+
 ## 2026-11-16
+- [FEAT] [E3.1] — green after 3 verifier rounds (lesson L-23; EvalKit concurrency bug found and logged for E3.3 and upstream; `ggh serve-throughput`: 0.86 s per answer). Serving: `ggh llama fetch` pins llama.cpp b12421 and refuses any tarball whose sha256 differs; `ggh export` builds base F16, Q4_K_M and Q8_0 GGUFs with a hash manifest (the pinned build loads Gemma 4 E2B, E6); `ggh serve` (all layers on Metal, one slot, seed 7, greedy, thinking off); `ggh serve-check`: template parity 20/20 token for token, constrained JSON 20/20 through EvalKit's adapter, 20/20 byte-identical reruns, unconstrained validity 1/20 (citations as strings); `configs/evalkit.yaml` per §7.1 with a cache-reuse check (not claimable: the reference run has no EvalKit version); dev smoke and off-scope EvalKit local tasks; `ggh behaviour` B1, B3, B4, B8 pre-sort; dev smoke with base: 2.95 claims per answer, $0.47, §11 updated
 - [FEAT] [N1.3] — green after 3 verifier rounds: owner hand audit 50/50 ok (thresholds unchanged); about 60 test gaps the CI-skipped real-data test hid were closed (CI `build()` test, boundary, cap, hedge and wiring tests); DATA_CARD describes the audit with per-stratum bounds; lesson L-22; known issues recorded
 
 ## 2026-11-15

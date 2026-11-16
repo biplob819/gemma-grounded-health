@@ -1,0 +1,28 @@
+{
+  "what": "EvalKit's OpenAICompatibleAdapter against `ggh serve --model base` (Q4_K_M, llama.cpp b12421, one slot), the 20 dev smoke prompts, constrained JSON, warm prompt cache",
+  "host": "arm64 Darwin 25.5.0",
+  "runs": [
+    {
+      "in_flight": 1,
+      "wall_s": 17.19,
+      "seconds_per_answer": 0.86,
+      "latency_mean_s": 0.859,
+      "latency_max_s": 1.662
+    },
+    {
+      "in_flight": 4,
+      "wall_s": 16.49,
+      "seconds_per_answer": 0.824,
+      "latency_mean_s": 2.995,
+      "latency_max_s": 4.258
+    },
+    {
+      "in_flight": 20,
+      "wall_s": 16.9,
+      "seconds_per_answer": 0.845,
+      "latency_mean_s": 8.875,
+      "latency_max_s": 16.895
+    }
+  ],
+  "seconds_per_answer": 0.86
+}

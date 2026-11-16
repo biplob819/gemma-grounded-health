@@ -1,0 +1,1 @@
+{"at": "2026-11-16T17:54:32+00:00", "judges": ["claude-opus-5-5", "gpt-6.1-sol"], "kind": "dev_smoke", "live_judges": true, "models": ["gemma-e2b-base-q4"], "n_cases": 20, "node": "E3.1", "run_id": "r-044ca4838ee9", "spent_usd": 0.472102}

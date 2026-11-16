@@ -49,7 +49,10 @@ def test_pyproject_pins_the_commit_recorded_in_d28():
         "dependencies"
     ]
     pin = [d for d in deps if d.startswith("evalkit-harness")]
-    assert pin == [f"evalkit-harness @ git+https://github.com/biplob819/evalkit@{PINNED}"]
+    # the SDK extras serve its endpoint route and its judges (E3.1)
+    assert pin == [
+        f"evalkit-harness[openai,anthropic] @ git+https://github.com/biplob819/evalkit@{PINNED}"
+    ]
     decisions = (ROOT / "docs" / "decisions.md").read_text(encoding="utf-8")
     d28 = next(ln for ln in decisions.splitlines() if ln.startswith("| D-28 |"))
     assert PINNED in d28 or f"`{PINNED[:7]}`" in d28

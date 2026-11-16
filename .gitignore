@@ -31,3 +31,4 @@ kaggle*.json
 
 # original PRD with application framing; kept local (owner ruling D-26)
 Gemma Grounded Health PRD (application).md
+runs/

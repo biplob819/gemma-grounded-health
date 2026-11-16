@@ -1,0 +1,85 @@
+{
+  "calibration_status": "uncalibrated",
+  "comparisons": [],
+  "config_hash": "71f0586274055868",
+  "extraction_error_rate": null,
+  "finished_at": "2026-11-16T17:54:03.806877Z",
+  "judge_mode": "dual",
+  "judges": [],
+  "judging_status": "complete",
+  "models": [
+    {
+      "accuracy": {
+        "hi": 0.8,
+        "lo": 0.4,
+        "point": 0.6
+      },
+      "citation_validity": {
+        "hi": 1.0,
+        "lo": 1.0,
+        "point": 1.0
+      },
+      "cost_per_100_usd": 0.0,
+      "cost_per_correct_usd": 0.0,
+      "coverage": {
+        "hi": 1.0,
+        "lo": 0.885,
+        "point": 0.9550000000000001
+      },
+      "failed_thresholds": [
+        "headline >= 0.6 (observed 0.45)"
+      ],
+      "family": "other",
+      "groundedness_mean": {
+        "claude-opus-5-5": {
+          "hi": 0.9550000000000001,
+          "lo": 0.725,
+          "point": 0.8533333333333333
+        },
+        "gpt-6.1-sol": {
+          "hi": 0.9400000000000001,
+          "lo": 0.625,
+          "point": 0.795
+        }
+      },
+      "headline": {
+        "claude-opus-5-5": {
+          "hi": 0.65,
+          "lo": 0.25,
+          "point": 0.45
+        },
+        "gpt-6.1-sol": {
+          "hi": 0.65,
+          "lo": 0.25,
+          "point": 0.45
+        }
+      },
+      "latency_p50_ms": 3887,
+      "latency_p95_ms": 5064,
+      "model": "gemma-e2b-base-q4",
+      "n": 20,
+      "n_errors": {},
+      "passes_threshold": false
+    }
+  ],
+  "run_id": "r-044ca4838ee9",
+  "schema_version": "1.0",
+  "self_preference": {
+    "claude-opus-5-5": {
+      "other": {
+        "hi": 0.9550000000000001,
+        "lo": 0.725,
+        "point": 0.8533333333333333
+      }
+    },
+    "gpt-6.1-sol": {
+      "other": {
+        "hi": 0.9400000000000001,
+        "lo": 0.625,
+        "point": 0.795
+      }
+    }
+  },
+  "started_at": "2026-11-16T17:52:58.303318Z",
+  "task": "ggh_dev_smoke"
+}

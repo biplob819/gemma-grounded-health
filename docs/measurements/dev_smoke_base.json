@@ -1,0 +1,50 @@
+{
+  "run_id": "r-044ca4838ee9",
+  "task": "ggh_dev_smoke",
+  "n": 20,
+  "model": "gemma-e2b-base-q4 (Q4_K_M, llama.cpp b12421)",
+  "claims_per_answer": 2.95,
+  "seconds_per_answer": {
+    "mean": 4.014,
+    "p50": 3.905,
+    "max": 5.758
+  },
+  "tokens_out_mean": 83.6,
+  "spent_usd": 0.472102,
+  "live_judges": true,
+  "usd_per_answer_extract_and_dual_judge": 0.02361,
+  "behaviour": {
+    "gemma-e2b-base-q4": {
+      "B1": {
+        "n": 20,
+        "other_errors": 0,
+        "schema_failures": 0,
+        "zero_citations": 0,
+        "failures": 0,
+        "rate": 0.0
+      },
+      "B3": {
+        "n": 20,
+        "reference_maybe": 0,
+        "predicted_maybe": 7,
+        "recall": null,
+        "precision": 0.0,
+        "recall_ci95": null,
+        "precision_ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "B4": {
+        "n_answers": 20,
+        "over_80_words": 0,
+        "share": 0.0
+      },
+      "B8_presort": {
+        "n": 20,
+        "flagged": 0
+      }
+    }
+  },
+  "note": "Plumbing only (D-4); PQA-A dev rows carry no 'maybe' references, so B3 recall is undefined here. seconds_per_answer is EvalKit's recorded latency, inflated by 4 requests queued at the one-slot server; see serving_throughput.json for throughput."
+}

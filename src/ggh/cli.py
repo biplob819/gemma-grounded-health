@@ -181,6 +181,9 @@ def build_parser() -> argparse.ArgumentParser:
     lverify.add_argument("manifest", help="path to a stage's manifest.json")
     lverify.add_argument("--root", default=".", help="repo root that holds every manifest")
     lverify.set_defaults(func=_cmd_lineage_verify)
+    from ggh.cli_serve import register  # E3.1: llama, export, serve, checks, tasks, behaviour
+
+    register(sub)
     return ap
 
 

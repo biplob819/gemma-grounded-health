@@ -1,0 +1,665 @@
+{
+  "llama_tag": "b12421",
+  "gguf": "base-Q4_K_M.gguf",
+  "gguf_sha256": "c1f9a87cbd9a62eecd592748be99f59d83fa6dd0bff2019ce52c7a73d7a5099c",
+  "server_args": [
+    "--model",
+    "model.gguf",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "8080",
+    "--n-gpu-layers",
+    "999",
+    "--parallel",
+    "1",
+    "--seed",
+    "7",
+    "--threads",
+    "8",
+    "--ctx-size",
+    "8192",
+    "--temp",
+    "0",
+    "--top-k",
+    "1",
+    "--jinja",
+    "--reasoning",
+    "off",
+    "--no-webui"
+  ],
+  "parity": [
+    {
+      "id": "dev-20153496",
+      "n_tokens": 457,
+      "server_sha256": "0acd6339388cd126d737e98edf5580dcff5ae42a7eb6516ca3c0e8a8c439f825",
+      "hf_sha256": "0acd6339388cd126d737e98edf5580dcff5ae42a7eb6516ca3c0e8a8c439f825",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-27433460",
+      "n_tokens": 470,
+      "server_sha256": "9fa1cd86e9b1529c537b147e009a3de7c0e001a3b842c259eb87bc1a6a10394f",
+      "hf_sha256": "9fa1cd86e9b1529c537b147e009a3de7c0e001a3b842c259eb87bc1a6a10394f",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-11045638",
+      "n_tokens": 485,
+      "server_sha256": "d4a416566bd7ab36d2181920aa96c83c31d0257f5fa35bd9032aa6bf73acd6d2",
+      "hf_sha256": "d4a416566bd7ab36d2181920aa96c83c31d0257f5fa35bd9032aa6bf73acd6d2",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-23112038",
+      "n_tokens": 382,
+      "server_sha256": "6a274602450795ae29781abb68c7c94f772369f64b2c81827bd56ea0543a9cae",
+      "hf_sha256": "6a274602450795ae29781abb68c7c94f772369f64b2c81827bd56ea0543a9cae",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-23787520",
+      "n_tokens": 482,
+      "server_sha256": "c6029e06c93be37a73db883159b3eee91507dcccd481dda3b55bfec7551ae64a",
+      "hf_sha256": "c6029e06c93be37a73db883159b3eee91507dcccd481dda3b55bfec7551ae64a",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-24896137",
+      "n_tokens": 494,
+      "server_sha256": "328e76f217795fc66f6d348c7b2da5daf76243ff9de87805b332d0b849862ad0",
+      "hf_sha256": "328e76f217795fc66f6d348c7b2da5daf76243ff9de87805b332d0b849862ad0",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-25257227",
+      "n_tokens": 368,
+      "server_sha256": "3a84d468301d386f3c7c129973151a0898ea0f11509f40532819fb4e2b3fce1b",
+      "hf_sha256": "3a84d468301d386f3c7c129973151a0898ea0f11509f40532819fb4e2b3fce1b",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-26361419",
+      "n_tokens": 919,
+      "server_sha256": "c86dc3041d7a1e4e44cff6579816eec765841a740626ddb3f74cbc3a2530fdf6",
+      "hf_sha256": "c86dc3041d7a1e4e44cff6579816eec765841a740626ddb3f74cbc3a2530fdf6",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-26390085",
+      "n_tokens": 391,
+      "server_sha256": "83200a49213162f2fb8f663883a1f7aaadcd7a845a4f68a25cb87ea6c9c43d9d",
+      "hf_sha256": "83200a49213162f2fb8f663883a1f7aaadcd7a845a4f68a25cb87ea6c9c43d9d",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-15712343",
+      "n_tokens": 459,
+      "server_sha256": "be23a634ef5c85d18e286ba540568a7b0a1079e6cdd0f7701a9d8b62851c159d",
+      "hf_sha256": "be23a634ef5c85d18e286ba540568a7b0a1079e6cdd0f7701a9d8b62851c159d",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-17536226",
+      "n_tokens": 510,
+      "server_sha256": "bf3217bb54fe8a1d093306bedce90f690ee3ff7f8404105a58e8d75c856ef697",
+      "hf_sha256": "bf3217bb54fe8a1d093306bedce90f690ee3ff7f8404105a58e8d75c856ef697",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-23070277",
+      "n_tokens": 478,
+      "server_sha256": "953f1932477d39695c862c7ee56a76b979f879bb7925a705e75bcf7ed422eea5",
+      "hf_sha256": "953f1932477d39695c862c7ee56a76b979f879bb7925a705e75bcf7ed422eea5",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-20105060",
+      "n_tokens": 442,
+      "server_sha256": "cb656572c6eb27487be8f242419affac48e36708bd34d557f9be6502ecadf69b",
+      "hf_sha256": "cb656572c6eb27487be8f242419affac48e36708bd34d557f9be6502ecadf69b",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-12213674",
+      "n_tokens": 549,
+      "server_sha256": "0981b08ecd0883ca6417a3d264e55a84551542c099115e43eca95bb09ebf8911",
+      "hf_sha256": "0981b08ecd0883ca6417a3d264e55a84551542c099115e43eca95bb09ebf8911",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-25299654",
+      "n_tokens": 421,
+      "server_sha256": "e67bf5e93a94c93e20aae5bbd625622b8b31e5273be9a810312ccb69fc5b025e",
+      "hf_sha256": "e67bf5e93a94c93e20aae5bbd625622b8b31e5273be9a810312ccb69fc5b025e",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-16129973",
+      "n_tokens": 544,
+      "server_sha256": "34fa13ede5642f5e5259a40748ae4466a208405c84519b47699b95440f23c04a",
+      "hf_sha256": "34fa13ede5642f5e5259a40748ae4466a208405c84519b47699b95440f23c04a",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-8635270",
+      "n_tokens": 590,
+      "server_sha256": "358d41b95e53a70c8a98b0fc51bf5f68a6931daf86214967cff6a858f62ba0da",
+      "hf_sha256": "358d41b95e53a70c8a98b0fc51bf5f68a6931daf86214967cff6a858f62ba0da",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-27557295",
+      "n_tokens": 456,
+      "server_sha256": "380c913d82a9a94d66c1d8b66da05c693cf947919f8ed48096a3d85e88aa85c2",
+      "hf_sha256": "380c913d82a9a94d66c1d8b66da05c693cf947919f8ed48096a3d85e88aa85c2",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-18721245",
+      "n_tokens": 506,
+      "server_sha256": "21f91c135a846f21debed86cb42c4f06cec8f4f09cd108c3b9e12256647a4513",
+      "hf_sha256": "21f91c135a846f21debed86cb42c4f06cec8f4f09cd108c3b9e12256647a4513",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-8751598",
+      "n_tokens": 457,
+      "server_sha256": "e459fde6afda5cf02c65a6cb59d60aeaf0192eb4569e3c6c7c264efdd811be22",
+      "hf_sha256": "e459fde6afda5cf02c65a6cb59d60aeaf0192eb4569e3c6c7c264efdd811be22",
+      "first_mismatch": null,
+      "equal": true
+    }
+  ],
+  "structured": [
+    {
+      "id": "dev-20153496",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"no\",\n\"answer\": \"Comparison of histologic healing scores and bursting pressure values showed no significant differences between the groups.\",\n\"citations\": [\n7]\n}",
+        "latency_ms": 856,
+        "tokens_out": 46
+      },
+      "unconstrained": {
+        "valid": false,
+        "error": "invalid answer at citations.0: Input should be a valid integer",
+        "raw_text": "```json\n{\n\"label\": \"no\",\n\"answer\": \"Comparison of histologic healing scores and bursting pressure values showed no significant differences between the groups.\",\n\"citations\": [\n\"7\"\n]\n}\n```",
+        "latency_ms": 442,
+        "tokens_out": 49
+      }
+    },
+    {
+      "id": "dev-27433460",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"The incidence of tumor protrusion in the early recurrence group was higher than that in the late recurrence group (100% vs. 30%, respectively, P = 0.003). Multivariate analysis showed that greater than 30% protrusion of the tumor was a predictor of patient survival.\",\n\"citations\": [\n7,\n9\n]\n}",
+        "latency_ms": 928,
+        "tokens_out": 95
+      },
+      "unconstrained": {
+        "valid": false,
+        "error": "invalid answer at citations.0: Input should be a valid integer",
+        "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"The incidence of tumor protrusion in the early recurrence group was higher than that in the late recurrence group (100% vs. 30%, respectively, P = 0.003). Multivariate analysis showed that greater than 30% protrusion of the tumor was a predictor of patient survival.\",\n\"citations\": [\n\"7\",\n\"9\"\n]\n}\n```",
+        "latency_ms": 812,
+        "tokens_out": 98
+      }
+    },
+    {
+      "id": "dev-11045638",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"LIF cDNA-treated groups showed significantly improved graft survival compared to the vector-treated control in 21 days postoperatively for grafting from B6D2F1 to BALB/c and BALB/c to B6D2F1.\",\n\"citations\": [\n7]\n}",
+        "latency_ms": 787,
+        "tokens_out": 81
+      },
+      "unconstrained": {
+        "valid": false,
+        "error": "invalid answer at citations.0: Input should be a valid integer",
+        "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"LIF cDNA-treated groups showed significantly improved graft survival compared to the vector-treated control in 21 days postoperatively for grafting from B6D2F1 to BALB/c and BALB/c to B6D2F1.\",\n\"citations\": [\n\"7\"\n]\n}\n```",
+        "latency_ms": 702,
+        "tokens_out": 84
+      }
+    },
+    {
+      "id": "dev-23112038",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"maybe\",\n\"answer\": \"The study compared clinical outcomes of microcoaxial cataract surgery systems with incision sizes of 1.8 mm, 2.2 mm, and 2.75 mm, and examined surgically induced astigmatism (SIA). The SIA in the 1.8 mm group was statistically lower compared to the 2.2 mm group and the 2.75 mm group.\",\n\"citations\": [\n1,\n5,\n8]\n}",
+        "latency_ms": 1112,
+        "tokens_out": 114
+      },
+      "unconstrained": {
+        "valid": false,
+        "error": "invalid answer at citations.0: Input should be a valid integer",
+        "raw_text": "```json\n{\n\"label\": \"maybe\",\n\"answer\": \"The study compared clinical outcomes of microcoaxial cataract surgery systems with incision sizes of 1.8 mm, 2.2 mm, and 2.75 mm, and examined surgically induced astigmatism (SIA). The SIA in the 1.8 mm group was statistically lower compared to the 2.2 mm group and the 2.75 mm group.\",\n\"citations\": [\n\"1\",\n\"5\",\n\"7\",\n\"8\"\n]\n}\n```",
+        "latency_ms": 1031,
+        "tokens_out": 123
+      }
+    },
+    {
+      "id": "dev-23787520",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"maybe\",\n\"answer\": \"Orphans living in kinship care reported being more optimistic, having birth certificates, ensuring inherent family property, obtaining basic needs from grandparents, and having more friends visiting their homes, compared to those in institutional care homes.\",\n\"citations\": [\n6,\n7\n]\n}",
+        "latency_ms": 726,
+        "tokens_out": 75
+      },
+      "unconstrained": {
+        "valid": false,
+        "error": "invalid answer at citations.0: Input should be a valid integer",
+        "raw_text": "```json\n{\n\"label\": \"maybe\",\n\"answer\": \"Orphans living in kinship care reported being more optimistic, having birth certificates, ensuring inherent family property, obtaining basic needs from grandparents, and having more friends visiting their homes, compared to those in institutional care homes.\",\n\"citations\": [\n\"5\",\n\"6\",\n\"7\"\n]\n}\n```",
+        "latency_ms": 675,
+        "tokens_out": 82
+      }
+    },
+    {
+      "id": "dev-24896137",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"The study evaluated pazopanib eye drops in both healthy subjects and subjects with neovascular age-related macular degeneration.\",\n\"citations\": [\n1]\n}",
+        "latency_ms": 533,
+        "tokens_out": 52
+      },
+      "unconstrained": {
+        "valid": false,
+        "error": "invalid answer at citations.0: Input should be a valid integer",
+        "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"The study evaluated pazopanib eye drops in both healthy subjects and subjects with neovascular age-related macular degeneration.\",\n\"citations\": [\n\"1\"\n]\n}\n```",
+        "latency_ms": 466,
+        "tokens_out": 55
+      }
+    },
+    {
+      "id": "dev-25257227",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"maybe\",\n\"answer\": \"The study aimed to ascertain the degree of histological overlap between conventional villous/tubulovillous (VA/TVAs) and traditional serrated adenomas (TSA). While some reclassification occurred (20 VA/TVAs were reclassified as TSA), luminal serration as noted in TSA was not seen in any of the remaining 160 polyps, and cytoplasmic eosinophilia was noted in only a small fraction of the VA/TVAs.\",\n\"citations\": [\n2,\n3,\n4,\n5\n]\n}",
+        "latency_ms": 1200,
+        "tokens_out": 133
+      },
+      "unconstrained": {
+        "valid": false,
+        "error": "invalid answer at citations.0: Input should be a valid integer",
+        "raw_text": "```json\n{\n\"label\": \"maybe\",\n\"answer\": \"The study aimed to ascertain the degree of histological overlap between conventional villous/tubulovillous (VA/TVAs) and traditional serrated adenomas (TSA). While some reclassification occurred (20 VA/TVAs were reclassified as TSA), luminal serration as noted in TSA was not seen in any of the remaining 160 polyps, and cytoplasmic eosinophilia was noted in only a small fraction of the VA/TVAs.\",\n\"citations\": [\n\"1\",\n\"4\",\n\"5\"\n]\n}\n```",
+        "latency_ms": 1175,
+        "tokens_out": 134
+      }
+    },
+    {
+      "id": "dev-26361419",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"maybe\",\n\"answer\": \"The study aimed to confirm the anti-invasion and anti-migration effects of down-regulation of Notch1 combined with interleukin (IL)-24 in hepatocellular carcinoma (HCC) cells. The invasion and migration capacities of HCC cells were detected by wound healing assays, and the distance of wound closure correlated with the concentrations of IL-24 and GSI-I. Furthermore, the apoptotic rate of HepG2 cells was observed following GSI-I/IL-24 combined treatment, and caspase-3/7 activity was increased in the presence of siNotch1 plus IL-24 treatment.\",\n\"citations\": [\n1,\n8,\n10,\n15,\n21\n]\n}",
+        "latency_ms": 1910,
+        "tokens_out": 167
+      },
+      "unconstrained": {
+        "valid": false,
+        "error": "invalid answer at citations.0: Input should be a valid integer",
+        "raw_text": "```json\n{\n\"label\": \"maybe\",\n\"answer\": \"The study aimed to confirm the anti-invasion and anti-migration effects of down-regulation of Notch1 combined with interleukin (IL)-24 in hepatocellular carcinoma (HCC) cells. The invasion and migration capacities of HCC cells were detected by wound healing assays, and the distance of wound closure correlated with the concentrations of IL-24 and GSI-I. Furthermore, the apoptotic rate of HepG2 cells was observed following GSI-I/IL-24 combined treatment, and caspase-3/7 activity was increased in the presence of siNotch1 plus IL-24 treatment.\",\n\"citations\": [\n\"1\",\n\"8\",\n\"10\",\n\"15\",\n\"21\"\n]\n}\n```",
+        "latency_ms": 1424,
+        "tokens_out": 173
+      }
+    },
+    {
+      "id": "dev-26390085",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"maybe\",\n\"answer\": \"The function of CLOCK on the human female reproductive system remains unknown [2]. However, knockdown of CLOCK led to decreased release of oocytes and smaller litter size in vivo [9].\",\n\"citations\": [\n9,\n2]\n}",
+        "latency_ms": 686,
+        "tokens_out": 71
+      },
+      "unconstrained": {
+        "valid": false,
+        "error": "invalid answer at citations.0: Input should be a valid integer",
+        "raw_text": "```json\n{\n\"label\": \"maybe\",\n\"answer\": \"The function of CLOCK on the human female reproductive system remains unknown [2]. However, knockdown of CLOCK led to decreased release of oocytes and smaller litter size in vivo [9].\",\n\"citations\": [\n\"2\",\n\"9\"\n]\n}\n```",
+        "latency_ms": 647,
+        "tokens_out": 75
+      }
+    },
+    {
+      "id": "dev-15712343",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"The study demonstrated efficient, functional, and long-term RNA interference (RNAi) in hMSC by gene specific knock-down of transiently and stably expressed EGFP (88-98%).\",\n\"citations\": [\n8]\n}",
+        "latency_ms": 716,
+        "tokens_out": 71
+      },
+      "unconstrained": {
+        "valid": false,
+        "error": "invalid answer at citations.0: Input should be a valid integer",
+        "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"The study demonstrated efficient, functional, and long-term RNA interference (RNAi) in hMSC by gene specific knock-down of transiently and stably expressed EGFP (88-98%).\",\n\"citations\": [\n\"4\",\n\"6\",\n\"8\"\n]\n}\n```",
+        "latency_ms": 690,
+        "tokens_out": 82
+      }
+    },
+    {
+      "id": "dev-17536226",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"A significant decrease of plasma adiponectin concentration was observed in patients treated with indapamide.\",\n\"citations\": [\n8]\n}",
+        "latency_ms": 513,
+        "tokens_out": 48
+      },
+      "unconstrained": {
+        "valid": false,
+        "error": "invalid answer at citations.0: Input should be a valid integer",
+        "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"A significant decrease of plasma adiponectin concentration was observed in patients treated with indapamide.\",\n\"citations\": [\n\"8\"\n]\n}\n```",
+        "latency_ms": 503,
+        "tokens_out": 51
+      }
+    },
+    {
+      "id": "dev-23070277",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"sCysC level was found to have a statistically significant association with AKI development in preterm neonates with RDS.\",\n\"citations\": [\n7]\n}",
+        "latency_ms": 584,
+        "tokens_out": 53
+      },
+      "unconstrained": {
+        "valid": false,
+        "error": "invalid answer at citations.0: Input should be a valid integer",
+        "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"sCysC level was found to have a statistically significant association with AKI development in preterm neonates with RDS.\",\n\"citations\": [\n\"1\",\n\"7\"\n]\n}\n```",
+        "latency_ms": 508,
+        "tokens_out": 60
+      }
+    },
+    {
+      "id": "dev-20105060",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"CO was significantly associated with declines in heart rate (HR) and heart rate variability (HRV), PM was significantly associated with declines in HRV and BW, and NO(2) was significantly associated with declines in HR.\",\n\"citations\": [\n7]\n}",
+        "latency_ms": 742,
+        "tokens_out": 73
+      },
+      "unconstrained": {
+        "valid": false,
+        "error": "invalid answer at citations.0: Input should be a valid integer",
+        "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"CO was significantly associated with declines in heart rate (HR) and heart rate variability (HRV), PM was significantly associated with declines in HRV and BW, and NO(2) was significantly associated with declines in HR.\",\n\"citations\": [\n\"7\"\n]\n}\n```",
+        "latency_ms": 694,
+        "tokens_out": 76
+      }
+    },
+    {
+      "id": "dev-12213674",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"TRH administration reduced PPII specific activity in the male rat adenohypophysis, and this reduction was associated with the diurnal variation of serum thyrotropin levels.\",\n\"citations\": [\n6,\n8]\n}",
+        "latency_ms": 706,
+        "tokens_out": 67
+      },
+      "unconstrained": {
+        "valid": false,
+        "error": "invalid answer at citations.0: Input should be a valid integer",
+        "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"TRH administration reduced PPII specific activity in the male rat adenohypophysis, and this reduction was associated with the diurnal variation of serum thyrotropin levels.\",\n\"citations\": [\n\"2\",\n\"4\",\n\"6\",\n\"8\"\n]\n}\n```",
+        "latency_ms": 666,
+        "tokens_out": 79
+      }
+    },
+    {
+      "id": "dev-25299654",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"Hyperferritinaemia was significantly associated with thrombocytopenia, elevated liver enzymes, and coagulation disturbances in dengue patients.\",\n\"citations\": [\n7]\n}",
+        "latency_ms": 536,
+        "tokens_out": 52
+      },
+      "unconstrained": {
+        "valid": false,
+        "error": "invalid answer at citations.0: Input should be a valid integer",
+        "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"Hyperferritinaemia was significantly associated with thrombocytopenia, elevated liver enzymes, and coagulation disturbances in dengue patients.\",\n\"citations\": [\n\"7\"\n]\n}\n```",
+        "latency_ms": 559,
+        "tokens_out": 55
+      }
+    },
+    {
+      "id": "dev-16129973",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"Desflurane titration to 12% increased heart rate, increased mean arterial blood pressure, and initiated frequent coughing (53% vs. 0% sevoflurane) and body movements (47% vs. 0% sevoflurane). During emergence, there was a twofold greater incidence of coughing and a fivefold increase in breath holding in the desflurane group.\",\n\"citations\": [\n10,\n11\n]\n}",
+        "latency_ms": 1105,
+        "tokens_out": 117
+      },
+      "unconstrained": {
+        "valid": false,
+        "error": "invalid answer at citations.0: Input should be a valid integer",
+        "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"Desflurane titration to 12% increased heart rate, increased mean arterial blood pressure, and initiated frequent coughing (53% vs. 0% sevoflurane) and body movements (47% vs. 0% sevoflurane). During emergence, there was a twofold greater incidence of coughing and a fivefold increase in breath holding in the desflurane group.\",\n\"citations\": [\n\"10\",\n\"11\"\n]\n}\n```",
+        "latency_ms": 1053,
+        "tokens_out": 120
+      }
+    },
+    {
+      "id": "dev-8635270",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"Administration of aminoguanidine prevented both the enhanced myocardial collagen fluorescence and the increased slope of the linearized LVED stress-LVED strain relation in rats with diabetes mellitus.\",\n\"citations\": [\n8]\n}",
+        "latency_ms": 648,
+        "tokens_out": 63
+      },
+      "unconstrained": {
+        "valid": false,
+        "error": "invalid answer at citations.0: Input should be a valid integer",
+        "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"Administration of aminoguanidine prevented both the enhanced myocardial collagen fluorescence and the increased slope of the linearized LVED stress-LVED strain relation in rats with diabetes mellitus.\",\n\"citations\": [\n\"8\"\n]\n}\n```",
+        "latency_ms": 549,
+        "tokens_out": 66
+      }
+    },
+    {
+      "id": "dev-27557295",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"maybe\",\n\"answer\": \"Longitudinal follow-up of melanoma markers in patients treated with ipilimumab correlates with therapy response, and a decline of marker levels by >30% at week 6 to week 9 was associated with response to therapy.\",\n\"citations\": [\n9,\n8]\n}",
+        "latency_ms": 814,
+        "tokens_out": 79
+      },
+      "unconstrained": {
+        "valid": false,
+        "error": "invalid answer at citations.0: Input should be a valid integer",
+        "raw_text": "```json\n{\n\"label\": \"maybe\",\n\"answer\": \"Longitudinal follow-up of melanoma markers in patients treated with ipilimumab correlates with therapy response, and a decline of marker levels by >30% at week 6 to week 9 was associated with response to therapy.\",\n\"citations\": [\n\"8\",\n\"9\"\n]\n}\n```",
+        "latency_ms": 723,
+        "tokens_out": 83
+      }
+    },
+    {
+      "id": "dev-18721245",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"maybe\",\n\"answer\": \"The provided sentences discuss the role of IDO in tolerance and allergic inflammation related to OVA sensitization, but they do not directly address whether tryptophan catabolites regulate mucosal sensitization to ovalbumin in respiratory airways.\",\n\"citations\": [\n2,\n3,\n4,\n5,\n6,\n7,\n8,\n9,\n10\n]\n}",
+        "latency_ms": 912,
+        "tokens_out": 96
+      },
+      "unconstrained": {
+        "valid": false,
+        "error": "invalid answer at citations.0: Input should be a valid integer",
+        "raw_text": "```json\n{\n\"label\": \"maybe\",\n\"answer\": \"The provided sentences discuss the role of IDO in tolerance and allergic inflammation related to OVA sensitization, but they do not directly address whether tryptophan catabolites regulate mucosal sensitization to ovalbumin in respiratory airways.\",\n\"citations\": [\n\"1\",\n\"2\",\n\"3\",\n\"4\",\n\"5\",\n\"6\",\n\"7\",\n\"8\",\n\"9\",\n\"10\"\n]\n}\n```",
+        "latency_ms": 1116,
+        "tokens_out": 110
+      }
+    },
+    {
+      "id": "dev-8751598",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\n\"label\": \"no\",\n\"answer\": \"Inhibition of NO synthesis was associated with decreased intracellular levels of reduced glutathione [2], and along with decreased glutathione levels, gamma-glutamylcysteine synthetase enzyme activity and steady state mRNA levels were also decreased with inhibition of NO synthesis [8]. Addition of 8-bromo-cGMP did not alter glutathione content or gamma-glutamylcysteine synthetase enzyme activity and steady-state mRNA levels [9].\",\n\"citations\": [2, 8, 9]\n}",
+        "latency_ms": 1179,
+        "tokens_out": 119
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "```json\n{\n\"label\": \"no\",\n\"answer\": \"Inhibition of NO synthesis was associated with decreased intracellular levels of reduced glutathione [2], and along with decreased glutathione levels, gamma-glutamylcysteine synthetase enzyme activity and steady state mRNA levels were also decreased with inhibition of NO synthesis [8]. Addition of 8-bromo-cGMP did not alter glutathione content or gamma-glutamylcysteine synthetase enzyme activity and steady-state mRNA levels [9].\",\n\"citations\": [2, 8, 9]\n}\n```",
+        "latency_ms": 1040,
+        "tokens_out": 119
+      }
+    }
+  ],
+  "determinism": [
+    {
+      "id": "dev-20153496",
+      "sha256_first": "0c1c2754f2f7314a508cb990540736cd2fdbdaaef3fdadb778572bd11d60e69a",
+      "sha256_second": "0c1c2754f2f7314a508cb990540736cd2fdbdaaef3fdadb778572bd11d60e69a",
+      "identical": true
+    },
+    {
+      "id": "dev-27433460",
+      "sha256_first": "5f0fc230b95497744223509cb4f68ded0c7ccc5db5f1a7ddf1faaae5580ca091",
+      "sha256_second": "5f0fc230b95497744223509cb4f68ded0c7ccc5db5f1a7ddf1faaae5580ca091",
+      "identical": true
+    },
+    {
+      "id": "dev-11045638",
+      "sha256_first": "e1b3ca47f0ba4c079cdd7ce48f14d45ddf86cd636bb6bea206a554469d3b9dad",
+      "sha256_second": "e1b3ca47f0ba4c079cdd7ce48f14d45ddf86cd636bb6bea206a554469d3b9dad",
+      "identical": true
+    },
+    {
+      "id": "dev-23112038",
+      "sha256_first": "55d700eb9dd12bff8567ef4842df39479a5221c904fae1a9c2e3b4cf2ed1e62b",
+      "sha256_second": "55d700eb9dd12bff8567ef4842df39479a5221c904fae1a9c2e3b4cf2ed1e62b",
+      "identical": true
+    },
+    {
+      "id": "dev-23787520",
+      "sha256_first": "01653995b5be307887e34c8e9daa731c25473ba35d9bac253f6bc187516a831c",
+      "sha256_second": "01653995b5be307887e34c8e9daa731c25473ba35d9bac253f6bc187516a831c",
+      "identical": true
+    },
+    {
+      "id": "dev-24896137",
+      "sha256_first": "c1d16402ed9ecee9462c565359a9b7437c9814815a46a64d30ac4868f9b3b1bc",
+      "sha256_second": "c1d16402ed9ecee9462c565359a9b7437c9814815a46a64d30ac4868f9b3b1bc",
+      "identical": true
+    },
+    {
+      "id": "dev-25257227",
+      "sha256_first": "0b5dfa77dfa0f2abce6c9961bec634911d576d72def6245ed300a34e31179fe3",
+      "sha256_second": "0b5dfa77dfa0f2abce6c9961bec634911d576d72def6245ed300a34e31179fe3",
+      "identical": true
+    },
+    {
+      "id": "dev-26361419",
+      "sha256_first": "35f552afb53c7c3128973119e14a5f7e13092dbded0042d6216e206286de3cd6",
+      "sha256_second": "35f552afb53c7c3128973119e14a5f7e13092dbded0042d6216e206286de3cd6",
+      "identical": true
+    },
+    {
+      "id": "dev-26390085",
+      "sha256_first": "4979d2e243ba122bb7f762f8c58f4646bc3242b5d36f1b7795af372782d8e83a",
+      "sha256_second": "4979d2e243ba122bb7f762f8c58f4646bc3242b5d36f1b7795af372782d8e83a",
+      "identical": true
+    },
+    {
+      "id": "dev-15712343",
+      "sha256_first": "6ef30a0886e113973f1632e3fec20a69dec7fb5fb2980c9f5251ae67af2d0e99",
+      "sha256_second": "6ef30a0886e113973f1632e3fec20a69dec7fb5fb2980c9f5251ae67af2d0e99",
+      "identical": true
+    },
+    {
+      "id": "dev-17536226",
+      "sha256_first": "4c1b44af278df4c06ccae4233238b0e6c9011641a5f9ad135211f612db757efd",
+      "sha256_second": "4c1b44af278df4c06ccae4233238b0e6c9011641a5f9ad135211f612db757efd",
+      "identical": true
+    },
+    {
+      "id": "dev-23070277",
+      "sha256_first": "b72aa6c477829c162c8832b6b95e44c6c864c91dd8398d1031f3f6951fdf00f5",
+      "sha256_second": "b72aa6c477829c162c8832b6b95e44c6c864c91dd8398d1031f3f6951fdf00f5",
+      "identical": true
+    },
+    {
+      "id": "dev-20105060",
+      "sha256_first": "3abba37f50a275d7d1f5f7fadd0098020b1075729718fac6cd37c5946e887b7a",
+      "sha256_second": "3abba37f50a275d7d1f5f7fadd0098020b1075729718fac6cd37c5946e887b7a",
+      "identical": true
+    },
+    {
+      "id": "dev-12213674",
+      "sha256_first": "a9e91627e76ce32166d744c3022d557cec66ab334720a5bc38d76de537ea031e",
+      "sha256_second": "a9e91627e76ce32166d744c3022d557cec66ab334720a5bc38d76de537ea031e",
+      "identical": true
+    },
+    {
+      "id": "dev-25299654",
+      "sha256_first": "0a85f53bda13f376babc9eb78fc4003c013e295940e6a53f3c68b8f98533a145",
+      "sha256_second": "0a85f53bda13f376babc9eb78fc4003c013e295940e6a53f3c68b8f98533a145",
+      "identical": true
+    },
+    {
+      "id": "dev-16129973",
+      "sha256_first": "56fa839879470d66b191b49a7a5010ec4b9ee74e2394c0344ed94fe33b16d3b0",
+      "sha256_second": "56fa839879470d66b191b49a7a5010ec4b9ee74e2394c0344ed94fe33b16d3b0",
+      "identical": true
+    },
+    {
+      "id": "dev-8635270",
+      "sha256_first": "cb01d74f1e326e68d5c5671897f7cacea2052966332058d0d62bf8f61391334f",
+      "sha256_second": "cb01d74f1e326e68d5c5671897f7cacea2052966332058d0d62bf8f61391334f",
+      "identical": true
+    },
+    {
+      "id": "dev-27557295",
+      "sha256_first": "39de79278b4c82aa9410a506abd9a13fb0ae0b4afa1bba0466de1f700f74cf8f",
+      "sha256_second": "39de79278b4c82aa9410a506abd9a13fb0ae0b4afa1bba0466de1f700f74cf8f",
+      "identical": true
+    },
+    {
+      "id": "dev-18721245",
+      "sha256_first": "89a564e82270e2c34fc33f08121945bc0c559e3318ac6870f4d0651cd9240fdc",
+      "sha256_second": "89a564e82270e2c34fc33f08121945bc0c559e3318ac6870f4d0651cd9240fdc",
+      "identical": true
+    },
+    {
+      "id": "dev-8751598",
+      "sha256_first": "9cb5c523ad24b05eedef2cf3eb4d767b946535ad61bbdb74c9be8f58aaece44b",
+      "sha256_second": "9cb5c523ad24b05eedef2cf3eb4d767b946535ad61bbdb74c9be8f58aaece44b",
+      "identical": true
+    }
+  ],
+  "summary": {
+    "parity_equal": 20,
+    "constrained_valid": 20,
+    "unconstrained_valid": 1,
+    "identical_reruns": 20,
+    "n": 20
+  },
+  "passed": true
+}

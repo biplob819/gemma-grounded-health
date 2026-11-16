@@ -1,0 +1,219 @@
+"""`ggh` commands for serving and EvalKit integration (node E3.1): `llama fetch`, `export`,
+`serve`, `serve-check`, `tasks`, `evalkit-check` and `behaviour`."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+from typing import Any
+
+EXIT_ERROR = 2
+
+
+def _fail(cmd: str, exc: BaseException | str) -> int:
+    print(f"{cmd}: FAIL: {exc}")
+    return EXIT_ERROR
+
+
+def _cmd_llama_fetch(_: argparse.Namespace) -> int:
+    from ggh.serve import llama
+
+    try:
+        root = llama.cache_root()
+        for pin in (llama.RELEASE, llama.SOURCE):
+            print(f"{pin.name}: verified, extracted to {llama.extract(pin, root)}")
+    except (llama.LlamaError, OSError) as exc:
+        return _fail("llama fetch", exc)
+    return 0
+
+
+def _cmd_export(args: argparse.Namespace) -> int:
+    from ggh.export import gguf
+    from ggh.serve import llama
+
+    if args.model != "base":
+        print("export: FAIL: only --model base exists before X3.1 merges the fine-tune")
+        return EXIT_ERROR
+    try:
+        hf = gguf.hf_snapshot(gguf.BASE_ID, gguf.BASE_REVISION)
+        m = gguf.export(
+            Path(args.root),
+            hf,
+            "base",
+            source_id=gguf.BASE_ID,
+            source_revision=gguf.BASE_REVISION,
+        )
+    except ImportError as exc:
+        return _fail("export", f"{exc}; the converter needs: uv sync --group nli")
+    except (llama.LlamaError, OSError) as exc:
+        return _fail("export", exc)
+    for name, f in m["files"].items():
+        print(f"{name}  {f['bytes']:,} bytes  sha256 {f['sha256'][:12]}…")
+    return 0
+
+
+def _cmd_serve(args: argparse.Namespace) -> int:
+    from ggh.serve import llama
+
+    try:
+        log = Path(args.root) / llama.GGUF_DIR / f"serve-{args.model}.log"
+        proc = llama.start(Path(args.root), args.model, args.quant, args.port, log=log)
+    except (llama.LlamaError, OSError) as exc:
+        return _fail("serve", exc)
+    port = args.port or llama.PORTS[args.model]
+    print(f"serving {args.model} {args.quant} at http://{llama.HOST}:{port}/v1 (Ctrl-C to stop)")
+    print(f"server log: {log}")
+    try:
+        return proc.wait()
+    except KeyboardInterrupt:
+        proc.terminate()
+        proc.wait()
+        return 0
+
+
+def _cmd_serve_check(args: argparse.Namespace) -> int:
+    from ggh.serve import checks, llama
+
+    root = Path(args.root)
+    base = f"http://{llama.HOST}:{llama.PORTS[args.model]}/v1"
+    try:
+        report = checks.run(
+            root,
+            args.model,
+            args.quant,
+            complete=checks.evalkit_complete(base),
+            hf=checks.hf_tokenizer(),
+        )
+    except ImportError as exc:
+        return _fail("serve-check", f"{exc}; the tokenizer needs: uv sync --group nli")
+    except (llama.LlamaError, OSError, ValueError) as exc:
+        return _fail("serve-check", exc)
+    out = root / checks.OUT
+    out.write_text(json.dumps(report, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
+    print(json.dumps(report["summary"]))
+    print(f"serve-check: {'PASS' if report['passed'] else 'FAIL'} ({checks.OUT})")
+    return 0 if report["passed"] else EXIT_ERROR
+
+
+def _cmd_serve_throughput(args: argparse.Namespace) -> int:
+    import platform
+
+    from ggh.serve import checks, llama
+
+    root = Path(args.root)
+    base = f"http://{llama.HOST}:{llama.PORTS[args.model]}/v1"
+    try:
+        rep = checks.throughput(
+            root, args.model, args.quant, checks.evalkit_async_client(base),
+            host=f"{platform.machine()} {platform.system()} {platform.release()}",
+        )  # fmt: skip
+    except (OSError, ValueError) as exc:
+        return _fail("serve-throughput", exc)
+    out = root / checks.THROUGHPUT
+    out.write_text(json.dumps(rep, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps(rep["runs"]))
+    return 0
+
+
+def _cmd_tasks(args: argparse.Namespace) -> int:
+    from ggh.evals import tasks
+
+    try:
+        for rel in tasks.write(Path(args.root)):
+            print(f"wrote {rel}")
+    except (OSError, ValueError, KeyError) as exc:
+        return _fail("tasks", exc)
+    return 0
+
+
+def _cmd_evalkit_check(args: argparse.Namespace) -> int:
+    from evalkit.config import ConfigError, load_run_config
+
+    from ggh.evals import config
+
+    root = Path(args.root)
+    try:
+        problems = config.config_problems(root) + config.pin_problems(root)
+        out: dict[str, Any] = {"config_problems": problems}
+        if args.reference:
+            if not args.reference_config:
+                raise ValueError("--reference needs --reference-config (that run's YAML config)")
+            mine = config.ours(load_run_config(root / config.MAIN), config.pinned_commit(root))
+            ref = config.reference(Path(args.reference), Path(args.reference_config))
+            store = Path(args.store) if args.store else None
+            out["reuse_problems"] = config.reuse_problems(mine, ref, store)
+            out["reuse_claimable"] = not out["reuse_problems"]
+    except (ConfigError, OSError, ValueError, KeyError) as exc:
+        return _fail("evalkit-check", exc)
+    print(json.dumps(out, indent=2))
+    return EXIT_ERROR if problems else 0
+
+
+def _cmd_behaviour(args: argparse.Namespace) -> int:
+    from evalkit.run import read_cases, read_records
+
+    from ggh.evals import behaviour
+
+    run_dir = Path(args.run_dir)
+    try:
+        rep = behaviour.report(read_records(run_dir), read_cases(run_dir))
+    except (OSError, ValueError, KeyError) as exc:
+        return _fail("behaviour", exc)
+    print(json.dumps(rep, indent=2))
+    return 0
+
+
+def register(sub: Any) -> None:
+    from ggh.serve import llama
+
+    lm = sub.add_parser("llama", help="the pinned llama.cpp release (E3.1)")
+    lsub = lm.add_subparsers(dest="llama_command", required=True)
+    lf = lsub.add_parser("fetch", help="download, verify and extract the pinned release")
+    lf.set_defaults(func=_cmd_llama_fetch)
+
+    ex = sub.add_parser("export", help="HF safetensors → GGUF F16, Q4_K_M, Q8_0")
+    ex.add_argument("--model", default="base", choices=sorted(llama.PORTS))
+    ex.add_argument("--root", default=".", help="repo root")
+    ex.set_defaults(func=_cmd_export)
+
+    sv = sub.add_parser("serve", help="start llama-server for base (8080) or ft (8081)")
+    sv.add_argument("--model", default="base", choices=sorted(llama.PORTS))
+    sv.add_argument("--quant", default="Q4_K_M", choices=llama.QUANTS)
+    sv.add_argument("--port", type=int, default=None)
+    sv.add_argument("--root", default=".", help="repo root")
+    sv.set_defaults(func=_cmd_serve)
+
+    sc = sub.add_parser("serve-check", help="template parity, JSON and determinism checks")
+    sc.add_argument("--model", default="base", choices=sorted(llama.PORTS))
+    sc.add_argument("--quant", default="Q4_K_M", choices=llama.QUANTS)
+    sc.add_argument("--root", default=".", help="repo root")
+    sc.set_defaults(func=_cmd_serve_check)
+
+    st = sub.add_parser("serve-throughput", help="seconds per answer through EvalKit's adapter")
+    st.add_argument("--model", default="base", choices=sorted(llama.PORTS))
+    st.add_argument("--quant", default="Q4_K_M", choices=llama.QUANTS)
+    st.add_argument("--root", default=".", help="repo root")
+    st.set_defaults(func=_cmd_serve_throughput)
+
+    tk = sub.add_parser("tasks", help="write the dev smoke and off-scope EvalKit tasks")
+    tk.add_argument("--root", default=".", help="repo root")
+    tk.set_defaults(func=_cmd_tasks)
+
+    ec = sub.add_parser("evalkit-check", help="check configs/evalkit.yaml and cache reuse")
+    ec.add_argument("--root", default=".", help="repo root")
+    ec.add_argument("--reference", default=None, help="a finished EvalKit run folder")
+    ec.add_argument(
+        "--reference-config", default=None, help="the YAML config that reference run used"
+    )
+    ec.add_argument("--store", default=None, help="the EvalKit store holding that run's entries")
+    ec.set_defaults(func=_cmd_evalkit_check)
+
+    bh = sub.add_parser("behaviour", help="B1, B3, B4 and the B8 pre-sort over EvalKit records")
+    bh.add_argument("run_dir", help="an EvalKit run folder")
+    bh.set_defaults(func=_cmd_behaviour)
+
+
+if __name__ == "__main__":  # pragma: no cover
+    sys.exit(EXIT_ERROR)

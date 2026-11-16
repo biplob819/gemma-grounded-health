@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "run_id": "r-044ca4838ee9",
+  "task": "ggh_dev_smoke",
+  "task_ref": "configs/tasks/dev_smoke.yaml",
+  "config_hash": "71f0586274055868",
+  "seed": 7,
+  "n": 20,
+  "models": [
+    "gemma-e2b-base-q4"
+  ],
+  "judges": [
+    "claude-opus-5-5",
+    "gpt-6.1-sol"
+  ],
+  "judge_mode": "dual",
+  "families": {
+    "gemma-e2b-base-q4": "other"
+  },
+  "thresholds": [
+    {
+      "metric": "headline",
+      "op": ">=",
+      "value": 0.6
+    }
+  ],
+  "live_judges": true,
+  "started_at": "2026-11-16T17:52:58.303318Z",
+  "finished_at": "2026-11-16T17:54:03.806877Z",
+  "spent_usd": 0.47210190000000013
+}
