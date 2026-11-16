@@ -3,7 +3,7 @@
 Format: `[TYPE] [NODE] — summary`. Types: FEAT, FIX, DOCS, HARNESS, RELEASE.
 
 ## 2026-11-17
-- [FEAT] [T2.1] — training recipe (building): `ggh train` (Unsloth and TRL + PEFT from one recipe, one tested completion-masked dataset), `ggh targets --replay` (byte-identical targets on any machine from the committed NLI scores), `ggh doctor --kaggle`, the thin Kaggle notebook; Kaggle T4 pilot through the API: 300 steps, loss 2.55 → 0.73, 676 tokens/s, 10.45 GB peak VRAM, fp16 finite; D-40 confirms D-9; full run ~1.9 h
+- [FEAT] [T2.1] — green after 3 verifier rounds (lesson L-24: the first pilot had silently trained on Unsloth's mirror; superseded). Training recipe: `ggh train` (Unsloth and TRL + PEFT from one recipe, one tested completion-masked dataset; the loaded checkpoint, dtypes and autocast recorded and checked), `ggh targets --replay` (byte-identical targets on any machine from the committed NLI scores), `ggh doctor --kaggle`, the thin Kaggle notebook; Kaggle T4 pilot on the pinned base: 300 steps, eval loss 0.773, 639 tokens/s, 9.84 GB peak VRAM, fp16 mixed precision with every loss finite; D-40 confirms D-9; full run ~2.3 h
 - [DOCS] [T2.1, R4.3] — owner rulings: OWNER D-38 the builder runs Kaggle through the API (Q8); OWNER D-39 the demo passkey is one numeric passcode only the owner knows (supersedes D-36's per-person keys)
 - [DOCS] [R4.3, R4.5] — owner rulings: OWNER D-36 passkey protection on every live demo action, even when visitors bring their own API keys (per-person, hashed, revocable, rate-limited; SPC-08); OWNER D-37 a complete README at release with real screenshots, a step-by-step guide and every important link, checked by a test (OSS-06)
 

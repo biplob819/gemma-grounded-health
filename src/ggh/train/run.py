@@ -196,6 +196,21 @@ LOADERS: dict[str, Callable[[RecipeConfig], Loaded]] = {"trl": load_trl, "unslot
 # ---- training ----
 
 
+def count_skipped(stats: Stats, trainer: Any) -> None:
+    """One optimizer step: count it if accelerate's fp16 loss scaler skipped it (inf grads).
+    An accelerator without the attribute is an error, so an API rename cannot silently
+    report zero skipped steps forever."""
+    if trainer is None or getattr(trainer, "accelerator", None) is None:
+        raise RuntimeError("the skipped-step counter is not wired to a trainer with an accelerator")
+    stats.skipped_steps += bool(trainer.accelerator.optimizer_step_was_skipped)
+
+
+def non_finite(loss: Any) -> bool:
+    import torch  # pyright: ignore[reportMissingImports]
+
+    return not bool(torch.isfinite(loss.detach()).all())
+
+
 @dataclass
 class Stats:
     """What the pilot measures: throughput, memory, numerics."""
@@ -283,15 +298,14 @@ def make_trainer(cfg: RecipeConfig, loaded: Loaded, train: fmt.Dataset, val: fmt
         def training_step(self, model: Any, inputs: Any, *a: Any, **k: Any) -> Any:
             stats.tokens += int(inputs["attention_mask"].sum())
             loss = super().training_step(model, inputs, *a, **k)
-            stats.non_finite_steps += not bool(torch.isfinite(loss.detach()).all())
+            stats.non_finite_steps += non_finite(loss)
             return loss
 
     class Skipped(TrainerCallback):
         trainer: Any = None
 
         def on_step_end(self, args: Any, state: Any, control: Any, **kw: Any) -> None:
-            acc = getattr(self.trainer, "accelerator", None)
-            stats.skipped_steps += bool(getattr(acc, "optimizer_step_was_skipped", False))
+            count_skipped(stats, self.trainer)
 
     tok = loaded.tokenizer
     pad = tok.pad_token_id if tok.pad_token_id is not None else 0
@@ -365,6 +379,9 @@ def run(
         "max_steps": max_steps,
         "steps": int(trainer.state.global_step),
         "train_examples": len(train.rows),
+        "val_examples": len(val.rows),
+        "eval_rows": len(trainer.eval_dataset),
+        "epochs": trainer.args.num_train_epochs,
         "train_tokens": train.tokens,
         "dropped_too_long": {"train": train.dropped_too_long, "val": val.dropped_too_long},
         "tokens_seen": stats.tokens,

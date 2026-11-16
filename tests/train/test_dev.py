@@ -56,3 +56,10 @@ def test_selection_bar_needs_all_three_at_098():
     for field in ("schema_valid", "has_citation", "citation_valid"):
         assert not dev.passes_selection(good.model_copy(update={field: 0.97})), field
     assert dev.passes_selection(good.model_copy(update={"schema_valid": 0.98}))
+
+
+def test_eighty_words_are_not_over_and_eighty_one_are():
+    rows = ROWS[:2]
+    m = dev.dev_metrics(rows, [ans("yes", [1], words=80), ans("no", [1], words=81)],
+                        [ans("yes", [1]), ans("no", [1])])  # fmt: skip
+    assert m.over_80_words == 1 / 2

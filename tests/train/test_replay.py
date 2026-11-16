@@ -100,3 +100,23 @@ def test_cli_train_reports_and_fails_on_non_finite_losses(monkeypatch, capsys):
     monkeypatch.setattr(R, "run", spy)
     cli.main(["train", "--out", "/tmp/x", "--max-steps", "300", "--tool", "trl"])
     assert seen == {"max_steps": 300, "tool": "trl"}
+
+
+def test_cli_train_fails_on_a_non_finite_micro_batch_loss(monkeypatch, capsys):
+    from ggh.train import run as R
+
+    base = {"backend": "trl", "steps": 3, "tokens_per_s": 10.0, "peak_vram_gb": 0.0,
+            "seconds": 1.0, "non_finite": 0}  # fmt: skip
+    monkeypatch.setattr(R, "run", lambda *a, **k: {**base, "non_finite_steps": 1})
+    assert cli.main(["train", "--out", "/tmp/x"]) == cli.EXIT_ERROR
+    assert "not finite" in capsys.readouterr().out
+
+
+def test_cli_replay_never_turns_a_missing_score_into_success(repo, tmp_path, capsys):  # noqa: F811
+    built(repo)
+    other = tmp_path / "k"
+    copy_inputs(repo, other)
+    with gzip.open(other / make.SCORES_ARCHIVE, "wt", encoding="utf-8") as fh:
+        fh.write("")
+    with pytest.raises(KeyError):
+        cli.main(["targets", "--root", str(other), "--replay"])

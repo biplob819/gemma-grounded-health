@@ -96,3 +96,29 @@ def test_kaggle_doctor_needs_a_gpu_vram_disk_and_internet(tmp_path):
     ok, lines = kaggle.kaggle_report(tmp_path, gpu=lambda: ("Tesla P100", 16.0),
                                      disk=disk(60), online=lambda: True)  # fmt: skip
     assert ok and any("not a T4" in ln for ln in lines)
+
+
+def test_the_data_and_train_cells_are_exactly_these_commands():
+    """Exact text, so a softened step (`|| true`, a dropped check) cannot slip through."""
+    cells = ["".join(c["source"]) for c in notebook.render(SHA, "unsloth", 300)["cells"]]
+    assert cells[3] == (
+        "# rebuild N1.2 data and replay N1.3 targets; every committed hash is checked\n"
+        'sh("ggh data")\n'
+        'sh("git diff --exit-code docs/measurements/data_manifest.json")\n'
+        'sh("ggh targets --replay")'
+    )
+    assert cells[4] == (
+        'sh("ggh train --config configs/recipe.yaml --out /kaggle/working/run'
+        ' --tool unsloth --max-steps 300")'
+    )
+    assert cells[1].count("check=True") == 1 and "|| true" not in cells[1] + cells[3] + cells[4]
+
+
+def test_doctor_kaggle_failures_make_the_cli_exit_2(monkeypatch, capsys):
+    from ggh import cli
+
+    for ok, code in ((False, cli.EXIT_ERROR), (True, 0)):
+        monkeypatch.setattr(kaggle, "kaggle_report", lambda work, ok=ok: (ok, ["[x] gpu"]))
+        assert cli.main(["doctor", "--kaggle"]) == code
+    monkeypatch.setattr(kaggle, "kaggle_report", lambda work: (False, ["[FAIL] no gpu"]))
+    assert cli.main(["doctor"]) == 0  # without --kaggle the GPU check does not run

@@ -1,13 +1,17 @@
 {
-  "what": "T2.1 Kaggle pilot: 300 steps of configs/recipe.yaml on one Tesla T4 (fp16), Unsloth backend",
-  "kernel": "biplob819/ggh-t21-pilot-unsloth, version 1",
-  "repo_commit": "eefb8a9ad8f67be68c7491bc29d0d82cb7dc7342",
+  "what": "T2.1 Kaggle pilot: 300 steps of configs/recipe.yaml on one Tesla T4, Unsloth backend, the pinned Google checkpoint",
+  "kernel": "biplob819/ggh-t21-pilot-unsloth, version 2",
+  "repo_commit": "59e04afe17ce7a37f25271492fc39f60f09521cf",
+  "repo_tag": "t2.1-pilot-2",
+  "session_hours": 1.32,
   "packages": {
     "unsloth": "2026.11.5",
+    "unsloth_zoo": "2026.11.5",
     "transformers": "5.17.0",
     "torch": "2.11.0",
     "peft": "0.21.3",
-    "bitsandbytes": "0.50.2"
+    "bitsandbytes": "0.50.2",
+    "accelerate": "1.15.0"
   },
   "report": {
     "backend": "unsloth",
@@ -21,158 +25,205 @@
       "val": 3
     },
     "tokens_seen": 2568888,
-    "seconds": 3801.41,
-    "tokens_per_s": 675.8,
-    "peak_vram_gb": 10.45,
+    "seconds": 4018.7,
+    "tokens_per_s": 639.2,
+    "peak_vram_gb": 9.84,
     "losses": [
       [
         10,
-        2.545640754699707
+        2.4301197052001955
       ],
       [
         20,
-        1.155570125579834
+        1.1638194084167481
       ],
       [
         30,
-        0.9498123168945313
+        0.9582687377929687
       ],
       [
         40,
-        0.9163119316101074
+        0.9230018615722656
       ],
       [
         50,
-        0.8460742950439453
+        0.857579517364502
       ],
       [
         60,
-        0.8358907699584961
+        0.8388260841369629
       ],
       [
         70,
-        0.8572553634643555
+        0.8690915107727051
       ],
       [
         80,
-        0.8097453117370605
+        0.8163999557495117
       ],
       [
         90,
-        0.8214826583862305
+        0.831060791015625
       ],
       [
         100,
-        0.8878851890563965
+        0.8986649513244629
       ],
       [
         110,
-        0.8405684471130371
+        0.8493430137634277
       ],
       [
         120,
-        0.8436957359313965
+        0.852879810333252
       ],
       [
         130,
-        0.8649753570556641
+        0.8721883773803711
       ],
       [
         140,
-        0.7957301139831543
+        0.8070670127868652
       ],
       [
         150,
-        0.812839412689209
+        0.8211262702941895
       ],
       [
         160,
-        0.8385651588439942
+        0.8452235221862793
       ],
       [
         170,
-        0.7978321075439453
+        0.8039059638977051
       ],
       [
         180,
-        0.747499418258667
+        0.7553235054016113
       ],
       [
         190,
-        0.7890630722045898
+        0.7953012943267822
       ],
       [
         200,
-        0.7744027614593506
+        0.7840561866760254
       ],
       [
         210,
-        0.786974573135376
+        0.7961779594421386
       ],
       [
         220,
-        0.7988705635070801
+        0.8071208953857422
       ],
       [
         230,
-        0.8047954559326171
+        0.8117545127868653
       ],
       [
         240,
-        0.7851393699645997
+        0.7934587001800537
       ],
       [
         250,
-        0.8115386962890625
+        0.8229209899902343
       ],
       [
         260,
-        0.7558482646942138
+        0.7659404754638672
       ],
       [
         270,
-        0.7376678466796875
+        0.7477400779724122
       ],
       [
         280,
-        0.7308408260345459
+        0.738089656829834
       ],
       [
         290,
-        0.7684448719024658
+        0.7791390419006348
       ],
       [
         300,
-        0.7326197147369384
+        0.7389096260070801
       ]
     ],
     "eval_losses": [
       [
         250,
-        0.7668018937110901
+        0.7742640972137451
       ],
       [
         300,
-        0.7654172778129578
+        0.7729663848876953
       ]
     ],
     "non_finite": 0,
+    "non_finite_steps": 0,
+    "skipped_steps": 1,
+    "base_loaded": [
+      "google/gemma-4-E2B-it",
+      "4adf15748de9e1a0097b6274cee9c15836c41c37"
+    ],
+    "precision": {
+      "amp": "fp16",
+      "trainable": {
+        "float32": 24158208
+      },
+      "frozen": {
+        "float16": 3227066496,
+        "float32": 411040,
+        "uint8": 938409984
+      }
+    },
     "best_checkpoint": "/kaggle/working/run/checkpoint-300",
-    "gpu": "Tesla T4"
+    "gpu": "Tesla T4",
+    "model_class": "Gemma4ForConditionalGeneration",
+    "trainable_params": 24158208
   },
   "full_run_estimate": {
     "train_tokens": 4521644,
     "epochs": 1,
-    "tokens_per_s": 675.8,
-    "train_hours": 1.86,
-    "eval_passes": 2,
-    "eval_seconds_each": 170.4,
-    "total_hours_with_eval": 1.95,
-    "session_limit_hours": 12
+    "tokens_per_s": 639.2,
+    "train_hours": 1.96,
+    "optimizer_steps": 527,
+    "eval_passes": 3,
+    "eval_seconds_each": 188.2,
+    "setup_minutes": 12,
+    "total_hours": 2.32,
+    "session_limit_hours": 12,
+    "note": "tokens_per_s already includes the pilot's two evaluation passes, so adding them again is conservative",
+    "eval_seconds_note": "pilot 2 measured 194.5 s and 181.9 s for its two passes"
+  },
+  "superseded": {
+    "pilot_1": {
+      "kernel": "biplob819/ggh-t21-pilot-unsloth, version 1",
+      "repo_tag": "t2.1-pilot-1",
+      "why": "Unsloth ignored the pinned revision and trained on its pre-quantized mirror unsloth/gemma-4-E2B-it-unsloth-bnb-4bit at HEAD (verifier round 1); its numbers are not evidence for the pinned base",
+      "tokens_per_s": 675.8,
+      "peak_vram_gb": 10.45,
+      "eval_losses": [
+        [
+          250,
+          0.7668018937110901
+        ],
+        [
+          300,
+          0.7654172778129578
+        ]
+      ]
+    }
   },
   "fallback_trl": {
     "kernel": "biplob819/ggh-t21-pilot-trl, versions 1 and 2",
     "v1": "out of memory in peft prepare_model_for_kbit_training: fp32 cast of the per-layer embedding tables (8.75 GiB)",
     "v2": "out of memory in the loss: logits for 4 x ~900 tokens x 262,144 vocabulary (2.70 GiB more with 12.3 GiB in use; the full multimodal model was loaded)"
+  },
+  "report_notes": {
+    "peak_vram_gb": "torch.cuda.max_memory_allocated (not reserved memory)",
+    "precision.amp": "echoes TrainingArguments.fp16; the GradScaler skipping a step is the evidence that fp16 mixed precision ran",
+    "torch": "2.11.0 from the Kaggle image (not pinned by the requirements file)"
   }
 }
