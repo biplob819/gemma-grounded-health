@@ -1,6 +1,6 @@
 # Data card
 
-Facts below describe what `ggh data` (build node N1.2) produces today. Training targets, their filters and the hand audit will arrive at node N1.3; this card will describe them once they exist.
+Facts below describe what `ggh data` (build node N1.2) and `ggh targets` (node N1.3) produce today. The owner's hand audit of the training examples is described at the end.
 
 ## Sources
 
@@ -40,19 +40,43 @@ Rendered prompts are 428 tokens at the median and 678 at the 99th percentile on 
 
 Because all 20 abstracts must come from `dev_eval`, a build with a seed other than 7 needs a newly written and approved off-scope file; with the frozen file, any other seed stops before writing anything.
 
-## Planned training mix (built at node N1.3)
+## Training examples (node N1.3)
 
-Node N1.3 will draw 20,000 training examples and 2,000 validation examples:
+`ggh targets` draws 8,436 training and 843 validation examples from the N1.2 splits. Every example's answer comes from the abstract's own author conclusion (`long_answer`), cut down to what its cited sentences support:
 
-- 10% "insufficient" examples (label `maybe`), made by removing an abstract's RESULTS and CONCLUSIONS sentences and every sentence the answer cited (Tech Spec D-15, INS-R1);
-- 1% off-scope refusals from templates written separately from the evaluation set, with a test that they share no 5-word sequence with it (D-16, OFF-R3);
-- the rest from author conclusions filtered to what the cited sentences support, sampled yes:no 60:40 so the model does not learn PQA-A's yes bias (MIX-R1). If too few "no" rows survive the filters, fewer "yes" rows are taken; the filters are never loosened.
+1. Conclusion sentences are split with EvalKit's splitter, and sentences that recommend or generalise ("should", "clinicians", "further studies", …) are dropped.
+2. A leading hedge such as "These findings suggest that" is removed.
+3. Context sentences are ranked by shared content words. The smallest set of the top 1 to 4 is cited where at least half the sentence's content words appear in it **and** an open NLI model (`cross-encoder/nli-deberta-v3-base@6c749ce3425cd33b46d187e45b92bbf96ee12ec7`, Apache-2.0) gives entailment of at least 0.5 with exactly those sentences as the premise (OWNER D-34, D-35).
+4. Answers over 80 words are dropped.
+
+No text from Claude, OpenAI or Gemini models is used anywhere; every example is rebuilt from its source row and the recorded NLI scores by a test.
+
+| | Train | Val |
+| --- | --- | --- |
+| Answer, label yes | 4,505 | 451 |
+| Answer, label no | 3,003 | 300 |
+| Insufficient (label maybe) | 844 | 84 |
+| Off-scope refusal (label maybe) | 84 | 8 |
+
+The yes:no ratio among answers is 60:40 (MIX-R1), so the model does not learn PQA-A's yes bias. The filters are strict: of the rows scored, 11,779 "no" rows and 14,270 "yes" rows had no conclusion sentence that survived. Only 3,303 "no" rows survived, which caps the set at 8,436 rather than the planned 20,000 (OWNER D-34 chose strict filters over size). Counts by reason are in `docs/measurements/targets_drop_report.json`.
+
+"Insufficient" examples remove every RESULTS-type sentence (and any sentence of unknown section) plus the sentences the answer cited, keep at least 2 sentences, and answer with one of 4 fixed sentences saying the results are missing (OWNER D-15). They teach "results missing → maybe", which is narrower than the expert set's "results inconclusive → maybe". Off-scope examples pair a train-pool abstract with one of 12 personal-advice questions and one of 6 refusals, written separately from the evaluation set (no shared 5-word sequence, tested).
 
 ## Known limits
 
 - PQA-A's yes/no labels were produced by a heuristic, not by people, and are heavily skewed towards yes.
-- PQA-A has no "maybe" questions at all, so a model trained on it alone cannot learn to say the abstract is insufficient (Tech Spec C2, handled at N1.3).
-- The conclusion (`long_answer`) is not part of the abstract text the model sees, and often goes beyond it. Using it as a training target unfiltered would teach the model to add claims (Tech Spec C1, handled at N1.3).
+- PQA-A has no "maybe" questions at all; the constructed insufficient examples above stand in for them (Tech Spec C2).
+- The conclusion (`long_answer`) is not part of the abstract text the model sees, and often goes beyond it, which is why the filters above drop most sentences (Tech Spec C1).
+- PQA-A labels come from a heuristic, so some "no" examples could have answers that read as "yes". The hand audit found no wrong label among its 12 "no" answers. That only bounds the rate loosely, at about 25% with 95% confidence.
+- EvalKit's prompt asks for "two to four sentences", but most training answers are one sentence, because only supported sentences are kept.
 - English only; abstracts only.
 
 Research only, not medical advice.
+
+## Hand audit (node N1.3)
+
+The owner read 50 training examples drawn from `train` at random within fixed strata, with a fixed seed (`docs/measurements/audit_sample.jsonl`): 18 "yes" answers, 12 "no" answers, 15 insufficient examples and 5 off-scope examples. Each example got one verdict: ok, weak citation, unsupported answer or wrong label. Each label is bound to a hash of the exact text shown, so editing an example voids its label (`docs/measurements/audit_labels.jsonl`).
+
+- Result: 50 of 50 `ok`. No weak citation, no unsupported answer and no wrong label. The pass bar was at least 45 `ok` and no unsupported answer example.
+- The thresholds (support 0.5, entailment 0.5, 80 words, 4 citations) therefore stay as built.
+- A small sample cannot show a rare fault, and each fault type applies only to some strata. By the rule of three, zero faults gives these 95% upper bounds. Unsupported answers, judged on the 30 answer examples: about 10%. Wrong labels on "no" answers, judged on 12 examples: about 25%. Any verdict across all 50: about 6%.

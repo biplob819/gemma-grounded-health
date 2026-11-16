@@ -1,0 +1,57 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Target audit</title>
+<style>
+:root{--bg:#fafaf9;--fg:#1c1917;--mute:#78716c;--line:#e7e5e4;--card:#fff;--cite:#fef3c7;--acc:#0f766e}
+@media (prefers-color-scheme:dark){:root{--bg:#1c1917;--fg:#f5f5f4;--mute:#a8a29e;--line:#44403c;
+--card:#292524;--cite:#713f12;--acc:#5eead4}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,sans-serif}
+main{max-width:860px;margin:0 auto;padding:24px 16px}
+.bar{display:flex;justify-content:space-between;color:var(--mute);font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin:14px 0}
+h2{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin:0 0 8px}
+ol{margin:0;padding-left:28px} li{margin:4px 0;padding:2px 6px;border-radius:4px}
+li.cited{background:var(--cite)} .kind{font-weight:600;color:var(--acc)}
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+button{font:inherit;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card);
+color:var(--fg);cursor:pointer} button.on{border-color:var(--acc);outline:2px solid var(--acc)}
+textarea{width:100%;box-sizing:border-box;font:inherit;background:var(--card);color:var(--fg);
+border:1px solid var(--line);border-radius:8px;padding:8px} #msg{color:var(--mute);min-height:1.5em}
+@media (max-width:600px){.keys{grid-template-columns:repeat(2,1fr)}}
+</style></head><body><main>
+<div class="bar"><span id="pos"></span><span id="done"></span></div>
+<div class="card"><h2>Question <span class="kind" id="kind"></span></h2><div id="q"></div></div>
+<div class="card"><h2>Abstract sentences (cited ones highlighted)</h2><ol id="ctx"></ol></div>
+<div class="card"><h2>Target</h2><div><b id="label"></b> &middot; cites <span id="cites"></span></div>
+<p id="answer"></p></div>
+<div class="card"><h2>Your verdict</h2><div class="keys">
+<button data-v="ok">O &middot; ok</button><button data-v="weak_citation">W &middot; weak citation</button>
+<button data-v="unsupported_answer">U &middot; unsupported answer</button>
+<button data-v="wrong_label">L &middot; wrong label</button></div>
+<p><textarea id="note" rows="2" placeholder="Note (optional)"></textarea></p>
+<div class="bar"><span>&larr; / &rarr; to move</span><span id="msg"></span></div></div>
+</main><script>
+let items=[],i=0;
+const $=id=>document.getElementById(id);
+async function load(){const r=await fetch('/api/items');items=await r.json();
+const first=items.findIndex(x=>!x.verdict);i=first<0?0:first;show();}
+function show(){const x=items[i];$('pos').textContent=`Example ${i+1} of ${items.length}`;
+$('done').textContent=`${items.filter(y=>y.verdict).length} labelled`;$('kind').textContent=x.kind;
+$('q').textContent=x.question;$('label').textContent=x.label;$('cites').textContent=x.citations.join(', ');
+$('answer').textContent=x.answer;const ol=$('ctx');ol.innerHTML='';
+x.context.forEach((s,k)=>{const li=document.createElement('li');li.textContent=s;
+if(x.citations.includes(k+1))li.className='cited';ol.appendChild(li);});
+$('note').value=x.note||'';document.querySelectorAll('button').forEach(b=>
+b.classList.toggle('on',b.dataset.v===x.verdict));$('msg').textContent='';}
+async function label(v){const x=items[i];const r=await fetch('/api/label',{method:'POST',
+headers:{'Content-Type':'application/json'},body:JSON.stringify({example_id:x.id,
+content_digest:x.digest,verdict:v,note:$('note').value})});
+if(!r.ok){$('msg').textContent=await r.text();return;}
+x.verdict=v;x.note=$('note').value;$('msg').textContent='saved';
+if(i<items.length-1){i++;show();}else{show();$('msg').textContent='saved; all done';}}
+document.querySelectorAll('button').forEach(b=>b.onclick=()=>label(b.dataset.v));
+document.addEventListener('keydown',ev=>{if(ev.target.tagName==='TEXTAREA')return;
+const m={o:'ok',w:'weak_citation',u:'unsupported_answer',l:'wrong_label'}[ev.key.toLowerCase()];
+if(m)label(m);if(ev.key==='ArrowRight'&&i<items.length-1){i++;show();}
+if(ev.key==='ArrowLeft'&&i>0){i--;show();}});
+load();
+</script></body></html>

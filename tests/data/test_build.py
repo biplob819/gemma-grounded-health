@@ -357,9 +357,14 @@ def test_data_card_claims_match_the_data():
     assert f"yes {pool['yes']:,}, no {pool['no']:,}" in card
     assert ("drops **0 rows**" in card) == (sum(m.drops.values()) == 0)
     assert "Research only, not medical advice." in card
-    for plan in ("20,000 training examples", '10% "insufficient"', "1% off-scope", "60:40"):
-        assert plan in card, plan
-    assert "will arrive at node N1.3" in card and "is pinned in a test" in card
+    assert "60:40" in card and "is pinned in a test" in card
+    targets = json.loads(
+        (ROOT / "docs/measurements/targets_drop_report.json").read_text(encoding="utf-8")
+    )  # N1.3's counts, stated as facts only once they exist (EK-L-16)
+    assert f"draws {targets['train']:,} training and {targets['val']:,} validation" in card
+    for split in ("train", "val"):
+        for kind in ("yes", "no", "insufficient", "offscope"):
+            assert f"{targets['quotas'][split][kind]:,}" in card, (split, kind)
     assert "PubMedQA's own" in card and "2.21%" in card  # the true source of UNLABELLED
     assert "training and evaluation see" not in card  # training prompts do not exist yet
 

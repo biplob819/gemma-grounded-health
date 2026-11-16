@@ -26,6 +26,14 @@ dev = [
     "pyright>=1.1.380",
     "types-pyyaml>=6.0.12",
 ]
+# N1.3's NLI filter only (`uv sync --group nli`); never installed in CI, where tests inject a
+# fake scorer
+nli = [
+    "torch>=2.4",
+    "transformers>=4.44",
+    "sentencepiece>=0.2",
+    "protobuf>=5",
+]
 
 [build-system]
 requires = ["hatchling>=1.26"]

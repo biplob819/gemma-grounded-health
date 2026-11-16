@@ -81,6 +81,68 @@ def _cmd_data(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_targets(args: argparse.Namespace) -> int:
+    from ggh.lineage import LineageError
+    from ggh.targets import make
+
+    def scorer():  # the real model; needs `uv sync --group nli`
+        from ggh.targets.nli import HFScorer
+
+        return HFScorer()
+
+    try:
+        report = make.build(
+            Path(args.root),
+            scorer,
+            seed=args.seed,
+            progress=lambda m: print(m, file=sys.stderr, flush=True),
+        )
+    except ImportError as exc:
+        print(f"targets: FAIL: {exc}; install the NLI model's dependencies: uv sync --group nli")
+        return EXIT_ERROR
+    except (ValueError, OSError, LineageError) as exc:
+        print(f"targets: FAIL: {exc}")
+        return EXIT_ERROR
+    print(f"train {report['train']}  val {report['val']}  (cap {report['cap_train']})")
+    print(f"quotas: {report['quotas']}")
+    print(f"report: {make.REPORT_COPY}")
+    return 0
+
+
+def _cmd_audit_serve(args: argparse.Namespace) -> int:
+    from ggh.targets import audit
+
+    try:
+        srv = audit.server(Path(args.root), args.port)
+    except (ValueError, OSError) as exc:
+        print(f"audit: FAIL: {exc}")
+        return EXIT_ERROR
+    host, port = srv.server_address[:2]
+    print(f"audit page: http://{host}:{port}/  (Ctrl-C to stop; labels save as you go)")
+    try:
+        srv.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        srv.server_close()
+    return 0
+
+
+def _cmd_audit_score(args: argparse.Namespace) -> int:
+    import json
+
+    from ggh.targets import audit
+
+    try:
+        result = audit.score(Path(args.root))
+    except (ValueError, OSError) as exc:
+        print(f"audit: FAIL: {exc}")
+        return EXIT_ERROR
+    print(json.dumps(result, indent=2))
+    print("audit: PASS" if result["passed"] else "audit: NOT PASSED")
+    return 0 if result["passed"] else EXIT_ERROR
+
+
 def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(
         prog="ggh",
@@ -100,6 +162,19 @@ def build_parser() -> argparse.ArgumentParser:
         help="accept a changed off-scope set (only after the owner approves it)",
     )
     data.set_defaults(func=_cmd_data)
+    targets = sub.add_parser("targets", help="build training targets from the data splits (N1.3)")
+    targets.add_argument("--root", default=".", help="repo root")
+    targets.add_argument("--seed", type=int, default=7)
+    targets.set_defaults(func=_cmd_targets)
+    aud = sub.add_parser("audit", help="hand audit of 50 training examples (N1.3)")
+    asub = aud.add_subparsers(dest="audit_command", required=True)
+    aserve = asub.add_parser("serve", help="open the local labelling page")
+    aserve.add_argument("--root", default=".", help="repo root")
+    aserve.add_argument("--port", type=int, default=8765)
+    aserve.set_defaults(func=_cmd_audit_serve)
+    ascore = asub.add_parser("score", help="apply the pass bar to the saved labels")
+    ascore.add_argument("--root", default=".", help="repo root")
+    ascore.set_defaults(func=_cmd_audit_score)
     lineage = sub.add_parser("lineage", help="check artifact lineage manifests")
     lsub = lineage.add_subparsers(dest="lineage_command", required=True)
     lverify = lsub.add_parser("verify", help="walk a manifest back through its parents")

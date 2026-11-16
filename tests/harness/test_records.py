@@ -57,12 +57,12 @@ def test_catalog_matches_tech_spec():
     assert {c.node for c in caps} == set(nodes)
 
 
-def test_decisions_seeded_d1_to_d33_with_owner_rulings():
+def test_decisions_d1_onwards_with_owner_rulings():
     text = (ROOT / "docs" / "decisions.md").read_text(encoding="utf-8")
     ids = {int(n) for n in re.findall(r"^\| (?:OWNER )?D-(\d+) \|", text, re.M)}
-    assert ids == set(range(1, 34))
+    assert ids == set(range(1, 36))  # D-1 to D-33 seeded, D-34 and D-35 appended at N1.3
     owner = {int(n) for n in re.findall(r"^\| OWNER D-(\d+) \|", text, re.M)}
-    assert owner == {15, 17, 23, 24, 25, 26, 27, 33}
+    assert owner == {15, 17, 23, 24, 25, 26, 27, 33, 34}
 
 
 def test_lessons_carry_exactly_the_appendix_b_lessons():
@@ -87,7 +87,7 @@ def test_decisions_equal_tech_spec_section_1():
         for line in text.splitlines()
         if re.match(r"^\| (OWNER )?D-\d+ \|", line)
     ]
-    assert len(spec_rows) == 33
+    assert len(spec_rows) == 35
     assert [r[:1] + r[2:] for r in log_rows] == spec_rows  # drop the date column
     assert "DeepMind" not in text
 
