@@ -24,7 +24,7 @@ from ggh.schemas import RecipeConfig, TrainExample
 from ggh.train import format as fmt
 
 TARGETS = Path("artifacts") / "targets"
-SKIP_TOWERS = ("vision", "audio", "embed_vision", "embed_audio")  # train the language model only
+SKIP_TOWERS = ("vision", "audio")  # any path part naming these: train the language model only
 
 
 class RecipeError(ValueError):
@@ -46,7 +46,7 @@ def lora_targets(module_names: Sequence[str], wanted: Sequence[str]) -> list[str
     out = []
     for name in module_names:
         parts = name.split(".")
-        if parts[-1] in wanted and not any(t in parts for t in SKIP_TOWERS):
+        if parts[-1] in wanted and not any(t in p for p in parts for t in SKIP_TOWERS):
             out.append(name)
     if not out:
         raise RecipeError(f"no module matches target_modules {list(wanted)}")
@@ -77,7 +77,7 @@ class TorchRows:
 
 
 def collator(pad_id: int) -> Callable[[list[fmt.Encoded]], dict[str, Any]]:
-    import torch
+    import torch  # pyright: ignore[reportMissingImports]
 
     def collate(batch: list[fmt.Encoded]) -> dict[str, Any]:
         return {k: torch.tensor(v) for k, v in fmt.collate(batch, pad_id).items()}
@@ -96,9 +96,9 @@ class Loaded:
 
 
 def load_trl(cfg: RecipeConfig) -> Loaded:  # pragma: no cover - downloads the base model
-    import torch
-    from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
-    from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+    import torch  # pyright: ignore[reportMissingImports]
+    from peft import LoraConfig, get_peft_model  # pyright: ignore[reportMissingImports]
+    from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig  # pyright: ignore[reportMissingImports]
 
     cuda = torch.cuda.is_available()
     dtype = getattr(torch, cfg.compute_dtype) if cuda else torch.float32
@@ -119,7 +119,11 @@ def load_trl(cfg: RecipeConfig) -> Loaded:  # pragma: no cover - downloads the b
         device_map={"": 0} if cuda else None,
     )
     if quant is not None:
-        model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=True)
+        # not peft's prepare_model_for_kbit_training: it casts every unquantized weight to
+        # fp32, and Gemma 4 E2B's per-layer embedding tables (~2.3B parameters) then need
+        # 8.75 GiB on their own (T2.1 pilot: out of memory on a 15 GB T4)
+        model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
+        model.enable_input_require_grads()
     return Loaded(attach_lora(model, cfg, get_peft_model, LoraConfig), tok, "trl")
 
 
@@ -137,8 +141,8 @@ def attach_lora(model: Any, cfg: RecipeConfig, get_peft_model: Any, lora_config:
 
 
 def load_unsloth(cfg: RecipeConfig) -> Loaded:  # pragma: no cover - CUDA and Kaggle only
-    import torch
-    from unsloth import FastModel
+    import torch  # pyright: ignore[reportMissingImports]
+    from unsloth import FastModel  # pyright: ignore[reportMissingImports]
 
     model, tok = FastModel.from_pretrained(
         model_name=cfg.base_model,
@@ -201,7 +205,7 @@ class Stats:
 def training_args(
     cfg: RecipeConfig, out: Path, *, max_steps: int | None, cuda: bool, log_every: int = 10
 ) -> Any:
-    from transformers import TrainingArguments
+    from transformers import TrainingArguments  # pyright: ignore[reportMissingImports]
 
     return TrainingArguments(
         output_dir=str(out),
@@ -237,8 +241,8 @@ def training_args(
 def make_trainer(cfg: RecipeConfig, loaded: Loaded, train: fmt.Dataset, val: fmt.Dataset,
                  out: Path, stats: Stats, *, max_steps: int | None,
                  log_every: int = 10) -> Any:  # fmt: skip
-    import torch
-    from transformers import Trainer, TrainerCallback
+    import torch  # pyright: ignore[reportMissingImports]
+    from transformers import Trainer, TrainerCallback  # pyright: ignore[reportMissingImports]
 
     class Measure(TrainerCallback):
         def on_train_begin(self, args: Any, state: Any, control: Any, **kw: Any) -> None:
@@ -270,7 +274,7 @@ def make_trainer(cfg: RecipeConfig, loaded: Loaded, train: fmt.Dataset, val: fmt
 
 
 def peak_vram_gb() -> float:
-    import torch
+    import torch  # pyright: ignore[reportMissingImports]
 
     return torch.cuda.max_memory_allocated() / 1e9 if torch.cuda.is_available() else 0.0
 
@@ -288,7 +292,7 @@ def run(
 ) -> dict[str, Any]:
     """Train from the recipe and write `report.json` into `out`. `max_steps` makes a pilot;
     `limit` caps the examples read (tests)."""
-    import torch
+    import torch  # pyright: ignore[reportMissingImports]
 
     cfg = load_recipe(config_path)
     if tool is not None:  # a pilot comparison; the report records which backend ran
@@ -321,6 +325,12 @@ def run(
         "non_finite": stats.non_finite,
         "best_checkpoint": trainer.state.best_model_checkpoint,
         "gpu": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "cpu",
+        "model_class": type(
+            loaded.model.get_base_model()
+            if hasattr(loaded.model, "get_base_model")
+            else loaded.model
+        ).__name__,
+        "trainable_params": sum(p.numel() for p in loaded.model.parameters() if p.requires_grad),
     }
     (out / "report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     return report

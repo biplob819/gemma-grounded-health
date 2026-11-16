@@ -128,9 +128,9 @@ def _cmd_targets(args: argparse.Namespace) -> int:
 def _cmd_train(args: argparse.Namespace) -> int:
     import json
 
-    try:
-        from ggh.train.run import RecipeError, run
+    from ggh.train.run import RecipeError, run  # light: heavy imports happen inside run()
 
+    try:
         report = run(
             Path(args.config), Path(args.root), Path(args.out),
             max_steps=args.max_steps, tool=args.tool,

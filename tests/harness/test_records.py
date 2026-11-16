@@ -60,7 +60,9 @@ def test_catalog_matches_tech_spec():
 def test_decisions_d1_onwards_with_owner_rulings():
     text = (ROOT / "docs" / "decisions.md").read_text(encoding="utf-8")
     ids = {int(n) for n in re.findall(r"^\| (?:OWNER )?D-(\d+) \|", text, re.M)}
-    assert ids == set(range(1, 40))  # D-1 to D-33 seeded, D-34/35 at N1.3, D-36 to D-39 owner rulings
+    assert ids == set(
+        range(1, 40)
+    )  # D-1 to D-33 seeded, D-34/35 at N1.3, D-36 to D-39 owner rulings
     owner = {int(n) for n in re.findall(r"^\| OWNER D-(\d+) \|", text, re.M)}
     assert owner == {15, 17, 23, 24, 25, 26, 27, 33, 34, 36, 37, 38, 39}
 

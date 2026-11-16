@@ -16,7 +16,7 @@ PROBE = "https://huggingface.co/api/models/google/gemma-4-E2B-it"
 
 def _gpu() -> tuple[str, float] | None:  # pragma: no cover - needs torch and a GPU
     try:
-        import torch
+        import torch  # pyright: ignore[reportMissingImports]
     except ImportError:
         return None
     if not torch.cuda.is_available():
