@@ -1,0 +1,9 @@
+# T2.1 acceptance criteria
+
+**RCP-01** — `ggh.train.run` builds the model from one `RecipeConfig` for `unsloth` and for `trl`. It refuses an unpinned base revision. The two backends share one pre-tokenized dataset and one `Trainer` setup, and the `trl` path trains a tiny model end to end on CPU.
+**RCP-02** — Completion-only loss: every prompt token, including the generation prompt, is labelled -100, and every target token plus the end-of-turn token is kept. The masked prefix is token-identical to the tokenizer's own rendering of the user turn with `add_generation_prompt=True`. The decoded target parses with EvalKit's `parse_answer` to the example's `Answer`.
+**RCP-03** — `pytest -m recipe` trains a tiny random-weight Gemma 4 architecture model (`Gemma4ForCausalLM`) for a few steps on CPU with the real tokenizer. The loss falls, the LoRA weights change and the base weights do not, and the same seed gives the same losses.
+**RCP-04** — The thin notebook installs this repo at a pinned commit and pinned packages, runs `ggh doctor --kaggle`, rebuilds the data, replays the targets with their hashes asserted, and calls `ggh train`. It holds no secrets and no stored outputs, and the safety scan covers it.
+**RCP-05** — `dev_metrics` computes `DevMetrics` deterministically from generated texts: schema validity through EvalKit's parser, has-citation, citation validity within 1..n, label accuracy per reference label, and mean words. It is tested on fixtures, including malformed outputs.
+**RCP-06** — Kaggle pilot: 300 steps on a T4 with the recipe. Losses are finite and falling under fp16, and tokens per second and peak VRAM are recorded in `docs/measurements/pilot_t4.json` and the GPU ledger. D-9 is confirmed or replaced by a decision entry.
+**RCP-07** — The full-run time estimated from the pilot's measured throughput and the real token count of `train.jsonl` fits one 12-hour Kaggle session with margin, and the estimate is written into Tech Spec §5.4.

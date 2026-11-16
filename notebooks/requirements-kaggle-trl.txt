@@ -1,0 +1,11 @@
+# Kaggle packages for `tool: trl` (transformers + PEFT + bitsandbytes 4-bit); torch comes with
+# the Kaggle image. Pinned exactly (NFR5); the notebook prints every installed version.
+transformers==5.23.0
+peft==0.21.3
+accelerate==1.15.0
+bitsandbytes==0.50.2
+# ggh runtime dependencies, at the versions in uv.lock
+pydantic==2.14.3
+pydantic-core==2.50.4
+pyyaml==6.0.3
+pyarrow==26.0.1

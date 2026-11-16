@@ -41,8 +41,13 @@ def doctor_report() -> tuple[bool, list[str]]:
     return ok, lines
 
 
-def _cmd_doctor(_: argparse.Namespace) -> int:
+def _cmd_doctor(args: argparse.Namespace) -> int:
     ok, lines = doctor_report()
+    if getattr(args, "kaggle", False):
+        from ggh.train.kaggle import kaggle_report
+
+        k_ok, k_lines = kaggle_report(Path(args.work))
+        ok, lines = ok and k_ok, lines + k_lines
     print("\n".join(lines))
     print("ready" if ok else "not ready")
     return 0 if ok else EXIT_ERROR
@@ -85,27 +90,63 @@ def _cmd_targets(args: argparse.Namespace) -> int:
     from ggh.lineage import LineageError
     from ggh.targets import make
 
+    root = Path(args.root)
+
     def scorer():  # the real model; needs `uv sync --group nli`
+        if args.replay:  # the committed scores: same bytes on any machine, no model (D-10)
+            return make.replay_scorer(root)
         from ggh.targets.nli import HFScorer
 
         return HFScorer()
 
     try:
+        expected = make.expected_files(root) if args.replay else {}
         report = make.build(
-            Path(args.root),
+            root,
             scorer,
             seed=args.seed,
             progress=lambda m: print(m, file=sys.stderr, flush=True),
         )
+        problems = make.replay_problems(root, expected) if args.replay else []
     except ImportError as exc:
         print(f"targets: FAIL: {exc}; install the NLI model's dependencies: uv sync --group nli")
         return EXIT_ERROR
     except (ValueError, OSError, LineageError) as exc:
         print(f"targets: FAIL: {exc}")
         return EXIT_ERROR
+    if problems:
+        print("targets: FAIL: the replayed targets differ from the committed ones")
+        for p in problems:
+            print(f"  {p}")
+        return EXIT_ERROR
     print(f"train {report['train']}  val {report['val']}  (cap {report['cap_train']})")
     print(f"quotas: {report['quotas']}")
     print(f"report: {make.REPORT_COPY}")
+    return 0
+
+
+def _cmd_train(args: argparse.Namespace) -> int:
+    import json
+
+    from ggh.train.run import RecipeError, run  # light: heavy imports happen inside run()
+
+    try:
+        report = run(
+            Path(args.config), Path(args.root), Path(args.out),
+            max_steps=args.max_steps, tool=args.tool,
+        )  # fmt: skip
+    except ImportError as exc:
+        print(f"train: FAIL: {exc}; needs the training packages (uv sync --group train)")
+        return EXIT_ERROR
+    except (RecipeError, ValueError, OSError) as exc:
+        print(f"train: FAIL: {exc}")
+        return EXIT_ERROR
+    keys = ("backend", "steps", "tokens_per_s", "peak_vram_gb", "non_finite", "seconds")
+    print(json.dumps({k: report[k] for k in keys}))
+    bad = report["non_finite"] + report.get("non_finite_steps", 0)
+    if bad:
+        print("train: FAIL: a loss or gradient norm was not finite")
+        return EXIT_ERROR
     return 0
 
 
@@ -151,6 +192,8 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--version", action="version", version=f"ggh {__version__}")
     sub = ap.add_subparsers(dest="command")
     doctor = sub.add_parser("doctor", help="check this machine is ready")
+    doctor.add_argument("--kaggle", action="store_true", help="also check GPU, disk, internet")
+    doctor.add_argument("--work", default=".", help="folder whose free disk is checked")
     doctor.set_defaults(func=_cmd_doctor)
     data = sub.add_parser("data", help="build the training pool and dev splits (N1.2)")
     data.add_argument("--root", default=".", help="repo root")
@@ -165,7 +208,19 @@ def build_parser() -> argparse.ArgumentParser:
     targets = sub.add_parser("targets", help="build training targets from the data splits (N1.3)")
     targets.add_argument("--root", default=".", help="repo root")
     targets.add_argument("--seed", type=int, default=7)
+    targets.add_argument(
+        "--replay",
+        action="store_true",
+        help="use the committed NLI scores (data/nli_scores.jsonl.gz) and check the hashes",
+    )
     targets.set_defaults(func=_cmd_targets)
+    tr = sub.add_parser("train", help="train from the recipe (T2.1, T2.2)")
+    tr.add_argument("--config", default="configs/recipe.yaml")
+    tr.add_argument("--root", default=".", help="repo root holding artifacts/targets")
+    tr.add_argument("--out", required=True, help="folder for checkpoints and report.json")
+    tr.add_argument("--max-steps", type=int, default=None, help="stop early (the pilot: 300)")
+    tr.add_argument("--tool", choices=["unsloth", "trl"], default=None, help="override the recipe")
+    tr.set_defaults(func=_cmd_train)
     aud = sub.add_parser("audit", help="hand audit of 50 training examples (N1.3)")
     asub = aud.add_subparsers(dest="audit_command", required=True)
     aserve = asub.add_parser("serve", help="open the local labelling page")

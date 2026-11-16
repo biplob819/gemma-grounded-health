@@ -24,7 +24,7 @@ from ggh.data import build as data
 from ggh.lineage import StageManifest, read_manifest, sha256_file, stage_key, write_manifest
 from ggh.schemas import TrainExample
 from ggh.targets import rules
-from ggh.targets.nli import MODEL_ID, MODEL_REVISION, RecordingScorer, Scorer
+from ggh.targets.nli import MODEL_ID, MODEL_REVISION, RecordingScorer, ReplayScorer, Scorer
 
 CODE_VERSION = "1"
 SEED = 7
@@ -539,3 +539,44 @@ def build(
         ),
     )
     return report
+
+
+# ---- replay on another machine (T2.1, D-10, PRV-R1) ----
+
+SCORES_ARCHIVE = Path("data") / "nli_scores.jsonl.gz"
+REPLAYED = ("train.jsonl", "val.jsonl", "nli_scores.jsonl", "audit_sample.jsonl")
+
+
+def write_scores_archive(root: Path) -> Path:
+    """Commit the recorded NLI scores: gzip with a fixed mtime and no file name, so the same
+    scores always give the same bytes."""
+    import gzip
+
+    src = (root / OUT_DIR / "nli_scores.jsonl").read_bytes()
+    dest = root / SCORES_ARCHIVE
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    with dest.open("wb") as raw, gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0) as gz:
+        gz.write(src)
+    return dest
+
+
+def replay_scorer(root: Path) -> ReplayScorer:
+    import gzip
+
+    with gzip.open(root / SCORES_ARCHIVE, "rt", encoding="utf-8") as fh:
+        table = {(r := json.loads(line))["key"]: float(r["entail"]) for line in fh if line.strip()}
+    return ReplayScorer(table)
+
+
+def expected_files(root: Path) -> dict[str, str]:
+    """The output hashes the committed targets report records, read before any rebuild."""
+    files = json.loads((root / REPORT_COPY).read_text(encoding="utf-8"))["files"]
+    return {name: files[(OUT_DIR / name).as_posix()] for name in REPLAYED}
+
+
+def replay_problems(root: Path, expected: dict[str, str]) -> list[str]:
+    return [
+        f"{name}: sha256 {got[:12]}…, committed {want[:12]}…"
+        for name, want in expected.items()
+        if (got := sha256_file(root / OUT_DIR / name)) != want
+    ]
