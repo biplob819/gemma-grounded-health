@@ -3,6 +3,7 @@
 Format: `[TYPE] [NODE] — summary`. Types: FEAT, FIX, DOCS, HARNESS, RELEASE.
 
 ## 2026-11-17
+- [DOCS] [T2.1, R4.3] — owner rulings: OWNER D-38 the builder runs Kaggle through the API (Q8); OWNER D-39 the demo passkey is one numeric passcode only the owner knows (supersedes D-36's per-person keys)
 - [DOCS] [R4.3, R4.5] — owner rulings: OWNER D-36 passkey protection on every live demo action, even when visitors bring their own API keys (per-person, hashed, revocable, rate-limited; SPC-08); OWNER D-37 a complete README at release with real screenshots, a step-by-step guide and every important link, checked by a test (OSS-06)
 
 ## 2026-11-16
