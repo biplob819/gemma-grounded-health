@@ -93,6 +93,23 @@ class Loaded:
     model: Any
     tokenizer: Any
     backend: str
+    source: tuple[str, str | None] | None = None  # (model id, commit) actually loaded
+
+
+def loaded_source(model: Any) -> tuple[str, str | None]:
+    """The Hub id and commit transformers recorded when it loaded the weights."""
+    base = model.get_base_model() if hasattr(model, "get_base_model") else model
+    cfg = base.config
+    return str(getattr(cfg, "_name_or_path", "")), getattr(cfg, "_commit_hash", None)
+
+
+def check_source(cfg: RecipeConfig, source: tuple[str, str | None]) -> None:
+    """D-1: "base" is the pinned Google checkpoint, never a mirror or another revision."""
+    name, commit = source
+    if name != cfg.base_model or commit != cfg.base_revision:
+        raise RecipeError(
+            f"loaded {name}@{commit}, but the recipe pins {cfg.base_model}@{cfg.base_revision}"
+        )
 
 
 def load_trl(cfg: RecipeConfig) -> Loaded:  # pragma: no cover - downloads the base model
@@ -124,7 +141,8 @@ def load_trl(cfg: RecipeConfig) -> Loaded:  # pragma: no cover - downloads the b
         # 8.75 GiB on their own (T2.1 pilot: out of memory on a 15 GB T4)
         model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
         model.enable_input_require_grads()
-    return Loaded(attach_lora(model, cfg, get_peft_model, LoraConfig), tok, "trl")
+    peft_model = attach_lora(model, cfg, get_peft_model, LoraConfig)
+    return Loaded(peft_model, tok, "trl", loaded_source(peft_model))
 
 
 def attach_lora(model: Any, cfg: RecipeConfig, get_peft_model: Any, lora_config: Any) -> Any:
@@ -147,6 +165,9 @@ def load_unsloth(cfg: RecipeConfig) -> Loaded:  # pragma: no cover - CUDA and Ka
     model, tok = FastModel.from_pretrained(
         model_name=cfg.base_model,
         revision=cfg.base_revision,
+        # without this Unsloth swaps in its own pre-quantized mirror at HEAD and ignores the
+        # revision (T2.1 verifier round 1, from the first pilot's log): D-1 needs the pin
+        use_exact_model_name=True,
         max_seq_length=cfg.max_seq_len,
         load_in_4bit=cfg.load_in_4bit,
         dtype=getattr(torch, cfg.compute_dtype),
@@ -158,6 +179,7 @@ def load_unsloth(cfg: RecipeConfig) -> Loaded:  # pragma: no cover - CUDA and Ka
         finetune_language_layers=True,
         finetune_attention_modules=True,
         finetune_mlp_modules=True,
+        target_modules=list(cfg.target_modules),
         r=cfg.lora_r,
         lora_alpha=cfg.lora_alpha,
         lora_dropout=cfg.lora_dropout,
@@ -165,7 +187,7 @@ def load_unsloth(cfg: RecipeConfig) -> Loaded:  # pragma: no cover - CUDA and Ka
         random_state=cfg.seed,
     )
     tok = getattr(tok, "tokenizer", tok)  # Unsloth may return a processor for Gemma 4
-    return Loaded(model, tok, "unsloth")
+    return Loaded(model, tok, "unsloth", loaded_source(model))
 
 
 LOADERS: dict[str, Callable[[RecipeConfig], Loaded]] = {"trl": load_trl, "unsloth": load_unsloth}
@@ -184,7 +206,9 @@ class Stats:
     losses: list[tuple[int, float]] = field(default_factory=list)
     eval_losses: list[tuple[int, float]] = field(default_factory=list)
     grad_norms: list[float] = field(default_factory=list)
-    non_finite: int = 0
+    non_finite: int = 0  # logged losses and gradient norms that were NaN or inf
+    non_finite_steps: int = 0  # micro-batch losses, checked every step (not only logged ones)
+    skipped_steps: int = 0  # optimizer steps the fp16 loss scaler skipped for inf gradients
 
     @property
     def tokens_per_s(self) -> float:
@@ -226,6 +250,7 @@ def training_args(
         metric_for_best_model="eval_loss",
         greater_is_better=False,
         logging_steps=log_every,
+        logging_nan_inf_filter=False,  # never replace a NaN loss with the running mean
         fp16=cuda and cfg.compute_dtype == "float16",
         bf16=cuda and cfg.compute_dtype == "bfloat16",
         optim="paged_adamw_8bit" if cuda else "adamw_torch",
@@ -257,11 +282,21 @@ def make_trainer(cfg: RecipeConfig, loaded: Loaded, train: fmt.Dataset, val: fmt
     class Counting(Trainer):
         def training_step(self, model: Any, inputs: Any, *a: Any, **k: Any) -> Any:
             stats.tokens += int(inputs["attention_mask"].sum())
-            return super().training_step(model, inputs, *a, **k)
+            loss = super().training_step(model, inputs, *a, **k)
+            stats.non_finite_steps += not bool(torch.isfinite(loss.detach()).all())
+            return loss
+
+    class Skipped(TrainerCallback):
+        trainer: Any = None
+
+        def on_step_end(self, args: Any, state: Any, control: Any, **kw: Any) -> None:
+            acc = getattr(self.trainer, "accelerator", None)
+            stats.skipped_steps += bool(getattr(acc, "optimizer_step_was_skipped", False))
 
     tok = loaded.tokenizer
     pad = tok.pad_token_id if tok.pad_token_id is not None else 0
-    return Counting(
+    skipped = Skipped()
+    trainer = Counting(
         model=loaded.model,
         args=training_args(
             cfg, out, max_steps=max_steps, cuda=torch.cuda.is_available(), log_every=log_every
@@ -269,8 +304,22 @@ def make_trainer(cfg: RecipeConfig, loaded: Loaded, train: fmt.Dataset, val: fmt
         train_dataset=TorchRows(train.rows),
         eval_dataset=TorchRows(val.rows),
         data_collator=collator(pad),
-        callbacks=[Measure()],
+        callbacks=[Measure(), skipped],
     )
+    skipped.trainer = trainer
+    return trainer
+
+
+def precision(model: Any, args: Any) -> dict[str, Any]:
+    """What actually ran: parameter dtypes (trainable and frozen) and the autocast mode."""
+    from collections import Counter
+
+    trainable: Counter[str] = Counter()
+    frozen: Counter[str] = Counter()
+    for p in model.parameters():
+        (trainable if p.requires_grad else frozen)[str(p.dtype).replace("torch.", "")] += p.numel()
+    amp = "fp16" if args.fp16 else "bf16" if args.bf16 else None
+    return {"amp": amp, "trainable": dict(trainable), "frozen": dict(frozen)}
 
 
 def peak_vram_gb() -> float:
@@ -300,6 +349,8 @@ def run(
     check_recipe(cfg)
     torch.manual_seed(cfg.seed)
     loaded = (load or LOADERS[cfg.tool])(cfg)
+    if loaded.source is not None:
+        check_source(cfg, loaded.source)
     train = fmt.build(loaded.tokenizer, load_examples(root, "train", limit), cfg.max_seq_len)
     val = fmt.build(loaded.tokenizer, load_examples(root, "val", limit), cfg.max_seq_len)
     stats = Stats()
@@ -323,6 +374,10 @@ def run(
         "losses": stats.losses,
         "eval_losses": stats.eval_losses,
         "non_finite": stats.non_finite,
+        "non_finite_steps": stats.non_finite_steps,
+        "skipped_steps": stats.skipped_steps,
+        "base_loaded": list(loaded.source) if loaded.source else None,
+        "precision": precision(loaded.model, trainer.args),
         "best_checkpoint": trainer.state.best_model_checkpoint,
         "gpu": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "cpu",
         "model_class": type(

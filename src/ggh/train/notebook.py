@@ -65,7 +65,7 @@ def render(commit: str, tool: str, max_steps: int | None) -> dict[str, Any]:
             f'os.chdir("{CHECKOUT}")\n'
             f'sh("git checkout -q {commit}")\n'
             f'sh("pip install -q -r notebooks/requirements-kaggle-{tool}.txt")\n'
-            'sh("pip install -q --no-deps -e . && pip install -q pydantic pyyaml pyarrow")\n'
+            'sh("pip install -q --no-deps -e .")\n'
             f"sh(\"pip install -q --no-deps 'evalkit-harness @ git+{EVALKIT_REPO}@{EVALKIT}'\")"
         ),
         _code(

@@ -1,0 +1,3 @@
+{"at": "2026-11-16T20:35:55+00:00", "gpu": "Tesla T4", "gpu_hours": 1.23, "kernel": "ggh-t21-pilot-unsloth v1", "kind": "pilot", "node": "T2.1", "outcome": "complete: 300 steps"}
+{"at": "2026-11-16T20:35:55+00:00", "gpu": "Tesla T4", "gpu_hours": 0.18, "kernel": "ggh-t21-pilot-trl v1", "kind": "pilot", "node": "T2.1", "outcome": "error: out of memory before training"}
+{"at": "2026-11-16T20:35:55+00:00", "gpu": "Tesla T4", "gpu_hours": 0.18, "kernel": "ggh-t21-pilot-trl v2", "kind": "pilot", "node": "T2.1", "outcome": "error: out of memory in the loss"}

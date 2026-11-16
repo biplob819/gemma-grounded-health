@@ -25,6 +25,7 @@ def test_the_score_archive_is_byte_stable(repo):  # noqa: F811
     first = (repo / make.SCORES_ARCHIVE).read_bytes()
     make.write_scores_archive(repo)
     assert (repo / make.SCORES_ARCHIVE).read_bytes() == first  # fixed mtime, no file name
+    assert first[4:8] == b"\x00\x00\x00\x00"  # gzip header mtime is zero
     raw = gzip.decompress(first)
     assert raw == (repo / make.OUT_DIR / "nli_scores.jsonl").read_bytes()
 

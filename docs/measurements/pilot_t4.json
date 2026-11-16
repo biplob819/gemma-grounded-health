@@ -1,0 +1,178 @@
+{
+  "what": "T2.1 Kaggle pilot: 300 steps of configs/recipe.yaml on one Tesla T4 (fp16), Unsloth backend",
+  "kernel": "biplob819/ggh-t21-pilot-unsloth, version 1",
+  "repo_commit": "eefb8a9ad8f67be68c7491bc29d0d82cb7dc7342",
+  "packages": {
+    "unsloth": "2026.11.5",
+    "transformers": "5.17.0",
+    "torch": "2.11.0",
+    "peft": "0.21.3",
+    "bitsandbytes": "0.50.2"
+  },
+  "report": {
+    "backend": "unsloth",
+    "config_sha256": "280b5b082abf089813718af15fca7872fff54070c144c605513f67b7123076bf",
+    "max_steps": 300,
+    "steps": 300,
+    "train_examples": 8422,
+    "train_tokens": 4521644,
+    "dropped_too_long": {
+      "train": 14,
+      "val": 3
+    },
+    "tokens_seen": 2568888,
+    "seconds": 3801.41,
+    "tokens_per_s": 675.8,
+    "peak_vram_gb": 10.45,
+    "losses": [
+      [
+        10,
+        2.545640754699707
+      ],
+      [
+        20,
+        1.155570125579834
+      ],
+      [
+        30,
+        0.9498123168945313
+      ],
+      [
+        40,
+        0.9163119316101074
+      ],
+      [
+        50,
+        0.8460742950439453
+      ],
+      [
+        60,
+        0.8358907699584961
+      ],
+      [
+        70,
+        0.8572553634643555
+      ],
+      [
+        80,
+        0.8097453117370605
+      ],
+      [
+        90,
+        0.8214826583862305
+      ],
+      [
+        100,
+        0.8878851890563965
+      ],
+      [
+        110,
+        0.8405684471130371
+      ],
+      [
+        120,
+        0.8436957359313965
+      ],
+      [
+        130,
+        0.8649753570556641
+      ],
+      [
+        140,
+        0.7957301139831543
+      ],
+      [
+        150,
+        0.812839412689209
+      ],
+      [
+        160,
+        0.8385651588439942
+      ],
+      [
+        170,
+        0.7978321075439453
+      ],
+      [
+        180,
+        0.747499418258667
+      ],
+      [
+        190,
+        0.7890630722045898
+      ],
+      [
+        200,
+        0.7744027614593506
+      ],
+      [
+        210,
+        0.786974573135376
+      ],
+      [
+        220,
+        0.7988705635070801
+      ],
+      [
+        230,
+        0.8047954559326171
+      ],
+      [
+        240,
+        0.7851393699645997
+      ],
+      [
+        250,
+        0.8115386962890625
+      ],
+      [
+        260,
+        0.7558482646942138
+      ],
+      [
+        270,
+        0.7376678466796875
+      ],
+      [
+        280,
+        0.7308408260345459
+      ],
+      [
+        290,
+        0.7684448719024658
+      ],
+      [
+        300,
+        0.7326197147369384
+      ]
+    ],
+    "eval_losses": [
+      [
+        250,
+        0.7668018937110901
+      ],
+      [
+        300,
+        0.7654172778129578
+      ]
+    ],
+    "non_finite": 0,
+    "best_checkpoint": "/kaggle/working/run/checkpoint-300",
+    "gpu": "Tesla T4"
+  },
+  "full_run_estimate": {
+    "train_tokens": 4521644,
+    "epochs": 1,
+    "tokens_per_s": 675.8,
+    "train_hours": 1.86,
+    "eval_passes": 2,
+    "eval_seconds_each": 170.4,
+    "total_hours_with_eval": 1.95,
+    "session_limit_hours": 12
+  },
+  "fallback_trl": {
+    "kernel": "biplob819/ggh-t21-pilot-trl, versions 1 and 2",
+    "v1": "out of memory in peft prepare_model_for_kbit_training: fp32 cast of the per-layer embedding tables (8.75 GiB)",
+    "v2": "out of memory in the loss: logits for 4 x ~900 tokens x 262,144 vocabulary (2.70 GiB more with 12.3 GiB in use; the full multimodal model was loaded)"
+  }
+}

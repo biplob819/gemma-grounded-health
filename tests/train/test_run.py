@@ -65,7 +65,7 @@ def test_training_args_follow_the_recipe():
         a.warmup_steps == cfg.warmup_ratio
         and getattr(a.lr_scheduler_type, "value", a.lr_scheduler_type) == "cosine"
     )
-    assert not a.fp16 and a.use_cpu
+    assert not a.fp16 and a.use_cpu and a.logging_nan_inf_filter is False
     g = R.training_args(cfg, Path("/tmp/x"), max_steps=None, cuda=True)
     assert (
         g.fp16
@@ -80,7 +80,7 @@ def test_training_args_follow_the_recipe():
 
 @pytest.fixture(scope="module")
 def tiny():
-    torch = pytest.importorskip("torch")
+    pytest.importorskip("torch")
     tr = pytest.importorskip("transformers")
     pytest.importorskip("peft")
     try:
@@ -99,8 +99,7 @@ def tiny():
         sliding_window=64, max_position_embeddings=2048,
     )  # fmt: skip
 
-    def make():
-        torch.manual_seed(0)
+    def make():  # unseeded: run() must seed the base and LoRA initialisation itself
         return tr.Gemma4ForCausalLM(cfg)
 
     return tok, make
@@ -115,25 +114,47 @@ def tiny_recipe(tmp_path):
     return p
 
 
+def synthetic_targets(root, n=16):
+    """A small training set built by the real N1.3 code, so the test needs no local artifacts."""
+    from ggh.targets import make as targets
+    from tests.targets.test_targets import row
+
+    for split, start in (("train", 0), ("val", 100)):
+        exs = []
+        for i in range(start, start + n):
+            label = "yes" if i % 3 else "no"
+            t = targets.AnswerTarget(f"Outcome beta{i} improved markedly.", (3,), 1.0, 0.9)
+            exs.append(targets.answer_example(row(i, label), t, split))
+        path = root / R.TARGETS / f"{split}.jsonl"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("".join(e.model_dump_json() + "\n" for e in exs), encoding="utf-8")
+    return root
+
+
 def train_tiny(tiny, tmp_path, name):
     from peft import LoraConfig, get_peft_model
 
     tok, make = tiny
-    model = make()
-    base = {n: p.detach().clone() for n, p in model.named_parameters()}
+    held = {}
 
-    def load(cfg):
-        return R.Loaded(R.attach_lora(model, cfg, get_peft_model, LoraConfig), tok, "trl")
+    def load(cfg):  # built after run() seeds, as a real loader is
+        model = make()
+        held["base"] = {n: p.detach().clone() for n, p in model.named_parameters()}
+        peft = R.attach_lora(model, cfg, get_peft_model, LoraConfig)
+        held["lora0"] = {n: p.detach().clone() for n, p in peft.named_parameters() if "lora_" in n}
+        held["model"] = peft
+        return R.Loaded(peft, tok, "trl")
 
-    rep = R.run(tiny_recipe(tmp_path), ROOT, tmp_path / name, max_steps=8, limit=16,
+    root = synthetic_targets(tmp_path / f"repo-{name}")
+    rep = R.run(tiny_recipe(tmp_path), root, tmp_path / name, max_steps=8, limit=16,
                 load=load, log_every=1)  # fmt: skip
-    return rep, model, base
+    return rep, held
 
 
 @pytest.mark.recipe
-@pytest.mark.skipif(not (ROOT / R.TARGETS / "train.jsonl").exists(), reason="targets are local")
 def test_tiny_gemma4_trains_on_cpu_loss_falls_and_only_lora_weights_move(tiny, tmp_path):
-    rep, model, base = train_tiny(tiny, tmp_path, "a")
+    rep, held = train_tiny(tiny, tmp_path, "a")
+    model, base = held["model"], held["base"]
     losses = [v for _, v in rep["losses"]]
     assert rep["steps"] == 8 and len(losses) == 8 and rep["non_finite"] == 0
     assert sum(losses[-3:]) / 3 < sum(losses[:3]) / 3  # it learns
@@ -143,15 +164,78 @@ def test_tiny_gemma4_trains_on_cpu_loss_falls_and_only_lora_weights_move(tiny, t
     for n, p in model.named_parameters():
         clean = n.replace("base_model.model.", "").replace(".base_layer", "")
         if "lora_" in n:
-            moved_lora += not bool((p.detach() == p.detach()).all() and p.abs().sum() == 0)
+            moved_lora += not bool((p.detach() == held["lora0"][n]).all())
         elif clean in base:
             moved_base += not bool((p.detach() == base[clean]).all())
     assert moved_lora > 0 and moved_base == 0
 
 
 @pytest.mark.recipe
-@pytest.mark.skipif(not (ROOT / R.TARGETS / "train.jsonl").exists(), reason="targets are local")
 def test_tiny_training_is_reproducible_with_the_same_seed(tiny, tmp_path):
-    a, _, _ = train_tiny(tiny, tmp_path, "a")
-    b, _, _ = train_tiny(tiny, tmp_path, "b")
+    a, _ = train_tiny(tiny, tmp_path, "a")
+    b, _ = train_tiny(tiny, tmp_path, "b")
     assert a["losses"] == b["losses"] and a["eval_losses"] == b["eval_losses"]
+
+
+@pytest.mark.recipe
+def test_tiny_run_counts_every_non_padding_token_once_and_reports_precision(tiny, tmp_path):
+    rep, _ = train_tiny(tiny, tmp_path, "a")
+    # 8 steps x 2 sequences = the 16 training examples, each seen once
+    assert rep["tokens_seen"] == rep["train_tokens"] and rep["train_examples"] == 16
+    tok, _ = tiny
+    from ggh.train import format as fmt
+
+    exs = R.load_examples(tmp_path / "repo-a", "train")
+    assert rep["train_tokens"] == fmt.build(tok, exs, 1024).tokens
+    assert rep["non_finite_steps"] == 0 and rep["skipped_steps"] == 0
+    assert rep["precision"]["amp"] is None and set(rep["precision"]["trainable"]) == {"float32"}
+    assert rep["base_loaded"] is None  # an injected loader declares no source
+
+
+def test_the_loaded_checkpoint_must_be_the_pinned_one():
+    cfg = load_recipe(ROOT / "configs/recipe.yaml")
+    R.check_source(cfg, (cfg.base_model, cfg.base_revision))
+    for bad in (("unsloth/gemma-4-E2B-it-unsloth-bnb-4bit", None),
+                (cfg.base_model, "0" * 40), (cfg.base_model, None)):  # fmt: skip
+        with pytest.raises(R.RecipeError, match="recipe pins"):
+            R.check_source(cfg, bad)
+
+
+def test_loaded_source_reads_the_config_transformers_recorded():
+    class Cfg:
+        _name_or_path = "google/gemma-4-E2B-it"
+        _commit_hash = "abc"
+
+    class Base:
+        config = Cfg()
+
+    class Peft:
+        def get_base_model(self):
+            return Base()
+
+    assert R.loaded_source(Peft()) == ("google/gemma-4-E2B-it", "abc")
+    assert R.loaded_source(Base()) == ("google/gemma-4-E2B-it", "abc")
+
+
+def test_run_picks_the_loader_named_by_tool_and_refuses_a_wrong_checkpoint(tmp_path, monkeypatch):
+    pytest.importorskip("torch")
+    called = []
+
+    def fake(name, source=None):
+        def load(cfg):
+            called.append((name, cfg.tool))
+            raise RuntimeError("stop after loading")  # nothing else is needed here
+
+        return load
+
+    monkeypatch.setattr(R, "LOADERS", {"trl": fake("trl"), "unsloth": fake("unsloth")})
+    for tool, want in ((None, "unsloth"), ("trl", "trl")):
+        with pytest.raises(RuntimeError, match="stop after loading"):
+            R.run(ROOT / "configs/recipe.yaml", tmp_path, tmp_path / "o", tool=tool)
+        assert called[-1] == (want, want)
+
+    def mirror(cfg):
+        return R.Loaded(None, None, "unsloth", ("unsloth/gemma-4-E2B-it-unsloth-bnb-4bit", None))
+
+    with pytest.raises(R.RecipeError, match="recipe pins"):
+        R.run(ROOT / "configs/recipe.yaml", tmp_path, tmp_path / "o", load=mirror)

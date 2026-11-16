@@ -143,7 +143,8 @@ def _cmd_train(args: argparse.Namespace) -> int:
         return EXIT_ERROR
     keys = ("backend", "steps", "tokens_per_s", "peak_vram_gb", "non_finite", "seconds")
     print(json.dumps({k: report[k] for k in keys}))
-    if report["non_finite"]:
+    bad = report["non_finite"] + report.get("non_finite_steps", 0)
+    if bad:
         print("train: FAIL: a loss or gradient norm was not finite")
         return EXIT_ERROR
     return 0
