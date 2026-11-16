@@ -79,6 +79,16 @@ def render(commit: str, tool: str, max_steps: int | None) -> dict[str, Any]:
             'sh("ggh targets --replay")'
         ),
         _code(f'sh("ggh train --config configs/recipe.yaml --out {out} --tool {tool}{steps}")'),
+        *(
+            []
+            if max_steps
+            else [
+                _code(
+                    "# §5.2: dev generations per checkpoint, in order of validation loss\n"
+                    f'sh("ggh dev-eval --run {out} --out {WORK}/dev")'
+                )
+            ]
+        ),
         _code(
             f'report = json.load(open("{out}/report.json"))\n'
             f'shutil.copy("{out}/report.json", "{WORK}/report.json")\n'

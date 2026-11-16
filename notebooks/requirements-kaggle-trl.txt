@@ -9,3 +9,5 @@ pydantic==2.14.3
 pydantic-core==2.50.4
 pyyaml==6.0.3
 pyarrow==26.0.1
+# T2.2 constrained dev generation (EvalKit answer schema)
+xgrammar==0.2.9

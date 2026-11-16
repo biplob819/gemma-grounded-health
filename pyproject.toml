@@ -42,6 +42,7 @@ train = [
     "transformers>=5.5",
     "peft>=0.17",
     "accelerate>=1.10",
+    "xgrammar==0.2.9",
 ]
 
 [build-system]
