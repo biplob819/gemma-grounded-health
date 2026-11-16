@@ -134,7 +134,7 @@ def synthetic_targets(root, n=16):
 
 
 def train_tiny(tiny, tmp_path, name):
-    from peft import LoraConfig, get_peft_model
+    from peft import LoraConfig, get_peft_model  # pyright: ignore[reportMissingImports]
 
     tok, make = tiny
     held = {}
@@ -272,7 +272,7 @@ def test_non_finite_flags_nan_and_inf_losses():
 
 @pytest.mark.recipe
 def test_a_nan_loss_on_one_step_is_counted(tiny, tmp_path):
-    from peft import LoraConfig, get_peft_model
+    from peft import LoraConfig, get_peft_model  # pyright: ignore[reportMissingImports]
 
     tok, make = tiny
     calls = {"n": 0}
@@ -299,7 +299,7 @@ def test_a_nan_loss_on_one_step_is_counted(tiny, tmp_path):
 
 @pytest.mark.recipe
 def test_seeding_happens_inside_run_even_after_the_global_rng_moves(tiny, tmp_path):
-    import torch
+    import torch  # pyright: ignore[reportMissingImports]
 
     a, _ = train_tiny(tiny, tmp_path, "a")
     torch.manual_seed(12345)
@@ -310,7 +310,7 @@ def test_seeding_happens_inside_run_even_after_the_global_rng_moves(tiny, tmp_pa
 
 @pytest.mark.recipe
 def test_a_partial_epoch_reports_seen_tokens_apart_from_the_dataset_total(tiny, tmp_path):
-    from peft import LoraConfig, get_peft_model
+    from peft import LoraConfig, get_peft_model  # pyright: ignore[reportMissingImports]
 
     tok, make = tiny
 
@@ -416,7 +416,7 @@ def test_load_trl_pins_the_revision_for_model_and_tokenizer(monkeypatch):
 
 @pytest.mark.recipe
 def test_eval_runs_on_val_and_every_skipped_step_is_counted(tiny, tmp_path, monkeypatch):
-    import accelerate
+    import accelerate  # pyright: ignore[reportMissingImports]
 
     # force the loss scaler's flag on: the wiring from the trainer to the counter is what runs
     monkeypatch.setattr(accelerate.Accelerator, "optimizer_step_was_skipped",
