@@ -390,6 +390,7 @@ def run(
         "peak_vram_gb": round(peak_vram_gb(), 2),
         "losses": stats.losses,
         "eval_losses": stats.eval_losses,
+        "grad_norms": stats.grad_norms,
         "non_finite": stats.non_finite,
         "non_finite_steps": stats.non_finite_steps,
         "skipped_steps": stats.skipped_steps,

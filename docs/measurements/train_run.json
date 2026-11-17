@@ -1,0 +1,38 @@
+{
+  "config_hash": "280b5b082abf089813718af15fca7872fff54070c144c605513f67b7123076bf",
+  "data_manifest_hash": "0bc88120d8074f303f64d4e409628949bfadffff77f30f1caff23ec98d4e62d3",
+  "repo_commit": "16ba41f43aa9b8a3d21219a504f1bff7938e7f0e",
+  "kaggle_kernel_version": "1",
+  "gpu": "Tesla T4",
+  "wall_clock_s": 6525.78,
+  "peak_vram_gb": 9.84,
+  "steps": 527,
+  "selected_step": 527,
+  "val_loss_curve": [
+    [
+      250,
+      0.7731167674064636
+    ],
+    [
+      500,
+      0.7592633366584778
+    ],
+    [
+      527,
+      0.7591971158981323
+    ]
+  ],
+  "dev_metrics": {
+    "n": 500,
+    "schema_valid": 1.0,
+    "schema_valid_unconstrained": 1.0,
+    "citation_valid": 1.0,
+    "has_citation": 1.0,
+    "label_accuracy": {
+      "no": 0.8372093023255814,
+      "yes": 0.9474835886214442
+    },
+    "mean_words": 15.07,
+    "over_80_words": 0.0
+  }
+}

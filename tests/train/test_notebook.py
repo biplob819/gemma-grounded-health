@@ -122,3 +122,16 @@ def test_doctor_kaggle_failures_make_the_cli_exit_2(monkeypatch, capsys):
         assert cli.main(["doctor", "--kaggle"]) == code
     monkeypatch.setattr(kaggle, "kaggle_report", lambda work: (False, ["[FAIL] no gpu"]))
     assert cli.main(["doctor"]) == 0  # without --kaggle the GPU check does not run
+
+
+def test_the_full_run_adds_dev_eval_after_training_and_the_pilot_does_not():
+    full = ["".join(c["source"]) for c in notebook.render(SHA, "unsloth", None)["cells"]]
+    assert full[4] == (
+        'sh("ggh train --config configs/recipe.yaml --out /kaggle/working/run --tool unsloth")'
+    )
+    assert full[5] == (
+        "# §5.2: dev generations per checkpoint, in order of validation loss\n"
+        'sh("ggh dev-eval --run /kaggle/working/run --out /kaggle/working/dev")'
+    )
+    pilot = code(notebook.render(SHA, "unsloth", 300))
+    assert "dev-eval" not in pilot
