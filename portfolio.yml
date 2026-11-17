@@ -1,0 +1,41 @@
+# portfolio.yml: this project's card and page on the portfolio site.
+# Publish with:  portfolio add .   (then `portfolio publish` in the site repo)
+# Keep the words honest: every number here must come from a published run in this repo.
+
+slug: gemma-grounded-health
+title: Gemma Grounded Health
+tagline: A small open Gemma model fine-tuned to answer health research questions only from a given abstract and cite its sentences. Research only, not medical advice.
+kind: case-study
+status: building
+role: Product and build
+year: 2026
+featured: false
+order: 36
+tags: [fine-tuning, open models, grounding, evals]
+
+# v1 main run r-f0f3b432a413 (docs/results/main/summary.json); v2 numbers replace these when published.
+metrics:
+  - { value: "0.501 → 0.728", label: "label accuracy, base → fine-tuned v1, 1,000 PubMedQA questions" }
+  - { value: "0.418 → 0.388", label: "correct and fully grounded (Opus judge), base → v1: the failure v2 fixes" }
+  - { value: "$53.68", label: "v1 main run, 4,000 answers with dual judges" }
+
+links:
+  repo: https://github.com/biplob819/gemma-grounded-health
+  prd: https://github.com/biplob819/gemma-grounded-health/blob/main/Gemma%20Grounded%20Health%20PRD.md
+  methodology: https://github.com/biplob819/gemma-grounded-health/blob/main/configs/eval_plan.yaml
+
+stack: [Gemma 4 E2B, Unsloth, Kaggle T4, llama.cpp, EvalKit, Claude API, OpenAI API]
+cost: "$53.68 for the v1 main run (1,000 questions, four models, dual judges)"
+
+case_study: docs/case-study.md
+
+methodology:
+  - Pre-registered comparisons, hashed before the main run
+  - Dual cross-family LLM judges (Claude Opus 5.5, GPT-6.1 Sol)
+  - Paired bootstrap 95% intervals, Holm correction
+  - Checkpoint chosen on dev data only; test set never used for tuning
+
+proof:
+  - { label: v1 main-run summary (JSON), url: https://github.com/biplob819/gemma-grounded-health/blob/main/docs/results/main/summary.json }
+  - { label: Pre-registered plan, url: https://github.com/biplob819/gemma-grounded-health/blob/main/configs/eval_plan.yaml }
+  - { label: Decision log (OWNER D-43, the v2 call), url: https://github.com/biplob819/gemma-grounded-health/blob/main/docs/decisions.md }
