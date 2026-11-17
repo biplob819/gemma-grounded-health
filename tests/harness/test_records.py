@@ -51,7 +51,7 @@ def test_graph_matches_tech_spec():
 @pytest.mark.contract
 def test_catalog_matches_tech_spec():
     caps = load_catalog()
-    assert len(caps) == 127  # SPC-08, OSS-06 (OWNER D-36, D-37); VTG, VEV (OWNER D-43)
+    assert len(caps) == 128  # SPC-08, OSS-06 (OWNER D-36, D-37); VTG, VEV (OWNER D-43)
     assert [(c.cap_id, c.node) for c in caps] == _spec_caps()
     nodes = load_graph()
     assert {c.node for c in caps} == set(nodes)
@@ -60,10 +60,10 @@ def test_catalog_matches_tech_spec():
 def test_decisions_d1_onwards_with_owner_rulings():
     text = (ROOT / "docs" / "decisions.md").read_text(encoding="utf-8")
     ids = {int(n) for n in re.findall(r"^\| (?:OWNER )?D-(\d+) \|", text, re.M)}
-    # D-1 to D-33 seeded, D-34/35 N1.3, D-36 to D-39 owner, D-40 T2.1, D-41 X3.1, D-42 E3.2, D-43/44 owner
-    assert ids == set(range(1, 45))
+    # D-1 to D-33 seeded, D-34/35 N1.3, D-36 to D-39 owner, D-40 T2.1, D-41 X3.1, D-42 E3.2, D-43 to D-45 owner
+    assert ids == set(range(1, 46))
     owner = {int(n) for n in re.findall(r"^\| OWNER D-(\d+) \|", text, re.M)}
-    assert owner == {15, 17, 23, 24, 25, 26, 27, 33, 34, 36, 37, 38, 39, 43, 44}
+    assert owner == {15, 17, 23, 24, 25, 26, 27, 33, 34, 36, 37, 38, 39, 43, 44, 45}
 
 
 def test_lessons_carry_exactly_the_appendix_b_lessons():
@@ -88,7 +88,7 @@ def test_decisions_equal_tech_spec_section_1():
         for line in text.splitlines()
         if re.match(r"^\| (OWNER )?D-\d+ \|", line)
     ]
-    assert len(spec_rows) == 44
+    assert len(spec_rows) == 45
     assert [r[:1] + r[2:] for r in log_rows] == spec_rows  # drop the date column
     assert "DeepMind" not in text
 
