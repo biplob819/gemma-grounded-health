@@ -47,6 +47,10 @@ story:
   next:
     - "v2: training citations from result sentences only, chosen on a dev grounding check, then a second pre-registered run on the same 1,000 questions; v1's results stay published"
 
+images:
+  - { src: docs/assets/dataflow.svg, alt: "Data flow: PubMedQA to targets, Kaggle training, export, laptop serving and EvalKit's dual-judge evaluation", kind: dataflow }
+  - { src: docs/assets/architecture.svg, alt: "Architecture: the ggh package, its build harness and the external services it uses", kind: architecture }
+
 proof:
   - { label: v1 main-run summary (JSON), url: https://github.com/biplob819/gemma-grounded-health/blob/main/docs/results/main/summary.json }
   - { label: Pre-registered plan, url: https://github.com/biplob819/gemma-grounded-health/blob/main/configs/eval_plan.yaml }
