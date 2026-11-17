@@ -1,2 +1,3 @@
 {"at": "2026-11-16T17:54:32+00:00", "judges": ["claude-opus-5-5", "gpt-6.1-sol"], "kind": "dev_smoke", "live_judges": true, "models": ["gemma-e2b-base-q4"], "n_cases": 20, "node": "E3.1", "run_id": "r-044ca4838ee9", "spent_usd": 0.472102}
 {"at": "2026-11-17T05:20:12+00:00", "calls": 202, "kind": "probe_build", "models": ["gpt-6.1-terra", "claude-opus-5-5"], "node": "E3.2", "spent_usd": 0.472607}
+{"at": "2026-11-17T05:51:50+00:00", "estimate_usd": 63.65, "judges": ["claude-opus-5-5", "gpt-6.1-sol"], "kind": "main", "live_judges": false, "models": ["gemma-e2b-base-q4", "gemma-e2b-grounded-q4", "claude-haiku-5-5", "gpt-6-luna"], "n_cases": 1000, "node": "E3.2", "run_id": "r-f0f3b432a413", "spent_usd": 53.68107}
