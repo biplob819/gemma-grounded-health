@@ -1,4 +1,4 @@
-"""Pinned target rules (Tech Spec §4.2–4.5, OWNER D-15, D-16, D-34).
+"""Pinned target rules (Tech Spec §4.2–4.5, OWNER D-15, D-16, D-34, D-43).
 
 Every constant here is part of the training data's definition: changing one changes the
 targets, so each is pinned by a test and changed only through a decision entry (§4).
@@ -12,8 +12,13 @@ import re
 from evalkit.text import split_sentences
 
 # ---- rule ids stamped into TrainExample.rule_ids (§4) ----
-ANSWER_RULES = ("TGT-R1", "TGT-R2", "TGT-R9", "TGT-R3", "TGT-R6", "TGT-R4", "TGT-R5", "TGT-R7")
+ANSWER_RULES = (
+    "TGT-R1", "TGT-R2", "TGT-R9", "TGT-R10", "TGT-R3", "TGT-R6", "TGT-R4", "TGT-R5", "TGT-R7",
+)  # fmt: skip
 INSUFFICIENT_RULES = (*ANSWER_RULES, "INS-R1", "INS-R2", "INS-R3")
+# v1 (N1.3) examples carry these; `reconstruct` still rebuilds them, without TGT-R10
+V1_ANSWER_RULES = tuple(r for r in ANSWER_RULES if r != "TGT-R10")
+V1_INSUFFICIENT_RULES = (*V1_ANSWER_RULES, "INS-R1", "INS-R2", "INS-R3")
 OFFSCOPE_RULES = ("OFF-R3",)
 
 # ---- thresholds (TGT-R8: revised at most once, after the hand audit, by a decision) ----
@@ -59,6 +64,102 @@ def strip_hedge(sentence: str) -> str:
     if rest == sentence or not rest:
         return sentence
     return rest[:1].upper() + rest[1:]
+
+
+# ---- TGT-R10: an answer never cites an aim, objective or study-description sentence ----
+# (OWNER D-43). v1 let "To investigate whether X..." through lexical ranking and NLI at 0.5,
+# so 43% of its answer targets cited one. The classifier is deliberately conservative: it
+# fires on aim phrasing, and the weaker study-description forms ("We examined X", "X was
+# investigated") fire only when the sentence reports no result. Insufficient and off-scope
+# examples are untouched: their citations come from INS-R3 and OFF-R3, not from TGT-R6.
+_LEAD = (  # sentence start, with an optional opener before the aim phrasing
+    r"^\W*(?:\d+\)\s*)?"  # "(1) To evaluate..."
+    r"(?:(?:therefore|thus|hence|accordingly|consequently|here(?:in)?|now|so),?\s+)?"
+    r"(?:(?:in|for)\s+(?:this|the\s+(?:present|current)|our)\s+(?:[\w-]+,?\s+){0,3}?"
+    r"(?:study|analysis|report|paper|work|trial|investigation|review|survey|article),?\s+)?"
+    r"(?:here(?:\s*in)?,?\s+)?"
+)
+_CLAUSE = (  # sentence start, or a clause start ("Since X is unclear, we investigated...")
+    r"(?:" + _LEAD + r"|[,;:]\s+(?:(?:therefore|thus|hence|here(?:in)?|so),?\s+)?)"
+)
+_STUDY = (  # "this study", "the present prospective cohort study", "this multicenter RCT"
+    r"(?:this|the\s+(?:present|current)|our)\s+(?:[\w-]+,?\s+){0,3}?"
+    r"(?:study|analysis|report|paper|work|trial|rct|investigation|review|project|survey|"
+    r"experiment|research)"
+)
+_ADV = (  # "we have now examined", "we therefore aimed"
+    r"(?:(?:have|therefore|thus|also|further|then|next|now|here|first|specifically|"
+    r"retrospectively|prospectively)\s+){0,2}"
+)
+_WE = r"(?:we|the\s+authors)\s+"
+AIM_PATTERNS = (  # aim phrasing: an aim unless the sentence also says what was found
+    _LEAD + r"(?:in\s+order\s+)?to\s+(?:investigate|determine|evaluate|assess|examine|"
+    r"explore|compare|study|test|identify|analy[sz]e|describe|estimate|establish|"
+    r"characteri[sz]e|clarify|elucidate|measure|quantify|ascertain|verify|validate|define|"
+    r"understand|address|confirm|document|report|review|present)\b",
+    _CLAUSE + r"(?:(?:the|our|a|one|another)\s+)?(?:(?:primary|main|secondary|first|second|"
+    r"overall|specific|principal|major|study|research|present|current|ultimate|key)\s+){0,2}"
+    r"(?:aims?|purposes?|objectives?|goals?|intent|intention)\s+(?:of|was|were|is|are)\b",
+    r"\b(?:aims?|purposes?|objectives?|goals?)\s+of\s+" + _STUDY + r"\b",
+    r"\b(?:it\s+(?:is|was)|we|authors)\s+(?:\w+\s+)?hypothesi[sz]ed\b",
+    r"\btest(?:ed|s)?\s+(?:the|our|a|this|these|two)\s+(?:\w+\s+)?hypothes[ie]s\b",
+    r"\b(?:our|the|a)\s+(?:\w+\s+)?hypothesis\s+(?:is|was)\s+that\b",
+    r"\bquestions?\s+addressed\b",
+    _CLAUSE + _WE + _ADV + r"(?:conducted|undertook|performed|did|designed|carried\s+out|"
+    r"initiated)\s+(?:this|the\s+present|the\s+current|a|an)\s+(?:[\w-]+,?\s+){0,4}?"
+    r"(?:study|analysis|trial|survey|review|investigation|experiment)\s+(?:in\s+order\s+)?to\b",
+    _CLAUSE + _WE + _ADV + r"(?:hypothesi[sz]e|aimed|aim|sought|seek|set\s+out|wished|"
+    r"wanted|intended)\b",
+    _CLAUSE + _STUDY + r"\s+(?:was\s+|is\s+)?(?:aimed|aims|sought|seeks|designed|"
+    r"undertaken|initiated|intends|intended|attempts|attempted|set\s+out|"
+    r"focus(?:es|ed)\s+on|to\s+\w+|(?:conducted|performed|carried\s+out|done)\s+"
+    r"(?:in\s+order\s+)?to)\b",
+)
+DESCRIPTION_PATTERNS = (  # study description: an aim only when no result is reported
+    _CLAUSE + _WE + _ADV + r"(?:investigated?|examined?|evaluated?|assessed?|studied|"
+    r"study|explored?|tested?)\b",
+    _CLAUSE + _STUDY + r"\s+(?:investigated?|investigates|examined?|examines|evaluated?|"
+    r"evaluates|assessed?|assesses|explored?|explores|describes|described|presents|"
+    r"compared?|compares)\b",
+    r"\b(?:was|were)\s+(?:\w+ly\s+)?(?:studied|investigated|examined|explored)\b",
+    r"\b(?:study|trial|analysis|investigation)\s+(?:was\s+)?(?:(?:conducted|performed|"
+    r"undertaken|designed|carried\s+out)\s+)?(?:in\s+order\s+)?to\s+(?:investigate|determine|"
+    r"evaluate|assess|examine|explore|test|compare|clarify|elucidate|identify)\b",
+)
+_FOUND = re.compile(  # a result reported in so many words ("we found", "results showed")
+    r"\b(?:we|and|but|they|authors|it|was|were|is|are|has|have|had)\s+(?:also\s+|further\s+|"
+    r"then\s+|not\s+)?(?:found|showed|shown|revealed|demonstrated|observed)\b|"
+    r"\b(?:results?|findings?|data|analys[ie]s)\s+(?:\w+\s+)?(?:showed|revealed|"
+    r"demonstrated|indicated|suggested)\b",
+    re.I,
+)
+_STATED = re.compile(  # a result stated as fact; read outside any "whether"/"if" clause
+    r"\bp\s*[<>=\u2264\u2265]|\d\s*%|\b(?:odds|hazard|risk)\s+ratios?\b|"
+    r"\b(?:is|are|was|were|be|been)\s+(?:not\s+|significantly\s+|strongly\s+|"
+    r"independently\s+|positively\s+|negatively\s+|inversely\s+)*(?:associated|correlated|"
+    r"related|linked|higher|lower|greater|smaller|increased|decreased|reduced|elevated|"
+    r"improved|unchanged|similar|different|comparable|superior|inferior|effective|"
+    r"predictive)\b|\bsignificant(?:ly)?\b",
+    re.I,
+)
+_OPEN_CLAUSE = re.compile(r"\b(?:whether|if)\b.*", re.I | re.S)
+_AIM = re.compile("|".join(f"(?:{p})" for p in AIM_PATTERNS), re.I)
+_DESCRIPTION = re.compile("|".join(f"(?:{p})" for p in DESCRIPTION_PATTERNS), re.I)
+
+
+def reports_result(sentence: str) -> bool:
+    """A result in so many words ("we found"), or one stated as fact outside a "whether" or
+    "if" clause ("X was associated with Y", "p < 0.05", "12%")."""
+    return bool(_FOUND.search(sentence) or _STATED.search(_OPEN_CLAUSE.sub("", sentence)))
+
+
+def is_aim_sentence(sentence: str) -> bool:
+    """TGT-R10: an aim, objective, hypothesis or study-description sentence."""
+    if _AIM.search(sentence):  # aim wording: only a result in so many words overrides it
+        return _FOUND.search(sentence) is None
+    if _DESCRIPTION.search(sentence):
+        return not reports_result(sentence)
+    return False
 
 
 # ---- TGT-R3 / TGT-R6: content words ----
@@ -195,11 +296,22 @@ def overlaps(sentence: str, context: tuple[str, ...]) -> list[float]:
     return [len(words & content_words(c)) / len(words) for c in context]
 
 
-def ranked_citations(sentence: str, context: tuple[str, ...]) -> tuple[int, ...]:
+def aim_positions(context: tuple[str, ...]) -> frozenset[int]:
+    """TGT-R10: the 1-based positions of the context's aim sentences."""
+    return frozenset(i + 1 for i, c in enumerate(context) if is_aim_sentence(c))
+
+
+def ranked_citations(
+    sentence: str, context: tuple[str, ...], exclude: frozenset[int] = frozenset()
+) -> tuple[int, ...]:
     """The up-to-4 context sentences (1-based) with the highest non-zero overlap, best first,
-    ties broken by position. Empty when nothing overlaps (E1: never cite at random)."""
+    ties broken by position, never one in `exclude` (TGT-R10). Empty when nothing overlaps
+    (E1: never cite at random)."""
     scores = overlaps(sentence, context)
-    ranked = sorted((i for i, s in enumerate(scores) if s > 0), key=lambda i: (-scores[i], i))
+    ranked = sorted(
+        (i for i, s in enumerate(scores) if s > 0 and i + 1 not in exclude),
+        key=lambda i: (-scores[i], i),
+    )
     return tuple(i + 1 for i in ranked[:MAX_CITES])
 
 

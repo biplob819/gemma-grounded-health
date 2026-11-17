@@ -71,10 +71,15 @@ def _half_up(x: float) -> int:
     return int(x + 0.5)
 
 
-def candidates(row: Row, counts: Counter[str] | None = None) -> list[Candidate]:
-    """TGT-R1, R2, R9, R6, R3: the lexically supported conclusion sentences of a row."""
+def candidates(
+    row: Row, counts: Counter[str] | None = None, *, exclude_aims: bool = True
+) -> list[Candidate]:
+    """TGT-R1, R2, R9, R10, R6, R3: the lexically supported conclusion sentences of a row.
+    With `exclude_aims` (TGT-R10, v2) no aim sentence is ever a citation option; without it
+    the v1 behaviour is rebuilt."""
     counts = counts if counts is not None else Counter()
     ctx = tuple(row["sentences"])
+    aims = rules.aim_positions(ctx) if exclude_aims else frozenset()
     out: list[Candidate] = []
     for raw in rules.conclusion_sentences(row["long_answer"]):
         if rules.is_recommendation(raw):
@@ -88,6 +93,14 @@ def candidates(row: Row, counts: Counter[str] | None = None) -> list[Candidate]:
         if not ranked:
             counts["sentence:zero_overlap"] += 1
             continue
+        if aims:
+            without = rules.ranked_citations(s, ctx, aims)
+            if without != ranked:
+                counts["ranking:aim_sentence_removed"] += 1  # not a drop by itself
+            if not without:
+                counts["sentence:aim_only_overlap"] += 1  # every overlapping sentence is an aim
+                continue
+            ranked = without
         options = []
         for cites in rules.citation_options(ranked):
             cited = [ctx[i - 1] for i in cites]
@@ -152,10 +165,14 @@ def assemble(choices: Sequence[Choice], counts: Counter[str] | None = None) -> A
 
 
 def targets_for(
-    rows: Sequence[Row], scorer: Scorer, counts: Counter[str] | None = None
+    rows: Sequence[Row],
+    scorer: Scorer,
+    counts: Counter[str] | None = None,
+    *,
+    exclude_aims: bool = True,
 ) -> list[AnswerTarget | str]:
     """Targets for many rows, with NLI batched across all of them."""
-    cand_lists = [candidates(r, counts) for r in rows]
+    cand_lists = [candidates(r, counts, exclude_aims=exclude_aims) for r in rows]
     choices = choose([c for cl in cand_lists for c in cl], scorer)
     out: list[AnswerTarget | str] = []
     k = 0
@@ -169,7 +186,9 @@ def _prompt(pmid: str, question: str, sentences: tuple[str, ...], label: str) ->
     return data.render(data.Row(pmid, question, sentences, ("",) * len(sentences), "", label))
 
 
-def answer_example(row: Row, t: AnswerTarget, split: str) -> TrainExample:
+def answer_example(
+    row: Row, t: AnswerTarget, split: str, rule_ids: tuple[str, ...] = rules.ANSWER_RULES
+) -> TrainExample:
     ctx = tuple(row["sentences"])
     return TrainExample(
         id=f"pqa-a-{row['pmid']}",
@@ -181,14 +200,21 @@ def answer_example(row: Row, t: AnswerTarget, split: str) -> TrainExample:
         prompt=_prompt(row["pmid"], row["question"], ctx, row["label"]),
         target=Answer(label=row["label"], answer=t.answer, citations=t.citations),
         source_label=row["label"],
-        rule_ids=rules.ANSWER_RULES,
+        rule_ids=rule_ids,
         support=t.support,
         nli_entail=t.entail,
     )
 
 
-def insufficient_example(row: Row, t: AnswerTarget, split: str, seed: int) -> TrainExample | None:
-    """INS-R1 to R3, or None when the row cannot make one."""
+def insufficient_example(
+    row: Row,
+    t: AnswerTarget,
+    split: str,
+    seed: int,
+    rule_ids: tuple[str, ...] = rules.INSUFFICIENT_RULES,
+) -> TrainExample | None:
+    """INS-R1 to R3, or None when the row cannot make one. Its own citations (INS-R3) are the
+    question's best matches and may be aim sentences: TGT-R10 governs answers only."""
     sents, secs = row["sentences"], row["sections"]
     if not any(rules.is_results_section(s) for s in secs):
         return None
@@ -219,7 +245,7 @@ def insufficient_example(row: Row, t: AnswerTarget, split: str, seed: int) -> Tr
         prompt=_prompt(row["pmid"], row["question"], ctx, "maybe"),
         target=Answer(label="maybe", answer=answer, citations=cites),
         source_label=row["label"],
-        rule_ids=rules.INSUFFICIENT_RULES,
+        rule_ids=rule_ids,
         support=0.0,  # not scored: the target is a fixed template
         nli_entail=0.0,
     )
@@ -249,18 +275,20 @@ def offscope_example(row: Row, split: str, seed: int) -> TrainExample:
 def reconstruct(
     row: Row, rule_ids: Sequence[str], *, split: str, seed: int, scorer: Scorer
 ) -> TrainExample:
-    """PRV-R1: rebuild an example from its source row and rule ids alone."""
+    """PRV-R1: rebuild an example from its source row and rule ids alone (v2 ids, or v1's,
+    which lack TGT-R10)."""
     ids = tuple(rule_ids)
     if ids == rules.OFFSCOPE_RULES:
         return offscope_example(row, split, seed)
-    if ids not in (rules.ANSWER_RULES, rules.INSUFFICIENT_RULES):
+    answer_ids = (rules.ANSWER_RULES, rules.V1_ANSWER_RULES)
+    if ids not in (*answer_ids, rules.INSUFFICIENT_RULES, rules.V1_INSUFFICIENT_RULES):
         raise ValueError(f"unknown rule ids {ids}")
-    (t,) = targets_for([row], scorer)
+    (t,) = targets_for([row], scorer, exclude_aims="TGT-R10" in ids)
     if isinstance(t, str):
         raise ValueError(f"row {row['pmid']} has no target ({t})")
-    if ids == rules.ANSWER_RULES:
-        return answer_example(row, t, split)
-    ex = insufficient_example(row, t, split, seed)
+    if ids in answer_ids:
+        return answer_example(row, t, split, ids)
+    ex = insufficient_example(row, t, split, seed, ids)
     if ex is None:
         raise ValueError(f"row {row['pmid']} cannot make an insufficient example")
     return ex
