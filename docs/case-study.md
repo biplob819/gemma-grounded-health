@@ -1,10 +1,18 @@
-## What I built
+Gemma Grounded Health is a small open model (Gemma 4 E2B, 3.3 GB at 4-bit) fine-tuned to answer a research question only from the numbered sentences of a given abstract, with a yes / no / maybe label, a short answer and the sentences it relied on. It runs offline on a laptop. Research only, not medical advice.
 
-A small open model (Gemma 4 E2B, 4-bit, 3.3 GB) fine-tuned to answer a research question **only from the numbered sentences of a given abstract**, in a fixed JSON shape: a yes / no / maybe label, a short answer, and the sentence numbers it relied on. It runs offline on a laptop through llama.cpp, and it is scored with [EvalKit](https://github.com/biplob819/evalkit) against its own base model, Claude Haiku 5.5 and GPT-6 Luna on all 1,000 expert-labelled PubMedQA questions, with two judges from different model families.
+The first fine-tune raised label accuracy on all 1,000 expert-labelled PubMedQA questions from 0.501 to 0.728, but it did not beat its own base model on the metric that matters, "correct and fully grounded" (0.388 against 0.418, Claude Opus 5.5 judging), because its citations often pointed at the study's aim instead of its results. The project measured that failure, traced it to the training data, and is building a v2 chosen on dev data only. Results for v2 are pending; v1's stay published.
 
-Research only, not medical advice. The demo and the Hugging Face release come after the v2 run below.
+## My role
 
-### How it is evaluated: EvalKit
+I set the goals, wrote the PRD and made every product call recorded as an owner decision: evaluate on all 1,000 questions, pre-approve the spend, build the v2 fix after v1 failed, extend EvalKit with a per-sentence citation check, and hand-audit the training data. Claude Code built the pipeline under a build harness (dependency-gated build steps, 13 automated gates, an independent reviewer for each step), ran the Kaggle training and the EvalKit runs, and wrote the code, tests and records; I reviewed results and approved each paid run.
+
+## Key decisions
+
+- **Train and test on the benchmark's own prompt and format (D-2, D-6).** Training prompts are rendered by EvalKit's own PubMedQA template, and every model, local or frontier, answers under the same JSON schema, so the benchmark measures grounding rather than format. Answers are scored on "correct and fully grounded" with two judges from different model families. *Trade-off:* a strict metric that made v1 look worse than label accuracy alone would have ($53.68 for the full v1 run, mostly judging).
+- **Pre-register the comparisons and live with them (§7.4).** The three comparisons were hashed and committed 31 seconds before the main run started; when v1 lost on the headline, the result stood. *Trade-off:* no freedom to pick a flattering metric afterwards.
+- **Fix it on dev data, label it honestly (OWNER D-43).** v2 is selected with a dev-set grounding check, never the test questions, and is labelled as built after v1's test results were seen. *Trade-off:* a second Kaggle training run and more paid judging, instead of shipping v1 with a caveat.
+
+## How it is evaluated: EvalKit
 
 Every evaluation runs through [EvalKit](https://github.com/biplob819/evalkit), my open-source grounded-answer benchmark harness, pinned to one commit (`06591f8`) so every number can be rerun. What it does for this project:
 
@@ -14,12 +22,6 @@ Every evaluation runs through [EvalKit](https://github.com/biplob819/evalkit), m
 - **Statistics.** Bootstrap 95% intervals on every metric, paired bootstrap on shared cases between models, Holm correction across the model pairs, and a fixed rule: a gap counts as "separated" only when its corrected interval excludes zero, otherwise it is a tie.
 - **Cost control.** A `--dry-run` estimate before every paid run, a hard spend cap (`max_cost_usd`), batch judging at half price, and a cache keyed by each request, so a rerun or a new model added to the same run pays only for what is new.
 - **Local tasks.** The off-scope prompts, the dev grounding check and the paraphrase probe are EvalKit local JSONL tasks that render exactly like the built-in task.
-
-## Decisions and trade-offs
-
-- **Score on grounding, not just the label.** The headline metric is "correct and fully grounded": the label is right *and* every claim is supported by the sentences the answer cites, judged by Claude Opus 5.5 and GPT-6.1 Sol. Label accuracy alone would have called v1 a success.
-- **Pre-register the comparisons, then live with them.** The three comparisons (fine-tuned against base, Haiku and Luna) were written down and hashed in the repo before the main run (`configs/eval_plan.yaml`, commit `9bc0f97`). When v1 lost on the headline, the result stood.
-- **Fix it on dev data only.** v2 is chosen with a dev-set grounding check, never with the 1,000 test questions, and it is labelled as built after v1's test results were seen.
 
 ## What failed
 
