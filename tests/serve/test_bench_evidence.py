@@ -47,8 +47,28 @@ def test_llama_bench_pp512_and_tg128_are_captured():
         assert r.llama_bench["pp512"] > r.llama_bench["tg128"] > 0
 
 
-def test_base_and_ft_per_token_speed_agree_within_ten_percent():
-    gaps = B.per_token_gap(RES)
-    assert set(gaps) == {"Q4_K_M", "Q8_0"} and all(g <= 0.10 for g in gaps.values())
-    for q, g in gaps.items():
-        assert f"{100 * g:.1f} % ({q})" in RUN_STATE  # the recorded numbers are these
+def test_base_and_ft_speed_agree_within_ten_percent_on_both_measures():
+    for on in ("tg128", "request"):
+        gaps = B.per_token_gap(RES, on)
+        assert set(gaps) == {"Q4_K_M", "Q8_0"} and all(g <= 0.10 for g in gaps.values()), on
+        for q, g in gaps.items():
+            assert f"{100 * g:.1f} % ({q}" in RUN_STATE  # the recorded numbers are these
+
+
+def test_llama_bench_values_are_medians_of_three_alternating_rounds():
+    import statistics
+
+    for k, r in RES.items():
+        rounds = DATA["details"][k]["llama_bench_rounds"]
+        assert len(rounds) == 3
+        for t in ("pp512", "tg128"):
+            assert r.llama_bench[t] == statistics.median(x[t] for x in rounds)
+
+
+def test_token_counts_and_protocol_are_recorded():
+    assert DATA["protocol"] == B.PROTOCOL and DATA["measured_at"].endswith("Z")
+    for k in RES:
+        d = DATA["details"][k]
+        assert d["prompt_tokens_p50"] > 0 and d["answer_tokens_p50"] > 0 and d["rss_samples"] > 100
+    ft, base = DATA["details"]["ft-Q4_K_M"], DATA["details"]["base-Q4_K_M"]
+    assert ft["prompt_tokens_p50"] == base["prompt_tokens_p50"]  # same prompts, same template

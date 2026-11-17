@@ -34,6 +34,8 @@ MAX_TOKENS = 256
 SEED = 7
 PORT = 8095  # not a `ggh serve` port
 SAMPLE_S = 0.05
+LB_REPS = 5  # llama-bench repetitions per call (its default)
+LB_ROUNDS = 3  # alternating rounds over all variants, after every workload has run
 LABELS = ("yes", "no", "maybe")
 OUT = Path("docs") / "measurements" / "laptop_bench.json"
 VARIANTS = (("base", "Q4_K_M"), ("ft", "Q4_K_M"), ("base", "Q8_0"), ("ft", "Q8_0"))
@@ -84,6 +86,8 @@ def measure(resp: dict[str, Any], wall_ms: float) -> dict[str, float]:
         "gen_tps": float(t["predicted_per_second"]),
         "ttft_ms": float(t["prompt_ms"] + per_token_ms),
         "latency_ms": float(wall_ms),
+        "prompt_tokens": float(t["prompt_n"]),
+        "answer_tokens": float(t["predicted_n"]),
     }
 
 
@@ -168,22 +172,22 @@ def guard(hw: dict[str, Any], busy: Callable[[int], bool] | None = None) -> None
         raise BenchError("on battery power; §8 needs mains power")
 
 
-def parse_llama_bench(text: str) -> dict[str, float]:
-    """pp512 and tg128 tokens per second from `llama-bench -o json`."""
-    out = {}
+def parse_llama_bench(text: str) -> tuple[dict[str, float], dict[str, float]]:
+    """pp512 and tg128 tokens per second from `llama-bench -o json`, and their spread."""
+    out, sd = {}, {}
     for e in json.loads(text):
-        if e.get("n_prompt") == 512 and e.get("n_gen") == 0:
-            out["pp512"] = float(e["avg_ts"])
-        elif e.get("n_gen") == 128 and e.get("n_prompt") == 0:
-            out["tg128"] = float(e["avg_ts"])
+        key = ("pp512" if e.get("n_prompt") == 512 and e.get("n_gen") == 0 else
+               "tg128" if e.get("n_gen") == 128 and e.get("n_prompt") == 0 else None)  # fmt: skip
+        if key:
+            out[key], sd[key] = float(e["avg_ts"]), float(e.get("stddev_ts", 0.0))
     if set(out) != {"pp512", "tg128"}:
         raise BenchError(f"llama-bench output lacks pp512 or tg128: got {sorted(out)}")
-    return out
+    return out, sd
 
 
 def llama_bench_cmd(gguf: Path, cache: Path | None = None) -> list[str]:
     return [str(llama.tool("llama-bench", cache)), "-m", str(gguf), "-p", "512", "-n", "128",
-            "-ngl", "999", "-o", "json"]  # fmt: skip
+            "-ngl", "999", "-r", str(LB_REPS), "-o", "json"]  # fmt: skip
 
 
 def http_post(url: str, body: dict[str, Any]) -> dict[str, Any]:  # pragma: no cover - network
@@ -233,10 +237,24 @@ def record(hw: dict[str, Any], quant: str, gguf_bytes: int, n: int, agg: dict[st
     )  # fmt: skip
 
 
-def bench_variant(root: Path, model: str, quant: str, prompts: Sequence[str], hw: dict[str, Any],
-                  *, post: Post = http_post, start: Callable[..., Any] = llama.start,
-                  sampler: Callable[[int], RssSampler] = RssSampler, run: Run = _sh
-                  ) -> LaptopBench:  # fmt: skip
+Details = dict[str, Any]
+
+
+def bench_variant(
+    root: Path,
+    model: str,
+    quant: str,
+    prompts: Sequence[str],
+    hw: dict[str, Any],
+    *,
+    post: Post = http_post,
+    start: Callable[..., Any] = llama.start,
+    sampler: Callable[[int], RssSampler] = RssSampler,
+    run: Run = _sh,
+    lb: dict[str, float] | None = None,
+) -> tuple[LaptopBench, Details]:
+    """The `LaptopBench` record and the details behind it. `lb` is this variant's llama-bench
+    result from `llama_bench_rounds`; without it, one llama-bench call is made here."""
     gguf = llama.model_path(root, model, quant)
     proc = start(root, model, quant, PORT, log=root / llama.GGUF_DIR / f"bench-{model}-{quant}.log")
     try:
@@ -245,25 +263,84 @@ def bench_variant(root: Path, model: str, quant: str, prompts: Sequence[str], hw
     finally:
         proc.terminate()
         proc.wait(timeout=30)
-    lb = parse_llama_bench(run(llama_bench_cmd(gguf)))
+    sd: dict[str, float] = {}
+    if lb is None:
+        lb, sd = parse_llama_bench(run(llama_bench_cmd(gguf)))
     n = len(prompts) - WARMUP
-    return record(hw, quant, gguf.stat().st_size, n, aggregate(reps), rss.peak, lb)
+    rec = record(hw, quant, gguf.stat().st_size, n, aggregate(reps), rss.peak, lb)
+    details_sd = {"llama_bench_stddev": sd} if sd else {}
+    allrows = [x for rep in reps for x in rep]
+    details = {
+        "prompt_tokens_p50": statistics.median(x["prompt_tokens"] for x in allrows),
+        "answer_tokens_p50": statistics.median(x["answer_tokens"] for x in allrows),
+        "answer_tokens_mean": round(statistics.fmean(x["answer_tokens"] for x in allrows), 1),
+        "rss_samples": rss.samples,
+        **details_sd,
+    }
+    return rec, details
 
 
-def per_token_gap(results: dict[str, LaptopBench]) -> dict[str, float]:
-    """Relative gap in per-token generation speed between base and ft, per quant (BEN-04),
-    from llama-bench tg128: a fixed-length generation, so answer length does not enter."""
+def llama_bench_rounds(
+    root: Path, variants: Sequence[tuple[str, str]], run: Run = _sh, rounds: int = LB_ROUNDS
+) -> tuple[dict[str, dict[str, float]], Details]:
+    """llama-bench on every variant in turn, `rounds` times, so slow drift in the machine's
+    state (heat, background work) falls on all variants alike; each value is the median across
+    rounds. Returns the medians and every round's numbers."""
+    per: dict[str, list[dict[str, float]]] = {f"{m}-{q}": [] for m, q in variants}
+    for _ in range(rounds):
+        for m, q in variants:
+            out, _sd = parse_llama_bench(run(llama_bench_cmd(llama.model_path(root, m, q))))
+            per[f"{m}-{q}"].append(out)
+    med = {k: {t: statistics.median(r[t] for r in rs) for t in ("pp512", "tg128")}
+           for k, rs in per.items()}  # fmt: skip
+    return med, {k: rs for k, rs in per.items()}
+
+
+def per_token_gap(results: dict[str, LaptopBench], on: str = "tg128") -> dict[str, float]:
+    """Relative gap in generation speed between base and ft, per quant (BEN-04): on llama-bench
+    tg128 (a fixed 128-token generation) or on the workload's per-request p50 (`gen_tps_p50`,
+    which moves a little with answer length). BEN-04 needs both within 10 %."""
+
+    def speed(r: LaptopBench) -> float:
+        return r.llama_bench["tg128"] if on == "tg128" else r.gen_tps_p50
+
     out = {}
     for q in sorted({r.quant for r in results.values()}):
-        b, f = results[f"base-{q}"].llama_bench["tg128"], results[f"ft-{q}"].llama_bench["tg128"]
+        b, f = speed(results[f"base-{q}"]), speed(results[f"ft-{q}"])
         out[q] = abs(b - f) / max(b, f)
     return out
 
 
-def write(root: Path, results: dict[str, LaptopBench]) -> Path:
+PROTOCOL = {
+    "section": "Tech Spec §8",
+    "prompts": f"{N_PROMPTS} dev_eval prompts drawn with seed {SEED}, {WARMUP} more as warm-ups",
+    "repetitions": REPETITIONS,
+    "request": "chat completions with EvalKit's answer schema (response_format json_schema)",
+    "max_tokens": MAX_TOKENS,
+    "deviations": [
+        "context 8192 (ggh serve's --ctx-size), not llama-server's default: §8 asks for both",
+        "cache_prompt false, so every prompt is processed fresh (EvalKit's request leaves the "
+        "server default, prompt caching on)",
+        "max_tokens 256 per §8 (EvalKit sends max_completion_tokens 2048) and temperature 0 "
+        "(the server is already greedy: --temp 0 --top-k 1)",
+    ],
+    "metrics": {
+        "ttft_ms": "server prompt_ms plus one generated token's mean time",
+        "gen_tps": "server predicted_per_second per request; its p95 is the fast tail",
+        "latency_ms": "wall time around the request",
+        "aggregate": "median across repetitions of each repetition's p50 (or p95)",
+        "peak_rss_mb": "ps rss of the llama-server process every 50 ms from /health to shutdown; "
+        "on Apple Silicon it may leave out Metal private buffers such as the KV cache",
+    },
+}
+
+
+def write(root: Path, results: dict[str, LaptopBench], details: dict[str, dict[str, Any]],
+          measured_at: str) -> Path:  # fmt: skip
     data = {k: v.model_dump(mode="json") for k, v in results.items()}
+    doc = {"measured_at": measured_at, "host_platform": platform.machine(),
+           "protocol": PROTOCOL, "variants": data, "details": details}  # fmt: skip
     path = root / OUT
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps({"host_platform": platform.machine(), "variants": data}, indent=2)
-                    + "\n", encoding="utf-8")  # fmt: skip
+    path.write_text(json.dumps(doc, indent=2) + "\n", encoding="utf-8")
     return path

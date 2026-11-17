@@ -46,7 +46,8 @@ def test_request_is_evalkits_constrained_chat_with_256_tokens_and_no_prompt_cach
 
 def test_measure_uses_server_timings_and_wall_clock():
     m = B.measure(timings(), 612.0)
-    assert m == {"prompt_tps": 4000.0, "gen_tps": 100.0, "ttft_ms": 110.0, "latency_ms": 612.0}
+    assert m == {"prompt_tps": 4000.0, "gen_tps": 100.0, "ttft_ms": 110.0, "latency_ms": 612.0,
+                 "prompt_tokens": 400.0, "answer_tokens": 40.0}  # fmt: skip
     with pytest.raises(B.BenchError, match="no work"):
         B.measure(timings(pred_n=0), 1.0)
 
@@ -106,6 +107,7 @@ def test_the_server_gets_ggh_serve_arguments_on_its_own_port(tmp_path, monkeypat
 
     class NoSampler:
         peak = 3000.0
+        samples = 12
 
         def __init__(self, pid):
             assert pid == 99
@@ -118,7 +120,7 @@ def test_the_server_gets_ggh_serve_arguments_on_its_own_port(tmp_path, monkeypat
 
     lb = json.dumps([{"n_prompt": 512, "n_gen": 0, "avg_ts": 2000.0},
                      {"n_prompt": 0, "n_gen": 128, "avg_ts": 90.0}])  # fmt: skip
-    r = B.bench_variant(tmp_path, "ft", "Q4_K_M", [f"p{i}" for i in range(53)], HW,
+    r, det = B.bench_variant(tmp_path, "ft", "Q4_K_M", [f"p{i}" for i in range(53)], HW,
                         post=lambda u, b: timings(), start=start, sampler=NoSampler,  # pyright: ignore[reportArgumentType]
                         run=lambda cmd: lb)  # fmt: skip
     assert started == {"model": "ft", "quant": "Q4_K_M", "port": B.PORT} and Proc.terminated
@@ -126,6 +128,8 @@ def test_the_server_gets_ggh_serve_arguments_on_its_own_port(tmp_path, monkeypat
     assert r.n_prompts == 50 and r.repetitions == 3 and r.gen_tps_p50 == 100.0
     assert r.model_file_mb == 1.0 and r.peak_rss_mb == 3000.0 and r.llama_cpp_commit == llama.TAG
     assert dict(r.llama_bench) == {"pp512": 2000.0, "tg128": 90.0}
+    assert det["answer_tokens_p50"] == 40.0 and det["prompt_tokens_p50"] == 400.0
+    assert det["llama_bench_stddev"] == {"pp512": 0.0, "tg128": 0.0}  # its own single call
 
 
 # ---- BEN-02: memory and hardware ----
@@ -145,7 +149,9 @@ def test_the_sampler_keeps_the_peak_and_samples_until_stopped():
         assert done.wait(2)
     assert s.peak == 900.0 and s.samples >= 3
     n = s.samples
-    assert s.samples == n  # stopped: no more samples after exit
+    assert not s._thread.is_alive()  # joined on exit
+    threading.Event().wait(0.02)
+    assert s.samples == n  # and it took no sample after stopping
 
 
 def test_hardware_reads_chip_ram_os_and_power():
@@ -164,11 +170,12 @@ def test_hardware_reads_chip_ram_os_and_power():
 def test_llama_bench_command_and_parsing(monkeypatch):
     monkeypatch.setattr(llama, "tool", lambda name, cache=None: Path("/v") / name)
     cmd = B.llama_bench_cmd(Path("/m.gguf"))
-    want = ["/v/llama-bench", "-m", "/m.gguf", "-p", "512", "-n", "128", "-ngl", "999", "-o"]
-    assert cmd == [*want, "json"]
+    want = ["/v/llama-bench", "-m", "/m.gguf", "-p", "512", "-n", "128", "-ngl", "999", "-r"]
+    assert cmd == [*want, "5", "-o", "json"]
     pp = {"n_prompt": 512, "n_gen": 0, "avg_ts": 1.5}
-    out = B.parse_llama_bench(json.dumps([pp, {"n_prompt": 0, "n_gen": 128, "avg_ts": 2.5}]))
-    assert out == {"pp512": 1.5, "tg128": 2.5}
+    tg = {"n_prompt": 0, "n_gen": 128, "avg_ts": 2.5, "stddev_ts": 0.3}
+    out, sd = B.parse_llama_bench(json.dumps([pp, tg]))
+    assert out == {"pp512": 1.5, "tg128": 2.5} and sd == {"pp512": 0.0, "tg128": 0.3}
     with pytest.raises(B.BenchError, match="lacks"):
         B.parse_llama_bench(json.dumps([{"n_prompt": 512, "n_gen": 0, "avg_ts": 1.5}]))
 
@@ -176,7 +183,7 @@ def test_llama_bench_command_and_parsing(monkeypatch):
 # ---- BEN-04: variants ----
 
 
-def _rec(quant, tg, gen=50.0):
+def _rec(quant, tg, gen=50.0):  # gen: the per-request p50
     return LaptopBench(**HW, llama_cpp_commit="b1", quant=quant, model_file_mb=1.0, n_prompts=50,
                        repetitions=3, prompt_tps_p50=1.0, gen_tps_p50=gen, gen_tps_p95=gen,
                        ttft_ms_p50=1, answer_latency_ms_p50=1, answer_latency_ms_p95=1,
@@ -189,9 +196,14 @@ def test_four_variants_and_the_base_ft_speed_gap(tmp_path):
            "base-Q8_0": _rec("Q8_0", 80.0), "ft-Q8_0": _rec("Q8_0", 80.0)}  # fmt: skip
     # from tg128, not the per-request rate (which moves with answer length: 10 vs 50 here)
     assert B.per_token_gap(res) == {"Q4_K_M": pytest.approx(0.05), "Q8_0": 0.0}
-    path = B.write(tmp_path, res)
-    data = json.loads(path.read_text(encoding="utf-8"))["variants"]
-    assert {k: LaptopBench.model_validate(v) for k, v in data.items()} == res
+    assert B.per_token_gap(res, "request") == {"Q4_K_M": pytest.approx(0.8), "Q8_0": 0.0}
+    path = B.write(
+        tmp_path, res, {k: {"answer_tokens_p50": 1} for k in res}, "2026-11-17T00:00:00Z"
+    )
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    assert {k: LaptopBench.model_validate(v) for k, v in doc["variants"].items()} == res
+    assert doc["protocol"] == B.PROTOCOL and doc["measured_at"] == "2026-11-17T00:00:00Z"
+    assert set(doc["details"]) == set(res)
 
 
 # ---- BEN-05: guards ----
@@ -211,3 +223,19 @@ def test_cli_refuses_before_starting_anything(tmp_path, monkeypatch, capsys):
     monkeypatch.setattr(B, "bench_variant", lambda *a, **k: pytest.fail("must not start"))
     assert cli.main(["bench", "--root", str(tmp_path)]) == cli.EXIT_ERROR
     assert "8080" in capsys.readouterr().out
+
+
+def test_llama_bench_alternates_variants_over_rounds_and_takes_medians(tmp_path, monkeypatch):
+    monkeypatch.setattr(llama, "tool", lambda name, cache=None: Path("/v") / name)
+    order, speeds = [], iter([100, 90, 120, 95, 110, 85])  # base, ft, base, ft, base, ft
+
+    def run(cmd):
+        order.append(Path(cmd[cmd.index("-m") + 1]).name)
+        tg = next(speeds)
+        return json.dumps([{"n_prompt": 512, "n_gen": 0, "avg_ts": 10.0 * tg},
+                           {"n_prompt": 0, "n_gen": 128, "avg_ts": float(tg)}])  # fmt: skip
+
+    med, rounds = B.llama_bench_rounds(tmp_path, [("base", "Q4_K_M"), ("ft", "Q4_K_M")], run=run)
+    assert order == ["base-Q4_K_M.gguf", "ft-Q4_K_M.gguf"] * 3  # interleaved, not one then other
+    assert med["base-Q4_K_M"]["tg128"] == 110 and med["ft-Q4_K_M"]["tg128"] == 90
+    assert [r["tg128"] for r in rounds["ft-Q4_K_M"]] == [90, 95, 85]

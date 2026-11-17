@@ -128,6 +128,8 @@ def _cmd_export_records(args: argparse.Namespace) -> int:
 
 
 def _cmd_bench(args: argparse.Namespace) -> int:
+    import datetime as dt
+
     from ggh.data.build import read_jsonl
     from ggh.serve import bench, llama
     from ggh.train.devrun import DEV_EVAL
@@ -137,18 +139,24 @@ def _cmd_bench(args: argparse.Namespace) -> int:
         hw = bench.hardware()
         bench.guard(hw)
         prompts = bench.select_prompts(read_jsonl(root / DEV_EVAL))
-        results = {}
+        results, details = {}, {}
+        started = dt.datetime.now(dt.UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
+        print("bench: llama-bench, alternating rounds …", flush=True)
+        lb, rounds = bench.llama_bench_rounds(root, bench.VARIANTS)
         for model, quant in bench.VARIANTS:
             print(f"bench: {model} {quant} …", flush=True)
-            results[f"{model}-{quant}"] = bench.bench_variant(root, model, quant, prompts, hw)
-            r = results[f"{model}-{quant}"]
+            key = f"{model}-{quant}"
+            results[key], details[key] = bench.bench_variant(root, model, quant, prompts, hw,
+                                                             lb=lb[key])  # fmt: skip
+            details[key]["llama_bench_rounds"] = rounds[key]
+            r = results[key]
             print(f"  gen {r.gen_tps_p50} tok/s, ttft {r.ttft_ms_p50} ms, "
                   f"latency p50 {r.answer_latency_ms_p50} ms, peak {r.peak_rss_mb} MB")  # fmt: skip
-        path = bench.write(root, results)
+        path = bench.write(root, results, details, started)
     except (bench.BenchError, llama.LlamaError, OSError, ValueError) as exc:
         return _fail("bench", exc)
-    gaps = bench.per_token_gap(results)
-    print(f"bench: wrote {path.relative_to(root)}; base/ft generation-speed gap {gaps}")
+    gaps = {on: bench.per_token_gap(results, on) for on in ("tg128", "request")}
+    print(f"bench: wrote {path.relative_to(root)}; base/ft generation-speed gaps {gaps}")
     return 0
 
 
