@@ -77,6 +77,7 @@ VTG-03	V2.1	not-started		Dev grounding check: EvalKit (pinned at the commit that
 VTG-04	V2.1	not-started		One clean Kaggle Run-All trains v2; log, wall clock and GPU ledger stored [US3, D-22]
 VTG-05	V2.1	not-started		v2 checkpoint selected by validation loss, the §5.2 bars and the dev grounding bar; `TrainRun` v2 frozen before any PQA-L use [D-4, OWNER D-43]
 VTG-06	V2.1	not-started		Read the sample: 20 v2 dev answers read against their cited sentences [D-18]
+VTG-07	V2.1	not-started		Per-sentence hand audit of 50 seeded v2 training examples (each cited sentence: supports, aim, method or weak) passed before the retrain [OWNER D-45, AUD-R1]
 VEV-01	V2.2	not-started		v2 merged bf16 and Q4_K_M and Q8_0 GGUFs built by the X3.1 code and steps; template parity holds [D-5, E9]
 VEV-02	V2.2	not-started		v2 dev parity: Q4_K_M against bf16, label agreement ≥ 0.95, schema validity within 1 point [§6, H2]
 VEV-03	V2.2	not-started		A v2 plan (v2 minus base, v1, Haiku 5.5 and GPT-6 Luna on the headline, per judge) hashed and committed before the v2 runs [§7.4, H9]
