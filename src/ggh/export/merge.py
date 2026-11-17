@@ -46,7 +46,7 @@ def check_unquantized(model: Any) -> None:
         raise MergeError("the base is quantized; merge only into the bf16 base on CPU")
     for p in model.parameters():
         if str(p.dtype) not in ("torch.bfloat16", "torch.float32"):
-            raise MergeError(f"the base holds {p.dtype} weights; merge only into bf16")
+            raise MergeError(f"the base holds {p.dtype} weights; merge only into bf16 (or fp32)")
 
 
 def check_adapter(adapter: Path, expected_sha256: str) -> None:

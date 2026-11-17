@@ -1,0 +1,12 @@
+{
+  "note": "X3.1 parity smoke on the first 16 dev_eval prompts, constrained, through EvalKit's adapter unless stated; agreement is label agreement with the merged bf16 model. Summary of the runs recorded in specs/X3.1-export/RUN-STATE.md.",
+  "runs": [
+    {"model": "ft", "quant": "Q4_K_M", "server": "E3.1 arguments", "merged": "without restored tensors", "agreement": 0.25},
+    {"model": "ft", "quant": "Q4_K_M", "server": "E3.1 arguments", "merged": "restored", "agreement": 0.5},
+    {"model": "ft", "quant": "Q8_0", "server": "E3.1 arguments", "merged": "restored", "agreement": 0.6875},
+    {"model": "base", "quant": "Q8_0", "server": "E3.1 arguments", "reference": "base in Transformers bf16", "agreement": 1.0},
+    {"model": "ft", "quant": "F16", "server": "raw /completion, token ids, label position", "agreement": "4 of 4 top labels equal"},
+    {"model": "ft", "quant": "Q4_K_M", "server": "E3.1 arguments + --logit-bias 100-inf", "merged": "restored", "agreement": 0.3125},
+    {"model": "ft", "quant": "Q4_K_M", "server": "E3.1 arguments + --reasoning-budget 0 (D-41)", "merged": "restored", "agreement": 0.9375}
+  ]
+}

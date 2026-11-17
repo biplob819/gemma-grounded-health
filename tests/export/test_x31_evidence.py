@@ -2,6 +2,7 @@
 the fine-tune's serving checks, the 500-prompt parity run, the lineage copies and the sample."""
 
 import gzip
+import hashlib
 import json
 import re
 from pathlib import Path
@@ -76,10 +77,21 @@ def test_template_parity_structured_output_and_reruns_hold_for_the_ft_gguf():
     assert rep["server_args"][i + 1] == "0"  # D-41
 
 
+# sha256 over E3.1's 20 base replies (constrained, NUL, unconstrained, NUL), from
+# docs/measurements/serving_checks.json at 80d6c52, before D-41
+E31_BASE_REPLIES = "0e0452b8420242e0e86a76976bce1d97f3f419648d40c80d62b9540bdba4b7fc"
+
+
 def test_d41_left_the_base_replies_unchanged():
     rep = load("serving_checks.json")  # the base, rerun under the D-41 arguments
-    assert rep["passed"] and "--reasoning-budget" in rep["server_args"]
-    assert "byte-identical to E3.1" in RUN_STATE and "20/20" in RUN_STATE
+    i = rep["server_args"].index("--reasoning-budget")
+    assert rep["passed"] and rep["server_args"][i + 1] == "0"
+    h = hashlib.sha256()
+    for r in rep["structured"]:
+        h.update(
+            (r["constrained"]["raw_text"] + "\0" + r["unconstrained"]["raw_text"] + "\0").encode()
+        )
+    assert len(rep["structured"]) == 20 and h.hexdigest() == E31_BASE_REPLIES
 
 
 # EXP-04

@@ -16,12 +16,13 @@ from typing import Any, Literal
 
 from ggh.export import parity
 from ggh.export.gguf import BASE_ID, BASE_REVISION
-from ggh.export.merge import ADAPTER_DIR, MERGED_DIR
+from ggh.export.merge import ADAPTER_DIR, MERGED_DIR, SELECTION
 from ggh.lineage import StageManifest, read_manifest, sha256_file, stage_key, write_manifest
 from ggh.schemas import ExportArtifact, TrainRun
 from ggh.serve import llama
 from ggh.train.devrun import DEV_EVAL, TRAIN_RUN
-from ggh.train.select import ADAPTER_FILES
+from ggh.train.run import config_hash
+from ggh.train.select import ADAPTER_FILES, adapter_hash
 
 CODE_VERSION = "1"
 TARGETS_MANIFEST = Path("artifacts") / "targets" / "manifest.json"
@@ -33,6 +34,7 @@ STAGE_DIRS = {
     "parity": Path("artifacts") / "parity",
 }
 RECORDS = Path("docs") / "measurements" / "export_artifacts.json"
+LEDGER = Path("docs") / "measurements" / "gpu-ledger.jsonl"
 LINEAGE_COPY = Path("docs") / "measurements" / "lineage"  # committed copies (artifacts/ is not)
 MERGED_FILES = ("model.safetensors", "config.json", "tokenizer.json", "tokenizer_config.json",
                 "chat_template.jinja")  # fmt: skip
@@ -84,12 +86,26 @@ def train_manifest(root: Path, now: Clock = _now) -> StageManifest:
     for rel in rels[:2]:
         if targets.outputs.get(rel.as_posix()) != inputs[rel.as_posix()]:
             raise ValueError(f"{rel} differs from what the targets stage recorded")
+    if config_hash(root / rels[2]) != run.config_hash:
+        raise ValueError("configs/recipe.yaml is not the recipe the run recorded")
+    frozen = json.loads((root / SELECTION).read_text(encoding="utf-8"))["adapter_sha256"]
+    if adapter_hash(root / ADAPTER_DIR) != frozen:
+        raise ValueError(f"{ADAPTER_DIR} is not the frozen adapter")
     outputs = hashes(root, [ADAPTER_DIR / f for f in ADAPTER_FILES] + [TRAIN_RUN])
-    params = {"kaggle_kernel": f"ggh-t22-train v{run.kaggle_kernel_version}",
-              "repo_commit": run.repo_commit, "selected_step": run.selected_step,
-              "base": f"{BASE_ID}@{BASE_REVISION}"}  # fmt: skip
-    t = now()
-    return _manifest("train", inputs, outputs, params, (targets.key,), t, t, HOST_KAGGLE)
+    kernel = f"ggh-t22-train v{run.kaggle_kernel_version}"
+    params = {"kaggle_kernel": kernel, "repo_commit": run.repo_commit,
+              "selected_step": run.selected_step, "base": f"{BASE_ID}@{BASE_REVISION}"}  # fmt: skip
+    started, finished = session_times(root, kernel)
+    return _manifest("train", inputs, outputs, params, (targets.key,), started, finished,
+                     HOST_KAGGLE)  # fmt: skip
+
+
+def session_times(root: Path, kernel: str) -> tuple[dt.datetime, dt.datetime]:
+    """The Kaggle session's span from its GPU ledger entry: it ended at `at`, after `gpu_hours`."""
+    rows = [json.loads(x) for x in (root / LEDGER).read_text(encoding="utf-8").splitlines() if x]
+    (row,) = [r for r in rows if r.get("kernel") == kernel and r.get("kind") == "train"]
+    end = dt.datetime.fromisoformat(row["at"])
+    return end - dt.timedelta(hours=float(row["gpu_hours"])), end
 
 
 def _gguf_rels(model: str) -> list[Path]:

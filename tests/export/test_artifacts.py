@@ -11,12 +11,12 @@ import pytest
 from ggh import lineage
 from ggh.export import artifacts as A
 from ggh.export import parity
-from ggh.export.merge import ADAPTER_DIR, MERGED_DIR
+from ggh.export.merge import ADAPTER_DIR, MERGED_DIR, SELECTION
 from ggh.lineage import StageManifest, sha256_file, stage_key, write_manifest
 from ggh.schemas import ExportArtifact
 from ggh.serve import llama
 from ggh.train.devrun import DEV_EVAL, TRAIN_RUN
-from ggh.train.select import ADAPTER_FILES
+from ggh.train.select import ADAPTER_FILES, adapter_hash
 
 ROOT = Path(__file__).resolve().parents[2]
 T0 = dt.datetime(2026, 11, 17, tzinfo=dt.UTC)
@@ -47,11 +47,14 @@ def repo(tmp_path):
     data = stage(r, "data", hf, data_out, ())
     tgt_out = {tr.as_posix(): put(r, tr), va.as_posix(): put(r, va)}
     stage(r, "targets", {pool.as_posix(): data_out[pool.as_posix()]}, tgt_out, (data.key,))
-    put(r, Path("configs/recipe.yaml"))
+    put(r, Path("configs/recipe.yaml"), (ROOT / "configs/recipe.yaml").read_bytes())
+    put(r, A.LEDGER, (ROOT / A.LEDGER).read_bytes())
     (r / TRAIN_RUN).parent.mkdir(parents=True, exist_ok=True)
     shutil.copy(ROOT / TRAIN_RUN, r / TRAIN_RUN)
     for f in ADAPTER_FILES:
         put(r, ADAPTER_DIR / f)
+    sel = {"adapter_sha256": adapter_hash(r / ADAPTER_DIR)}
+    put(r, SELECTION, json.dumps(sel).encode())
     for f in A.MERGED_FILES:
         put(r, MERGED_DIR / f)
     for model in ("base", "ft"):
@@ -128,3 +131,23 @@ def test_a_missing_output_is_an_error_not_a_skipped_record(repo):
     (root / llama.GGUF_DIR / "ft-Q8_0.gguf").unlink()
     with pytest.raises(FileNotFoundError, match=r"ft-Q8_0\.gguf"):
         A.write_all(root, base, now=lambda: T0)
+
+
+def test_the_train_manifest_refuses_another_recipe_or_adapter(repo):
+    root, _ = repo
+    (root / ADAPTER_DIR / "adapter_config.json").write_bytes(b"{}")
+    with pytest.raises(ValueError, match="not the frozen adapter"):
+        A.train_manifest(root, now=lambda: T0)
+    (root / "configs/recipe.yaml").write_bytes(b"seed: 8\n")
+    with pytest.raises(ValueError, match="not the recipe the run recorded"):
+        A.train_manifest(root, now=lambda: T0)
+
+
+def test_the_train_manifest_spans_the_kaggle_session_from_the_ledger(repo):
+    root, _ = repo
+    m = A.train_manifest(root, now=lambda: T0)
+    (row,) = [json.loads(x) for x in (ROOT / A.LEDGER).read_text(encoding="utf-8").splitlines()
+              if x and json.loads(x).get("kernel") == "ggh-t22-train v1"]  # fmt: skip
+    assert m.finished_at == dt.datetime.fromisoformat(row["at"])
+    assert (m.finished_at - m.started_at).total_seconds() == pytest.approx(row["gpu_hours"] * 3600)
+    assert m.host == "kaggle" and m.params["kaggle_kernel"] == "ggh-t22-train v1"

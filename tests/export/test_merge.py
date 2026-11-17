@@ -11,24 +11,27 @@ from ggh.train.select import adapter_hash
 
 
 def test_quantized_or_low_precision_bases_are_refused():
-    torch = pytest.importorskip("torch")
+    """No torch needed: the check reads `quantization_config` and each weight's dtype name."""
 
     class Fake:
-        def __init__(self, dtype, qcfg=None):
+        def __init__(self, dtype, qcfg=None, flag=False):
             self.config = SimpleNamespace(quantization_config=qcfg)
-            self._p = [torch.zeros(2, dtype=dtype)]
+            self.is_quantized = flag
+            self._p = [SimpleNamespace(dtype=f"torch.{dtype}")]
 
         def parameters(self):
             return iter(self._p)
 
-    M.check_unquantized(Fake(torch.bfloat16))
-    M.check_unquantized(Fake(torch.float32))
+    M.check_unquantized(Fake("bfloat16"))
+    M.check_unquantized(Fake("float32"))
     with pytest.raises(M.MergeError, match="quantized"):
-        M.check_unquantized(Fake(torch.bfloat16, qcfg={"load_in_4bit": True}))
-    with pytest.raises(M.MergeError, match=r"uint8|float16"):
-        M.check_unquantized(Fake(torch.uint8))
+        M.check_unquantized(Fake("bfloat16", qcfg={"load_in_4bit": True}))
+    with pytest.raises(M.MergeError, match="quantized"):
+        M.check_unquantized(Fake("bfloat16", flag=True))
+    with pytest.raises(M.MergeError, match="uint8"):  # bitsandbytes packs 4-bit weights as uint8
+        M.check_unquantized(Fake("uint8"))
     with pytest.raises(M.MergeError, match="float16"):
-        M.check_unquantized(Fake(torch.float16))
+        M.check_unquantized(Fake("float16"))
 
 
 def test_a_changed_or_incomplete_adapter_is_refused(tmp_path):
