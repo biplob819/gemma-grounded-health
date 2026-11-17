@@ -189,6 +189,7 @@ def server_args(server: Path, gguf: Path, port: int) -> list[str]:
         "--top-k", "1",
         "--jinja",
         "--reasoning", "off",
+        "--reasoning-budget", "0",  # D-41: the chat grammar still admits a thought channel
         "--no-webui",
     ]  # fmt: skip
 

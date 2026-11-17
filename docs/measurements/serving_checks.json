@@ -26,6 +26,8 @@
     "--jinja",
     "--reasoning",
     "off",
+    "--reasoning-budget",
+    "0",
     "--no-webui"
   ],
   "parity": [
@@ -197,14 +199,14 @@
         "valid": true,
         "error": null,
         "raw_text": "{\n\"label\": \"no\",\n\"answer\": \"Comparison of histologic healing scores and bursting pressure values showed no significant differences between the groups.\",\n\"citations\": [\n7]\n}",
-        "latency_ms": 856,
+        "latency_ms": 742,
         "tokens_out": 46
       },
       "unconstrained": {
         "valid": false,
         "error": "invalid answer at citations.0: Input should be a valid integer",
         "raw_text": "```json\n{\n\"label\": \"no\",\n\"answer\": \"Comparison of histologic healing scores and bursting pressure values showed no significant differences between the groups.\",\n\"citations\": [\n\"7\"\n]\n}\n```",
-        "latency_ms": 442,
+        "latency_ms": 454,
         "tokens_out": 49
       }
     },
@@ -214,14 +216,14 @@
         "valid": true,
         "error": null,
         "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"The incidence of tumor protrusion in the early recurrence group was higher than that in the late recurrence group (100% vs. 30%, respectively, P = 0.003). Multivariate analysis showed that greater than 30% protrusion of the tumor was a predictor of patient survival.\",\n\"citations\": [\n7,\n9\n]\n}",
-        "latency_ms": 928,
+        "latency_ms": 973,
         "tokens_out": 95
       },
       "unconstrained": {
         "valid": false,
         "error": "invalid answer at citations.0: Input should be a valid integer",
         "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"The incidence of tumor protrusion in the early recurrence group was higher than that in the late recurrence group (100% vs. 30%, respectively, P = 0.003). Multivariate analysis showed that greater than 30% protrusion of the tumor was a predictor of patient survival.\",\n\"citations\": [\n\"7\",\n\"9\"\n]\n}\n```",
-        "latency_ms": 812,
+        "latency_ms": 895,
         "tokens_out": 98
       }
     },
@@ -231,14 +233,14 @@
         "valid": true,
         "error": null,
         "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"LIF cDNA-treated groups showed significantly improved graft survival compared to the vector-treated control in 21 days postoperatively for grafting from B6D2F1 to BALB/c and BALB/c to B6D2F1.\",\n\"citations\": [\n7]\n}",
-        "latency_ms": 787,
+        "latency_ms": 851,
         "tokens_out": 81
       },
       "unconstrained": {
         "valid": false,
         "error": "invalid answer at citations.0: Input should be a valid integer",
         "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"LIF cDNA-treated groups showed significantly improved graft survival compared to the vector-treated control in 21 days postoperatively for grafting from B6D2F1 to BALB/c and BALB/c to B6D2F1.\",\n\"citations\": [\n\"7\"\n]\n}\n```",
-        "latency_ms": 702,
+        "latency_ms": 761,
         "tokens_out": 84
       }
     },
@@ -248,14 +250,14 @@
         "valid": true,
         "error": null,
         "raw_text": "{\n\"label\": \"maybe\",\n\"answer\": \"The study compared clinical outcomes of microcoaxial cataract surgery systems with incision sizes of 1.8 mm, 2.2 mm, and 2.75 mm, and examined surgically induced astigmatism (SIA). The SIA in the 1.8 mm group was statistically lower compared to the 2.2 mm group and the 2.75 mm group.\",\n\"citations\": [\n1,\n5,\n8]\n}",
-        "latency_ms": 1112,
+        "latency_ms": 1132,
         "tokens_out": 114
       },
       "unconstrained": {
         "valid": false,
         "error": "invalid answer at citations.0: Input should be a valid integer",
         "raw_text": "```json\n{\n\"label\": \"maybe\",\n\"answer\": \"The study compared clinical outcomes of microcoaxial cataract surgery systems with incision sizes of 1.8 mm, 2.2 mm, and 2.75 mm, and examined surgically induced astigmatism (SIA). The SIA in the 1.8 mm group was statistically lower compared to the 2.2 mm group and the 2.75 mm group.\",\n\"citations\": [\n\"1\",\n\"5\",\n\"7\",\n\"8\"\n]\n}\n```",
-        "latency_ms": 1031,
+        "latency_ms": 1128,
         "tokens_out": 123
       }
     },
@@ -265,14 +267,14 @@
         "valid": true,
         "error": null,
         "raw_text": "{\n\"label\": \"maybe\",\n\"answer\": \"Orphans living in kinship care reported being more optimistic, having birth certificates, ensuring inherent family property, obtaining basic needs from grandparents, and having more friends visiting their homes, compared to those in institutional care homes.\",\n\"citations\": [\n6,\n7\n]\n}",
-        "latency_ms": 726,
+        "latency_ms": 794,
         "tokens_out": 75
       },
       "unconstrained": {
         "valid": false,
         "error": "invalid answer at citations.0: Input should be a valid integer",
         "raw_text": "```json\n{\n\"label\": \"maybe\",\n\"answer\": \"Orphans living in kinship care reported being more optimistic, having birth certificates, ensuring inherent family property, obtaining basic needs from grandparents, and having more friends visiting their homes, compared to those in institutional care homes.\",\n\"citations\": [\n\"5\",\n\"6\",\n\"7\"\n]\n}\n```",
-        "latency_ms": 675,
+        "latency_ms": 745,
         "tokens_out": 82
       }
     },
@@ -282,14 +284,14 @@
         "valid": true,
         "error": null,
         "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"The study evaluated pazopanib eye drops in both healthy subjects and subjects with neovascular age-related macular degeneration.\",\n\"citations\": [\n1]\n}",
-        "latency_ms": 533,
+        "latency_ms": 589,
         "tokens_out": 52
       },
       "unconstrained": {
         "valid": false,
         "error": "invalid answer at citations.0: Input should be a valid integer",
         "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"The study evaluated pazopanib eye drops in both healthy subjects and subjects with neovascular age-related macular degeneration.\",\n\"citations\": [\n\"1\"\n]\n}\n```",
-        "latency_ms": 466,
+        "latency_ms": 500,
         "tokens_out": 55
       }
     },
@@ -299,14 +301,14 @@
         "valid": true,
         "error": null,
         "raw_text": "{\n\"label\": \"maybe\",\n\"answer\": \"The study aimed to ascertain the degree of histological overlap between conventional villous/tubulovillous (VA/TVAs) and traditional serrated adenomas (TSA). While some reclassification occurred (20 VA/TVAs were reclassified as TSA), luminal serration as noted in TSA was not seen in any of the remaining 160 polyps, and cytoplasmic eosinophilia was noted in only a small fraction of the VA/TVAs.\",\n\"citations\": [\n2,\n3,\n4,\n5\n]\n}",
-        "latency_ms": 1200,
+        "latency_ms": 1305,
         "tokens_out": 133
       },
       "unconstrained": {
         "valid": false,
         "error": "invalid answer at citations.0: Input should be a valid integer",
         "raw_text": "```json\n{\n\"label\": \"maybe\",\n\"answer\": \"The study aimed to ascertain the degree of histological overlap between conventional villous/tubulovillous (VA/TVAs) and traditional serrated adenomas (TSA). While some reclassification occurred (20 VA/TVAs were reclassified as TSA), luminal serration as noted in TSA was not seen in any of the remaining 160 polyps, and cytoplasmic eosinophilia was noted in only a small fraction of the VA/TVAs.\",\n\"citations\": [\n\"1\",\n\"4\",\n\"5\"\n]\n}\n```",
-        "latency_ms": 1175,
+        "latency_ms": 1271,
         "tokens_out": 134
       }
     },
@@ -316,14 +318,14 @@
         "valid": true,
         "error": null,
         "raw_text": "{\n\"label\": \"maybe\",\n\"answer\": \"The study aimed to confirm the anti-invasion and anti-migration effects of down-regulation of Notch1 combined with interleukin (IL)-24 in hepatocellular carcinoma (HCC) cells. The invasion and migration capacities of HCC cells were detected by wound healing assays, and the distance of wound closure correlated with the concentrations of IL-24 and GSI-I. Furthermore, the apoptotic rate of HepG2 cells was observed following GSI-I/IL-24 combined treatment, and caspase-3/7 activity was increased in the presence of siNotch1 plus IL-24 treatment.\",\n\"citations\": [\n1,\n8,\n10,\n15,\n21\n]\n}",
-        "latency_ms": 1910,
+        "latency_ms": 1914,
         "tokens_out": 167
       },
       "unconstrained": {
         "valid": false,
         "error": "invalid answer at citations.0: Input should be a valid integer",
         "raw_text": "```json\n{\n\"label\": \"maybe\",\n\"answer\": \"The study aimed to confirm the anti-invasion and anti-migration effects of down-regulation of Notch1 combined with interleukin (IL)-24 in hepatocellular carcinoma (HCC) cells. The invasion and migration capacities of HCC cells were detected by wound healing assays, and the distance of wound closure correlated with the concentrations of IL-24 and GSI-I. Furthermore, the apoptotic rate of HepG2 cells was observed following GSI-I/IL-24 combined treatment, and caspase-3/7 activity was increased in the presence of siNotch1 plus IL-24 treatment.\",\n\"citations\": [\n\"1\",\n\"8\",\n\"10\",\n\"15\",\n\"21\"\n]\n}\n```",
-        "latency_ms": 1424,
+        "latency_ms": 1610,
         "tokens_out": 173
       }
     },
@@ -333,14 +335,14 @@
         "valid": true,
         "error": null,
         "raw_text": "{\n\"label\": \"maybe\",\n\"answer\": \"The function of CLOCK on the human female reproductive system remains unknown [2]. However, knockdown of CLOCK led to decreased release of oocytes and smaller litter size in vivo [9].\",\n\"citations\": [\n9,\n2]\n}",
-        "latency_ms": 686,
+        "latency_ms": 737,
         "tokens_out": 71
       },
       "unconstrained": {
         "valid": false,
         "error": "invalid answer at citations.0: Input should be a valid integer",
         "raw_text": "```json\n{\n\"label\": \"maybe\",\n\"answer\": \"The function of CLOCK on the human female reproductive system remains unknown [2]. However, knockdown of CLOCK led to decreased release of oocytes and smaller litter size in vivo [9].\",\n\"citations\": [\n\"2\",\n\"9\"\n]\n}\n```",
-        "latency_ms": 647,
+        "latency_ms": 679,
         "tokens_out": 75
       }
     },
@@ -350,14 +352,14 @@
         "valid": true,
         "error": null,
         "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"The study demonstrated efficient, functional, and long-term RNA interference (RNAi) in hMSC by gene specific knock-down of transiently and stably expressed EGFP (88-98%).\",\n\"citations\": [\n8]\n}",
-        "latency_ms": 716,
+        "latency_ms": 740,
         "tokens_out": 71
       },
       "unconstrained": {
         "valid": false,
         "error": "invalid answer at citations.0: Input should be a valid integer",
         "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"The study demonstrated efficient, functional, and long-term RNA interference (RNAi) in hMSC by gene specific knock-down of transiently and stably expressed EGFP (88-98%).\",\n\"citations\": [\n\"4\",\n\"6\",\n\"8\"\n]\n}\n```",
-        "latency_ms": 690,
+        "latency_ms": 758,
         "tokens_out": 82
       }
     },
@@ -367,14 +369,14 @@
         "valid": true,
         "error": null,
         "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"A significant decrease of plasma adiponectin concentration was observed in patients treated with indapamide.\",\n\"citations\": [\n8]\n}",
-        "latency_ms": 513,
+        "latency_ms": 561,
         "tokens_out": 48
       },
       "unconstrained": {
         "valid": false,
         "error": "invalid answer at citations.0: Input should be a valid integer",
         "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"A significant decrease of plasma adiponectin concentration was observed in patients treated with indapamide.\",\n\"citations\": [\n\"8\"\n]\n}\n```",
-        "latency_ms": 503,
+        "latency_ms": 471,
         "tokens_out": 51
       }
     },
@@ -384,14 +386,14 @@
         "valid": true,
         "error": null,
         "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"sCysC level was found to have a statistically significant association with AKI development in preterm neonates with RDS.\",\n\"citations\": [\n7]\n}",
-        "latency_ms": 584,
+        "latency_ms": 597,
         "tokens_out": 53
       },
       "unconstrained": {
         "valid": false,
         "error": "invalid answer at citations.0: Input should be a valid integer",
         "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"sCysC level was found to have a statistically significant association with AKI development in preterm neonates with RDS.\",\n\"citations\": [\n\"1\",\n\"7\"\n]\n}\n```",
-        "latency_ms": 508,
+        "latency_ms": 540,
         "tokens_out": 60
       }
     },
@@ -401,14 +403,14 @@
         "valid": true,
         "error": null,
         "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"CO was significantly associated with declines in heart rate (HR) and heart rate variability (HRV), PM was significantly associated with declines in HRV and BW, and NO(2) was significantly associated with declines in HR.\",\n\"citations\": [\n7]\n}",
-        "latency_ms": 742,
+        "latency_ms": 758,
         "tokens_out": 73
       },
       "unconstrained": {
         "valid": false,
         "error": "invalid answer at citations.0: Input should be a valid integer",
         "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"CO was significantly associated with declines in heart rate (HR) and heart rate variability (HRV), PM was significantly associated with declines in HRV and BW, and NO(2) was significantly associated with declines in HR.\",\n\"citations\": [\n\"7\"\n]\n}\n```",
-        "latency_ms": 694,
+        "latency_ms": 689,
         "tokens_out": 76
       }
     },
@@ -418,14 +420,14 @@
         "valid": true,
         "error": null,
         "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"TRH administration reduced PPII specific activity in the male rat adenohypophysis, and this reduction was associated with the diurnal variation of serum thyrotropin levels.\",\n\"citations\": [\n6,\n8]\n}",
-        "latency_ms": 706,
+        "latency_ms": 722,
         "tokens_out": 67
       },
       "unconstrained": {
         "valid": false,
         "error": "invalid answer at citations.0: Input should be a valid integer",
         "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"TRH administration reduced PPII specific activity in the male rat adenohypophysis, and this reduction was associated with the diurnal variation of serum thyrotropin levels.\",\n\"citations\": [\n\"2\",\n\"4\",\n\"6\",\n\"8\"\n]\n}\n```",
-        "latency_ms": 666,
+        "latency_ms": 696,
         "tokens_out": 79
       }
     },
@@ -435,14 +437,14 @@
         "valid": true,
         "error": null,
         "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"Hyperferritinaemia was significantly associated with thrombocytopenia, elevated liver enzymes, and coagulation disturbances in dengue patients.\",\n\"citations\": [\n7]\n}",
-        "latency_ms": 536,
+        "latency_ms": 579,
         "tokens_out": 52
       },
       "unconstrained": {
         "valid": false,
         "error": "invalid answer at citations.0: Input should be a valid integer",
         "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"Hyperferritinaemia was significantly associated with thrombocytopenia, elevated liver enzymes, and coagulation disturbances in dengue patients.\",\n\"citations\": [\n\"7\"\n]\n}\n```",
-        "latency_ms": 559,
+        "latency_ms": 505,
         "tokens_out": 55
       }
     },
@@ -452,14 +454,14 @@
         "valid": true,
         "error": null,
         "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"Desflurane titration to 12% increased heart rate, increased mean arterial blood pressure, and initiated frequent coughing (53% vs. 0% sevoflurane) and body movements (47% vs. 0% sevoflurane). During emergence, there was a twofold greater incidence of coughing and a fivefold increase in breath holding in the desflurane group.\",\n\"citations\": [\n10,\n11\n]\n}",
-        "latency_ms": 1105,
+        "latency_ms": 1289,
         "tokens_out": 117
       },
       "unconstrained": {
         "valid": false,
         "error": "invalid answer at citations.0: Input should be a valid integer",
         "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"Desflurane titration to 12% increased heart rate, increased mean arterial blood pressure, and initiated frequent coughing (53% vs. 0% sevoflurane) and body movements (47% vs. 0% sevoflurane). During emergence, there was a twofold greater incidence of coughing and a fivefold increase in breath holding in the desflurane group.\",\n\"citations\": [\n\"10\",\n\"11\"\n]\n}\n```",
-        "latency_ms": 1053,
+        "latency_ms": 1098,
         "tokens_out": 120
       }
     },
@@ -469,14 +471,14 @@
         "valid": true,
         "error": null,
         "raw_text": "{\n\"label\": \"yes\",\n\"answer\": \"Administration of aminoguanidine prevented both the enhanced myocardial collagen fluorescence and the increased slope of the linearized LVED stress-LVED strain relation in rats with diabetes mellitus.\",\n\"citations\": [\n8]\n}",
-        "latency_ms": 648,
+        "latency_ms": 707,
         "tokens_out": 63
       },
       "unconstrained": {
         "valid": false,
         "error": "invalid answer at citations.0: Input should be a valid integer",
         "raw_text": "```json\n{\n\"label\": \"yes\",\n\"answer\": \"Administration of aminoguanidine prevented both the enhanced myocardial collagen fluorescence and the increased slope of the linearized LVED stress-LVED strain relation in rats with diabetes mellitus.\",\n\"citations\": [\n\"8\"\n]\n}\n```",
-        "latency_ms": 549,
+        "latency_ms": 669,
         "tokens_out": 66
       }
     },
@@ -493,7 +495,7 @@
         "valid": false,
         "error": "invalid answer at citations.0: Input should be a valid integer",
         "raw_text": "```json\n{\n\"label\": \"maybe\",\n\"answer\": \"Longitudinal follow-up of melanoma markers in patients treated with ipilimumab correlates with therapy response, and a decline of marker levels by >30% at week 6 to week 9 was associated with response to therapy.\",\n\"citations\": [\n\"8\",\n\"9\"\n]\n}\n```",
-        "latency_ms": 723,
+        "latency_ms": 742,
         "tokens_out": 83
       }
     },
@@ -503,14 +505,14 @@
         "valid": true,
         "error": null,
         "raw_text": "{\n\"label\": \"maybe\",\n\"answer\": \"The provided sentences discuss the role of IDO in tolerance and allergic inflammation related to OVA sensitization, but they do not directly address whether tryptophan catabolites regulate mucosal sensitization to ovalbumin in respiratory airways.\",\n\"citations\": [\n2,\n3,\n4,\n5,\n6,\n7,\n8,\n9,\n10\n]\n}",
-        "latency_ms": 912,
+        "latency_ms": 977,
         "tokens_out": 96
       },
       "unconstrained": {
         "valid": false,
         "error": "invalid answer at citations.0: Input should be a valid integer",
         "raw_text": "```json\n{\n\"label\": \"maybe\",\n\"answer\": \"The provided sentences discuss the role of IDO in tolerance and allergic inflammation related to OVA sensitization, but they do not directly address whether tryptophan catabolites regulate mucosal sensitization to ovalbumin in respiratory airways.\",\n\"citations\": [\n\"1\",\n\"2\",\n\"3\",\n\"4\",\n\"5\",\n\"6\",\n\"7\",\n\"8\",\n\"9\",\n\"10\"\n]\n}\n```",
-        "latency_ms": 1116,
+        "latency_ms": 981,
         "tokens_out": 110
       }
     },
@@ -520,14 +522,14 @@
         "valid": true,
         "error": null,
         "raw_text": "{\n\"label\": \"no\",\n\"answer\": \"Inhibition of NO synthesis was associated with decreased intracellular levels of reduced glutathione [2], and along with decreased glutathione levels, gamma-glutamylcysteine synthetase enzyme activity and steady state mRNA levels were also decreased with inhibition of NO synthesis [8]. Addition of 8-bromo-cGMP did not alter glutathione content or gamma-glutamylcysteine synthetase enzyme activity and steady-state mRNA levels [9].\",\n\"citations\": [2, 8, 9]\n}",
-        "latency_ms": 1179,
+        "latency_ms": 1113,
         "tokens_out": 119
       },
       "unconstrained": {
         "valid": true,
         "error": null,
         "raw_text": "```json\n{\n\"label\": \"no\",\n\"answer\": \"Inhibition of NO synthesis was associated with decreased intracellular levels of reduced glutathione [2], and along with decreased glutathione levels, gamma-glutamylcysteine synthetase enzyme activity and steady state mRNA levels were also decreased with inhibition of NO synthesis [8]. Addition of 8-bromo-cGMP did not alter glutathione content or gamma-glutamylcysteine synthetase enzyme activity and steady-state mRNA levels [9].\",\n\"citations\": [2, 8, 9]\n}\n```",
-        "latency_ms": 1040,
+        "latency_ms": 1044,
         "tokens_out": 119
       }
     }

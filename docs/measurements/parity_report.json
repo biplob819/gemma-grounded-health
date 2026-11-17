@@ -1,0 +1,10 @@
+{
+  "n": 500,
+  "label_agreement": 0.956,
+  "citation_exact_match": 0.5,
+  "schema_valid": {
+    "bf16": 1.0,
+    "q4_k_m": 1.0
+  },
+  "judged_headline_delta": null
+}

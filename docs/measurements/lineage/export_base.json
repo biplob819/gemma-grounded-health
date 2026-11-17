@@ -1,0 +1,27 @@
+{
+  "stage": "export",
+  "code_version": "1",
+  "key": "f7e228d1c3dc286d69ec3b08eb77458331f72b9ce6d834b793f9224db6e7c951",
+  "inputs": {
+    "hf://google/gemma-4-E2B-it@4adf15748de9e1a0097b6274cee9c15836c41c37/model.safetensors": "2db5482b20d746879bb3ef79b5203e9075a2e2b98f54ec7c2f281c1477ddc550"
+  },
+  "outputs": {
+    "artifacts/gguf/base-f16.gguf": "3603ca946c831e445491397ba39f3b391802f678f7efbaee5127e82407341097",
+    "artifacts/gguf/base-Q4_K_M.gguf": "c1f9a87cbd9a62eecd592748be99f59d83fa6dd0bff2019ce52c7a73d7a5099c",
+    "artifacts/gguf/base-Q8_0.gguf": "e4c44bc02248a9a688dbc2df4a48e62c5e0607eb2464fa7ea21e1ceb0d634bb3"
+  },
+  "params": {
+    "llama_cpp": "b12421",
+    "release_sha256": "bdeff25d862f1c9b9526ce2c373492e67656659b2ac386308c28b4808f4d074d",
+    "steps": [
+      "convert_hf_to_gguf.py --outtype f16",
+      "llama-quantize Q4_K_M",
+      "llama-quantize Q8_0"
+    ]
+  },
+  "seed": 7,
+  "parents": [],
+  "started_at": "2026-11-17T03:02:54.411529Z",
+  "finished_at": "2026-11-17T03:02:54.411529Z",
+  "host": "local"
+}

@@ -1,0 +1,27 @@
+{
+  "stage": "parity",
+  "code_version": "1",
+  "key": "3a567d38f9a4f36d1a249b88b41d25000d8a6bef6182d4b9ca39ef514f422d01",
+  "inputs": {
+    "artifacts/merged/ft-bf16/model.safetensors": "b09550be7b5b3848db0d5c0ad84f535e5d18e9f419cf65a40015c0d7892837d5",
+    "artifacts/gguf/ft-Q4_K_M.gguf": "f2beaeaddcb494f49985255ad138ac8efcebd03ffbe5decb149a81110957f0ae",
+    "artifacts/data/dev_eval.jsonl": "4210c085a0046271bc346c988723982a59683811bb45b0fe5201801f97b58316"
+  },
+  "outputs": {
+    "docs/measurements/parity_report.json": "3b96fc59b03dd44d82aad75bc8b5b7287071573cadeabafa93bd193c2a28a031",
+    "docs/measurements/parity_generations.jsonl.gz": "95669e431bb2029a169df9d0a758b764c441e20013eb08ece49f962b802d05c2",
+    "docs/measurements/parity_sample.jsonl": "bea28de9a0bbf820390b32625caf4f27b2fcbe8eb39488134cedac0f29dfe98d"
+  },
+  "params": {
+    "agreement_bar": 0.95,
+    "schema_gap": 0.01
+  },
+  "seed": 7,
+  "parents": [
+    "f5dccf8a3851c0497fe4d14f20388c9477791855a4f484c4754814968295fbf3",
+    "e1a3f6bc37ab7be4e335b18e76b0b3bf442607f196d61546a0466ffa92378066"
+  ],
+  "started_at": "2026-11-17T03:03:27.054306Z",
+  "finished_at": "2026-11-17T03:03:27.054306Z",
+  "host": "local"
+}

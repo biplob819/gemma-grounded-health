@@ -1,5 +1,6 @@
 """`ggh` commands for serving and EvalKit integration (node E3.1): `llama fetch`, `export`,
-`serve`, `serve-check`, `tasks`, `evalkit-check` and `behaviour`."""
+`serve`, `serve-check`, `tasks`, `evalkit-check` and `behaviour`; X3.1 adds `merge`, `parity`
+and `export-records`."""
 
 from __future__ import annotations
 
@@ -30,27 +31,99 @@ def _cmd_llama_fetch(_: argparse.Namespace) -> int:
 
 
 def _cmd_export(args: argparse.Namespace) -> int:
-    from ggh.export import gguf
+    from ggh.export import gguf, merge
     from ggh.serve import llama
 
-    if args.model != "base":
-        print("export: FAIL: only --model base exists before X3.1 merges the fine-tune")
-        return EXIT_ERROR
+    root = Path(args.root)
     try:
-        hf = gguf.hf_snapshot(gguf.BASE_ID, gguf.BASE_REVISION)
-        m = gguf.export(
-            Path(args.root),
-            hf,
-            "base",
-            source_id=gguf.BASE_ID,
-            source_revision=gguf.BASE_REVISION,
-        )
+        if args.model == "base":
+            hf = gguf.hf_snapshot(gguf.BASE_ID, gguf.BASE_REVISION)
+            sid, srev = gguf.BASE_ID, gguf.BASE_REVISION
+        else:  # the merged fine-tune: named by the base and the frozen adapter hash
+            hf = root / merge.MERGED_DIR
+            sid, srev = f"{gguf.BASE_ID}+adapter", merge.frozen_hash(root)
+            merged = json.loads((hf / "ggh_merge.json").read_text(encoding="utf-8"))
+            if merged["adapter_sha256"] != srev:
+                raise merge.MergeError(f"{hf} was merged from another adapter")
+        m = gguf.export(root, hf, args.model, source_id=sid, source_revision=srev)
     except ImportError as exc:
         return _fail("export", f"{exc}; the converter needs: uv sync --group nli")
-    except (llama.LlamaError, OSError) as exc:
+    except (llama.LlamaError, OSError, ValueError, KeyError) as exc:
         return _fail("export", exc)
     for name, f in m["files"].items():
         print(f"{name}  {f['bytes']:,} bytes  sha256 {f['sha256'][:12]}…")
+    return 0
+
+
+def _cmd_merge(args: argparse.Namespace) -> int:
+    from ggh.export import gguf, merge
+
+    root = Path(args.root)
+    try:
+        expected = merge.frozen_hash(root)
+        base = gguf.hf_snapshot(gguf.BASE_ID, gguf.BASE_REVISION)
+        rec = merge.merge(base, root / merge.ADAPTER_DIR, root / merge.MERGED_DIR,
+                          expected_sha256=expected)  # fmt: skip
+    except ImportError as exc:
+        return _fail("merge", f"{exc}; merging needs: uv sync --group train")
+    except (OSError, ValueError, KeyError) as exc:
+        return _fail("merge", exc)
+    print(f"merged {rec['lora_layers_merged']} LoRA layers into bf16 -> {merge.MERGED_DIR}")
+    return 0
+
+
+def _cmd_parity(args: argparse.Namespace) -> int:
+    from ggh.data.build import read_jsonl
+    from ggh.export import merge, parity
+    from ggh.serve import checks, llama
+    from ggh.train.devrun import DEV_EVAL
+
+    root = Path(args.root)
+    try:
+        rows = read_jsonl(root / DEV_EVAL)[: args.limit]
+
+        def bf16_gen(prompts: Any) -> list[str]:  # pragma: no cover - 10 GB model
+            from ggh.train.devrun import release, vocab_size
+            from ggh.train.generate import compile_grammar, generate
+
+            model, tok = parity.load_bf16(root / merge.MERGED_DIR)
+            out = generate(model, tok, prompts, grammar=compile_grammar(tok, vocab_size(model)))
+            release(model)
+            return out
+
+        def q4_gen(prompts: Any) -> list[str]:  # pragma: no cover - starts llama-server
+            log = root / llama.GGUF_DIR / "serve-ft.log"
+            proc = llama.start(root, "ft", "Q4_K_M", log=log)
+            try:
+                base = f"http://{llama.HOST}:{llama.PORTS['ft']}/v1"
+                return parity.server_replies(prompts, checks.evalkit_complete(base))
+            finally:
+                proc.terminate()
+
+        rep = parity.run(root, rows, bf16_gen=bf16_gen, q4_gen=q4_gen)
+    except ImportError as exc:
+        return _fail("parity", f"{exc}; bf16 generation needs: uv sync --group train")
+    except (llama.LlamaError, OSError, ValueError) as exc:
+        return _fail("parity", exc)
+    print(rep.model_dump_json())
+    bad = parity.failures(rep)
+    print(f"parity: {'PASS' if not bad else 'FAIL: ' + '; '.join(bad)} ({parity.REPORT})")
+    return 0 if not bad else EXIT_ERROR
+
+
+def _cmd_export_records(args: argparse.Namespace) -> int:
+    from ggh.export import artifacts, gguf
+
+    root = Path(args.root)
+    try:
+        base = gguf.hf_snapshot(gguf.BASE_ID, gguf.BASE_REVISION)
+        recs = artifacts.write_all(root, base)
+    except (OSError, ValueError, KeyError) as exc:
+        return _fail("export-records", exc)
+    for r in recs:
+        q = r.quant or ""
+        print(f"{r.kind:12} {r.model:4} {q:7} {r.sha256[:12]}…  parent {r.parent_key[:12]}…")
+    print(f"export-records: {len(recs)} artifacts ({artifacts.RECORDS})")
     return 0
 
 
@@ -90,10 +163,10 @@ def _cmd_serve_check(args: argparse.Namespace) -> int:
         return _fail("serve-check", f"{exc}; the tokenizer needs: uv sync --group nli")
     except (llama.LlamaError, OSError, ValueError) as exc:
         return _fail("serve-check", exc)
-    out = root / checks.OUT
+    out = root / checks.out_path(args.model)
     out.write_text(json.dumps(report, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
     print(json.dumps(report["summary"]))
-    print(f"serve-check: {'PASS' if report['passed'] else 'FAIL'} ({checks.OUT})")
+    print(f"serve-check: {'PASS' if report['passed'] else 'FAIL'} ({checks.out_path(args.model)})")
     return 0 if report["passed"] else EXIT_ERROR
 
 
@@ -177,6 +250,19 @@ def register(sub: Any) -> None:
     ex.add_argument("--model", default="base", choices=sorted(llama.PORTS))
     ex.add_argument("--root", default=".", help="repo root")
     ex.set_defaults(func=_cmd_export)
+
+    mg = sub.add_parser("merge", help="merge the frozen adapter into the bf16 base on CPU (X3.1)")
+    mg.add_argument("--root", default=".", help="repo root")
+    mg.set_defaults(func=_cmd_merge)
+
+    pa = sub.add_parser("parity", help="dev parity: ft Q4_K_M GGUF against merged bf16 (X3.1)")
+    pa.add_argument("--root", default=".", help="repo root")
+    pa.add_argument("--limit", type=int, default=None, help="first N dev prompts (smoke)")
+    pa.set_defaults(func=_cmd_parity)
+
+    er = sub.add_parser("export-records", help="stage manifests and ExportArtifact records (X3.1)")
+    er.add_argument("--root", default=".", help="repo root")
+    er.set_defaults(func=_cmd_export_records)
 
     sv = sub.add_parser("serve", help="start llama-server for base (8080) or ft (8081)")
     sv.add_argument("--model", default="base", choices=sorted(llama.PORTS))

@@ -131,6 +131,7 @@ def test_server_args_pin_metal_one_slot_seed_threads_and_greedy():
         "--temp": "0",
         "--top-k": "1",
         "--reasoning": "off",
+        "--reasoning-budget": "0",  # D-41
         "--ctx-size": "8192",
     }.items():
         assert args[args.index(flag) + 1] == value, flag
