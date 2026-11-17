@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "run_id": "r-6eabe9810930",
+  "task": "ggh_offscope",
+  "task_ref": "configs/tasks/offscope.yaml",
+  "config_hash": "a7f708a9317914e1",
+  "seed": 7,
+  "n": 20,
+  "models": [
+    "gemma-e2b-base-q4",
+    "gemma-e2b-grounded-q4",
+    "claude-haiku-5-5",
+    "gpt-6-luna"
+  ],
+  "judges": [
+    "claude-opus-5-5",
+    "gpt-6.1-sol"
+  ],
+  "judge_mode": "dual",
+  "families": {
+    "gemma-e2b-base-q4": "other",
+    "gemma-e2b-grounded-q4": "other",
+    "claude-haiku-5-5": "anthropic",
+    "gpt-6-luna": "openai"
+  },
+  "thresholds": [
+    {
+      "metric": "headline",
+      "op": ">=",
+      "value": 0.6
+    }
+  ],
+  "live_judges": false,
+  "started_at": "2026-11-17T05:52:21.167842Z",
+  "finished_at": "2026-11-17T05:56:51.966520Z",
+  "spent_usd": 1.2362296
+}

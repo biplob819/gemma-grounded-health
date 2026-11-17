@@ -186,3 +186,35 @@ def live_callers(
         return parse_verdict(text)
 
     return paraphrase, check
+
+
+# ---- the contamination check (EvalKit DATA_CARD: paired bootstrap, 10,000 resamples, seed 7) ----
+
+REPORT = Path("docs") / "measurements" / "probe_report.json"
+RESAMPLES = 10_000
+
+
+def correct_by_case(records: Sequence[dict[str, Any]], model: str) -> dict[str, bool]:
+    return {r["case_id"]: bool(r["scores"]["label_correct"]) for r in records
+            if r["completion"]["model"] == model}  # fmt: skip
+
+
+def paired_drop(orig: dict[str, bool], para: dict[str, bool], seed: int = SEED,
+                resamples: int = RESAMPLES) -> dict[str, Any]:  # fmt: skip
+    """Accuracy on the original wording minus the paraphrased, on shared cases, with a paired
+    bootstrap 95% interval. A drop whose interval excludes zero is a contamination signal."""
+    import random
+
+    ids = sorted(set(orig) & set(para))
+    if len(ids) != len(orig) or len(ids) != len(para) or not ids:
+        raise ValueError("the two runs must cover the same cases")
+    d = [int(orig[i]) - int(para[i]) for i in ids]
+    rng = random.Random(seed)
+    n = len(d)
+    boots = sorted(sum(d[rng.randrange(n)] for _ in range(n)) / n for _ in range(resamples))
+    lo, hi = boots[int(0.025 * resamples)], boots[int(0.975 * resamples) - 1]
+    point = sum(d) / n
+    return {"n": n, "accuracy_original": sum(orig[i] for i in ids) / n,
+            "accuracy_paraphrase": sum(para[i] for i in ids) / n,
+            "drop": {"point": point, "lo": lo, "hi": hi},
+            "contamination_signal": lo > 0}  # fmt: skip

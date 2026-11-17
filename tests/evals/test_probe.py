@@ -71,8 +71,13 @@ def test_written_tasks_share_abstracts_and_differ_only_in_wording(tmp_path):
     cs = cases()
     kept, rejected = P.build(cs, lambda q: "Rephrased: " + q, lambda c, p: P.Verdict(True, "r"))
     P.write(tmp_path, kept, rejected, cs)
-    orig = [json.loads(x) for x in (tmp_path / P.ORIGINAL_DATA).read_text(encoding="utf-8").splitlines()]
-    para = [json.loads(x) for x in (tmp_path / P.PARAPHRASE_DATA).read_text(encoding="utf-8").splitlines()]
+    orig = [
+        json.loads(x) for x in (tmp_path / P.ORIGINAL_DATA).read_text(encoding="utf-8").splitlines()
+    ]
+    para = [
+        json.loads(x)
+        for x in (tmp_path / P.PARAPHRASE_DATA).read_text(encoding="utf-8").splitlines()
+    ]
     assert len(orig) == len(para) == 100
     for a, b in zip(orig, para, strict=True):
         assert a["id"] == b["id"] and a["context"] == b["context"] and a["label"] == b["label"]
@@ -81,3 +86,29 @@ def test_written_tasks_share_abstracts_and_differ_only_in_wording(tmp_path):
         text = (tmp_path / task).read_text(encoding="utf-8")
         assert "name: ggh_probe_" in text and "prompt_template" in text
     assert (tmp_path / P.REJECTS).read_text(encoding="utf-8") == ""
+
+
+def _rec(case, model, ok):
+    return {"case_id": case, "completion": {"model": model}, "scores": {"label_correct": ok}}
+
+
+def test_paired_drop_is_original_minus_paraphrase_on_shared_cases():
+    o = {f"c{i}": i < 32 for i in range(40)}  # 0.8
+    p = {f"c{i}": i < 20 for i in range(40)}  # 0.5: 12 cases right only in the original wording
+    r = P.paired_drop(o, p, resamples=2000)
+    assert r["n"] == 40 and r["accuracy_original"] == 0.8 and r["accuracy_paraphrase"] == 0.5
+    assert (
+        r["drop"]["point"] == pytest.approx(0.3)
+        and r["drop"]["lo"] > 0
+        and r["contamination_signal"]
+    )
+    same = P.paired_drop(o, o, resamples=500)
+    assert same["drop"] == {"point": 0.0, "lo": 0.0, "hi": 0.0} and not same["contamination_signal"]
+    assert P.paired_drop(o, p, resamples=500) == P.paired_drop(o, p, resamples=500)  # seeded
+    with pytest.raises(ValueError, match="same cases"):
+        P.paired_drop(o, {"c0": True})
+
+
+def test_correct_by_case_keeps_one_model():
+    recs = [_rec("a", "m1", True), _rec("a", "m2", False), _rec("b", "m1", False)]
+    assert P.correct_by_case(recs, "m1") == {"a": True, "b": False}
