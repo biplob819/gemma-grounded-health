@@ -44,6 +44,7 @@ class Proc(Protocol):
     """The part of `subprocess.Popen` that serving uses."""
 
     returncode: int | None
+    pid: int
 
     def poll(self) -> int | None: ...
 
