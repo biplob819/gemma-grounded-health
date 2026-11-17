@@ -28,6 +28,13 @@ from ggh.evals.tasks import LABELS, SMOKE_TASK, prompts
 from ggh.serve import llama
 
 OUT = Path("docs") / "measurements" / "serving_checks.json"
+
+
+def out_path(model: str) -> Path:
+    """The base keeps E3.1's file; the fine-tune gets its own (X3.1)."""
+    return OUT if model == "base" else OUT.with_name(f"serving_checks_{model}.json")
+
+
 MAX_OUTPUT_TOKENS = 2048  # configs/evalkit.yaml
 N = 20
 

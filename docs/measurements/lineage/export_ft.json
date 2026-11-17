@@ -1,0 +1,37 @@
+{
+  "stage": "export",
+  "code_version": "1",
+  "key": "f5dccf8a3851c0497fe4d14f20388c9477791855a4f484c4754814968295fbf3",
+  "inputs": {
+    "hf://google/gemma-4-E2B-it@4adf15748de9e1a0097b6274cee9c15836c41c37/model.safetensors": "2db5482b20d746879bb3ef79b5203e9075a2e2b98f54ec7c2f281c1477ddc550",
+    "artifacts/adapter/adapter_config.json": "17c0c0526c410b1a2aecbf74d67594f8f5f961993b7c9d7a955341674274bcf9",
+    "artifacts/adapter/adapter_model.safetensors": "8891cd0653155ff82d59900ee48eec208cf682b215ad0f6488d8863baee123f4"
+  },
+  "outputs": {
+    "artifacts/merged/ft-bf16/model.safetensors": "b09550be7b5b3848db0d5c0ad84f535e5d18e9f419cf65a40015c0d7892837d5",
+    "artifacts/merged/ft-bf16/config.json": "44d5e8d9938ed73b132bbdb17f0902860d585400b706615aab648baf69d4243a",
+    "artifacts/merged/ft-bf16/tokenizer.json": "ab26b2add729e6f645bd869f228f14190a06615538f3be6f7786f33d13d78ad2",
+    "artifacts/merged/ft-bf16/tokenizer_config.json": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+    "artifacts/merged/ft-bf16/chat_template.jinja": "0a2c8073c878ab1da004bee933a998606537bbb62016310352c7285c3f01c5b5",
+    "artifacts/gguf/ft-f16.gguf": "2de741224aa8d0f004766ca05dcb6434d4d7b5e71a63095046502c8665e92244",
+    "artifacts/gguf/ft-Q4_K_M.gguf": "f2beaeaddcb494f49985255ad138ac8efcebd03ffbe5decb149a81110957f0ae",
+    "artifacts/gguf/ft-Q8_0.gguf": "9aee8a0dfc60b1a0eb5595456ebb1c23e38332e486798fcdcf6028bf1e572b06"
+  },
+  "params": {
+    "llama_cpp": "b12421",
+    "release_sha256": "bdeff25d862f1c9b9526ce2c373492e67656659b2ac386308c28b4808f4d074d",
+    "steps": [
+      "convert_hf_to_gguf.py --outtype f16",
+      "llama-quantize Q4_K_M",
+      "llama-quantize Q8_0"
+    ],
+    "merge": "bf16 on CPU, peft merge_and_unload"
+  },
+  "seed": 7,
+  "parents": [
+    "99867c532a5e4ae2cb5ef1868e7ffc8f59e3bae6e45aadc7672e4c03bff96586"
+  ],
+  "started_at": "2026-11-17T03:18:00.565987Z",
+  "finished_at": "2026-11-17T03:18:00.565987Z",
+  "host": "local"
+}

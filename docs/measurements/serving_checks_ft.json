@@ -1,0 +1,667 @@
+{
+  "llama_tag": "b12421",
+  "gguf": "ft-Q4_K_M.gguf",
+  "gguf_sha256": "f2beaeaddcb494f49985255ad138ac8efcebd03ffbe5decb149a81110957f0ae",
+  "server_args": [
+    "--model",
+    "model.gguf",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "8081",
+    "--n-gpu-layers",
+    "999",
+    "--parallel",
+    "1",
+    "--seed",
+    "7",
+    "--threads",
+    "8",
+    "--ctx-size",
+    "8192",
+    "--temp",
+    "0",
+    "--top-k",
+    "1",
+    "--jinja",
+    "--reasoning",
+    "off",
+    "--reasoning-budget",
+    "0",
+    "--no-webui"
+  ],
+  "parity": [
+    {
+      "id": "dev-20153496",
+      "n_tokens": 457,
+      "server_sha256": "0acd6339388cd126d737e98edf5580dcff5ae42a7eb6516ca3c0e8a8c439f825",
+      "hf_sha256": "0acd6339388cd126d737e98edf5580dcff5ae42a7eb6516ca3c0e8a8c439f825",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-27433460",
+      "n_tokens": 470,
+      "server_sha256": "9fa1cd86e9b1529c537b147e009a3de7c0e001a3b842c259eb87bc1a6a10394f",
+      "hf_sha256": "9fa1cd86e9b1529c537b147e009a3de7c0e001a3b842c259eb87bc1a6a10394f",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-11045638",
+      "n_tokens": 485,
+      "server_sha256": "d4a416566bd7ab36d2181920aa96c83c31d0257f5fa35bd9032aa6bf73acd6d2",
+      "hf_sha256": "d4a416566bd7ab36d2181920aa96c83c31d0257f5fa35bd9032aa6bf73acd6d2",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-23112038",
+      "n_tokens": 382,
+      "server_sha256": "6a274602450795ae29781abb68c7c94f772369f64b2c81827bd56ea0543a9cae",
+      "hf_sha256": "6a274602450795ae29781abb68c7c94f772369f64b2c81827bd56ea0543a9cae",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-23787520",
+      "n_tokens": 482,
+      "server_sha256": "c6029e06c93be37a73db883159b3eee91507dcccd481dda3b55bfec7551ae64a",
+      "hf_sha256": "c6029e06c93be37a73db883159b3eee91507dcccd481dda3b55bfec7551ae64a",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-24896137",
+      "n_tokens": 494,
+      "server_sha256": "328e76f217795fc66f6d348c7b2da5daf76243ff9de87805b332d0b849862ad0",
+      "hf_sha256": "328e76f217795fc66f6d348c7b2da5daf76243ff9de87805b332d0b849862ad0",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-25257227",
+      "n_tokens": 368,
+      "server_sha256": "3a84d468301d386f3c7c129973151a0898ea0f11509f40532819fb4e2b3fce1b",
+      "hf_sha256": "3a84d468301d386f3c7c129973151a0898ea0f11509f40532819fb4e2b3fce1b",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-26361419",
+      "n_tokens": 919,
+      "server_sha256": "c86dc3041d7a1e4e44cff6579816eec765841a740626ddb3f74cbc3a2530fdf6",
+      "hf_sha256": "c86dc3041d7a1e4e44cff6579816eec765841a740626ddb3f74cbc3a2530fdf6",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-26390085",
+      "n_tokens": 391,
+      "server_sha256": "83200a49213162f2fb8f663883a1f7aaadcd7a845a4f68a25cb87ea6c9c43d9d",
+      "hf_sha256": "83200a49213162f2fb8f663883a1f7aaadcd7a845a4f68a25cb87ea6c9c43d9d",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-15712343",
+      "n_tokens": 459,
+      "server_sha256": "be23a634ef5c85d18e286ba540568a7b0a1079e6cdd0f7701a9d8b62851c159d",
+      "hf_sha256": "be23a634ef5c85d18e286ba540568a7b0a1079e6cdd0f7701a9d8b62851c159d",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-17536226",
+      "n_tokens": 510,
+      "server_sha256": "bf3217bb54fe8a1d093306bedce90f690ee3ff7f8404105a58e8d75c856ef697",
+      "hf_sha256": "bf3217bb54fe8a1d093306bedce90f690ee3ff7f8404105a58e8d75c856ef697",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-23070277",
+      "n_tokens": 478,
+      "server_sha256": "953f1932477d39695c862c7ee56a76b979f879bb7925a705e75bcf7ed422eea5",
+      "hf_sha256": "953f1932477d39695c862c7ee56a76b979f879bb7925a705e75bcf7ed422eea5",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-20105060",
+      "n_tokens": 442,
+      "server_sha256": "cb656572c6eb27487be8f242419affac48e36708bd34d557f9be6502ecadf69b",
+      "hf_sha256": "cb656572c6eb27487be8f242419affac48e36708bd34d557f9be6502ecadf69b",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-12213674",
+      "n_tokens": 549,
+      "server_sha256": "0981b08ecd0883ca6417a3d264e55a84551542c099115e43eca95bb09ebf8911",
+      "hf_sha256": "0981b08ecd0883ca6417a3d264e55a84551542c099115e43eca95bb09ebf8911",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-25299654",
+      "n_tokens": 421,
+      "server_sha256": "e67bf5e93a94c93e20aae5bbd625622b8b31e5273be9a810312ccb69fc5b025e",
+      "hf_sha256": "e67bf5e93a94c93e20aae5bbd625622b8b31e5273be9a810312ccb69fc5b025e",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-16129973",
+      "n_tokens": 544,
+      "server_sha256": "34fa13ede5642f5e5259a40748ae4466a208405c84519b47699b95440f23c04a",
+      "hf_sha256": "34fa13ede5642f5e5259a40748ae4466a208405c84519b47699b95440f23c04a",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-8635270",
+      "n_tokens": 590,
+      "server_sha256": "358d41b95e53a70c8a98b0fc51bf5f68a6931daf86214967cff6a858f62ba0da",
+      "hf_sha256": "358d41b95e53a70c8a98b0fc51bf5f68a6931daf86214967cff6a858f62ba0da",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-27557295",
+      "n_tokens": 456,
+      "server_sha256": "380c913d82a9a94d66c1d8b66da05c693cf947919f8ed48096a3d85e88aa85c2",
+      "hf_sha256": "380c913d82a9a94d66c1d8b66da05c693cf947919f8ed48096a3d85e88aa85c2",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-18721245",
+      "n_tokens": 506,
+      "server_sha256": "21f91c135a846f21debed86cb42c4f06cec8f4f09cd108c3b9e12256647a4513",
+      "hf_sha256": "21f91c135a846f21debed86cb42c4f06cec8f4f09cd108c3b9e12256647a4513",
+      "first_mismatch": null,
+      "equal": true
+    },
+    {
+      "id": "dev-8751598",
+      "n_tokens": 457,
+      "server_sha256": "e459fde6afda5cf02c65a6cb59d60aeaf0192eb4569e3c6c7c264efdd811be22",
+      "hf_sha256": "e459fde6afda5cf02c65a6cb59d60aeaf0192eb4569e3c6c7c264efdd811be22",
+      "first_mismatch": null,
+      "equal": true
+    }
+  ],
+  "structured": [
+    {
+      "id": "dev-20153496",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"no\", \"answer\": \"Pharmacologic or genetic depletion of initially involved muscularis macrophages does not affect anastomotic healing.\", \"citations\": [2, 3, 4, 7]}",
+        "latency_ms": 712,
+        "tokens_out": 52
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"no\", \"answer\": \"Pharmacologic or genetic depletion of muscularis macrophages does not affect anastomotic healing.\", \"citations\": [3, 4, 7]}",
+        "latency_ms": 351,
+        "tokens_out": 39
+      }
+    },
+    {
+      "id": "dev-27433460",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"Protrusion of the tumor is a predictor of early recurrence in patients with spontaneously ruptured HCC after hepatectomy.\", \"citations\": [1, 2, 4]}",
+        "latency_ms": 577,
+        "tokens_out": 54
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"Protrusion of the tumor is a predictor of early recurrence in patients with spontaneously ruptured HCC after hepatectomy.\", \"citations\": [1, 2, 4]}",
+        "latency_ms": 410,
+        "tokens_out": 46
+      }
+    },
+    {
+      "id": "dev-11045638",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"LIF expression is strongly present in the epidermal, dermal, and subdermal tissues of the graft skin.\", \"citations\": [10]}",
+        "latency_ms": 521,
+        "tokens_out": 47
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"LIF expression is strongly present in the graft skin and the host tissue.\", \"citations\": [10]}",
+        "latency_ms": 297,
+        "tokens_out": 33
+      }
+    },
+    {
+      "id": "dev-23112038",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"The 1.8 mm incision size resulted in the lowest SIA.\", \"citations\": [5, 8]}",
+        "latency_ms": 456,
+        "tokens_out": 42
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"The 1.8 mm incision size resulted in the lowest SIA.\", \"citations\": [5, 8]}",
+        "latency_ms": 302,
+        "tokens_out": 34
+      }
+    },
+    {
+      "id": "dev-23787520",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"Kinship care is a better model to ensure psychosocial and economic security to AIDS orphans than from care homes.\", \"citations\": [2, 5]}",
+        "latency_ms": 538,
+        "tokens_out": 49
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"Kinship care is a better model to ensure psychosocial and economic security to AIDS orphans than from care homes.\", \"citations\": [2, 5]}",
+        "latency_ms": 368,
+        "tokens_out": 41
+      }
+    },
+    {
+      "id": "dev-24896137",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"no\", \"answer\": \"Pazopanib eye drops were well tolerated in healthy subjects and in subjects with neovascular age-related macular degeneration.\", \"citations\": [1, 3]}",
+        "latency_ms": 561,
+        "tokens_out": 52
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"no\", \"answer\": \"Pazopanib eye drops were well tolerated in healthy subjects and in subjects with neovascular age-related macular degeneration.\", \"citations\": [1, 3]}",
+        "latency_ms": 396,
+        "tokens_out": 44
+      }
+    },
+    {
+      "id": "dev-25257227",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"no\", \"answer\": \"Luminal serration was not seen in any of the remaining VA/TVAs.\", \"citations\": [5]}",
+        "latency_ms": 455,
+        "tokens_out": 42
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"no\", \"answer\": \"Luminal serration was not seen in any of the remaining VA/TVAs.\", \"citations\": [5]}",
+        "latency_ms": 304,
+        "tokens_out": 34
+      }
+    },
+    {
+      "id": "dev-26361419",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"The combination of GSI-I and IL-24 can inhibit the invasion and migration of HCC cells.\", \"citations\": [1, 8, 17]}",
+        "latency_ms": 654,
+        "tokens_out": 54
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"The combination of GSI-I and IL-24 can inhibit the invasion and migration of HCC cells.\", \"citations\": [1, 8, 17]}",
+        "latency_ms": 404,
+        "tokens_out": 46
+      }
+    },
+    {
+      "id": "dev-26390085",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"CLOCK plays a key role in the regulation of the ovarian cycle and the risk of spontaneous abortion.\", \"citations\": [1, 2, 6, 7]}",
+        "latency_ms": 562,
+        "tokens_out": 53
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"CLOCK plays a key role in the regulation of the ovarian cycle and the risk of spontaneous abortion.\", \"citations\": [1, 2, 6, 7]}",
+        "latency_ms": 400,
+        "tokens_out": 45
+      }
+    },
+    {
+      "id": "dev-15712343",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"Nonviral nucleic acid delivery is a powerful tool for genetic modification of hMSC.\", \"citations\": [3, 4]}",
+        "latency_ms": 497,
+        "tokens_out": 44
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"Nonviral nucleic acid delivery is a powerful tool for genetic modification of hMSC.\", \"citations\": [3, 4]}",
+        "latency_ms": 326,
+        "tokens_out": 36
+      }
+    },
+    {
+      "id": "dev-17536226",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"Indapamide may decrease plasma adiponectin concentration in patients with essential hypertension.\", \"citations\": [2, 4, 8]}",
+        "latency_ms": 521,
+        "tokens_out": 47
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"Indapamide may have a beneficial effect on plasma adiponectin concentration in patients with essential hypertension.\", \"citations\": [2, 4, 8]}",
+        "latency_ms": 386,
+        "tokens_out": 43
+      }
+    },
+    {
+      "id": "dev-23070277",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"sCysC levels are significantly higher in preterm neonates with RDS and AKI compared to neonates with RDS but no AKI and control neonates.\", \"citations\": [7]}",
+        "latency_ms": 607,
+        "tokens_out": 57
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"sCysC levels are significantly higher in preterm neonates with RDS and AKI compared to neonates with RDS but no AKI and control neonates.\", \"citations\": [7]}",
+        "latency_ms": 435,
+        "tokens_out": 49
+      }
+    },
+    {
+      "id": "dev-20105060",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"The complex mixture of ambient air pollutants, PM, CO, and NO(2), can alter the regulation of HR and HRV in aged mice.\", \"citations\": [3, 7]}",
+        "latency_ms": 595,
+        "tokens_out": 57
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"The complex mixture of ambient air pollutants has a significant effect on the regulation of HR and HRV in aged mice.\", \"citations\": [3, 7]}",
+        "latency_ms": 374,
+        "tokens_out": 42
+      }
+    },
+    {
+      "id": "dev-12213674",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"TRH regulates the diurnal variation of PPII activity in the male rat adenohypophysis.\", \"citations\": [4]}",
+        "latency_ms": 524,
+        "tokens_out": 45
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"TRH regulates the diurnal variation of PPII activity in the male rat adenohypophysis.\", \"citations\": [4]}",
+        "latency_ms": 324,
+        "tokens_out": 37
+      }
+    },
+    {
+      "id": "dev-25299654",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"Hyperferritinaemia is associated with extensive immune activation and coagulation disturbances in dengue virus infected patients.\", \"citations\": [3]}",
+        "latency_ms": 488,
+        "tokens_out": 45
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"Hyperferritinaemia is associated with extensive immune activation and coagulation disturbances in dengue virus infected patients.\", \"citations\": [3]}",
+        "latency_ms": 335,
+        "tokens_out": 37
+      }
+    },
+    {
+      "id": "dev-16129973",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"Desflurane increased heart rate, mean arterial blood pressure, and coughing and body movements during the use of the LMA.\", \"citations\": [10]}",
+        "latency_ms": 573,
+        "tokens_out": 52
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"Desflurane titration to 12% increased heart rate, mean arterial blood pressure, and initiated frequent coughing and body movements.\", \"citations\": [10]}",
+        "latency_ms": 393,
+        "tokens_out": 45
+      }
+    },
+    {
+      "id": "dev-8635270",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"Aminoguanidine prevents the decreased myocardial compliance produced by streptozotocin-induced diabetes mellitus in rats.\", \"citations\": [3, 8]}",
+        "latency_ms": 566,
+        "tokens_out": 50
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"Aminoguanidine prevents the decreased myocardial compliance produced by streptozotocin-induced diabetes mellitus in rats.\", \"citations\": [3, 8]}",
+        "latency_ms": 366,
+        "tokens_out": 42
+      }
+    },
+    {
+      "id": "dev-27557295",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"The multimarker detection of circulating melanoma cells is a useful prognostic and pharmacodynamic biomarker in patients with metastatic melanoma treated with ipilimumab.\", \"citations\": [4]}",
+        "latency_ms": 563,
+        "tokens_out": 53
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"The multimarker detection of circulating melanoma cells is a useful prognostic and pharmacodynamic biomarker in patients with metastatic melanoma treated with ipilimumab.\", \"citations\": [4]}",
+        "latency_ms": 400,
+        "tokens_out": 45
+      }
+    },
+    {
+      "id": "dev-18721245",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"IDO is important in the development of mucosal tolerance to OVA.\", \"citations\": [4]}",
+        "latency_ms": 458,
+        "tokens_out": 37
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"IDO is important in the development of mucosal tolerance to OVA.\", \"citations\": [4]}",
+        "latency_ms": 262,
+        "tokens_out": 29
+      }
+    },
+    {
+      "id": "dev-8751598",
+      "constrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"no\", \"answer\": \"NO-mediated regulation of glutathione synthesis is not dependent on the presence of soluble guanylyl cyclase.\", \"citations\": [5, 9]}",
+        "latency_ms": 532,
+        "tokens_out": 48
+      },
+      "unconstrained": {
+        "valid": true,
+        "error": null,
+        "raw_text": "{\"label\": \"yes\", \"answer\": \"NO-mediated regulation of glutathione synthesis is independent of the role of soluble guanylyl cyclase.\", \"citations\": [5, 9]}",
+        "latency_ms": 389,
+        "tokens_out": 39
+      }
+    }
+  ],
+  "determinism": [
+    {
+      "id": "dev-20153496",
+      "sha256_first": "d174fa3e4d1afde2aafa9d7e395f5ea8d5d624692d800b02c82e3dd6b976e3f4",
+      "sha256_second": "d174fa3e4d1afde2aafa9d7e395f5ea8d5d624692d800b02c82e3dd6b976e3f4",
+      "identical": true
+    },
+    {
+      "id": "dev-27433460",
+      "sha256_first": "10416ee9ad19b07e3cb77a4f45c55751e4ad56bfbf8c07b4456348563979d12c",
+      "sha256_second": "10416ee9ad19b07e3cb77a4f45c55751e4ad56bfbf8c07b4456348563979d12c",
+      "identical": true
+    },
+    {
+      "id": "dev-11045638",
+      "sha256_first": "cb0f52fc40add574884b566c995b6de0c0891c7a07652c03449e02e7314e3b5f",
+      "sha256_second": "cb0f52fc40add574884b566c995b6de0c0891c7a07652c03449e02e7314e3b5f",
+      "identical": true
+    },
+    {
+      "id": "dev-23112038",
+      "sha256_first": "477eccb68b50f4dc91d514fe401e590433eb64a1e3d9d8d6fa63e81d394d1040",
+      "sha256_second": "477eccb68b50f4dc91d514fe401e590433eb64a1e3d9d8d6fa63e81d394d1040",
+      "identical": true
+    },
+    {
+      "id": "dev-23787520",
+      "sha256_first": "927d31df5051aba3a443b4e4e968f6d5867ce15ce9838eeccc4ec5d983824cc6",
+      "sha256_second": "927d31df5051aba3a443b4e4e968f6d5867ce15ce9838eeccc4ec5d983824cc6",
+      "identical": true
+    },
+    {
+      "id": "dev-24896137",
+      "sha256_first": "b00343cb75542e50dcd584ce54bc114c1089f71cc7fd6018e95300b8e2836d4b",
+      "sha256_second": "b00343cb75542e50dcd584ce54bc114c1089f71cc7fd6018e95300b8e2836d4b",
+      "identical": true
+    },
+    {
+      "id": "dev-25257227",
+      "sha256_first": "6347d0e797caaa4f381ae53446667c1b45cc1b8a1b288b1f63f2f819f7e083c2",
+      "sha256_second": "6347d0e797caaa4f381ae53446667c1b45cc1b8a1b288b1f63f2f819f7e083c2",
+      "identical": true
+    },
+    {
+      "id": "dev-26361419",
+      "sha256_first": "92eaf4b0d77f40bd260733e16f47339f2b9ea842fef3785744f76460dbb96ff6",
+      "sha256_second": "92eaf4b0d77f40bd260733e16f47339f2b9ea842fef3785744f76460dbb96ff6",
+      "identical": true
+    },
+    {
+      "id": "dev-26390085",
+      "sha256_first": "93135bbad33a2eadc9f2b9220e67d10049c99d202ee7fdda057d9b8f9a1edac6",
+      "sha256_second": "93135bbad33a2eadc9f2b9220e67d10049c99d202ee7fdda057d9b8f9a1edac6",
+      "identical": true
+    },
+    {
+      "id": "dev-15712343",
+      "sha256_first": "bff41c989e7efd724d59105dc44b6a20f05735fed471641e344db1c1d6fa1e4d",
+      "sha256_second": "bff41c989e7efd724d59105dc44b6a20f05735fed471641e344db1c1d6fa1e4d",
+      "identical": true
+    },
+    {
+      "id": "dev-17536226",
+      "sha256_first": "e8a925ae7760d3f71eaf451e5139953ea48cd84a39fb8c892c6d9148f97c5563",
+      "sha256_second": "e8a925ae7760d3f71eaf451e5139953ea48cd84a39fb8c892c6d9148f97c5563",
+      "identical": true
+    },
+    {
+      "id": "dev-23070277",
+      "sha256_first": "38708a661ec84e7aac5694989050f25a95d4abcee6a6741d112f7d0fb16acfc3",
+      "sha256_second": "38708a661ec84e7aac5694989050f25a95d4abcee6a6741d112f7d0fb16acfc3",
+      "identical": true
+    },
+    {
+      "id": "dev-20105060",
+      "sha256_first": "75e2b45fd25979db92bca48deee9fe57be8a4d67cfa0d6755ee33a9935abb742",
+      "sha256_second": "75e2b45fd25979db92bca48deee9fe57be8a4d67cfa0d6755ee33a9935abb742",
+      "identical": true
+    },
+    {
+      "id": "dev-12213674",
+      "sha256_first": "5d6d0b927324423c9b707cc631f77212dea274c46180716a64d86f4733b788f6",
+      "sha256_second": "5d6d0b927324423c9b707cc631f77212dea274c46180716a64d86f4733b788f6",
+      "identical": true
+    },
+    {
+      "id": "dev-25299654",
+      "sha256_first": "8194c949a4ff82f2365437840eb238ef49d34b703fbdd35f6e90dfa460831269",
+      "sha256_second": "8194c949a4ff82f2365437840eb238ef49d34b703fbdd35f6e90dfa460831269",
+      "identical": true
+    },
+    {
+      "id": "dev-16129973",
+      "sha256_first": "bc558e35082f5f632b9e5b4f77d3e7d4902a76e0b1d40de7c93332f6d6d2c20d",
+      "sha256_second": "bc558e35082f5f632b9e5b4f77d3e7d4902a76e0b1d40de7c93332f6d6d2c20d",
+      "identical": true
+    },
+    {
+      "id": "dev-8635270",
+      "sha256_first": "7c851562cb0ccbacb012e4a8d7fc704340141e93d16ec03d71b864024c6db0d4",
+      "sha256_second": "7c851562cb0ccbacb012e4a8d7fc704340141e93d16ec03d71b864024c6db0d4",
+      "identical": true
+    },
+    {
+      "id": "dev-27557295",
+      "sha256_first": "fc1948686b687d00700fb63c04c701a29a3bccbc168d35dbb2415e349b07b81a",
+      "sha256_second": "fc1948686b687d00700fb63c04c701a29a3bccbc168d35dbb2415e349b07b81a",
+      "identical": true
+    },
+    {
+      "id": "dev-18721245",
+      "sha256_first": "0d7b0a1401c85add2d542abace0642c960b6bea96ce535f6a3920fa677185e49",
+      "sha256_second": "0d7b0a1401c85add2d542abace0642c960b6bea96ce535f6a3920fa677185e49",
+      "identical": true
+    },
+    {
+      "id": "dev-8751598",
+      "sha256_first": "90ad2a337823b7085d686e10ff4a7e29f2f55df801e6475c91ff02ad8e09edeb",
+      "sha256_second": "90ad2a337823b7085d686e10ff4a7e29f2f55df801e6475c91ff02ad8e09edeb",
+      "identical": true
+    }
+  ],
+  "summary": {
+    "parity_equal": 20,
+    "constrained_valid": 20,
+    "unconstrained_valid": 20,
+    "identical_reruns": 20,
+    "n": 20
+  },
+  "passed": true
+}

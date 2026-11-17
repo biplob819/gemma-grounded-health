@@ -1,0 +1,33 @@
+{
+  "stage": "data",
+  "code_version": "1",
+  "key": "e1a3f6bc37ab7be4e335b18e76b0b3bf442607f196d61546a0466ffa92378066",
+  "inputs": {
+    "hf://qiaojin/PubMedQA@9001f2853fb87cab8d220904e0de81ac6973b318/pqa_artificial/train-00000-of-00001.parquet": "cdee2d3c01369f47d2ea7b89cd32ee64b142cc0debcb863bf39b3a81a3cece05",
+    "hf://qiaojin/PubMedQA@9001f2853fb87cab8d220904e0de81ac6973b318/pqa_labeled/train-00000-of-00001.parquet": "3d56bd1abc11884579ecc3aab9dd3cdfce8b7cf54715daeca93b8022b7be231c",
+    "data/offscope_eval.jsonl": "0c110a35fa7e6182daef833ce388ea72867e2e5973b50d025efb5b0f7890073d"
+  },
+  "outputs": {
+    "artifacts/data/train_pool.jsonl": "2b0fbc29466ef0f44f07a8538e5b301a1fd037412472109bbb9c841514c0eb8d",
+    "artifacts/data/val.jsonl": "73bf3f4ca5715e0bd552e34b541b44949587aba9a14bf7149d3bada81ece628a",
+    "artifacts/data/dev_eval.jsonl": "4210c085a0046271bc346c988723982a59683811bb45b0fe5201801f97b58316",
+    "artifacts/data/overlap_report.json": "5ad72a002c4b6da52c29514015dea35ad6bc2a4520373623ff82f5fd79233b1e",
+    "artifacts/data/length_report.json": "f946c68a292ec8b3fa58df8a92ea4d06297a073ace162da745006c7bb878b393",
+    "docs/measurements/data_overlap_report.json": "5ad72a002c4b6da52c29514015dea35ad6bc2a4520373623ff82f5fd79233b1e",
+    "docs/measurements/data_length_report.json": "f946c68a292ec8b3fa58df8a92ea4d06297a073ace162da745006c7bb878b393",
+    "docs/measurements/data_manifest.json": "0bc88120d8074f303f64d4e409628949bfadffff77f30f1caff23ec98d4e62d3"
+  },
+  "params": {
+    "seed": 7,
+    "n_val": 2000,
+    "n_dev_eval": 500,
+    "shingle": 8,
+    "jaccard_drop": 0.5,
+    "evalkit": "06591f8de9b178078c971940a83019a6530fd119"
+  },
+  "seed": 7,
+  "parents": [],
+  "started_at": "2026-11-15T15:05:37.767873Z",
+  "finished_at": "2026-11-15T15:08:35.839045Z",
+  "host": "local"
+}

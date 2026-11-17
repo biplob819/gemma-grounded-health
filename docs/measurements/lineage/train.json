@@ -1,0 +1,28 @@
+{
+  "stage": "train",
+  "code_version": "1",
+  "key": "99867c532a5e4ae2cb5ef1868e7ffc8f59e3bae6e45aadc7672e4c03bff96586",
+  "inputs": {
+    "artifacts/targets/train.jsonl": "5b9a225df93f7824ccf230175e63f7177e006a594d51837f62f2a2642595ce4f",
+    "artifacts/targets/val.jsonl": "e6f716fbaf1cd3792e91102e8c03a98d65350dd8f5eb8c6b19cfcf4997e21dc2",
+    "configs/recipe.yaml": "280b5b082abf089813718af15fca7872fff54070c144c605513f67b7123076bf"
+  },
+  "outputs": {
+    "artifacts/adapter/adapter_config.json": "17c0c0526c410b1a2aecbf74d67594f8f5f961993b7c9d7a955341674274bcf9",
+    "artifacts/adapter/adapter_model.safetensors": "8891cd0653155ff82d59900ee48eec208cf682b215ad0f6488d8863baee123f4",
+    "docs/measurements/train_run.json": "437c1be5c119614e51195bd375b48ba919888b2e4a70fdad935328a108e0d6fc"
+  },
+  "params": {
+    "kaggle_kernel": "ggh-t22-train v1",
+    "repo_commit": "16ba41f43aa9b8a3d21219a504f1bff7938e7f0e",
+    "selected_step": 527,
+    "base": "google/gemma-4-E2B-it@4adf15748de9e1a0097b6274cee9c15836c41c37"
+  },
+  "seed": 7,
+  "parents": [
+    "381ae5ff400ba13e1de016d84c8097fef928c182dd46054835e692876ae4d371"
+  ],
+  "started_at": "2026-11-16T23:52:45Z",
+  "finished_at": "2026-11-17T02:05:57Z",
+  "host": "kaggle"
+}
