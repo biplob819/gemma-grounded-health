@@ -71,8 +71,8 @@ def test_written_tasks_share_abstracts_and_differ_only_in_wording(tmp_path):
     cs = cases()
     kept, rejected = P.build(cs, lambda q: "Rephrased: " + q, lambda c, p: P.Verdict(True, "r"))
     P.write(tmp_path, kept, rejected, cs)
-    orig = [json.loads(x) for x in (tmp_path / P.ORIGINAL_DATA).read_text().splitlines()]
-    para = [json.loads(x) for x in (tmp_path / P.PARAPHRASE_DATA).read_text().splitlines()]
+    orig = [json.loads(x) for x in (tmp_path / P.ORIGINAL_DATA).read_text(encoding="utf-8").splitlines()]
+    para = [json.loads(x) for x in (tmp_path / P.PARAPHRASE_DATA).read_text(encoding="utf-8").splitlines()]
     assert len(orig) == len(para) == 100
     for a, b in zip(orig, para, strict=True):
         assert a["id"] == b["id"] and a["context"] == b["context"] and a["label"] == b["label"]
