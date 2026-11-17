@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="640" viewBox="0 0 1180 640" font-family="Helvetica, Arial, sans-serif">
+<title>Gemma Grounded Health: data flow</title>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#55647d"/></marker></defs>
+<rect width="1180" height="640" fill="#ffffff"/>
+<text x="24" y="34" font-size="20" font-weight="700" fill="#1a2433">Gemma Grounded Health: data flow</text>
+<rect x="24" y="90" width="200" height="110" rx="8" fill="#eef6ee" stroke="#3b7a4a" stroke-width="1.5"/>
+<text x="124.0" y="112" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">PubMedQA (pinned)</text>
+<text x="124.0" y="132" text-anchor="middle" font-size="11.5" fill="#33405a">PQA-A: 211k auto-labelled</text>
+<text x="124.0" y="148" text-anchor="middle" font-size="11.5" fill="#33405a">PQA-L: 1,000 expert-labelled</text>
+<text x="124.0" y="164" text-anchor="middle" font-size="11.5" fill="#33405a">(test only, never trained on)</text>
+<rect x="264" y="90" width="200" height="110" rx="8" fill="#f5f7fb" stroke="#3b5b92" stroke-width="1.5"/>
+<text x="364.0" y="112" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">ggh data</text>
+<text x="364.0" y="132" text-anchor="middle" font-size="11.5" fill="#33405a">leakage check vs PQA-L</text>
+<text x="364.0" y="148" text-anchor="middle" font-size="11.5" fill="#33405a">train / val / dev splits</text>
+<text x="364.0" y="164" text-anchor="middle" font-size="11.5" fill="#33405a">EvalKit prompt rendering</text>
+<rect x="504" y="90" width="200" height="110" rx="8" fill="#f5f7fb" stroke="#3b5b92" stroke-width="1.5"/>
+<text x="604.0" y="112" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">ggh targets</text>
+<text x="604.0" y="132" text-anchor="middle" font-size="11.5" fill="#33405a">answer + citation targets</text>
+<text x="604.0" y="148" text-anchor="middle" font-size="11.5" fill="#33405a">NLI support filter</text>
+<text x="604.0" y="164" text-anchor="middle" font-size="11.5" fill="#33405a">50-example hand audit</text>
+<rect x="744" y="90" width="200" height="110" rx="8" fill="#fff6e8" stroke="#a8742a" stroke-width="1.5"/>
+<text x="844.0" y="112" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">Kaggle T4 (free GPU)</text>
+<text x="844.0" y="132" text-anchor="middle" font-size="11.5" fill="#33405a">QLoRA, Unsloth, 1 epoch</text>
+<text x="844.0" y="148" text-anchor="middle" font-size="11.5" fill="#33405a">527 steps, 2.2 GPU hours</text>
+<text x="844.0" y="164" text-anchor="middle" font-size="11.5" fill="#33405a">dev-set checkpoint choice</text>
+<rect x="964" y="90" width="192" height="110" rx="8" fill="#f5f7fb" stroke="#3b5b92" stroke-width="1.5"/>
+<text x="1060.0" y="112" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">Frozen adapter</text>
+<text x="1060.0" y="132" text-anchor="middle" font-size="11.5" fill="#33405a">hash recorded before</text>
+<text x="1060.0" y="148" text-anchor="middle" font-size="11.5" fill="#33405a">any test use</text>
+<text x="1060.0" y="164" text-anchor="middle" font-size="11.5" fill="#33405a">(TrainRun record)</text>
+<line x1="224" y1="145.0" x2="264" y2="145.0" stroke="#55647d" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="464" y1="145.0" x2="504" y2="145.0" stroke="#55647d" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="704" y1="145.0" x2="744" y2="145.0" stroke="#55647d" stroke-width="1.6" marker-end="url(#a)"/>
+<line x1="944" y1="145.0" x2="964" y2="145.0" stroke="#55647d" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="964" y="300" width="192" height="110" rx="8" fill="#f5f7fb" stroke="#3b5b92" stroke-width="1.5"/>
+<text x="1060.0" y="322" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">ggh merge + export</text>
+<text x="1060.0" y="342" text-anchor="middle" font-size="11.5" fill="#33405a">bf16 merge on CPU</text>
+<text x="1060.0" y="358" text-anchor="middle" font-size="11.5" fill="#33405a">llama.cpp b12421 GGUF</text>
+<text x="1060.0" y="374" text-anchor="middle" font-size="11.5" fill="#33405a">Q4_K_M 3.3 GB, Q8_0</text>
+<line x1="1060" y1="200" x2="1060" y2="300" stroke="#55647d" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="724" y="300" width="200" height="110" rx="8" fill="#fff6e8" stroke="#a8742a" stroke-width="1.5"/>
+<text x="824.0" y="322" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">ggh serve (laptop)</text>
+<text x="824.0" y="342" text-anchor="middle" font-size="11.5" fill="#33405a">llama-server, Metal</text>
+<text x="824.0" y="358" text-anchor="middle" font-size="11.5" fill="#33405a">greedy, one slot</text>
+<text x="824.0" y="374" text-anchor="middle" font-size="11.5" fill="#33405a">JSON-schema constrained</text>
+<line x1="964" y1="355.0" x2="924" y2="355.0" stroke="#55647d" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="404" y="300" width="280" height="110" rx="8" fill="#eef1fb" stroke="#3b5b92" stroke-width="1.5"/>
+<text x="544.0" y="322" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">EvalKit (pinned)</text>
+<text x="544.0" y="342" text-anchor="middle" font-size="11.5" fill="#33405a">same prompt + JSON schema for 4 models</text>
+<text x="544.0" y="358" text-anchor="middle" font-size="11.5" fill="#33405a">claims extracted, judged per claim</text>
+<text x="544.0" y="374" text-anchor="middle" font-size="11.5" fill="#33405a">against the cited sentences only</text>
+<line x1="724" y1="355.0" x2="684" y2="355.0" stroke="#55647d" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="824" y="292" text-anchor="middle" font-size="10.5" fill="#55647d">answers: Gemma base and fine-tuned</text>
+<rect x="24" y="300" width="200" height="110" rx="8" fill="#f4eefb" stroke="#6b4a9a" stroke-width="1.5"/>
+<text x="124.0" y="322" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">Frontier APIs</text>
+<text x="124.0" y="342" text-anchor="middle" font-size="11.5" fill="#33405a">Claude Haiku 5.5</text>
+<text x="124.0" y="358" text-anchor="middle" font-size="11.5" fill="#33405a">GPT-6 Luna</text>
+<text x="124.0" y="374" text-anchor="middle" font-size="11.5" fill="#33405a">(answers via API)</text>
+<line x1="224" y1="355.0" x2="404" y2="355.0" stroke="#55647d" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="314.0" y="349.0" text-anchor="middle" font-size="10.5" fill="#55647d">answers</text>
+<rect x="404" y="470" width="280" height="110" rx="8" fill="#f4eefb" stroke="#6b4a9a" stroke-width="1.5"/>
+<text x="544.0" y="492" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">Judges</text>
+<text x="544.0" y="512" text-anchor="middle" font-size="11.5" fill="#33405a">Claude Opus 5.5 + GPT-6.1 Sol</text>
+<text x="544.0" y="528" text-anchor="middle" font-size="11.5" fill="#33405a">two model families</text>
+<text x="544.0" y="544" text-anchor="middle" font-size="11.5" fill="#33405a">claim verdicts with evidence</text>
+<line x1="544" y1="410" x2="544" y2="470" stroke="#55647d" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="744" y="470" width="200" height="110" rx="8" fill="#eef6ee" stroke="#3b7a4a" stroke-width="1.5"/>
+<text x="844.0" y="492" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">Results</text>
+<text x="844.0" y="512" text-anchor="middle" font-size="11.5" fill="#33405a">accuracy, groundedness,</text>
+<text x="844.0" y="528" text-anchor="middle" font-size="11.5" fill="#33405a">correct and fully grounded</text>
+<text x="844.0" y="544" text-anchor="middle" font-size="11.5" fill="#33405a">95% intervals, Holm</text>
+<line x1="684" y1="525.0" x2="744" y2="525.0" stroke="#55647d" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="964" y="470" width="192" height="110" rx="8" fill="#f5f7fb" stroke="#3b5b92" stroke-width="1.5"/>
+<text x="1060.0" y="492" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">Release (planned)</text>
+<text x="1060.0" y="512" text-anchor="middle" font-size="11.5" fill="#33405a">model card, HF Hub</text>
+<text x="1060.0" y="528" text-anchor="middle" font-size="11.5" fill="#33405a">laptop GGUF</text>
+<text x="1060.0" y="544" text-anchor="middle" font-size="11.5" fill="#33405a">demo Space (passcode)</text>
+<line x1="944" y1="525.0" x2="964" y2="525.0" stroke="#55647d" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="24" y="620" font-size="11" fill="#55647d">Every stage writes a hashed manifest; the lineage chain is verified from results back to the dataset. Research only, not medical advice.</text>
+</svg>
