@@ -6,3 +6,4 @@
 {"at": "2026-11-16T20:59:55+00:00", "gpu_hours": 0.01, "kernel": "ggh-t21-pilot-trl v2", "kind": "pilot_correction", "node": "T2.1", "note": "the first entry undercut the session's log span (verifier round 1); this adds the difference"}
 {"at": "2026-11-16T22:20:25+00:00", "gpu": "Tesla T4", "gpu_hours": 1.32, "kernel": "ggh-t21-pilot-unsloth v2", "kind": "pilot", "node": "T2.1", "outcome": "complete: 300 steps on the pinned base"}
 {"at": "2026-11-16T23:48:38+00:00", "gpu": "Tesla T4", "gpu_hours": 0.22, "kernel": "ggh-t22-devsmoke v1", "kind": "smoke", "node": "T2.2", "outcome": "complete: dev-eval on 32 prompts with the pilot 2 checkpoint (schema 1.0 constrained and unconstrained)"}
+{"at": "2026-11-17T02:05:57+00:00", "gpu": "Tesla T4", "gpu_hours": 2.22, "kernel": "ggh-t22-train v1", "kind": "train", "node": "T2.2", "outcome": "complete: 527 steps, one epoch on the pinned base; dev-eval selected step 527"}

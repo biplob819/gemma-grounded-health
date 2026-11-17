@@ -1,0 +1,26 @@
+{
+  "selected_step": 527,
+  "adapter_sha256": "a7eca759bd0476462e8387af8c4486d4eff5cfd15fe9e14f036c1ec42cf9701e",
+  "tried": [
+    {
+      "step": 527,
+      "eval_loss": 0.7591971158981323,
+      "passed": true,
+      "failed": [],
+      "metrics": {
+        "n": 500,
+        "schema_valid": 1.0,
+        "schema_valid_unconstrained": 1.0,
+        "citation_valid": 1.0,
+        "has_citation": 1.0,
+        "label_accuracy": {
+          "no": 0.8372093023255814,
+          "yes": 0.9474835886214442
+        },
+        "mean_words": 15.07,
+        "over_80_words": 0.0
+      }
+    }
+  ],
+  "n_prompts": 500
+}

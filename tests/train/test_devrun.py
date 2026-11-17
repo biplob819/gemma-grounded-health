@@ -81,9 +81,10 @@ def test_dev_eval_tries_the_best_loss_first_and_copies_only_the_adapter(tmp_path
     assert not any(c[1] == "checkpoint-250" for c in calls)  # never needed
     assert sorted(p.name for p in (out / "adapter").iterdir()) == list(sel.ADAPTER_FILES)
     assert rec["adapter_sha256"] == sel.adapter_hash(out / "adapter")
-    gens = [json.loads(x) for x in (out / "generations.jsonl").read_text().splitlines()]
+    text = (out / "generations.jsonl").read_text(encoding="utf-8")
+    gens = [json.loads(x) for x in text.splitlines()]
     assert len(gens) == 6 and gens[0]["step"] == 527 and gens[0]["constrained"] == GOOD
-    assert json.loads((out / "selection.json").read_text()) == rec
+    assert json.loads((out / "selection.json").read_text(encoding="utf-8")) == rec
 
 
 def test_dev_eval_falls_back_to_the_next_checkpoint_and_records_why(tmp_path):
