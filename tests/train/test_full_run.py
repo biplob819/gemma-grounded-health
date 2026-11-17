@@ -9,6 +9,7 @@ from pathlib import Path
 from ggh.config import load_recipe
 from ggh.data.build import MANIFEST_PATH, read_jsonl
 from ggh.schemas import TrainRun
+from ggh.train.dev import dev_metrics
 from ggh.train.devrun import DEV_EVAL, sha256_file
 from ggh.train.notebook import render
 from ggh.train.run import config_hash
@@ -99,6 +100,24 @@ def test_dev_metrics_are_the_ones_recorded_in_spec_and_run_state():
     assert f"no {m.label_accuracy['no']:.3f}" in RUN_STATE
 
 
+def test_all_500_generations_reproduce_the_recorded_metrics():
+    rows = [json.loads(x) for x in gzip.decompress((M / "dev_generations.jsonl.gz")
+            .read_bytes()).decode("utf-8").splitlines() if x]  # fmt: skip
+    assert len(rows) == 500 and {r["step"] for r in rows} == {RUN.selected_step}
+    assert all(r["constrained"] == r["unconstrained"] for r in rows)  # byte-identical
+    m = RUN.dev_metrics
+    for lab in ("yes", "no"):  # label accuracy recomputed from the texts alone (CI)
+        mine = [r for r in rows if r["label"] == lab]
+        hit = sum(json.loads(r["constrained"])["label"] == lab for r in mine) / len(mine)
+        assert hit == m.label_accuracy[lab]
+    if (ROOT / DEV_EVAL).exists():  # every metric, with the sentences (local: data is built)
+        dev = {str(r["pmid"]): r for r in read_jsonl(ROOT / DEV_EVAL)}
+        src = [dev[str(r["pmid"])] for r in rows]
+        con, unc = [r["constrained"] for r in rows], [r["unconstrained"] for r in rows]
+        assert dev_metrics(src, con, unc) == m
+    assert [json.dumps(r) for r in rows[::25]] == [json.dumps(r) for r in SAMPLE]
+
+
 # TRN-04
 
 
@@ -132,6 +151,8 @@ def test_the_sample_reading_is_noted():
         gold = {str(r["pmid"]): r["label"] for r in read_jsonl(ROOT / DEV_EVAL)}
         assert all(r["label"] == gold[str(r["pmid"])] for r in SAMPLE)
     assert "Read the sample" in RUN_STATE and f"{right}/20" in RUN_STATE
+    first = sum(1 in json.loads(r["constrained"])["citations"] for r in SAMPLE)
+    assert f"{first} of 20 cite sentence [1]" in RUN_STATE
     for pmid in ("23472862", "24896137"):  # the two wrong labels, named
         assert pmid in RUN_STATE
 
@@ -142,7 +163,8 @@ def test_the_sample_reading_is_noted():
 def test_the_ledger_holds_the_session_no_less_than_its_log_span():
     (row,) = [r for r in ledger() if r.get("kernel") == "ggh-t22-train v1"]
     assert row["node"] == "T2.2" and row["kind"] == "train"
-    assert row["gpu_hours"] >= math.ceil(LOG[-1]["time"] / 36) / 100  # rounded up
+    # the session end (stricter than the span, which starts at 7 s), rounded up
+    assert row["gpu_hours"] >= math.ceil(LOG[-1]["time"] / 36) / 100
 
 
 def test_every_t22_kernel_is_in_the_ledger():

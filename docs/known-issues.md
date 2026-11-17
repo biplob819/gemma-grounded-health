@@ -33,4 +33,5 @@ finding that would leak a secret or publish a wrong number is never parked here.
 | T2.1 | The report keeps logged losses but not gradient norms (collected, then dropped); pilot 2's gradient norms were checked against its log by hand | Plausible | Low | Closed at T2.2: the report keeps them |
 | T2.2 | `save_total_limit=2` keeps at most two checkpoints, so §5.2's "try the next checkpoint" fallback can go one deep at most (unused: the first candidate passed) | Plausible | Low | Accepted; a rerun would raise the limit |
 | T2.2 | The downloaded adapter's hash match is tested only where `artifacts/adapter/` exists (it is gitignored), not in CI; `ggh freeze` checked it when the record was written | Plausible | Low | Accepted; R4.2's download-back check covers the published copy |
+| T2.2 | The run record (`train_full.json`, `train_run.json`, `train_selection.json`) is linked to the adapter through the selection's hash but is not yet published beside it | Plausible | Medium | Open; R4.2 must publish it in the model repo with the adapter (TRN-02) |
 | T2.2 | Skipped fp16 steps are counted (3) but their step numbers are not recorded | Contrived | Low | Accepted |
