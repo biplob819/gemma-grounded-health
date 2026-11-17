@@ -7,9 +7,9 @@ import math
 from pathlib import Path
 
 from ggh.config import load_recipe
-from ggh.data.build import MANIFEST_PATH
+from ggh.data.build import MANIFEST_PATH, read_jsonl
 from ggh.schemas import TrainRun
-from ggh.train.devrun import sha256_file
+from ggh.train.devrun import DEV_EVAL, sha256_file
 from ggh.train.notebook import render
 from ggh.train.run import config_hash
 from ggh.train.select import BAR, adapter_hash, failed_bars
@@ -127,7 +127,11 @@ def test_twenty_dev_generations_from_the_selected_step_are_kept():
 
 
 def test_the_sample_reading_is_noted():
-    assert "Read the sample" in RUN_STATE and "18/20" in RUN_STATE
+    right = sum(json.loads(r["constrained"])["label"] == r["label"] for r in SAMPLE)
+    if (ROOT / DEV_EVAL).exists():  # built locally by `ggh data` (gitignored); not in CI
+        gold = {str(r["pmid"]): r["label"] for r in read_jsonl(ROOT / DEV_EVAL)}
+        assert all(r["label"] == gold[str(r["pmid"])] for r in SAMPLE)
+    assert "Read the sample" in RUN_STATE and f"{right}/20" in RUN_STATE
     for pmid in ("23472862", "24896137"):  # the two wrong labels, named
         assert pmid in RUN_STATE
 
@@ -138,7 +142,7 @@ def test_the_sample_reading_is_noted():
 def test_the_ledger_holds_the_session_no_less_than_its_log_span():
     (row,) = [r for r in ledger() if r.get("kernel") == "ggh-t22-train v1"]
     assert row["node"] == "T2.2" and row["kind"] == "train"
-    assert row["gpu_hours"] >= round(LOG[-1]["time"] / 3600, 2)
+    assert row["gpu_hours"] >= math.ceil(LOG[-1]["time"] / 36) / 100  # rounded up
 
 
 def test_every_t22_kernel_is_in_the_ledger():
