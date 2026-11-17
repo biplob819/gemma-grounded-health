@@ -86,6 +86,7 @@ def test_workload_discards_three_warmups_then_runs_three_repetitions():
 
 
 def test_the_server_gets_ggh_serve_arguments_on_its_own_port(tmp_path, monkeypatch):
+    monkeypatch.setattr(llama, "tool", lambda name, cache=None: Path("/v") / name)  # no cache in CI
     gguf = tmp_path / llama.GGUF_DIR / "ft-Q4_K_M.gguf"
     gguf.parent.mkdir(parents=True)
     gguf.write_bytes(b"x" * 2**20)
