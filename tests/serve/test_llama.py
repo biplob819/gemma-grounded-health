@@ -152,6 +152,7 @@ class FakeProc:
         self.code = code
         self.returncode = code
         self.terminated = False
+        self.pid = 4242
 
     def poll(self):
         return self.code

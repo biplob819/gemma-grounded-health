@@ -1,6 +1,6 @@
 """`ggh` commands for serving and EvalKit integration (node E3.1): `llama fetch`, `export`,
 `serve`, `serve-check`, `tasks`, `evalkit-check` and `behaviour`; X3.1 adds `merge`, `parity`
-and `export-records`."""
+and `export-records`; X3.2 adds `bench`."""
 
 from __future__ import annotations
 
@@ -124,6 +124,31 @@ def _cmd_export_records(args: argparse.Namespace) -> int:
         q = r.quant or ""
         print(f"{r.kind:12} {r.model:4} {q:7} {r.sha256[:12]}…  parent {r.parent_key[:12]}…")
     print(f"export-records: {len(recs)} artifacts ({artifacts.RECORDS})")
+    return 0
+
+
+def _cmd_bench(args: argparse.Namespace) -> int:
+    from ggh.data.build import read_jsonl
+    from ggh.serve import bench, llama
+    from ggh.train.devrun import DEV_EVAL
+
+    root = Path(args.root)
+    try:
+        hw = bench.hardware()
+        bench.guard(hw)
+        prompts = bench.select_prompts(read_jsonl(root / DEV_EVAL))
+        results = {}
+        for model, quant in bench.VARIANTS:
+            print(f"bench: {model} {quant} …", flush=True)
+            results[f"{model}-{quant}"] = bench.bench_variant(root, model, quant, prompts, hw)
+            r = results[f"{model}-{quant}"]
+            print(f"  gen {r.gen_tps_p50} tok/s, ttft {r.ttft_ms_p50} ms, "
+                  f"latency p50 {r.answer_latency_ms_p50} ms, peak {r.peak_rss_mb} MB")  # fmt: skip
+        path = bench.write(root, results)
+    except (bench.BenchError, llama.LlamaError, OSError, ValueError) as exc:
+        return _fail("bench", exc)
+    gaps = bench.per_token_gap(results)
+    print(f"bench: wrote {path.relative_to(root)}; base/ft generation-speed gap {gaps}")
     return 0
 
 
@@ -263,6 +288,10 @@ def register(sub: Any) -> None:
     er = sub.add_parser("export-records", help="stage manifests and ExportArtifact records (X3.1)")
     er.add_argument("--root", default=".", help="repo root")
     er.set_defaults(func=_cmd_export_records)
+
+    bn = sub.add_parser("bench", help="laptop benchmark under Tech Spec §8 (X3.2)")
+    bn.add_argument("--root", default=".", help="repo root")
+    bn.set_defaults(func=_cmd_bench)
 
     sv = sub.add_parser("serve", help="start llama-server for base (8080) or ft (8081)")
     sv.add_argument("--model", default="base", choices=sorted(llama.PORTS))

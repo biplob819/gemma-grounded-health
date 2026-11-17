@@ -1,0 +1,93 @@
+{
+  "host_platform": "arm64",
+  "variants": {
+    "base-Q4_K_M": {
+      "chip": "Apple M3 Max",
+      "ram_gb": 64,
+      "os": "macOS 26.5.2",
+      "power": "ac",
+      "llama_cpp_commit": "b12421",
+      "quant": "Q4_K_M",
+      "model_file_mb": 3269.1,
+      "n_prompts": 50,
+      "repetitions": 3,
+      "prompt_tps_p50": 5205.5,
+      "gen_tps_p50": 109.7,
+      "gen_tps_p95": 113.7,
+      "ttft_ms_p50": 101,
+      "answer_latency_ms_p50": 809,
+      "answer_latency_ms_p95": 1272,
+      "peak_rss_mb": 4519.7,
+      "llama_bench": {
+        "pp512": 6962.666481,
+        "tg128": 115.959239
+      }
+    },
+    "ft-Q4_K_M": {
+      "chip": "Apple M3 Max",
+      "ram_gb": 64,
+      "os": "macOS 26.5.2",
+      "power": "ac",
+      "llama_cpp_commit": "b12421",
+      "quant": "Q4_K_M",
+      "model_file_mb": 3269.1,
+      "n_prompts": 50,
+      "repetitions": 3,
+      "prompt_tps_p50": 3973.6,
+      "gen_tps_p50": 107.8,
+      "gen_tps_p95": 110.2,
+      "ttft_ms_p50": 131,
+      "answer_latency_ms_p50": 583,
+      "answer_latency_ms_p95": 725,
+      "peak_rss_mb": 4509.3,
+      "llama_bench": {
+        "pp512": 6937.647063,
+        "tg128": 108.213677
+      }
+    },
+    "base-Q8_0": {
+      "chip": "Apple M3 Max",
+      "ram_gb": 64,
+      "os": "macOS 26.5.2",
+      "power": "ac",
+      "llama_cpp_commit": "b12421",
+      "quant": "Q8_0",
+      "model_file_mb": 4737.4,
+      "n_prompts": 50,
+      "repetitions": 3,
+      "prompt_tps_p50": 4680.1,
+      "gen_tps_p50": 82.8,
+      "gen_tps_p95": 84.9,
+      "ttft_ms_p50": 114,
+      "answer_latency_ms_p50": 1310,
+      "answer_latency_ms_p95": 1914,
+      "peak_rss_mb": 5975.4,
+      "llama_bench": {
+        "pp512": 7185.673931,
+        "tg128": 81.712143
+      }
+    },
+    "ft-Q8_0": {
+      "chip": "Apple M3 Max",
+      "ram_gb": 64,
+      "os": "macOS 26.5.2",
+      "power": "ac",
+      "llama_cpp_commit": "b12421",
+      "quant": "Q8_0",
+      "model_file_mb": 4737.4,
+      "n_prompts": 50,
+      "repetitions": 3,
+      "prompt_tps_p50": 3722.2,
+      "gen_tps_p50": 85.0,
+      "gen_tps_p95": 87.9,
+      "ttft_ms_p50": 142,
+      "answer_latency_ms_p50": 707,
+      "answer_latency_ms_p95": 886,
+      "peak_rss_mb": 5969.3,
+      "llama_bench": {
+        "pp512": 7035.667237,
+        "tg128": 75.381082
+      }
+    }
+  }
+}
