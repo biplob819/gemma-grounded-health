@@ -1,10 +1,13 @@
 """`ggh` commands for serving and EvalKit integration (node E3.1): `llama fetch`, `export`,
 `serve`, `serve-check`, `tasks`, `evalkit-check` and `behaviour`; X3.1 adds `merge`, `parity`
-and `export-records`; X3.2 adds `bench`."""
+and `export-records`; X3.2 adds `bench`;
+E3.2 adds `serve-hf` and
+`probe build`."""
 
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
 import sys
 from pathlib import Path
@@ -160,6 +163,50 @@ def _cmd_bench(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_serve_hf(args: argparse.Namespace) -> int:  # pragma: no cover - serves until Ctrl-C
+    from ggh.export import merge
+    from ggh.serve import hf
+
+    root = Path(args.root)
+    try:
+        gen = hf.transformers_generate(root / merge.MERGED_DIR)
+        server = hf.serve(gen, args.port)
+    except ImportError as exc:
+        return _fail("serve-hf", f"{exc}; it needs: uv sync --group train")
+    except OSError as exc:
+        return _fail("serve-hf", exc)
+    print(
+        f"serving {hf.MODEL_ID} (bf16, Transformers) at http://{hf.HOST}:{args.port}/v1", flush=True
+    )
+    with contextlib.suppress(KeyboardInterrupt):
+        server.serve_forever()
+    return 0
+
+
+def _cmd_probe_build(args: argparse.Namespace) -> int:  # pragma: no cover - paid API calls
+    from evalkit.datasets.pubmedqa import load_pqa_l
+
+    from ggh import ledger
+    from ggh.evals import probe
+
+    root = Path(args.root)
+    spend = probe.Spend()
+    try:
+        cases = load_pqa_l()
+        para, check = probe.live_callers(spend)
+        kept, rejected = probe.build(cases, para, check)
+        probe.write(root, kept, rejected, cases)
+    except (OSError, ValueError, ImportError) as exc:
+        return _fail("probe build", exc)
+    finally:
+        if spend.calls:
+            ledger.append(root / "docs/measurements/spend-ledger.jsonl", "probe_build", "spent_usd",
+                          round(spend.usd, 6), node="E3.2", calls=spend.calls,
+                          models=[probe.PARAPHRASE_MODEL, probe.CHECK_MODEL])  # fmt: skip
+    print(f"probe build: {len(kept)} kept, {len(rejected)} rejected, ${spend.usd:.4f}")
+    return 0
+
+
 def _cmd_serve(args: argparse.Namespace) -> int:
     from ggh.serve import llama
 
@@ -296,6 +343,17 @@ def register(sub: Any) -> None:
     er = sub.add_parser("export-records", help="stage manifests and ExportArtifact records (X3.1)")
     er.add_argument("--root", default=".", help="repo root")
     er.set_defaults(func=_cmd_export_records)
+
+    sh = sub.add_parser("serve-hf", help="OpenAI-compatible bf16 fine-tune server (E3.2 parity)")
+    sh.add_argument("--port", type=int, default=8082)
+    sh.add_argument("--root", default=".", help="repo root")
+    sh.set_defaults(func=_cmd_serve_hf)
+
+    pb = sub.add_parser("probe", help="paraphrase probe set (E3.2, D-42)")
+    pbs = pb.add_subparsers(dest="probe_command", required=True)
+    pbb = pbs.add_parser("build", help="paraphrase and check 100 PQA-L questions (paid)")
+    pbb.add_argument("--root", default=".", help="repo root")
+    pbb.set_defaults(func=_cmd_probe_build)
 
     bn = sub.add_parser("bench", help="laptop benchmark under Tech Spec §8 (X3.2)")
     bn.add_argument("--root", default=".", help="repo root")
