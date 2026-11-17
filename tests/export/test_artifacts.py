@@ -137,15 +137,15 @@ def test_the_train_manifest_refuses_another_recipe_or_adapter(repo):
     root, _ = repo
     (root / ADAPTER_DIR / "adapter_config.json").write_bytes(b"{}")
     with pytest.raises(ValueError, match="not the frozen adapter"):
-        A.train_manifest(root, now=lambda: T0)
+        A.train_manifest(root)
     (root / "configs/recipe.yaml").write_bytes(b"seed: 8\n")
     with pytest.raises(ValueError, match="not the recipe the run recorded"):
-        A.train_manifest(root, now=lambda: T0)
+        A.train_manifest(root)
 
 
 def test_the_train_manifest_spans_the_kaggle_session_from_the_ledger(repo):
     root, _ = repo
-    m = A.train_manifest(root, now=lambda: T0)
+    m = A.train_manifest(root)
     (row,) = [json.loads(x) for x in (ROOT / A.LEDGER).read_text(encoding="utf-8").splitlines()
               if x and json.loads(x).get("kernel") == "ggh-t22-train v1"]  # fmt: skip
     assert m.finished_at == dt.datetime.fromisoformat(row["at"])

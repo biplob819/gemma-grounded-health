@@ -75,7 +75,7 @@ def _manifest(stage: str, inputs: Mapping[str, str], outputs: Mapping[str, str],
     )
 
 
-def train_manifest(root: Path, now: Clock = _now) -> StageManifest:
+def train_manifest(root: Path) -> StageManifest:
     """The Kaggle run, recorded locally from `TrainRun` (D-10): its inputs are the targets
     stage's outputs (replayed byte-identically on Kaggle) and the recipe."""
     run = TrainRun.model_validate_json((root / TRAIN_RUN).read_text(encoding="utf-8"))
@@ -101,7 +101,9 @@ def train_manifest(root: Path, now: Clock = _now) -> StageManifest:
 
 
 def session_times(root: Path, kernel: str) -> tuple[dt.datetime, dt.datetime]:
-    """The Kaggle session's span from its GPU ledger entry: it ended at `at`, after `gpu_hours`."""
+    """An approximate span of the Kaggle session from its GPU ledger entry: `at` is when the
+    entry was written (soon after the session ended) and `gpu_hours` is rounded up, so
+    `started_at` and `finished_at` are estimates, not the run's own clock."""
     rows = [json.loads(x) for x in (root / LEDGER).read_text(encoding="utf-8").splitlines() if x]
     (row,) = [r for r in rows if r.get("kernel") == kernel and r.get("kind") == "train"]
     end = dt.datetime.fromisoformat(row["at"])
@@ -178,7 +180,7 @@ def _write(root: Path, name: str, m: StageManifest) -> None:
 
 
 def write_all(root: Path, base_dir: Path, now: Clock = _now) -> list[ExportArtifact]:
-    train = train_manifest(root, now)
+    train = train_manifest(root)
     _write(root, "train", train)
     base = export_base_manifest(root, base_dir, now)
     _write(root, "export_base", base)
