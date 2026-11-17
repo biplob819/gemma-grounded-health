@@ -30,10 +30,22 @@ cost: "$53.68 for the v1 main run (1,000 questions, four models, dual judges)"
 case_study: docs/case-study.md
 
 methodology:
-  - Pre-registered comparisons, hashed before the main run
+  - Evaluated with EvalKit (pinned commit), all 1,000 expert-labelled PubMedQA questions
+  - Claim-level judging against the cited sentences only
   - Dual cross-family LLM judges (Claude Opus 5.5, GPT-6.1 Sol)
-  - Paired bootstrap 95% intervals, Holm correction
+  - Paired bootstrap 95% intervals, Holm correction, fixed separation rule
+  - Pre-registered comparisons, hashed before the main run
   - Checkpoint chosen on dev data only; test set never used for tuning
+
+story:
+  monitoring:
+    - { metric: "Correct and fully grounded (Opus judge)", kind: north-star, target: "Above base, separated", current: "0.388 (base 0.418)", how: "EvalKit main run on 1,000 PubMedQA questions, paired bootstrap with Holm correction" }
+    - { metric: "Claims supported by the cited sentences (Opus judge)", kind: quality, current: "0.519 (base 0.863)", how: "EvalKit claim-level verdicts; v2 bar fixed on dev before v2 is measured" }
+    - { metric: "Label accuracy", kind: quality, current: "0.728 (base 0.501)", how: "EvalKit label_correct with bootstrap intervals" }
+    - { metric: "Laptop file agrees with full precision on dev labels", kind: guardrail, target: "≥ 0.95", current: "0.956", how: "ggh parity on 500 dev questions before any benchmark" }
+    - { metric: "Spend per main run", kind: cost, target: "Hard cap $70", current: "$53.68", how: "EvalKit dry-run estimate first; every dollar in the spend ledger" }
+  next:
+    - "v2: training citations from result sentences only, chosen on a dev grounding check, then a second pre-registered run on the same 1,000 questions; v1's results stay published"
 
 proof:
   - { label: v1 main-run summary (JSON), url: https://github.com/biplob819/gemma-grounded-health/blob/main/docs/results/main/summary.json }
