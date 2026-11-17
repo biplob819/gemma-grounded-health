@@ -110,3 +110,12 @@ def test_requests_are_served_one_at_a_time(server):
 
 def test_the_server_binds_loopback_only():
     assert hf.HOST == "127.0.0.1" and hf.PORT not in (8080, 8081)
+
+
+def test_grammar_keeps_the_schemas_property_order():
+    from evalkit.pipeline.answer import answer_schema
+
+    sch = dict(answer_schema(("yes", "no", "maybe")))
+    src = json.loads(hf.grammar_source(sch))
+    assert list(src["properties"]) == ["label", "answer", "citations"]  # not sorted
+    assert list(json.loads(json.dumps(sch, sort_keys=True))["properties"])[0] == "answer"

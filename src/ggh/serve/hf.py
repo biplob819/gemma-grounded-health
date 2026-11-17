@@ -127,6 +127,13 @@ def serve(generate: Generate, port: int = PORT, model: str = MODEL_ID) -> Thread
     return ThreadingHTTPServer((HOST, port), make_handler(generate, model))
 
 
+def grammar_source(schema: dict[str, Any]) -> str:
+    """The schema text the grammar is compiled from, in the request's own key order: xgrammar
+    emits object properties in that order, so sorting the keys would put `answer` before
+    `label` (an order the model never saw in training)."""
+    return json.dumps(schema)
+
+
 def transformers_generate(merged: Any) -> Generate:  # pragma: no cover - 10 GB model on MPS
     """Greedy generation with the merged bf16 model; xgrammar when a schema is given."""
     import torch  # pyright: ignore[reportMissingImports]
@@ -149,9 +156,9 @@ def transformers_generate(merged: Any) -> Generate:  # pragma: no cover - 10 GB 
                                   "eos_token_id": stop_ids(tok),
                                   "pad_token_id": tok.pad_token_id or 0}  # fmt: skip
         if schema is not None:
-            key = json.dumps(schema, sort_keys=True)
-            if key not in compiled:
-                compiled[key] = compiler.compile_json_schema(key)  # any whitespace, as llama-server
+            key = json.dumps(schema, sort_keys=True)  # cache key only
+            if key not in compiled:  # any whitespace, as llama-server; property order kept
+                compiled[key] = compiler.compile_json_schema(grammar_source(schema))
             kwargs["logits_processor"] = [xgr.contrib.hf.LogitsProcessor(compiled[key])]
         with torch.no_grad():
             seq = model.generate(x, attention_mask=torch.ones_like(x), **kwargs)[0, x.shape[1] :]
