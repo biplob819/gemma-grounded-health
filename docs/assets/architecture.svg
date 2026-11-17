@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="640" viewBox="0 0 1180 640" font-family="Helvetica, Arial, sans-serif">
+<title>Gemma Grounded Health: architecture</title>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#55647d"/></marker></defs>
+<rect width="1180" height="640" fill="#ffffff"/>
+<text x="24" y="34" font-size="20" font-weight="700" fill="#1a2433">Gemma Grounded Health: architecture</text>
+<rect x="24" y="64" width="760" height="400" rx="10" fill="#fbfcfe" stroke="#9aa8c2" stroke-dasharray="5,4"/><text x="40" y="88" font-size="13" font-weight="700" fill="#33405a">ggh (this repo, Python package and CLI)</text>
+<rect x="44" y="104" width="232" height="100" rx="8" fill="#f5f7fb" stroke="#3b5b92" stroke-width="1.5"/>
+<text x="160.0" y="126" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">ggh.data</text>
+<text x="160.0" y="146" text-anchor="middle" font-size="11.5" fill="#33405a">pinned load, leakage check, splits</text>
+<rect x="292" y="104" width="232" height="100" rx="8" fill="#f5f7fb" stroke="#3b5b92" stroke-width="1.5"/>
+<text x="408.0" y="126" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">ggh.targets</text>
+<text x="408.0" y="146" text-anchor="middle" font-size="11.5" fill="#33405a">rules, NLI scorer, audit page</text>
+<rect x="540" y="104" width="232" height="100" rx="8" fill="#f5f7fb" stroke="#3b5b92" stroke-width="1.5"/>
+<text x="656.0" y="126" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">ggh.train</text>
+<text x="656.0" y="146" text-anchor="middle" font-size="11.5" fill="#33405a">recipe, Kaggle notebook, dev eval, freeze</text>
+<rect x="44" y="234" width="232" height="100" rx="8" fill="#f5f7fb" stroke="#3b5b92" stroke-width="1.5"/>
+<text x="160.0" y="256" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">ggh.export</text>
+<text x="160.0" y="276" text-anchor="middle" font-size="11.5" fill="#33405a">merge, GGUF, parity, lineage records</text>
+<rect x="292" y="234" width="232" height="100" rx="8" fill="#f5f7fb" stroke="#3b5b92" stroke-width="1.5"/>
+<text x="408.0" y="256" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">ggh.serve</text>
+<text x="408.0" y="276" text-anchor="middle" font-size="11.5" fill="#33405a">llama-server, checks, bench, bf16 server</text>
+<rect x="540" y="234" width="232" height="100" rx="8" fill="#f5f7fb" stroke="#3b5b92" stroke-width="1.5"/>
+<text x="656.0" y="256" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">ggh.evals</text>
+<text x="656.0" y="276" text-anchor="middle" font-size="11.5" fill="#33405a">EvalKit tasks, behaviour, probe</text>
+<rect x="44" y="364" width="720" height="80" rx="8" fill="#f5f5f5" stroke="#777" stroke-width="1.5"/>
+<text x="404.0" y="386" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">Harness</text>
+<text x="404.0" y="406" text-anchor="middle" font-size="11.5" fill="#33405a">build graph, capability catalog, 13 converge gates, independent verifier, CI on Linux and macOS, spend and GPU ledgers</text>
+<rect x="844" y="84" width="312" height="84" rx="8" fill="#f4eefb" stroke="#6b4a9a" stroke-width="1.5"/>
+<text x="1000.0" y="106" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">Hugging Face datasets</text>
+<text x="1000.0" y="126" text-anchor="middle" font-size="11.5" fill="#33405a">PubMedQA at a pinned revision</text>
+<line x1="784" y1="126" x2="844" y2="126" stroke="#55647d" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="844" y="194" width="312" height="84" rx="8" fill="#f4eefb" stroke="#6b4a9a" stroke-width="1.5"/>
+<text x="1000.0" y="216" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">Kaggle</text>
+<text x="1000.0" y="236" text-anchor="middle" font-size="11.5" fill="#33405a">free T4 GPU, Unsloth QLoRA</text>
+<line x1="784" y1="236" x2="844" y2="236" stroke="#55647d" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="844" y="304" width="312" height="84" rx="8" fill="#f4eefb" stroke="#6b4a9a" stroke-width="1.5"/>
+<text x="1000.0" y="326" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">llama.cpp b12421</text>
+<text x="1000.0" y="346" text-anchor="middle" font-size="11.5" fill="#33405a">convert, quantize, llama-server</text>
+<line x1="784" y1="346" x2="844" y2="346" stroke="#55647d" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="844" y="414" width="312" height="84" rx="8" fill="#f4eefb" stroke="#6b4a9a" stroke-width="1.5"/>
+<text x="1000.0" y="436" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">EvalKit</text>
+<text x="1000.0" y="456" text-anchor="middle" font-size="11.5" fill="#33405a">benchmark engine, judges, statistics</text>
+<line x1="784" y1="456" x2="844" y2="456" stroke="#55647d" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="844" y="532" width="312" height="84" rx="8" fill="#f4eefb" stroke="#6b4a9a" stroke-width="1.5"/>
+<text x="1000.0" y="554" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">Anthropic and OpenAI APIs</text>
+<text x="1000.0" y="574" text-anchor="middle" font-size="11.5" fill="#33405a">Haiku 5.5, GPT-6 Luna; judges Opus 5.5, GPT-6.1 Sol</text>
+<line x1="1000" y1="498" x2="1000" y2="531.9" stroke="#55647d" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="24" y="490" width="760" height="84" rx="8" fill="#eef6ee" stroke="#3b7a4a" stroke-width="1.5"/>
+<text x="404.0" y="512" text-anchor="middle" font-size="14" font-weight="700" fill="#1a2433">Outputs</text>
+<text x="404.0" y="532" text-anchor="middle" font-size="11.5" fill="#33405a">docs/results (EvalKit summaries, gzipped records), docs/measurements (training, parity, laptop bench, ledgers), GGUF files, model card</text>
+</svg>
