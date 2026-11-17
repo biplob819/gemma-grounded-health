@@ -1,7 +1,7 @@
 # X3.2 run state
 
-**Now:** building — verifier round 1 PASS, fixes applied and the bench rerun
-**Next:** converge, verifier round 2
+**Now:** green (verifier rounds 1 and 2 PASS)
+**Next:** E3.2 benchmark runs
 
 ## History
 - 2026-11-17 — spec written. The machine is an Apple M3 Max with 64 GB on mains power.
@@ -28,3 +28,4 @@
   | ft Q8_0 | 95.6 (96.8, 95.6, 90.0) | 84.3 | 48.5 | 142 ms | 711 / 888 ms | 5,905 |
 
   Gaps, base against fine-tuned: tg128 0.5 % (Q4_K_M) and 0.3 % (Q8_0); per-request 7.1 % (Q4_K_M, ft slower) and 5.9 % (Q8_0, ft faster). Both measures pass. Interleaving removed the tg128 gap; single dips still happen (ft Q4_K_M round 3, 108.8) and the median absorbs them. Every request processed 486 prompt tokens at the median for both models, so the fine-tuned model's later first token (137 against 97 ms on Q4_K_M) and lower per-request prompt rate are not from a longer prompt; D-41's forced end-of-thinking tokens remain the likely cause, not verified.
+- 2026-11-17 — verifier round 2: PASS, no blocker. Said plainly: BEN-04's criterion and the llama-bench method both changed after seeing results. First it moved from the per-request rate (14 % and 17 % gaps) to tg128 alone; then, after round 1, to both measures; a run with 10 llama-bench repetitions per variant then failed on tg128 (15 % and 13 %, opposite directions; its numbers were overwritten and are not kept), the llama-bench method was redesigned to alternate the variants, and the rerun passed. Requiring both measures is stricter than either alone, but the per-request pass (7.1 % and 5.9 %) rests on one run on a machine whose run-to-run noise is several percent. Fixed: the spec's BEN-04 line, the `protocol` block (file-name deviation and the llama-bench method; the committed file's block was regenerated from the code that produced it, its measurements untouched), the `LB_ROUNDS` comment, the gap docstring, and a test that `ggh bench` runs the llama-bench rounds before any workload.

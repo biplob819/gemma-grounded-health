@@ -239,3 +239,28 @@ def test_llama_bench_alternates_variants_over_rounds_and_takes_medians(tmp_path,
     assert order == ["base-Q4_K_M.gguf", "ft-Q4_K_M.gguf"] * 3  # interleaved, not one then other
     assert med["base-Q4_K_M"]["tg128"] == 110 and med["ft-Q4_K_M"]["tg128"] == 90
     assert [r["tg128"] for r in rounds["ft-Q4_K_M"]] == [90, 95, 85]
+
+
+def test_cli_runs_the_llama_bench_rounds_before_any_workload(tmp_path, monkeypatch):
+    from ggh.train.devrun import DEV_EVAL
+
+    (tmp_path / DEV_EVAL).parent.mkdir(parents=True)
+    rows = "".join(json.dumps({"prompt": f"p{i}"}) + "\n" for i in range(60))
+    (tmp_path / DEV_EVAL).write_text(rows, encoding="utf-8")
+    calls = []
+    monkeypatch.setattr(B, "hardware", lambda: HW)
+    monkeypatch.setattr(llama, "port_busy", lambda p, host=llama.HOST: False)
+    lb = {f"{m}-{q}": {"pp512": 1.0, "tg128": 1.0} for m, q in B.VARIANTS}
+
+    def rounds(root, variants):
+        calls.append("rounds")
+        return lb, {k: [] for k in lb}
+
+    def variant(root, model, quant, prompts, hw, lb):
+        calls.append(f"{model}-{quant}")
+        return _rec(quant, 1.0), {}
+
+    monkeypatch.setattr(B, "llama_bench_rounds", rounds)
+    monkeypatch.setattr(B, "bench_variant", variant)
+    assert cli.main(["bench", "--root", str(tmp_path)]) == 0
+    assert calls == ["rounds", *(f"{m}-{q}" for m, q in B.VARIANTS)]

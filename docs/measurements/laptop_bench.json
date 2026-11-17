@@ -10,8 +10,10 @@
     "deviations": [
       "context 8192 (ggh serve's --ctx-size), not llama-server's default: \u00a78 asks for both",
       "cache_prompt false, so every prompt is processed fresh (EvalKit's request leaves the server default, prompt caching on)",
-      "max_tokens 256 per \u00a78 (EvalKit sends max_completion_tokens 2048) and temperature 0 (the server is already greedy: --temp 0 --top-k 1)"
+      "max_tokens 256 per \u00a78 (EvalKit sends max_completion_tokens 2048) and temperature 0 (the server is already greedy: --temp 0 --top-k 1)",
+      "output laptop_bench.json with a measured_at stamp, not \u00a78's laptop-bench-<date>.json"
     ],
+    "llama_bench": "-p 512 -n 128 -ngl 999 -r 5, run on every variant in turn for 3 rounds before the workloads; each value is the median across rounds",
     "metrics": {
       "ttft_ms": "server prompt_ms plus one generated token's mean time",
       "gen_tps": "server predicted_per_second per request; its p95 is the fast tail",

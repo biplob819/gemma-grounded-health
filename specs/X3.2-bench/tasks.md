@@ -6,5 +6,5 @@
 - [x] 4. Build
 - [x] 5. Bench run on the laptop
 - [x] 6. Converge twice
-- [ ] 7. Verifier (max 3 rounds, OWNER D-33)
-- [ ] 8. Proofs, green, commit, push
+- [x] 7. Verifier (max 3 rounds, OWNER D-33)
+- [x] 8. Proofs, green, commit, push

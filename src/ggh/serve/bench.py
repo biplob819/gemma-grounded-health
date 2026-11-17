@@ -35,7 +35,7 @@ SEED = 7
 PORT = 8095  # not a `ggh serve` port
 SAMPLE_S = 0.05
 LB_REPS = 5  # llama-bench repetitions per call (its default)
-LB_ROUNDS = 3  # alternating rounds over all variants, after every workload has run
+LB_ROUNDS = 3  # alternating rounds over all variants, before any workload runs
 LABELS = ("yes", "no", "maybe")
 OUT = Path("docs") / "measurements" / "laptop_bench.json"
 VARIANTS = (("base", "Q4_K_M"), ("ft", "Q4_K_M"), ("base", "Q8_0"), ("ft", "Q8_0"))
@@ -299,7 +299,7 @@ def llama_bench_rounds(
 def per_token_gap(results: dict[str, LaptopBench], on: str = "tg128") -> dict[str, float]:
     """Relative gap in generation speed between base and ft, per quant (BEN-04): on llama-bench
     tg128 (a fixed 128-token generation) or on the workload's per-request p50 (`gen_tps_p50`,
-    which moves a little with answer length). BEN-04 needs both within 10 %."""
+    which moves with answer length and grammar overhead). BEN-04 needs both within 10 %."""
 
     def speed(r: LaptopBench) -> float:
         return r.llama_bench["tg128"] if on == "tg128" else r.gen_tps_p50
@@ -323,7 +323,10 @@ PROTOCOL = {
         "server default, prompt caching on)",
         "max_tokens 256 per §8 (EvalKit sends max_completion_tokens 2048) and temperature 0 "
         "(the server is already greedy: --temp 0 --top-k 1)",
+        "output laptop_bench.json with a measured_at stamp, not §8's laptop-bench-<date>.json",
     ],
+    "llama_bench": f"-p 512 -n 128 -ngl 999 -r {LB_REPS}, run on every variant in turn for "
+    f"{LB_ROUNDS} rounds before the workloads; each value is the median across rounds",
     "metrics": {
         "ttft_ms": "server prompt_ms plus one generated token's mean time",
         "gen_tps": "server predicted_per_second per request; its p95 is the fast tail",
