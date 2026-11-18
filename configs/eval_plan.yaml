@@ -1,0 +1,17 @@
+# Pre-registered comparisons (Tech Spec §7.4, RUN-01, H9). Written and hashed before the main
+# run; `docs/measurements/eval_plan.sha256` holds the hash, committed before any main-run result.
+task: pubmedqa                 # EvalKit's built-in PQA-L task
+n_cases: 1000                  # OWNER D-17
+seed: 7
+config: configs/evalkit.yaml
+metric: headline               # EvalKit's "correct and fully grounded" share, per judge
+judges: [claude-opus-5-5, gpt-6.1-sol]
+primary:                       # model minus model, each on the headline, per judge
+  - [gemma-e2b-grounded-q4, gemma-e2b-base-q4]
+  - [gemma-e2b-grounded-q4, claude-haiku-5-5]
+  - [gemma-e2b-grounded-q4, gpt-6-luna]
+rule: >-
+  A gap is "separated" only under EvalKit's rule (paired bootstrap 95% interval on shared
+  cases, Holm-corrected across the run's model pairs, excluding zero); otherwise it is reported
+  as a tie, whichever way the point estimate falls.
+secondary: everything else (accuracy, groundedness, citation validity, B1-B8, other pairs)

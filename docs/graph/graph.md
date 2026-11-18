@@ -33,7 +33,14 @@ Generated from the Tech Spec §13.2 on 2026-11-15; edit here from now on and kee
 | --- | --- | --- | --- | --- | --- |
 | **E3.1** | Local serving and EvalKit integration | N1.2 | node_converge + verifier | Pinned llama.cpp, base GGUF, `ggh serve`, template parity, EvalKit endpoints config, behaviour checks, dev smoke run | US1, US6 |
 | **E3.2** | Benchmark runs | X3.1 | node_converge + verifier | Main, parity, off-scope and probe runs in EvalKit; spend logged | US1 |
-| **E3.3** | Results, behaviour table and calibration | E3.2 | node_converge + verifier | Behaviour table, owner reviews, Gemma-family check (as ruled), sample read, `results_bundle.json` | US1, US4 |
+| **E3.3** | Results, behaviour table and calibration | E3.2, V2.2 | node_converge + verifier | Behaviour table, owner reviews, Gemma-family check (as ruled), sample read, `results_bundle.json` | US1, US4 |
+
+## Wave 3 — v2 iteration (OWNER D-43)
+
+| Node | Title | Depends on | Verified by | Deliverable | Stories |
+| --- | --- | --- | --- | --- | --- |
+| **V2.1** | Citation-fixed targets and retrain (v2) | E3.2 | node_converge + verifier | `ggh targets` v2 that never cites an aim or objective sentence for an answer, dev grounding judged by EvalKit on a dev task (v1 baseline and v2), one Kaggle run, selection with a dev grounding bar, frozen v2 `TrainRun` | US1, US3 |
+| **V2.2** | v2 export, parity and benchmark | V2.1 | node_converge + verifier | v2 merged bf16 and GGUFs, dev parity, a v2 plan hashed before its runs, the main run with v2 added (the other models from the cache), off-scope and probe runs for v2, spend logged | US1, US2 |
 
 ## Wave 3 — export and laptop
 

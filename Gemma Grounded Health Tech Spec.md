@@ -55,6 +55,12 @@ Each decision below seeds `docs/decisions.md` as D-1 to D-33; later rulings are 
 | OWNER D-39 | The demo passkey (OWNER D-36) is one numeric passcode that only the owner knows, not per-person keys. The Space holds only its salted hash in a Space secret; input is compared in constant time and rate-limited per session. Every live action needs it, including when a visitor brings their own API keys. Changing it means setting a new hash (`ggh passkey set`); the passcode is never logged, stored in plain text or committed. Supersedes D-36's per-person issue and revoke | Per-person passkeys (D-36 as first written); WebAuthn device passkeys | Owner ruling: "passkey is a passcode a number that i know only" |
 | D-40 | D-9 confirmed by the T2.1 pilot (kernel version 2, tag t2.1-pilot-2): Unsloth 2026.11.5 on one T4 trained 300 steps of the recipe on the pinned Google checkpoint (google/gemma-4-E2B-it@4adf157, recorded as loaded; `use_exact_model_name=True`, since without it Unsloth substitutes its own pre-quantized mirror at HEAD, which the superseded first pilot did). Precision: the frozen base is 4-bit (bitsandbytes) with its remaining weights in float16 and the LoRA weights (24.2M) in float32, as recorded. Unsloth flags Gemma 4 as unsafe in fp16 (it printed "float16 won't work, using float32"; what it then changes internally is not recorded), while our `Trainer(fp16=True)` requested fp16 mixed precision and its GradScaler was active (it skipped 1 step; `amp` in the report only echoes the config, and the skip shows the scaler ran, not which ops computed in fp16). D-9's original reason ("Unsloth patches Gemma's numerics for fp16") is not what the evidence shows; the measured outcome is what confirms the choice. Even so, every micro-batch loss was finite (checked each step, NaN filter off) and the loss scaler skipped 1 of 300 optimizer steps; eval loss 0.774 at step 250 and 0.773 at 300; 639 training tokens per second; 9.84 GB peak VRAM. The recipe stays as written. The TRL + PEFT fallback ran out of memory twice on the T4 (PEFT's fp32 cast of Gemma 4's per-layer embedding tables, fixed; then the logits of the 262,144-word vocabulary at 4 sequences per step), so if it is ever needed it runs at per-device batch 1 with gradient accumulation 16, which is untested | Switch the primary to TRL + PEFT; raise the batch size for Unsloth; bf16 (the T4 has none) | Measured, not assumed (H8). The full run (4.52M tokens, 527 optimizer steps, 1 epoch) is estimated at 2.0 hours of training plus 3 evaluation passes (about 3 minutes each) and about 12 minutes of setup, 2.3 hours in all, inside one 12-hour session (NFR2). Why Unsloth fits where the plain fallback did not is not established; its smaller loss-time memory is the likely reason |
 | D-41 | llama-server runs with `--reasoning-budget 0` as well as `--reasoning off` (X3.1). With a JSON schema on the chat endpoint, the b12421 Gemma 4 chat grammar still admits a thought channel, and the fine-tuned model opened it and answered after a long reasoning trace: on 16 smoke prompts Q4_K_M agreed with bf16 on 8 and Q8_0 on 11, both answering "insufficient" where bf16 answered, so not quantization; raw `/completion` with the token ids put the bf16 label first at the label position (F16 GGUF, 4 of 4 prompts). With the budget at 0 the server closes the channel at once: the reply carries an empty `<|channel>thought<channel|>` prefix, which the chat parser strips, and 15 of 16 smoke labels agree with bf16. The base never opened the channel (E3.1 records 0 reasoning tokens), so its runs are unchanged | Banning the channel token with a logit bias (5 of 16 agree, long replies); serving through raw `/completion` (EvalKit's endpoint adapter sends chat completions) | Benchmarks must use the request EvalKit sends; dev parity on 500 prompts under these exact arguments is the check |
+| D-42 | The contamination probe uses a paraphrase set built in E3.2 by EvalKit's documented method (EvalKit DATA_CARD, DAT-06): 100 PQA-L questions drawn with EvalKit's stratified sampler at seed 7; each rewritten once by gpt-6.1-terra (not in the comparison), keeping meaning, entities and numbers; Claude Opus 5.5 checks it asks the same question given the abstract, and a rejected one is replaced by the next question of its label. EvalKit specified this set but never shipped it (it is not in the pinned 06591f8 or later). The owner's spot-check (20 kept, all rejected) is done at E3.3 | Skip the probe and drop the memorisation caveat (H4); wait for EvalKit to ship the set | The card's contamination caveat needs a measurement; EvalKit's own recipe keeps it comparable with what EvalKit planned |
+| OWNER D-43 | v2 iteration (Q from E3.2): after the main run showed the fine-tuned model citing aim sentences (303 of its 525 unsupported claims cite sentence 1; 43 % of the N1.3 answer targets cite an aim-like sentence), a v2 is built: targets that never cite an aim or objective sentence for an answer, one retrain selected on dev only (a dev grounding check judged by EvalKit), and a second, separately pre-registered benchmark run. v1's results stay published, and v2 is labelled as built after v1's test results were seen | Release v1 as is and report the trade-off (A) | Owner ruling: "B". The flaw is specific and fixable on dev data, and a grounded-answer model whose citations fail about half the time undercuts the project's point |
+| OWNER D-44 | Evals must measure what this project claims, and EvalKit is extended when it does not (a standing rule for the owner's projects). For GGH: EvalKit gains a per-sentence citation check (per claim and judge: does each cited sentence support the claim, and its role: question or aim, method, result, conclusion or background), with citation precision and an aim-citation rate per model. It is requested from EvalKit's own build (its Wave 5, project-driven, as its D-61 and D-63) and must be green and pinned before V2.1's dev grounding check, which then measures v1 and v2 with it; v2's test run uses the same pin | Keep EvalKit 06591f8 for v2 and add the metric afterwards as extra analysis; keep the rule to this project only | Owner ruling: per-sentence citation check, before v2's dev check, standing rule. v1 passed every generic check (citations valid) while citing aim sentences; the failure only showed indirectly |
+| OWNER D-45 | v2 targets (TGT-R10: answers never cite an aim, objective or study-description sentence; answers citing one: 50 % in v1, 0 % in v2) get a fresh 50-example hand audit before the Kaggle retrain, now per cited sentence: each cited sentence gets its own verdict (supports, aim, method, weak), so a set that mixes an aim sentence with a result sentence can no longer pass as a whole (v1's audit passed 50/50 while about half its answers cited an aim). Insufficient examples keep citing the question-matching sentence, which is now more often the aim (572 of 819, was 261): that is the right citation for an answer saying the abstract states what was studied but reports no finding | Rely on the rule's tests and the EvalKit dev grounding check without a hand audit; prefer a method sentence for insufficient examples | Owner ruling: per-sentence audit yes; keep the insufficient behaviour |
+| OWNER D-46 | The first per-sentence audit of the v2 targets (AUD-R4, labelled by the owner on a mobile artifact page) did not pass: all 50 examples overall ok, but 15 of the 30 answer examples cite a sentence the owner marked aim (9 sentences) or method (8). The labels stand as recorded. TGT-R10 is tightened (more aim and study-description forms, and pure method or procedure sentences excluded from answer citations), the targets are rebuilt, and the owner re-checks the answer examples whose text changed before the retrain | Keep the rule and let the dev check decide; tighten without a re-audit | Owner ruling: labels as on the page; tighten, then re-audit the changed examples |
+| OWNER D-47 | The re-audit after D-46 (the answer examples whose text changed when TGT-R10 was tightened) is labelled by Claude, not the owner: a fresh-context reviewer agent that sees only each example and the S/A/M/W definitions, not the rule, its tests or which examples changed, labels blind under the same bar (AUD-R4). The records and the data card say so; the owner's first-round labels stay as recorded | The owner relabels the changed examples | Owner ruling: "Do the labelling yourself". A blind, separate reviewer keeps the check independent of the session that wrote the rule |
 
 ---
 
@@ -430,7 +436,7 @@ max_cost_usd: 70
 | Main | all four | 1,000 or 200 PQA-L | Headline, uplift, gaps, B1–B7 |
 | Parity | ft bf16 (Transformers server) | 200 PQA-L (seeded subset of the main run) | Quantisation cost, reported (§6) |
 | Off-scope | all four | 20 off-scope prompts as an EvalKit local JSONL task | B8 |
-| Contamination probe | base, ft | EvalKit's paraphrase probe set (EvalKit DAT-06) | Memorisation caveat in the card (H4) |
+| Contamination probe | base, ft | A paraphrase probe set built by EvalKit's DAT-06 method (D-42) | Memorisation caveat in the card (H4) |
 
 ### 7.3 Behaviour checks (D-8)
 
@@ -583,10 +589,10 @@ gemma-grounded-health/
 
 Status vocabulary: `not-started | spec | building | green`.
 
-### 13.2 Build graph: 18 nodes in six waves
+### 13.2 Build graph: 20 nodes in seven waves
 
-**Release (all Must and Should stories): 16 nodes.** W0.1, N1.1–N1.3, E3.1, T2.1, T2.2, X3.1, X3.2, E3.2, E3.3, R4.1–R4.5.
-**Full scope: 18 nodes**, adding P5.1 (write-up) and O6.1 (DPO, Could).
+**Release (all Must and Should stories): 18 nodes.** W0.1, N1.1–N1.3, E3.1, T2.1, T2.2, X3.1, X3.2, E3.2, V2.1, V2.2 (OWNER D-43), E3.3, R4.1–R4.5.
+**Full scope: 20 nodes**, adding P5.1 (write-up) and O6.1 (DPO, Could).
 
 | Node | Title | Depends on | Deliverable (what exists when it is green) | Stories |
 | --- | --- | --- | --- | --- |
@@ -600,7 +606,9 @@ Status vocabulary: `not-started | spec | building | green`.
 | **X3.1** | Export and parity | T2.2, E3.1 | Merged bf16, fine-tuned Q4_K_M and Q8_0 GGUFs, parity report on dev | US2, US7 |
 | **X3.2** | Laptop benchmark | X3.1 | `make bench` under the §8 protocol, `LaptopBench` file | US2 |
 | **E3.2** | Benchmark runs | X3.1 | Main, parity, off-scope and probe runs in EvalKit; spend logged | US1 |
-| **E3.3** | Results, behaviour table and calibration | E3.2 | Behaviour table, owner reviews, Gemma-family check (as ruled), sample read, `results_bundle.json` | US1, US4 |
+| **V2.1** | Citation-fixed targets and retrain (v2) | E3.2 | `ggh targets` v2 that never cites an aim or objective sentence for an answer, dev grounding judged by EvalKit on a dev task (v1 baseline and v2), one Kaggle run, selection with a dev grounding bar, frozen v2 `TrainRun` | US1, US3 |
+| **V2.2** | v2 export, parity and benchmark | V2.1 | v2 merged bf16 and GGUFs, dev parity, a v2 plan hashed before its runs, the main run with v2 added (the other models from the cache), off-scope and probe runs for v2, spend logged | US1, US2 |
+| **E3.3** | Results, behaviour table and calibration | E3.2, V2.2 | Behaviour table, owner reviews, Gemma-family check (as ruled), sample read, `results_bundle.json` | US1, US4 |
 | **R4.1** | Model card | E3.3, X3.2 | Generated `MODEL_CARD.md`, Hub metadata, licence and NOTICE | US4 |
 | **R4.2** | Hugging Face release | R4.1 | Two Hub repos at a tagged revision, download-back and Ollama checks | US4, US7 |
 | **R4.3** | Gradio Space | R4.2 | ZeroGPU Space (or recorded local fallback) with side-by-side answers | US5 |
@@ -625,6 +633,9 @@ graph LR
   E31 --> X31
   X31 --> X32[X3.2 Laptop bench]
   X31 --> E32[E3.2 Benchmark runs]
+  E32 --> V21[V2.1 v2 targets + retrain]
+  V21 --> V22[V2.2 v2 export + benchmark]
+  V22 --> E33
   E32 --> E33[E3.3 Results + calibration]
   E33 --> R41[R4.1 Model card]
   X32 --> R41
@@ -816,6 +827,29 @@ Each row becomes one line in `docs/graph/catalog.tsv` with status `not-started`.
 | RUN-05 | Off-scope run on all four models | B8 |
 | RUN-06 | Paraphrase probe for base and fine-tuned | H4 |
 | RUN-07 | Spend ledger updated with every run's cost | D-22 |
+
+**V2.1 Citation-fixed targets and retrain (v2)**
+
+| Cap | Capability | Trace |
+| --- | --- | --- |
+| VTG-01 | Answer citations never include an aim, objective or study-description sentence; the rule is tested on fixtures and its drops are counted | OWNER D-43 |
+| VTG-02 | v2 targets regenerated with the rule, every example still reconstructs from its row; share of answer targets citing an aim-like sentence reported for v1 and v2 | OWNER D-43, TGT-09 |
+| VTG-03 | Dev grounding check: EvalKit (pinned at the commit that adds the per-sentence citation check) runs a 200-case `dev_eval` local task with dual judges for v1 (baseline) and v2; bars fixed before v2 is measured | OWNER D-43, OWNER D-44, D-4 |
+| VTG-04 | One clean Kaggle Run-All trains v2; log, wall clock and GPU ledger stored | US3, D-22 |
+| VTG-05 | v2 checkpoint selected by validation loss, the §5.2 bars and the dev grounding bar; `TrainRun` v2 frozen before any PQA-L use | D-4, OWNER D-43 |
+| VTG-06 | Read the sample: 20 v2 dev answers read against their cited sentences | D-18 |
+| VTG-07 | Per-sentence hand audit of 50 seeded v2 training examples (each cited sentence: supports, aim, method or weak) passed before the retrain | OWNER D-45, AUD-R1 |
+
+**V2.2 v2 export, parity and benchmark**
+
+| Cap | Capability | Trace |
+| --- | --- | --- |
+| VEV-01 | v2 merged bf16 and Q4_K_M and Q8_0 GGUFs built by the X3.1 code and steps; template parity holds | D-5, E9 |
+| VEV-02 | v2 dev parity: Q4_K_M against bf16, label agreement ≥ 0.95, schema validity within 1 point | §6, H2 |
+| VEV-03 | A v2 plan (v2 minus base, v1, Haiku 5.5 and GPT-6 Luna on the headline, per judge) hashed and committed before the v2 runs | §7.4, H9 |
+| VEV-04 | Main run with v2 added to the four models on the same 1,000 PQA-L cases; the others' answers and verdicts come from EvalKit's cache | FR5, US1 |
+| VEV-05 | Off-scope and paraphrase-probe runs for v2 | B8, H4 |
+| VEV-06 | Spend ledger updated with every v2 run's cost; v2 is labelled as built after v1's test results were seen | D-22, OWNER D-43 |
 
 **E3.3 Results, behaviour table and calibration**
 

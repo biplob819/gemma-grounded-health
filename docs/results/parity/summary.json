@@ -1,0 +1,85 @@
+{
+  "calibration_status": "uncalibrated",
+  "comparisons": [],
+  "config_hash": "561c13e609e5fa7a",
+  "extraction_error_rate": null,
+  "finished_at": "2026-11-17T20:36:48.219287Z",
+  "judge_mode": "dual",
+  "judges": [],
+  "judging_status": "complete",
+  "models": [
+    {
+      "accuracy": {
+        "hi": 0.775,
+        "lo": 0.65,
+        "point": 0.715
+      },
+      "citation_validity": {
+        "hi": 1.0,
+        "lo": 1.0,
+        "point": 1.0
+      },
+      "cost_per_100_usd": 0.0,
+      "cost_per_correct_usd": 0.0,
+      "coverage": {
+        "hi": 0.9641666666666667,
+        "lo": 0.899,
+        "point": 0.9331666666666666
+      },
+      "failed_thresholds": [
+        "headline >= 0.6 (observed 0.365)"
+      ],
+      "family": "other",
+      "groundedness_mean": {
+        "claude-opus-5-5": {
+          "hi": 0.6508374999999998,
+          "lo": 0.518,
+          "point": 0.5855
+        },
+        "gpt-6.1-sol": {
+          "hi": 0.5991666666666666,
+          "lo": 0.4648333333333333,
+          "point": 0.5328333333333333
+        }
+      },
+      "headline": {
+        "claude-opus-5-5": {
+          "hi": 0.48,
+          "lo": 0.34,
+          "point": 0.41
+        },
+        "gpt-6.1-sol": {
+          "hi": 0.435,
+          "lo": 0.3,
+          "point": 0.365
+        }
+      },
+      "latency_p50_ms": 8678,
+      "latency_p95_ms": 10334,
+      "model": "gemma-e2b-grounded-bf16",
+      "n": 200,
+      "n_errors": {},
+      "passes_threshold": false
+    }
+  ],
+  "run_id": "r-99cd13bb9d69",
+  "schema_version": "1.0",
+  "self_preference": {
+    "claude-opus-5-5": {
+      "other": {
+        "hi": 0.6508374999999998,
+        "lo": 0.518,
+        "point": 0.5855
+      }
+    },
+    "gpt-6.1-sol": {
+      "other": {
+        "hi": 0.5991666666666666,
+        "lo": 0.4648333333333333,
+        "point": 0.5328333333333333
+      }
+    }
+  },
+  "started_at": "2026-11-17T07:12:57.264378Z",
+  "task": "pubmedqa"
+}

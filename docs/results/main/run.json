@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "run_id": "r-f0f3b432a413",
+  "task": "pubmedqa",
+  "task_ref": "pubmedqa",
+  "config_hash": "a7f708a9317914e1",
+  "seed": 7,
+  "n": 1000,
+  "models": [
+    "gemma-e2b-base-q4",
+    "gemma-e2b-grounded-q4",
+    "claude-haiku-5-5",
+    "gpt-6-luna"
+  ],
+  "judges": [
+    "claude-opus-5-5",
+    "gpt-6.1-sol"
+  ],
+  "judge_mode": "dual",
+  "families": {
+    "gemma-e2b-base-q4": "other",
+    "gemma-e2b-grounded-q4": "other",
+    "claude-haiku-5-5": "anthropic",
+    "gpt-6-luna": "openai"
+  },
+  "thresholds": [
+    {
+      "metric": "headline",
+      "op": ">=",
+      "value": 0.6
+    }
+  ],
+  "live_judges": false,
+  "started_at": "2026-11-17T04:34:06.665224Z",
+  "finished_at": "2026-11-17T05:50:15.439325Z",
+  "spent_usd": 53.68107049999976
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "run_id": "r-99cd13bb9d69",
+  "task": "pubmedqa",
+  "task_ref": "pubmedqa",
+  "config_hash": "561c13e609e5fa7a",
+  "seed": 7,
+  "n": 200,
+  "models": [
+    "gemma-e2b-grounded-bf16"
+  ],
+  "judges": [
+    "claude-opus-5-5",
+    "gpt-6.1-sol"
+  ],
+  "judge_mode": "dual",
+  "families": {
+    "gemma-e2b-grounded-bf16": "other"
+  },
+  "thresholds": [
+    {
+      "metric": "headline",
+      "op": ">=",
+      "value": 0.6
+    }
+  ],
+  "live_judges": false,
+  "started_at": "2026-11-17T07:12:57.264378Z",
+  "finished_at": "2026-11-17T20:36:48.219287Z",
+  "spent_usd": 1.0291122000000006
+}

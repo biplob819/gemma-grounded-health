@@ -1,0 +1,31 @@
+{
+  "method": "accuracy on original minus paraphrased wording, paired bootstrap 95% interval, 10,000 resamples, seed 7 (EvalKit DATA_CARD, D-42)",
+  "runs": {
+    "original": "r-f98be6681636",
+    "paraphrase": "r-5bd60094cf2d"
+  },
+  "models": {
+    "gemma-e2b-base-q4": {
+      "n": 100,
+      "accuracy_original": 0.56,
+      "accuracy_paraphrase": 0.59,
+      "drop": {
+        "point": -0.03,
+        "lo": -0.09,
+        "hi": 0.03
+      },
+      "contamination_signal": false
+    },
+    "gemma-e2b-grounded-q4": {
+      "n": 100,
+      "accuracy_original": 0.79,
+      "accuracy_paraphrase": 0.84,
+      "drop": {
+        "point": -0.05,
+        "lo": -0.1,
+        "hi": 0.0
+      },
+      "contamination_signal": false
+    }
+  }
+}
