@@ -42,23 +42,24 @@ Because all 20 abstracts must come from `dev_eval`, a build with a seed other th
 
 ## Training examples (node N1.3)
 
-`ggh targets` draws 8,436 training and 843 validation examples from the N1.2 splits. Every example's answer comes from the abstract's own author conclusion (`long_answer`), cut down to what its cited sentences support:
+`ggh targets` draws 7,402 training and 740 validation examples from the N1.2 splits (v2.1 targets: TGT-R10 as tightened after OWNER D-46, so an answer never cites an aim, objective, study-description or pure method sentence; the first v2 build drew 8,189 and 818; v1, which trained the first fine-tune, drew 8,436 and 843). Every example's answer comes from the abstract's own author conclusion (`long_answer`), cut down to what its cited sentences support:
 
 1. Conclusion sentences are split with EvalKit's splitter, and sentences that recommend or generalise ("should", "clinicians", "further studies", …) are dropped.
 2. A leading hedge such as "These findings suggest that" is removed.
-3. Context sentences are ranked by shared content words. The smallest set of the top 1 to 4 is cited where at least half the sentence's content words appear in it **and** an open NLI model (`cross-encoder/nli-deberta-v3-base@6c749ce3425cd33b46d187e45b92bbf96ee12ec7`, Apache-2.0) gives entailment of at least 0.5 with exactly those sentences as the premise (OWNER D-34, D-35).
-4. Answers over 80 words are dropped.
+3. An answer never cites an aim, objective, hypothesis or study-description sentence ("To investigate whether…", "The aim of this study was…", "We examined…" with no result reported). v1 had no such rule, and 50% of its answers cited one, so the first fine-tune learned to cite the study's aim (OWNER D-43). The rule applies to answers only: insufficient examples still cite the sentences that best match the question, which are often the aim.
+4. Context sentences are ranked by shared content words. The smallest set of the top 1 to 4 is cited where at least half the sentence's content words appear in it **and** an open NLI model (`cross-encoder/nli-deberta-v3-base@6c749ce3425cd33b46d187e45b92bbf96ee12ec7`, Apache-2.0) gives entailment of at least 0.5 with exactly those sentences as the premise (OWNER D-34, D-35).
+5. Answers over 80 words are dropped.
 
 No text from Claude, OpenAI or Gemini models is used anywhere; every example is rebuilt from its source row and the recorded NLI scores by a test.
 
 | | Train | Val |
 | --- | --- | --- |
-| Answer, label yes | 4,505 | 451 |
-| Answer, label no | 3,003 | 300 |
-| Insufficient (label maybe) | 844 | 84 |
-| Off-scope refusal (label maybe) | 84 | 8 |
+| Answer, label yes | 3,953 | 395 |
+| Answer, label no | 2,635 | 264 |
+| Insufficient (label maybe) | 740 | 74 |
+| Off-scope refusal (label maybe) | 74 | 7 |
 
-The yes:no ratio among answers is 60:40 (MIX-R1), so the model does not learn PQA-A's yes bias. The filters are strict: of the rows scored, 11,779 "no" rows and 14,270 "yes" rows had no conclusion sentence that survived. Only 3,303 "no" rows survived, which caps the set at 8,436 rather than the planned 20,000 (OWNER D-34 chose strict filters over size). Counts by reason are in `docs/measurements/targets_drop_report.json`.
+The yes:no ratio among answers is 60:40 (MIX-R1), so the model does not learn PQA-A's yes bias. The filters are strict: of the rows scored, 12,182 "no" rows and 16,884 "yes" rows had no conclusion sentence that survived. Only 2,877 "no" rows survived, which caps the set at 7,402 rather than the planned 20,000 (OWNER D-34 chose strict filters over size). Counts by reason are in `docs/measurements/targets_drop_report.json`.
 
 "Insufficient" examples remove every RESULTS-type sentence (and any sentence of unknown section) plus the sentences the answer cited, keep at least 2 sentences, and answer with one of 4 fixed sentences saying the results are missing (OWNER D-15). They teach "results missing → maybe", which is narrower than the expert set's "results inconclusive → maybe". Off-scope examples pair a train-pool abstract with one of 12 personal-advice questions and one of 6 refusals, written separately from the evaluation set (no shared 5-word sequence, tested).
 
@@ -75,7 +76,7 @@ Research only, not medical advice.
 
 ## Hand audit (node N1.3)
 
-The owner read 50 training examples drawn from `train` at random within fixed strata, with a fixed seed (`docs/measurements/audit_sample.jsonl`): 18 "yes" answers, 12 "no" answers, 15 insufficient examples and 5 off-scope examples. Each example got one verdict: ok, weak citation, unsupported answer or wrong label. Each label is bound to a hash of the exact text shown, so editing an example voids its label (`docs/measurements/audit_labels.jsonl`).
+This audit was of the v1 targets, and `docs/measurements/audit_sample.jsonl` stays the v1 sample its labels are bound to. The v2 rebuild (TGT-R10) draws a new sample (`artifacts/targets/audit_sample.jsonl`, hash in `targets_drop_report.json`), which has not been audited. The owner read 50 v1 training examples drawn from `train` at random within fixed strata, with a fixed seed (`docs/measurements/audit_sample.jsonl`): 18 "yes" answers, 12 "no" answers, 15 insufficient examples and 5 off-scope examples. Each example got one verdict: ok, weak citation, unsupported answer or wrong label. Each label is bound to a hash of the exact text shown, so editing an example voids its label (`docs/measurements/audit_labels.jsonl`).
 
 - Result: 50 of 50 `ok`. No weak citation, no unsupported answer and no wrong label. The pass bar was at least 45 `ok` and no unsupported answer example.
 - The thresholds (support 0.5, entailment 0.5, 80 words, 4 citations) therefore stay as built.

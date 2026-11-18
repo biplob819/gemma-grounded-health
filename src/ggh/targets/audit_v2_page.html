@@ -1,0 +1,87 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Citation audit v2</title>
+<style>
+:root{--bg:#fafaf9;--fg:#1c1917;--mute:#78716c;--line:#e7e5e4;--card:#fff;--cite:#fef3c7;--acc:#0f766e;--bad:#b91c1c}
+@media (prefers-color-scheme:dark){:root{--bg:#1c1917;--fg:#f5f5f4;--mute:#a8a29e;--line:#44403c;
+--card:#292524;--cite:#713f12;--acc:#5eead4;--bad:#fca5a5}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,sans-serif}
+main{max-width:900px;margin:0 auto;padding:24px 16px}
+.bar{display:flex;justify-content:space-between;gap:12px;color:var(--mute);font-size:14px;flex-wrap:wrap}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin:14px 0}
+h2{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin:0 0 8px}
+ol{margin:0;padding-left:28px} li{margin:4px 0;padding:2px 6px;border-radius:4px}
+li.cited{background:var(--cite)} .kind{font-weight:600;color:var(--acc)}
+.sent{border:1px solid var(--line);border-radius:8px;padding:10px;margin:10px 0}
+.sent.focus{outline:2px solid var(--acc)} .sent p{margin:0 0 8px}
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.keys3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+button{font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--card);
+color:var(--fg);cursor:pointer} button.on{border-color:var(--acc);outline:2px solid var(--acc)}
+button:disabled{opacity:.35;cursor:default}
+textarea{width:100%;box-sizing:border-box;font:inherit;background:var(--card);color:var(--fg);
+border:1px solid var(--line);border-radius:8px;padding:8px} #msg{min-height:1.5em}
+.err{color:var(--bad)} small{color:var(--mute)}
+@media (max-width:600px){.keys{grid-template-columns:repeat(2,1fr)}.keys3{grid-template-columns:1fr}}
+</style></head><body><main>
+<div class="bar"><span id="pos"></span><span id="done"></span></div>
+<div class="card"><h2>Question <span class="kind" id="kind"></span></h2><div id="q"></div></div>
+<div class="card"><h2>Abstract sentences (cited ones highlighted)</h2><ol id="ctx"></ol></div>
+<div class="card"><h2>Target</h2><div><b id="label"></b> &middot; cites <span id="cites"></span></div>
+<p id="answer"></p></div>
+<div class="card" id="sentcard"><h2>Each cited sentence</h2>
+<small>Does this sentence, on its own, support the target answer? S supports &middot; A aim or question
+&middot; M method only &middot; W weak (partly). Keys apply to the outlined sentence, then move on.</small>
+<div id="sents"></div></div>
+<div class="card"><h2>Overall</h2><div class="keys3">
+<button data-o="ok">O &middot; ok</button><button data-o="wrong_label">L &middot; wrong label</button>
+<button data-o="claims_finding" id="cf">F &middot; claims a finding (insufficient)</button></div>
+<p><textarea id="note" rows="2" placeholder="Note (optional, saved with the next click)"></textarea></p>
+<div class="bar"><span>&larr; / &rarr; examples &middot; &uarr; / &darr; sentences</span><span id="msg"></span></div></div>
+</main><script>
+const V={s:'supports',a:'aim',m:'method',w:'weak'};
+let items=[],i=0,f=0;
+const $=id=>document.getElementById(id);
+const done=x=>x.overall&&(!x.judge_sentences||x.citations.every(c=>x.sentences[String(c)]));
+async function load(){const r=await fetch('/api/items');items=await r.json();
+const first=items.findIndex(x=>!done(x));i=first<0?0:first;show();}
+function show(){const x=items[i];
+$('pos').textContent=`Example ${i+1} of ${items.length}`;
+$('done').textContent=`${items.filter(done).length} complete`;$('kind').textContent=x.kind;
+$('q').textContent=x.question;$('label').textContent=x.label;$('cites').textContent=x.citations.join(', ');
+$('answer').textContent=x.answer;const ol=$('ctx');ol.innerHTML='';
+x.context.forEach((s,k)=>{const li=document.createElement('li');li.textContent=s;
+if(x.citations.includes(k+1))li.className='cited';ol.appendChild(li);});
+$('sentcard').style.display=x.judge_sentences?'':'none';
+const box=$('sents');box.innerHTML='';
+if(x.judge_sentences){x.citations.forEach((c,k)=>{const d=document.createElement('div');
+d.className='sent'+(k===f?' focus':'');const p=document.createElement('p');
+p.textContent=`[${c}] ${x.context[c-1]}`;d.appendChild(p);const g=document.createElement('div');
+g.className='keys';for(const [key,v] of Object.entries(V)){const b=document.createElement('button');
+b.textContent=`${key.toUpperCase()} · ${v}`;if(x.sentences[String(c)]===v)b.classList.add('on');
+b.onclick=()=>{f=k;setSent(v);};g.appendChild(b);}d.appendChild(g);box.appendChild(d);});}
+document.querySelectorAll('button[data-o]').forEach(b=>b.classList.toggle('on',b.dataset.o===x.overall));
+$('cf').disabled=x.kind!=='insufficient';
+$('note').value=x.note||'';}
+async function save(x){const r=await fetch('/api/label',{method:'POST',headers:{'Content-Type':'application/json'},
+body:JSON.stringify({example_id:x.id,content_digest:x.digest,sentences:x.sentences,overall:x.overall,
+note:$('note').value})});
+if(!r.ok){$('msg').textContent=await r.text();$('msg').className='err';return false;}
+x.note=$('note').value;$('msg').textContent='saved';$('msg').className='';return true;}
+async function setSent(v){const x=items[i];if(!x.judge_sentences)return;
+const c=String(x.citations[f]);const old=x.sentences[c];x.sentences={...x.sentences,[c]:v};
+if(!await save(x)){x.sentences={...x.sentences};if(old)x.sentences[c]=old;else delete x.sentences[c];show();return;}
+if(f<x.citations.length-1)f++;show();}
+async function setOverall(o){const x=items[i];if(o==='claims_finding'&&x.kind!=='insufficient')return;
+const old=x.overall;x.overall=o;if(!await save(x)){x.overall=old;show();return;}
+if(done(x)&&i<items.length-1){i++;f=0;}show();}
+document.querySelectorAll('button[data-o]').forEach(b=>b.onclick=()=>setOverall(b.dataset.o));
+document.addEventListener('keydown',ev=>{if(ev.target.tagName==='TEXTAREA')return;
+const k=ev.key.toLowerCase();const x=items[i];
+if(V[k]){setSent(V[k]);return;}
+const o={o:'ok',l:'wrong_label',f:'claims_finding'}[k];if(o){setOverall(o);return;}
+if(ev.key==='ArrowRight'&&i<items.length-1){i++;f=0;show();}
+if(ev.key==='ArrowLeft'&&i>0){i--;f=0;show();}
+if(ev.key==='ArrowDown'&&x.judge_sentences&&f<x.citations.length-1){f++;show();}
+if(ev.key==='ArrowUp'&&f>0){f--;show();}});
+load();
+</script></body></html>

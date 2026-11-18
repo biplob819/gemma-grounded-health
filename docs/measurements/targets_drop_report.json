@@ -1,53 +1,56 @@
 {
   "cap_train": 20000,
   "files": {
-    "artifacts/targets/audit_sample.jsonl": "da0e4ed194ac12e412db21e65bb467c28fa60720aaae764ea79764f841c5537e",
-    "artifacts/targets/nli_scores.jsonl": "405aa6e52b50576c5022c706f44d4fcabfb8fadabcd6ac53a521701ce1c71bfb",
-    "artifacts/targets/train.jsonl": "5b9a225df93f7824ccf230175e63f7177e006a594d51837f62f2a2642595ce4f",
-    "artifacts/targets/val.jsonl": "e6f716fbaf1cd3792e91102e8c03a98d65350dd8f5eb8c6b19cfcf4997e21dc2"
+    "artifacts/targets/audit_sample.jsonl": "c922cf9f6410bc1442b2bef71bff354c3f43487f7ef36a5eb8eaf84cd4f50a70",
+    "artifacts/targets/nli_scores.jsonl": "f2bfc69001f02299cd5dcd57dddadaddf9bc61a799c32fd159d5d9586059aa58",
+    "artifacts/targets/train.jsonl": "8c3e0a01a396cb648ca6ef5bdff82b73ed9ed8ff3abbc3e4dfeb210e17d5efdb",
+    "artifacts/targets/val.jsonl": "695e1abd458dd87b22897382934002d9cb2c67a9bb85307567ec922e519bc602"
   },
   "nli_model": "cross-encoder/nli-deberta-v3-base@6c749ce3425cd33b46d187e45b92bbf96ee12ec7",
   "no_rows_surviving": {
-    "train_pool": 3278,
-    "val_split": 25
+    "train_pool": 2877,
+    "val_split": 22
   },
   "quotas": {
     "train": {
-      "insufficient": 844,
-      "no": 3003,
-      "offscope": 84,
-      "yes": 4505
+      "insufficient": 740,
+      "no": 2635,
+      "offscope": 74,
+      "yes": 3953
     },
     "val": {
-      "insufficient": 84,
-      "no": 300,
-      "offscope": 8,
-      "yes": 451
+      "insufficient": 74,
+      "no": 264,
+      "offscope": 7,
+      "yes": 395
     }
   },
   "row_drops": {
-    "no:no_supported_sentence": 11779,
-    "yes:no_supported_sentence": 14270,
-    "yes:over_80_words": 1
+    "no:no_supported_sentence": 12182,
+    "no:over_80_words": 1,
+    "yes:no_supported_sentence": 16884,
+    "yes:over_80_words": 2
   },
-  "rows_scored": 35538,
-  "rules_sha256": "daae24a3fd7e6d4b818d16f28e30828d97751cff50d8172b431f87336fab6595",
+  "rows_scored": 37398,
+  "rules_sha256": "20ee63b5d067d7f8cb9ba2c84371f10d12ab853ddcce8184215725e3e91ba3c0",
   "seed": 7,
   "sentence_drops": {
-    "sentence:citation_cap": 233,
-    "sentence:low_entailment": 27090,
-    "sentence:low_support": 19682,
-    "sentence:no_content_words": 15,
-    "sentence:recommendation": 4422,
-    "sentence:zero_overlap": 737
+    "ranking:aim_or_method_removed": 50834,
+    "sentence:aim_or_method_only_overlap": 621,
+    "sentence:citation_cap": 145,
+    "sentence:low_entailment": 21451,
+    "sentence:low_support": 29082,
+    "sentence:no_content_words": 16,
+    "sentence:recommendation": 4629,
+    "sentence:zero_overlap": 786
   },
-  "shortfall_vs_cap": 11564,
+  "shortfall_vs_cap": 12598,
   "thresholds": {
     "entail_min": 0.5,
     "max_cites": 4,
     "max_words": 80,
     "support_min": 0.5
   },
-  "train": 8436,
-  "val": 843
+  "train": 7402,
+  "val": 740
 }

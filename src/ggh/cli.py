@@ -195,10 +195,14 @@ def _cmd_freeze(args: argparse.Namespace) -> int:
 
 
 def _cmd_audit_serve(args: argparse.Namespace) -> int:
-    from ggh.targets import audit
+    from ggh.targets import audit, audit_v2
 
     try:
-        srv = audit.server(Path(args.root), args.port)
+        if args.v2:  # AUD-R4: per cited sentence, its own files and port
+            port = audit_v2.DEFAULT_PORT if args.port is None else args.port
+            srv = audit_v2.server(Path(args.root), port)
+        else:
+            srv = audit.server(Path(args.root), 8765 if args.port is None else args.port)
     except (ValueError, OSError) as exc:
         print(f"audit: FAIL: {exc}")
         return EXIT_ERROR
@@ -216,16 +220,46 @@ def _cmd_audit_serve(args: argparse.Namespace) -> int:
 def _cmd_audit_score(args: argparse.Namespace) -> int:
     import json
 
-    from ggh.targets import audit
+    from ggh.targets import audit, audit_v2
 
     try:
-        result = audit.score(Path(args.root))
+        result = audit_v2.write_result(Path(args.root)) if args.v2 else audit.score(Path(args.root))
     except (ValueError, OSError) as exc:
         print(f"audit: FAIL: {exc}")
         return EXIT_ERROR
     print(json.dumps(result, indent=2))
+    if args.v2:
+        print(f"result: {audit_v2.RESULT}")
     print("audit: PASS" if result["passed"] else "audit: NOT PASSED")
     return 0 if result["passed"] else EXIT_ERROR
+
+
+def _cmd_audit_sample(args: argparse.Namespace) -> int:
+    from ggh.targets import audit_v2
+
+    try:
+        sample = audit_v2.draw(Path(args.root))
+    except (ValueError, OSError) as exc:
+        print(f"audit: FAIL: {exc}")
+        return EXIT_ERROR
+    print(f"{len(sample)} examples drawn into {audit_v2.SAMPLE}")
+    return 0
+
+
+def _cmd_audit_refresh(args: argparse.Namespace) -> int:
+    import json
+
+    from ggh.targets import audit_v2
+
+    try:
+        out = audit_v2.refresh(Path(args.root))
+    except (ValueError, OSError, StopIteration) as exc:
+        print(f"audit: FAIL: {exc!r}")
+        return EXIT_ERROR
+    print(json.dumps(out, indent=2))
+    print(f"{len(out['relabel'])} examples need labels ({out['relabel_answers']} answers); "
+          f"list in {audit_v2.RELABEL}")  # fmt: skip
+    return 0
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -284,11 +318,23 @@ def build_parser() -> argparse.ArgumentParser:
     asub = aud.add_subparsers(dest="audit_command", required=True)
     aserve = asub.add_parser("serve", help="open the local labelling page")
     aserve.add_argument("--root", default=".", help="repo root")
-    aserve.add_argument("--port", type=int, default=8765)
+    aserve.add_argument("--port", type=int, default=None, help="default 8765, or 8766 with --v2")
+    aserve.add_argument("--v2", action="store_true", help="the v2 per-sentence audit (AUD-R4)")
     aserve.set_defaults(func=_cmd_audit_serve)
     ascore = asub.add_parser("score", help="apply the pass bar to the saved labels")
     ascore.add_argument("--root", default=".", help="repo root")
+    ascore.add_argument("--v2", action="store_true", help="score the v2 audit, write its result")
     ascore.set_defaults(func=_cmd_audit_score)
+    asample = asub.add_parser("sample", help="draw the v2 audit sample from the v2 train split")
+    asample.add_argument("--root", default=".", help="repo root")
+    asample.add_argument("--v2", action="store_true", required=True, help="(v2 only)")
+    asample.set_defaults(func=_cmd_audit_sample)
+    arefresh = asub.add_parser(
+        "refresh", help="after a targets rebuild: same v2 ids, re-read; list who needs labels"
+    )
+    arefresh.add_argument("--root", default=".", help="repo root")
+    arefresh.add_argument("--v2", action="store_true", required=True, help="(v2 only)")
+    arefresh.set_defaults(func=_cmd_audit_refresh)
     lineage = sub.add_parser("lineage", help="check artifact lineage manifests")
     lsub = lineage.add_subparsers(dest="lineage_command", required=True)
     lverify = lsub.add_parser("verify", help="walk a manifest back through its parents")

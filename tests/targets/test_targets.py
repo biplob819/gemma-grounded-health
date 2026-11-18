@@ -106,7 +106,7 @@ def test_support_is_the_share_of_content_words_found_in_the_cited_sentences():
     assert rules.support(s, ["Mortality fell in patients."]) == pytest.approx(3 / 5)
     assert rules.support(s, ["Nothing alike here."]) == 0.0
     r = row(2, long_answer="Mortality fell sharply among treated elderly smokers yesterday.")
-    r["sentences"] = ["Mortality was recorded.", "Other words entirely."]
+    r["sentences"] = ["Mortality in the cohort.", "Other words entirely."]
     counts = Counter()
     assert make.candidates(r, counts) == [] and counts["sentence:low_support"] == 1
 
@@ -200,7 +200,7 @@ def test_the_smallest_citation_option_that_entails_is_chosen():
 
     sents = [
         "Background on alpha9 dosing.",
-        "Treatment alpha9 was given daily.",
+        "Treatment alpha9 on a daily schedule.",
         "Outcome beta9 improved.",
         "Unrelated sentence.",
     ]
@@ -342,8 +342,9 @@ def test_every_example_is_reconstructed_from_its_row_and_rule_ids():
 
 
 def test_rule_ids_are_pinned():
+    # TGT-R10: OWNER D-43, tests/targets/test_targets_aim.py
     assert rules.ANSWER_RULES == (
-        "TGT-R1", "TGT-R2", "TGT-R9", "TGT-R3", "TGT-R6", "TGT-R4", "TGT-R5", "TGT-R7",
+        "TGT-R1", "TGT-R2", "TGT-R9", "TGT-R10", "TGT-R3", "TGT-R6", "TGT-R4", "TGT-R5", "TGT-R7",
     )  # fmt: skip
     assert (*rules.ANSWER_RULES, "INS-R1", "INS-R2", "INS-R3") == rules.INSUFFICIENT_RULES
     assert rules.OFFSCOPE_RULES == ("OFF-R3",)
