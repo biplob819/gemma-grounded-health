@@ -301,6 +301,9 @@ def build_parser() -> argparse.ArgumentParser:
     from ggh.cli_results import register as register_results  # E3.3: bundle, sample, plans
 
     register_results(sub)
+    from ggh.cli_release import register as register_release  # R4: card, release, space
+
+    register_release(sub)
     return ap
 
 

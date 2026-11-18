@@ -3,6 +3,7 @@
 Format: `[TYPE] [NODE] — summary`. Types: FEAT, FIX, DOCS, HARNESS, RELEASE.
 
 ## 2026-11-18
+- [FEAT] [R4.1/R4.2/R4.3/R4.5] — release scaffolding, not yet node work: `ggh card` renders MODEL_CARD.md from `results_bundle.json` through a number-free template (golden card from a v1 fixture bundle built from committed results; every decimal traced to the bundle or a hashed input); `ggh release` dry run lists both Hub repos' files with lineage and sha256 checks and pushes only with `--push`, `HF_TOKEN` and a clean plan; `ggh.space` demo logic (EvalKit prompt and parsing, invalid-citation flag, salted-hash numeric passcode with per-session rate limits, visitor key used once, nothing typed logged), six samples from the v1 dev run, `ggh space --local`, `ggh passkey set`; `ggh readme-table` and docs/README_release_draft.md with screenshot slots and a links registry
 - [FEAT] [E3.2] — green after 2 verifier rounds (round 1 FAIL: two runs missing from the ledger; round 2 PASS). Benchmark runs: plan hashed before the main run; main run on 1,000 PQA-L cases, four models, dual judges ($53.68): fine-tuned accuracy 0.728 (base 0.501) but headline 0.388/0.330 (base 0.418/0.394), its citations often pointing at aim sentences (OWNER D-43 starts v2); bf16 parity on 200 cases (headline +0.025/+0.015 over Q4_K_M, intervals include zero); off-scope run on the 20 frozen prompts; paraphrase probe built by EvalKit's DAT-06 method (D-42), no contamination signal; `ggh serve-hf`, `ggh probe build`; total E3.2 spend $58.84
 
 ## 2026-11-17

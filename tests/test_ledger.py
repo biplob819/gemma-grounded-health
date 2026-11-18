@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 
 import pytest
-from hypothesis import given
+from hypothesis import given, settings
 from hypothesis import strategies as st
 
 from ggh import ledger
@@ -59,6 +59,7 @@ def test_total_raises_on_malformed_lines(tmp_path):
         ledger.total(path, ledger.SPEND_FIELD)
 
 
+@settings(deadline=None)  # file I/O per example; timing varies under load, the result does not
 @given(st.lists(st.floats(min_value=0, max_value=1e4, allow_nan=False), max_size=20))
 def test_total_is_exact_fsum_of_appended_amounts(amounts):
     import tempfile
