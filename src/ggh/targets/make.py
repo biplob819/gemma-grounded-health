@@ -96,9 +96,9 @@ def candidates(
         if aims:
             without = rules.ranked_citations(s, ctx, aims)
             if without != ranked:
-                counts["ranking:aim_sentence_removed"] += 1  # not a drop by itself
+                counts["ranking:aim_or_method_removed"] += 1  # not a drop by itself
             if not without:
-                counts["sentence:aim_only_overlap"] += 1  # every overlapping sentence is an aim
+                counts["sentence:aim_or_method_only_overlap"] += 1  # nothing else overlaps
                 continue
             ranked = without
         options = []

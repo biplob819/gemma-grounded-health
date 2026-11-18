@@ -42,7 +42,7 @@ Because all 20 abstracts must come from `dev_eval`, a build with a seed other th
 
 ## Training examples (node N1.3)
 
-`ggh targets` draws 8,189 training and 818 validation examples from the N1.2 splits (v2 targets, TGT-R10; v1, which trained the first fine-tune, drew 8,436 and 843). Every example's answer comes from the abstract's own author conclusion (`long_answer`), cut down to what its cited sentences support:
+`ggh targets` draws 7,402 training and 740 validation examples from the N1.2 splits (v2.1 targets: TGT-R10 as tightened after OWNER D-46, so an answer never cites an aim, objective, study-description or pure method sentence; the first v2 build drew 8,189 and 818; v1, which trained the first fine-tune, drew 8,436 and 843). Every example's answer comes from the abstract's own author conclusion (`long_answer`), cut down to what its cited sentences support:
 
 1. Conclusion sentences are split with EvalKit's splitter, and sentences that recommend or generalise ("should", "clinicians", "further studies", …) are dropped.
 2. A leading hedge such as "These findings suggest that" is removed.
@@ -54,12 +54,12 @@ No text from Claude, OpenAI or Gemini models is used anywhere; every example is 
 
 | | Train | Val |
 | --- | --- | --- |
-| Answer, label yes | 4,373 | 437 |
-| Answer, label no | 2,915 | 291 |
-| Insufficient (label maybe) | 819 | 82 |
-| Off-scope refusal (label maybe) | 82 | 8 |
+| Answer, label yes | 3,953 | 395 |
+| Answer, label no | 2,635 | 264 |
+| Insufficient (label maybe) | 740 | 74 |
+| Off-scope refusal (label maybe) | 74 | 7 |
 
-The yes:no ratio among answers is 60:40 (MIX-R1), so the model does not learn PQA-A's yes bias. The filters are strict: of the rows scored, 11,876 "no" rows and 16,287 "yes" rows had no conclusion sentence that survived. Only 3,206 "no" rows survived, which caps the set at 8,189 rather than the planned 20,000 (OWNER D-34 chose strict filters over size). Counts by reason are in `docs/measurements/targets_drop_report.json`.
+The yes:no ratio among answers is 60:40 (MIX-R1), so the model does not learn PQA-A's yes bias. The filters are strict: of the rows scored, 12,182 "no" rows and 16,884 "yes" rows had no conclusion sentence that survived. Only 2,877 "no" rows survived, which caps the set at 7,402 rather than the planned 20,000 (OWNER D-34 chose strict filters over size). Counts by reason are in `docs/measurements/targets_drop_report.json`.
 
 "Insufficient" examples remove every RESULTS-type sentence (and any sentence of unknown section) plus the sentences the answer cited, keep at least 2 sentences, and answer with one of 4 fixed sentences saying the results are missing (OWNER D-15). They teach "results missing → maybe", which is narrower than the expert set's "results inconclusive → maybe". Off-scope examples pair a train-pool abstract with one of 12 personal-advice questions and one of 6 refusals, written separately from the evaluation set (no shared 5-word sequence, tested).
 

@@ -1,55 +1,56 @@
 {
   "cap_train": 20000,
   "files": {
-    "artifacts/targets/audit_sample.jsonl": "acf9a00350fc4e6bcc81dfa04139e4bbcdb7145c3b04306f29f17273de241e24",
-    "artifacts/targets/nli_scores.jsonl": "c57fdb23e64025cf6fc7f02bd48ba1594e90f581fb0d57b96b6ac6459ad400fc",
-    "artifacts/targets/train.jsonl": "acb4d5aa7df65ec2bbcc6404fcd19d914d2818daee7c95fe74d84007a1bc760c",
-    "artifacts/targets/val.jsonl": "a3b48c245744131d6d7148ad1a70d94ef832c87e7cd6ff927de3c3dfd6496bb7"
+    "artifacts/targets/audit_sample.jsonl": "c922cf9f6410bc1442b2bef71bff354c3f43487f7ef36a5eb8eaf84cd4f50a70",
+    "artifacts/targets/nli_scores.jsonl": "f2bfc69001f02299cd5dcd57dddadaddf9bc61a799c32fd159d5d9586059aa58",
+    "artifacts/targets/train.jsonl": "8c3e0a01a396cb648ca6ef5bdff82b73ed9ed8ff3abbc3e4dfeb210e17d5efdb",
+    "artifacts/targets/val.jsonl": "695e1abd458dd87b22897382934002d9cb2c67a9bb85307567ec922e519bc602"
   },
   "nli_model": "cross-encoder/nli-deberta-v3-base@6c749ce3425cd33b46d187e45b92bbf96ee12ec7",
   "no_rows_surviving": {
-    "train_pool": 3186,
-    "val_split": 20
+    "train_pool": 2877,
+    "val_split": 22
   },
   "quotas": {
     "train": {
-      "insufficient": 819,
-      "no": 2915,
-      "offscope": 82,
-      "yes": 4373
+      "insufficient": 740,
+      "no": 2635,
+      "offscope": 74,
+      "yes": 3953
     },
     "val": {
-      "insufficient": 82,
-      "no": 291,
-      "offscope": 8,
-      "yes": 437
+      "insufficient": 74,
+      "no": 264,
+      "offscope": 7,
+      "yes": 395
     }
   },
   "row_drops": {
-    "no:no_supported_sentence": 11876,
-    "yes:no_supported_sentence": 16287,
+    "no:no_supported_sentence": 12182,
+    "no:over_80_words": 1,
+    "yes:no_supported_sentence": 16884,
     "yes:over_80_words": 2
   },
   "rows_scored": 37398,
-  "rules_sha256": "e4a91b96009444e3c3af24691f9553566d5351e08140c565d28a94db128b1854",
+  "rules_sha256": "20ee63b5d067d7f8cb9ba2c84371f10d12ab853ddcce8184215725e3e91ba3c0",
   "seed": 7,
   "sentence_drops": {
-    "ranking:aim_sentence_removed": 39934,
-    "sentence:aim_only_overlap": 211,
-    "sentence:citation_cap": 223,
-    "sentence:low_entailment": 24400,
-    "sentence:low_support": 25529,
+    "ranking:aim_or_method_removed": 50834,
+    "sentence:aim_or_method_only_overlap": 621,
+    "sentence:citation_cap": 145,
+    "sentence:low_entailment": 21451,
+    "sentence:low_support": 29082,
     "sentence:no_content_words": 16,
     "sentence:recommendation": 4629,
     "sentence:zero_overlap": 786
   },
-  "shortfall_vs_cap": 11811,
+  "shortfall_vs_cap": 12598,
   "thresholds": {
     "entail_min": 0.5,
     "max_cites": 4,
     "max_words": 80,
     "support_min": 0.5
   },
-  "train": 8189,
-  "val": 818
+  "train": 7402,
+  "val": 740
 }

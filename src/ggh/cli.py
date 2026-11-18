@@ -246,6 +246,22 @@ def _cmd_audit_sample(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_audit_refresh(args: argparse.Namespace) -> int:
+    import json
+
+    from ggh.targets import audit_v2
+
+    try:
+        out = audit_v2.refresh(Path(args.root))
+    except (ValueError, OSError, StopIteration) as exc:
+        print(f"audit: FAIL: {exc!r}")
+        return EXIT_ERROR
+    print(json.dumps(out, indent=2))
+    print(f"{len(out['relabel'])} examples need labels ({out['relabel_answers']} answers); "
+          f"list in {audit_v2.RELABEL}")  # fmt: skip
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(
         prog="ggh",
@@ -313,6 +329,12 @@ def build_parser() -> argparse.ArgumentParser:
     asample.add_argument("--root", default=".", help="repo root")
     asample.add_argument("--v2", action="store_true", required=True, help="(v2 only)")
     asample.set_defaults(func=_cmd_audit_sample)
+    arefresh = asub.add_parser(
+        "refresh", help="after a targets rebuild: same v2 ids, re-read; list who needs labels"
+    )
+    arefresh.add_argument("--root", default=".", help="repo root")
+    arefresh.add_argument("--v2", action="store_true", required=True, help="(v2 only)")
+    arefresh.set_defaults(func=_cmd_audit_refresh)
     lineage = sub.add_parser("lineage", help="check artifact lineage manifests")
     lsub = lineage.add_subparsers(dest="lineage_command", required=True)
     lverify = lsub.add_parser("verify", help="walk a manifest back through its parents")

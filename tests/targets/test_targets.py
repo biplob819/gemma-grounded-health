@@ -106,7 +106,7 @@ def test_support_is_the_share_of_content_words_found_in_the_cited_sentences():
     assert rules.support(s, ["Mortality fell in patients."]) == pytest.approx(3 / 5)
     assert rules.support(s, ["Nothing alike here."]) == 0.0
     r = row(2, long_answer="Mortality fell sharply among treated elderly smokers yesterday.")
-    r["sentences"] = ["Mortality was recorded.", "Other words entirely."]
+    r["sentences"] = ["Mortality in the cohort.", "Other words entirely."]
     counts = Counter()
     assert make.candidates(r, counts) == [] and counts["sentence:low_support"] == 1
 
@@ -200,7 +200,7 @@ def test_the_smallest_citation_option_that_entails_is_chosen():
 
     sents = [
         "Background on alpha9 dosing.",
-        "Treatment alpha9 was given daily.",
+        "Treatment alpha9 on a daily schedule.",
         "Outcome beta9 improved.",
         "Unrelated sentence.",
     ]

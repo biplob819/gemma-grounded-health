@@ -66,12 +66,15 @@ def strip_hedge(sentence: str) -> str:
     return rest[:1].upper() + rest[1:]
 
 
-# ---- TGT-R10: an answer never cites an aim, objective or study-description sentence ----
-# (OWNER D-43). v1 let "To investigate whether X..." through lexical ranking and NLI at 0.5,
-# so 43% of its answer targets cited one. The classifier is deliberately conservative: it
-# fires on aim phrasing, and the weaker study-description forms ("We examined X", "X was
-# investigated") fire only when the sentence reports no result. Insufficient and off-scope
-# examples are untouched: their citations come from INS-R3 and OFF-R3, not from TGT-R6.
+# ---- TGT-R10: an answer never cites an aim, objective, study-description or method sentence
+# (OWNER D-43; v2 of the rule after the owner's per-sentence audit, D-45). v1 let "To
+# investigate whether X..." through lexical ranking and NLI at 0.5, so 43% of its answer
+# targets cited one; the first v2 audit then found method sentences ("X was assessed by qPCR")
+# cited too. The classifier is deliberately conservative: aim phrasing always counts; study
+# descriptions ("We examined X", "X was investigated", "This article reports") and method or
+# procedure sentences ("X were used to analyse", "Each patient was tested with") count only
+# when the sentence reports no result. Insufficient and off-scope examples are untouched: their
+# citations come from INS-R3 and OFF-R3, not from TGT-R6.
 _LEAD = (  # sentence start, with an optional opener before the aim phrasing
     r"^\W*(?:\d+\)\s*)?"  # "(1) To evaluate..."
     r"(?:(?:therefore|thus|hence|accordingly|consequently|here(?:in)?|now|so),?\s+)?"
@@ -82,14 +85,14 @@ _LEAD = (  # sentence start, with an optional opener before the aim phrasing
 _CLAUSE = (  # sentence start, or a clause start ("Since X is unclear, we investigated...")
     r"(?:" + _LEAD + r"|[,;:]\s+(?:(?:therefore|thus|hence|here(?:in)?|so),?\s+)?)"
 )
-_STUDY = (  # "this study", "the present prospective cohort study", "this multicenter RCT"
-    r"(?:this|the\s+(?:present|current)|our)\s+(?:[\w-]+,?\s+){0,3}?"
-    r"(?:study|analysis|report|paper|work|trial|rct|investigation|review|project|survey|"
-    r"experiment|research)"
+_STUDY = (  # "this study", "the study", "the present prospective cohort study", "this RCT"
+    r"(?:this|the(?:\s+(?:present|current))?|our)\s+(?:[\w-]+,?\s+){0,3}?"
+    r"(?:study|analysis|report|paper|article|work|trial|rct|investigation|review|project|"
+    r"survey|experiment|research)"
 )
 _ADV = (  # "we have now examined", "we therefore aimed"
-    r"(?:(?:have|therefore|thus|also|further|then|next|now|here|first|specifically|"
-    r"retrospectively|prospectively)\s+){0,2}"
+    r"(?:(?:have|has|therefore|thus|also|further|then|next|now|here|first|specifically|"
+    r"recently|previously|retrospectively|prospectively)\s+){0,2}"
 )
 _WE = r"(?:we|the\s+authors)\s+"
 AIM_PATTERNS = (  # aim phrasing: an aim unless the sentence also says what was found
@@ -117,10 +120,12 @@ AIM_PATTERNS = (  # aim phrasing: an aim unless the sentence also says what was 
 )
 DESCRIPTION_PATTERNS = (  # study description: an aim only when no result is reported
     _CLAUSE + _WE + _ADV + r"(?:investigated?|examined?|evaluated?|assessed?|studied|"
-    r"study|explored?|tested?)\b",
+    r"study|explored?|tested?|determined?|reported|described|published)\b",
     _CLAUSE + _STUDY + r"\s+(?:investigated?|investigates|examined?|examines|evaluated?|"
     r"evaluates|assessed?|assesses|explored?|explores|describes|described|presents|"
-    r"compared?|compares)\b",
+    r"compared?|compares|reports|reported|determined|determines)\b",
+    r"\b(?:has|have)\s+been\s+(?:\w+ly\s+)?(?:studied|investigated|examined|explored|"
+    r"evaluated|assessed)\b",  # earlier work: not this study's finding
     r"\b(?:was|were)\s+(?:\w+ly\s+)?(?:studied|investigated|examined|explored)\b",
     r"\b(?:study|trial|analysis|investigation)\s+(?:was\s+)?(?:(?:conducted|performed|"
     r"undertaken|designed|carried\s+out)\s+)?(?:in\s+order\s+)?to\s+(?:investigate|determine|"
@@ -130,7 +135,8 @@ _FOUND = re.compile(  # a result reported in so many words ("we found", "results
     r"\b(?:we|and|but|they|authors|it|was|were|is|are|has|have|had)\s+(?:also\s+|further\s+|"
     r"then\s+|not\s+)?(?:found|showed|shown|revealed|demonstrated|observed)\b|"
     r"\b(?:results?|findings?|data|analys[ie]s)\s+(?:\w+\s+)?(?:showed|revealed|"
-    r"demonstrated|indicated|suggested)\b",
+    r"demonstrated|indicated|suggested)\b|"
+    r"\b(?:showed|revealed|demonstrated|confirmed)\s+(?:that|a|an|no|significant)\b",
     re.I,
 )
 _STATED = re.compile(  # a result stated as fact; read outside any "whether"/"if" clause
@@ -146,6 +152,38 @@ _OPEN_CLAUSE = re.compile(r"\b(?:whether|if)\b.*", re.I | re.S)
 _AIM = re.compile("|".join(f"(?:{p})" for p in AIM_PATTERNS), re.I)
 _DESCRIPTION = re.compile("|".join(f"(?:{p})" for p in DESCRIPTION_PATTERNS), re.I)
 
+_DONE = (  # what a method sentence says was done to, or with, its subject
+    r"used|performed|measured|assessed|evaluated|determined|analy[sz]ed|collected|recorded|"
+    r"obtained|tested|administered|given|randomi[sz]ed|enrolled|included|recruited|monitored|"
+    r"calculated|estimated|quantified|compared|treated|divided|allocated|assigned|maintained|"
+    r"scored|reviewed|selected|genotyped|sequenced|stained|injected|implanted|exposed|"
+    r"interviewed|surveyed|applied|conducted|carried\s+out|undertaken|subjected|sampled|"
+    r"harvested|prepared|incubated|cultured|transfected|imaged|scanned|screened|based|founded|"
+    r"defined|categori[sz]ed|classified|matched|followed(?:\s+up)?|retrieved|extracted|"
+    r"identified|evaluated|investigated|studied|examined"
+)
+METHOD_PATTERNS = (  # a method or procedure: excluded only when no result is reported
+    r"\b(?:was|were|is|are|been|being)\s+(?:\w+ly\s+)?(?:" + _DONE + r")\b",
+    _CLAUSE + _WE + _ADV + r"(?:used|measured|performed|conducted|analy[sz]ed|recruited|"
+    r"enrolled|collected|reviewed|compared|calculated|obtained|genotyped|followed|included|"
+    r"selected|identified|applied|developed|constructed|designed|administered|randomi[sz]ed|"
+    r"retrieved|extracted|searched)\b",
+    r"\b(?:using|by\s+means\s+of)\b.*\b(?:was|were)\s+(?:\w+ly\s+)?(?:" + _DONE + r")\b",
+)
+_METHOD = re.compile("|".join(f"(?:{p})" for p in METHOD_PATTERNS), re.I)
+_FINDING = re.compile(  # a finding, for method sentences (a bare dose "1.0%" is not one)
+    r"\bp\s*[<>=\u2264\u2265]|\b(?:odds|hazard|risk)\s+ratios?\b|\bci\b|"
+    r"\b(?:did|does|do|was|were|is|are|could|can)\s+not\b|\bno\s+(?:\w+\s+)?(?:difference|"
+    r"change|effect|association|correlation|relationship)s?\b|"
+    r"\b(?:increased|decreased|reduced|improved|declined|rose|fell|lowered|raised|predicted|"
+    r"correlated|associated|higher|lower|greater|fewer|smaller|larger|elevated|diminished|"
+    r"inhibited|induced|abolished|attenuated|enhanced|prevented|caused|resulted|replicated)\b|"
+    r"\b(?:significant(?:ly)?|best|worse|better|more|less|associations?|increases?|"
+    r"decreases?|reductions?|elevations?)\b|"
+    r"\(\s*\d+(?:\.\d+)?\s*%|\d\s*%\s+(?:of|were|was|had|in)\b",  # "127 cases (73.4%)"
+    re.I,
+)
+
 
 def reports_result(sentence: str) -> bool:
     """A result in so many words ("we found"), or one stated as fact outside a "whether" or
@@ -157,9 +195,22 @@ def is_aim_sentence(sentence: str) -> bool:
     """TGT-R10: an aim, objective, hypothesis or study-description sentence."""
     if _AIM.search(sentence):  # aim wording: only a result in so many words overrides it
         return _FOUND.search(sentence) is None
-    if _DESCRIPTION.search(sentence):
-        return not reports_result(sentence)
+    m = _DESCRIPTION.search(sentence)
+    if m:  # a leading background clause ("As X is decreased in Y, we explored...") is not read
+        return not reports_result(sentence[m.start() :])
     return False
+
+
+def is_method_sentence(sentence: str) -> bool:
+    """TGT-R10 (v2): a method or procedure sentence that reports no finding."""
+    if not _METHOD.search(sentence):
+        return False
+    return not (_FOUND.search(sentence) or _FINDING.search(_OPEN_CLAUSE.sub("", sentence)))
+
+
+def is_excluded_from_answers(sentence: str) -> bool:
+    """TGT-R10: an answer never cites this sentence."""
+    return is_aim_sentence(sentence) or is_method_sentence(sentence)
 
 
 # ---- TGT-R3 / TGT-R6: content words ----
@@ -297,8 +348,8 @@ def overlaps(sentence: str, context: tuple[str, ...]) -> list[float]:
 
 
 def aim_positions(context: tuple[str, ...]) -> frozenset[int]:
-    """TGT-R10: the 1-based positions of the context's aim sentences."""
-    return frozenset(i + 1 for i, c in enumerate(context) if is_aim_sentence(c))
+    """TGT-R10: the 1-based positions an answer may not cite (aim or method sentences)."""
+    return frozenset(i + 1 for i, c in enumerate(context) if is_excluded_from_answers(c))
 
 
 def ranked_citations(

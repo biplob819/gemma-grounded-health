@@ -33,6 +33,7 @@ MEASURE = Path("docs") / "measurements"
 SAMPLE = MEASURE / "audit_v2_sample.jsonl"
 LABELS = MEASURE / "audit_v2_labels.jsonl"
 RESULT = MEASURE / "audit_v2_result.json"
+RELABEL = MEASURE / "audit_v2_relabel.json"  # ids needing labels after a rebuild (`refresh`)
 TRAIN = make.OUT_DIR / "train.jsonl"
 DEFAULT_PORT = 8766  # not 8765: a v1 audit server may still be running there
 
@@ -77,6 +78,56 @@ def draw(root: Path, seed: int = make.SEED) -> list[TrainExample]:
         for e in sample:
             fh.write(json.dumps(json.loads(e.model_dump_json()), sort_keys=True) + "\n")
     return sample
+
+
+def _stratum(e: TrainExample) -> tuple[str, str | None]:
+    return (e.kind, e.source_label if e.kind == "answer" else None)
+
+
+def refresh(root: Path, seed: int = make.SEED) -> dict[str, Any]:
+    """After a targets rebuild: keep the same example ids, re-read each from the rebuilt train
+    split, and replace an id the rebuild dropped by the first example of its stratum in AUD-R1's
+    seeded draw on the rebuilt split that is not already in the sample. Labels whose digest still
+    matches stay valid; the rest need relabelling (`RELABEL`)."""
+    old = load_sample(root)
+    report = json.loads((root / make.REPORT_COPY).read_text(encoding="utf-8"))
+    if sha256_file(root / TRAIN) != report["files"].get(TRAIN.as_posix()):
+        raise ValueError(f"{TRAIN} is not the split {make.REPORT_COPY} records; rerun ggh targets")
+    train = {e.id: e for e in map(TrainExample.model_validate, read_jsonl(root / TRAIN))}
+    fresh = make.audit_sample(list(train.values()), seed)
+    keep = {e.id for e in old if e.id in train}
+    new: list[TrainExample] = []
+    replaced: dict[str, str] = {}
+    for e in old:
+        if e.id in train:
+            new.append(train[e.id])
+            continue
+        pick = next(
+            f
+            for f in fresh
+            if _stratum(f) == _stratum(e) and f.id not in keep and f.id not in {x.id for x in new}
+        )
+        replaced[e.id] = pick.id
+        new.append(pick)
+    labels = load_labels(root)
+    relabel = [
+        {"id": e.id, "kind": e.kind}
+        for e in new
+        if (lab := labels.get(e.id)) is None or lab.content_digest != digest(e)
+    ]
+    path = root / SAMPLE
+    with path.open("w", encoding="utf-8", newline="\n") as fh:
+        for e in new:
+            fh.write(json.dumps(json.loads(e.model_dump_json()), sort_keys=True) + "\n")
+    out = {
+        "sample_sha256": sha256_file(path),
+        "replaced": replaced,
+        "relabel": relabel,
+        "relabel_answers": sum(r["kind"] == "answer" for r in relabel),
+        "still_valid": len(new) - len(relabel),
+    }
+    (root / RELABEL).write_text(json.dumps(out, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return out
 
 
 def load_sample(root: Path) -> list[TrainExample]:

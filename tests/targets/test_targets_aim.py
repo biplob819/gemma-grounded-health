@@ -40,6 +40,20 @@ AIM = (
     "alters symptoms.",  # percentages inside an aim
     "This study aimed to evaluate surgical timing, and phases were compared to find the one "
     "which showed the best survival.",  # "which showed" is part of the aim
+    # TGT-R10 v2: forms the first v2 audit found cited (OWNER D-45)
+    "The study aims to investigate whether information from multimodal imaging increases "
+    "ASTRAL score's accuracy.",
+    "Here we determined the expression and function of proteins involved in MAPK signaling in "
+    "benign, atypical, and malignant meningiomas.",
+    "This article reports the importance of serum protein mediums in the performance of the "
+    "manual hexadimethrine bromide test.",
+    "We recently have reported the first randomized, controlled study on the effects of "
+    "short-term rhGH therapy on the nutritional status of malnourished dialysis patients.",
+    "A serotonin transporter promoter polymorphism has been extensively studied in neuroticism "
+    "and several psychiatric disorders, with inconclusive results.",
+    "Hypertension has been investigated extensively in adults.",  # earlier work, not a finding
+    "As the proportion of CD39 lymphocytes is decreased in juvenile AILD, we have explored "
+    "whether decreased CD39 expression is present on Th17 cells.",  # background clause first
 )
 NOT_AIM = (
     "We found that obesity was associated with higher mortality.",
@@ -56,7 +70,6 @@ NOT_AIM = (
     "The objective response rate was 25%.",
     "These findings suggest that the aim of therapy should shift towards prevention.",
     "In this study, we have demonstrated that Notch1 mediates the effect of COX-2 inhibitors.",
-    "Hypertension has been investigated extensively in adults.",
     "There was no difference in pain scores between the groups.",
     "Elevated troponin was associated with right ventricular dilatation.",
     "We investigated 50 patients; troponin levels were elevated in 30 of them.",
@@ -81,15 +94,68 @@ def test_reports_result_reads_effects_only_outside_a_whether_clause():
     assert rules.reports_result("Mortality was 12% (p = 0.03).")
 
 
+# ---- TGT-R10 v2: method and procedure sentences that report no finding ----
+
+METHOD = (  # from the first v2 audit's answer examples, and the owner's ruling
+    "Antibodies to CD14, CD19-ECD, HLA-A-B-C and anti-HLA-B27 were used to analyse peripheral "
+    "blood mononuclear cells.",
+    "Expression levels of ER stress markers (GRP78 and CHOP) and proinflammatory genes were "
+    "assessed by qPCR.",
+    "CD 34 counts (blood vessels) and VEGF expression was evaluated by means of "
+    "immunohistochemistry on specimens from patients undergoing cytoreductive surgery.",
+    "Blood group O red blood cells and Rh positive serum were collected at random from healthy "
+    "blood donators, then tested with each other by the manual hexadimethrine bromide methods.",
+    "Each patient was tested with TRH (400 microg bolus i.v.) on two separate occasions, just "
+    "before and immediately after the treatment period.",
+    "After tracheal intubation, anesthesia was maintained with an end-tidal isoflurane "
+    "concentration of 1.0% for 20 min.",  # a dose, not a finding
+    "In 181 pediatric patients, PA diagnosis was founded on medical history, skin prick testing "
+    "and oral food challenge.",
+    "The effect of MAPK and PI3K pathway inhibition on cell proliferation and apoptosis was "
+    "determined using a primary malignant meningioma cell culture.",
+    "GH, PRL and TSH responses to TRH before and 1 month after rhGH therapy were evaluated.",
+    "We measured serum CML and blood pressure in 3044 adults aged 70-79 years.",
+)
+NOT_METHOD = (  # results, even when they name a method
+    "Atypical and malignant meningiomas showed higher levels of phospho-Akt compared with "
+    "benign tumors.",
+    "rhGH treatment did not modify baseline serum GH concentrations (6.6 vs 4.1 microg/l).",
+    "Immunohistochemical staining demonstrated that TnC expression began in adventitial "
+    "myofibroblasts three days after injury.",
+    "When tranexamic acid was administered, the need for transfusions was lower.",
+    "Expression of phospho-MAPK was decreased in aggressive meningiomas, as assessed by "
+    "western blot.",
+    "Patients treated with X were followed for 5 years; mortality was 12% (p = 0.03).",
+    "No significant difference was found when the groups were compared.",
+    "Ara h 6 was the best predictor of PA.",
+    "Forty-five patients after TKR receive treatment with tranexamic acid.",
+)
+
+
+@pytest.mark.parametrize("sentence", METHOD)
+def test_method_sentences_are_excluded_from_answers(sentence):
+    assert rules.is_method_sentence(sentence) and rules.is_excluded_from_answers(sentence)
+
+
+@pytest.mark.parametrize("sentence", NOT_METHOD)
+def test_result_sentences_naming_a_method_stay_citable(sentence):
+    assert not rules.is_method_sentence(sentence)
+    assert not rules.is_excluded_from_answers(sentence)
+
+
 def test_the_patterns_are_pinned():
     # the whole pattern set, by hash: changing a pattern changes the targets (§4)
     guards = (rules._FOUND.pattern, rules._STATED.pattern, rules._OPEN_CLAUSE.pattern)
-    text = "\n".join((*rules.AIM_PATTERNS, "--", *rules.DESCRIPTION_PATTERNS, "--", *guards))
+    method = (*rules.METHOD_PATTERNS, rules._FINDING.pattern)
+    text = "\n".join(
+        (*rules.AIM_PATTERNS, "--", *rules.DESCRIPTION_PATTERNS, "--", *guards, "--", *method)
+    )
     assert hashlib.sha256(text.encode()).hexdigest() == AIM_PATTERNS_SHA256
-    assert (len(rules.AIM_PATTERNS), len(rules.DESCRIPTION_PATTERNS)) == (10, 4)
+    assert (len(rules.AIM_PATTERNS), len(rules.DESCRIPTION_PATTERNS)) == (10, 5)
+    assert len(rules.METHOD_PATTERNS) == 3
 
 
-AIM_PATTERNS_SHA256 = "718b70c1c5b7cf76b2e479bb182fd85e5b850c35fda396c232148047efc65fcc"
+AIM_PATTERNS_SHA256 = "75ecfc463739ecad1416e4943d437f64db93440e403e3be986f2b1818aad05bd"
 
 # ---- the pipeline: answers only ----
 
@@ -110,7 +176,7 @@ def test_an_answer_never_cites_an_aim_sentence_even_when_it_overlaps_best():
     counts = Counter()
     (t,) = make.targets_for([r], FakeScorer(), counts)
     assert isinstance(t, make.AnswerTarget) and 1 not in t.citations and 3 in t.citations
-    assert counts["ranking:aim_sentence_removed"] == 1
+    assert counts["ranking:aim_or_method_removed"] == 1
     (v1,) = make.targets_for([r], FakeScorer(), exclude_aims=False)
     assert isinstance(v1, make.AnswerTarget) and v1.citations[0] == 1  # what v1 trained on
 
@@ -122,7 +188,9 @@ def test_a_sentence_supported_only_by_an_aim_is_dropped_and_counted():
     counts = Counter()
     (t,) = make.targets_for([r], FakeScorer(), counts)
     assert t == "no_supported_sentence"
-    assert counts["sentence:aim_only_overlap"] == 1 and counts["sentence:zero_overlap"] == 0
+    assert (
+        counts["sentence:aim_or_method_only_overlap"] == 1 and counts["sentence:zero_overlap"] == 0
+    )
 
 
 def test_insufficient_examples_still_cite_the_question_match_even_an_aim():
@@ -193,4 +261,4 @@ def test_selected_answers_cite_no_aim_and_every_example_reconstructs():
         again = make.reconstruct(by_pmid[e.pmid], e.rule_ids, split=e.split, seed=7, scorer=replay)
         assert again == e, e.id
         TrainExample.model_validate_json(e.model_dump_json())
-    assert sel.report["sentence_drops"]["ranking:aim_sentence_removed"] > 0
+    assert sel.report["sentence_drops"]["ranking:aim_or_method_removed"] > 0

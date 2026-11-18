@@ -324,6 +324,62 @@ def test_serve_with_a_busy_port_fails_cleanly(repo, capsys):
     assert rc == cli.EXIT_ERROR and "audit: FAIL" in capsys.readouterr().out
 
 
+# ---- re-audit after a rebuild: same ids, only changed examples lose their labels ----
+
+
+def rebuild(root, edit):
+    """Rewrite the train split as a rebuild would, and record it in the targets report."""
+    p = root / audit_v2.TRAIN
+    rows = [r for r in (edit(r) for r in data.read_jsonl(p)) if r is not None]
+    p.write_text("".join(json.dumps(r) + "\n" for r in rows), encoding="utf-8")
+    report = json.loads((root / make.REPORT_COPY).read_text(encoding="utf-8"))
+    report["files"][audit_v2.TRAIN.as_posix()] = sha256_file(p)
+    (root / make.REPORT_COPY).write_text(json.dumps(report), encoding="utf-8")
+
+
+def test_refresh_keeps_ids_voids_only_changed_labels_and_replaces_dropped_ids(repo):
+    root, sample = repo
+    label_all(root, sample)
+    a, b = answers(sample)[:2]
+    ins = next(e for e in sample if e.kind == "insufficient")
+
+    def edit(r):
+        if r["id"] == a.id:  # a rebuilt answer: new text, so its label is void
+            return {**r, "target": {**r["target"], "answer": r["target"]["answer"] + " Again."}}
+        return None if r["id"] == b.id else r  # b dropped by the rebuild
+
+    rebuild(root, edit)
+    out = audit_v2.refresh(root)
+    new = audit_v2.load_sample(root)
+    assert [e.id for e in new if e.id != out["replaced"].get(b.id)] == [
+        e.id for e in sample if e.id != b.id
+    ]  # same ids, same order, one replaced in place
+    rep = out["replaced"][b.id]
+    assert rep not in {e.id for e in sample}
+    assert audit_v2._stratum(next(e for e in new if e.id == rep)) == audit_v2._stratum(b)
+    assert {r["id"] for r in out["relabel"]} == {a.id, rep} and out["relabel_answers"] == 2
+    assert out["still_valid"] == 48
+    assert json.loads((root / audit_v2.RELABEL).read_text(encoding="utf-8")) == out
+    r = audit_v2.score(root)
+    assert r["stale"] == [a.id] and r["missing"] == [rep] and not r["passed"]
+    with pytest.raises(ValueError, match="missing or incomplete"):
+        audit_v2.write_result(root)
+    for e in new:
+        if e.id in (a.id, rep):
+            audit_v2.save_label(root, label(e))
+    assert audit_v2.write_result(root)["passed"]
+    assert next(e for e in new if e.id == ins.id) == ins  # unchanged example, unchanged text
+
+
+def test_refresh_refuses_an_unrecorded_split(repo):
+    root, _ = repo
+    p = root / audit_v2.TRAIN
+    p.write_text(p.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="rerun ggh targets"):
+        audit_v2.refresh(root)
+    assert cli.main(["audit", "refresh", "--v2", "--root", str(root)]) == cli.EXIT_ERROR
+
+
 # ---- the committed v2 sample ----
 
 
@@ -335,9 +391,10 @@ def test_committed_v2_sample_is_stratified_and_its_answers_cite_no_aim():
     assert kinds.count(("answer", "no")) == 12 and kinds.count(("insufficient", None)) == 15
     for e in answers(sample):
         assert "TGT-R10" in e.rule_ids
-        assert not any(rules.is_aim_sentence(e.context[i - 1]) for i in e.target.citations)
+        cited = [e.context[i - 1] for i in e.target.citations]
+        assert not any(rules.is_excluded_from_answers(s) for s in cited)
     train = ROOT / audit_v2.TRAIN
     report = json.loads((ROOT / make.REPORT_COPY).read_text(encoding="utf-8"))
     if train.exists() and sha256_file(train) == report["files"][audit_v2.TRAIN.as_posix()]:
-        rows = [TrainExample.model_validate(r) for r in data.read_jsonl(train)]
-        assert [e.id for e in make.audit_sample(rows, 7)] == [e.id for e in sample]
+        rows = {r["id"]: TrainExample.model_validate(r) for r in data.read_jsonl(train)}
+        assert all(rows[e.id] == e for e in sample)  # the rebuilt text, by the same ids
