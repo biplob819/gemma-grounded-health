@@ -1,0 +1,15 @@
+# v2 dev grounding bars (VTG-03, D-52). Fixed from v1's dev baseline (docs/results/dev_ground_v1/,
+# run r-67b40f1ce1f5, EvalKit ee59699) and committed before any v2 model is measured. v2 passes
+# only if every bar holds under BOTH judges on the 200-case dev_ground task.
+task: ggh_dev_ground
+n_cases: 200
+evalkit: ee5969978c9213acf4838ca0e673fdfaea34a876
+judges: [claude-opus-5-5, gpt-6.1-sol]
+baseline:                 # observed, Opus / Sol
+  v1:   {citation_precision: [0.356, 0.404], aim_citation_rate: [0.574, 0.590], headline: [0.465, 0.355], accuracy: 0.880}
+  base: {citation_precision: [0.770, 0.782], aim_citation_rate: [0.046, 0.133], headline: [0.560, 0.520], accuracy: 0.665}
+bars:
+  citation_precision_min: 0.60   # well clear of v1, most of the way to the base model
+  aim_citation_rate_max: 0.20    # v1 cites aim sentences in ~58 % of answers
+  headline_min_vs_v1: 0.0        # v2 headline >= v1's under each judge (no regression)
+  accuracy_min: 0.80             # label accuracy may fall from v1's 0.88, not below 0.80

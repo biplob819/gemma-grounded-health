@@ -60,6 +60,33 @@ def test_committed_notebook_equals_its_template():
     assert text == notebook.dumps(notebook.render(commit, tool, steps))
 
 
+def test_committed_v2_notebook_equals_its_template_and_uses_the_v2_recipe():
+    text = (ROOT / "notebooks" / "v2" / "train_kaggle.ipynb").read_text(encoding="utf-8")
+    src = code(json.loads(text))
+    commit = src.split("git checkout -q ")[1][:40]
+    assert "--config configs/recipe_v2.yaml" in src and "ggh dev-eval" in src
+    assert src.count("--config configs/recipe_v2.yaml") == 2  # train and dev-eval
+    assert text == notebook.dumps(
+        notebook.render(commit, "unsloth", None, "configs/recipe_v2.yaml")
+    )
+    meta = json.loads((ROOT / "notebooks" / "v2" / "kernel-metadata.json").read_text(encoding="utf-8"))
+    assert meta == notebook.kernel_metadata("ggh-v21-train", "train_kaggle.ipynb")
+
+
+def test_v2_recipe_differs_from_the_t22_recipe_only_in_epochs_and_checkpoint_interval():
+    import yaml
+
+    v1 = yaml.safe_load((ROOT / "configs/recipe.yaml").read_text(encoding="utf-8"))
+    v2 = yaml.safe_load((ROOT / "configs/recipe_v2.yaml").read_text(encoding="utf-8"))
+    assert {k for k in v1 if v1[k] != v2[k]} == {"epochs", "eval_every_steps"}
+    assert (v2["epochs"], v2["eval_every_steps"]) == (2, 50)
+
+
+def test_render_refuses_a_config_outside_configs():
+    with pytest.raises(ValueError):
+        notebook.render(SHA, "unsloth", None, "/tmp/x.yaml")
+
+
 def test_requirements_are_pinned_exactly():
     for tool in ("trl", "unsloth"):
         lines = [
@@ -135,3 +162,16 @@ def test_the_full_run_adds_dev_eval_after_training_and_the_pilot_does_not():
     )
     pilot = code(notebook.render(SHA, "unsloth", 300))
     assert "dev-eval" not in pilot
+
+
+def test_v2_dev_bars_are_committed_with_their_hash_before_any_v2_result():
+    import hashlib
+
+    import yaml
+
+    text = (ROOT / "configs/v2_dev_bars.yaml").read_bytes()
+    want = (ROOT / "docs/measurements/v2_dev_bars.sha256").read_text(encoding="utf-8").strip()
+    assert hashlib.sha256(text).hexdigest() == want
+    bars = yaml.safe_load(text)["bars"]
+    assert bars == {"citation_precision_min": 0.60, "aim_citation_rate_max": 0.20,
+                    "headline_min_vs_v1": 0.0, "accuracy_min": 0.80}  # fmt: skip
