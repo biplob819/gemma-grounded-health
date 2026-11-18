@@ -80,11 +80,14 @@ def _cmd_merge(args: argparse.Namespace) -> int:
 
 def _cmd_parity(args: argparse.Namespace) -> int:
     from ggh.data.build import read_jsonl
-    from ggh.export import merge, parity
+    from ggh.export import parity
     from ggh.serve import checks, llama
     from ggh.train.devrun import DEV_EVAL
+    from ggh.versions import version
 
     root = Path(args.root)
+    model = args.model
+    port = args.port or llama.PORTS[model]
     try:
         rows = read_jsonl(root / DEV_EVAL)[: args.limit]
 
@@ -92,28 +95,31 @@ def _cmd_parity(args: argparse.Namespace) -> int:
             from ggh.train.devrun import release, vocab_size
             from ggh.train.generate import compile_grammar, generate
 
-            model, tok = parity.load_bf16(root / merge.MERGED_DIR)
-            out = generate(model, tok, prompts, grammar=compile_grammar(tok, vocab_size(model)))
-            release(model)
+            model_, tok = parity.load_bf16(root / version(model).merged_dir)
+            out = generate(model_, tok, prompts, grammar=compile_grammar(tok, vocab_size(model_)))
+            release(model_)
             return out
 
         def q4_gen(prompts: Any) -> list[str]:  # pragma: no cover - starts llama-server
-            log = root / llama.GGUF_DIR / "serve-ft.log"
-            proc = llama.start(root, "ft", "Q4_K_M", log=log)
+            log = root / llama.GGUF_DIR / f"serve-{model}-parity.log"
+            proc = llama.start(root, model, "Q4_K_M", port, log=log)
             try:
-                base = f"http://{llama.HOST}:{llama.PORTS['ft']}/v1"
-                return parity.server_replies(prompts, checks.evalkit_complete(base))
+                base = f"http://{llama.HOST}:{port}/v1"
+                return parity.server_replies(prompts, checks.evalkit_complete(base),
+                                             parity.q4_name(model))  # fmt: skip
             finally:
                 proc.terminate()
+                proc.wait(timeout=30)
 
-        rep = parity.run(root, rows, bf16_gen=bf16_gen, q4_gen=q4_gen)
+        rep = parity.run(root, rows, bf16_gen=bf16_gen, q4_gen=q4_gen, model=model)
     except ImportError as exc:
         return _fail("parity", f"{exc}; bf16 generation needs: uv sync --group train")
     except (llama.LlamaError, OSError, ValueError) as exc:
         return _fail("parity", exc)
     print(rep.model_dump_json())
     bad = parity.failures(rep)
-    print(f"parity: {'PASS' if not bad else 'FAIL: ' + '; '.join(bad)} ({parity.REPORT})")
+    out = parity.paths(model)[0]
+    print(f"parity: {'PASS' if not bad else 'FAIL: ' + '; '.join(bad)} ({out})")
     return 0 if not bad else EXIT_ERROR
 
 
@@ -141,15 +147,17 @@ def _cmd_bench(args: argparse.Namespace) -> int:
     from ggh.train.devrun import DEV_EVAL
 
     root = Path(args.root)
+    v2 = args.model == "ft2"
+    variants = bench.V2_VARIANTS if v2 else bench.VARIANTS
     try:
         hw = bench.hardware()
-        bench.guard(hw)
+        bench.guard(hw, allow=args.allow_idle_port)
         prompts = bench.select_prompts(read_jsonl(root / DEV_EVAL))
         results, details = {}, {}
         started = dt.datetime.now(dt.UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
         print("bench: llama-bench, alternating rounds …", flush=True)
-        lb, rounds = bench.llama_bench_rounds(root, bench.VARIANTS)
-        for model, quant in bench.VARIANTS:
+        lb, rounds = bench.llama_bench_rounds(root, variants)
+        for model, quant in variants:
             print(f"bench: {model} {quant} …", flush=True)
             key = f"{model}-{quant}"
             results[key], details[key] = bench.bench_variant(root, model, quant, prompts, hw,
@@ -158,11 +166,17 @@ def _cmd_bench(args: argparse.Namespace) -> int:
             r = results[key]
             print(f"  gen {r.gen_tps_p50} tok/s, ttft {r.ttft_ms_p50} ms, "
                   f"latency p50 {r.answer_latency_ms_p50} ms, peak {r.peak_rss_mb} MB")  # fmt: skip
-        path = bench.write(root, results, details, started)
+        cond = ({"idle_servers_listening": sorted(args.allow_idle_port)}
+                if args.allow_idle_port else None)  # fmt: skip
+        path = bench.write(root, results, details, started,
+                           bench.V2_OUT if v2 else bench.OUT, cond)  # fmt: skip
     except (bench.BenchError, llama.LlamaError, OSError, ValueError) as exc:
         return _fail("bench", exc)
-    gaps = {on: bench.per_token_gap(results, on) for on in ("tg128", "request")}
-    print(f"bench: wrote {path.relative_to(root)}; base/ft generation-speed gaps {gaps}")
+    pair = ("ft", "ft2") if v2 else ("base", "ft")
+    gaps = {on: bench.per_token_gap(results, on, pair) for on in ("tg128", "request")}
+    print(
+        f"bench: wrote {path.relative_to(root)}; {pair[0]}/{pair[1]} generation-speed gaps {gaps}"
+    )
     return 0
 
 
@@ -341,6 +355,18 @@ def register(sub: Any) -> None:
     mg.set_defaults(func=_cmd_merge)
 
     pa = sub.add_parser("parity", help="dev parity: ft Q4_K_M GGUF against merged bf16 (X3.1)")
+    pa.add_argument(
+        "--model",
+        default="ft",
+        choices=("ft", "ft2"),
+        help="ft (v1) or ft2 (v2, written to docs/measurements/v2/parity.json)",
+    )
+    pa.add_argument(
+        "--port",
+        type=int,
+        default=None,
+        help="llama-server port (default the model's `ggh serve` port)",
+    )
     pa.add_argument("--root", default=".", help="repo root")
     pa.add_argument("--limit", type=int, default=None, help="first N dev prompts (smoke)")
     pa.set_defaults(func=_cmd_parity)
@@ -361,6 +387,19 @@ def register(sub: Any) -> None:
     pbb.set_defaults(func=_cmd_probe_build)
 
     bn = sub.add_parser("bench", help="laptop benchmark under Tech Spec §8 (X3.2)")
+    bn.add_argument(
+        "--model",
+        default="ft",
+        choices=("ft", "ft2"),
+        help="ft: base and ft (v1's file); ft2: ft and ft2 (docs/measurements/v2)",
+    )
+    bn.add_argument(
+        "--allow-idle-port",
+        type=int,
+        action="append",
+        default=[],
+        help="a `ggh serve` port whose server is known idle (recorded in the file)",
+    )
     bn.add_argument("--root", default=".", help="repo root")
     bn.set_defaults(func=_cmd_bench)
 

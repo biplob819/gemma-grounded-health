@@ -21,6 +21,7 @@ from evalkit.pipeline.answer import SchemaError, parse_answer
 
 from ggh.schemas import ParityReport
 from ggh.serve import checks
+from ggh.versions import measurements
 
 LABELS = ("yes", "no", "maybe")
 AGREEMENT_BAR = 0.95
@@ -30,6 +31,22 @@ REPORT = MEASURE / "parity_report.json"
 GENERATIONS = MEASURE / "parity_generations.jsonl.gz"
 SAMPLE = MEASURE / "parity_sample.jsonl"
 Q4_NAME = "gemma-e2b-ft-q4"
+# v2 (`ft2`, V2.1) writes beside its other records, under the same bars
+V2_FILES = ("parity.json", "parity_generations.jsonl.gz", "parity_sample.jsonl")
+
+
+def paths(model: str = "ft") -> tuple[Path, Path, Path]:
+    """The report, all generations and the every-25th sample for `model` (ft or ft2)."""
+    if model == "ft":
+        return REPORT, GENERATIONS, SAMPLE
+    if model != "ft2":
+        raise ValueError(f"parity runs on ft or ft2, got {model!r}")
+    folder = measurements(model)
+    return folder / V2_FILES[0], folder / V2_FILES[1], folder / V2_FILES[2]
+
+
+def q4_name(model: str = "ft") -> str:
+    return Q4_NAME if model == "ft" else f"gemma-e2b-{model}-q4"
 
 
 def parsed(text: str) -> Any | None:
@@ -72,9 +89,10 @@ def failures(rep: ParityReport) -> list[str]:
     return out
 
 
-def server_replies(prompts: Sequence[str], complete: checks.Complete) -> list[str]:
-    """Constrained replies from the running ft server, one EvalKit request per prompt."""
-    return [complete(checks.request(p, Q4_NAME, constrained=True)).raw_text for p in prompts]
+def server_replies(prompts: Sequence[str], complete: checks.Complete, name: str = Q4_NAME
+                   ) -> list[str]:  # fmt: skip
+    """Constrained replies from the running fine-tune server, one EvalKit request per prompt."""
+    return [complete(checks.request(p, name, constrained=True)).raw_text for p in prompts]
 
 
 def load_bf16(merged: Path) -> tuple[Any, Any]:  # pragma: no cover - 10 GB model
@@ -99,17 +117,18 @@ def gzip_bytes(raw: bytes) -> bytes:
 
 
 def write(root: Path, rows: Sequence[dict[str, Any]], bf16: Sequence[str], q4: Sequence[str],
-          rep: ParityReport) -> None:  # fmt: skip
+          rep: ParityReport, model: str = "ft") -> None:  # fmt: skip
     lines = [
         json.dumps(
             {"pmid": r["pmid"], "label": r["label"], "bf16": a, "q4_k_m": b}, ensure_ascii=True
         )
         for r, a, b in zip(rows, bf16, q4, strict=True)
     ]
-    (root / MEASURE).mkdir(parents=True, exist_ok=True)
-    (root / GENERATIONS).write_bytes(gzip_bytes(("\n".join(lines) + "\n").encode("utf-8")))
-    (root / SAMPLE).write_text("\n".join(lines[::25]) + "\n", encoding="utf-8")
-    (root / REPORT).write_text(rep.model_dump_json(indent=2) + "\n", encoding="utf-8")
+    report, generations, sample = paths(model)
+    (root / report).parent.mkdir(parents=True, exist_ok=True)
+    (root / generations).write_bytes(gzip_bytes(("\n".join(lines) + "\n").encode("utf-8")))
+    (root / sample).write_text("\n".join(lines[::25]) + "\n", encoding="utf-8")
+    (root / report).write_text(rep.model_dump_json(indent=2) + "\n", encoding="utf-8")
 
 
 def run(
@@ -118,10 +137,11 @@ def run(
     *,
     bf16_gen: Callable[[Sequence[str]], list[str]],
     q4_gen: Callable[[Sequence[str]], list[str]],
+    model: str = "ft",
 ) -> ParityReport:
     prompts = [r["prompt"] for r in rows]
     bf16 = bf16_gen(prompts)
     q4 = q4_gen(prompts)
     rep = build_report(bf16, q4)
-    write(root, rows, bf16, q4, rep)
+    write(root, rows, bf16, q4, rep, model)
     return rep

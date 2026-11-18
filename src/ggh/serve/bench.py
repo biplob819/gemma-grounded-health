@@ -39,6 +39,9 @@ LB_ROUNDS = 3  # alternating rounds over all variants, before any workload runs
 LABELS = ("yes", "no", "maybe")
 OUT = Path("docs") / "measurements" / "laptop_bench.json"
 VARIANTS = (("base", "Q4_K_M"), ("ft", "Q4_K_M"), ("base", "Q8_0"), ("ft", "Q8_0"))
+# V2.1: v2's GGUFs, each beside v1's measured in the same session; v1's file is left alone
+V2_OUT = Path("docs") / "measurements" / "v2" / "laptop_bench.json"
+V2_VARIANTS = (("ft", "Q4_K_M"), ("ft2", "Q4_K_M"), ("ft", "Q8_0"), ("ft2", "Q8_0"))
 METRICS = ("prompt_tps", "gen_tps", "ttft_ms", "latency_ms")
 
 Post = Callable[[str, dict[str, Any]], dict[str, Any]]
@@ -160,10 +163,12 @@ def hardware(run: Run = _sh) -> dict[str, Any]:
     return {"chip": chip, "ram_gb": ram, "os": os_, "power": power}
 
 
-def guard(hw: dict[str, Any], busy: Callable[[int], bool] | None = None) -> None:
-    """BEN-05: never alongside an E3.2 generation run, never on battery."""
+def guard(hw: dict[str, Any], busy: Callable[[int], bool] | None = None,
+          allow: Sequence[int] = ()) -> None:  # fmt: skip
+    """BEN-05: never alongside an E3.2 generation run, never on battery. `allow` names ports
+    whose server the caller has checked is idle (recorded in the output's `conditions`)."""
     busy = busy or llama.port_busy
-    used = [p for p in sorted(set(llama.PORTS.values())) if busy(p)]
+    used = [p for p in sorted(set(llama.PORTS.values())) if p not in allow and busy(p)]
     if used:
         raise BenchError(
             f"a llama-server is listening on {used} (an evaluation run?); stop it first"
@@ -296,7 +301,8 @@ def llama_bench_rounds(
     return med, {k: rs for k, rs in per.items()}
 
 
-def per_token_gap(results: dict[str, LaptopBench], on: str = "tg128") -> dict[str, float]:
+def per_token_gap(results: dict[str, LaptopBench], on: str = "tg128",
+                  pair: tuple[str, str] = ("base", "ft")) -> dict[str, float]:  # fmt: skip
     """Relative gap in generation speed between base and ft, per quant (BEN-04): on llama-bench
     tg128 (a fixed 128-token generation) or on the workload's per-request p50 (`gen_tps_p50`,
     which moves with answer length and grammar overhead). BEN-04 needs both within 10 %."""
@@ -306,7 +312,7 @@ def per_token_gap(results: dict[str, LaptopBench], on: str = "tg128") -> dict[st
 
     out = {}
     for q in sorted({r.quant for r in results.values()}):
-        b, f = speed(results[f"base-{q}"]), speed(results[f"ft-{q}"])
+        b, f = speed(results[f"{pair[0]}-{q}"]), speed(results[f"{pair[1]}-{q}"])
         out[q] = abs(b - f) / max(b, f)
     return out
 
@@ -339,11 +345,14 @@ PROTOCOL = {
 
 
 def write(root: Path, results: dict[str, LaptopBench], details: dict[str, dict[str, Any]],
-          measured_at: str) -> Path:  # fmt: skip
+          measured_at: str, out: Path = OUT, conditions: dict[str, Any] | None = None
+          ) -> Path:  # fmt: skip
     data = {k: v.model_dump(mode="json") for k, v in results.items()}
     doc = {"measured_at": measured_at, "host_platform": platform.machine(),
            "protocol": PROTOCOL, "variants": data, "details": details}  # fmt: skip
-    path = root / OUT
+    if conditions:
+        doc["conditions"] = conditions
+    path = root / out
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(doc, indent=2) + "\n", encoding="utf-8")
     return path
