@@ -1,0 +1,50 @@
+# What `ggh results bundle` reads (E3.3, RES-06, D-20). Every path is a committed file; nothing
+# under artifacts/ is read unless `--full-lineage` is given. A release is included only when its
+# `primary_run` has a summary under docs/results/; once included, every non-optional file must
+# exist or the bundle refuses. v2 (V2.2) appears automatically when docs/results/main_v2/ lands.
+ledger: docs/measurements/spend-ledger.jsonl
+bench: docs/measurements/laptop_bench.json
+b8_review: docs/measurements/b8_review.jsonl          # optional until RES-02
+gemma_family_check: docs/measurements/gemma_family_check.json   # optional until RES-03
+sample_read: docs/measurements/sample_read_{run}.jsonl  # optional per run until RES-05
+releases:
+  - version: v1
+    model: gemma-e2b-grounded-q4
+    plan: configs/eval_plan.yaml
+    built_after_test_seen: false
+    primary_run: main
+    behaviour_run: main
+    citation_run: main_citation
+    offscope_run: offscope
+    runs: [main, main_citation, offscope, probe_original, probe_paraphrase, parity]
+    train_run: docs/measurements/train_run.json
+    train_selection: docs/measurements/train_selection.json
+    audits:
+      - {name: "v1 (N1.3, AUD-R2)", kind: v1_labels, path: docs/measurements/audit_labels.jsonl}
+    parity: docs/measurements/parity_report.json
+    parity_headline: docs/measurements/parity_headline.json
+    probe: docs/measurements/probe_report.json
+    artifacts: docs/measurements/export_artifacts.json
+    gguf: artifacts/gguf/ft-Q4_K_M.gguf
+    lineage: [docs/measurements/lineage/train.json, docs/measurements/lineage/parity.json]
+  - version: v2
+    model: gemma-e2b-grounded-v2-q4
+    plan: configs/eval_plan_v2.yaml
+    built_after_test_seen: true
+    primary_run: main_v2
+    behaviour_run: main_v2
+    citation_run: main_v2
+    offscope_run: offscope_v2
+    runs: [main_v2, offscope_v2, probe_original_v2, probe_paraphrase_v2, parity_v2]
+    train_run: docs/measurements/train_run_v2.json
+    train_selection: docs/measurements/train_selection_v2.json
+    audits:
+      - {name: "v2 round 1 (AUD-R4, owner)", kind: result, path: docs/measurements/audit_v2_result.json}
+      - {name: "v2.1 round 2 (AUD-R4, blind reviewer)", kind: result, path: docs/measurements/audit_v2r1_result.json}
+      - {name: "v2.2 round 3 (AUD-R4, blind reviewer)", kind: result, path: docs/measurements/audit_v2r2_result.json}
+    parity: docs/measurements/parity_report_v2.json
+    parity_headline: docs/measurements/parity_headline_v2.json
+    probe: docs/measurements/probe_report_v2.json
+    artifacts: docs/measurements/export_artifacts_v2.json
+    gguf: artifacts/gguf/ft-v2-Q4_K_M.gguf
+    lineage: [docs/measurements/lineage/train_v2.json, docs/measurements/lineage/parity_v2.json]

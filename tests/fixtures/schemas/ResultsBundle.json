@@ -1,126 +1,255 @@
 {
-  "artifacts": [
-    {
-      "kind": "gguf",
-      "llama_cpp_commit": "b1234",
-      "model": "ft",
-      "parent_key": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "path": "artifacts/export/ft-Q4_K_M.gguf",
-      "quant": "Q4_K_M",
-      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    }
-  ],
-  "audit_pass_rate": 0.94,
   "behaviour": [
     {
       "metric": "schema_valid",
       "model": "m",
       "n": 1000,
       "rule": "B1",
+      "run": "main",
       "source": "evalkit:n_errors",
       "value": 0.99
     }
   ],
   "bench": {
-    "answer_latency_ms_p50": 3500,
-    "answer_latency_ms_p95": 5200,
-    "chip": "Apple M3",
-    "gen_tps_p50": 45.0,
-    "gen_tps_p95": 40.0,
-    "llama_bench": {
-      "pp512": 950.0,
-      "tg128": 47.0
-    },
-    "llama_cpp_commit": "b1234",
-    "model_file_mb": 3100.0,
-    "n_prompts": 50,
-    "os": "macOS 26.1",
-    "peak_rss_mb": 3400.0,
-    "power": "ac",
-    "prompt_tps_p50": 900.0,
-    "quant": "Q4_K_M",
-    "ram_gb": 16,
-    "repetitions": 3,
-    "ttft_ms_p50": 600
+    "ft-Q4_K_M": {
+      "answer_latency_ms_p50": 3500,
+      "answer_latency_ms_p95": 5200,
+      "chip": "Apple M3",
+      "gen_tps_p50": 45.0,
+      "gen_tps_p95": 40.0,
+      "llama_bench": {
+        "pp512": 950.0,
+        "tg128": 47.0
+      },
+      "llama_cpp_commit": "b1234",
+      "model_file_mb": 3100.0,
+      "n_prompts": 50,
+      "os": "macOS 26.1",
+      "peak_rss_mb": 3400.0,
+      "power": "ac",
+      "prompt_tps_p50": 900.0,
+      "quant": "Q4_K_M",
+      "ram_gb": 16,
+      "repetitions": 3,
+      "ttft_ms_p50": 600
+    }
   },
   "calibration_status": "calibrated",
   "evalkit_run_ids": [
     "r-1"
   ],
-  "evalkit_version": "0.1.0+06591f8",
+  "evalkit_version": "06591f8de9b1",
   "gemma_family_check": {
     "opus": 0.9,
     "sol": 0.85
   },
   "judge_mode": "dual",
   "lineage_ok": true,
-  "parity": {
-    "citation_exact_match": 0.9,
-    "judged_headline_delta": {
-      "opus": {
+  "lineage_problems": [],
+  "lineage_scope": "committed",
+  "primary": [
+    {
+      "diff": {
+        "hi": 0.01,
+        "lo": -0.07,
+        "point": -0.03
+      },
+      "judge": "opus",
+      "metric": "headline",
+      "model_a": "gemma-e2b-grounded-q4",
+      "model_b": "gemma-e2b-base-q4",
+      "p_value": 0.2,
+      "plan": "configs/eval_plan.yaml",
+      "run": "main",
+      "separated": false,
+      "verdict": "tie"
+    }
+  ],
+  "publish_blockers": [],
+  "releases": [
+    {
+      "adapter_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "artifacts": [
+        {
+          "kind": "gguf",
+          "llama_cpp_commit": "b1234",
+          "model": "ft",
+          "parent_key": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "path": "artifacts/export/ft-Q4_K_M.gguf",
+          "quant": "Q4_K_M",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ],
+      "audits": [
+        {
+          "labelled": 50,
+          "name": "v1",
+          "pass_rate": 0.94,
+          "passed": true,
+          "path": "docs/measurements/audit_labels.jsonl"
+        }
+      ],
+      "built_after_test_seen": false,
+      "model": "gemma-e2b-grounded-q4",
+      "parity": {
+        "citation_exact_match": 0.9,
+        "judged_headline_delta": {
+          "opus": {
+            "hi": 0.6,
+            "lo": 0.4,
+            "point": 0.5
+          }
+        },
+        "label_agreement": 0.97,
+        "n": 500,
+        "schema_valid": {
+          "bf16": 1.0,
+          "q4": 1.0
+        }
+      },
+      "parity_headline": {
+        "opus": {
+          "hi": 0.6,
+          "lo": 0.4,
+          "point": 0.5
+        }
+      },
+      "plan": "configs/eval_plan.yaml",
+      "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "plan_status": "final",
+      "probe": {
+        "accuracy_original": 0.79,
+        "accuracy_paraphrase": 0.84,
+        "contamination_signal": false,
+        "drop": {
+          "hi": 0.0,
+          "lo": -0.1,
+          "point": -0.05
+        },
+        "model": "gemma-e2b-grounded-q4",
+        "n": 100
+      },
+      "runs": [
+        "main"
+      ],
+      "train": {
+        "config_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "data_manifest_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "dev_metrics": {
+          "citation_valid": 0.99,
+          "has_citation": 1.0,
+          "label_accuracy": {
+            "no": 0.7,
+            "yes": 0.8
+          },
+          "mean_words": 42.0,
+          "n": 500,
+          "over_80_words": 0.0,
+          "schema_valid": 0.99,
+          "schema_valid_unconstrained": 0.9
+        },
+        "gpu": "Tesla T4",
+        "kaggle_kernel_version": "3",
+        "peak_vram_gb": 11.5,
+        "repo_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "selected_step": 1000,
+        "steps": 1250,
+        "val_loss_curve": [
+          [
+            250,
+            1.2
+          ],
+          [
+            500,
+            1.0
+          ],
+          [
+            750,
+            0.95
+          ],
+          [
+            1000,
+            0.94
+          ]
+        ],
+        "wall_clock_s": 9000.0
+      },
+      "version": "v1"
+    }
+  ],
+  "results": [
+    {
+      "accuracy": {
         "hi": 0.6,
         "lo": 0.4,
         "point": 0.5
-      }
-    },
-    "label_agreement": 0.97,
-    "n": 500,
-    "schema_valid": {
-      "bf16": 1.0,
-      "q4": 1.0
-    }
-  },
-  "primary": {
-    "ft_minus_base:opus": {
-      "hi": 0.6,
-      "lo": 0.4,
-      "point": 0.5
-    }
-  },
-  "schema_version": "1.0",
-  "summary_paths": [
-    "docs/results/summary.json"
-  ],
-  "train": {
-    "config_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    "data_manifest_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    "dev_metrics": {
-      "citation_valid": 0.99,
-      "has_citation": 1.0,
-      "label_accuracy": {
-        "no": 0.7,
-        "yes": 0.8
       },
-      "mean_words": 42.0,
-      "n": 500,
-      "over_80_words": 0.0,
-      "schema_valid": 0.99,
-      "schema_valid_unconstrained": 0.9
-    },
-    "gpu": "Tesla T4",
-    "kaggle_kernel_version": "3",
-    "peak_vram_gb": 11.5,
-    "repo_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-    "selected_step": 1000,
-    "steps": 1250,
-    "val_loss_curve": [
-      [
-        250,
-        1.2
+      "aim_citation_rate": null,
+      "citation_precision": null,
+      "citation_validity": {
+        "hi": 0.6,
+        "lo": 0.4,
+        "point": 0.5
+      },
+      "groundedness_mean": {
+        "opus": {
+          "hi": 0.6,
+          "lo": 0.4,
+          "point": 0.5
+        }
+      },
+      "headline": {
+        "opus": {
+          "hi": 0.6,
+          "lo": 0.4,
+          "point": 0.5
+        }
+      },
+      "model": "gemma-e2b-grounded-q4",
+      "n": 1000,
+      "run": "main"
+    }
+  ],
+  "runs": [
+    {
+      "calibration_status": "calibrated",
+      "judge_mode": "dual",
+      "judges": [
+        "opus",
+        "sol"
       ],
-      [
-        500,
-        1.0
+      "judging_status": "complete",
+      "models": [
+        "gemma-e2b-grounded-q4",
+        "gemma-e2b-base-q4"
       ],
-      [
-        750,
-        0.95
-      ],
-      [
-        1000,
-        0.94
-      ]
-    ],
-    "wall_clock_s": 9000.0
-  }
+      "n": 1000,
+      "name": "main",
+      "records_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "run_id": "r-1",
+      "spent_usd": 53.68,
+      "started_at": "2026-11-17T04:34:06Z",
+      "summary_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "task": "pubmedqa"
+    }
+  ],
+  "sample_read": [
+    {
+      "complete": true,
+      "drawn": 20,
+      "findings": {
+        "model_fault": 1,
+        "ok": 19
+      },
+      "model": "gemma-e2b-grounded-q4",
+      "read": 20,
+      "run": "main"
+    }
+  ],
+  "schema_version": "1.0",
+  "secondary": [],
+  "spend_usd": 113.05,
+  "summary_paths": [
+    "docs/results/main/summary.json"
+  ]
 }
