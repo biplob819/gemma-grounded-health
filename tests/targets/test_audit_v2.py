@@ -8,6 +8,7 @@ import threading
 import urllib.error
 import urllib.request
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -52,7 +53,7 @@ def repo(built, tmp_path):
     return tmp_path, audit_v2.draw(tmp_path)
 
 
-def label(e, sentences=None, overall="ok", **kw):
+def label(e, sentences: Any = None, overall: Any = "ok", **kw):
     if sentences is None:
         sentences = "supports"
     if isinstance(sentences, str):

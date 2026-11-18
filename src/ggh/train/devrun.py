@@ -8,6 +8,7 @@ before any PQA-L use) checks the downloaded adapter against that hash and writes
 
 from __future__ import annotations
 
+import gzip
 import hashlib
 import json
 import shutil
@@ -130,14 +131,22 @@ def freeze(
     *,
     kernel_version: str,
     repo_commit: str,
+    out: Path = TRAIN_RUN,
+    config: Path | None = None,
 ) -> TrainRun:
-    """Check the downloaded adapter against the recorded hash, then write `TrainRun`."""
+    """Check the downloaded adapter against the recorded hash (and, given the recipe, the
+    report's config hash against it), then write `TrainRun` to `out` under `root`."""
     if selection.get("selected_step") is None:
         raise FreezeError("no checkpoint passed the §5.2 bars; nothing to freeze")
     got = sel.adapter_hash(adapter)
     if got != selection["adapter_sha256"]:
         raise FreezeError(f"adapter hash {got[:12]}… differs from the recorded "
                           f"{selection['adapter_sha256'][:12]}…")  # fmt: skip
+    if config is not None:
+        want = sha256_file(config)
+        if report["config_sha256"] != want:
+            raise FreezeError(f"the run's config hash {report['config_sha256'][:12]}… is not "
+                              f"{config.name}'s {want[:12]}…")  # fmt: skip
     (chosen,) = [t for t in selection["tried"] if t["step"] == selection["selected_step"]]
     run = TrainRun(
         config_hash=report["config_sha256"],
@@ -152,7 +161,38 @@ def freeze(
         val_loss_curve=tuple((int(s), float(v)) for s, v in report["eval_losses"]),
         dev_metrics=DevMetrics.model_validate(chosen["metrics"]),
     )
-    path = root / TRAIN_RUN
+    path = root / out
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(run.model_dump_json(indent=2) + "\n", encoding="utf-8")
     return run
+
+
+SAMPLE_EVERY = 25  # the read sample: every 25th dev generation (20 of 500)
+
+
+def write_records(
+    folder: Path,
+    report: dict[str, Any],
+    selection: dict[str, Any],
+    generations: Path,
+    log: Path | None = None,
+) -> list[Path]:
+    """The committed run record beside `train_run.json`, as T2.2 kept v1's: the selection,
+    the full report, all dev generations (gzip, no timestamp), every 25th of them as the read
+    sample and, when downloaded, the Kaggle session log."""
+    folder.mkdir(parents=True, exist_ok=True)
+    lines = [x for x in generations.read_text(encoding="utf-8").splitlines() if x]
+    if {json.loads(x)["step"] for x in lines} != {selection["selected_step"]}:
+        raise FreezeError(f"{generations} is not from the selected step")
+    every = "".join(x + "\n" for x in lines).encode()
+    written = {
+        "train_selection.json": (json.dumps(selection, indent=2) + "\n").encode(),
+        "train_full.json": (json.dumps(report, indent=2) + "\n").encode(),
+        "dev_generations.jsonl.gz": gzip.compress(every, mtime=0),
+        "dev_generations_sample.jsonl": "".join(x + "\n" for x in lines[::SAMPLE_EVERY]).encode(),
+    }
+    if log is not None:
+        written["train_full_log.json.gz"] = gzip.compress(log.read_bytes(), mtime=0)
+    for name, data in written.items():
+        (folder / name).write_bytes(data)
+    return [folder / n for n in written]

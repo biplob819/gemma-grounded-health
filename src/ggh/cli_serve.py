@@ -36,15 +36,16 @@ def _cmd_llama_fetch(_: argparse.Namespace) -> int:
 def _cmd_export(args: argparse.Namespace) -> int:
     from ggh.export import gguf, merge
     from ggh.serve import llama
+    from ggh.versions import version
 
     root = Path(args.root)
     try:
         if args.model == "base":
             hf = gguf.hf_snapshot(gguf.BASE_ID, gguf.BASE_REVISION)
             sid, srev = gguf.BASE_ID, gguf.BASE_REVISION
-        else:  # the merged fine-tune: named by the base and the frozen adapter hash
-            hf = root / merge.MERGED_DIR
-            sid, srev = f"{gguf.BASE_ID}+adapter", merge.frozen_hash(root)
+        else:  # a merged fine-tune (v1 ft, v2 ft2): named by the base and the frozen adapter
+            hf = root / version(args.model).merged_dir
+            sid, srev = f"{gguf.BASE_ID}+adapter", merge.frozen_hash(root, args.model)
             merged = json.loads((hf / "ggh_merge.json").read_text(encoding="utf-8"))
             if merged["adapter_sha256"] != srev:
                 raise merge.MergeError(f"{hf} was merged from another adapter")
@@ -60,18 +61,20 @@ def _cmd_export(args: argparse.Namespace) -> int:
 
 def _cmd_merge(args: argparse.Namespace) -> int:
     from ggh.export import gguf, merge
+    from ggh.versions import version
 
     root = Path(args.root)
+    v = version(args.model)
     try:
-        expected = merge.frozen_hash(root)
+        expected = merge.frozen_hash(root, args.model)
         base = gguf.hf_snapshot(gguf.BASE_ID, gguf.BASE_REVISION)
-        rec = merge.merge(base, root / merge.ADAPTER_DIR, root / merge.MERGED_DIR,
+        rec = merge.merge(base, root / v.adapter_dir, root / v.merged_dir,
                           expected_sha256=expected)  # fmt: skip
     except ImportError as exc:
         return _fail("merge", f"{exc}; merging needs: uv sync --group train")
     except (OSError, ValueError, KeyError) as exc:
         return _fail("merge", exc)
-    print(f"merged {rec['lora_layers_merged']} LoRA layers into bf16 -> {merge.MERGED_DIR}")
+    print(f"merged {rec['lora_layers_merged']} LoRA layers into bf16 -> {v.merged_dir}")
     return 0
 
 
@@ -320,6 +323,7 @@ def _cmd_behaviour(args: argparse.Namespace) -> int:
 
 def register(sub: Any) -> None:
     from ggh.serve import llama
+    from ggh.versions import VERSIONS
 
     lm = sub.add_parser("llama", help="the pinned llama.cpp release (E3.1)")
     lsub = lm.add_subparsers(dest="llama_command", required=True)
@@ -332,6 +336,7 @@ def register(sub: Any) -> None:
     ex.set_defaults(func=_cmd_export)
 
     mg = sub.add_parser("merge", help="merge the frozen adapter into the bf16 base on CPU (X3.1)")
+    mg.add_argument("--model", default="ft", choices=sorted(VERSIONS), help="ft (v1) or ft2 (v2)")
     mg.add_argument("--root", default=".", help="repo root")
     mg.set_defaults(func=_cmd_merge)
 
@@ -359,7 +364,7 @@ def register(sub: Any) -> None:
     bn.add_argument("--root", default=".", help="repo root")
     bn.set_defaults(func=_cmd_bench)
 
-    sv = sub.add_parser("serve", help="start llama-server for base (8080) or ft (8081)")
+    sv = sub.add_parser("serve", help="start llama-server: base 8080, ft 8081, ft2 8083")
     sv.add_argument("--model", default="base", choices=sorted(llama.PORTS))
     sv.add_argument("--quant", default="Q4_K_M", choices=llama.QUANTS)
     sv.add_argument("--port", type=int, default=None)

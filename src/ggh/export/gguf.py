@@ -17,11 +17,12 @@ from pathlib import Path
 from typing import Any
 
 from ggh.serve import llama
+from ggh.versions import measurements
 
 BASE_ID = "google/gemma-4-E2B-it"
 BASE_REVISION = "4adf15748de9e1a0097b6274cee9c15836c41c37"  # Apache-2.0, not gated
 QUANTS = llama.QUANTS
-MANIFEST_COPY = Path("docs") / "measurements"
+MANIFEST_COPY = Path("docs") / "measurements"  # base and v1; v2's goes to its own folder
 
 Runner = Callable[[Sequence[str], dict[str, str]], None]
 
@@ -97,7 +98,7 @@ def export(
     }
     text = json.dumps(manifest, indent=2, sort_keys=True) + "\n"
     (out_dir / f"{name}.manifest.json").write_text(text, encoding="utf-8")
-    copy = root / MANIFEST_COPY / f"gguf_{name}_manifest.json"
+    copy = root / measurements(name) / f"gguf_{name}_manifest.json"
     copy.parent.mkdir(parents=True, exist_ok=True)
     copy.write_text(text, encoding="utf-8")
     return manifest

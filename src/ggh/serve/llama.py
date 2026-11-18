@@ -32,7 +32,7 @@ SRC_SHA256 = "5ff59287cab5dd3d9c90444f7d3692db5b51e5e4a4c6d3eb086cfa3b834ff9de" 
 STAMP = ".verified-sha256"
 
 HOST = "127.0.0.1"
-PORTS = {"base": 8080, "ft": 8081}
+PORTS = {"base": 8080, "ft": 8081, "ft2": 8083}  # 8082 is `ggh serve-hf`; ft2 is v2 (V2.1)
 QUANTS = ("Q4_K_M", "Q8_0")
 SEED = 7
 THREADS = 8

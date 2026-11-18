@@ -176,21 +176,36 @@ def _cmd_dev_eval(args: argparse.Namespace) -> int:
 def _cmd_freeze(args: argparse.Namespace) -> int:
     import json
 
-    from ggh.train.devrun import TRAIN_RUN, FreezeError, freeze
+    from ggh.train.devrun import FreezeError, freeze, write_records
+    from ggh.versions import version
 
+    root, v = Path(args.root), version(args.model)
+    folder = Path(args.out) if args.out else v.measurements  # relative to --root
+    # v1 was frozen before the recipe check existed; every later version checks its recipe
+    config = args.config or (None if args.model == "ft" else v.recipe)
     try:
+        report = json.loads(Path(args.report).read_text(encoding="utf-8"))
+        selection = json.loads(Path(args.selection).read_text(encoding="utf-8"))
         run = freeze(
-            Path(args.root),
-            json.loads(Path(args.report).read_text(encoding="utf-8")),
-            json.loads(Path(args.selection).read_text(encoding="utf-8")),
+            root,
+            report,
+            selection,
             Path(args.adapter),
             kernel_version=args.kernel_version,
             repo_commit=args.repo_commit,
+            out=folder / "train_run.json",
+            config=None if config is None else root / config,
         )
+        kept = []
+        if args.generations:
+            log = Path(args.log) if args.log else None
+            kept = write_records(root / folder, report, selection, Path(args.generations), log)
     except (FreezeError, ValueError, OSError, KeyError) as exc:
         print(f"freeze: FAIL: {exc}")
         return EXIT_ERROR
-    print(f"froze step {run.selected_step} -> {TRAIN_RUN}")
+    print(f"froze step {run.selected_step} -> {folder / 'train_run.json'}")
+    for path in kept:
+        print(f"kept {path.relative_to(root)}")
     return 0
 
 
@@ -306,6 +321,8 @@ def build_parser() -> argparse.ArgumentParser:
     de.add_argument("--root", default=".", help="repo root holding artifacts/data")
     de.add_argument("--limit", type=int, default=None, help="first N dev prompts (tests)")
     de.set_defaults(func=_cmd_dev_eval)
+    from ggh.versions import VERSIONS
+
     fz = sub.add_parser("freeze", help="check the downloaded adapter and write TrainRun (T2.2)")
     fz.add_argument("--report", required=True)
     fz.add_argument("--selection", required=True)
@@ -313,6 +330,14 @@ def build_parser() -> argparse.ArgumentParser:
     fz.add_argument("--kernel-version", required=True)
     fz.add_argument("--repo-commit", required=True)
     fz.add_argument("--root", default=".")
+    fz.add_argument("--model", default="ft", choices=sorted(VERSIONS),
+                    help="ft (v1) or ft2 (v2, its records in docs/measurements/v2)")  # fmt: skip
+    fz.add_argument("--out", default=None, help="folder for train_run.json (default: the model's)")
+    fz.add_argument("--config", default=None, help="recipe whose hash the run must carry "
+                    "(default: the model's; v1 skips the check)")  # fmt: skip
+    fz.add_argument("--generations", default=None, help="dev/generations.jsonl: also keep the "
+                    "selection, report and generations beside train_run.json")  # fmt: skip
+    fz.add_argument("--log", default=None, help="the Kaggle session log (with --generations)")
     fz.set_defaults(func=_cmd_freeze)
     aud = sub.add_parser("audit", help="hand audit of 50 training examples (N1.3)")
     asub = aud.add_subparsers(dest="audit_command", required=True)

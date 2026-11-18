@@ -69,7 +69,8 @@ def test_committed_v2_notebook_equals_its_template_and_uses_the_v2_recipe():
     assert text == notebook.dumps(
         notebook.render(commit, "unsloth", None, "configs/recipe_v2.yaml")
     )
-    meta = json.loads((ROOT / "notebooks" / "v2" / "kernel-metadata.json").read_text(encoding="utf-8"))
+    meta_path = ROOT / "notebooks" / "v2" / "kernel-metadata.json"
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
     assert meta == notebook.kernel_metadata("ggh-v21-train", "train_kaggle.ipynb")
 
 
