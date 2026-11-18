@@ -85,7 +85,7 @@ def test_sample_is_aud_r1s_draw_on_the_v2_train_split(repo):
     train = [TrainExample.model_validate(r) for r in data.read_jsonl(root / audit_v2.TRAIN)]
     assert [e.id for e in sample] == [e.id for e in make.audit_sample(train, 7)]
     assert all(
-        e.split == "train" and "TGT-R10" in e.rule_ids for e in sample if e.kind != "offscope"
+        e.split == "train" and "TGT-R11" in e.rule_ids for e in sample if e.kind != "offscope"
     )
     assert audit_v2.load_sample(root) == sample
     assert audit_v2.SAMPLE != audit.SAMPLE and audit_v2.LABELS != audit.LABELS  # v1 untouched
@@ -103,14 +103,14 @@ def test_draw_refuses_v1_targets(repo):
     root, _ = repo
     p = root / audit_v2.TRAIN
     lines = [
-        json.dumps({**r, "rule_ids": [x for x in r["rule_ids"] if x != "TGT-R10"]})
+        json.dumps({**r, "rule_ids": [x for x in r["rule_ids"] if x != "TGT-R11"]})
         for r in data.read_jsonl(p)
     ]
     p.write_text("\n".join(lines) + "\n", encoding="utf-8")
     report = json.loads((root / make.REPORT_COPY).read_text(encoding="utf-8"))
     report["files"][audit_v2.TRAIN.as_posix()] = sha256_file(p)
     (root / make.REPORT_COPY).write_text(json.dumps(report), encoding="utf-8")
-    with pytest.raises(ValueError, match="not v2"):
+    with pytest.raises(ValueError, match=r"not v2\.2"):
         audit_v2.draw(root)
 
 
@@ -390,7 +390,7 @@ def test_committed_v2_sample_is_stratified_and_its_answers_cite_no_aim():
     assert len(sample) == 50 and kinds.count(("answer", "yes")) == 18
     assert kinds.count(("answer", "no")) == 12 and kinds.count(("insufficient", None)) == 15
     for e in answers(sample):
-        assert e.rule_ids == rules.ANSWER_RULES  # v2.2: TGT-R10 and TGT-R11
+        assert e.rule_ids == rules.ANSWER_RULES  # v2.2: TGT-R12 and TGT-R11
         cited = [e.context[i - 1] for i in e.target.citations]
         assert not any(rules.is_excluded_from_answers(s) for s in cited)
     train = ROOT / audit_v2.TRAIN

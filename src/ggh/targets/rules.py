@@ -12,15 +12,19 @@ import re
 from evalkit.text import split_sentences
 
 # ---- rule ids stamped into TrainExample.rule_ids (§4) ----
-# v2.2 (OWNER D-48): TGT-R11 chooses citations by single-sentence entailment, replacing the
-# word-overlap ranking of TGT-R6 (its cap of 4 citations is kept, as MAX_CITES)
+# v2.2 (OWNER D-48, D-49): TGT-R12 (the tightened aim and method exclusion) and TGT-R11
+# (citations by single-sentence entailment, replacing TGT-R6's word-overlap ranking; its cap
+# of 4 citations is kept, as MAX_CITES)
 ANSWER_RULES = (
-    "TGT-R1", "TGT-R2", "TGT-R9", "TGT-R10", "TGT-R11", "TGT-R3", "TGT-R4", "TGT-R5", "TGT-R7",
+    "TGT-R1", "TGT-R2", "TGT-R9", "TGT-R12", "TGT-R11", "TGT-R3", "TGT-R4", "TGT-R5", "TGT-R7",
 )  # fmt: skip
 INSUFFICIENT_RULES = (*ANSWER_RULES, "INS-R1", "INS-R2", "INS-R3")
-# earlier builds' ids; `reconstruct` still rebuilds them. v2 ids rebuild with TGT-R10 as it
-# stands now (v2.1, OWNER D-46): the first v2 build used the untightened patterns
-V2_ANSWER_RULES = (
+# earlier builds' ids; `reconstruct` still rebuilds each exactly (PRV-R1)
+V21_ANSWER_RULES = (  # v2.1: TGT-R12 with TGT-R6
+    "TGT-R1", "TGT-R2", "TGT-R9", "TGT-R12", "TGT-R3", "TGT-R6", "TGT-R4", "TGT-R5", "TGT-R7",
+)  # fmt: skip
+V21_INSUFFICIENT_RULES = (*V21_ANSWER_RULES, "INS-R1", "INS-R2", "INS-R3")
+V2_ANSWER_RULES = (  # the first v2 build: TGT-R10 as first written (rules_r10.py)
     "TGT-R1", "TGT-R2", "TGT-R9", "TGT-R10", "TGT-R3", "TGT-R6", "TGT-R4", "TGT-R5", "TGT-R7",
 )  # fmt: skip
 V2_INSUFFICIENT_RULES = (*V2_ANSWER_RULES, "INS-R1", "INS-R2", "INS-R3")
@@ -32,6 +36,8 @@ def rules_version(rule_ids: tuple[str, ...]) -> str:
     """Which build's citation rules a set of answer or insufficient rule ids names."""
     if "TGT-R11" in rule_ids:
         return "v2.2"
+    if "TGT-R12" in rule_ids:
+        return "v2.1"
     return "v2" if "TGT-R10" in rule_ids else "v1"
 
 
@@ -83,7 +89,8 @@ def strip_hedge(sentence: str) -> str:
     return rest[:1].upper() + rest[1:]
 
 
-# ---- TGT-R10: an answer never cites an aim, objective, study-description or method sentence
+# ---- TGT-R12 (TGT-R10 tightened; the first TGT-R10 is frozen in rules_r10.py): an answer
+# never cites an aim, objective, study-description or method sentence
 # (OWNER D-43; v2 of the rule after the owner's per-sentence audit, D-45). v1 let "To
 # investigate whether X..." through lexical ranking and NLI at 0.5, so 43% of its answer
 # targets cited one; the first v2 audit then found method sentences ("X was assessed by qPCR")
@@ -369,8 +376,13 @@ def overlaps(sentence: str, context: tuple[str, ...]) -> list[float]:
     return [len(words & content_words(c)) / len(words) for c in context]
 
 
-def aim_positions(context: tuple[str, ...]) -> frozenset[int]:
-    """TGT-R10: the 1-based positions an answer may not cite (aim or method sentences)."""
+def aim_positions(context: tuple[str, ...], first: bool = False) -> frozenset[int]:
+    """TGT-R12 (or, with `first`, TGT-R10 as first written): the 1-based positions an answer
+    may not cite."""
+    if first:
+        from ggh.targets import rules_r10
+
+        return frozenset(i + 1 for i, c in enumerate(context) if rules_r10.is_aim_sentence(c))
     return frozenset(i + 1 for i, c in enumerate(context) if is_excluded_from_answers(c))
 
 

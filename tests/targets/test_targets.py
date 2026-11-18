@@ -346,9 +346,9 @@ def test_every_example_is_reconstructed_from_its_row_and_rule_ids():
 
 
 def test_rule_ids_are_pinned():
-    # TGT-R10: OWNER D-43, test_targets_aim.py; TGT-R11: OWNER D-48, test_targets_support.py
+    # TGT-R12 (TGT-R10 tightened): test_targets_aim.py; TGT-R11 (D-48): test_targets_support.py
     assert rules.ANSWER_RULES == (
-        "TGT-R1", "TGT-R2", "TGT-R9", "TGT-R10", "TGT-R11", "TGT-R3", "TGT-R4", "TGT-R5", "TGT-R7",
+        "TGT-R1", "TGT-R2", "TGT-R9", "TGT-R12", "TGT-R11", "TGT-R3", "TGT-R4", "TGT-R5", "TGT-R7",
     )  # fmt: skip
     assert (*rules.ANSWER_RULES, "INS-R1", "INS-R2", "INS-R3") == rules.INSUFFICIENT_RULES
     assert rules.OFFSCOPE_RULES == ("OFF-R3",)

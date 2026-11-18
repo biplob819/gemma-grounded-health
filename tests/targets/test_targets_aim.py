@@ -210,7 +210,7 @@ def test_insufficient_examples_still_cite_the_question_match_even_an_aim():
     ex = make.insufficient_example(r, t, "train", 7)
     assert ex is not None and ex.context == tuple(r["sentences"][:2])
     assert ex.target.citations == (1,)  # INS-R3 unchanged: the aim matches the question
-    assert ex.rule_ids == rules.INSUFFICIENT_RULES and "TGT-R10" in ex.rule_ids
+    assert ex.rule_ids == rules.INSUFFICIENT_RULES and "TGT-R12" in ex.rule_ids
 
 
 def test_offscope_examples_keep_citing_sentence_one():
@@ -223,7 +223,8 @@ def test_offscope_examples_keep_citing_sentence_one():
 
 
 def test_rule_ids_carry_tgt_r10_and_v1_ids_stay_known():
-    assert "TGT-R10" in rules.ANSWER_RULES and "TGT-R11" in rules.ANSWER_RULES
+    assert "TGT-R12" in rules.ANSWER_RULES and "TGT-R11" in rules.ANSWER_RULES
+    assert "TGT-R12" in rules.V21_ANSWER_RULES and "TGT-R6" in rules.V21_ANSWER_RULES
     assert rules.V2_ANSWER_RULES == (
         "TGT-R1", "TGT-R2", "TGT-R9", "TGT-R10", "TGT-R3", "TGT-R6", "TGT-R4", "TGT-R5", "TGT-R7",
     )  # fmt: skip
@@ -271,3 +272,27 @@ def test_selected_answers_cite_no_aim_and_every_example_reconstructs():
         assert again == e, e.id
         TrainExample.model_validate_json(e.model_dump_json())
     assert sum(sel.report["sentence_drops"].values()) > 0
+
+
+# ---- TGT-R10 as first written stays frozen; TGT-R12 is the tightened rule (OWNER D-49) ----
+
+RULES_R10_SHA256 = "12fa92c8f2bfc7e093386ba96e7a8bdb1754dd5eae9ce4d01347cbbd2a52d70f"
+
+
+def test_first_tgt_r10_is_frozen_and_rebuilds_the_first_v2_ids():
+    from pathlib import Path
+
+    from ggh.targets import rules_r10
+
+    digest = hashlib.sha256(Path(rules_r10.__file__).read_bytes()).hexdigest()
+    assert digest == RULES_R10_SHA256  # never edited: TGT-R10 examples rebuild byte for byte
+    method = "We measured serum outcome zeta9 in 30 adults."
+    assert rules.is_method_sentence(method) and not rules_r10.is_aim_sentence(method)
+    sents = ["Background on zeta9.", method, "Nothing else."]
+    r = row(9, long_answer="Serum outcome zeta9 in adults.", sentences=sents, sections=["X"] * 3)
+    rec = nli.RecordingScorer(FakeScorer(), rules.SCORE_DECIMALS)
+    v2 = make.reconstruct(r, rules.V2_ANSWER_RULES, split="train", seed=7, scorer=rec)
+    assert 2 in v2.target.citations  # the first rule let a method sentence through
+    with pytest.raises(ValueError, match="no target"):
+        make.reconstruct(r, rules.V21_ANSWER_RULES, split="train", seed=7, scorer=rec)
+    assert rules.rules_version(rules.V2_ANSWER_RULES) == "v2"

@@ -37,12 +37,11 @@ REPORT_COPY = MEASURE_DIR / "targets_drop_report.json"
 # (v2 samples are drawn by `ggh audit sample --v2`, AUD-R4)
 AUDIT_COPY = MEASURE_DIR / "audit_sample.jsonl"
 CHUNK = 2_000  # rows scored per NLI batch while filling yes quotas
-# The citation rules `ggh targets` builds with. TGT-R11 (v2.2, OWNER D-48) is implemented and
-# tested, but its first full build gave 2,722 train examples, under the ~3,000 floor the owner
-# set for V2.1, so the committed targets stay v2.1 (TGT-R10 + R6) until the owner decides.
-BUILD_VERSION = "v2"
+# The citation rules `ggh targets` builds with: v2.2 (TGT-R12 + R11), adopted by OWNER D-49
+BUILD_VERSION = "v2.2"
 RULE_IDS = {  # version -> (answer ids, insufficient ids)
     "v2.2": (rules.ANSWER_RULES, rules.INSUFFICIENT_RULES),
+    "v2.1": (rules.V21_ANSWER_RULES, rules.V21_INSUFFICIENT_RULES),
     "v2": (rules.V2_ANSWER_RULES, rules.V2_INSUFFICIENT_RULES),
     "v1": (rules.V1_ANSWER_RULES, rules.V1_INSUFFICIENT_RULES),
 }
@@ -83,14 +82,14 @@ def _half_up(x: float) -> int:
 
 
 def candidates(
-    row: Row, counts: Counter[str] | None = None, *, exclude_aims: bool = True
+    row: Row, counts: Counter[str] | None = None, *, exclude_aims: bool = True, first: bool = False
 ) -> list[Candidate]:
     """TGT-R1, R2, R9, R10, R6, R3: the lexically supported conclusion sentences of a row.
     With `exclude_aims` (TGT-R10, v2) no aim sentence is ever a citation option; without it
     the v1 behaviour is rebuilt."""
     counts = counts if counts is not None else Counter()
     ctx = tuple(row["sentences"])
-    aims = rules.aim_positions(ctx) if exclude_aims else frozenset()
+    aims = rules.aim_positions(ctx, first) if exclude_aims else frozenset()
     out: list[Candidate] = []
     for raw in rules.conclusion_sentences(row["long_answer"]):
         if rules.is_recommendation(raw):
@@ -235,11 +234,14 @@ def targets_for(
     version: str = "v2.2",
 ) -> list[AnswerTarget | str]:
     """Targets for many rows, with NLI batched across all of them. `version` names the
-    citation rules: "v2.2" (TGT-R10 + R11, the default), "v2" (TGT-R10 + R6), "v1" (R6)."""
+    citation rules: "v2.2" (TGT-R12 + R11, the default), "v2.1" (TGT-R12 + R6), "v2" (the
+    first TGT-R10 + R6), "v1" (R6)."""
     if version == "v2.2":
         cand_lists = support_candidates(rows, scorer, counts)
-    elif version in ("v2", "v1"):
-        cand_lists = [candidates(r, counts, exclude_aims=version == "v2") for r in rows]
+    elif version in ("v2.1", "v2", "v1"):
+        cand_lists = [
+            candidates(r, counts, exclude_aims=version != "v1", first=version == "v2") for r in rows
+        ]
     else:
         raise ValueError(f"unknown rules version {version!r}")
     choices = choose([c for cl in cand_lists for c in cl], scorer)
@@ -349,10 +351,8 @@ def reconstruct(
     ids = tuple(rule_ids)
     if ids == rules.OFFSCOPE_RULES:
         return offscope_example(row, split, seed)
-    answer_ids = (rules.ANSWER_RULES, rules.V2_ANSWER_RULES, rules.V1_ANSWER_RULES)
-    insufficient_ids = (
-        rules.INSUFFICIENT_RULES, rules.V2_INSUFFICIENT_RULES, rules.V1_INSUFFICIENT_RULES,
-    )  # fmt: skip
+    answer_ids = tuple(a for a, _ in RULE_IDS.values())
+    insufficient_ids = tuple(i for _, i in RULE_IDS.values())
     if ids not in (*answer_ids, *insufficient_ids):
         raise ValueError(f"unknown rule ids {ids}")
     (t,) = targets_for([row], scorer, version=rules.rules_version(ids))
@@ -564,7 +564,10 @@ def _json(path: Path, obj: Any) -> str:
 
 
 def rules_hash() -> str:
-    return hashlib.sha256(Path(rules.__file__).read_bytes()).hexdigest()
+    from ggh.targets import rules_r10
+
+    blob = Path(rules.__file__).read_bytes() + Path(rules_r10.__file__).read_bytes()
+    return hashlib.sha256(blob).hexdigest()
 
 
 def build(

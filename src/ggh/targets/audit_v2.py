@@ -69,8 +69,8 @@ def draw(root: Path, seed: int = make.SEED) -> list[TrainExample]:
     if want is None or sha256_file(root / TRAIN) != want:
         raise ValueError(f"{TRAIN} is not the split {make.REPORT_COPY} records; rerun ggh targets")
     train = [TrainExample.model_validate(r) for r in read_jsonl(root / TRAIN)]
-    if not any("TGT-R10" in e.rule_ids for e in train):
-        raise ValueError("the targets are not v2 (no example carries TGT-R10)")
+    if not any("TGT-R11" in e.rule_ids for e in train):  # OWNER D-49: audit the v2.2 build
+        raise ValueError("the targets are not v2.2 (no example carries TGT-R11)")
     sample = make.audit_sample(train, seed)
     path = root / SAMPLE
     path.parent.mkdir(parents=True, exist_ok=True)

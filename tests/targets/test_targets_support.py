@@ -102,9 +102,10 @@ def test_two_partly_supporting_results_are_cited_together_in_entailment_order():
 
 def test_rule_ids_and_rebuilds_from_them():
     assert rules.ANSWER_RULES == (
-        "TGT-R1", "TGT-R2", "TGT-R9", "TGT-R10", "TGT-R11", "TGT-R3", "TGT-R4", "TGT-R5", "TGT-R7",
+        "TGT-R1", "TGT-R2", "TGT-R9", "TGT-R12", "TGT-R11", "TGT-R3", "TGT-R4", "TGT-R5", "TGT-R7",
     )  # fmt: skip
     assert rules.rules_version(rules.ANSWER_RULES) == "v2.2"
+    assert rules.rules_version(rules.V21_ANSWER_RULES) == "v2.1"
     assert rules.rules_version(rules.V2_INSUFFICIENT_RULES) == "v2"
     assert rules.rules_version(rules.V1_ANSWER_RULES) == "v1"
     r = ara()
