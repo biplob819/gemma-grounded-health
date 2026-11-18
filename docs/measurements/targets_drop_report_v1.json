@@ -1,0 +1,53 @@
+{
+  "cap_train": 20000,
+  "files": {
+    "artifacts/targets/audit_sample.jsonl": "da0e4ed194ac12e412db21e65bb467c28fa60720aaae764ea79764f841c5537e",
+    "artifacts/targets/nli_scores.jsonl": "405aa6e52b50576c5022c706f44d4fcabfb8fadabcd6ac53a521701ce1c71bfb",
+    "artifacts/targets/train.jsonl": "5b9a225df93f7824ccf230175e63f7177e006a594d51837f62f2a2642595ce4f",
+    "artifacts/targets/val.jsonl": "e6f716fbaf1cd3792e91102e8c03a98d65350dd8f5eb8c6b19cfcf4997e21dc2"
+  },
+  "nli_model": "cross-encoder/nli-deberta-v3-base@6c749ce3425cd33b46d187e45b92bbf96ee12ec7",
+  "no_rows_surviving": {
+    "train_pool": 3278,
+    "val_split": 25
+  },
+  "quotas": {
+    "train": {
+      "insufficient": 844,
+      "no": 3003,
+      "offscope": 84,
+      "yes": 4505
+    },
+    "val": {
+      "insufficient": 84,
+      "no": 300,
+      "offscope": 8,
+      "yes": 451
+    }
+  },
+  "row_drops": {
+    "no:no_supported_sentence": 11779,
+    "yes:no_supported_sentence": 14270,
+    "yes:over_80_words": 1
+  },
+  "rows_scored": 35538,
+  "rules_sha256": "daae24a3fd7e6d4b818d16f28e30828d97751cff50d8172b431f87336fab6595",
+  "seed": 7,
+  "sentence_drops": {
+    "sentence:citation_cap": 233,
+    "sentence:low_entailment": 27090,
+    "sentence:low_support": 19682,
+    "sentence:no_content_words": 15,
+    "sentence:recommendation": 4422,
+    "sentence:zero_overlap": 737
+  },
+  "shortfall_vs_cap": 11564,
+  "thresholds": {
+    "entail_min": 0.5,
+    "max_cites": 4,
+    "max_words": 80,
+    "support_min": 0.5
+  },
+  "train": 8436,
+  "val": 843
+}
