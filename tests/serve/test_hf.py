@@ -28,6 +28,7 @@ def test_parse_takes_messages_cap_and_schema():
         {"messages": [{"role": "user"}]},
         {"messages": [{"role": "user", "content": "x"}], "max_tokens": 0},
         {"messages": [{"role": "user", "content": "x"}], "temperature": 0.7},
+        {"messages": [{"role": "user", "content": "x"}], "response_format": "json"},
         {
             "messages": [{"role": "user", "content": "x"}],
             "response_format": {"type": "json_object"},

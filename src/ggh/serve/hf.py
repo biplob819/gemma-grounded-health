@@ -52,6 +52,8 @@ def parse_request(body: dict[str, Any]) -> tuple[list[dict[str, str]], int, dict
     schema = None
     rf = body.get("response_format")
     if rf is not None:
+        if not isinstance(rf, dict) or not isinstance(rf.get("json_schema", {}), dict):
+            raise BadRequest("response_format must be an object")
         if rf.get("type") != "json_schema" or "schema" not in rf.get("json_schema", {}):
             raise BadRequest("only response_format type json_schema is supported")
         schema = rf["json_schema"]["schema"]
@@ -156,7 +158,7 @@ def transformers_generate(merged: Any) -> Generate:  # pragma: no cover - 10 GB 
                                   "eos_token_id": stop_ids(tok),
                                   "pad_token_id": tok.pad_token_id or 0}  # fmt: skip
         if schema is not None:
-            key = json.dumps(schema, sort_keys=True)  # cache key only
+            key = grammar_source(schema)  # key order matters (L-26), so it is part of the key
             if key not in compiled:  # any whitespace, as llama-server; property order kept
                 compiled[key] = compiler.compile_json_schema(grammar_source(schema))
             kwargs["logits_processor"] = [xgr.contrib.hf.LogitsProcessor(compiled[key])]

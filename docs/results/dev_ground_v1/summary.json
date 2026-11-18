@@ -1,0 +1,226 @@
+{
+  "calibration_status": "uncalibrated",
+  "comparisons": [
+    {
+      "diff": {
+        "hi": -0.15,
+        "lo": -0.28,
+        "point": -0.215
+      },
+      "judge": null,
+      "metric": "accuracy",
+      "model_a": "gemma-e2b-base-q4",
+      "model_b": "gemma-e2b-grounded-q4",
+      "p_value": 0.00019998000199980003,
+      "separated": true
+    },
+    {
+      "diff": {
+        "hi": 0.19,
+        "lo": 0.0,
+        "point": 0.095
+      },
+      "judge": "claude-opus-5-5",
+      "metric": "headline",
+      "model_a": "gemma-e2b-base-q4",
+      "model_b": "gemma-e2b-grounded-q4",
+      "p_value": 0.06239376062393761,
+      "separated": false
+    },
+    {
+      "diff": {
+        "hi": 0.26,
+        "lo": 0.07,
+        "point": 0.165
+      },
+      "judge": "gpt-6.1-sol",
+      "metric": "headline",
+      "model_a": "gemma-e2b-base-q4",
+      "model_b": "gemma-e2b-grounded-q4",
+      "p_value": 0.0005999400059994001,
+      "separated": true
+    }
+  ],
+  "config_hash": "cf2bcb997b5492d6",
+  "extraction_error_rate": null,
+  "finished_at": "2026-11-18T06:18:53.520065Z",
+  "judge_mode": "dual",
+  "judges": [],
+  "judging_status": "complete",
+  "models": [
+    {
+      "accuracy": {
+        "hi": 0.73,
+        "lo": 0.6,
+        "point": 0.665
+      },
+      "aim_citation_rate": {
+        "claude-opus-5-5": {
+          "hi": 0.07692307692307693,
+          "lo": 0.02030456852791878,
+          "point": 0.046153846153846156
+        },
+        "gpt-6.1-sol": {
+          "hi": 0.18181818181818182,
+          "lo": 0.08717948717948718,
+          "point": 0.13333333333333333
+        }
+      },
+      "citation_precision": {
+        "claude-opus-5-5": {
+          "hi": 0.8245625516671259,
+          "lo": 0.7171481215566757,
+          "point": 0.7703349282296651
+        },
+        "gpt-6.1-sol": {
+          "hi": 0.8329048843187661,
+          "lo": 0.7313424117729111,
+          "point": 0.7822966507177034
+        }
+      },
+      "citation_validity": {
+        "hi": 1.0,
+        "lo": 1.0,
+        "point": 1.0
+      },
+      "cost_per_100_usd": 0.0,
+      "cost_per_correct_usd": 0.0,
+      "coverage": {
+        "hi": 0.9640000000000001,
+        "lo": 0.9046666666666667,
+        "point": 0.9356666666666666
+      },
+      "failed_thresholds": [
+        "headline >= 0.6 (observed 0.52)"
+      ],
+      "family": "other",
+      "groundedness_mean": {
+        "claude-opus-5-5": {
+          "hi": 0.929375,
+          "lo": 0.8603272321428572,
+          "point": 0.8957440476190476
+        },
+        "gpt-6.1-sol": {
+          "hi": 0.9043517857142858,
+          "lo": 0.8332848214285713,
+          "point": 0.8702440476190476
+        }
+      },
+      "headline": {
+        "claude-opus-5-5": {
+          "hi": 0.63,
+          "lo": 0.49,
+          "point": 0.56
+        },
+        "gpt-6.1-sol": {
+          "hi": 0.59,
+          "lo": 0.45,
+          "point": 0.52
+        }
+      },
+      "latency_p50_ms": 3424,
+      "latency_p95_ms": 6093,
+      "model": "gemma-e2b-base-q4",
+      "n": 200,
+      "n_errors": {},
+      "passes_threshold": false
+    },
+    {
+      "accuracy": {
+        "hi": 0.925,
+        "lo": 0.835,
+        "point": 0.88
+      },
+      "aim_citation_rate": {
+        "claude-opus-5-5": {
+          "hi": 0.6443298969072165,
+          "lo": 0.5051546391752577,
+          "point": 0.5743589743589743
+        },
+        "gpt-6.1-sol": {
+          "hi": 0.6597938144329897,
+          "lo": 0.5208333333333334,
+          "point": 0.5897435897435898
+        }
+      },
+      "citation_precision": {
+        "claude-opus-5-5": {
+          "hi": 0.3983516483516483,
+          "lo": 0.3141197703213474,
+          "point": 0.35561497326203206
+        },
+        "gpt-6.1-sol": {
+          "hi": 0.44709094614683736,
+          "lo": 0.36159565774828467,
+          "point": 0.4037433155080214
+        }
+      },
+      "citation_validity": {
+        "hi": 1.0,
+        "lo": 1.0,
+        "point": 1.0
+      },
+      "cost_per_100_usd": 0.0,
+      "cost_per_correct_usd": 0.0,
+      "coverage": {
+        "hi": 0.9725,
+        "lo": 0.9116666666666667,
+        "point": 0.9441666666666667
+      },
+      "failed_thresholds": [
+        "headline >= 0.6 (observed 0.355)"
+      ],
+      "family": "other",
+      "groundedness_mean": {
+        "claude-opus-5-5": {
+          "hi": 0.6104166666666666,
+          "lo": 0.4775,
+          "point": 0.5445833333333333
+        },
+        "gpt-6.1-sol": {
+          "hi": 0.49583333333333335,
+          "lo": 0.36541666666666667,
+          "point": 0.43041666666666667
+        }
+      },
+      "headline": {
+        "claude-opus-5-5": {
+          "hi": 0.535,
+          "lo": 0.395,
+          "point": 0.465
+        },
+        "gpt-6.1-sol": {
+          "hi": 0.42,
+          "lo": 0.29,
+          "point": 0.355
+        }
+      },
+      "latency_p50_ms": 3437,
+      "latency_p95_ms": 4044,
+      "model": "gemma-e2b-grounded-q4",
+      "n": 200,
+      "n_errors": {},
+      "passes_threshold": false
+    }
+  ],
+  "run_id": "r-67b40f1ce1f5",
+  "schema_version": "1.0",
+  "self_preference": {
+    "claude-opus-5-5": {
+      "other": {
+        "hi": 0.7590634672619048,
+        "lo": 0.6806456845238095,
+        "point": 0.7201636904761906
+      }
+    },
+    "gpt-6.1-sol": {
+      "other": {
+        "hi": 0.6883958333333333,
+        "lo": 0.6126835565476191,
+        "point": 0.6503303571428571
+      }
+    }
+  },
+  "started_at": "2026-11-17T11:44:47.769723Z",
+  "task": "ggh_dev_ground"
+}

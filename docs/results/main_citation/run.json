@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "run_id": "r-edfcba37159e",
+  "task": "pubmedqa",
+  "task_ref": "/private/tmp/claude-502/-Users-biplob-chakraborty-Gemma-Grounded-Health/cfe16ce7-947e-4f2c-8197-2b4766a06f5a/scratchpad/pubmedqa_cit.yaml",
+  "config_hash": "a7f708a9317914e1",
+  "seed": 7,
+  "n": 1000,
+  "models": [
+    "gemma-e2b-base-q4",
+    "gemma-e2b-grounded-q4",
+    "claude-haiku-5-5",
+    "gpt-6-luna"
+  ],
+  "judges": [
+    "claude-opus-5-5",
+    "gpt-6.1-sol"
+  ],
+  "judge_mode": "dual",
+  "families": {
+    "gemma-e2b-base-q4": "other",
+    "gemma-e2b-grounded-q4": "other",
+    "claude-haiku-5-5": "anthropic",
+    "gpt-6-luna": "openai"
+  },
+  "thresholds": [
+    {
+      "metric": "headline",
+      "op": ">=",
+      "value": 0.6
+    }
+  ],
+  "live_judges": false,
+  "started_at": "2026-11-17T08:48:55.205419Z",
+  "finished_at": "2026-11-18T06:18:16.524520Z",
+  "spent_usd": 48.239756000000014
+}

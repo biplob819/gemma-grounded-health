@@ -64,6 +64,12 @@ def test_the_plan_was_committed_before_the_main_run_started():
         load("main", "run.json")["started_at"].replace("Z", "+00:00")
     )
     assert committed < started
+    import subprocess
+
+    out = subprocess.run(["git", "log", "-1", "--format=%cI", "9bc0f97"], cwd=ROOT,
+                         capture_output=True, text=True)  # fmt: skip
+    if out.returncode == 0 and out.stdout.strip():  # absent in a shallow CI clone
+        assert dt.datetime.fromisoformat(out.stdout.strip()) == committed
 
 
 # RUN-02 and RUN-07
@@ -171,3 +177,22 @@ def test_the_headline_difference_against_q4_recomputes_and_is_reported():
         d = rep["bf16_minus_q4_headline"][j]
         assert d["lo"] <= d["point"] <= d["hi"] and d["point"] == round(bf - qq, 3)
     assert "Reported, not gated" in RUN_STATE
+
+
+KNOWN_MISSING_VERDICTS = {
+    ("main", "pqa-23792130:claude-haiku-5-5:1", "claude-opus-5-5"),
+    ("parity", "pqa-26852225:gemma-e2b-grounded-bf16:1", "gpt-6.1-sol"),
+}
+
+
+def test_every_claim_has_both_verdicts_except_the_two_disclosed():
+    missing = set()
+    for run in ("main", "parity", "offscope", "probe_original", "probe_paraphrase"):
+        for r in records(run):
+            have = {(v["claim_id"], v["judge"]) for v in r["verdicts"]}
+            for c in r["claims"]:
+                for j in JUDGES:
+                    if (c["id"], j) not in have:
+                        missing.add((run, c["id"], j))
+    assert missing == KNOWN_MISSING_VERDICTS
+    assert "Two verdicts are missing" in RUN_STATE
