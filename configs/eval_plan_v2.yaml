@@ -1,0 +1,122 @@
+# DRAFT: NOT PRE-REGISTERED YET. Do not run anything from this plan while `status` is draft.
+# V2.2 pre-registration (VEV-03, Tech Spec §7.4, H9, OWNER D-43). Modelled on configs/eval_plan.yaml.
+# To finalise, after v2's TrainRun is frozen and before any v2 PQA-L run: fill the `fill at
+# finalisation` fields, set `status: final`, write sha256 of this file's bytes to
+# docs/measurements/eval_plan_v2.sha256, commit both, and append the commit and its time to
+# docs/measurements/preregistrations.jsonl. tests/results/test_preregistration.py then checks,
+# for every run below that has results, that the hash was committed before the run started.
+status: draft
+version: v2
+node: V2.2
+built_after_test_seen: true    # OWNER D-43: v2 was built after v1's PQA-L results were seen
+evalkit: ee5969978c9213acf4838ca0e673fdfaea34a876   # OWNER D-44 pin
+# TODO(OWNER D-53): the pin is decided technically before finalising; v0.4.0 is preferred if its
+# cache keys match the rescore's (prompt, rubric, citation-prompt hashes, extractor version).
+checkpoint:                    # fill at finalisation, from the frozen v2 TrainRun (VTG-05)
+  train_run: docs/measurements/train_run_v2.json
+  adapter_sha256: null
+  gguf_q4_k_m_sha256: null
+task: pubmedqa                 # EvalKit's built-in PQA-L task, plus citation_support (OWNER D-44)
+task_file: configs/tasks/pubmedqa_cit.yaml
+n_cases: 1000                  # the same 1,000 PQA-L cases as the E3.2 main run (OWNER D-17)
+seed: 7
+config: configs/evalkit_v2.yaml
+metric: headline               # kept for the E3.2 plan's shape; the outcomes are below
+judges: [claude-opus-5-5, gpt-6.1-sol]
+primary:                       # OWNER D-53: model minus model, per outcome, per judge
+  - [gemma-e2b-grounded-v2-q4, gemma-e2b-grounded-q4]
+  - [gemma-e2b-grounded-v2-q4, gemma-e2b-base-q4]
+primary_metrics:               # OWNER D-53: three primary outcomes, each with its direction
+  - {metric: headline, better: higher}             # correct and fully grounded share
+  - {metric: citation_precision, better: higher}   # cited sentences that support a claim
+  - {metric: aim_citation_rate, better: lower}     # answers citing an unsupporting aim sentence
+holm: family                   # Holm over the 12 primary tests (2 pairs x 3 outcomes x 2 judges)
+bootstrap: {resamples: 10000, seed: 7, alpha: 0.05}
+reported_not_primary:          # OWNER D-53: reported with EvalKit's own run-wide Holm
+  - [gemma-e2b-grounded-v2-q4, claude-haiku-5-5]
+  - [gemma-e2b-grounded-v2-q4, gpt-6-luna]
+rule: >-
+  A gap is "separated" only if its paired bootstrap p-value (shared cases, 10,000 resamples,
+  seed 7, EvalKit's stats functions) stays below 0.05 after Holm correction across the twelve
+  primary tests; otherwise it is reported as a tie, whichever way the point estimate falls.
+  "Better" follows each outcome's direction: higher headline and citation precision, lower
+  aim-citation rate. Per-case values are EvalKit's: correct_and_grounded per judge; citation
+  precision pooled over each answer's distinct cited sentences (a sentence supports if any of its
+  claims' citation_support entries does), which reproduces EvalKit's summary; aim-citation rate
+  pooled over answers with citation_support entries (an answer counts if a cited sentence's
+  majority role, EvalKit's tie order, is aim and it supports no claim), which reproduces
+  EvalKit's summary. v1's E3.2 comparisons stand as published under their own plan.
+secondary: >-
+  everything else: v2 minus Haiku 5.5 and GPT-6 Luna (reported, not primary), accuracy,
+  groundedness, citation validity, B1-B8, other pairs
+cache:
+  source_run: r-edfcba37159e   # the v1 citation rescore (docs/results/main_citation/)
+  expected_hits: [gemma-e2b-base-q4, gemma-e2b-grounded-q4, claude-haiku-5-5, gpt-6-luna]
+  rule: >-
+    The four E3.2 models' answers, claims, claim verdicts and citation verdicts come from
+    EvalKit's store. Their numbers in this run must equal docs/results/main_citation/ (the
+    known gaps aside: one missing Opus verdict and 9 citation-support gaps, re-collected from
+    cache at a fixed pin); any other cache miss is a deviation and is reported.
+runs:
+  - name: main_v2
+    purpose: headline, primary comparisons, B1-B7 for v2 (VEV-04)
+    config: configs/evalkit_v2.yaml
+    task: configs/tasks/pubmedqa_cit.yaml
+    n: 1000
+    new_models: [gemma-e2b-grounded-v2-q4]
+    cached_models: [gemma-e2b-base-q4, gemma-e2b-grounded-q4, claude-haiku-5-5, gpt-6-luna]
+    citation_support: true
+    results: docs/results/main_v2
+    command: uv run evalkit run configs/evalkit_v2.yaml --task configs/tasks/pubmedqa_cit.yaml --n 1000
+  - name: offscope_v2
+    purpose: B8 for v2, owner review of its 20 answers (VEV-05)
+    config: configs/evalkit_v2_solo.yaml
+    task: configs/tasks/offscope.yaml
+    n: 20
+    new_models: [gemma-e2b-grounded-v2-q4]
+    cached_models: []
+    citation_support: false
+    results: docs/results/offscope_v2
+    command: uv run evalkit run configs/evalkit_v2_solo.yaml --task configs/tasks/offscope.yaml --n 20
+  - name: probe_original_v2
+    purpose: paraphrase probe, original wording (VEV-05, D-42, H4)
+    config: configs/evalkit_v2_solo.yaml
+    task: configs/tasks/probe_original.yaml
+    n: 100
+    new_models: [gemma-e2b-grounded-v2-q4]
+    cached_models: []
+    citation_support: false
+    results: docs/results/probe_original_v2
+    command: uv run evalkit run configs/evalkit_v2_solo.yaml --task configs/tasks/probe_original.yaml --n 100
+  - name: probe_paraphrase_v2
+    purpose: paraphrase probe, paraphrased wording; drop = original minus paraphrased accuracy
+    config: configs/evalkit_v2_solo.yaml
+    task: configs/tasks/probe_paraphrase.yaml
+    n: 100
+    new_models: [gemma-e2b-grounded-v2-q4]
+    cached_models: []
+    citation_support: false
+    results: docs/results/probe_paraphrase_v2
+    command: uv run evalkit run configs/evalkit_v2_solo.yaml --task configs/tasks/probe_paraphrase.yaml --n 100
+  - name: parity_v2
+    purpose: judged parity (runs, OWNER D-53), bf16 minus Q4_K_M headline on the same 200 cases; reported, not gated
+    config: configs/evalkit_v2_parity.yaml
+    task: configs/tasks/pubmedqa_cit.yaml
+    n: 200
+    new_models: [gemma-e2b-grounded-v2-bf16]
+    cached_models: []
+    citation_support: true
+    results: docs/results/parity_v2
+    command: uv run evalkit run configs/evalkit_v2_parity.yaml --task configs/tasks/pubmedqa_cit.yaml --n 200
+dev_parity:                    # VEV-02, local, $0, gated before any paid v2 run
+  what: v2 Q4_K_M against merged bf16 on the 500 dev_eval prompts, as X3.1
+  bars: {label_agreement_min: 0.95, schema_valid_within_points: 1}
+  output: docs/measurements/parity_report_v2.json
+estimate:
+  cache_aware: uv run ggh results estimate --plan configs/eval_plan_v2.yaml
+  evalkit_dry_run: >-
+    the `command` of each run with --dry-run appended (no API calls). EvalKit prices every
+    model as uncached, so for main_v2 it overstates the spend about five-fold; both numbers are
+    recorded before the run (RUN-02).
+spend: every run's cost from its run.json into docs/measurements/spend-ledger.jsonl, node V2.2,
+  with note "v2, built after v1's test results were seen (OWNER D-43)" (VEV-06, D-22)

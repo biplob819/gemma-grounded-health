@@ -298,6 +298,9 @@ def build_parser() -> argparse.ArgumentParser:
     from ggh.cli_serve import register  # E3.1: llama, export, serve, checks, tasks, behaviour
 
     register(sub)
+    from ggh.cli_results import register as register_results  # E3.3: bundle, sample, plans
+
+    register_results(sub)
     return ap
 
 
