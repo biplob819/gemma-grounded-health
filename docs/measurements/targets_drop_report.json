@@ -1,56 +1,53 @@
 {
   "cap_train": 20000,
   "files": {
-    "artifacts/targets/audit_sample.jsonl": "c922cf9f6410bc1442b2bef71bff354c3f43487f7ef36a5eb8eaf84cd4f50a70",
-    "artifacts/targets/nli_scores.jsonl": "f2bfc69001f02299cd5dcd57dddadaddf9bc61a799c32fd159d5d9586059aa58",
-    "artifacts/targets/train.jsonl": "8c3e0a01a396cb648ca6ef5bdff82b73ed9ed8ff3abbc3e4dfeb210e17d5efdb",
-    "artifacts/targets/val.jsonl": "695e1abd458dd87b22897382934002d9cb2c67a9bb85307567ec922e519bc602"
+    "artifacts/targets/audit_sample.jsonl": "b50b76148df25ad9beb53ae71439f26aaced85b14dc7173da5380348e20272d7",
+    "artifacts/targets/nli_scores.jsonl": "78a8f8d3f01207427ced54f79e4f45e0a93a1995b76b4fcafe43ba4766f27866",
+    "artifacts/targets/train.jsonl": "93d8daa30b55b15f3b5fe41f443573cf94a81167c1f60e04140e2a3b63bfd13c",
+    "artifacts/targets/val.jsonl": "c0bd8f2038024e28b8a7e65454a9814e26ecc361be7c97ed80a1f52808a3de89"
   },
   "nli_model": "cross-encoder/nli-deberta-v3-base@6c749ce3425cd33b46d187e45b92bbf96ee12ec7",
   "no_rows_surviving": {
-    "train_pool": 2877,
-    "val_split": 22
+    "train_pool": 1061,
+    "val_split": 5
   },
   "quotas": {
     "train": {
-      "insufficient": 740,
-      "no": 2635,
-      "offscope": 74,
-      "yes": 3953
+      "insufficient": 272,
+      "no": 969,
+      "offscope": 27,
+      "yes": 1454
     },
     "val": {
-      "insufficient": 74,
-      "no": 264,
-      "offscope": 7,
-      "yes": 395
+      "insufficient": 27,
+      "no": 97,
+      "offscope": 3,
+      "yes": 145
     }
   },
   "row_drops": {
-    "no:no_supported_sentence": 12182,
-    "no:over_80_words": 1,
-    "yes:no_supported_sentence": 16884,
-    "yes:over_80_words": 2
+    "no:no_supported_sentence": 14016,
+    "yes:no_supported_sentence": 22162,
+    "yes:over_80_words": 1
   },
-  "rows_scored": 37398,
-  "rules_sha256": "20ee63b5d067d7f8cb9ba2c84371f10d12ab853ddcce8184215725e3e91ba3c0",
+  "rows_scored": 39252,
+  "rules_sha256": "92ea28fbd7e80352e6158dd95eec3449ac0de97b3c2c583c451737c9a9167e19",
   "seed": 7,
   "sentence_drops": {
-    "ranking:aim_or_method_removed": 50834,
-    "sentence:aim_or_method_only_overlap": 621,
-    "sentence:citation_cap": 145,
-    "sentence:low_entailment": 21451,
-    "sentence:low_support": 29082,
-    "sentence:no_content_words": 16,
-    "sentence:recommendation": 4629,
-    "sentence:zero_overlap": 786
+    "sentence:citation_cap": 9,
+    "sentence:low_entailment": 117,
+    "sentence:low_support": 3377,
+    "sentence:no_content_words": 20,
+    "sentence:no_supporting_sentence": 57445,
+    "sentence:recommendation": 4834
   },
-  "shortfall_vs_cap": 12598,
+  "shortfall_vs_cap": 17278,
   "thresholds": {
     "entail_min": 0.5,
     "max_cites": 4,
     "max_words": 80,
     "support_min": 0.5
   },
-  "train": 7402,
-  "val": 740
+  "train": 2722,
+  "val": 272
 }

@@ -135,7 +135,9 @@ def test_the_cap_drops_a_sentence_that_would_make_five_citations():
     la = "Alpha bravo charlie delta echo foxtrot. Golf hotel india juliet."
     r = row(6, long_answer=la, sentences=sents, sections=["RESULTS"] * 5)
     counts = Counter()
-    (t,) = make.targets_for([r], AllWords(), counts)
+    (t,) = make.targets_for(
+        [r], AllWords(), counts, version="v2"
+    )  # TGT-R6 mechanics: v2 rules (v2.2 ranks by entailment, test_targets_support.py)
     assert isinstance(t, make.AnswerTarget)
     assert t.citations == (1, 2, 3) and counts["sentence:citation_cap"] == 1
 
@@ -161,7 +163,9 @@ def test_insufficient_drops_cited_non_results_sentences_and_cites_two_question_m
         sections=["BACKGROUND", "METHODS", "METHODS", "RESULTS"],
         question="Does zeta help older adults?",
     )
-    (t,) = make.targets_for([r], AllWords())
+    (t,) = make.targets_for(
+        [r], AllWords(), version="v2"
+    )  # TGT-R6 mechanics: v2 rules (v2.2 ranks by entailment, test_targets_support.py)
     assert isinstance(t, make.AnswerTarget) and 2 in t.citations
     ex = make.insufficient_example(r, t, "train", 7)
     assert ex is not None

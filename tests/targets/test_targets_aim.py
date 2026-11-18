@@ -174,10 +174,12 @@ def test_an_answer_never_cites_an_aim_sentence_even_when_it_overlaps_best():
     assert rules.aim_positions(ctx) == {1}
     assert rules.ranked_citations(r["long_answer"], ctx)[0] == 1  # v1 ranks the aim first
     counts = Counter()
-    (t,) = make.targets_for([r], FakeScorer(), counts)
+    (t,) = make.targets_for([r], FakeScorer(), counts, version="v2")
     assert isinstance(t, make.AnswerTarget) and 1 not in t.citations and 3 in t.citations
     assert counts["ranking:aim_or_method_removed"] == 1
-    (v1,) = make.targets_for([r], FakeScorer(), exclude_aims=False)
+    (t22,) = make.targets_for([r], FakeScorer())  # v2.2: the aim is never even scored
+    assert isinstance(t22, make.AnswerTarget) and 1 not in t22.citations
+    (v1,) = make.targets_for([r], FakeScorer(), version="v1")
     assert isinstance(v1, make.AnswerTarget) and v1.citations[0] == 1  # what v1 trained on
 
 
@@ -186,11 +188,14 @@ def test_a_sentence_supported_only_by_an_aim_is_dropped_and_counted():
              "Nothing else here."]  # fmt: skip
     r = row(2, long_answer="Zeta2 lowers omega2.", sentences=sents, sections=["X"] * 3)
     counts = Counter()
-    (t,) = make.targets_for([r], FakeScorer(), counts)
+    (t,) = make.targets_for([r], FakeScorer(), counts, version="v2")
     assert t == "no_supported_sentence"
     assert (
         counts["sentence:aim_or_method_only_overlap"] == 1 and counts["sentence:zero_overlap"] == 0
     )
+    counts = Counter()  # v2.2: the aim is never scored; what is left shares no word (TGT-R3)
+    (t,) = make.targets_for([r], FakeScorer(), counts)
+    assert t == "no_supported_sentence" and counts["sentence:low_support"] == 1
 
 
 def test_insufficient_examples_still_cite_the_question_match_even_an_aim():
@@ -205,7 +210,7 @@ def test_insufficient_examples_still_cite_the_question_match_even_an_aim():
     ex = make.insufficient_example(r, t, "train", 7)
     assert ex is not None and ex.context == tuple(r["sentences"][:2])
     assert ex.target.citations == (1,)  # INS-R3 unchanged: the aim matches the question
-    assert ex.rule_ids == rules.INSUFFICIENT_RULES and "TGT-R10" in ex.rule_ids
+    assert ex.rule_ids == rules.INSUFFICIENT_RULES and "TGT-R12" in ex.rule_ids
 
 
 def test_offscope_examples_keep_citing_sentence_one():
@@ -218,7 +223,9 @@ def test_offscope_examples_keep_citing_sentence_one():
 
 
 def test_rule_ids_carry_tgt_r10_and_v1_ids_stay_known():
-    assert rules.ANSWER_RULES == (
+    assert "TGT-R12" in rules.ANSWER_RULES and "TGT-R11" in rules.ANSWER_RULES
+    assert "TGT-R12" in rules.V21_ANSWER_RULES and "TGT-R6" in rules.V21_ANSWER_RULES
+    assert rules.V2_ANSWER_RULES == (
         "TGT-R1", "TGT-R2", "TGT-R9", "TGT-R10", "TGT-R3", "TGT-R6", "TGT-R4", "TGT-R5", "TGT-R7",
     )  # fmt: skip
     assert rules.V1_ANSWER_RULES == (
@@ -231,10 +238,13 @@ def test_v1_rule_ids_rebuild_the_v1_target_and_v2_ids_the_v2_target():
     r = row(5, long_answer="Treatment alpha1 improves outcome beta1 in adults.",
             sentences=AIM_FIRST)  # fmt: skip
     rec = nli.RecordingScorer(FakeScorer(), rules.SCORE_DECIMALS)
-    v2 = make.reconstruct(r, rules.ANSWER_RULES, split="train", seed=7, scorer=rec)
+    v2 = make.reconstruct(r, rules.V2_ANSWER_RULES, split="train", seed=7, scorer=rec)
     v1 = make.reconstruct(r, rules.V1_ANSWER_RULES, split="train", seed=7, scorer=rec)
+    v22 = make.reconstruct(r, rules.ANSWER_RULES, split="train", seed=7, scorer=rec)
     assert 1 not in v2.target.citations and 1 in v1.target.citations
-    assert v1.rule_ids == rules.V1_ANSWER_RULES and v2.rule_ids == rules.ANSWER_RULES
+    assert 1 not in v22.target.citations
+    assert v1.rule_ids == rules.V1_ANSWER_RULES and v2.rule_ids == rules.V2_ANSWER_RULES
+    assert v22.rule_ids == rules.ANSWER_RULES
 
 
 def aim_pool(n_yes, n_no, start=0):
@@ -261,4 +271,28 @@ def test_selected_answers_cite_no_aim_and_every_example_reconstructs():
         again = make.reconstruct(by_pmid[e.pmid], e.rule_ids, split=e.split, seed=7, scorer=replay)
         assert again == e, e.id
         TrainExample.model_validate_json(e.model_dump_json())
-    assert sel.report["sentence_drops"]["ranking:aim_or_method_removed"] > 0
+    assert sum(sel.report["sentence_drops"].values()) > 0
+
+
+# ---- TGT-R10 as first written stays frozen; TGT-R12 is the tightened rule (OWNER D-49) ----
+
+RULES_R10_SHA256 = "12fa92c8f2bfc7e093386ba96e7a8bdb1754dd5eae9ce4d01347cbbd2a52d70f"
+
+
+def test_first_tgt_r10_is_frozen_and_rebuilds_the_first_v2_ids():
+    from pathlib import Path
+
+    from ggh.targets import rules_r10
+
+    digest = hashlib.sha256(Path(rules_r10.__file__).read_bytes()).hexdigest()
+    assert digest == RULES_R10_SHA256  # never edited: TGT-R10 examples rebuild byte for byte
+    method = "We measured serum outcome zeta9 in 30 adults."
+    assert rules.is_method_sentence(method) and not rules_r10.is_aim_sentence(method)
+    sents = ["Background on zeta9.", method, "Nothing else."]
+    r = row(9, long_answer="Serum outcome zeta9 in adults.", sentences=sents, sections=["X"] * 3)
+    rec = nli.RecordingScorer(FakeScorer(), rules.SCORE_DECIMALS)
+    v2 = make.reconstruct(r, rules.V2_ANSWER_RULES, split="train", seed=7, scorer=rec)
+    assert 2 in v2.target.citations  # the first rule let a method sentence through
+    with pytest.raises(ValueError, match="no target"):
+        make.reconstruct(r, rules.V21_ANSWER_RULES, split="train", seed=7, scorer=rec)
+    assert rules.rules_version(rules.V2_ANSWER_RULES) == "v2"

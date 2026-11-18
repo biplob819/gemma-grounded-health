@@ -46,7 +46,7 @@ def test_build_writes_outputs_copies_and_a_manifest_that_replays(repo):
     report = make.build(repo, FakeScorer, seed=7, cap=200, chunk=100)
     out = repo / make.OUT_DIR
     assert (repo / make.REPORT_COPY).read_bytes() == (out / "drop_report.json").read_bytes()
-    assert (repo / make.AUDIT_COPY).read_bytes() == (out / "audit_sample.jsonl").read_bytes()
+    assert not (repo / make.AUDIT_COPY).exists()  # v1's committed sample is never rewritten
     man = read_manifest(out / "manifest.json")
     assert man.params["nli_model"] == f"{nli.MODEL_ID}@{nli.MODEL_REVISION}"
     assert man.params["rules_sha256"] == make.rules_hash() == report["rules_sha256"]
@@ -273,7 +273,9 @@ def test_a_multi_sentence_premise_joins_the_cited_sentences_with_a_space():
             return [0.9 if "Charlie" in p else 0.1 for p, _ in pairs]
 
     spy = Spy()
-    (t,) = make.targets_for([r], spy)
+    (t,) = make.targets_for(
+        [r], spy, version="v2"
+    )  # TGT-R6 mechanics: v2 rules (v2.2 ranks by entailment, test_targets_support.py)
     assert isinstance(t, make.AnswerTarget) and t.citations == (1, 2)
     assert "Alpha bravo. Charlie delta." in spy.premises
 

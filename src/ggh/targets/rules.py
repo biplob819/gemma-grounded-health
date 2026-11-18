@@ -12,20 +12,43 @@ import re
 from evalkit.text import split_sentences
 
 # ---- rule ids stamped into TrainExample.rule_ids (§4) ----
+# v2.2 (OWNER D-48, D-49): TGT-R12 (the tightened aim and method exclusion) and TGT-R11
+# (citations by single-sentence entailment, replacing TGT-R6's word-overlap ranking; its cap
+# of 4 citations is kept, as MAX_CITES)
 ANSWER_RULES = (
-    "TGT-R1", "TGT-R2", "TGT-R9", "TGT-R10", "TGT-R3", "TGT-R6", "TGT-R4", "TGT-R5", "TGT-R7",
+    "TGT-R1", "TGT-R2", "TGT-R9", "TGT-R12", "TGT-R11", "TGT-R3", "TGT-R4", "TGT-R5", "TGT-R7",
 )  # fmt: skip
 INSUFFICIENT_RULES = (*ANSWER_RULES, "INS-R1", "INS-R2", "INS-R3")
-# v1 (N1.3) examples carry these; `reconstruct` still rebuilds them, without TGT-R10
-V1_ANSWER_RULES = tuple(r for r in ANSWER_RULES if r != "TGT-R10")
+# earlier builds' ids; `reconstruct` still rebuilds each exactly (PRV-R1)
+V21_ANSWER_RULES = (  # v2.1: TGT-R12 with TGT-R6
+    "TGT-R1", "TGT-R2", "TGT-R9", "TGT-R12", "TGT-R3", "TGT-R6", "TGT-R4", "TGT-R5", "TGT-R7",
+)  # fmt: skip
+V21_INSUFFICIENT_RULES = (*V21_ANSWER_RULES, "INS-R1", "INS-R2", "INS-R3")
+V2_ANSWER_RULES = (  # the first v2 build: TGT-R10 as first written (rules_r10.py)
+    "TGT-R1", "TGT-R2", "TGT-R9", "TGT-R10", "TGT-R3", "TGT-R6", "TGT-R4", "TGT-R5", "TGT-R7",
+)  # fmt: skip
+V2_INSUFFICIENT_RULES = (*V2_ANSWER_RULES, "INS-R1", "INS-R2", "INS-R3")
+V1_ANSWER_RULES = tuple(r for r in V2_ANSWER_RULES if r != "TGT-R10")
 V1_INSUFFICIENT_RULES = (*V1_ANSWER_RULES, "INS-R1", "INS-R2", "INS-R3")
+
+
+def rules_version(rule_ids: tuple[str, ...]) -> str:
+    """Which build's citation rules a set of answer or insufficient rule ids names."""
+    if "TGT-R11" in rule_ids:
+        return "v2.2"
+    if "TGT-R12" in rule_ids:
+        return "v2.1"
+    return "v2" if "TGT-R10" in rule_ids else "v1"
+
+
 OFFSCOPE_RULES = ("OFF-R3",)
 
 # ---- thresholds (TGT-R8: revised at most once, after the hand audit, by a decision) ----
 SUPPORT_MIN = 0.5  # TGT-R3
 ENTAIL_MIN = 0.5  # TGT-R4
 MAX_WORDS = 80  # TGT-R5
-MAX_CITES = 4  # TGT-R6
+MAX_CITES = 4  # TGT-R6, and TGT-R11's cap
+SENTENCE_FLOOR = 0.3  # TGT-R11: each cited sentence alone entails the claim at least this much
 SCORE_DECIMALS = 6  # NLI scores are rounded before comparison, so a replay decides identically
 
 # ---- TGT-R2: recommendation and implication sentences are dropped ----
@@ -66,7 +89,8 @@ def strip_hedge(sentence: str) -> str:
     return rest[:1].upper() + rest[1:]
 
 
-# ---- TGT-R10: an answer never cites an aim, objective, study-description or method sentence
+# ---- TGT-R12 (TGT-R10 tightened; the first TGT-R10 is frozen in rules_r10.py): an answer
+# never cites an aim, objective, study-description or method sentence
 # (OWNER D-43; v2 of the rule after the owner's per-sentence audit, D-45). v1 let "To
 # investigate whether X..." through lexical ranking and NLI at 0.5, so 43% of its answer
 # targets cited one; the first v2 audit then found method sentences ("X was assessed by qPCR")
@@ -208,6 +232,11 @@ def is_method_sentence(sentence: str) -> bool:
     return not (_FOUND.search(sentence) or _FINDING.search(_OPEN_CLAUSE.sub("", sentence)))
 
 
+def is_result_like(sentence: str) -> bool:
+    """TGT-R11: the sentence reports a result (the TGT-R10 result and finding detectors)."""
+    return reports_result(sentence) or _FINDING.search(_OPEN_CLAUSE.sub("", sentence)) is not None
+
+
 def is_excluded_from_answers(sentence: str) -> bool:
     """TGT-R10: an answer never cites this sentence."""
     return is_aim_sentence(sentence) or is_method_sentence(sentence)
@@ -347,8 +376,13 @@ def overlaps(sentence: str, context: tuple[str, ...]) -> list[float]:
     return [len(words & content_words(c)) / len(words) for c in context]
 
 
-def aim_positions(context: tuple[str, ...]) -> frozenset[int]:
-    """TGT-R10: the 1-based positions an answer may not cite (aim or method sentences)."""
+def aim_positions(context: tuple[str, ...], first: bool = False) -> frozenset[int]:
+    """TGT-R12 (or, with `first`, TGT-R10 as first written): the 1-based positions an answer
+    may not cite."""
+    if first:
+        from ggh.targets import rules_r10
+
+        return frozenset(i + 1 for i, c in enumerate(context) if rules_r10.is_aim_sentence(c))
     return frozenset(i + 1 for i, c in enumerate(context) if is_excluded_from_answers(c))
 
 
@@ -364,6 +398,25 @@ def ranked_citations(
         key=lambda i: (-scores[i], i),
     )
     return tuple(i + 1 for i in ranked[:MAX_CITES])
+
+
+def support_ranking(
+    sentence: str, context: tuple[str, ...], entail: dict[int, float], exclude: frozenset[int]
+) -> tuple[int, ...]:
+    """TGT-R11 (OWNER D-48): the up-to-4 context sentences (1-based) that may support
+    `sentence`, best first. `entail[i]` is sentence i's entailment of the claim on its own. A
+    candidate is not excluded by TGT-R10, entails at least SENTENCE_FLOOR alone, and either
+    reports a result or entails at least ENTAIL_MIN alone. Ranked by that entailment; ties by
+    word overlap, then position."""
+    lex = overlaps(sentence, context)
+    cands = [
+        i
+        for i, e in entail.items()
+        if i not in exclude
+        and e >= SENTENCE_FLOOR
+        and (e >= ENTAIL_MIN or is_result_like(context[i - 1]))
+    ]
+    return tuple(sorted(cands, key=lambda i: (-entail[i], -lex[i - 1], i))[:MAX_CITES])
 
 
 def citation_options(ranked: tuple[int, ...]) -> tuple[tuple[int, ...], ...]:

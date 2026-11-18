@@ -1,24 +1,15 @@
 {
   "answers_failing": [
-    "pqa-a-18043973",
-    "pqa-a-24625110",
-    "pqa-a-15507800",
-    "pqa-a-20016195",
-    "pqa-a-11216993",
-    "pqa-a-15519641",
-    "pqa-a-25376086",
-    "pqa-a-10584658",
-    "pqa-a-25179896",
-    "pqa-a-23238305",
-    "pqa-a-25215463"
+    "pqa-a-12350439",
+    "pqa-a-21853148",
+    "pqa-a-21896197"
   ],
   "answers_with_one_weak": [
-    "pqa-a-18976910",
-    "pqa-a-27595504",
-    "pqa-a-23946278",
-    "pqa-a-23842711",
-    "pqa-a-11410500",
-    "pqa-a-24894405"
+    "pqa-a-11108757",
+    "pqa-a-14656733",
+    "pqa-a-10320179",
+    "pqa-a-25889160",
+    "pqa-a-23044253"
   ],
   "audit": "v2 per-sentence (AUD-R4, OWNER D-45)",
   "bars": {
@@ -32,22 +23,23 @@
   "labelled": 50,
   "missing": [],
   "overall": {
-    "ok": 50
+    "ok": 49,
+    "wrong_label": 1
   },
   "passed": false,
   "sample": 50,
-  "sample_sha256": "e09575075158f16faa97e4616c01e5c50ce833bd719c9203e6554313793cc605",
+  "sample_sha256": "b50b76148df25ad9beb53ae71439f26aaced85b14dc7173da5380348e20272d7",
   "sentences": {
     "answer": {
-      "aim": 2,
-      "method": 7,
-      "supports": 41,
-      "weak": 14
+      "aim": 1,
+      "method": 2,
+      "supports": 24,
+      "weak": 5
     },
     "insufficient": {
-      "aim": 1,
-      "method": 6,
-      "supports": 22
+      "aim": 8,
+      "method": 10,
+      "weak": 12
     }
   },
   "stale": []
