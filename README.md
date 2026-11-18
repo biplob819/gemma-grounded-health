@@ -4,6 +4,8 @@ This project is building a fine-tuned small open Gemma model (Gemma 4 E2B) that 
 
 > **Status: under construction.** Results, model and demo links appear here once the build reaches them. Research only, not medical advice.
 
+[![Walkthrough: results, the citation failure, laptop benchmark, CLI and audit page](https://raw.githubusercontent.com/biplob819/gemma-grounded-health/main/docs/assets/walkthrough.gif)](https://github.com/biplob819/gemma-grounded-health/blob/main/docs/walkthrough.md)
+
 - Product: [Gemma Grounded Health PRD](Gemma%20Grounded%20Health%20PRD.md)
 - Design: [Gemma Grounded Health Tech Spec](Gemma%20Grounded%20Health%20Tech%20Spec.md)
 - Build status: `uv run python scripts/status.py`
