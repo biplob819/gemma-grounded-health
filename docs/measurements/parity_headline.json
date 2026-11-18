@@ -1,0 +1,28 @@
+{
+  "n": 200,
+  "run_bf16": "r-99cd13bb9d69",
+  "run_q4": "r-f0f3b432a413",
+  "bf16": {
+    "accuracy": 0.715,
+    "headline_claude-opus-5-5": 0.41,
+    "headline_gpt-6.1-sol": 0.365
+  },
+  "q4_k_m": {
+    "accuracy": 0.725,
+    "headline_claude-opus-5-5": 0.385,
+    "headline_gpt-6.1-sol": 0.35
+  },
+  "bf16_minus_q4_headline": {
+    "claude-opus-5-5": {
+      "point": 0.025,
+      "lo": -0.035,
+      "hi": 0.085
+    },
+    "gpt-6.1-sol": {
+      "point": 0.015,
+      "lo": -0.045,
+      "hi": 0.075
+    }
+  },
+  "method": "paired bootstrap 95%, 10,000 resamples, seed 7; reported, not gated (Tech Spec \u00a76)"
+}

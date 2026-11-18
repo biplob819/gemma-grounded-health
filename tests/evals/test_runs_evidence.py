@@ -71,7 +71,7 @@ def test_the_plan_was_committed_before_the_main_run_started():
 
 def test_every_paid_run_is_in_the_ledger_with_its_own_cost():
     rows = {r.get("run_id"): r for r in ledger() if r.get("node") == "E3.2" and r.get("run_id")}
-    for run in ("main", "offscope", "probe_original", "probe_paraphrase"):
+    for run in ("main", "offscope", "probe_original", "probe_paraphrase", "parity"):
         r = load(run, "run.json")
         assert rows[r["run_id"]]["spent_usd"] == round(r["spent_usd"], 6), run
     main = rows[load("main", "run.json")["run_id"]]
@@ -137,3 +137,37 @@ def test_the_probe_report_recomputes_and_shows_no_contamination_signal():
     for m in GEMMA:
         got = P.paired_drop(P.correct_by_case(o, m), P.correct_by_case(p, m))
         assert got == rep["models"][m] and not got["contamination_signal"]
+
+
+# RUN-04
+
+
+def test_parity_ran_the_bf16_finetune_on_200_cases_of_the_main_run():
+    run, s = load("parity", "run.json"), load("parity", "summary.json")
+    assert (
+        run["n"] == 200 and run["models"] == ["gemma-e2b-grounded-bf16"] and run["judges"] == JUDGES
+    )
+    assert s["judging_status"] == "complete"
+    par = records("parity")
+    main_ids = {r["case_id"] for r in records("main")}
+    assert len(par) == 200 and {r["case_id"] for r in par} <= main_ids
+
+
+def test_the_headline_difference_against_q4_recomputes_and_is_reported():
+    rep = json.loads((M / "parity_headline.json").read_text(encoding="utf-8"))
+    par = records("parity")
+    q4 = {
+        r["case_id"]: r
+        for r in records("main")
+        if r["completion"]["model"] == "gemma-e2b-grounded-q4"
+    }
+    for j in JUDGES:
+        bf = sum(bool(r["scores"]["correct_and_grounded"][j]) for r in par) / 200
+        qq = sum(bool(q4[r["case_id"]]["scores"]["correct_and_grounded"][j]) for r in par) / 200
+        assert (
+            round(bf, 3) == rep["bf16"][f"headline_{j}"]
+            and round(qq, 3) == rep["q4_k_m"][f"headline_{j}"]
+        )
+        d = rep["bf16_minus_q4_headline"][j]
+        assert d["lo"] <= d["point"] <= d["hi"] and d["point"] == round(bf - qq, 3)
+    assert "Reported, not gated" in RUN_STATE

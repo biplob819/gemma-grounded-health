@@ -118,4 +118,4 @@ def test_grammar_keeps_the_schemas_property_order():
     sch = dict(answer_schema(("yes", "no", "maybe")))
     src = json.loads(hf.grammar_source(sch))
     assert list(src["properties"]) == ["label", "answer", "citations"]  # not sorted
-    assert list(json.loads(json.dumps(sch, sort_keys=True))["properties"])[0] == "answer"
+    assert next(iter(json.loads(json.dumps(sch, sort_keys=True))["properties"])) == "answer"
