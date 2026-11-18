@@ -172,7 +172,6 @@ FIXTURES = {
                     }
                 ],
                 "parity": PARITY,
-                "parity_headline": {"opus": IV},
                 "probe": {
                     "model": "gemma-e2b-grounded-q4",
                     "n": 100,
@@ -197,7 +196,10 @@ FIXTURES = {
                 "aim_citation_rate": None,
             }
         ],
-        "primary": [COMPARISON],
+        "primary": {
+            "headline: gemma-e2b-grounded-q4 minus gemma-e2b-base-q4 (opus)": COMPARISON["diff"]
+        },
+        "primary_comparisons": [COMPARISON],
         "secondary": [],
         "behaviour": [
             {
@@ -210,7 +212,8 @@ FIXTURES = {
                 "run": "main",
             }
         ],
-        "bench": {"ft-Q4_K_M": BENCH},
+        "bench": BENCH,
+        "bench_variants": {"ft-Q4_K_M": BENCH},
         "sample_read": [
             {
                 "run": "main",

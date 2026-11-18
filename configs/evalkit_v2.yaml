@@ -17,4 +17,4 @@ seed: 7                          # the E3.2 main run's seed, so the cached cases
 default_effort: medium
 judge_effort: medium
 extractor_effort: medium
-max_cost_usd: 40                 # hard stop; the cache-aware estimate is ~$10-19 (owner to confirm)
+max_cost_usd: 25                 # OWNER D-53: hard stop at the approval line; a trip returns to the owner

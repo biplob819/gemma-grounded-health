@@ -45,7 +45,7 @@ def test_today_the_bundle_has_v1_only_with_every_committed_run(v1):
 
 
 def test_primary_comparisons_are_the_plans_oriented_as_written(v1):
-    prim = v1.bundle.primary
+    prim = v1.bundle.primary_comparisons
     assert len(prim) == 6 and all(c.model_a == "gemma-e2b-grounded-q4" for c in prim)
     by = {(c.model_b, c.judge): c for c in prim}
     base_opus = by[("gemma-e2b-base-q4", "claude-opus-5-5")]
@@ -133,11 +133,52 @@ def test_v2_appears_when_its_main_run_exists(v2):
     assert {"main_v2", "offscope_v2", "parity_v2"} <= {r.name for r in b.runs}
 
 
-def test_v2_primary_comparisons_come_from_its_own_plan(v2):
-    p2 = [c for c in v2.bundle.primary if c.plan == "configs/eval_plan_v2.yaml"]
-    assert len(p2) == 8 and all(c.model_a == fake.V2 and c.run == "main_v2" for c in p2)
+def test_v2_primary_family_is_the_owners_d53_family(v2):
+    p2 = [c for c in v2.bundle.primary_comparisons if c.plan == "configs/eval_plan_v2.yaml"]
+    # 2 pairs (v1, base) x 3 outcomes x 2 judges, Holm over those 12; Haiku and Luna not primary
+    assert len(p2) == 12 and {c.family_size for c in p2} == {12}
+    assert {c.model_b for c in p2} == {fake.V1, "gemma-e2b-base-q4"}
+    assert all(
+        c.model_a == fake.V2 and c.run == "main_v2" and c.method == "plan_family" for c in p2
+    )
+    assert {(c.metric, c.better) for c in p2} == {
+        ("headline", "higher"),
+        ("citation_precision", "higher"),
+        ("aim_citation_rate", "lower"),
+    }
+    # the fake v2 is v1's records, so v2 minus v1 is exactly zero: a tie on every outcome
     vs_v1 = [c for c in p2 if c.model_b == fake.V1]
-    assert len(vs_v1) == 2 and all(c.verdict == "tie" for c in vs_v1)
+    assert all(c.diff.point == 0 and c.verdict == "tie" for c in vs_v1)
+    # against base, v1's citations are worse on both citation outcomes, whatever the direction
+    by = {(c.metric, c.judge): c for c in p2 if c.model_b == "gemma-e2b-base-q4"}
+    aim = by[("aim_citation_rate", "claude-opus-5-5")]
+    assert aim.diff.point == pytest.approx(0.5569 - 0.0571, abs=1e-3) and aim.verdict == "b_better"
+    assert by[("citation_precision", "gpt-6.1-sol")].verdict == "b_better"
+    key = f"aim_citation_rate: {fake.V2} minus gemma-e2b-base-q4 (claude-opus-5-5)"
+    assert v2.bundle.primary[key] == aim.diff
+
+
+def test_v2_haiku_and_luna_are_reported_not_primary(v2):
+    sec = [c for c in v2.bundle.secondary if c.run == "main_v2" and c.model_a == fake.V2]
+    pairs = {c.model_b for c in sec if c.metric == "headline"}
+    assert {"claude-haiku-5-5", "gpt-6-luna"} <= pairs
+    assert all(c.method == "evalkit" and c.plan == "secondary" for c in sec)
+
+
+def test_r4_flat_fields_read_from_the_shipped_release(v1, v2):
+    for built in (v1, v2):
+        b = built.bundle
+        assert b.train == b.releases[-1].train and b.artifacts == b.releases[-1].artifacts
+        assert b.audit_pass_rate == b.releases[-1].audits[-1].pass_rate
+        assert b.bench.quant == "Q4_K_M" and {"ft-Q4_K_M", "base-Q4_K_M"} <= set(b.bench_variants)
+    p = v1.bundle.parity
+    assert p and p.judged_headline_delta
+    assert p.judged_headline_delta["claude-opus-5-5"].point == 0.025
+    assert set(v1.bundle.primary) == {
+        f"headline: gemma-e2b-grounded-q4 minus {m} ({j})"
+        for m in ("gemma-e2b-base-q4", "claude-haiku-5-5", "gpt-6-luna")
+        for j in JUDGES
+    }
 
 
 def test_v2_behaviour_rows_include_its_citation_metrics_and_offscope(v2):

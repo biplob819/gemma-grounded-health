@@ -26,9 +26,10 @@ from evalkit.schemas import Interval
 
 from ggh import ledger
 from ggh.lineage import LineageError, StageManifest, read_manifest, sha256_file
+from ggh.results import family as F
 from ggh.results import sample as S
 from ggh.results import table as T
-from ggh.results.plan import load_plan
+from ggh.results.plan import Plan, load_plan
 from ggh.results.runs import ResultsError, Run
 from ggh.schemas import (
     AuditSummary,
@@ -44,6 +45,7 @@ from ggh.schemas import (
     RunRef,
     SampleReadSummary,
     TrainRun,
+    primary_key,
 )
 
 CONFIG = Path("configs") / "results.yaml"
@@ -79,8 +81,9 @@ def _flip(d: dict[str, Any]) -> dict[str, Any]:
     return {"point": -d["point"], "lo": -d["hi"], "hi": -d["lo"]}
 
 
-def _verdict(separated: bool, point: float) -> str:
-    return "tie" if not separated else ("a_better" if point > 0 else "b_better")
+def _verdict(separated: bool, point: float, better: str = "higher") -> str:
+    a_ahead = point > 0 if better == "higher" else point < 0
+    return "tie" if not separated else ("a_better" if a_ahead else "b_better")
 
 
 def comparison(c: dict[str, Any], *, plan: str, run: str, flip: bool = False) -> Comparison:
@@ -127,6 +130,34 @@ def comparisons(
             prim.append(comparison(c, plan=plan_rel, run=run.name, flip=c["model_a"] != a))
     sec = [
         comparison(c, plan="secondary", run=run.name) for i, c in enumerate(rows) if i not in used
+    ]
+    return prim, sec
+
+
+def plan_comparisons(run: Run, plan: Plan) -> tuple[list[Comparison], list[Comparison]]:
+    """A plan with `primary_metrics` (V2.2, OWNER D-53) gets its own Holm family computed from
+    the records; the E3.2 plan's comparisons are EvalKit's, as published. Either way every
+    comparison in EvalKit's summary that is not primary is secondary."""
+    d = plan.data
+    if "primary_metrics" not in d:
+        return comparisons(run, plan.path.as_posix(), plan.primary, d["metric"], list(d["judges"]))
+    prim = [
+        Comparison.model_validate(
+            {
+                **t,
+                "diff": t["diff"].model_dump(),
+                "plan": plan.path.as_posix(),
+                "run": run.name,
+                "method": "plan_family",
+                "verdict": _verdict(t["separated"], t["diff"].point, t["better"]),
+            }
+        )
+        for t in F.family_tests(run, d)
+    ]
+    reported = {tuple(x) for x in d.get("reported_not_primary", [])}
+    sec = [
+        comparison(c, plan="secondary", run=run.name, flip=(c["model_b"], c["model_a"]) in reported)
+        for c in run.summary.get("comparisons", [])
     ]
     return prim, sec
 
@@ -327,9 +358,7 @@ def build(root: Path, *, full_lineage: bool = False, config: Path = CONFIG) -> B
     for rel in included:
         plan = load_plan(root, rel["plan"])
         main = runs[rel["primary_run"]]
-        p, s = comparisons(
-            main, plan.path.as_posix(), plan.primary, plan.data["metric"], list(plan.data["judges"])
-        )
+        p, s = plan_comparisons(main, plan)
         primary += p
         secondary += s
         cit = runs[rel["citation_run"]] if rel["citation_run"] != rel["behaviour_run"] else None
@@ -346,6 +375,9 @@ def build(root: Path, *, full_lineage: bool = False, config: Path = CONFIG) -> B
         probe = _opt_json(root, rel.get("probe"))
         pm = (probe or {}).get("models", {}).get(rel["model"])
         ph = _opt_json(root, rel.get("parity_headline"))
+        parity = _opt_json(root, rel.get("parity"))
+        if parity is not None and ph is not None:
+            parity["judged_headline_delta"] = ph["bf16_minus_q4_headline"]
         selection = _opt_json(root, rel.get("train_selection")) or {}
         if plan.status != "final":
             blockers.append(f"{rel['version']}: plan {plan.path} is {plan.status}")
@@ -362,12 +394,7 @@ def build(root: Path, *, full_lineage: bool = False, config: Path = CONFIG) -> B
                     "train": TrainRun.model_validate(_json(root, rel["train_run"])),
                     "adapter_sha256": selection.get("adapter_sha256"),
                     "audits": [a.model_dump() for a in audits(root, rel["audits"])],
-                    "parity": (
-                        ParityReport.model_validate(_json(root, rel["parity"]))
-                        if rel.get("parity")
-                        else None
-                    ),
-                    "parity_headline": ph["bf16_minus_q4_headline"] if ph else None,
+                    "parity": ParityReport.model_validate(parity) if parity else None,
                     "probe": ProbeResult.model_validate({"model": rel["model"], **pm})
                     if pm
                     else None,
@@ -399,10 +426,12 @@ def build(root: Path, *, full_lineage: bool = False, config: Path = CONFIG) -> B
             "runs": [r.model_dump() for r in refs],
             "releases": [r.model_dump() for r in releases],
             "results": [m.model_dump() for r in ordered for m in model_results(r)],
-            "primary": [c.model_dump() for c in primary],
+            "primary": {primary_key(c): c.diff.model_dump() for c in primary},
+            "primary_comparisons": [c.model_dump() for c in primary],
             "secondary": [c.model_dump() for c in secondary],
             "behaviour": [b.model_dump() for b in behaviour],
-            "bench": {
+            "bench": LaptopBench.model_validate(bench_raw[cfg.get("bench_shipped", "ft-Q4_K_M")]),
+            "bench_variants": {
                 k: LaptopBench.model_validate(v).model_dump() for k, v in sorted(bench_raw.items())
             },
             "sample_read": [s.model_dump() for s in sample_sums],

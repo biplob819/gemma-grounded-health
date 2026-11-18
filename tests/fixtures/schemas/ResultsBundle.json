@@ -11,6 +11,28 @@
     }
   ],
   "bench": {
+    "answer_latency_ms_p50": 3500,
+    "answer_latency_ms_p95": 5200,
+    "chip": "Apple M3",
+    "gen_tps_p50": 45.0,
+    "gen_tps_p95": 40.0,
+    "llama_bench": {
+      "pp512": 950.0,
+      "tg128": 47.0
+    },
+    "llama_cpp_commit": "b1234",
+    "model_file_mb": 3100.0,
+    "n_prompts": 50,
+    "os": "macOS 26.1",
+    "peak_rss_mb": 3400.0,
+    "power": "ac",
+    "prompt_tps_p50": 900.0,
+    "quant": "Q4_K_M",
+    "ram_gb": 16,
+    "repetitions": 3,
+    "ttft_ms_p50": 600
+  },
+  "bench_variants": {
     "ft-Q4_K_M": {
       "answer_latency_ms_p50": 3500,
       "answer_latency_ms_p95": 5200,
@@ -47,7 +69,14 @@
   "lineage_ok": true,
   "lineage_problems": [],
   "lineage_scope": "committed",
-  "primary": [
+  "primary": {
+    "headline: gemma-e2b-grounded-q4 minus gemma-e2b-base-q4 (opus)": {
+      "hi": 0.01,
+      "lo": -0.07,
+      "point": -0.03
+    }
+  },
+  "primary_comparisons": [
     {
       "diff": {
         "hi": 0.01,
@@ -105,13 +134,6 @@
         "schema_valid": {
           "bf16": 1.0,
           "q4": 1.0
-        }
-      },
-      "parity_headline": {
-        "opus": {
-          "hi": 0.6,
-          "lo": 0.4,
-          "point": 0.5
         }
       },
       "plan": "configs/eval_plan.yaml",

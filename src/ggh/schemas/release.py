@@ -118,7 +118,11 @@ class ModelResult(Model):
 
 
 class Comparison(Model):
-    """A paired comparison from EvalKit's summary, oriented as model_a minus model_b."""
+    """A paired comparison, oriented as model_a minus model_b.
+
+    `method` "evalkit": copied from EvalKit's summary (Holm across the run's model pairs).
+    `method` "plan_family": computed with EvalKit's bootstrap over the plan's own Holm family
+    (OWNER D-53); `family_size` is the number of tests corrected together."""
 
     plan: NonBlank  # the pre-registration that named it, or "secondary"
     run: NonBlank
@@ -128,12 +132,16 @@ class Comparison(Model):
     judge: NonBlank | None
     diff: Interval
     p_value: Prob | None
-    separated: bool  # EvalKit's rule: paired bootstrap, Holm across the run's pairs
+    separated: bool  # after Holm, see `method`
     verdict: Literal["a_better", "b_better", "tie"]
+    better: Literal["higher", "lower"] = "higher"  # the outcome's direction
+    method: Literal["evalkit", "plan_family"] = "evalkit"
+    family_size: PosInt | None = None
 
     @model_validator(mode="after")
     def _verdict_follows_the_rule(self) -> Comparison:
-        want = "tie" if not self.separated else ("a_better" if self.diff.point > 0 else "b_better")
+        a_ahead = self.diff.point > 0 if self.better == "higher" else self.diff.point < 0
+        want = "tie" if not self.separated else ("a_better" if a_ahead else "b_better")
         if self.verdict != want:
             raise ValueError(f"verdict {self.verdict!r} contradicts the separation rule ({want})")
         return self
@@ -171,8 +179,7 @@ class ReleaseEntry(Model):
     train: TrainRun
     adapter_sha256: Sha256 | None = None
     audits: tuple[AuditSummary, ...]
-    parity: ParityReport | None = None
-    parity_headline: FrozenMap[Interval] | None = None  # bf16 minus Q4_K_M, per judge
+    parity: ParityReport | None = None  # judged_headline_delta: bf16 minus Q4_K_M, per judge
     probe: ProbeResult | None = None
     artifacts: tuple[ExportArtifact, ...]
 
@@ -250,10 +257,14 @@ class ResultsBundle(Model):
     runs: tuple[RunRef, ...]
     releases: tuple[ReleaseEntry, ...]
     results: tuple[ModelResult, ...]
-    primary: tuple[Comparison, ...]  # pre-registered comparisons (§7.4), per judge
+    # pre-registered comparisons (§7.4) as "<metric>: <a> minus <b> (<judge>)" -> difference, the
+    # shape the R4 card reads; `primary_comparisons` holds the same with p, Holm and verdict
+    primary: FrozenMap[Interval]
+    primary_comparisons: tuple[Comparison, ...]
     secondary: tuple[Comparison, ...]
     behaviour: tuple[BehaviourRow, ...]
-    bench: FrozenMap[LaptopBench]  # variant ("ft-Q4_K_M", ...) -> measurement
+    bench: LaptopBench  # the shipped variant, ft-Q4_K_M (base and fine-tunes share the speed)
+    bench_variants: FrozenMap[LaptopBench]  # every measured variant
     sample_read: tuple[SampleReadSummary, ...]
     spend_usd: NonNegFloat  # the spend ledger's total
     lineage_ok: bool
@@ -272,9 +283,40 @@ class ResultsBundle(Model):
             missing = set(rel.runs) - names
             if missing:
                 raise ValueError(f"{rel.version} names runs the bundle lacks: {sorted(missing)}")
-        for c in self.primary:
+        for c in self.primary_comparisons:
             if c.plan == "secondary":
                 raise ValueError("a primary comparison must name its plan")
+        if set(self.primary) != {primary_key(c) for c in self.primary_comparisons}:
+            raise ValueError("primary must hold exactly the primary comparisons")
         if [r.version for r in self.releases] != sorted({r.version for r in self.releases}):
             raise ValueError("releases must be unique and ordered v1, v2")
+        if not self.releases:
+            raise ValueError("a bundle needs at least one release")
         return self
+
+    # The flat fields of the first ResultsBundle (Tech Spec §3), read by the R4 card and Hub
+    # code, now come from the shipped release: the newest one in the bundle.
+    @property
+    def shipped(self) -> ReleaseEntry:
+        return self.releases[-1]
+
+    @property
+    def train(self) -> TrainRun:
+        return self.shipped.train
+
+    @property
+    def parity(self) -> ParityReport | None:
+        return self.shipped.parity
+
+    @property
+    def artifacts(self) -> tuple[ExportArtifact, ...]:
+        return self.shipped.artifacts
+
+    @property
+    def audit_pass_rate(self) -> float:
+        """The shipped release's latest audit (the one its training data was cleared on)."""
+        return self.shipped.audits[-1].pass_rate
+
+
+def primary_key(c: Comparison) -> str:
+    return f"{c.metric}: {c.model_a} minus {c.model_b}" + (f" ({c.judge})" if c.judge else "")

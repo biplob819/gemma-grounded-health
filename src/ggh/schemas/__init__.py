@@ -16,6 +16,7 @@ from ggh.schemas.release import (
     RunRef,
     SampleReadRow,
     SampleReadSummary,
+    primary_key,
 )
 from ggh.schemas.train import UNPINNED, DevMetrics, RecipeConfig, TrainRun
 
@@ -44,4 +45,5 @@ __all__ = [
     "SampleReadSummary",
     "TrainExample",
     "TrainRun",
+    "primary_key",
 ]

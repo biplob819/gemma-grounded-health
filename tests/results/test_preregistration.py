@@ -50,7 +50,17 @@ def test_v2_plan_names_the_primary_comparisons_judges_metric_and_rule():
     assert d["n_cases"] == v1["n_cases"] == 1000 and d["seed"] == v1["seed"] == 7
     assert V2.primary[:2] == [(V2_MODEL, "gemma-e2b-grounded-q4"), (V2_MODEL, "gemma-e2b-base-q4")]
     assert all(a == V2_MODEL for a, _ in V2.primary)
-    assert v1["rule"].split(" The run has")[0] in d["rule"]  # the same separation and tie rule
+    # OWNER D-53: v2 vs v1 and v2 vs base only; three outcomes with directions; Holm over them
+    assert V2.primary == [(V2_MODEL, "gemma-e2b-grounded-q4"), (V2_MODEL, "gemma-e2b-base-q4")]
+    assert [(m["metric"], m["better"]) for m in d["primary_metrics"]] == [
+        ("headline", "higher"),
+        ("citation_precision", "higher"),
+        ("aim_citation_rate", "lower"),
+    ]
+    assert d["holm"] == "family" and "twelve primary tests" in d["rule"] and "tie" in d["rule"]
+    assert [b for _, b in d["reported_not_primary"]] == ["claude-haiku-5-5", "gpt-6-luna"]
+    assert load_run_config(ROOT / d["config"]).max_cost_usd == 25  # OWNER D-53
+    assert any(r.name == "parity_v2" for r in V2.runs)  # judged parity runs (OWNER D-53)
     assert d["built_after_test_seen"] is True  # OWNER D-43
 
 
