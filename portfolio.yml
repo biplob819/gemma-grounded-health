@@ -48,6 +48,11 @@ story:
     - "v2: training citations from result sentences only, chosen on a dev grounding check, then a second pre-registered run on the same 1,000 questions; v1's results stay published"
 
 images:
+  # rebuilt from committed files by scripts/walkthrough.py (shot list: docs/walkthrough.md)
+  - src: docs/assets/walkthrough.gif
+    alt: "Walkthrough of ten screens: v1 headline numbers, the data flow and architecture diagrams, the ggh CLI, ggh doctor and the audit score, the local hand-audit page, the four-model results with paired intervals, the failure diagnosis (citations of the study's aim), the laptop benchmark, and the quantisation parity and paraphrase probe checks"
+    caption: ten real screens, 25 seconds, loops; nothing live or paid
+    kind: walkthrough
   - { src: docs/assets/dataflow.svg, alt: "Data flow: PubMedQA to targets, Kaggle training, export, laptop serving and EvalKit's dual-judge evaluation", kind: dataflow }
   - { src: docs/assets/architecture.svg, alt: "Architecture: the ggh package, its build harness and the external services it uses", kind: architecture }
 
