@@ -12,4 +12,4 @@ seed: 7                          # same as EvalKit's reference run, so its 200 c
 default_effort: medium
 judge_effort: medium
 extractor_effort: medium
-max_cost_usd: 10
+max_cost_usd: 15
