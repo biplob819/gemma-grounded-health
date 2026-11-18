@@ -1,0 +1,7 @@
+# Hugging Face Space (ZeroGPU) requirements for R4.3. The ggh pin moves to the release tag at
+# R4.5; until then it follows main.
+gemma-grounded-health @ git+https://github.com/biplob819/gemma-grounded-health@main
+gradio>=5
+spaces
+torch>=2.4
+transformers>=5.5

@@ -1,0 +1,243 @@
+{
+  "artifacts": [
+    {
+      "kind": "adapter",
+      "llama_cpp_commit": null,
+      "model": "ft",
+      "parent_key": "99867c532a5e4ae2cb5ef1868e7ffc8f59e3bae6e45aadc7672e4c03bff96586",
+      "path": "artifacts/adapter",
+      "quant": null,
+      "sha256": "8891cd0653155ff82d59900ee48eec208cf682b215ad0f6488d8863baee123f4"
+    },
+    {
+      "kind": "merged_bf16",
+      "llama_cpp_commit": null,
+      "model": "ft",
+      "parent_key": "f5dccf8a3851c0497fe4d14f20388c9477791855a4f484c4754814968295fbf3",
+      "path": "artifacts/merged/ft-bf16/model.safetensors",
+      "quant": null,
+      "sha256": "b09550be7b5b3848db0d5c0ad84f535e5d18e9f419cf65a40015c0d7892837d5"
+    },
+    {
+      "kind": "gguf",
+      "llama_cpp_commit": "b12421",
+      "model": "base",
+      "parent_key": "f7e228d1c3dc286d69ec3b08eb77458331f72b9ce6d834b793f9224db6e7c951",
+      "path": "artifacts/gguf/base-f16.gguf",
+      "quant": "F16",
+      "sha256": "3603ca946c831e445491397ba39f3b391802f678f7efbaee5127e82407341097"
+    },
+    {
+      "kind": "gguf",
+      "llama_cpp_commit": "b12421",
+      "model": "base",
+      "parent_key": "f7e228d1c3dc286d69ec3b08eb77458331f72b9ce6d834b793f9224db6e7c951",
+      "path": "artifacts/gguf/base-Q4_K_M.gguf",
+      "quant": "Q4_K_M",
+      "sha256": "c1f9a87cbd9a62eecd592748be99f59d83fa6dd0bff2019ce52c7a73d7a5099c"
+    },
+    {
+      "kind": "gguf",
+      "llama_cpp_commit": "b12421",
+      "model": "base",
+      "parent_key": "f7e228d1c3dc286d69ec3b08eb77458331f72b9ce6d834b793f9224db6e7c951",
+      "path": "artifacts/gguf/base-Q8_0.gguf",
+      "quant": "Q8_0",
+      "sha256": "e4c44bc02248a9a688dbc2df4a48e62c5e0607eb2464fa7ea21e1ceb0d634bb3"
+    },
+    {
+      "kind": "gguf",
+      "llama_cpp_commit": "b12421",
+      "model": "ft",
+      "parent_key": "f5dccf8a3851c0497fe4d14f20388c9477791855a4f484c4754814968295fbf3",
+      "path": "artifacts/gguf/ft-f16.gguf",
+      "quant": "F16",
+      "sha256": "2de741224aa8d0f004766ca05dcb6434d4d7b5e71a63095046502c8665e92244"
+    },
+    {
+      "kind": "gguf",
+      "llama_cpp_commit": "b12421",
+      "model": "ft",
+      "parent_key": "f5dccf8a3851c0497fe4d14f20388c9477791855a4f484c4754814968295fbf3",
+      "path": "artifacts/gguf/ft-Q4_K_M.gguf",
+      "quant": "Q4_K_M",
+      "sha256": "f2beaeaddcb494f49985255ad138ac8efcebd03ffbe5decb149a81110957f0ae"
+    },
+    {
+      "kind": "gguf",
+      "llama_cpp_commit": "b12421",
+      "model": "ft",
+      "parent_key": "f5dccf8a3851c0497fe4d14f20388c9477791855a4f484c4754814968295fbf3",
+      "path": "artifacts/gguf/ft-Q8_0.gguf",
+      "quant": "Q8_0",
+      "sha256": "9aee8a0dfc60b1a0eb5595456ebb1c23e38332e486798fcdcf6028bf1e572b06"
+    }
+  ],
+  "audit_pass_rate": 1.0,
+  "behaviour": [
+    {
+      "metric": "citation_validity",
+      "model": "gemma-e2b-base-q4",
+      "n": 1000,
+      "rule": "B7",
+      "source": "evalkit:citation_validity",
+      "value": {
+        "hi": 0.999,
+        "lo": 0.99,
+        "point": 0.995
+      }
+    },
+    {
+      "metric": "citation_validity",
+      "model": "gemma-e2b-grounded-q4",
+      "n": 1000,
+      "rule": "B7",
+      "source": "evalkit:citation_validity",
+      "value": {
+        "hi": 1.0,
+        "lo": 1.0,
+        "point": 1.0
+      }
+    },
+    {
+      "metric": "citation_validity",
+      "model": "claude-haiku-5-5",
+      "n": 1000,
+      "rule": "B7",
+      "source": "evalkit:citation_validity",
+      "value": {
+        "hi": 1.0,
+        "lo": 1.0,
+        "point": 1.0
+      }
+    },
+    {
+      "metric": "citation_validity",
+      "model": "gpt-6-luna",
+      "n": 1000,
+      "rule": "B7",
+      "source": "evalkit:citation_validity",
+      "value": {
+        "hi": 1.0,
+        "lo": 0.997,
+        "point": 0.999
+      }
+    }
+  ],
+  "bench": {
+    "answer_latency_ms_p50": 604,
+    "answer_latency_ms_p95": 759,
+    "chip": "Apple M3 Max",
+    "gen_tps_p50": 105.1,
+    "gen_tps_p95": 107.6,
+    "llama_bench": {
+      "pp512": 7017.9613,
+      "tg128": 124.946313
+    },
+    "llama_cpp_commit": "b12421",
+    "model_file_mb": 3269.1,
+    "n_prompts": 50,
+    "os": "macOS 26.5.2",
+    "peak_rss_mb": 4462.2,
+    "power": "ac",
+    "prompt_tps_p50": 3829.9,
+    "quant": "Q4_K_M",
+    "ram_gb": 64,
+    "repetitions": 3,
+    "ttft_ms_p50": 137
+  },
+  "calibration_status": "uncalibrated",
+  "evalkit_run_ids": [
+    "r-f0f3b432a413",
+    "r-6eabe9810930",
+    "r-f98be6681636",
+    "r-5bd60094cf2d"
+  ],
+  "evalkit_version": "0.1.0+06591f8",
+  "gemma_family_check": null,
+  "judge_mode": "dual",
+  "lineage_ok": true,
+  "parity": {
+    "citation_exact_match": 0.5,
+    "judged_headline_delta": {
+      "claude-opus-5-5": {
+        "hi": 0.085,
+        "lo": -0.035,
+        "point": 0.025
+      },
+      "gpt-6.1-sol": {
+        "hi": 0.075,
+        "lo": -0.045,
+        "point": 0.015
+      }
+    },
+    "label_agreement": 0.956,
+    "n": 500,
+    "schema_valid": {
+      "bf16": 1.0,
+      "q4_k_m": 1.0
+    }
+  },
+  "primary": {
+    "accuracy: gemma-e2b-grounded-q4 minus gemma-e2b-base-q4": {
+      "hi": 0.263,
+      "lo": 0.193,
+      "point": 0.227
+    },
+    "headline: gemma-e2b-grounded-q4 minus gemma-e2b-base-q4 (claude-opus-5-5)": {
+      "hi": 0.007,
+      "lo": -0.067,
+      "point": -0.03
+    },
+    "headline: gemma-e2b-grounded-q4 minus gemma-e2b-base-q4 (gpt-6.1-sol)": {
+      "hi": -0.025,
+      "lo": -0.101,
+      "point": -0.064
+    }
+  },
+  "schema_version": "1.0",
+  "summary_paths": [
+    "docs/results/main/summary.json",
+    "docs/results/offscope/summary.json",
+    "docs/results/probe_original/summary.json",
+    "docs/results/probe_paraphrase/summary.json"
+  ],
+  "train": {
+    "config_hash": "280b5b082abf089813718af15fca7872fff54070c144c605513f67b7123076bf",
+    "data_manifest_hash": "0bc88120d8074f303f64d4e409628949bfadffff77f30f1caff23ec98d4e62d3",
+    "dev_metrics": {
+      "citation_valid": 1.0,
+      "has_citation": 1.0,
+      "label_accuracy": {
+        "no": 0.8372093023255814,
+        "yes": 0.9474835886214442
+      },
+      "mean_words": 15.07,
+      "n": 500,
+      "over_80_words": 0.0,
+      "schema_valid": 1.0,
+      "schema_valid_unconstrained": 1.0
+    },
+    "gpu": "Tesla T4",
+    "kaggle_kernel_version": "1",
+    "peak_vram_gb": 9.84,
+    "repo_commit": "16ba41f43aa9b8a3d21219a504f1bff7938e7f0e",
+    "selected_step": 527,
+    "steps": 527,
+    "val_loss_curve": [
+      [
+        250,
+        0.7731167674064636
+      ],
+      [
+        500,
+        0.7592633366584778
+      ],
+      [
+        527,
+        0.7591971158981323
+      ]
+    ],
+    "wall_clock_s": 6525.78
+  }
+}
