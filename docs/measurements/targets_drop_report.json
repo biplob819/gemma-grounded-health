@@ -32,7 +32,7 @@
     "yes:over_80_words": 2
   },
   "rows_scored": 37398,
-  "rules_sha256": "20ee63b5d067d7f8cb9ba2c84371f10d12ab853ddcce8184215725e3e91ba3c0",
+  "rules_sha256": "02c13adb200ddef2e0d15d94a3e16ac1410570d899414a541c0587d74a25d11d",
   "seed": 7,
   "sentence_drops": {
     "ranking:aim_or_method_removed": 50834,

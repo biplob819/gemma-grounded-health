@@ -118,7 +118,9 @@ def test_nli_premise_is_exactly_the_cited_sentences_and_low_entailment_drops():
     r = row(3, long_answer="Outcome beta3 improved markedly. Outcome beta3 improved NOTENTAILED.")
     sc = FakeScorer()
     counts = Counter()
-    (t,) = make.targets_for([r], sc, counts)
+    (t,) = make.targets_for(
+        [r], sc, counts, version="v2"
+    )  # TGT-R6 mechanics: v2 rules (v2.2 ranks by entailment, test_targets_support.py)
     assert isinstance(t, make.AnswerTarget)
     ctx = tuple(r["sentences"])
     for premise, hyp in sc.pairs:  # every premise is exactly one citation option's sentences
@@ -205,10 +207,12 @@ def test_the_smallest_citation_option_that_entails_is_chosen():
         "Unrelated sentence.",
     ]
     r = row(9, long_answer="Treatment alpha9 improved outcome beta9.", sentences=sents)
-    (t,) = make.targets_for([r], NeedsBoth())
+    (t,) = make.targets_for(
+        [r], NeedsBoth(), version="v2"
+    )  # TGT-R6 mechanics: v2 rules (v2.2 ranks by entailment, test_targets_support.py)
     assert isinstance(t, make.AnswerTarget)
     assert t.citations == (2, 3)  # not padded to every overlapping sentence
-    (t1,) = make.targets_for([r], FakeScorer())
+    (t1,) = make.targets_for([r], FakeScorer(), version="v2")
     assert isinstance(t1, make.AnswerTarget) and len(t1.citations) < 3
 
 
@@ -342,9 +346,9 @@ def test_every_example_is_reconstructed_from_its_row_and_rule_ids():
 
 
 def test_rule_ids_are_pinned():
-    # TGT-R10: OWNER D-43, tests/targets/test_targets_aim.py
+    # TGT-R10: OWNER D-43, test_targets_aim.py; TGT-R11: OWNER D-48, test_targets_support.py
     assert rules.ANSWER_RULES == (
-        "TGT-R1", "TGT-R2", "TGT-R9", "TGT-R10", "TGT-R3", "TGT-R6", "TGT-R4", "TGT-R5", "TGT-R7",
+        "TGT-R1", "TGT-R2", "TGT-R9", "TGT-R10", "TGT-R11", "TGT-R3", "TGT-R4", "TGT-R5", "TGT-R7",
     )  # fmt: skip
     assert (*rules.ANSWER_RULES, "INS-R1", "INS-R2", "INS-R3") == rules.INSUFFICIENT_RULES
     assert rules.OFFSCOPE_RULES == ("OFF-R3",)
@@ -388,4 +392,5 @@ def test_yes_rows_are_not_scored_once_their_quotas_are_full():
     sel = make.select(pool(30, 4), pool(200, 40, start=100) + yes_late, sc, seed=7, chunk=100)
     yes_needed = sum(1 for e in sel.train + sel.val if e.kind != "offscope")
     assert len(sc.pairs) < 3000  # far fewer than the 3,230 yes rows available
-    assert len(sc.pairs) <= 45 + 100 * 3 + yes_needed * 3  # no rows + a few chunks of slack
+    # TGT-R11 scores each of a row's 4 sentences alone, then up to 3 sets per claim
+    assert len(sc.pairs) <= (45 + 100 * 3 + yes_needed * 3) * 4  # no rows + chunks of slack
