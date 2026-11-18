@@ -1,0 +1,15 @@
+# V2.1 dev grounding check (VTG-03, D-52): the v2 fine-tune only, judged against configs/v2_dev_bars.yaml, on the dev_ground task. EvalKit is pinned by git commit ee59699 (OWNER D-44).
+# Gemma reaches EvalKit through the `endpoints` route: llama-server started by `ggh serve` (D-7).
+models: [gemma-e2b-grounded-v2-q4]
+endpoints:
+  gemma-e2b-grounded-v2-q4: http://127.0.0.1:8083/v1
+judges: [claude-opus-5-5, gpt-6.1-sol]
+extractor: claude-haiku-5-5
+structured_output: true          # D-6
+max_output_tokens: 2048
+concurrency: {anthropic: 8, openai: 8, openai_compatible: 1}
+seed: 7                          # same as EvalKit's reference run, so its 200 cases can hit the cache
+default_effort: medium
+judge_effort: medium
+extractor_effort: medium
+max_cost_usd: 10
