@@ -1,0 +1,74 @@
+{
+  "calibration_status": "uncalibrated",
+  "comparisons": [],
+  "config_hash": "ba4ee5ee6992795d",
+  "extraction_error_rate": null,
+  "finished_at": "2026-11-18T23:33:50.297270Z",
+  "judge_mode": "single",
+  "judges": [],
+  "judging_status": "complete",
+  "models": [
+    {
+      "accuracy": {
+        "hi": 0.85,
+        "lo": 0.735,
+        "point": 0.795
+      },
+      "aim_citation_rate": {
+        "gpt-6.1-sol": {
+          "hi": 0.10471204188481675,
+          "lo": 0.03553299492385787,
+          "point": 0.06735751295336788
+        }
+      },
+      "citation_precision": {
+        "gpt-6.1-sol": {
+          "hi": 0.8256578947368418,
+          "lo": 0.7061855670103093,
+          "point": 0.7680412371134021
+        }
+      },
+      "citation_validity": {
+        "hi": 1.0,
+        "lo": 1.0,
+        "point": 1.0
+      },
+      "cost_per_100_usd": 0.0,
+      "cost_per_correct_usd": 0.0,
+      "coverage": {
+        "hi": 0.95,
+        "lo": 0.8741666666666668,
+        "point": 0.9141666666666667
+      },
+      "failed_thresholds": [
+        "headline >= 0.6 (observed 0.35)"
+      ],
+      "family": "other",
+      "groundedness_mean": {
+        "gpt-6.1-sol": {
+          "hi": 0.5066666666666666,
+          "lo": 0.37083333333333335,
+          "point": 0.4375
+        }
+      },
+      "headline": {
+        "gpt-6.1-sol": {
+          "hi": 0.42,
+          "lo": 0.285,
+          "point": 0.35
+        }
+      },
+      "latency_p50_ms": 3909,
+      "latency_p95_ms": 4783,
+      "model": "gemma-e2b-grounded-v2-q4",
+      "n": 200,
+      "n_errors": {},
+      "passes_threshold": false
+    }
+  ],
+  "run_id": "r-4b7e3a0c3d19",
+  "schema_version": "1.0",
+  "self_preference": {},
+  "started_at": "2026-11-18T15:58:55.093931Z",
+  "task": "ggh_dev_ground"
+}
