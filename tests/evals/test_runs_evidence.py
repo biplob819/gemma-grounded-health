@@ -75,20 +75,29 @@ def test_the_plan_was_committed_before_the_main_run_started():
 # RUN-02 and RUN-07
 
 
+RUN_DIRS = {"main": "main", "offscope": "offscope", "probe_original": "probe_original",
+            "probe_paraphrase": "probe_paraphrase", "parity": "parity",
+            "main_citation": "main_citation", "dev_ground_v1": "dev_ground_v1"}  # fmt: skip
+
+
 def test_every_paid_run_is_in_the_ledger_with_its_own_cost():
-    rows = {r.get("run_id"): r for r in ledger() if r.get("node") == "E3.2" and r.get("run_id")}
-    for run in ("main", "offscope", "probe_original", "probe_paraphrase", "parity"):
+    rows = {r["run_id"]: r for r in ledger() if r.get("run_id")}
+    seen = set()
+    for run in RUN_DIRS.values():
         r = load(run, "run.json")
         assert rows[r["run_id"]]["spent_usd"] == round(r["spent_usd"], 6), run
+        seen.add(r["run_id"])
+    assert set(rows) - {"r-044ca4838ee9"} == seen  # every logged run (E3.1's smoke aside) is here
     main = rows[load("main", "run.json")["run_id"]]
     assert main["estimate_usd"] == 63.65 and main["spent_usd"] < 70  # max_cost_usd, OWNER D-17
     for est in ("main $63.65", "off-scope $1.27", "probe original $3.16", "parity $3.16"):
         assert est in RUN_STATE
 
 
-def test_only_the_main_run_crossed_the_owner_approval_line():
-    big = [r for r in ledger() if r.get("node") == "E3.2" and r["spent_usd"] > 25]
-    assert [r["kind"] for r in big] == ["main"]  # covered by OWNER D-17
+def test_only_approved_runs_crossed_the_owner_approval_line():
+    big = sorted(r["kind"] for r in ledger() if r["spent_usd"] > 25)
+    assert big == ["main", "rescore"]  # main: OWNER D-17; rescore: owner approval, cap $65
+    assert "Owner approved all four models" in RUN_STATE and "raised the cap to $65" in RUN_STATE
 
 
 # RUN-03
@@ -196,3 +205,21 @@ def test_every_claim_has_both_verdicts_except_the_two_disclosed():
                         missing.add((run, c["id"], j))
     assert missing == KNOWN_MISSING_VERDICTS
     assert "Two verdicts are missing" in RUN_STATE
+
+
+KNOWN_CITATION_GAPS = 9  # main_citation, all GPT-6.1 Sol (EvalKit 'complete but missing')
+
+
+def test_citation_support_covers_every_cited_sentence_except_the_disclosed_gaps():
+    gaps = {}
+    for run in ("main_citation", "dev_ground_v1"):
+        for r in records(run):
+            cs = r.get("citation_support") or {}
+            for c in r["claims"]:
+                for j in JUDGES:
+                    got = {e["n"] for e in cs.get(j, []) if e["claim_id"] == c["id"]}
+                    if set(c["cited"]) - got:
+                        gaps.setdefault(run, set()).add((c["id"], j))
+    assert set(gaps) == {"main_citation"} and len(gaps["main_citation"]) == KNOWN_CITATION_GAPS
+    assert all(j == "gpt-6.1-sol" for _, j in gaps["main_citation"])
+    assert "9 claim-judge pairs" in RUN_STATE

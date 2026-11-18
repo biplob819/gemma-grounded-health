@@ -8,5 +8,5 @@
 - [x] 6. Off-scope run
 - [x] 7. Probe set and probe runs
 - [x] 8. Spend ledger, tests, converge twice
-- [ ] 9. Verifier (max 3 rounds, OWNER D-33)
-- [ ] 10. Proofs, green, commit, push
+- [x] 9. Verifier (max 3 rounds, OWNER D-33)
+- [x] 10. Proofs, green, commit, push
