@@ -65,8 +65,6 @@ Generated from the Tech Spec §13.2 on 2026-11-15; edit here from now on and kee
 | --- | --- | --- | --- | --- | --- |
 | **P5.1** | Write-up | R4.5 | node_converge + verifier | "How I built it" note, decision log summary, project page text with generated numbers, video script | — |
 
-## Wave 6 — optional
+## Wave 6 — cut
 
-| Node | Title | Depends on | Verified by | Deliverable | Stories |
-| --- | --- | --- | --- | --- | --- |
-| **O6.1** | DPO (optional) | T2.2, E3.3 | node_converge + verifier | Rule-based preference pairs, one DPO run, exploratory EvalKit result in its own table | US8 |
+O6.1 (optional DPO: rule-based preference pairs, one DPO run, an exploratory EvalKit result in its own table) was cut by OWNER D-58; its capabilities DPO-01..04 are removed from the catalog.

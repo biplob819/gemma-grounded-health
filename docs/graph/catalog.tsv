@@ -123,7 +123,3 @@ PUB-01	P5.1	not-started		"""How I built it"" note [PRD deliverables]"
 PUB-02	P5.1	not-started		Project page text with every number generated from the bundle [D-20]
 PUB-03	P5.1	not-started		Decision log summary and one-page PRD link [PRD deliverables]
 PUB-04	P5.1	not-started		90-second video script, including the offline laptop segment [PRD deliverables]
-DPO-01	O6.1	not-started		Rule-based pairs: chosen = filtered target; rejected = the same answer with an unsupported sentence, an invalid citation, or advice added [US8, NFR1]
-DPO-02	O6.1	not-started		One DPO run on Kaggle from the T2.2 adapter, selected on dev only [D-4]
-DPO-03	O6.1	not-started		Exploratory EvalKit run, reported in its own table [§7.4]
-DPO-04	O6.1	not-started		Never replaces the released model without a new owner ruling [—]

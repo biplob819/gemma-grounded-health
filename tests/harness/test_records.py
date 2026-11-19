@@ -44,14 +44,14 @@ def _spec_caps() -> list[tuple[str, str]]:
 def test_graph_matches_tech_spec():
     nodes = load_graph()
     spec = _spec_nodes()
-    assert len(nodes) == len(spec) == 20  # V2.1, V2.2 by OWNER D-43
+    assert len(nodes) == len(spec) == 19  # V2.1, V2.2 by OWNER D-43; O6.1 cut by D-58
     assert {n: (v.title, v.depends_on) for n, v in nodes.items()} == spec
 
 
 @pytest.mark.contract
 def test_catalog_matches_tech_spec():
     caps = load_catalog()
-    assert len(caps) == 128  # SPC-08, OSS-06 (OWNER D-36, D-37); VTG, VEV (OWNER D-43)
+    assert len(caps) == 124  # SPC-08, OSS-06 (D-36, D-37); VTG, VEV (D-43); no DPO (D-58)
     assert [(c.cap_id, c.node) for c in caps] == _spec_caps()
     nodes = load_graph()
     assert {c.node for c in caps} == set(nodes)
@@ -136,7 +136,8 @@ def test_changelog_has_w01_entry():
 def test_status_prints_graph_node_and_ledgers(capsys):
     assert status.main([]) == 0
     out = capsys.readouterr().out
-    assert "W0.1" in out and "O6.1" in out and "capabilities green" in out
+    assert "W0.1" in out and "P5.1" in out and "capabilities green" in out
+    assert "O6.1" not in out  # cut, OWNER D-58
     assert "API spend: $" in out and "Kaggle GPU:" in out
     assert status.main(["W0.1"]) == 0
     assert "HAR-08" in capsys.readouterr().out

@@ -475,7 +475,7 @@ B8 passes for a model only if the owner marks zero of its 20 answers as giving p
 - EvalKit's Aggregate supplies everything: bootstrap 95% intervals, paired bootstrap on shared cases, and Holm correction across the model pairs in the run (EvalKit §6).
 - **Pre-registered primary comparisons** (written in `configs/eval_plan.yaml` and hashed before the main run): fine-tuned minus base, fine-tuned minus Haiku 5.5, fine-tuned minus GPT-6 Luna, each on the headline (correct and fully grounded) per judge. Everything else is reported as secondary.
 - A gap is called "separated" only under EvalKit's rule. Otherwise it is reported as a tie, whichever way the point estimate falls (PRD success metrics).
-- The DPO variant (O6.1), if built, is exploratory and reported in its own table.
+- The DPO variant (O6.1) was cut (OWNER D-58).
 
 ### 7.5 Judge calibration and the Gemma-family check
 
@@ -606,10 +606,10 @@ gemma-grounded-health/
 
 Status vocabulary: `not-started | spec | building | green`.
 
-### 13.2 Build graph: 20 nodes in seven waves
+### 13.2 Build graph: 19 nodes in six waves (O6.1 cut, OWNER D-58)
 
 **Release (all Must and Should stories): 18 nodes.** W0.1, N1.1–N1.3, E3.1, T2.1, T2.2, X3.1, X3.2, E3.2, V2.1, V2.2 (OWNER D-43), E3.3, R4.1–R4.5.
-**Full scope: 20 nodes**, adding P5.1 (write-up) and O6.1 (DPO, Could).
+**Full scope: 19 nodes**, adding P5.1 (write-up). O6.1 (DPO, Could) was cut by OWNER D-58.
 
 | Node | Title | Depends on | Deliverable (what exists when it is green) | Stories |
 | --- | --- | --- | --- | --- |
@@ -632,7 +632,6 @@ Status vocabulary: `not-started | spec | building | green`.
 | **R4.4** | EvalKit upstream | E3.3, R4.2 | EvalKit PR (docs, example config) and the Gemma report page, built under EvalKit's harness | US6 |
 | **R4.5** | Open-source release v1.0.0 | R4.3, R4.4 | Reproduce-from-scratch docs, README with results, CITATION.cff, tagged v1.0.0 GitHub release with notes linking model, GGUF, Space and results | US3, US4, US7 |
 | **P5.1** | Write-up | R4.5 | "How I built it" note, decision log summary, project page text with generated numbers, video script | — |
-| **O6.1** | DPO (optional) | T2.2, E3.3 | Rule-based preference pairs, one DPO run, exploratory EvalKit result in its own table | US8 |
 
 Waves: **W0** harness → **N1** data → **T2** training, alongside **E3.1** serving → **X3** export and laptop → **E3** evaluation → **R4** release, ending in the v1.0.0 open-source release (R4.5) → **P5/O6** write-up and optional DPO.
 
@@ -663,8 +662,6 @@ graph LR
   R43 --> R45[R4.5 OSS release v1.0.0]
   R44 --> R45
   R45 --> P51[P5.1 Write-up]
-  T22 --> O61[O6.1 DPO]
-  E33 --> O61
 ```
 
 **Dependency levels.**
@@ -680,7 +677,7 @@ graph LR
 | 6 | X3.1 |
 | 7 | X3.2, E3.2 |
 | 8 | E3.3 |
-| 9 | R4.1, O6.1 |
+| 9 | R4.1 |
 | 10 | R4.2 |
 | 11 | R4.3, R4.4 |
 | 12 | R4.5 |
@@ -709,7 +706,6 @@ graph LR
 | 15 | R4.4 | |
 | 16 | R4.5 | Tag v1.0.0 |
 | 17 | P5.1 | |
-| 18 | O6.1 | Only if time remains; never changes the released model |
 
 **Pacing (OWNER D-23).** No calendar milestones: the graph is built in one continuous push in the order above. Wall-clock is governed by three waits, each overlapped with other work:
 
@@ -942,14 +938,7 @@ Each row becomes one line in `docs/graph/catalog.tsv` with status `not-started`.
 | PUB-03 | Decision log summary and one-page PRD link | PRD deliverables |
 | PUB-04 | 90-second video script, including the offline laptop segment | PRD deliverables |
 
-**O6.1 DPO (optional)**
-
-| Cap | Capability | Trace |
-| --- | --- | --- |
-| DPO-01 | Rule-based pairs: chosen = filtered target; rejected = the same answer with an unsupported sentence, an invalid citation, or advice added | US8, NFR1 |
-| DPO-02 | One DPO run on Kaggle from the T2.2 adapter, selected on dev only | D-4 |
-| DPO-03 | Exploratory EvalKit run, reported in its own table | §7.4 |
-| DPO-04 | Never replaces the released model without a new owner ruling | — |
+**O6.1 DPO** was cut (OWNER D-58); its capabilities DPO-01..04 are removed.
 
 ### 13.5 Node lifecycle
 
