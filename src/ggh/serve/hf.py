@@ -21,6 +21,8 @@ from typing import Any
 HOST = "127.0.0.1"
 PORT = 8082
 MODEL_ID = "gemma-e2b-grounded-bf16"
+# the EvalKit model id each version is served under (V2.2: the judged parity config names v2's)
+MODEL_IDS = {"ft": MODEL_ID, "ft2": "gemma-e2b-grounded-v2-bf16"}
 DEFAULT_MAX = 2048
 
 

@@ -181,20 +181,19 @@ def _cmd_bench(args: argparse.Namespace) -> int:
 
 
 def _cmd_serve_hf(args: argparse.Namespace) -> int:  # pragma: no cover - serves until Ctrl-C
-    from ggh.export import merge
     from ggh.serve import hf
+    from ggh.versions import version
 
     root = Path(args.root)
+    model_id = hf.MODEL_IDS[args.model]
     try:
-        gen = hf.transformers_generate(root / merge.MERGED_DIR)
-        server = hf.serve(gen, args.port)
+        gen = hf.transformers_generate(root / version(args.model).merged_dir)
+        server = hf.serve(gen, args.port, model_id)
     except ImportError as exc:
         return _fail("serve-hf", f"{exc}; it needs: uv sync --group train")
     except OSError as exc:
         return _fail("serve-hf", exc)
-    print(
-        f"serving {hf.MODEL_ID} (bf16, Transformers) at http://{hf.HOST}:{args.port}/v1", flush=True
-    )
+    print(f"serving {model_id} (bf16, Transformers) at http://{hf.HOST}:{args.port}/v1", flush=True)
     with contextlib.suppress(KeyboardInterrupt):
         server.serve_forever()
     return 0
@@ -377,6 +376,7 @@ def register(sub: Any) -> None:
 
     sh = sub.add_parser("serve-hf", help="OpenAI-compatible bf16 fine-tune server (E3.2 parity)")
     sh.add_argument("--port", type=int, default=8082)
+    sh.add_argument("--model", choices=["ft", "ft2"], default="ft", help="ft2: v2 (V2.2)")
     sh.add_argument("--root", default=".", help="repo root")
     sh.set_defaults(func=_cmd_serve_hf)
 
