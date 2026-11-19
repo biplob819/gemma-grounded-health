@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any
 
 from ggh.train.select import ADAPTER_FILES, adapter_hash
+from ggh.versions import VERSIONS, version
 
 CARRIED = (  # files from the base snapshot the merged folder needs besides the weights
     "tokenizer.json",
@@ -21,15 +22,16 @@ CARRIED = (  # files from the base snapshot the merged folder needs besides the 
     "processor_config.json",
     "generation_config.json",
 )
-MERGED_DIR = Path("artifacts") / "merged" / "ft-bf16"
-SELECTION = Path("docs") / "measurements" / "train_selection.json"
-ADAPTER_DIR = Path("artifacts") / "adapter"
+MERGED_DIR = VERSIONS["ft"].merged_dir  # v1; v2 (`ft2`) paths come from `ggh.versions`
+SELECTION = VERSIONS["ft"].selection
+ADAPTER_DIR = VERSIONS["ft"].adapter_dir
 
 
-def frozen_hash(root: Path) -> str:
-    sel = json.loads((root / SELECTION).read_text(encoding="utf-8"))
+def frozen_hash(root: Path, model: str = "ft") -> str:
+    selection = version(model).selection
+    sel = json.loads((root / selection).read_text(encoding="utf-8"))
     if not sel.get("adapter_sha256"):
-        raise MergeError(f"{SELECTION} records no frozen adapter hash")
+        raise MergeError(f"{selection} records no frozen adapter hash")
     return str(sel["adapter_sha256"])
 
 

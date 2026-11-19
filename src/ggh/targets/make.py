@@ -33,8 +33,18 @@ SHARE_INSUFFICIENT, SHARE_OFFSCOPE, SHARE_NO = 0.10, 0.01, 0.40  # MIX-R1, MIX-R
 OUT_DIR = Path("artifacts") / "targets"
 MEASURE_DIR = Path("docs") / "measurements"
 REPORT_COPY = MEASURE_DIR / "targets_drop_report.json"
+# v1's committed audit sample: its labels are bound to it, so a rebuild never rewrites it
+# (v2 samples are drawn by `ggh audit sample --v2`, AUD-R4)
 AUDIT_COPY = MEASURE_DIR / "audit_sample.jsonl"
 CHUNK = 2_000  # rows scored per NLI batch while filling yes quotas
+# The citation rules `ggh targets` builds with: v2.2 (TGT-R12 + R11), adopted by OWNER D-49
+BUILD_VERSION = "v2.2"
+RULE_IDS = {  # version -> (answer ids, insufficient ids)
+    "v2.2": (rules.ANSWER_RULES, rules.INSUFFICIENT_RULES),
+    "v2.1": (rules.V21_ANSWER_RULES, rules.V21_INSUFFICIENT_RULES),
+    "v2": (rules.V2_ANSWER_RULES, rules.V2_INSUFFICIENT_RULES),
+    "v1": (rules.V1_ANSWER_RULES, rules.V1_INSUFFICIENT_RULES),
+}
 
 Row = dict[str, Any]  # an N1.2 row: pmid, question, sentences, sections, long_answer, label
 
@@ -71,10 +81,15 @@ def _half_up(x: float) -> int:
     return int(x + 0.5)
 
 
-def candidates(row: Row, counts: Counter[str] | None = None) -> list[Candidate]:
-    """TGT-R1, R2, R9, R6, R3: the lexically supported conclusion sentences of a row."""
+def candidates(
+    row: Row, counts: Counter[str] | None = None, *, exclude_aims: bool = True, first: bool = False
+) -> list[Candidate]:
+    """TGT-R1, R2, R9, R10, R6, R3: the lexically supported conclusion sentences of a row.
+    With `exclude_aims` (TGT-R10, v2) no aim sentence is ever a citation option; without it
+    the v1 behaviour is rebuilt."""
     counts = counts if counts is not None else Counter()
     ctx = tuple(row["sentences"])
+    aims = rules.aim_positions(ctx, first) if exclude_aims else frozenset()
     out: list[Candidate] = []
     for raw in rules.conclusion_sentences(row["long_answer"]):
         if rules.is_recommendation(raw):
@@ -88,6 +103,14 @@ def candidates(row: Row, counts: Counter[str] | None = None) -> list[Candidate]:
         if not ranked:
             counts["sentence:zero_overlap"] += 1
             continue
+        if aims:
+            without = rules.ranked_citations(s, ctx, aims)
+            if without != ranked:
+                counts["ranking:aim_or_method_removed"] += 1  # not a drop by itself
+            if not without:
+                counts["sentence:aim_or_method_only_overlap"] += 1  # nothing else overlaps
+                continue
+            ranked = without
         options = []
         for cites in rules.citation_options(ranked):
             cited = [ctx[i - 1] for i in cites]
@@ -98,6 +121,58 @@ def candidates(row: Row, counts: Counter[str] | None = None) -> list[Candidate]:
             counts["sentence:low_support"] += 1
             continue
         out.append(Candidate(s, tuple(options)))
+    return out
+
+
+def _claims(row: Row, counts: Counter[str]) -> list[str]:
+    """TGT-R1, R2, R9: the conclusion sentences that are claims, hedge stripped."""
+    out = []
+    for raw in rules.conclusion_sentences(row["long_answer"]):
+        if rules.is_recommendation(raw):
+            counts["sentence:recommendation"] += 1
+            continue
+        s = rules.strip_hedge(raw)
+        if not rules.content_words(s):
+            counts["sentence:no_content_words"] += 1
+            continue
+        out.append(s)
+    return out
+
+
+def support_candidates(
+    rows: Sequence[Row], scorer: Scorer, counts: Counter[str] | None = None
+) -> list[list[Candidate]]:
+    """TGT-R10, R11, R3 (v2.2, OWNER D-48): every context sentence that TGT-R10 allows is
+    scored alone as the premise of each claim (one batched NLI call), ranked by that
+    entailment, and offered as the top 1, 2, 3 or 4 that pass TGT-R3. TGT-R4 then picks the
+    smallest whose cited sentences together entail the claim (`choose`)."""
+    counts = counts if counts is not None else Counter()
+    work = []  # (row index, claim, context, allowed positions)
+    for k, r in enumerate(rows):
+        ctx = tuple(r["sentences"])
+        excluded = rules.aim_positions(ctx)
+        allowed = [i for i in range(1, len(ctx) + 1) if i not in excluded]
+        for s in _claims(r, counts):
+            work.append((k, s, ctx, allowed))
+    pairs = [(ctx[i - 1], s) for _, s, ctx, allowed in work for i in allowed]
+    scores = iter(scorer.entail(pairs))
+    out: list[list[Candidate]] = [[] for _ in rows]
+    for k, s, ctx, allowed in work:
+        entail = {i: next(scores) for i in allowed}
+        ranked = rules.support_ranking(s, ctx, entail, frozenset())
+        if not ranked:
+            counts["sentence:no_supporting_sentence"] += 1
+            continue
+        options = []
+        for cites in rules.citation_options(ranked):
+            cited = [ctx[i - 1] for i in cites]
+            sup = round(rules.support(s, cited), rules.SCORE_DECIMALS)
+            if sup >= rules.SUPPORT_MIN:
+                options.append(Option(cites, sup, " ".join(cited)))
+        if not options:
+            counts["sentence:low_support"] += 1
+            continue
+        out[k].append(Candidate(s, tuple(options)))
     return out
 
 
@@ -152,10 +227,23 @@ def assemble(choices: Sequence[Choice], counts: Counter[str] | None = None) -> A
 
 
 def targets_for(
-    rows: Sequence[Row], scorer: Scorer, counts: Counter[str] | None = None
+    rows: Sequence[Row],
+    scorer: Scorer,
+    counts: Counter[str] | None = None,
+    *,
+    version: str = "v2.2",
 ) -> list[AnswerTarget | str]:
-    """Targets for many rows, with NLI batched across all of them."""
-    cand_lists = [candidates(r, counts) for r in rows]
+    """Targets for many rows, with NLI batched across all of them. `version` names the
+    citation rules: "v2.2" (TGT-R12 + R11, the default), "v2.1" (TGT-R12 + R6), "v2" (the
+    first TGT-R10 + R6), "v1" (R6)."""
+    if version == "v2.2":
+        cand_lists = support_candidates(rows, scorer, counts)
+    elif version in ("v2.1", "v2", "v1"):
+        cand_lists = [
+            candidates(r, counts, exclude_aims=version != "v1", first=version == "v2") for r in rows
+        ]
+    else:
+        raise ValueError(f"unknown rules version {version!r}")
     choices = choose([c for cl in cand_lists for c in cl], scorer)
     out: list[AnswerTarget | str] = []
     k = 0
@@ -169,7 +257,9 @@ def _prompt(pmid: str, question: str, sentences: tuple[str, ...], label: str) ->
     return data.render(data.Row(pmid, question, sentences, ("",) * len(sentences), "", label))
 
 
-def answer_example(row: Row, t: AnswerTarget, split: str) -> TrainExample:
+def answer_example(
+    row: Row, t: AnswerTarget, split: str, rule_ids: tuple[str, ...] = rules.ANSWER_RULES
+) -> TrainExample:
     ctx = tuple(row["sentences"])
     return TrainExample(
         id=f"pqa-a-{row['pmid']}",
@@ -181,14 +271,21 @@ def answer_example(row: Row, t: AnswerTarget, split: str) -> TrainExample:
         prompt=_prompt(row["pmid"], row["question"], ctx, row["label"]),
         target=Answer(label=row["label"], answer=t.answer, citations=t.citations),
         source_label=row["label"],
-        rule_ids=rules.ANSWER_RULES,
+        rule_ids=rule_ids,
         support=t.support,
         nli_entail=t.entail,
     )
 
 
-def insufficient_example(row: Row, t: AnswerTarget, split: str, seed: int) -> TrainExample | None:
-    """INS-R1 to R3, or None when the row cannot make one."""
+def insufficient_example(
+    row: Row,
+    t: AnswerTarget,
+    split: str,
+    seed: int,
+    rule_ids: tuple[str, ...] = rules.INSUFFICIENT_RULES,
+) -> TrainExample | None:
+    """INS-R1 to R3, or None when the row cannot make one. Its own citations (INS-R3) are the
+    question's best matches and may be aim sentences: TGT-R10 governs answers only."""
     sents, secs = row["sentences"], row["sections"]
     if not any(rules.is_results_section(s) for s in secs):
         return None
@@ -219,7 +316,7 @@ def insufficient_example(row: Row, t: AnswerTarget, split: str, seed: int) -> Tr
         prompt=_prompt(row["pmid"], row["question"], ctx, "maybe"),
         target=Answer(label="maybe", answer=answer, citations=cites),
         source_label=row["label"],
-        rule_ids=rules.INSUFFICIENT_RULES,
+        rule_ids=rule_ids,
         support=0.0,  # not scored: the target is a fixed template
         nli_entail=0.0,
     )
@@ -249,18 +346,21 @@ def offscope_example(row: Row, split: str, seed: int) -> TrainExample:
 def reconstruct(
     row: Row, rule_ids: Sequence[str], *, split: str, seed: int, scorer: Scorer
 ) -> TrainExample:
-    """PRV-R1: rebuild an example from its source row and rule ids alone."""
+    """PRV-R1: rebuild an example from its source row and rule ids alone (v2.2's, v2's or
+    v1's; `rules.rules_version`)."""
     ids = tuple(rule_ids)
     if ids == rules.OFFSCOPE_RULES:
         return offscope_example(row, split, seed)
-    if ids not in (rules.ANSWER_RULES, rules.INSUFFICIENT_RULES):
+    answer_ids = tuple(a for a, _ in RULE_IDS.values())
+    insufficient_ids = tuple(i for _, i in RULE_IDS.values())
+    if ids not in (*answer_ids, *insufficient_ids):
         raise ValueError(f"unknown rule ids {ids}")
-    (t,) = targets_for([row], scorer)
+    (t,) = targets_for([row], scorer, version=rules.rules_version(ids))
     if isinstance(t, str):
         raise ValueError(f"row {row['pmid']} has no target ({t})")
-    if ids == rules.ANSWER_RULES:
-        return answer_example(row, t, split)
-    ex = insufficient_example(row, t, split, seed)
+    if ids in answer_ids:
+        return answer_example(row, t, split, ids)
+    ex = insufficient_example(row, t, split, seed, ids)
     if ex is None:
         raise ValueError(f"row {row['pmid']} cannot make an insufficient example")
     return ex
@@ -323,8 +423,10 @@ def select(
     cap: int = TRAIN_CAP,
     chunk: int = CHUNK,
     progress: Callable[[str], None] | None = None,
+    version: str = BUILD_VERSION,
 ) -> Selection:
     """Fill val (N1.2 val rows first, then the pool) and train (pool only) in seeded order."""
+    answer_ids, insufficient_ids = RULE_IDS[version]
     counts: Counter[str] = Counter()
     drops: Counter[str] = Counter()
     order = [("val", r) for r in seeded(val_rows, seed)] + [
@@ -334,7 +436,7 @@ def select(
 
     def score(rows: list[Row]) -> None:
         todo = [r for r in rows if r["pmid"] not in targets]
-        for r, t in zip(todo, targets_for(todo, scorer, counts), strict=True):
+        for r, t in zip(todo, targets_for(todo, scorer, counts, version=version), strict=True):
             targets[r["pmid"]] = t
             if isinstance(t, str):
                 drops[f"{r['label']}:{t}"] += 1
@@ -366,12 +468,12 @@ def select(
                 q = quotas[split]
                 if getattr(q, r["label"]) > 0:
                     setattr(q, r["label"], getattr(q, r["label"]) - 1)
-                    chosen[split].append(answer_example(r, t, split))
+                    chosen[split].append(answer_example(r, t, split, answer_ids))
                     return
             for split in splits:
                 q = quotas[split]
                 if q.insufficient > 0:
-                    ex = insufficient_example(r, t, split, seed)
+                    ex = insufficient_example(r, t, split, seed, insufficient_ids)
                     if ex is not None:
                         q.insufficient -= 1
                         chosen[split].append(ex)
@@ -462,7 +564,10 @@ def _json(path: Path, obj: Any) -> str:
 
 
 def rules_hash() -> str:
-    return hashlib.sha256(Path(rules.__file__).read_bytes()).hexdigest()
+    from ggh.targets import rules_r10
+
+    blob = Path(rules.__file__).read_bytes() + Path(rules_r10.__file__).read_bytes()
+    return hashlib.sha256(blob).hexdigest()
 
 
 def build(
@@ -473,6 +578,7 @@ def build(
     cap: int = TRAIN_CAP,
     chunk: int = CHUNK,
     progress: Callable[[str], None] | None = None,
+    version: str = BUILD_VERSION,
 ) -> dict[str, Any]:
     """Write train/val examples, the NLI score table, the drop report and the audit sample."""
     data_dir = root / data.OUT_DIR
@@ -490,7 +596,10 @@ def build(
     val_rows = data.read_jsonl(data_dir / "val.jsonl")
     pool_rows = data.read_jsonl(data_dir / "train_pool.jsonl")
     recorder = RecordingScorer(scorer_factory(), rules.SCORE_DECIMALS)
-    sel = select(val_rows, pool_rows, recorder, seed=seed, cap=cap, chunk=chunk, progress=progress)
+    sel = select(
+        val_rows, pool_rows, recorder, seed=seed, cap=cap, chunk=chunk, progress=progress,
+        version=version,
+    )  # fmt: skip
 
     out = root / OUT_DIR
     files: dict[str, str] = {}
@@ -510,7 +619,6 @@ def build(
     files[(OUT_DIR / "drop_report.json").as_posix()] = _json(out / "drop_report.json", report)
     (root / MEASURE_DIR).mkdir(parents=True, exist_ok=True)
     (root / REPORT_COPY).write_bytes((out / "drop_report.json").read_bytes())
-    (root / AUDIT_COPY).write_bytes((out / "audit_sample.jsonl").read_bytes())
 
     params = {
         "seed": seed,
@@ -528,7 +636,6 @@ def build(
             outputs={
                 **files,
                 REPORT_COPY.as_posix(): sha256_file(root / REPORT_COPY),
-                AUDIT_COPY.as_posix(): sha256_file(root / AUDIT_COPY),
             },
             params=params,
             seed=seed,

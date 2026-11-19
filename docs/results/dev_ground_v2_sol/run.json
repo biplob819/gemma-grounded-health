@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "run_id": "r-4b7e3a0c3d19",
+  "task": "ggh_dev_ground",
+  "task_ref": "configs/tasks/dev_ground.yaml",
+  "config_hash": "ba4ee5ee6992795d",
+  "seed": 7,
+  "n": 200,
+  "models": [
+    "gemma-e2b-grounded-v2-q4"
+  ],
+  "judges": [
+    "gpt-6.1-sol"
+  ],
+  "judge_mode": "single",
+  "families": {
+    "gemma-e2b-grounded-v2-q4": "other"
+  },
+  "thresholds": [
+    {
+      "metric": "headline",
+      "op": ">=",
+      "value": 0.6
+    }
+  ],
+  "live_judges": false,
+  "started_at": "2026-11-18T15:58:55.093931Z",
+  "finished_at": "2026-11-18T23:33:50.297270Z",
+  "spent_usd": 0.18181700000000003
+}

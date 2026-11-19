@@ -6,6 +6,7 @@ import hashlib
 import json
 from pathlib import Path
 
+import pytest
 import yaml
 
 from ggh.evals import probe as P
@@ -77,7 +78,9 @@ def test_the_plan_was_committed_before_the_main_run_started():
 
 RUN_DIRS = {"main": "main", "offscope": "offscope", "probe_original": "probe_original",
             "probe_paraphrase": "probe_paraphrase", "parity": "parity",
-            "main_citation": "main_citation", "dev_ground_v1": "dev_ground_v1"}  # fmt: skip
+            "main_citation": "main_citation", "dev_ground_v1": "dev_ground_v1",
+            "dev_ground_v2_sol": "dev_ground_v2_sol",
+            "dev_ground_v2_dual_partial": "dev_ground_v2_dual_partial"}  # fmt: skip
 
 
 def test_every_paid_run_is_in_the_ledger_with_its_own_cost():
@@ -86,6 +89,8 @@ def test_every_paid_run_is_in_the_ledger_with_its_own_cost():
     for run in RUN_DIRS.values():
         r = load(run, "run.json")
         assert rows[r["run_id"]]["spent_usd"] == round(r["spent_usd"], 6), run
+        if "live_judges" in r:
+            assert rows[r["run_id"]]["live_judges"] == r["live_judges"], run
         seen.add(r["run_id"])
     assert set(rows) - {"r-044ca4838ee9"} == seen  # every logged run (E3.1's smoke aside) is here
     main = rows[load("main", "run.json")["run_id"]]
@@ -223,3 +228,70 @@ def test_citation_support_covers_every_cited_sentence_except_the_disclosed_gaps(
     assert set(gaps) == {"main_citation"} and len(gaps["main_citation"]) == KNOWN_CITATION_GAPS
     assert all(j == "gpt-6.1-sol" for _, j in gaps["main_citation"])
     assert "9 claim-judge pairs" in RUN_STATE
+
+
+# VTG-05: the v2 dev check, judged by GPT-6.1 Sol only (OWNER D-54)
+
+
+def test_v2_dev_check_on_sol_is_complete_and_scored_against_the_d52_bars():
+    import yaml
+
+    bars = yaml.safe_load((ROOT / "configs/v2_dev_bars.yaml").read_text(encoding="utf-8"))
+    s = load("dev_ground_v2_sol", "summary.json")
+    assert s["judging_status"] == "complete" and s["task"] == "ggh_dev_ground"
+    (m,) = s["models"]
+    assert m["model"] == "gemma-e2b-grounded-v2-q4" and m["n"] == 200
+    j = "gpt-6.1-sol"
+    prec, aim = m["citation_precision"][j]["point"], m["aim_citation_rate"][j]["point"]
+    head, acc = m["headline"][j]["point"], m["accuracy"]["point"]
+    assert prec >= bars["bars"]["citation_precision_min"]  # 0.768, v1 0.404
+    assert aim <= bars["bars"]["aim_citation_rate_max"]  # 0.067, v1 0.590
+    v1 = load("dev_ground_v1", "summary.json")["models"]
+    (v1m,) = [x for x in v1 if x["model"] == "gemma-e2b-grounded-q4"]
+    assert head - v1m["headline"][j]["point"] < bars["bars"]["headline_min_vs_v1"]  # disclosed
+    assert acc < bars["bars"]["accuracy_min"]  # 0.795 vs 0.80: disclosed miss
+    v21 = (ROOT / "specs/V2.1-retrain/RUN-STATE.md").read_text(encoding="utf-8")
+    assert "v2 dev check on Sol" in v21
+
+
+def test_v2_dev_check_has_citation_support_for_every_cited_sentence():
+    for r in records("dev_ground_v2_sol"):
+        cs = r.get("citation_support") or {}
+        for c in r["claims"]:
+            got = {e["n"] for e in cs.get("gpt-6.1-sol", []) if e["claim_id"] == c["id"]}
+            assert set(c["cited"]) <= got, (r.get("case_id"), c["id"])
+
+
+def test_v2_opus_headline_is_bounded_below_v1_by_the_partial_verdicts():
+    j = "claude-opus-5-5"
+    lo = hi = 0
+    unjudged = 0
+    for r in records("dev_ground_v2_dual_partial"):
+        if not r["scores"]["label_correct"] or not r["claims"]:
+            continue
+        got = {v["claim_id"]: v["verdict"] for v in r["verdicts"] if v["judge"] == j}
+        ids = [c["id"] for c in r["claims"]]
+        unjudged += sum(i not in got for i in ids)
+        lo += all(got.get(i) == "supported" for i in ids)
+        hi += all(got.get(i, "supported") == "supported" for i in ids)
+    v1 = load("dev_ground_v1", "summary.json")["models"]
+    (v1m,) = [x for x in v1 if x["model"] == "gemma-e2b-grounded-q4"]
+    assert unjudged == 2 and (lo / 200, hi / 200) == (0.44, 0.445)
+    assert hi / 200 < v1m["headline"][j]["point"] == 0.465
+    assert "0.440 (the 2 unjudged claims" in (ROOT / "specs/V2.1-retrain/RUN-STATE.md").read_text(
+        encoding="utf-8"
+    )
+
+
+def test_v2_dev_bars_were_committed_before_either_v2_dev_run_started():
+    import datetime as dt
+    import subprocess
+
+    cmd = ["git", "log", "--diff-filter=A", "--format=%cI", "--", "configs/v2_dev_bars.yaml"]
+    out = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
+    if out.returncode != 0 or not out.stdout.strip():
+        pytest.skip("no git history (shallow clone)")
+    added = dt.datetime.fromisoformat(out.stdout.split()[-1])
+    for run in ("dev_ground_v2_dual_partial", "dev_ground_v2_sol"):
+        started = load(run, "run.json")["started_at"].replace("Z", "+00:00")
+        assert added < dt.datetime.fromisoformat(started), run

@@ -37,18 +37,24 @@ def _md(src: str) -> dict[str, Any]:
             "source": [line + "\n" for line in lines[:-1]] + lines[-1:]}  # fmt: skip
 
 
-def render(commit: str, tool: str, max_steps: int | None) -> dict[str, Any]:
+def render(
+    commit: str, tool: str, max_steps: int | None, config: str = "configs/recipe.yaml"
+) -> dict[str, Any]:
     if len(commit) != 40 or any(c not in "0123456789abcdef" for c in commit):
         raise ValueError("commit must be a full 40-character git sha")
     if tool not in ("unsloth", "trl"):
         raise ValueError(f"tool must be unsloth or trl, got {tool!r}")
+    if not config.startswith("configs/") or not config.endswith(".yaml"):
+        raise ValueError(f"config must be a committed configs/*.yaml recipe, got {config!r}")
     steps = f" --max-steps {max_steps}" if max_steps else ""
+    cfg = "" if config == "configs/recipe.yaml" else f" --config {config}"
     out = f"{WORK}/run"
     cells = [
         _md(
             "# Gemma Grounded Health: training run\n\n"
             f"Thin runner (D-10): repo at `{commit[:12]}`, backend `{tool}`"
             + (f", {max_steps} steps (pilot)" if max_steps else ", full run")
+            + ("" if not cfg else f", recipe `{config}`")
             + ". All logic lives in the tested `ggh` package; any failing step stops the run."
         ),
         _code(
@@ -78,14 +84,14 @@ def render(commit: str, tool: str, max_steps: int | None) -> dict[str, Any]:
             'sh("git diff --exit-code docs/measurements/data_manifest.json")\n'
             'sh("ggh targets --replay")'
         ),
-        _code(f'sh("ggh train --config configs/recipe.yaml --out {out} --tool {tool}{steps}")'),
+        _code(f'sh("ggh train --config {config} --out {out} --tool {tool}{steps}")'),
         *(
             []
             if max_steps
             else [
                 _code(
                     "# §5.2: dev generations per checkpoint, in order of validation loss\n"
-                    f'sh("ggh dev-eval --run {out} --out {WORK}/dev")'
+                    f'sh("ggh dev-eval --run {out} --out {WORK}/dev{cfg}")'
                 )
             ]
         ),

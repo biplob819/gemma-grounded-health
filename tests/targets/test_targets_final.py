@@ -82,7 +82,9 @@ def test_the_cap_counts_the_union_and_keeps_later_sentences_that_still_fit():
     )
     r = row(43, long_answer=la, sentences=sents, sections=["RESULTS"] * 5)
     counts = Counter()
-    (t,) = make.targets_for([r], AllWords(), counts)
+    (t,) = make.targets_for(
+        [r], AllWords(), counts, version="v2"
+    )  # TGT-R6 mechanics: v2 rules (v2.2 ranks by entailment, test_targets_support.py)
     assert isinstance(t, make.AnswerTarget)
     assert t.citations == (1, 2, 3) and counts["sentence:citation_cap"] == 1
     assert t.answer.endswith("Alpha bravo charlie delta.")
@@ -128,7 +130,7 @@ def test_drop_report_records_quotas_shortfall_thresholds_and_model(repo):  # noq
     }  # fmt: skip
     assert saved["nli_model"] == f"{nli.MODEL_ID}@{nli.MODEL_REVISION}" and saved["seed"] == 7
     train = data.read_jsonl(repo / make.OUT_DIR / "train.jsonl")
-    sample = data.read_jsonl(repo / make.AUDIT_COPY)
+    sample = data.read_jsonl(repo / make.OUT_DIR / "audit_sample.jsonl")
     assert {e["id"] for e in sample} <= {e["id"] for e in train}  # drawn from train only
     other = repo / "other"
     other.mkdir()
@@ -136,7 +138,8 @@ def test_drop_report_records_quotas_shortfall_thresholds_and_model(repo):  # noq
         (other / data.OUT_DIR).mkdir(parents=True, exist_ok=True)
         (other / data.OUT_DIR / p.name).write_bytes(p.read_bytes())
     make.build(other, FakeScorer, seed=8, cap=200, chunk=100)
-    assert data.read_jsonl(other / make.AUDIT_COPY) != sample  # the seed reaches the build
+    again = data.read_jsonl(other / make.OUT_DIR / "audit_sample.jsonl")
+    assert again != sample  # the seed reaches the build
 
 
 def test_offscope_context_is_the_rows_full_abstract():

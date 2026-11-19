@@ -1,0 +1,54 @@
+{
+  "answers_failing": [
+    "pqa-a-18043973",
+    "pqa-a-24625110",
+    "pqa-a-15507800",
+    "pqa-a-20016195",
+    "pqa-a-11216993",
+    "pqa-a-15519641",
+    "pqa-a-25376086",
+    "pqa-a-10584658",
+    "pqa-a-25179896",
+    "pqa-a-23238305",
+    "pqa-a-25215463"
+  ],
+  "answers_with_one_weak": [
+    "pqa-a-18976910",
+    "pqa-a-27595504",
+    "pqa-a-23946278",
+    "pqa-a-23842711",
+    "pqa-a-11410500",
+    "pqa-a-24894405"
+  ],
+  "audit": "v2 per-sentence (AUD-R4, OWNER D-45)",
+  "bars": {
+    "at_most_3_answers_with_one_weak": false,
+    "every_label_present_and_fresh": true,
+    "no_answer_cites_aim_or_method_or_two_weak": false,
+    "no_insufficient_answer_claims_a_finding": true,
+    "overall_ok_at_least_45": true
+  },
+  "insufficient_claiming_a_finding": [],
+  "labelled": 50,
+  "missing": [],
+  "overall": {
+    "ok": 50
+  },
+  "passed": false,
+  "sample": 50,
+  "sample_sha256": "e09575075158f16faa97e4616c01e5c50ce833bd719c9203e6554313793cc605",
+  "sentences": {
+    "answer": {
+      "aim": 2,
+      "method": 7,
+      "supports": 41,
+      "weak": 14
+    },
+    "insufficient": {
+      "aim": 1,
+      "method": 6,
+      "supports": 22
+    }
+  },
+  "stale": []
+}
