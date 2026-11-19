@@ -43,7 +43,7 @@ Accuracy rose 22.7 points over the base (separated, paired bootstrap), but the h
 1. **Read the judges' reasons, not just the score.** A typical v1 answer stated the study's finding correctly but cited sentence 1, and both judges said the same thing: *"The sentence only states the research question being studied; it reports no result."*
 2. **Count it.** Of the 525 fine-tuned claims the primary judge marked unsupported, 303 cite sentence 1, which is usually the study's aim (92 cite only sentence 1). The base model's unsupported claims cite sentence 1 in 31 of 273 cases.
 3. **Check whether the warning signs were already there.** They were. Reading 20 dev answers after training (step D-18 of the process) I noted that 8 of 20 cited sentence 1, often the aim. Every automatic dev bar passed (valid JSON 100 %, valid citations 100 %), because "valid" only meant the cited numbers existed, not that they supported the claim.
-4. **Trace it to the training data.** 43 % of the 7,508 training answers cite an aim-like sentence ("To investigate…", "We examined…", "The aim of this study…"). The model learned exactly what it was shown.
+4. **Trace it to the training data.** 43 % of the 7,508 training answers cite an aim-like sentence ("To investigate…", "We examined…", "The aim of this study…") under the first, phrase-based count made at E3.2; the stricter classifier later written for the v2 rule (TGT-R10) counts 3,785 (50.3 %). The model learned exactly what it was shown.
 5. **Ask why the hand audit passed.** Before training, 50 training examples were read by hand (pass bar 45 ok; result 50 of 50). 12 of its 30 answer examples did include an aim sentence among their citations, but next to result sentences, and the audit asked whether the cited set as a whole supported the answer, which it did. The model then learned to lead with the aim sentence and often dropped the results.
 6. **Find the mechanism.** Each training answer is the abstract's conclusion, which is not one of the numbered sentences. Its citations were picked by word overlap with that conclusion, and an entailment model at a 0.5 threshold let them through. An aim sentence shares most of its words with the conclusion ("Does X improve Y?" against "X improves Y"), so it ranked high and passed.
 
@@ -68,7 +68,7 @@ Accuracy rose 22.7 points over the base (separated, paired bootstrap), but the h
 
 How it is watched: every build step has to pass 13 automated gates and an independent reviewer before it is marked done; CI runs on Linux and macOS; every API dollar goes into a spend ledger and every Kaggle GPU hour into a GPU ledger; and 20 answers are read by hand at each stage.
 
-### What I changed (v2, in progress)
+### What I changed (v2: trained, dev-checked, test run next)
 
 1. Training answers never cite an aim, objective or study-description sentence; citations must come from result sentences that the entailment check confirms (rule tested on fixtures, drops counted).
 2. A dev grounding bar, judged by the same EvalKit judges on 200 dev questions, measured for v1 first as the baseline, with the v2 bars fixed before v2 is measured.
@@ -77,8 +77,11 @@ How it is watched: every build step has to pass 13 automated gates and an indepe
 
 | Measure | v1 | v2 |
 | --- | --- | --- |
-| Training answers citing an aim-like sentence | 43 % | pending |
-| Dev claims supported (Opus) | pending | pending |
+| Training answers citing an aim sentence (TGT-R10 classifier) | 50.3 % (43 % by the E3.2 phrase count) | 0 % |
+| Dev citation precision (Sol / Opus) | 0.404 / 0.356 | 0.768 / not run (Anthropic credit ran out, OWNER D-54) |
+| Dev aim-citation rate (Sol) | 0.590 | 0.067 |
+| Dev headline (Sol / Opus) | 0.355 / 0.465 | 0.350 / 0.440–0.445 (2 claims unjudged) |
+| Dev label accuracy | 0.880 | 0.795 (bar 0.80; Q4 quantization drift, OWNER D-55) |
 | Test label accuracy | 0.728 | pending |
 | Test headline (Opus / Sol) | 0.388 / 0.330 | pending |
 | Test claims supported (Opus) | 0.519 | pending |

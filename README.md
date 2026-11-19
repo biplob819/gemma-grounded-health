@@ -1,8 +1,17 @@
 # Gemma Grounded Health
 
-This project is building a fine-tuned small open Gemma model (Gemma 4 E2B) that answers health research questions **only from a given abstract** and cites the sentences it used. The training recipe and a Kaggle pilot come at build node T2.1, the full training run at T2.2. The plan: score it with [EvalKit](https://github.com/biplob819/evalkit) against its own base model, Claude Haiku 5.5 and GPT-6 Luna (build node E3.2), and release it on Hugging Face with the training recipe, a GGUF for laptops and a demo (nodes R4.2 and R4.3).
+This project fine-tunes a small open Gemma model (Gemma 4 E2B, 3.3 GB at 4-bit, runs offline on a laptop) to answer health research questions **only from a given abstract**, with a yes / no / maybe label, a short answer and the numbered sentences it relied on. Every model is scored with [EvalKit](https://github.com/biplob819/evalkit) on all 1,000 expert-labelled PubMedQA questions, against its own base model, Claude Haiku 5.5 and GPT-6 Luna, with two judges from different model families.
 
-> **Status: under construction.** Results, model and demo links appear here once the build reaches them. Research only, not medical advice.
+> **Status.** v1 is trained and measured; v2 is trained and passed its dev citation bars, and its test run is next (build node V2.2), then the Hugging Face release with the recipe, a laptop GGUF and a demo (nodes R4.2 and R4.3). Research only, not medical advice.
+
+| v1 main run (`r-f0f3b432a413`, 1,000 questions) | Label accuracy | Correct and fully grounded (Opus / Sol) |
+| --- | --- | --- |
+| Gemma base | 0.501 | 0.418 / 0.394 |
+| **Gemma fine-tuned (v1)** | **0.728** | 0.388 / 0.330 |
+| Claude Haiku 5.5 | 0.685 | 0.345 / 0.231 |
+| GPT-6 Luna | 0.579 | 0.431 / 0.290 |
+
+v1 raised label accuracy by 22.7 points but did not beat its base on the pre-registered headline, because its citations often pointed at the study's aim instead of its results. v2 retrains on targets that never cite an aim sentence. On 200 dev questions (GPT-6.1 Sol judging) v2's citation precision is 0.768 (v1 0.404) and its aim-citation rate 0.067 (v1 0.590); its headline (0.350 against v1's 0.355; under Opus, 0.440–0.445 against 0.465) and label accuracy (0.795 against a 0.80 bar) narrowly missed their dev bars, disclosed in [known issues](docs/known-issues.md). The full story: [case study](docs/case-study.md). Results: `docs/results/`.
 
 [![Walkthrough: results, the citation failure, laptop benchmark, CLI and audit page](https://raw.githubusercontent.com/biplob819/gemma-grounded-health/main/docs/assets/walkthrough.gif)](https://github.com/biplob819/gemma-grounded-health/blob/main/docs/walkthrough.md)
 
