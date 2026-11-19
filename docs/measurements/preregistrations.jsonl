@@ -1,1 +1,2 @@
 {"commit": "9bc0f970996af4935cba98985d3afd916b74f11e", "committed_at": "2026-11-17T04:33:35Z", "hash_file": "docs/measurements/eval_plan.sha256", "plan": "configs/eval_plan.yaml", "sha256": "ad081a23569fc73d5c606df0f43a3fd8a08879d526a3dae82f9755be6bac4d2d"}
+{"commit": "31de9839617bdb96f09e3fac1ce560638e37224b", "committed_at": "2026-11-19T10:28:13Z", "hash_file": "docs/measurements/eval_plan_v2.sha256", "plan": "configs/eval_plan_v2.yaml", "sha256": "b51167badd1adb24c7c87dd2070d1971758c6975b0c7538536a5e4b06d2fa385"}
