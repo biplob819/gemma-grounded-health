@@ -375,6 +375,9 @@ def build_parser() -> argparse.ArgumentParser:
     from ggh.cli_release import register as register_release  # R4: card, release, space
 
     register_release(sub)
+    from ggh.cli_calibrate import register as register_calibrate  # E3.3: OWNER D-24 check
+
+    register_calibrate(sub)
     return ap
 
 
