@@ -7,4 +7,4 @@
 - [x] 5. Fix the v2 dev bars from the v1 baseline
 - [x] 6. Kaggle retrain, dev selection, freeze
 - [x] 7. Dev check of v2 against the bars (citation bars pass; headline and accuracy miss, OWNER D-55); read the sample
-- [ ] 8. Converge, verifier, green
+- [x] 8. Converge, verifier, green

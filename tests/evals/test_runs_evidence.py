@@ -89,6 +89,8 @@ def test_every_paid_run_is_in_the_ledger_with_its_own_cost():
     for run in RUN_DIRS.values():
         r = load(run, "run.json")
         assert rows[r["run_id"]]["spent_usd"] == round(r["spent_usd"], 6), run
+        if "live_judges" in r:
+            assert rows[r["run_id"]]["live_judges"] == r["live_judges"], run
         seen.add(r["run_id"])
     assert set(rows) - {"r-044ca4838ee9"} == seen  # every logged run (E3.1's smoke aside) is here
     main = rows[load("main", "run.json")["run_id"]]

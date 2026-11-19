@@ -8,4 +8,4 @@
 **VTG-06** — Read the sample: 20 v2 dev answers read against their cited sentences and noted.
 **VTG-07** — A per-sentence audit of 50 seeded v2 examples passes AUD-R4 before the retrain; earlier failed audits stay recorded.
 
-**Owner waivers.** VTG-05's dev-grounding part and VTG-07 were not met as written: v2 step 340 missed the headline and accuracy bars and no other checkpoint was tried (OWNER D-55); the round-3 audit missed AUD-R4 (OWNER D-50). Both are listed in docs/known-issues.md.
+**Owner waivers.** VTG-05's dev-grounding part and VTG-07 were not met as written: v2 step 340 missed the headline and accuracy bars and no other checkpoint was tried (OWNER D-55); the round-3 audit missed AUD-R4 (OWNER D-50). VTG-03's citation bars were judged by GPT-6.1 Sol alone, not both judges (OWNER D-54). All are listed in docs/known-issues.md.
