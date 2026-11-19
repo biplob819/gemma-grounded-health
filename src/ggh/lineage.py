@@ -96,6 +96,23 @@ def stage_key(
     return hashlib.sha256(_canonical(payload).encode("utf-8")).hexdigest()
 
 
+# Committed outputs a later build overwrote, whose original bytes are kept under another name.
+# v2.x rewrote the targets drop report; v1's copy (test_v1_lineage_copy.py) is the one v1's
+# lineage records.
+KEPT_COPIES: dict[str, str] = {
+    "docs/measurements/targets_drop_report.json": "docs/measurements/targets_drop_report_v1.json",
+}
+
+
+def committed_output(root: Path, rel: str, digest: str) -> Path | None:
+    """The file holding committed output `rel` with `digest`: the path itself, else its kept
+    copy when a later build overwrote it; None when neither matches."""
+    for cand in (rel, KEPT_COPIES.get(rel)):
+        if cand and (root / cand).is_file() and sha256_file(root / cand) == digest:
+            return root / cand
+    return None
+
+
 def sha256_file(path: Path) -> str:
     h = hashlib.sha256()
     with open(path, "rb") as fh:  # binary: no encoding applies
