@@ -17,7 +17,8 @@ from collections.abc import Callable, Sequence
 from pathlib import Path
 from typing import Any
 
-from evalkit.pipeline.answer import SchemaError, parse_answer
+from evalkit.errors import SchemaError
+from evalkit.pipeline.answer import parse_answer
 
 from ggh.schemas import ParityReport
 from ggh.serve import checks

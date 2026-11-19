@@ -5,8 +5,8 @@ import pytest
 import yaml
 from evalkit.config import load_run_config
 
-from ggh.data.build import EVALKIT_COMMIT
 from ggh.evals import config
+from ggh.evals.config import EVALKIT_COMMIT
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -58,8 +58,10 @@ def test_the_dev_config_may_differ_only_in_models_endpoints_and_cap(tmp_path):
     assert any("endpoint" in p for p in config.config_problems(root))
 
 
-def test_evalkit_is_pinned_to_the_d28_commit_and_installed_from_it():
+def test_evalkit_is_pinned_to_the_d48_release_and_installed_from_it():
+    assert config.pinned_version(ROOT) == "0.4.0"
     assert config.pinned_commit(ROOT) == EVALKIT_COMMIT
+    assert EVALKIT_COMMIT == "f9cbc8e5396c4fc638021cb426cc34e2d6853d78"  # tag v0.4.0
     assert config.pin_problems(ROOT) == []
 
 
@@ -163,10 +165,10 @@ def test_reference_reads_a_run_folder_and_flags_mixed_values(tmp_path):
 
 
 def test_ours_reads_the_installed_evalkit():
-    from evalkit.pipeline.extract import EXTRACTOR_VERSION
-    from evalkit.pipeline.judge import JUDGE_PROMPT_HASH
+    from evalkit.identity import EXTRACTOR_VERSION, JUDGE_PROMPT_HASH
 
     mine = config.ours(load_run_config(ROOT / config.MAIN), EVALKIT_COMMIT)
+    assert JUDGE_PROMPT_HASH == "9a3a8246049f6f85"  # as every committed v1 verdict carries
     assert (
         mine["rubric_hash"] == JUDGE_PROMPT_HASH and mine["extractor_version"] == EXTRACTOR_VERSION
     )
@@ -214,8 +216,34 @@ def test_the_dev_config_may_not_differ_in(tmp_path, field):
     assert any(field in p for p in config.config_problems(root))
 
 
-def test_a_pyproject_pin_other_than_d28_is_a_problem(tmp_path):
-    text = (ROOT / "pyproject.toml").read_text(encoding="utf-8").replace(EVALKIT_COMMIT, "1" * 40)
+def test_a_pyproject_pin_other_than_d48_is_a_problem(tmp_path):
+    text = (ROOT / "pyproject.toml").read_text(encoding="utf-8").replace("==0.4.0", "==0.3.0")
     (tmp_path / "pyproject.toml").write_text(text, encoding="utf-8")
     problems = config.pin_problems(tmp_path)
-    assert any("D-28 says" in p for p in problems)
+    assert any("D-56 says 0.4.0" in p for p in problems)
+    with pytest.raises(ValueError, match="no known commit"):
+        config.pinned_commit(tmp_path)
+    git = (
+        (ROOT / "pyproject.toml")
+        .read_text(encoding="utf-8")
+        .replace(
+            "evalkit-harness[openai,anthropic]==0.4.0",
+            "evalkit-harness[openai,anthropic] @ git+https://github.com/biplob819/evalkit@"
+            + EVALKIT_COMMIT,
+        )
+    )
+    (tmp_path / "pyproject.toml").write_text(git, encoding="utf-8")
+    with pytest.raises(ValueError, match="one release with =="):
+        config.pinned_version(tmp_path)
+
+
+def test_an_installed_evalkit_other_than_the_pin_is_a_problem(monkeypatch):
+    monkeypatch.setattr(config, "installed_version", lambda: "0.3.0")
+    assert config.pin_problems(ROOT) == ["installed EvalKit is 0.3.0, pyproject pins 0.4.0"]
+    monkeypatch.setattr(config, "installed_version", lambda: "0.4.0")
+    ee59699 = "ee5969978c9213acf4838ca0e673fdfaea34a876"
+    monkeypatch.setattr(config, "installed_commit", lambda: ee59699)
+    (p,) = config.pin_problems(ROOT)
+    assert "git build of ee5969978c92" in p
+    monkeypatch.setattr(config, "installed_commit", lambda: EVALKIT_COMMIT)
+    assert config.pin_problems(ROOT) == []  # a git build of the tag itself is the release

@@ -42,7 +42,13 @@ def test_one_session_ran_the_committed_notebook_at_the_recorded_commit():
     assert span_h < 12  # inside one session
     assert REPORT["seconds"] == RUN.wall_clock_s and REPORT["seconds"] / 3600 < span_h
     cfg = load_recipe(ROOT / "configs/recipe.yaml")
-    nb = render(COMMIT, cfg.tool, None)
+    # the run installed the D-28 git pin; new notebooks install the D-56 release
+    v1_evalkit = (
+        "evalkit-harness @ git+https://github.com/biplob819/evalkit@"
+        "06591f8de9b178078c971940a83019a6530fd119"
+    )
+    assert f"$ pip install -q --no-deps '{v1_evalkit}'" in LOG_TEXT
+    nb = render(COMMIT, cfg.tool, None, evalkit=v1_evalkit)
     code = "".join("".join(c["source"]) for c in nb["cells"] if c["cell_type"] == "code")
     ran = [x["data"][2:].rstrip("\n") for x in LOG if x["data"].startswith("$ ")]
     assert ran[-2:] == ["ggh train --config configs/recipe.yaml --out /kaggle/working/run "

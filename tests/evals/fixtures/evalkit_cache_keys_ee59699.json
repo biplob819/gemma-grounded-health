@@ -1,0 +1,54 @@
+{
+ "dev_ground_v1": {
+  "dev-17949392/gemma-e2b-grounded-q4": {
+   "citation:claude-opus-5-5": "7ac30786f2844e14fb13e6521101c5e04cbd320569c2ff88d8d9db219fa62851",
+   "citation:gpt-6.1-sol": "ca4e24c798914b3e6ed66cd931313ed727135ae9c12298379946f2977c2a90d7",
+   "extract": "57a04971df506b0efdf9cb86293ed18b5c8272222541a05944f7b47d70d6c452",
+   "generate": "35b254aede381014caefd8bd9ccf24301217ed5a06b2759c0a461a5d3b7272e7",
+   "judge:claude-opus-5-5": "a038a60e2bdc0a015bbcf893facf1f73878c61bc90c7b4dbfe210bafa0bfed74",
+   "judge:gpt-6.1-sol": "4c3bebaf4de0c3ce3150e30976f550f397e78e9dd54417a86e91d187963ec2f2"
+  },
+  "dev-23625721/gemma-e2b-base-q4": {
+   "citation:claude-opus-5-5": "cc1260e21533b5a61777ad0c9c2670d71136c4105507f4fedb903b9448711407",
+   "citation:gpt-6.1-sol": "ca5c5e96a75fdf403257f83ae7ce072558e0c2b2cd9fa64061dea0bf7bca8d49",
+   "extract": "6b974a469cdf174755d8d02ef729599b01b78f7a232866a2378de83d08c539f7",
+   "generate": "013d55221a13e95d78bc2cd03b1d5234e3e29db9e5f5029cc73b0a94a1e0a2a0",
+   "judge:claude-opus-5-5": "6607cc4bcca21fb9f2ef122c17c7e499db76d17c994dc9d6c4113aa0a2e2d0c5",
+   "judge:gpt-6.1-sol": "304f59885ea9fba93a1a9b16dea7792ee11e7e928553454190f18da0fe18e207"
+  }
+ },
+ "main_citation": {
+  "pqa-10808977/gemma-e2b-base-q4": {
+   "citation:claude-opus-5-5": "73af3355335facde1f494761f88c5c5f08d3d435a7165fae7f6ec8a18674ed8d",
+   "citation:gpt-6.1-sol": "f7bc2a242d7ec28947eb9b0ad541e292807a92f1cecfbec9047e54cd3a341afc",
+   "extract": "f5e4189de12357ccfe22a39e72c53cab685ce69f5328304103734fefdd27b6c8",
+   "generate": "12e55ba8aa45af4cad492140405449563f7185fac134033d96126d620a7e30cd",
+   "judge:claude-opus-5-5": "7985fd7899c8280d05e18f34fe1ca61b333b8348fb04f6d40cc2e748444dd0cc",
+   "judge:gpt-6.1-sol": "761ed2d7e8326bb9e53f142e335a0113e31c1c09a9a606fc865b2c2d04a7a82c"
+  },
+  "pqa-10834864/gpt-6-luna": {
+   "citation:claude-opus-5-5": "c2cdbb2f40cf59a35300b8f0574d6097830b3a19d15edd435434a318c5c587e1",
+   "citation:gpt-6.1-sol": "08de2ba145f956a4fcc819368b9c1118b402140c368c766a699e069fc829066c",
+   "extract": "3af1e8f7a65dcfe79ee1a2b5945496e256210da8a74a5fa7c2a71f25317241ac",
+   "generate": "b990a3b74d07f8252e33f2b3bc1816927b487b1893f5258959888cc11b5d911d",
+   "judge:claude-opus-5-5": "9650bab4ce64d39b13138d5d674e0fb973eeed22cf2608b981a39e91f42768c1",
+   "judge:gpt-6.1-sol": "bcf97f3aacbe98c87588afa3155a804776ba95ec1096a620257ecb7c54d77271"
+  },
+  "pqa-17244100/gemma-e2b-grounded-q4": {
+   "citation:claude-opus-5-5": "3ba3fbe6e1d1bef8b220a3008105c4386330d1b11c7d9d0da1b92e45c6903f6b",
+   "citation:gpt-6.1-sol": "811a43aa3bea8e64a1ceb0b73526016f6dd3a7629c0be4bb794fcbd4ce62f965",
+   "extract": "a1248a80dc2a0a48cd00ede2e3811dc000874e7d736ce467cd8464352b845b7e",
+   "generate": "a1e0ddaf328de01cff75f68e747857086ea820e5ff3e7eb257ad00cfa63747a3",
+   "judge:claude-opus-5-5": "08c38b653c28d0b09225537f203b5957a31e77092268d231198b2353ae3f7e10",
+   "judge:gpt-6.1-sol": "4249f95a4596aa995fd207eed3dbfcd002daf0534215a8ce58370cac60b15880"
+  },
+  "pqa-22350859/claude-haiku-5-5": {
+   "citation:claude-opus-5-5": "01d99bc9845807ce9fcefbc8f77307e5625ddf25b7920e206ddc47a8e417d419",
+   "citation:gpt-6.1-sol": "8fad33b3c7400316c6377b37c9c4579b60242719afae20b2d2341dd85396a4c8",
+   "extract": "b9200b80edb9c155cbd0f1ecf709e4fd8aeed86ee203e4814248054395702a0a",
+   "generate": "ec903d236a2ad550cfdac4a7e020e0a6908fd949f2eb4afbde7ce495cfd0b64f",
+   "judge:claude-opus-5-5": "d9facb3fccc5fde84324da78e637c8a2fd1fca27f569e0a336b4c903edb067ec",
+   "judge:gpt-6.1-sol": "2cf7d4c5d607e716f7be6078e511155347aed65daaff018b7ee0e31005b6d584"
+  }
+ }
+}

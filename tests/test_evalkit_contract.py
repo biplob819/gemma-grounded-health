@@ -8,12 +8,17 @@ from pathlib import Path
 import pytest
 
 ROOT = Path(__file__).resolve().parent.parent
-PINNED = "06591f8de9b178078c971940a83019a6530fd119"
+PINNED = "0.4.0"  # D-56: the PyPI release, tag v0.4.0
+TAG_COMMIT = "f9cbc8e5396c4fc638021cb426cc34e2d6853d78"
 
 REQUIRED = {
     "evalkit.schemas": ["Answer", "Case", "Interval", "RunSummary"],
     "evalkit.text": ["number_sentences"],
     "evalkit.tasks": ["builtin_task", "render_prompt"],
+    # 0.4.0 homes of names this repo imports (EvalKit docs/downstream.md, 0.3 -> 0.4)
+    "evalkit.identity": ["EXTRACTOR_VERSION", "JUDGE_PROMPT_HASH"],
+    "evalkit.errors": ["SchemaError"],
+    "evalkit.adapters": ["CompletionRequest", "RawCompletion"],
 }
 
 
@@ -44,25 +49,38 @@ def test_pubmedqa_task_renders_with_the_pinned_evalkit():
 
 
 @pytest.mark.contract
-def test_pyproject_pins_the_commit_recorded_in_d28():
+def test_pyproject_pins_the_release_recorded_in_d56():
     deps = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"][
         "dependencies"
     ]
     pin = [d for d in deps if d.startswith("evalkit-harness")]
     # the SDK extras serve its endpoint route and its judges (E3.1)
-    assert pin == [
-        f"evalkit-harness[openai,anthropic] @ git+https://github.com/biplob819/evalkit@{PINNED}"
-    ]
+    assert pin == [f"evalkit-harness[openai,anthropic]=={PINNED}"]
     decisions = (ROOT / "docs" / "decisions.md").read_text(encoding="utf-8")
-    d28 = next(ln for ln in decisions.splitlines() if ln.startswith("| D-28 |"))
-    assert PINNED in d28 or f"`{PINNED[:7]}`" in d28
+    d56 = next(ln for ln in decisions.splitlines() if ln.startswith("| D-56 |"))
+    assert f"`evalkit-harness=={PINNED}`" in d56 and f"`{TAG_COMMIT[:7]}`" in d56
 
 
 @pytest.mark.contract
-def test_installed_evalkit_is_the_pinned_commit():
+def test_installed_evalkit_is_the_pinned_release():
     import json
     from importlib.metadata import distribution
 
-    direct = distribution("evalkit-harness").read_text("direct_url.json")
-    assert direct, "evalkit-harness was not installed from the git pin"
-    assert json.loads(direct)["vcs_info"]["commit_id"] == PINNED
+    import evalkit
+
+    dist = distribution("evalkit-harness")
+    assert dist.version == evalkit.__version__ == PINNED
+    direct = dist.read_text("direct_url.json")  # absent for a PyPI install
+    if direct and "vcs_info" in json.loads(direct):
+        assert json.loads(direct)["vcs_info"]["commit_id"] == TAG_COMMIT
+
+
+@pytest.mark.contract
+def test_the_0_4_record_and_summary_fields_this_repo_reads_exist():
+    from evalkit.schemas import ModelSummary, Record, RunConfig
+
+    assert {"judge_errors", "citation_support"} <= set(Record.model_fields)
+    assert {"missing_verdicts", "efficiency", "citation_precision"} <= set(
+        ModelSummary.model_fields
+    )
+    assert "systems" in RunConfig.model_fields

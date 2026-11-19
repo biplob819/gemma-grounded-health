@@ -11,12 +11,13 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from ggh.data.build import EVALKIT_COMMIT as EVALKIT  # the D-28 pin
+# Future runs install the D-56 release; a committed notebook keeps the EvalKit line it was
+# rendered with (the pilot and v1 runs: the D-28 git pin), which `render` takes back.
+from ggh.evals.config import EVALKIT_REQUIREMENT
 
 REPO = "https://github.com/biplob819/gemma-grounded-health"
 WORK = "/kaggle/working"
 CHECKOUT = f"{WORK}/ggh"
-EVALKIT_REPO = "https://github.com/biplob819/evalkit"
 VERSIONED = "torch|transformers|peft|accelerate|bitsandbytes|unsloth|unsloth.zoo|evalkit-harness"
 
 
@@ -38,14 +39,22 @@ def _md(src: str) -> dict[str, Any]:
 
 
 def render(
-    commit: str, tool: str, max_steps: int | None, config: str = "configs/recipe.yaml"
+    commit: str,
+    tool: str,
+    max_steps: int | None,
+    config: str = "configs/recipe.yaml",
+    evalkit: str = EVALKIT_REQUIREMENT,
 ) -> dict[str, Any]:
+    """The Kaggle runner for repo `commit`. `evalkit` is the pip requirement it installs:
+    the current pin by default; a committed notebook passes back the one it was made with."""
     if len(commit) != 40 or any(c not in "0123456789abcdef" for c in commit):
         raise ValueError("commit must be a full 40-character git sha")
     if tool not in ("unsloth", "trl"):
         raise ValueError(f"tool must be unsloth or trl, got {tool!r}")
     if not config.startswith("configs/") or not config.endswith(".yaml"):
         raise ValueError(f"config must be a committed configs/*.yaml recipe, got {config!r}")
+    if not evalkit.startswith("evalkit-harness") or not ("==" in evalkit or "@ git+" in evalkit):
+        raise ValueError(f"evalkit must pin evalkit-harness exactly, got {evalkit!r}")
     steps = f" --max-steps {max_steps}" if max_steps else ""
     cfg = "" if config == "configs/recipe.yaml" else f" --config {config}"
     out = f"{WORK}/run"
@@ -72,7 +81,7 @@ def render(
             f'sh("git checkout -q {commit}")\n'
             f'sh("pip install -q -r notebooks/requirements-kaggle-{tool}.txt")\n'
             'sh("pip install -q --no-deps -e .")\n'
-            f"sh(\"pip install -q --no-deps 'evalkit-harness @ git+{EVALKIT_REPO}@{EVALKIT}'\")"
+            f"sh(\"pip install -q --no-deps '{evalkit}'\")"
         ),
         _code(
             f"sh(\"pip list 2>/dev/null | grep -i -E '^({VERSIONED}) ' || true\")\n"

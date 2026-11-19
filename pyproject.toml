@@ -11,9 +11,9 @@ dependencies = [
     "pydantic>=2.7",
     "pyyaml>=6",
     "pyarrow>=15",
-    # EvalKit is not on PyPI yet; pinned to an exact commit (D-28). The SDK extras serve
-    # its endpoint route to llama-server (D-7) and its judges and extractor
-    "evalkit-harness[openai,anthropic] @ git+https://github.com/biplob819/evalkit@06591f8de9b178078c971940a83019a6530fd119",
+    # EvalKit's PyPI release 0.4.0 (tag v0.4.0, commit f9cbc8e; D-56 supersedes D-28's git
+    # pin). The SDK extras serve its endpoint route to llama-server (D-7) and its judges
+    "evalkit-harness[openai,anthropic]==0.4.0",
 ]
 
 [project.scripts]
@@ -48,9 +48,6 @@ train = [
 [build-system]
 requires = ["hatchling>=1.26"]
 build-backend = "hatchling.build"
-
-[tool.hatch.metadata]
-allow-direct-references = true  # the EvalKit git pin (D-28)
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/ggh"]

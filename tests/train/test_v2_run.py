@@ -40,7 +40,9 @@ def test_one_session_ran_the_committed_v2_notebook_at_the_recorded_commit():
     assert RUN.kaggle_kernel_version == "1" and "Traceback" not in LOG_TEXT
     assert (LOG[-1]["time"] - LOG[0]["time"]) / 3600 < 12
     assert REPORT["seconds"] == RUN.wall_clock_s < LOG[-1]["time"]
-    nb = render(COMMIT, "unsloth", None, V2.recipe.as_posix())
+    nb_text = (ROOT / "notebooks/v2/train_kaggle.ipynb").read_text(encoding="utf-8")
+    evalkit = nb_text.split("pip install -q --no-deps '")[1].split("'")[0]  # pre-D-56 pin
+    nb = render(COMMIT, "unsloth", None, V2.recipe.as_posix(), evalkit=evalkit)
     code = "".join("".join(c["source"]) for c in nb["cells"] if c["cell_type"] == "code")
     ran = [x["data"][2:].rstrip("\n") for x in LOG if x["data"].startswith("$ ")]
     assert ran[-2:] == ["ggh train --config configs/recipe_v2.yaml --out /kaggle/working/run "
