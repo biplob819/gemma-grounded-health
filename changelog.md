@@ -3,6 +3,7 @@
 Format: `[TYPE] [NODE] — summary`. Types: FEAT, FIX, DOCS, HARNESS, RELEASE.
 
 ## 2026-11-19
+- [DOCS] [V2.1] — README status replaces "under construction" with v1's main-run table and v2's dev results (misses included); the case study fills v2's dev rows and names which classifier gives v1's aim share (43 % by E3.2's phrase count, 50.3 % under TGT-R10).
 - [FEAT] [V2.1] — green after 2 verifier rounds (round 1 FAIL: the Opus headline was already bounded by partial verdicts but described as pending, and the round-3 audit was recorded as passed; round 2 PASS). v2 retrain. Citations rebuilt by single-sentence support (TGT-R11, OWNER D-48; TGT-R10 excludes aim and method sentences), v2.2 targets 2,722 train / 272 val; the per-sentence audit's three rounds recorded (owner, blind, round 3; round 3's miss disclosed, OWNER D-50); v2 trained on Kaggle (`ggh-v21-train`, recipe_v2: two epochs, 340 steps, 1.67 GPU h), step 340 selected and frozen; dev check on 200 cases against bars fixed beforehand (D-52), judged by GPT-6.1 Sol alone after the Anthropic credit ran out (OWNER D-54): citation precision 0.768 (v1 0.404) and aim-citation rate 0.067 (v1 0.590) pass; the headline is below v1's under both judges (Sol 0.350 vs 0.355; Opus 0.440–0.445 vs 0.465 from 259/261 verdicts; paired intervals include zero) and label accuracy 0.795 misses its 0.80 bar; Q4_K_M parity 0.920 (bar 0.95, Q8_0 0.996). OWNER D-55: v2 at Q4_K_M goes to V2.2 with all three misses disclosed
 
 ## 2026-11-18
