@@ -156,8 +156,10 @@ def test_an_edited_plan_or_a_missing_record_is_caught(tmp_path):
     edited = P.load_plan(root, rel)
     assert "no longer match" in P.plan_problems(root, edited)[0]
     assert "no committed hash" in P.preregistration_problems(root, edited)[0]
+    real = (ROOT / "docs/measurements/preregistrations.jsonl").read_text(encoding="utf-8")
+    v1_only = [x for x in real.splitlines() if x.strip() and json.loads(x)["plan"] != rel]
     (root / "docs/measurements/preregistrations.jsonl").write_text(
-        (ROOT / "docs/measurements/preregistrations.jsonl").read_text(encoding="utf-8"), "utf-8"
+        "".join(x + "\n" for x in v1_only), "utf-8"
     )
     sha = hashlib.sha256((root / rel).read_bytes()).hexdigest()
     (root / "docs/measurements/eval_plan_v2.sha256").write_text(sha, encoding="utf-8")
