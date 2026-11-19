@@ -287,11 +287,15 @@ def test_v2_dev_bars_were_committed_before_either_v2_dev_run_started():
     import datetime as dt
     import subprocess
 
-    cmd = ["git", "log", "--diff-filter=A", "--format=%cI", "--", "configs/v2_dev_bars.yaml"]
+    # 8ff61b9 added the bars file; a shallow CI clone lacks it, so the check runs locally
+    cmd = ["git", "show", "-s", "--format=%cI", "8ff61b9"]
     out = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
     if out.returncode != 0 or not out.stdout.strip():
-        pytest.skip("no git history (shallow clone)")
-    added = dt.datetime.fromisoformat(out.stdout.split()[-1])
+        pytest.skip("8ff61b9 not in this clone (shallow)")
+    files = subprocess.run(["git", "show", "--name-status", "--format=", "8ff61b9"], cwd=ROOT,
+                           capture_output=True, text=True).stdout  # fmt: skip
+    assert "A\tconfigs/v2_dev_bars.yaml" in files
+    added = dt.datetime.fromisoformat(out.stdout.strip())
     for run in ("dev_ground_v2_dual_partial", "dev_ground_v2_sol"):
         started = load(run, "run.json")["started_at"].replace("Z", "+00:00")
         assert added < dt.datetime.fromisoformat(started), run
