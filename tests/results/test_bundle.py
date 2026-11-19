@@ -170,6 +170,28 @@ def test_v2_is_never_compared_with_haiku_or_luna(v2):
     assert all(c.method == "evalkit" and c.plan == "secondary" for c in sec)
 
 
+def test_every_run_names_its_extractor_and_judges(v1, v2):
+    # E3.2: Haiku extracts, Opus and Sol judge; V2.2 (OWNER D-57): Luna extracts, Sol alone
+    assert {r.extractor for r in v1.bundle.runs} == {"claude-haiku-5-5"}
+    by = {r.name: r for r in v2.bundle.runs}
+    for name in ("main", "main_citation", "offscope"):
+        assert by[name].extractor == "claude-haiku-5-5" and by[name].judges == JUDGES
+    for name in ("main_v2", "offscope_v2", "probe_original_v2", "parity_v2"):
+        assert by[name].extractor == "gpt-6-luna" and by[name].judges == ("gpt-6.1-sol",)
+        assert by[name].judge_mode == "single"
+    assert set(by["main_v2"].models) == {"gemma-e2b-base-q4", fake.V1, fake.V2}
+
+
+def test_a_plan_whose_configs_disagree_on_the_extractor_is_refused(tmp_path):
+    root = fake.copy_repo(tmp_path)
+    fake.add_v2(root)
+    cfg = root / "configs/evalkit_v2_solo.yaml"
+    text = cfg.read_text(encoding="utf-8").replace("gpt-6-luna", "claude-haiku-5-5")
+    cfg.write_text(text, encoding="utf-8")
+    with pytest.raises(ResultsError, match="extractor 'gpt-6-luna' differs from"):
+        B.build(root)
+
+
 def test_r4_flat_fields_read_from_the_shipped_release(v1, v2):
     for built in (v1, v2):
         b = built.bundle

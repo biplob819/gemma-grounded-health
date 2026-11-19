@@ -182,7 +182,7 @@ def model_results(run: Run) -> list[ModelResult]:
     return out
 
 
-def run_ref(run: Run) -> RunRef:
+def run_ref(run: Run, extractor: str | None = None) -> RunRef:
     m, s = run.manifest, run.summary
     return RunRef(
         name=run.name,
@@ -198,7 +198,29 @@ def run_ref(run: Run) -> RunRef:
         spent_usd=round(float(m["spent_usd"]), 6),
         summary_sha256=run.summary_sha256,
         records_sha256=run.records_sha256,
+        extractor=extractor,
     )
+
+
+def _config_extractor(root: Path, rel: str | None) -> str | None:
+    if not rel or not (root / rel).is_file():
+        return None
+    return (yaml.safe_load((root / rel).read_text(encoding="utf-8")) or {}).get("extractor")
+
+
+def release_extractor(root: Path, plan: Plan) -> str | None:
+    """The claim extractor every run of a release used: the plan's `extractor` (V2.2, OWNER
+    D-57: GPT-6 Luna), else the one in the EvalKit config the plan names (E3.2:
+    configs/evalkit.yaml, Claude Haiku 5.5). Every EvalKit config the plan names, its own and
+    each run's, must agree with it."""
+    d = plan.data
+    configs = [d.get("config"), *(r.get("config") for r in d.get("runs") or [])]
+    found = {c: e for c in configs if c and (e := _config_extractor(root, c)) is not None}
+    want = d.get("extractor") or found.get(d.get("config")) or next(iter(found.values()), None)
+    bad = sorted(c for c, e in found.items() if e != want)
+    if bad:
+        raise ResultsError(f"{plan.path}: extractor {want!r} differs from {', '.join(bad)}")
+    return want
 
 
 def audits(root: Path, specs: list[dict[str, Any]]) -> list[AuditSummary]:
@@ -354,6 +376,7 @@ def build(root: Path, *, full_lineage: bool = False, config: Path = CONFIG) -> B
     behaviour: list[BehaviourRow] = []
     lineage_problems: list[str] = []
     blockers: list[str] = []
+    extractors: dict[str, str | None] = {}
     review = T.load_b8_review(root / cfg["b8_review"])
     sample_sums: list[SampleReadSummary] = []
     for name in sorted(runs):
@@ -362,6 +385,8 @@ def build(root: Path, *, full_lineage: bool = False, config: Path = CONFIG) -> B
         blockers += probs
     for rel in included:
         plan = load_plan(root, rel["plan"])
+        extractor = release_extractor(root, plan)
+        extractors.update(dict.fromkeys(rel["runs"], extractor))
         main = runs[rel["primary_run"]]
         p, s = plan_comparisons(main, plan)
         primary += p
@@ -408,7 +433,7 @@ def build(root: Path, *, full_lineage: bool = False, config: Path = CONFIG) -> B
             )
         )
     ordered = [runs[n] for n in sorted(runs)]
-    refs = [run_ref(r) for r in ordered]
+    refs = [run_ref(r, extractors.get(r.name)) for r in ordered]
     calibrated = all(r.calibration_status == "calibrated" for r in refs)
     gfc = _opt_json(root, cfg.get("gemma_family_check"))
     for r in refs:

@@ -36,7 +36,7 @@ def test_block_has_every_model_and_the_stamps(fixture_src):
     block = readme.results_block(fixture_src)
     for m in fixture_src.main().models:
         assert m.model in block
-    assert f"**{fixture_src.paths.ft_model}**" in block
+    assert f"**{fixture_src.ft_model}**" in block
     assert "judge not calibrated" in block and "Research only, not medical advice" in block
 
 

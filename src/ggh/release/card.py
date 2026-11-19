@@ -19,7 +19,7 @@ from evalkit.pipeline.aggregate import stamp_lines
 from evalkit.schemas import Interval, RunSummary
 
 from ggh.release.sources import Sources
-from ggh.schemas import Comparison
+from ggh.schemas import Comparison, ReleaseEntry, RunRef
 
 TEMPLATE = Path(__file__).parent / "templates" / "model_card.md"
 HUB_LICENSE = "apache-2.0"
@@ -103,10 +103,136 @@ def model_table(summary: RunSummary) -> str:
     )
 
 
+def scoring(ref: RunRef) -> str:
+    """Who produced a run's claim-level numbers: its extractor and its judges."""
+    judges = " and ".join(f"`{j}`" for j in ref.judges)
+    head = f"claims extracted by `{ref.extractor}`, " if ref.extractor else ""
+    return f"{head}judged by {judges}" + (" alone" if len(ref.judges) == 1 else "")
+
+
+def _get(d: Mapping[str, Interval] | None, j: str) -> str:
+    return iv(d[j]) if d and j in d else "–"
+
+
+def outcome_table(src: Sources, ref: RunRef, bold: str | None = None) -> str:
+    """One run's models from the bundle: accuracy, the headline per judge, and citation
+    precision and the aim-citation rate per judge where the run measured them."""
+    rows = [r for r in src.bundle.results if r.run == ref.name]
+    hj = sorted({j for r in rows for j in r.headline})
+    cj = sorted({j for r in rows for j in (r.citation_precision or {})})
+    aj = sorted({j for r in rows for j in (r.aim_citation_rate or {})})
+    header = [
+        "Model",
+        "n",
+        "Accuracy",
+        *[f"Correct and grounded ({j})" for j in hj],
+        *[f"Citation precision ({j})" for j in cj],
+        *[f"Aim-citation rate ({j}, lower is better)" for j in aj],
+    ]
+    body = [
+        [
+            f"**{r.model}**" if r.model == bold else r.model,
+            str(r.n),
+            iv(r.accuracy),
+            *[_get(r.headline, j) for j in hj],
+            *[_get(r.citation_precision, j) for j in cj],
+            *[_get(r.aim_citation_rate, j) for j in aj],
+        ]
+        for r in rows
+    ]
+    return table(header, body)
+
+
+def _release_refs(src: Sources, release: ReleaseEntry) -> list[RunRef]:
+    """The release's benchmark run and, if separate, its citation run."""
+    refs = [src.ref(src.release_main(release))]
+    cit = src.citation_run(release)
+    if cit is not None and cit.name != refs[0].name:
+        refs.append(cit)
+    return refs
+
+
+def earlier_tables(src: Sources, heading: str = "### ") -> list[str]:
+    """Each earlier release's published benchmark numbers, under their own extractor and judges
+    and labelled as such. They stand as published and are never compared with the shipped
+    release (OWNER D-57: models not re-scored for v2 are shown, not compared)."""
+    shipped = src.bundle.shipped
+    now = src.ref(src.main())
+    scored_now = set(now.models)
+    out: list[str] = []
+    for rel in src.earlier():
+        refs = _release_refs(src, rel)
+        v, s = rel.version, shipped.version
+        out += [f"{heading}Published {v} numbers (not compared with {s})", ""]
+        notes = [
+            f"These are {v}'s numbers as published under `{rel.plan}`; they stand as they are "
+            f"and are shown for reference, not as a {s} comparison."
+        ]
+        differs = [
+            what
+            for what, bad in (
+                ("claim extractor", any(r.extractor != now.extractor for r in refs)),
+                ("judges", any(r.judges != now.judges for r in refs)),
+            )
+            if bad
+        ]
+        if differs:
+            notes.append(
+                f"They were produced with a different {' and different '.join(differs)} from "
+                f"{s}'s run ({scoring(now)}), so the two sets of numbers are not comparable."
+            )
+        dropped = sorted({m for r in refs for m in r.models} - scored_now)
+        if dropped:
+            names = " and ".join(f"`{m}`" for m in dropped)
+            notes.append(
+                f"As answering models, {names} were not re-scored for {s}, so {s} is not "
+                "compared with them."
+            )
+        both = sorted({m for r in refs for m in r.models} & scored_now)
+        if both:
+            names = " and ".join(f"`{m}`" for m in both)
+            notes.append(
+                f"{names} appear in both {s}'s table and here; each table's numbers come from "
+                "its own run."
+            )
+        out += [" ".join(notes), ""]
+        for r in refs:
+            out += [f"Run `{r.name}` (`{r.run_id}`), {scoring(r)}:", ""]
+            out += [outcome_table(src, r, bold=rel.model), ""]
+    return out[:-1] if out else out
+
+
+def benchmark(src: Sources) -> str:
+    """The shipped release's benchmark. With one release this is the EvalKit summary table
+    (v1's card, unchanged); with earlier releases in the bundle, the shipped run is labelled
+    with its extractor and judges and each earlier release's numbers follow under their own."""
+    main = src.main()
+    if not src.earlier():
+        return model_table(main)
+    ref, shipped = src.ref(main), src.bundle.shipped
+    lines = [
+        f"{shipped.version}: EvalKit task `{main.task}`, run `{main.run_id}`. Every model in this "
+        f"table was scored in this run: {scoring(ref)}. 95% bootstrap intervals in square "
+        "brackets. The headline counts an answer only when its label is correct and every claim "
+        "is supported by the sentences it cites.",
+        "",
+    ]
+    for r in _release_refs(src, shipped):
+        if r.name != ref.name:
+            lines += [f"Run `{r.name}` (`{r.run_id}`), {scoring(r)}:", ""]
+        lines += [outcome_table(src, r, bold=src.ft_model), ""]
+    return "\n".join([*lines, *earlier_tables(src)])
+
+
 def stamps(src: Sources) -> str:
     b = src.bundle
-    lines = [f"- Judge mode: **{b.judge_mode}**. Calibration: **{b.calibration_status}**."]
-    lines += [f"- ⚠ {s}" for s in stamp_lines(src.main())]
+    main = src.main()
+    ref = next((r for r in b.runs if r.run_id == main.run_id), None)
+    mode = ref.judge_mode if ref is not None else b.judge_mode
+    lines = [f"- Judge mode: **{mode}**. Calibration: **{b.calibration_status}**."]
+    if ref is not None and src.earlier():
+        lines.append(f"- {b.shipped.version} scoring: {scoring(ref)}.")
+    lines += [f"- ⚠ {s}" for s in stamp_lines(main)]
     if b.gemma_family_check:
         checks = ", ".join(f"{j} {f3(a)}" for j, a in sorted(b.gemma_family_check.items()))
         lines.append(f"- Gemma-family judge check (agreement on owner-labelled claims): {checks}.")
@@ -139,10 +265,18 @@ def primary_table(src: Sources) -> str:
         ]
         for c in comps
     ]
+    family = ""
+    if src.earlier():
+        refs = {r.name: r for r in src.bundle.runs}
+        runs = sorted({c.run for c in comps})
+        how = "; ".join(f"run `{n}`, {scoring(refs[n])}" for n in runs if n in refs)
+        sizes = sorted({c.family_size for c in comps if c.family_size})
+        holm = f" Holm runs over the plan's {sizes[0]} tests." if len(sizes) == 1 else ""
+        family = f" Every model on both sides was scored the same way: {how}.{holm}"
     return (
         f"From `{shipped.plan}` ({shipped.plan_status}). Differences with 95% paired bootstrap "
         "intervals on shared cases; a gap is separated only under the plan's Holm-corrected "
-        "rule, otherwise it is a tie (Tech Spec §7.4).\n\n"
+        f"rule, otherwise it is a tie (Tech Spec §7.4).{family}\n\n"
         + table(["Comparison", "Outcome", "Judge", "Difference", "p", "Verdict"], rows)
     )
 
@@ -170,13 +304,35 @@ def secondary_table(src: Sources) -> str:
 
 
 def behaviour_table(src: Sources) -> str:
+    """B1-B8. With earlier releases in the bundle, only the shipped release's runs are shown,
+    each row with its run and each run with its extractor and judges, so v1's rows (another
+    extractor and other judges) are never mixed in unlabelled; they stay in the bundle."""
+    if not src.earlier():
+        rows = [
+            [r.rule, r.model, r.metric, value(r.value), str(r.n), f"`{r.source}`"]
+            for r in src.bundle.behaviour
+        ]
+        if not rows:
+            return "No behaviour row is recorded in this bundle."
+        return table(["Rule", "Model", "Metric", "Value", "n", "Source"], rows)
+    shipped = src.bundle.shipped
+    own = set(shipped.runs)
+    picked = [r for r in src.bundle.behaviour if r.run in own]
+    if not picked:
+        return "No behaviour row is recorded for this release."
+    refs = {r.name: r for r in src.bundle.runs}
+    used = list(dict.fromkeys(r.run for r in picked if r.run))
+    how = "; ".join(f"`{n}`: {scoring(refs[n])}" for n in used if n in refs)
+    earlier = ", ".join(r.version for r in src.earlier())
     rows = [
-        [r.rule, r.model, r.metric, value(r.value), str(r.n), f"`{r.source}`"]
-        for r in src.bundle.behaviour
+        [r.rule, r.model, r.metric, value(r.value), str(r.n), f"`{r.run}`", f"`{r.source}`"]
+        for r in picked
     ]
-    if not rows:
-        return "No behaviour row is recorded in this bundle."
-    return table(["Rule", "Model", "Metric", "Value", "n", "Source"], rows)
+    return (
+        f"{shipped.version}'s runs ({how}). The rows of {earlier} are in the results bundle "
+        "under their own runs.\n\n"
+        + table(["Rule", "Model", "Metric", "Value", "n", "Run", "Source"], rows)
+    )
 
 
 def parity(src: Sources) -> str:
@@ -191,7 +347,11 @@ def parity(src: Sources) -> str:
         table(["Weights", "Schema valid"], [[k, f3(v)] for k, v in sorted(p.schema_valid.items())]),
     ]
     if p.judged_headline_delta:
-        lines += ["", "Judged headline difference (bf16 minus Q4_K_M), 95% interval:", ""]
+        how = ""
+        if src.earlier():
+            ext = src.ref(src.main()).extractor
+            how = f", claims extracted by `{ext}`" if ext else ""
+        lines += ["", f"Judged headline difference (bf16 minus Q4_K_M), 95% interval{how}:", ""]
         lines.append(
             table(
                 ["Judge", "Difference"],
@@ -306,12 +466,25 @@ def limits(src: Sources) -> str:
 def summary(src: Sources) -> str:
     main = src.main()
     by = {m.model: m for m in main.models}
-    ft, base = by.get(src.paths.ft_model), by.get(src.paths.base_model)
+    ft, base = by.get(src.ft_model), by.get(src.paths.base_model)
+    against = "against its own base model and two API models."
+    earlier = src.earlier()
+    if earlier:
+        skip = {src.ft_model, src.paths.base_model}
+        label = {r.model: f"{r.version} (`{r.model}`)" for r in earlier}
+        others = [label.get(m.model, f"`{m.model}`") for m in main.models if m.model not in skip]
+        names = ", ".join(others)
+        prev = ", ".join(r.version for r in earlier)
+        against = (
+            f"against its own base model{f' and {names}' if names else ''}, all scored in one "
+            f"run with the same claim extractor and judges. The published {prev} numbers are "
+            "shown beside them, labelled with their own extractor and judges, and not compared."
+        )
     lines = [
         f"`{src.recipe.base_model}` fine-tuned with LoRA to answer a research question from a "
         "supplied abstract only, as JSON with a label, a short answer and the numbers of the "
         "sentences it relied on. It is trained on PubMedQA's artificial set and scored with "
-        "EvalKit on the expert set, against its own base model and two API models."
+        f"EvalKit on the expert set, {against}"
     ]
     if ft is not None:
         line = (
@@ -327,7 +500,7 @@ def summary(src: Sources) -> str:
 
 def model_index(src: Sources) -> list[dict[str, Any]]:
     main = src.main()
-    ft = next((m for m in main.models if m.model == src.paths.ft_model), None)
+    ft = next((m for m in main.models if m.model == src.ft_model), None)
     if ft is None:
         return []
     metrics: list[dict[str, Any]] = [
@@ -422,7 +595,7 @@ def render(src: Sources, template: str | None = None) -> str:
         training_data=training_data(src),
         training_procedure=training_procedure(src),
         stamps=stamps(src),
-        model_table=model_table(src.main()),
+        model_table=benchmark(src),
         primary_table=primary_table(src),
         secondary_table=secondary_table(src),
         behaviour_table=behaviour_table(src),

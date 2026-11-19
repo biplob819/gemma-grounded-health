@@ -19,7 +19,7 @@ from evalkit.schemas.summary import ModelSummary
 
 from ggh.config import load_recipe
 from ggh.lineage import committed_output, read_manifest, sha256_file
-from ggh.schemas import DataManifest, RecipeConfig, ResultsBundle
+from ggh.schemas import DataManifest, RecipeConfig, ReleaseEntry, ResultsBundle, RunRef
 
 BUNDLE = Path("docs") / "results" / "results_bundle.json"
 DATA_MANIFEST = Path("docs") / "measurements" / "data_manifest.json"
@@ -30,7 +30,7 @@ MAIN_TASK = "pubmedqa"  # the PQA-L benchmark task in EvalKit
 PROBE_TASK_PREFIX = "ggh_probe_"
 OFFSCOPE_TASK = "ggh_offscope"
 BASE_MODEL_NAME = "gemma-e2b-base-q4"
-FT_MODEL_NAME = "gemma-e2b-grounded-q4"  # v2 passes its own name (--ft-model)
+FT_MODEL_NAME = "gemma-e2b-grounded-q4"  # v1's name; the default is the shipped release's model
 
 
 class SourceError(ValueError):
@@ -47,7 +47,7 @@ class Paths:
     targets_lineage: Path = TARGETS_LINEAGE
     recipe: Path = RECIPE
     base_model: str = BASE_MODEL_NAME
-    ft_model: str = FT_MODEL_NAME
+    ft_model: str | None = None  # None: the bundle's shipped release model (--ft-model overrides)
 
 
 @dataclass(frozen=True)
@@ -60,25 +60,56 @@ class Sources:
     paths: Paths
     raw: dict[str, Any] = field(default_factory=dict[str, Any])  # every input as parsed JSON
 
+    @property
+    def ft_model(self) -> str:
+        """The released fine-tune's EvalKit name: `--ft-model` if given, else the shipped
+        release's model, so a v2 bundle never reports v1 as the release by default."""
+        return self.paths.ft_model or self.bundle.shipped.model
+
     def summary(self, task: str) -> RunSummary | None:
         for _, s in self.summaries:
             if s.task == task:
                 return s
         return None
 
-    def shipped_summaries(self) -> list[RunSummary]:
-        """The summaries of the shipped release's runs (the newest release in the bundle), in
-        the order the release lists them; its primary run comes first."""
+    def release_summaries(self, release: ReleaseEntry) -> list[RunSummary]:
+        """The summaries of one release's runs, in the order the release lists them; its
+        primary run comes first."""
         ids = {r.name: r.run_id for r in self.bundle.runs}
         by_id = {s.run_id: s for _, s in self.summaries}
-        names = self.bundle.shipped.runs
-        return [by_id[ids[n]] for n in names if n in ids and ids[n] in by_id]
+        return [by_id[ids[n]] for n in release.runs if n in ids and ids[n] in by_id]
+
+    def shipped_summaries(self) -> list[RunSummary]:
+        """The summaries of the shipped release's runs (the newest release in the bundle)."""
+        return self.release_summaries(self.bundle.shipped)
+
+    def release_main(self, release: ReleaseEntry) -> RunSummary:
+        s = next((s for s in self.release_summaries(release) if s.task == MAIN_TASK), None)
+        if s is None:
+            raise SourceError(f"{release.version} names no summary for the {MAIN_TASK!r} task")
+        return s
 
     def main(self) -> RunSummary:
-        s = next((s for s in self.shipped_summaries() if s.task == MAIN_TASK), None)
-        if s is None:
-            raise SourceError(f"the bundle names no summary for the {MAIN_TASK!r} task")
-        return s
+        return self.release_main(self.bundle.shipped)
+
+    def earlier(self) -> list[ReleaseEntry]:
+        """Releases before the shipped one. Their numbers stand under their own plans and
+        scoring set-up; they are shown beside the shipped release's, labelled, never compared."""
+        return list(self.bundle.releases[:-1])
+
+    def ref(self, summary: RunSummary) -> RunRef:
+        """The bundle's record of the run a summary came from (judges, extractor, name)."""
+        r = next((r for r in self.bundle.runs if r.run_id == summary.run_id), None)
+        if r is None:
+            raise SourceError(f"run {summary.run_id} is not in the bundle")
+        return r
+
+    def citation_run(self, release: ReleaseEntry) -> RunRef | None:
+        """The release's first run with citation precision in the bundle (v1: the citation
+        rescore, main_citation; v2: main_v2 itself)."""
+        has = {r.run for r in self.bundle.results if r.citation_precision}
+        refs = {r.name: r for r in self.bundle.runs}
+        return next((refs[n] for n in release.runs if n in has and n in refs), None)
 
     def probes(self) -> list[RunSummary]:
         return [s for s in self.shipped_summaries() if s.task.startswith(PROBE_TASK_PREFIX)]

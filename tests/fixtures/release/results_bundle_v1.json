@@ -42,7 +42,8 @@
       "started_at": "2026-11-17T04:34:06.665224Z",
       "spent_usd": 53.68107,
       "summary_sha256": "11b1ae81f2dd251f7b45a042715e9a4f7f5ba6594ccb45bec96a17b9d21ddbe1",
-      "records_sha256": "086d626f131e04f76dea134ca75d3ef01bd4748868950f43e63855575fb57b0b"
+      "records_sha256": "086d626f131e04f76dea134ca75d3ef01bd4748868950f43e63855575fb57b0b",
+      "extractor": "claude-haiku-5-5"
     },
     {
       "name": "main_citation",
@@ -65,7 +66,8 @@
       "started_at": "2026-11-17T08:48:55.205419Z",
       "spent_usd": 48.239756,
       "summary_sha256": "8377d6aab5fb61567dc08182442f9dd9f0ea7dbb2277422f6e3c8f816e7daafd",
-      "records_sha256": "0ca906588e0eca793aa5e43559d8199c8156a91869fdf87d9db6bd576a774f0f"
+      "records_sha256": "0ca906588e0eca793aa5e43559d8199c8156a91869fdf87d9db6bd576a774f0f",
+      "extractor": "claude-haiku-5-5"
     },
     {
       "name": "offscope",
@@ -88,7 +90,8 @@
       "started_at": "2026-11-17T05:52:21.167842Z",
       "spent_usd": 1.23623,
       "summary_sha256": "791af3d302fe1a20da10fdcbd6e012bd56f57e9bf63d629b9e0089e861c5aa9a",
-      "records_sha256": "4c4431056201221b4429f547860a06b8aa14002ad46362a1a265f00e13bf56d8"
+      "records_sha256": "4c4431056201221b4429f547860a06b8aa14002ad46362a1a265f00e13bf56d8",
+      "extractor": "claude-haiku-5-5"
     },
     {
       "name": "parity",
@@ -108,7 +111,8 @@
       "started_at": "2026-11-17T07:12:57.264378Z",
       "spent_usd": 1.029112,
       "summary_sha256": "7ee318a17a8de17e9d13711629f256836582c3a5668207348f0410d2ab3a18c0",
-      "records_sha256": "a994adf31738f4dfef9fd4c4e92e842597f240f635d504bf418c2c42a9efbfa8"
+      "records_sha256": "a994adf31738f4dfef9fd4c4e92e842597f240f635d504bf418c2c42a9efbfa8",
+      "extractor": "claude-haiku-5-5"
     },
     {
       "name": "probe_original",
@@ -129,7 +133,8 @@
       "started_at": "2026-11-17T05:56:53.030262Z",
       "spent_usd": 1.403682,
       "summary_sha256": "9dbae70dcbadefa996fe8132e3f0a4d86a1c9e202b37b6131d70ae9b373023a8",
-      "records_sha256": "97a613fcbbad72069983b75f2ab33d5b84784fdd338c90f65a71c2fddfd69cae"
+      "records_sha256": "97a613fcbbad72069983b75f2ab33d5b84784fdd338c90f65a71c2fddfd69cae",
+      "extractor": "claude-haiku-5-5"
     },
     {
       "name": "probe_paraphrase",
@@ -150,7 +155,8 @@
       "started_at": "2026-11-17T06:11:18.812987Z",
       "spent_usd": 1.017916,
       "summary_sha256": "4a56d32d734c96bc77c670bf6ad2061d61bdda19d42f2c6ef87d46714d7effcb",
-      "records_sha256": "9435a9cbf274ef995acc96c5139ce2963fe9c19f1c5bb7a2312c79f985e6fc47"
+      "records_sha256": "9435a9cbf274ef995acc96c5139ce2963fe9c19f1c5bb7a2312c79f985e6fc47",
+      "extractor": "claude-haiku-5-5"
     }
   ],
   "releases": [

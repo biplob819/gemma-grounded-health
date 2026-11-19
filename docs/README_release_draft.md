@@ -4,12 +4,14 @@
 release. The results and links blocks are generated: run `uv run ggh readme-table --write
 docs/README_release_draft.md` after E3.3 writes docs/results/results_bundle.json (v2 numbers
 drop in from the bundle; nothing here is typed by hand). Until then the blocks show the v1
-fixture bundle (tests/fixtures/release/results_bundle_v1.json). Screenshot files are slots: a
-test checks each one exists once the release is tagged. -->
+fixture bundle (tests/fixtures/release/results_bundle_v1.json). With v2 in the bundle the block
+shows v2's run labelled with its extractor and judge (OWNER D-57: GPT-6 Luna, GPT-6.1 Sol), then
+v1's published numbers under their own (Claude Haiku 5.5, Claude Opus 5.5 and GPT-6.1 Sol), not
+compared. Screenshot files are slots: a test checks each one exists once the release is tagged. -->
 
 > **Research only, not medical advice.** The model summarises what a study abstract says. It is not guidance for anyone's diagnosis or treatment.
 
-A small open model (Gemma 4 E2B, fine-tuned with LoRA) that answers a biomedical research question **only from the abstract you give it**, as JSON with a yes, no or maybe label, a short answer and the numbers of the sentences it relied on. It is scored with [EvalKit](https://github.com/biplob819/evalkit) against its own base model and two API models, and it runs offline on a laptop.
+A small open model (Gemma 4 E2B, fine-tuned with LoRA) that answers a biomedical research question **only from the abstract you give it**, as JSON with a yes, no or maybe label, a short answer and the numbers of the sentences it relied on. It is scored with [EvalKit](https://github.com/biplob819/evalkit) against the first fine-tune (v1) and its own base model, all three scored in one run with the same claim extractor and judge; two API models' published v1 numbers are shown beside them, not compared. It runs offline on a laptop.
 
 ## Results
 

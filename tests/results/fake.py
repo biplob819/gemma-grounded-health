@@ -22,6 +22,7 @@ RUNS = (
     "parity",
     "dev_ground_v1",
 )
+V2_RUNS = ("main_v2", "offscope_v2", "probe_original_v2", "probe_paraphrase_v2", "parity_v2")
 PLAN_COMMITTED = "2026-11-30T00:00:00Z"
 V2_STARTED = "2026-12-01T00:00:00Z"
 
@@ -59,6 +60,36 @@ def _records(folder: Path) -> list[dict]:
 def _as_v2(obj: dict) -> dict:
     text = json.dumps(obj).replace(V1, V2).replace("ft-Q4_K_M.gguf", "ft-v2-Q4_K_M.gguf")
     return json.loads(text)
+
+
+OPUS = "claude-opus-5-5"
+
+
+def sol_only(obj):
+    """OWNER D-57: every V2.2 run is judged by GPT-6.1 Sol alone, so Opus's verdicts, per-judge
+    entries, comparisons and judge-mode are removed from the copied E3.2 data."""
+    if isinstance(obj, dict):
+        if obj.get("judge") == OPUS:
+            return None
+        out = {k: sol_only(v) for k, v in obj.items() if OPUS not in k}
+        if out.get("judge_mode") == "dual":
+            out["judge_mode"] = "single"
+            if "self_preference" in out:
+                out["self_preference"] = {}  # EvalKit: a single-judge run has none
+        return out
+    if isinstance(obj, list):
+        kept = [sol_only(v) for v in obj if v != OPUS]
+        return [v for v in kept if v is not None]
+    return obj
+
+
+def _sol_only_file(path: Path) -> None:
+    if path.name.endswith(".gz"):
+        rows = [sol_only(r) for r in _records(path.parent)]
+        path.write_bytes(_gz(rows))
+    else:
+        data = sol_only(json.loads(path.read_text(encoding="utf-8")))
+        path.write_text(json.dumps(data, indent=2), encoding="utf-8")
 
 
 def _v2_run(
@@ -108,6 +139,7 @@ def _v2_run(
     run = json.loads((s_dir / "run.json").read_text(encoding="utf-8"))
     run["models"] = [m["model"] for m in summary["models"]]
     run["started_at"] = summary["started_at"] = started
+    run["finished_at"] = summary["finished_at"] = started
     run["run_id"] = summary["run_id"] = run_id or f"r-fake-{dst}"
     (d_dir / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     (d_dir / "run.json").write_text(json.dumps(run, indent=2), encoding="utf-8")
@@ -138,6 +170,10 @@ def add_v2(root: Path, *, started: str = V2_STARTED, finalise: bool = True) -> N
     probe = json.loads((m / "probe_report.json").read_text(encoding="utf-8"))
     probe["models"] = {V2: probe["models"][V1]}
     (m / "probe_report_v2.json").write_text(json.dumps(probe), encoding="utf-8")
+    for run in V2_RUNS:
+        for f in ("summary.json", "run.json", "records.jsonl.gz"):
+            _sol_only_file(root / "docs/results" / run / f)
+    _sol_only_file(m / "parity_headline_v2.json")
     for name in ("audit_v2_result", "audit_v2r1_result", "audit_v2r2_result"):
         res = {"labelled": 50, "overall": {"ok": 49}, "passed": False}
         (m / f"{name}.json").write_text(json.dumps(res), encoding="utf-8")

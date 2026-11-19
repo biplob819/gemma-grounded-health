@@ -101,6 +101,9 @@ class RunRef(Model):
     spent_usd: NonNegFloat
     summary_sha256: Sha256
     records_sha256: Sha256
+    # the claim extractor, from the release's plan or the EvalKit config it names (E3.2: Claude
+    # Haiku 5.5; V2.2, OWNER D-57: GPT-6 Luna), so numbers from different set-ups stay labelled
+    extractor: NonBlank | None = None
 
 
 class ModelResult(Model):
