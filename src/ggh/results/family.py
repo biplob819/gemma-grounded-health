@@ -2,8 +2,9 @@
 
 EvalKit's summary Holm-corrects across every model pair in a run and compares the headline and
 accuracy only. The V2.2 plan instead names a family: two pairs (v2 minus v1, v2 minus base),
-three outcomes (headline, citation precision, aim-citation rate) and both judges, twelve tests,
-Holm-corrected together. This module computes those tests from EvalKit's per-record values
+three outcomes (headline, citation precision, aim-citation rate) and each of the plan's judges,
+Holm-corrected together: six tests under OWNER D-57 (GPT-6.1 Sol alone; twelve with two
+judges). This module computes those tests from EvalKit's per-record values
 with EvalKit's own bootstrap functions (`evalkit.stats`: seeded resamples, paired percentile
 interval, two-sided p with the +1 correction, Holm step-down), so the method is EvalKit's and
 only the family differs.

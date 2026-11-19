@@ -40,16 +40,16 @@ def test_the_check_is_not_vacuous_today():
 
 V2 = P.load_plan(ROOT, "configs/eval_plan_v2.yaml")
 V2_MODEL = "gemma-e2b-grounded-v2-q4"
-E32 = ["gemma-e2b-base-q4", "gemma-e2b-grounded-q4", "claude-haiku-5-5", "gpt-6-luna"]
 
 
-def test_v2_plan_names_the_primary_comparisons_judges_metric_and_rule():
+def test_v2_plan_names_the_primary_comparisons_judge_metric_and_rule():
     v1 = P.load_plan(ROOT, "configs/eval_plan.yaml").data
     d = V2.data
-    assert d["metric"] == "headline" and d["judges"] == v1["judges"]
+    # OWNER D-57: OpenAI only; Sol judges alone and Luna extracts (v1's plan: Opus and Sol)
+    assert d["metric"] == "headline" and d["judges"] == ["gpt-6.1-sol"]
+    assert "gpt-6.1-sol" in v1["judges"] and d["extractor"] == "gpt-6-luna"
+    assert d["provider"] == "openai_only"
     assert d["n_cases"] == v1["n_cases"] == 1000 and d["seed"] == v1["seed"] == 7
-    assert V2.primary[:2] == [(V2_MODEL, "gemma-e2b-grounded-q4"), (V2_MODEL, "gemma-e2b-base-q4")]
-    assert all(a == V2_MODEL for a, _ in V2.primary)
     # OWNER D-53: v2 vs v1 and v2 vs base only; three outcomes with directions; Holm over them
     assert V2.primary == [(V2_MODEL, "gemma-e2b-grounded-q4"), (V2_MODEL, "gemma-e2b-base-q4")]
     assert [(m["metric"], m["better"]) for m in d["primary_metrics"]] == [
@@ -57,29 +57,40 @@ def test_v2_plan_names_the_primary_comparisons_judges_metric_and_rule():
         ("citation_precision", "higher"),
         ("aim_citation_rate", "lower"),
     ]
-    assert d["holm"] == "family" and "twelve primary tests" in d["rule"] and "tie" in d["rule"]
-    assert [b for _, b in d["reported_not_primary"]] == ["claude-haiku-5-5", "gpt-6-luna"]
-    assert load_run_config(ROOT / d["config"]).max_cost_usd == 25  # OWNER D-53
+    n_tests = len(V2.primary) * len(d["primary_metrics"]) * len(d["judges"])
+    assert n_tests == 6 and d["holm"] == "family" and "six primary tests" in d["rule"]
+    assert "tie" in d["rule"]
+    assert d["shown_not_compared"] == ["claude-haiku-5-5", "gpt-6-luna"]  # OWNER D-57
+    caps = [load_run_config(ROOT / r.spec["config"]).max_cost_usd for r in V2.runs]
+    assert sum(caps) == 25  # OWNER D-53's $25, split across the V2.2 runs (D-57)
     assert any(r.name == "parity_v2" for r in V2.runs)  # judged parity runs (OWNER D-53)
     assert d["built_after_test_seen"] is True  # OWNER D-43
 
 
-def test_v2_main_run_adds_only_v2_and_takes_the_rest_from_the_cache():
+def test_v2_plan_is_final_and_names_the_frozen_checkpoint_and_the_evalkit_release():
+    d = V2.data
+    assert V2.status == "final" and d["evalkit"].startswith("f9cbc8e")  # D-56
+    manifest = json.loads(
+        (ROOT / "docs/measurements/v2/gguf_ft2_manifest.json").read_text(encoding="utf-8")
+    )
+    assert d["checkpoint"]["gguf_q4_k_m_sha256"] == manifest["files"]["ft2-Q4_K_M.gguf"]["sha256"]
+    assert (ROOT / d["checkpoint"]["train_run"]).is_file()
+    assert d["checkpoint"]["adapter_sha256"].startswith("e5f97861693346623bf5")
+
+
+def test_v2_main_run_rescores_base_and_v1_from_cached_answers_with_one_extractor_and_judge():
     main = next(r for r in V2.runs if r.name == "main_v2")
     cfg = load_run_config(ROOT / main.spec["config"])
-    assert main.spec["new_models"] == [V2_MODEL] and main.spec["cached_models"] == E32
-    assert sorted(cfg.models) == sorted([*E32, V2_MODEL])
+    e32_gemma = ["gemma-e2b-base-q4", "gemma-e2b-grounded-q4"]
+    assert main.spec["new_models"] == [V2_MODEL]
+    assert main.spec["cached_models"] == main.spec["rescored_models"] == e32_gemma
+    assert sorted(cfg.models) == sorted([*e32_gemma, V2_MODEL])
+    assert list(cfg.judges) == V2.data["judges"] and cfg.extractor == V2.data["extractor"]
     e32 = load_run_config(ROOT / "configs/evalkit.yaml")
-    for field in (
-        "judges",
-        "extractor",
-        "structured_output",
-        "max_output_tokens",
-        "seed",
-        "default_effort",
-        "judge_effort",
-        "extractor_effort",
-    ):
+    # everything that keys a cached answer matches E3.2, so base and v1 answers are reused
+    for field in ("structured_output", "max_output_tokens", "seed", "default_effort"):
+        assert getattr(cfg, field) == getattr(e32, field), field
+    for field in ("judge_effort", "extractor_effort"):
         assert getattr(cfg, field) == getattr(e32, field), field
     for m, url in e32.endpoints.items():
         assert cfg.endpoints[m] == url  # base and v1 served as in E3.2
@@ -92,6 +103,10 @@ def test_v2_main_run_adds_only_v2_and_takes_the_rest_from_the_cache():
             "run_id"
         ]
     )
+    assert V2.data["cache"]["expected_hits"] == e32_gemma
+    for r in V2.runs:  # every V2.2 run uses the same extractor and judge
+        c = load_run_config(ROOT / r.spec["config"])
+        assert list(c.judges) == ["gpt-6.1-sol"] and c.extractor == "gpt-6-luna", r.name
 
 
 def test_v2_side_runs_are_v2_only_on_the_e32_tasks():

@@ -133,10 +133,11 @@ def test_v2_appears_when_its_main_run_exists(v2):
     assert {"main_v2", "offscope_v2", "parity_v2"} <= {r.name for r in b.runs}
 
 
-def test_v2_primary_family_is_the_owners_d53_family(v2):
+def test_v2_primary_family_is_the_owners_d53_family_under_one_judge(v2):
     p2 = [c for c in v2.bundle.primary_comparisons if c.plan == "configs/eval_plan_v2.yaml"]
-    # 2 pairs (v1, base) x 3 outcomes x 2 judges, Holm over those 12; Haiku and Luna not primary
-    assert len(p2) == 12 and {c.family_size for c in p2} == {12}
+    # 2 pairs (v1, base) x 3 outcomes x Sol alone (OWNER D-57), Holm over those 6
+    assert len(p2) == 6 and {c.family_size for c in p2} == {6}
+    assert {c.judge for c in p2} == {"gpt-6.1-sol"}
     assert {c.model_b for c in p2} == {fake.V1, "gemma-e2b-base-q4"}
     assert all(
         c.model_a == fake.V2 and c.run == "main_v2" and c.method == "plan_family" for c in p2
@@ -151,17 +152,21 @@ def test_v2_primary_family_is_the_owners_d53_family(v2):
     assert all(c.diff.point == 0 and c.verdict == "tie" for c in vs_v1)
     # against base, v1's citations are worse on both citation outcomes, whatever the direction
     by = {(c.metric, c.judge): c for c in p2 if c.model_b == "gemma-e2b-base-q4"}
-    aim = by[("aim_citation_rate", "claude-opus-5-5")]
-    assert aim.diff.point == pytest.approx(0.5569 - 0.0571, abs=1e-3) and aim.verdict == "b_better"
+    aim = by[("aim_citation_rate", "gpt-6.1-sol")]
+    assert aim.diff.point == pytest.approx(0.5671 - 0.1417, abs=1e-3) and aim.verdict == "b_better"
     assert by[("citation_precision", "gpt-6.1-sol")].verdict == "b_better"
-    key = f"aim_citation_rate: {fake.V2} minus gemma-e2b-base-q4 (claude-opus-5-5)"
+    key = f"aim_citation_rate: {fake.V2} minus gemma-e2b-base-q4 (gpt-6.1-sol)"
     assert v2.bundle.primary[key] == aim.diff
 
 
-def test_v2_haiku_and_luna_are_reported_not_primary(v2):
+def test_v2_is_never_compared_with_haiku_or_luna(v2):
+    # OWNER D-57: they are not re-scored, so no v2 comparison with them exists anywhere
+    every = [*v2.bundle.primary_comparisons, *v2.bundle.secondary]
+    v2_pairs = {
+        c.model_b for c in every if c.run == "main_v2" and fake.V2 in (c.model_a, c.model_b)
+    }
+    assert not v2_pairs & {"claude-haiku-5-5", "gpt-6-luna"}
     sec = [c for c in v2.bundle.secondary if c.run == "main_v2" and c.model_a == fake.V2]
-    pairs = {c.model_b for c in sec if c.metric == "headline"}
-    assert {"claude-haiku-5-5", "gpt-6-luna"} <= pairs
     assert all(c.method == "evalkit" and c.plan == "secondary" for c in sec)
 
 

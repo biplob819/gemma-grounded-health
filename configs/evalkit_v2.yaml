@@ -1,20 +1,19 @@
-# V2.2 main run (VEV-04, OWNER D-43): the E3.2 main configuration with the v2 fine-tune added.
-# DRAFT until configs/eval_plan_v2.yaml is finalised and hashed. EvalKit pin: see the plan.
-# base, v1, Haiku 5.5 and GPT-6 Luna are answered, extracted and judged from EvalKit's store
-# (the v1 citation rescore, r-edfcba37159e); only v2's answers and judgments are new.
+# V2.2 main run (VEV-04), OpenAI only (OWNER D-57): base, v1 and v2 on the E3.2 cases.
+# Base and v1 answers come from EvalKit's answer store (their servers stay stopped, so a miss
+# fails); every model's claims are extracted by GPT-6 Luna and judged by GPT-6.1 Sol.
 # Gemma reaches EvalKit through the `endpoints` route: llama-server started by `ggh serve` (D-7).
-models: [gemma-e2b-base-q4, gemma-e2b-grounded-q4, gemma-e2b-grounded-v2-q4, claude-haiku-5-5, gpt-6-luna]
+models: [gemma-e2b-base-q4, gemma-e2b-grounded-q4, gemma-e2b-grounded-v2-q4]
 endpoints:
   gemma-e2b-base-q4: http://127.0.0.1:8080/v1
   gemma-e2b-grounded-q4: http://127.0.0.1:8081/v1
   gemma-e2b-grounded-v2-q4: http://127.0.0.1:8083/v1
-judges: [claude-opus-5-5, gpt-6.1-sol]
-extractor: claude-haiku-5-5
+judges: [gpt-6.1-sol]            # OWNER D-57: Sol alone
+extractor: gpt-6-luna             # OWNER D-57: replaces Haiku 5.5
 structured_output: true          # D-6
 max_output_tokens: 2048
-concurrency: {anthropic: 8, openai: 8, openai_compatible: 1}
+concurrency: {openai: 8, openai_compatible: 1}
 seed: 7                          # the E3.2 main run's seed, so the cached cases are the same 1,000
 default_effort: medium
 judge_effort: medium
 extractor_effort: medium
-max_cost_usd: 25                 # OWNER D-53: hard stop at the approval line; a trip returns to the owner
+max_cost_usd: 16  # OWNER D-53/D-57: the V2.2 caps sum to $25
