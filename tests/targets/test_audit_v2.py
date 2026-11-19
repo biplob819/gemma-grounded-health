@@ -415,3 +415,12 @@ def test_failed_rounds_rescore_to_their_committed_results(rnd, tmp_path):
     r = audit_v2.score(tmp_path)
     assert r == committed and not r["passed"]
     assert not r["bars"]["no_answer_cites_aim_or_method_or_two_weak"]
+
+
+def test_round_three_rescores_to_its_committed_failure():
+    """Round 3 (the v2.2 targets v2 trained on) missed AUD-R4; OWNER D-50 waived it."""
+    committed = json.loads((ROOT / audit_v2.MEASURE / "audit_v2_result.json").read_text("utf-8"))
+    r = audit_v2.score(ROOT)
+    assert r == committed and not r["passed"]
+    assert len(r["answers_failing"]) == 3 and len(r["answers_with_one_weak"]) == 5
+    assert r["overall"] == {"ok": 49, "wrong_label": 1}
