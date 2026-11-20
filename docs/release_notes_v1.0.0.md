@@ -23,11 +23,11 @@ From `configs/eval_plan_v2.yaml` (final). Differences with 95% paired bootstrap 
 | Comparison | Outcome | Judge | Difference | p | Verdict |
 |---|---|---|---|---|---|
 | gemma-e2b-grounded-v2-q4 minus gemma-e2b-grounded-q4 | headline | gpt-6.1-sol | -0.002 [-0.034, 0.030] | 0.927 | tie (not separated) |
-| gemma-e2b-grounded-v2-q4 minus gemma-e2b-grounded-q4 | citation_precision | gpt-6.1-sol | 0.374 [0.344, 0.403] | 0.000 | gemma-e2b-grounded-v2-q4 better |
-| gemma-e2b-grounded-v2-q4 minus gemma-e2b-grounded-q4 | aim_citation_rate (lower is better) | gpt-6.1-sol | -0.476 [-0.508, -0.443] | 0.000 | gemma-e2b-grounded-v2-q4 better |
-| gemma-e2b-grounded-v2-q4 minus gemma-e2b-base-q4 | headline | gpt-6.1-sol | -0.075 [-0.113, -0.037] | 0.000 | gemma-e2b-base-q4 better |
+| gemma-e2b-grounded-v2-q4 minus gemma-e2b-grounded-q4 | citation_precision | gpt-6.1-sol | 0.374 [0.344, 0.403] | <0.001 | gemma-e2b-grounded-v2-q4 better |
+| gemma-e2b-grounded-v2-q4 minus gemma-e2b-grounded-q4 | aim_citation_rate (lower is better) | gpt-6.1-sol | -0.476 [-0.508, -0.443] | <0.001 | gemma-e2b-grounded-v2-q4 better |
+| gemma-e2b-grounded-v2-q4 minus gemma-e2b-base-q4 | headline | gpt-6.1-sol | -0.075 [-0.113, -0.037] | <0.001 | gemma-e2b-base-q4 better |
 | gemma-e2b-grounded-v2-q4 minus gemma-e2b-base-q4 | citation_precision | gpt-6.1-sol | -0.011 [-0.046, 0.023] | 0.504 | tie (not separated; depends on the aim rule, OWNER D-62) |
-| gemma-e2b-grounded-v2-q4 minus gemma-e2b-base-q4 | aim_citation_rate (lower is better) | gpt-6.1-sol | -0.054 [-0.080, -0.028] | 0.000 | gemma-e2b-grounded-v2-q4 better (depends on the aim rule, OWNER D-62) |
+| gemma-e2b-grounded-v2-q4 minus gemma-e2b-base-q4 | aim_citation_rate (lower is better) | gpt-6.1-sol | -0.054 [-0.080, -0.028] | <0.001 | gemma-e2b-grounded-v2-q4 better (depends on the aim rule, OWNER D-62) |
 
 #### Citation results and the aim rule (OWNER D-62)
 
@@ -48,7 +48,7 @@ Caveats: gpt-6.1-sol: calibrated, held-out kappa 0.598 [0.468, 0.711] on 231 pub
 
 ## Artifacts
 
-Release `v2` (`gemma-e2b-grounded-v2-q4`), 20 files, 18,771,038,204 bytes, lineage verified from `artifacts/parity_v2/manifest.json` (5 stages), plan problems: 0. "published" means the file on the Hub was downloaded back with this sha256 (tag `v2.0.0`).
+Release `v2` (`gemma-e2b-grounded-v2-q4`), 20 files, 18,771,038,208 bytes, lineage verified from `artifacts/parity_v2/manifest.json` (5 stages), plan problems: 0. "published" means the file on the Hub was downloaded back with this sha256 (tag `v2.0.0`).
 
 | File | Size | sha256 | Hub |
 |---|---|---|---|
@@ -62,7 +62,7 @@ Release `v2` (`gemma-e2b-grounded-v2-q4`), 20 files, 18,771,038,204 bytes, linea
 | `biplob123/gemma-4-e2b-grounded-health/ggh_merge.json` | 4.07 KB | `558fbdbda2567142579e7b23cdb74e9f79bf8d509b032876e683600974a50cca` | published |
 | `biplob123/gemma-4-e2b-grounded-health/adapter/adapter_config.json` | 1.58 KB | `17c0c0526c410b1a2aecbf74d67594f8f5f961993b7c9d7a955341674274bcf9` | published |
 | `biplob123/gemma-4-e2b-grounded-health/adapter/adapter_model.safetensors` | 96.69 MB | `8ea0959ffae6cdc5122a5158112f84c6545857b64e6b4751825cc25a8ad9ee01` | published |
-| `biplob123/gemma-4-e2b-grounded-health/README.md` | 26.99 KB | `de6ae083ed3568882e2d181158b9144e47ad528b1198c9f467d44050b269cb3c` | published |
+| `biplob123/gemma-4-e2b-grounded-health/README.md` | 26.99 KB | `7c36271fda03bed6d697f13484b654bb9ca6a327250b545aba0b406a06968718` | published |
 | `biplob123/gemma-4-e2b-grounded-health/results_bundle.json` | 107.17 KB | `2deb2e839756b392003c9775a83bc952d0ee6d532a09c189f73e2bf7eec93f56` | published |
 | `biplob123/gemma-4-e2b-grounded-health/lineage.json` | 8.05 KB | `1ddb6a73cfbcc125cf7b29debb951bffdece00ce2d255fdafadfaaff6c39c037` | published |
 | `biplob123/gemma-4-e2b-grounded-health-GGUF/gemma-4-e2b-grounded-health-Q4_K_M.gguf` | 3.43 GB | `6da2c13ee1a3b94c99f9107bb27f344539364cdad371caea4b1114ef91b5be45` | published |
@@ -82,7 +82,7 @@ From [Known issues](https://github.com/biplob819/gemma-grounded-health/blob/main
 - **V2.1.** v2 dev label accuracy 0.795 misses the 0.80 bar (v1 0.880); v2 answers 'no' on 35 of 178 'yes' cases. No other checkpoint was tried, so VTG-05's dev-grounding part is not met *Status:* Owner-waived (OWNER D-55); disclosed
 - **V2.1.** v2 Q4_K_M dev parity 0.920 misses the 0.95 bar (Q8_0 0.996); the loss comes from quantization *Status:* Owner-waived (OWNER D-55); disclosed; V2.2 runs judged bf16 parity
 - **V2.1.** The round-3 per-sentence audit of the v2.2 targets missed AUD-R4 (3 failing answers, 5 with one weak sentence against a bar of 3); v2 trained on them, so VTG-07 is not met as written *Status:* Owner-waived (OWNER D-50); disclosed in DATA_CARD
-- **V2.1.** The v2 laptop benchmark ran on a busy machine (load 4.7 rising to 9): tg128 gaps ft2 vs ft are 1.7 % / 2.7 %, but the per-request gap at Q4_K_M (30 %) is noise from load, as the models share one architecture *Status:* Open; quote tg128; rerun on a quiet machine before release
+- **V2.1.** The v2 laptop benchmark ran on a busy machine (load 4.7 rising to 9): tg128 gaps ft2 vs ft are 1.7 % / 2.7 %, but the per-request gap at Q4_K_M (30 %) is noise from load, as the models share one architecture *Status:* Open after v1.0.0: a quiet re-run was tried on 2026-11-21 but the machine was busy (another project's emulator); the card prints the measured numbers and llama-bench tg128; re-run when the laptop is idle
 - **V2.2.** All V2.2 numbers rest on one judge (GPT-6.1 Sol) and one extractor (GPT-6 Luna), because the Anthropic credit ran out (OWNER D-57); Opus never judged v2 on PQA-L *Status:* Disclosed; Sol's agreement with a Claude Opus 5.5 reference labeller is reported (D-59, D-60)
 - **V2.2.** v2 Q4_K_M ties v1 on the headline (0.329 vs 0.331) and is below base (0.404); it fixed citation precision (0.736, v1 0.362) and the aim-citation rate (0.084, v1 0.560) relative to v1, not correct-and-grounded. Against base it comes within about 0.05 of base's citation quality on either count; whether it is better or worse depends on how aim-restating claims are read (see the E3.3 aim-rule row) *Status:* Disclosed; the README and card lead with it
 - **V2.2.** EvalKit's dry-run estimate for main_v2 ($33.30, above its $16 cap; it prices every model fresh) was printed in the run log but not committed before the run, and no per-run dry-run figure was committed for the side runs; the cache-aware estimate ($8.63–$10.78) was. The run relied on stop-at-cap and spent $4.00 *Status:* Disclosed; later runs commit EvalKit's dry run first
@@ -96,7 +96,7 @@ From [Known issues](https://github.com/biplob819/gemma-grounded-health/blob/main
 - **E3.3.** The citation check's part-of-claim clause can mark a sentence supporting for a claim it only partly bears on; when no other claim uses it, that answer's citation precision rises (base pqa-27928673, pqa-15588538). Not measured run-wide; upper gauge 11.3% / 11.0% / 25.3% of cited sentences (base, v1, v2), and v2-vs-v1 holds even if all were wrong (0.483 against 0.252) *Status:* Disclosed (`sample_read_faults.md#part-of-claim`)
 - **E3.3.** In the B8 blind batches 19 of v2's 20 answers carried their citations (" [n]") and no other model's did, so v2's answers were easier to tell apart (no names shown; Luna's own text sometimes cites inline); all 20 were labelled no advice *Status:* Disclosed (`sample_read_faults.md#presentation`)
 - **E3.3.** The run-wide figures on the faults page (part-of-claim gauge, both judge-disagreement rates, label-correct extractor drops) were recomputed by the verifiers but are not pinned by a test or written by `ggh results aim-check` *Status:* Open; fold them into `aim_rule_check.json` with a test (R4.1 or later)
-- **R4.1.** v2's laptop generation p50 is 73.1 tokens/s against v1's 104.6 in the same bench session, while llama-bench tg128 is the same (129 vs 131) and answer lengths are similar; unexplained *Status:* Open; the card prints the measured numbers; re-run the bench on a quiet machine before R4.2
+- **R4.1.** v2's laptop generation p50 is 73.1 tokens/s against v1's 104.6 in the same bench session, while llama-bench tg128 is the same (129 vs 131) and answer lengths are similar; unexplained *Status:* Open after v1.0.0: a quiet re-run was tried on 2026-11-21 but the machine was busy (another project's emulator); the card prints the measured numbers and llama-bench tg128; re-run when the laptop is idle
 - **R4.1.** The card's number test checks that each number exists in the bundle or its sources, not that it sits in the right place (it let a rotated audit figure through, since fixed and now pinned by its own test) *Status:* Open; targeted per-section checks for the audit and training data were added; a cell-by-cell check is future work
 - **R4.2.** Through Ollama, Gemma 4 thinks first unless run with `--think=false`, and Ollama samples at its default temperature, so its answers can differ from the benchmark's greedy ones (one sample: [9] vs llama-server's [8]) *Status:* Disclosed on the GGUF card with the `--think=false` command; the check runs thinking off
 

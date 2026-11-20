@@ -183,7 +183,7 @@ From `configs/eval_plan.yaml` (final). Differences with 95% paired bootstrap int
 | gemma-e2b-grounded-q4 minus gemma-e2b-base-q4 | headline | claude-opus-5-5 | -0.030 [-0.067, 0.007] | 0.119 | tie (not separated) |
 | gemma-e2b-grounded-q4 minus gemma-e2b-base-q4 | headline | gpt-6.1-sol | -0.064 [-0.101, -0.025] | 0.001 | gemma-e2b-base-q4 better |
 | gemma-e2b-grounded-q4 minus claude-haiku-5-5 | headline | claude-opus-5-5 | 0.043 [0.005, 0.081] | 0.026 | tie (not separated) |
-| gemma-e2b-grounded-q4 minus claude-haiku-5-5 | headline | gpt-6.1-sol | 0.099 [0.063, 0.136] | 0.000 | gemma-e2b-grounded-q4 better |
+| gemma-e2b-grounded-q4 minus claude-haiku-5-5 | headline | gpt-6.1-sol | 0.099 [0.063, 0.136] | <0.001 | gemma-e2b-grounded-q4 better |
 | gemma-e2b-grounded-q4 minus gpt-6-luna | headline | claude-opus-5-5 | -0.043 [-0.082, -0.005] | 0.027 | tie (not separated) |
 | gemma-e2b-grounded-q4 minus gpt-6-luna | headline | gpt-6.1-sol | 0.040 [0.002, 0.079] | 0.044 | gemma-e2b-grounded-q4 better |
 

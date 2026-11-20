@@ -58,7 +58,7 @@ Run `main_citation` (`r-edfcba37159e`), claims extracted by `claude-haiku-5-5`, 
 | claude-haiku-5-5 | 1000 | 0.685 [0.656, 0.714] | 0.345 [0.316, 0.374] | 0.231 [0.205, 0.257] | 0.848 [0.836, 0.860] | 0.882 [0.872, 0.893] | 0.186 [0.162, 0.210] | 0.225 [0.199, 0.251] |
 | gpt-6-luna | 1000 | 0.579 [0.548, 0.611] | 0.431 [0.401, 0.462] | 0.290 [0.262, 0.319] | 0.865 [0.851, 0.879] | 0.894 [0.881, 0.905] | 0.094 [0.076, 0.113] | 0.116 [0.096, 0.136] |
 
-Caveats: single judge: self-preference not measured; gpt-6.1-sol: calibrated, held-out kappa 0.598 [0.468, 0.711] on 231 pubmedqa claims, lower bound at least 0.4 (OWNER D-59): agreement with a Claude Opus 5.5 reference labeller (a model's labels, not a human expert's; OWNER D-60). Gemma-family check (40 claims from main_v2): agreement 0.950, kappa 0.893 [0.722, 1.000]; EvalKit's own run summaries keep its per-run stamp (OWNER D-59); B5 and B8 are a blind review by Claude Opus 5.5, not the owner (OWNER D-61); v2-vs-base citation results depend on how the judge applies the citation check's aim rule; a post-hoc count makes base better than v2 on citation precision and aim-citation rate, so v2 is not claimed to beat base on citations, while v2-vs-v1 holds under both counts (OWNER D-62, `docs/measurements/aim_rule_check.json`). The demo runs bf16 weights; the benchmark scores Q4_K_M, which agrees with bf16 on the label for 0.920 of 500 dev prompts. On a laptop (Apple M3 Max) the Q4_K_M GGUF generates 73.1 tokens/s (p50). Research only, not medical advice.
+Caveats: single judge: self-preference not measured; gpt-6.1-sol: calibrated, held-out kappa 0.598 [0.468, 0.711] on 231 pubmedqa claims, lower bound at least 0.4 (OWNER D-59): agreement with a Claude Opus 5.5 reference labeller (a model's labels, not a human expert's; OWNER D-60). Gemma-family check (40 claims from main_v2): agreement 0.950, kappa 0.893 [0.722, 1.000]; EvalKit's own run summaries keep its per-run stamp (OWNER D-59); B5 and B8 are a blind review by Claude Opus 5.5, not the owner (OWNER D-61); v2-vs-base citation results depend on how the judge applies the citation check's aim rule; a post-hoc count makes base better than v2 on citation precision and aim-citation rate, so v2 is not claimed to beat base on citations, while v2-vs-v1 holds under both counts (OWNER D-62, `docs/measurements/aim_rule_check.json`). The local demo serves the benchmarked Q4_K_M GGUF (OWNER D-63); the published bf16 weights agree with it on the label for 0.920 of 500 dev prompts. On a laptop (Apple M3 Max) the Q4_K_M GGUF generates 73.1 tokens/s (p50). Research only, not medical advice.
 <!-- ggh:results:end -->
 
 ## Run it offline
@@ -138,7 +138,7 @@ All taken from the real release, not mock-ups.
 
 ![The local demo's Your abstract tab: question, abstract, passcode and optional API key fields, with the reply "Wrong passcode."](docs/assets/screenshots/demo_passcode_gate.png)
 
-**The EvalKit report** for the V2.2 main run (published as EvalKit's `/gemma/` page once [EvalKit PR #1](https://github.com/biplob819/evalkit/pull/1) merges):
+**The EvalKit report** for the V2.2 main run (published as EvalKit's [`/gemma/` page](https://biplob819.github.io/evalkit/gemma/), from [EvalKit PR #1](https://github.com/biplob819/evalkit/pull/1)):
 
 ![EvalKit's report for the V2.2 main run: headline with 95% intervals and the per-model table of headline, groundedness, citation precision, aim-citation rate and accuracy](docs/assets/screenshots/evalkit_report_main_v2.png)
 

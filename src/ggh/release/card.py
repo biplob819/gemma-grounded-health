@@ -464,7 +464,7 @@ def primary_table(src: Sources) -> str:
             c.metric + (" (lower is better)" if c.better == "lower" else ""),
             c.judge or "–",
             iv(c.diff),
-            value(c.p_value),
+            ("<0.001" if c.p_value is not None and c.p_value < 0.0005 else value(c.p_value)),
             _verdict(
                 c, AIM_NOTE if _ckey(c.model_a, c.model_b, c.metric, c.judge) in flips else ""
             ),

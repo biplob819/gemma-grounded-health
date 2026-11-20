@@ -72,9 +72,9 @@
     },
     {
       "file": "biplob123/gemma-4-e2b-grounded-health/README.md",
-      "sha256": "de6ae083ed3568882e2d181158b9144e47ad528b1198c9f467d44050b269cb3c",
+      "sha256": "7c36271fda03bed6d697f13484b654bb9ca6a327250b545aba0b406a06968718",
       "ok": true,
-      "note": "re-uploaded 2026-11-21 under OWNER D-65 (main: base_model_relation finetune and a How-to-use prompt section; GGUF: prompt-format line); tag v2.0.0 moved to that commit; downloaded back"
+      "note": "re-uploaded 2026-11-21 under OWNER D-65 (base_model_relation finetune, How-to-use prompt section, then p-values below 0.001 as <0.001); tag v2.0.0 moved to that commit; downloaded back"
     },
     {
       "file": "biplob123/gemma-4-e2b-grounded-health/results_bundle.json",

@@ -207,11 +207,11 @@ From `configs/eval_plan_v2.yaml` (final). Differences with 95% paired bootstrap 
 | Comparison | Outcome | Judge | Difference | p | Verdict |
 |---|---|---|---|---|---|
 | gemma-e2b-grounded-v2-q4 minus gemma-e2b-grounded-q4 | headline | gpt-6.1-sol | -0.002 [-0.034, 0.030] | 0.927 | tie (not separated) |
-| gemma-e2b-grounded-v2-q4 minus gemma-e2b-grounded-q4 | citation_precision | gpt-6.1-sol | 0.374 [0.344, 0.403] | 0.000 | gemma-e2b-grounded-v2-q4 better |
-| gemma-e2b-grounded-v2-q4 minus gemma-e2b-grounded-q4 | aim_citation_rate (lower is better) | gpt-6.1-sol | -0.476 [-0.508, -0.443] | 0.000 | gemma-e2b-grounded-v2-q4 better |
-| gemma-e2b-grounded-v2-q4 minus gemma-e2b-base-q4 | headline | gpt-6.1-sol | -0.075 [-0.113, -0.037] | 0.000 | gemma-e2b-base-q4 better |
+| gemma-e2b-grounded-v2-q4 minus gemma-e2b-grounded-q4 | citation_precision | gpt-6.1-sol | 0.374 [0.344, 0.403] | <0.001 | gemma-e2b-grounded-v2-q4 better |
+| gemma-e2b-grounded-v2-q4 minus gemma-e2b-grounded-q4 | aim_citation_rate (lower is better) | gpt-6.1-sol | -0.476 [-0.508, -0.443] | <0.001 | gemma-e2b-grounded-v2-q4 better |
+| gemma-e2b-grounded-v2-q4 minus gemma-e2b-base-q4 | headline | gpt-6.1-sol | -0.075 [-0.113, -0.037] | <0.001 | gemma-e2b-base-q4 better |
 | gemma-e2b-grounded-v2-q4 minus gemma-e2b-base-q4 | citation_precision | gpt-6.1-sol | -0.011 [-0.046, 0.023] | 0.504 | tie (not separated; depends on the aim rule, OWNER D-62) |
-| gemma-e2b-grounded-v2-q4 minus gemma-e2b-base-q4 | aim_citation_rate (lower is better) | gpt-6.1-sol | -0.054 [-0.080, -0.028] | 0.000 | gemma-e2b-grounded-v2-q4 better (depends on the aim rule, OWNER D-62) |
+| gemma-e2b-grounded-v2-q4 minus gemma-e2b-base-q4 | aim_citation_rate (lower is better) | gpt-6.1-sol | -0.054 [-0.080, -0.028] | <0.001 | gemma-e2b-grounded-v2-q4 better (depends on the aim rule, OWNER D-62) |
 
 #### Citation results and the aim rule (OWNER D-62)
 

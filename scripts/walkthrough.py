@@ -407,7 +407,7 @@ def screen_dataflow(c: Ctx) -> str:
         c.paths.dataflow,
         "Data flow",
         "PubMedQA to training targets, Kaggle training, GGUF export, laptop serving and "
-        "EvalKit's dual-judge evaluation.",
+        "EvalKit's evaluation (v1 two judges, v2 one).",
     )
 
 

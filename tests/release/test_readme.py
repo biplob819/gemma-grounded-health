@@ -115,3 +115,10 @@ def test_card_cli_writes_a_valid_card(tmp_path):
     assert main(["card", "--root", str(ROOT), "--bundle", str(rel), "--out", str(out)]) == 0
     assert out.read_text(encoding="utf-8") == B.CARD.read_text(encoding="utf-8")
     assert main(["card", "--root", str(ROOT), "--bundle", "nope.json"]) == 2
+
+
+def test_the_readme_says_the_demo_serves_the_benchmarked_gguf():
+    """OWNER D-63: the local demo serves the Q4_K_M GGUF that was benchmarked, not bf16."""
+    text = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert "demo runs bf16" not in text and "The demo runs" not in text
+    assert "The local demo serves the benchmarked Q4_K_M GGUF" in text

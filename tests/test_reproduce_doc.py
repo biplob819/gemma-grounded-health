@@ -44,6 +44,28 @@ def ggh_args(cmd: list[str]) -> list[str] | None:
     return rest[1:] if rest[:1] == ["ggh"] else None
 
 
+def _snapshot() -> dict[Path, bytes | None]:
+    """Bytes of every tracked file under the paths the run steps write, and the untracked set."""
+    tracked = subprocess.run(
+        ["git", "ls-files", "README.md", "MODEL_CARD.md", "docs"],
+        cwd=ROOT, capture_output=True, text=True, check=True,
+    ).stdout.split()  # fmt: skip
+    snap: dict[Path, bytes | None] = {ROOT / p: (ROOT / p).read_bytes() for p in tracked}
+    for p in ROOT.joinpath("docs").rglob("*"):
+        if p.is_file() and p not in snap:
+            snap[p] = p.read_bytes()
+    return snap
+
+
+def _restore(snap: dict[Path, bytes | None]) -> None:
+    for p, data in snap.items():
+        if data is not None and (not p.is_file() or p.read_bytes() != data):
+            p.write_bytes(data)
+    for p in ROOT.joinpath("docs").rglob("*"):
+        if p.is_file() and p not in snap:
+            p.unlink()  # written by a run step and not there before
+
+
 def _state() -> dict[str, str]:
     """Every changed or untracked path with its content hash: a write shows up even on a
     checkout that already had local changes."""
@@ -97,18 +119,26 @@ def test_run_blocks_run_offline_and_change_nothing(monkeypatch: pytest.MonkeyPat
         monkeypatch.delenv(k, raising=False)
     monkeypatch.chdir(ROOT)
     before = _state()
+    # the run steps regenerate committed outputs in place: snapshot them and put them back, so
+    # the test detects a stale output without overwriting a developer's edits or hiding the
+    # staleness from the other generator tests
+    snap = _snapshot()
     ran = []
-    for mark, cmds in blocks():
-        if mark != "run":
-            continue
-        for cmd in cmds:
-            args = ggh_args(cmd)
-            assert args is not None, f"a run block runs only ggh commands: {cmd}"
-            try:
-                code = main(args)
-            except SystemExit as exc:  # --version exits through argparse
-                code = exc.code
-            assert code in (0, None), (cmd, capsys.readouterr().out[-2000:])
-            ran.append(args[0])
+    try:
+        for mark, cmds in blocks():
+            if mark != "run":
+                continue
+            for cmd in cmds:
+                args = ggh_args(cmd)
+                assert args is not None, f"a run block runs only ggh commands: {cmd}"
+                try:
+                    code = main(args)
+                except SystemExit as exc:  # --version exits through argparse
+                    code = exc.code
+                assert code in (0, None), (cmd, capsys.readouterr().out[-2000:])
+                ran.append(args[0])
+        after = _state()
+    finally:
+        _restore(snap)
     assert {"doctor", "card", "readme-table", "release-notes", "results"} <= set(ran)
-    assert _state() == before, "a run step changed a committed file: commit its output"
+    assert after == before, "a run step changed a committed file: commit its output"
