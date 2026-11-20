@@ -588,7 +588,7 @@ SEGMENTS: tuple[Segment, ...] = (
         "`docs/assets/screenshots/v1_vs_v2_citation.png`: the same answer, v1 citing the aim "
         "sentence, v2 citing the result",
         "Version one raised label accuracy from ${base_acc} to ${v1_acc}, but it cited the "
-        "study's aim instead of its results, so it lost to its own base on that score.",
+        "study's aim instead of its results, so it fell below its own base on that score.",
     ),
     Segment(
         15,

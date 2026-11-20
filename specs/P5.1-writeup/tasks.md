@@ -5,4 +5,4 @@
 - [x] 3. How-I-built-it note, project page generator, decisions summary, video script; tests
 - [x] 4. Read it (D-18)
 - [ ] 5. Proof cells, records, README write-up link
-- [ ] 6. Converge, verifier, green, merge
+- [ ] 6. Converge, verifier, green (then rerun `ggh writeup` after the green changelog edit), merge

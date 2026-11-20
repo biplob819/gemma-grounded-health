@@ -10,7 +10,7 @@ A small open model, Gemma 4 E2B with LoRA, fine-tuned to answer a health researc
 
 ## The result in one paragraph
 
-The first fine-tune (v1) learned the label, raising accuracy from ${base_acc} to ${v1_acc}, but cited the study's aim instead of its results, so it lost to its own base model on "correct and fully grounded". The retrain (v2) fixed the citations against v1 (citation precision ${d_v2v1_cp}; aim-citation rate ${d_v2v1_aim}). It did not move the headline against v1 (${d_v2v1_head}), and the base model is still better on it (${d_v2base_head}).
+The first fine-tune (v1) learned the label, raising accuracy from ${base_acc} to ${v1_acc}, but cited the study's aim instead of its results, so it fell below its own base model on "correct and fully grounded" (separated under GPT-6.1 Sol, a tie under Claude Opus 5.5). The retrain (v2) fixed the citations against v1 (citation precision ${d_v2v1_cp}; aim-citation rate ${d_v2v1_aim}). It did not move the headline against v1 (${d_v2v1_head}), and the base model is still better on it (${d_v2base_head}).
 
 ## Results
 

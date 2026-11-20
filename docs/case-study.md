@@ -1,6 +1,6 @@
 Gemma Grounded Health is a small open model (Gemma 4 E2B, 3.3 GB at 4-bit) fine-tuned to answer a research question only from the numbered sentences of a given abstract, with a yes / no / maybe label, a short answer and the sentences it relied on. It runs offline on a laptop. Research only, not medical advice.
 
-The first fine-tune raised label accuracy on all 1,000 expert-labelled PubMedQA questions from 0.501 to 0.728, but it did not beat its own base model on the metric that matters, "correct and fully grounded" (0.388 against 0.418, Claude Opus 5.5 judging), because its citations often pointed at the study's aim instead of its results. The project measured that failure, traced it to the training data, and is building a v2 chosen on dev data only. Results for v2 are pending; v1's stay published.
+The first fine-tune raised label accuracy on all 1,000 expert-labelled PubMedQA questions from 0.501 to 0.728, but it did not beat its own base model on the metric that matters, "correct and fully grounded" (0.388 against 0.418, Claude Opus 5.5 judging), because its citations often pointed at the study's aim instead of its results. The project measured that failure, traced it to the training data, and is building a v2 chosen on dev data only. v2, retrained on cleaner citation targets, fixed the citations against v1 (citation precision 0.736 against 0.362 in the same run) but tied v1 on the headline (0.329 against 0.331), and base stays ahead (0.404); v1's published numbers stay as published, and v2 is not claimed to beat base on citations (OWNER D-62).
 
 ## My role
 
@@ -25,7 +25,7 @@ Every evaluation runs through [EvalKit](https://github.com/biplob819/evalkit), m
 
 ## What failed
 
-**The fine-tuned model got much better at the label and worse at grounding, so it did not beat its own base model on the metric that matters.** Status: the failure and its cause are measured; the v2 fix is in progress, and its numbers will be added here from its own published run.
+**The fine-tuned model got much better at the label and worse at grounding, so it did not beat its own base model on the metric that matters.** Status: the failure and its cause are measured, and the v2 retrain fixed the citations against v1 without moving the headline; its numbers are in the table below, from its own pre-registered run.
 
 ### The result (v1, main run `r-f0f3b432a413`, 1,000 PQA-L questions)
 
@@ -68,12 +68,12 @@ Accuracy rose 22.7 points over the base (separated, paired bootstrap), but the h
 
 How it is watched: every build step has to pass 13 automated gates and an independent reviewer before it is marked done; CI runs on Linux and macOS; every API dollar goes into a spend ledger and every Kaggle GPU hour into a GPU ledger; and 20 answers are read by hand at each stage.
 
-### What I changed (v2: trained, dev-checked, test run next)
+### What I changed (v2: trained, dev-checked, tested)
 
 1. Training answers never cite an aim, objective or study-description sentence; citations must come from result sentences that the entailment check confirms (rule tested on fixtures, drops counted).
-2. A dev grounding bar, judged by the same EvalKit judges on 200 dev questions, measured for v1 first as the baseline, with the v2 bars fixed before v2 is measured.
+2. A dev grounding bar on 200 dev questions (judged by GPT-6.1 Sol alone once the Anthropic credit ran out, OWNER D-54), measured for v1 first as the baseline, with the v2 bars fixed before v2 is measured.
 3. One retrain on Kaggle, the checkpoint chosen by validation loss, the existing bars and the new grounding bar.
-4. A second, separately pre-registered run on the same 1,000 questions (v2 against base, v1, Haiku and Luna). Only v2's answers are new; the other models come from EvalKit's cache.
+4. A second, separately pre-registered run on the same 1,000 questions (v2 against base and v1, judged by GPT-6.1 Sol alone; Haiku and Luna are not compared with it, OWNER D-57). Only v2's answers are new; base and v1 come from EvalKit's cache.
 
 | Measure | v1 | v2 |
 | --- | --- | --- |
