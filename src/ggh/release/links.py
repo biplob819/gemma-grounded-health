@@ -3,8 +3,10 @@ D-37), in one place. A link that does not exist yet is `None` and renders as a v
 placeholder; R4.2 to R4.5 filled them in as each thing was published. Two R4.5 links point at
 pages that go live with an outward step the builder takes after the merge: the v1.0.0 GitHub
 release (the tag; R4.5). EvalKit PR #1 merged and its report page is live (R4.4). The write-up
-(P5.1) may stay pending. `tests/release/test_links.py` checks every link offline: https on an
-allowed host, and every local or repo path exists.
+(P5.1) was added after v1.0.0 was published: the README links it, while the v1.0.0 release notes
+keep it as pending, exactly as published (`AFTER_RELEASE`, `md_abs(..., as_released=True)`).
+`tests/release/test_links.py` checks every link offline: https on an allowed host, and every
+local or repo path exists.
 """
 
 from __future__ import annotations
@@ -38,13 +40,18 @@ LINKS: dict[str, tuple[str, str | None]] = {
     "tech_spec": ("Tech Spec", "Gemma%20Grounded%20Health%20Tech%20Spec.md"),
     "bundle": ("Results bundle", "docs/results/results_bundle.json"),
     "citation": ("CITATION.cff", "CITATION.cff"),
-    "writeup": ("Write-up", None),  # P5.1
+    "writeup": ("Write-up", "docs/writeup/how-i-built-it.md"),  # P5.1
     "case_study": ("Case study: the v1 grounding failure", "docs/case-study.md"),
     "reproduce": ("Reproduce from scratch", "docs/reproduce.md"),
     "release_notes": ("Release notes v1.0.0", "docs/release_notes_v1.0.0.md"),
     "known_issues": ("Known issues", "docs/known-issues.md"),
     "evalkit": ("EvalKit", "https://github.com/biplob819/evalkit"),
 }
+
+
+# links added after the v1.0.0 release; the published release notes show them as they were
+# then (pending), so `docs/release_notes_v1.0.0.md` stays the file the release used
+AFTER_RELEASE: frozenset[str] = frozenset({"writeup"})
 
 
 def md(name: str) -> str:
@@ -60,8 +67,12 @@ def absolute(url: str) -> str:
     return f"{REPO}/blob/main/{url}"
 
 
-def md_abs(name: str) -> str:
+def md_abs(name: str, as_released: bool = False) -> str:
+    """The link with an absolute URL; `as_released` renders a link added after the release as
+    the published notes showed it (pending)."""
     label, url = LINKS[name]
+    if as_released and name in AFTER_RELEASE:
+        url = None
     return f"[{label}]({absolute(url)})" if url else f"{label} {PENDING}"
 
 
