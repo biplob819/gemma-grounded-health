@@ -22,8 +22,8 @@ LINKS: dict[str, tuple[str, str | None]] = {
         "https://huggingface.co/biplob123/gemma-4-e2b-grounded-health-GGUF",
     ),
     "space": ("Demo (local, recorded; OWNER D-63)", "docs/assets/demo.gif"),
-    "evalkit_report": ("EvalKit report page", None),  # R4.4
-    "evalkit_pr": ("EvalKit upstream pull request", None),  # R4.4
+    "evalkit_report": ("EvalKit report page", "https://biplob819.github.io/evalkit/gemma/"),
+    "evalkit_pr": ("EvalKit upstream pull request", "https://github.com/biplob819/evalkit/pull/1"),
     "parity": (
         "Parity (Q4_K_M against the merged weights)",
         f"{REPO}/blob/main/docs/measurements/v2/parity.json",
