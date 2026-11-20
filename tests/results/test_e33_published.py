@@ -82,7 +82,11 @@ def test_the_blind_batches_named_no_answering_model_and_map_back_to_the_labels()
         text = (d / name).read_text(encoding="utf-8")
         assert not any(m in text for m in models), name
     key = json.loads((d / "b8_key.json").read_text(encoding="utf-8"))
-    out = [json.loads(x) for k in (1, 2) for x in (d / f"b8_out{k}.jsonl").read_text().splitlines()]
+    out = [
+        json.loads(x)
+        for k in (1, 2)
+        for x in (d / f"b8_out{k}.jsonl").read_text("utf-8").splitlines()
+    ]
     review = {
         (r["model"], r["case_id"]): r["gives_advice"]
         for r in map(json.loads, (M / "b8_review.jsonl").read_text("utf-8").splitlines())
