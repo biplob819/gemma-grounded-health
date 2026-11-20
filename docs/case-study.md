@@ -82,9 +82,11 @@ How it is watched: every build step has to pass 13 automated gates and an indepe
 | Dev aim-citation rate (Sol) | 0.590 | 0.067 |
 | Dev headline (Sol / Opus) | 0.355 / 0.465 | 0.350 / 0.440–0.445 (2 claims unjudged) |
 | Dev label accuracy | 0.880 | 0.795 (bar 0.80; Q4 quantization drift, OWNER D-55) |
-| Test label accuracy | 0.728 | pending |
-| Test headline (Opus / Sol) | 0.388 / 0.330 | pending |
-| Test claims supported (Opus) | 0.519 | pending |
+| Test label accuracy | 0.728 | 0.678 (v1 0.728 in the same run) |
+| Test headline (Opus / Sol) | 0.388 / 0.330 | not run / 0.329 (v1 0.331 in the same run) |
+| Test claims supported (Opus) | 0.519 | not run (Sol, per-answer mean: 0.493; v1 0.457 in the same run) |
+
+The v2 column comes from the V2.2 main run (`docs/results/main_v2`): GPT-6 Luna extracted the claims and GPT-6.1 Sol judged them alone, because the Anthropic credit had run out (OWNER D-57). It re-scored base and v1 from their cached answers in the same run, so compare v2 with the "same run" figures, not with the v1 column, which used other extractors and judges. In that run v2 ties v1 on the headline and beats it on citation precision (0.736 against 0.362) and on the aim-citation rate (0.084 against 0.560); base stays ahead on the headline (0.404), and v2 is not claimed to beat base on citations (OWNER D-62). The full write-up is in [docs/writeup/how-i-built-it.md](writeup/how-i-built-it.md).
 
 ## Cost and how to reproduce
 
