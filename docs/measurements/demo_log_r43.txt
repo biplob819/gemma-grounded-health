@@ -1,0 +1,11 @@
+space: http://127.0.0.1:7860/ against http://127.0.0.1:8083 (Ctrl-C to stop)
+* Running on local URL:  http://127.0.0.1:7860
+2026-11-21 01:18:24,202 httpx HTTP Request: GET http://127.0.0.1:7860/gradio_api/startup-events "HTTP/1.1 200 OK"
+2026-11-21 01:18:24,217 httpx HTTP Request: HEAD http://127.0.0.1:7860/ "HTTP/1.1 200 OK"
+* To create a public link, set `share=True` in `launch()`.
+2026-11-21 01:18:35,514 ggh.space {"event": "space", "outcome": "sample", "latency_ms": 0}
+2026-11-21 01:18:39,227 ggh.space {"event": "space", "outcome": "sample", "latency_ms": 0}
+2026-11-21 01:18:42,913 ggh.space {"event": "space", "outcome": "refused", "latency_ms": 53}
+2026-11-21 01:18:46,311 ggh.space {"event": "space", "outcome": "sample", "latency_ms": 0}
+2026-11-21 01:18:55,154 ggh.space {"event": "space", "outcome": "sample", "latency_ms": 0}
+2026-11-21 01:19:03,469 ggh.space {"event": "space", "outcome": "refused", "latency_ms": 53}

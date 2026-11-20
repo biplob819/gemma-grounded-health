@@ -86,7 +86,9 @@ def test_nothing_typed_is_logged(space, caplog):  # SPC-05
     assert text, "the service logs outcomes"
     for secret in (SECRET_Q, "Zanthoxylin", CODE, "111111", VISITOR_KEY, "s9"):
         assert secret not in text
-    for rec in caplog.records:
+    for rec in caplog.records:  # the service's own lines (a library may log too, never the input)
+        if rec.name != "ggh.space":
+            continue
         assert set(json.loads(rec.getMessage())) == {"event", "outcome", "latency_ms"}
 
 

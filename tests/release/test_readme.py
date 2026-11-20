@@ -69,7 +69,9 @@ def test_links_block_lists_every_link_and_marks_the_pending_ones():
     block = readme.links_block()
     for name, (label, url) in links.LINKS.items():
         assert (f"[{label}]({url})" if url else f"{label} {links.PENDING}") in block, name
-    assert set(links.pending()) >= {"hf_model", "hf_gguf", "space", "release"}
+    # R4.2 published both Hub repos; R4.3 recorded the local demo (OWNER D-63)
+    assert not {"hf_model", "hf_gguf", "space", "parity"} & set(links.pending())
+    assert "release" in links.pending()  # R4.5
 
 
 def test_splice_refuses_a_file_without_markers():

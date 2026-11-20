@@ -71,3 +71,5 @@ finding that would leak a secret or publish a wrong number is never parked here.
 | R4.2 | `generation_config.json` and `processor_config.json` ship in the main repo with hashes no build stage records (the release plan is their only record) | Plausible | Low | Accepted |
 | R4.2 | The GGUF repo's `v2.0.0` tag was moved once, to the commit that carries the corrected Ollama guidance on its card | Plausible | Low | Recorded in `release_record_v2.json` |
 | R4.2 | The Hub shows the main repo as an adapter of `google/gemma-4-E2B-it` although it holds merged weights (the card front matter lacks `base_model_relation: finetune`), and the GGUF card does not say a JSON answer needs EvalKit's PubMedQA prompt | Plausible | Low | Open; fix both cards and re-upload in R4.5 |
+| R4.3 | The demo's passcode rate limit is per Gradio session, and a client can open new sessions; a hosted demo would need a global or per-IP cap | Plausible | Low | Accepted: the demo binds to 127.0.0.1 only (OWNER D-63) |
+| R4.3 | The demo's abstract highlights only the fine-tune's citations; base's cited sentences are listed, highlighted, in its own card | Plausible | Low | Accepted |

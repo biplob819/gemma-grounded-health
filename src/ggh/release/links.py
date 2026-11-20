@@ -13,12 +13,21 @@ PENDING = "(link pending)"
 LINKS: dict[str, tuple[str, str | None]] = {
     "repo": ("GitHub repository", REPO),
     "release": ("GitHub release v1.0.0", None),  # R4.5
-    "hf_model": ("Hugging Face model", None),  # R4.2
-    "hf_gguf": ("Hugging Face GGUF", None),  # R4.2
-    "space": ("Hugging Face Space (demo)", None),  # R4.3
+    "hf_model": (
+        "Hugging Face model",
+        "https://huggingface.co/biplob123/gemma-4-e2b-grounded-health",
+    ),
+    "hf_gguf": (
+        "Hugging Face GGUF",
+        "https://huggingface.co/biplob123/gemma-4-e2b-grounded-health-GGUF",
+    ),
+    "space": ("Demo (local, recorded; OWNER D-63)", "docs/assets/demo.gif"),
     "evalkit_report": ("EvalKit report page", None),  # R4.4
     "evalkit_pr": ("EvalKit upstream pull request", None),  # R4.4
-    "parity": ("Parity figure", None),  # R4.3: a page or image of the parity result
+    "parity": (
+        "Parity (Q4_K_M against the merged weights)",
+        f"{REPO}/blob/main/docs/measurements/v2/parity.json",
+    ),
     "benchmark": ("Benchmark results", f"{REPO}/tree/main/docs/results"),
     "data_card": ("DATA_CARD.md", "DATA_CARD.md"),
     "model_card": ("MODEL_CARD.md", "MODEL_CARD.md"),
