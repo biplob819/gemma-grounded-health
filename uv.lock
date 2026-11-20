@@ -271,6 +271,7 @@ version = "0.0.1"
 source = { editable = "." }
 dependencies = [
     { name = "evalkit-harness", extra = ["anthropic", "openai"] },
+    { name = "huggingface-hub" },
     { name = "pyarrow" },
     { name = "pydantic" },
     { name = "pyyaml" },
@@ -301,6 +302,7 @@ train = [
 [package.metadata]
 requires-dist = [
     { name = "evalkit-harness", extras = ["openai", "anthropic"], specifier = "==0.4.0" },
+    { name = "huggingface-hub", specifier = ">=2.4,<3" },
     { name = "pyarrow", specifier = ">=15" },
     { name = "pydantic", specifier = ">=2.7" },
     { name = "pyyaml", specifier = ">=6" },

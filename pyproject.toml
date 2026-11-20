@@ -14,6 +14,8 @@ dependencies = [
     # EvalKit's PyPI release 0.4.0 (tag v0.4.0, commit f9cbc8e; D-56 supersedes D-28's git
     # pin). The SDK extras serve its endpoint route to llama-server (D-7) and its judges
     "evalkit-harness[openai,anthropic]==0.4.0",
+    # R4.1 validates the card's Hub metadata; R4.2 pushes and downloads back with it
+    "huggingface-hub>=2.4,<3",
 ]
 
 [project.scripts]
