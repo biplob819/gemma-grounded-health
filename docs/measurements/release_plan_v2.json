@@ -156,8 +156,8 @@
       "repo": "biplob123/gemma-4-e2b-grounded-health-GGUF",
       "path_in_repo": "README.md",
       "local": "(generated)",
-      "size": 1147,
-      "sha256": "f9c1826b730f6ef9bee607b969dedcdf5fd07644e14a538d3b3ea97eb85c24e4",
+      "size": 1442,
+      "sha256": "fbaea54e2a7c088f1b9acf747d91a3077e7e8fdf2343baa043e4fcdd2dee3a59",
       "status": "generated",
       "record": null
     },
@@ -198,7 +198,7 @@
       "record": null
     }
   ],
-  "total_bytes": 18771036108,
+  "total_bytes": 18771036403,
   "problems": [],
   "ready": true
 }

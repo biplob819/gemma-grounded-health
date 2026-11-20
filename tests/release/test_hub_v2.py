@@ -235,7 +235,7 @@ def test_gguf_card_links_the_main_repo_with_the_d63_note(repo):
     assert "Research only, not medical advice." in text
     assert "https://huggingface.co/someone/gemma-4-e2b-grounded-health" in text
     assert "OWNER D-63" in text and "Q4_K_M" in text
-    assert "ollama run hf.co/someone/gemma-4-e2b-grounded-health-GGUF:Q4_K_M" in text
+    assert "ollama run --think=false hf.co/someone/gemma-4-e2b-grounded-health-GGUF:Q4_K_M" in text
     for f in p.by_repo("gguf"):
         if f.path_in_repo.endswith(".gguf"):
             assert f.sha256 in text
@@ -397,7 +397,7 @@ def test_ollama_check_starts_a_server_and_parses_the_answer():
     assert r.ok and r.started_server and proc.terminated
     assert r.answer == reply and r.sample_id
     assert ["ollama", "serve"] in calls
-    assert ["ollama", "run", "--nowordwrap", "hf.co/o/r-GGUF:Q4_K_M"] in calls
+    assert ["ollama", "run", "--nowordwrap", "--think=false", "hf.co/o/r-GGUF:Q4_K_M"] in calls
 
 
 def test_ollama_check_uses_a_running_server_and_fails_gracefully():
@@ -431,3 +431,19 @@ def test_ollama_check_without_ollama_or_a_server(monkeypatch):
     )
     assert not r.ok and "did not answer" in (r.error or "") and proc.terminated
     assert dataclasses.asdict(r)["ref"] == "x"
+
+
+def test_ollama_check_fails_when_the_answer_does_not_parse(tmp_path):
+    """An answer that does not parse to a label with citations is a failed check, not ok
+    (the first live run printed a thought block and was wrongly reported ok)."""
+    import subprocess as _sp
+    from pathlib import Path as _Path
+
+    root = _Path(__file__).resolve().parents[2]
+
+    def run(cmd, **kw):
+        out = "<|channel>thought\nsome reasoning" if cmd[1] == "run" else ""
+        return _sp.CompletedProcess(cmd, 0, stdout=out, stderr="")
+
+    res = hub.ollama_check("hf.co/o/r-GGUF:Q4_K_M", root, binary="ollama", run=run)
+    assert res.ok is False and res.error

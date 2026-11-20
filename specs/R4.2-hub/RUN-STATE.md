@@ -1,8 +1,11 @@
 # R4.2 run state
 
-**Now:** node started; plan clean; push next
-**Next:** push, download back, Ollama check, screenshot
+**Now:** pushed and checked; records; converge
+**Next:** converge twice, verifier, green, merge; then R4.3 (local demo, prepared on `r4.3-prep`)
 
 ## Log
 - 2026-11-20 — owner: HF username biplob123; HF_TOKEN in .env (whoami: biplob123, role write); push go-ahead given in session ("Go-ahead to push to Hugging Face - Approved"). Ollama 0.40.16 installed by the builder at the owner's request (Homebrew; not started at login).
 - 2026-11-20 — release code follows the shipped release (v2) by default (commit fb54152): dry run verifies 5 lineage stages and plans 20 files, 18,771,036,108 bytes, problems 0 (`docs/measurements/release_plan_v2.json`). generation_config.json and processor_config.json ship unrecorded by any stage (marked so in the plan).
+- 2026-11-20 21:08–23:58 IST — `ggh release --owner biplob123 --push`: both repos created and filled (https://huggingface.co/biplob123/gemma-4-e2b-grounded-health, https://huggingface.co/biplob123/gemma-4-e2b-grounded-health-GGUF), tagged `v2.0.0`; Xet uploaded 3.68 GB of new data for the 10.2 GB safetensors (the rest deduplicated) at about 1–3 MB/s; every one of the 20 files downloaded back from the tag with its planned sha256 (`docs/measurements/release_record_v2.json`).
+- 2026-11-21 — Ollama check, first attempt: `ollama run hf.co/biplob123/gemma-4-e2b-grounded-health-GGUF:Q4_K_M` ran Gemma 4 with its thinking channel on, so the answer began with a thought block; the JSON after it did not parse, and the check wrongly reported ok (label null). Fixed: the check runs `--think=false` (as `ggh serve` runs llama-server with `--reasoning off`) and passes only on a parsed label with citations; a test pins the failure case. Re-run: ok, label "no", citations [9] on sample dev-1471704 (llama-server greedy cited [8]; Ollama samples at its default temperature). The GGUF card now tells users to run with `--think=false` and says Ollama's default sampling can differ from the benchmark's greedy decoding; re-uploaded (1,442 bytes), tag `v2.0.0` moved to that commit, downloaded back with its planned hash.
+- 2026-11-21 — Hub model page screenshot (logged out, headless Chromium via `uvx --with playwright`; the Chrome extension was not connected after the account change): `docs/assets/screenshots/hf_model_page.png`.

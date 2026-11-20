@@ -184,7 +184,11 @@ def gguf_card(
         f"{OLLAMA_QUANT} file; read that card for training data, evaluation and limits.\n\n"
         f"The local demo serves this {OLLAMA_QUANT} file through llama-server, the same bytes "
         "that were benchmarked (OWNER D-63), so the demo and the numbers match.\n\n"
-        f"```bash\nollama run hf.co/{owner}/{GGUF_REPO}:{OLLAMA_QUANT}\n```\n\n"
+        f"```bash\nollama run --think=false hf.co/{owner}/{GGUF_REPO}:{OLLAMA_QUANT}\n```\n\n"
+        "Run it with thinking off, as the benchmark did (llama-server `--reasoning off`): "
+        "with thinking on, Gemma 4 writes a reasoning block before the JSON answer. The "
+        "benchmark decoded greedily (temperature 0); Ollama's default sampling can give a "
+        "different answer to the same question.\n\n"
         "| File | Size | sha256 |\n|---|---|---|\n" + rows + "\n\n"
         f"Built with llama.cpp `{_gguf_commit(arts)}`. Licence: Apache-2.0 (see `NOTICE`).\n"
     )
@@ -589,7 +593,9 @@ def ollama_check(
             waited += 1.0
     try:
         done = run(
-            [exe, "run", "--nowordwrap", ref],
+            # thinking off, as `ggh serve` runs llama-server (--reasoning off): the benchmark
+            # never let the model think first, so neither does the check
+            [exe, "run", "--nowordwrap", "--think=false", ref],
             input=prompt,
             capture_output=True,
             text=True,
@@ -609,6 +615,10 @@ def ollama_check(
 
     card = to_card(ref, res.answer, sentences)
     res.label, res.citations = card.label, card.citations
+    # HUB-05: passes only on a parsed answer with a label and in-range citations
+    if card.label is None or not card.citations:
+        res.error = "the answer did not parse to a label with citations"
+        return res
     res.ok = True
     return res
 
