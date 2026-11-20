@@ -1,7 +1,7 @@
 # E3.3 run state
 
-**Now:** reviews, calibration stamp, fault explanations and bundle done; converge
-**Next:** converge twice, verifier, green, merge; then R4.1
+**Now:** PAUSED 2026-11-20 at the owner's request (account change, relayed by the portfolio session). E3.3 work committed at 81a895f; converge PASS once. Nothing in flight: no paid, Kaggle or model run; background servers on 8083 (ft2 Q4) and 8084 (ft2 bf16) are idle and may be stopped
+**Next (resume here):** `NODE=E3.3 make converge` (second pass), fresh-context verifier round 1, green (catalog RES rows, tasks 8, changelog), merge e3.3 to main, push, check CI; then R4.1 (card and README generators: per-release per-judge stamp, v2 bench, D-61/D-62 disclosures, see known issues). Open owner items: D-42 probe spot-check (default: blind Opus review), HF username and HF_TOKEN (R4.2), demo passcode and ZeroGPU vs local (R4.3)
 
 ## Log
 - 2026-11-20 — OWNER D-61 (ask widget, "Model reviews both"): B5 and B8 reviewed blind by Claude Opus 5.5 subagents under committed prompts (`configs/sample_read_prompt.md`, `configs/offscope_review_prompt.md`); disclosed as model reviews.
