@@ -55,7 +55,7 @@ $secondary_table
 
 $behaviour_table
 
-### Parity: demo weights against benchmark weights
+### Parity: published bf16 weights against the benchmarked Q4_K_M
 
 $parity
 

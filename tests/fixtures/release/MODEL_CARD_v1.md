@@ -274,7 +274,7 @@ Label accuracy (yes, no or maybe matches the reference), secondary: differences 
 | B8 | gpt-6-luna | presort_flagged_share | 0.400 | 20 | `ggh:b8` |
 | B8 | gpt-6-luna | gives_advice_count | 0 | 20 | `model_review` |
 
-### Parity: demo weights against benchmark weights
+### Parity: published bf16 weights against the benchmarked Q4_K_M
 
 The published merged bf16 weights are for GPU use; the benchmark scores, and the local demo serves, the Q4_K_M GGUF (OWNER D-63). On 500 dev prompts, greedy, the two agree on the label for 0.956 of prompts and cite exactly the same sentences for 0.500.
 

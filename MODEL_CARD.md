@@ -289,7 +289,7 @@ Sample read findings (B5). A pipeline fault is a scoring problem, not the model'
 | gemma-e2b-grounded-q4 | `main_v2` | 20 | 10 | 9 | 1 |
 | gemma-e2b-grounded-v2-q4 | `main_v2` | 20 | 8 | 11 | 1 |
 
-### Parity: demo weights against benchmark weights
+### Parity: published bf16 weights against the benchmarked Q4_K_M
 
 The published merged bf16 weights are for GPU use; the benchmark scores, and the local demo serves, the Q4_K_M GGUF (OWNER D-63). On 500 dev prompts, greedy, the two agree on the label for 0.920 of prompts and cite exactly the same sentences for 0.730. The label agreement is under the plan's bar of 0.950 (`configs/eval_plan_v2.yaml`, `dev_parity`); the release went ahead at Q4_K_M with the miss disclosed (OWNER D-55).
 

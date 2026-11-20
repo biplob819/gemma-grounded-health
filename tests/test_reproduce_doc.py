@@ -5,6 +5,7 @@ outputs are what the commands write. A `dry-run` block needs a GPU, Kaggle, the 
 API calls or the gitignored artifacts: its `ggh` commands must parse with the real CLI, its
 `make` targets must exist and every repo path it names must be committed."""
 
+import fcntl
 import hashlib
 import re
 import shlex
@@ -122,6 +123,8 @@ def test_run_blocks_run_offline_and_change_nothing(monkeypatch: pytest.MonkeyPat
     # the run steps regenerate committed outputs in place: snapshot them and put them back, so
     # the test detects a stale output without overwriting a developer's edits or hiding the
     # staleness from the other generator tests
+    lock = open(ROOT / ".git" / "ggh-reproduce-test.lock", "w")  # noqa: SIM115
+    fcntl.flock(lock, fcntl.LOCK_EX)  # one run at a time per checkout (a second run waits)
     snap = _snapshot()
     ran = []
     try:
@@ -140,5 +143,7 @@ def test_run_blocks_run_offline_and_change_nothing(monkeypatch: pytest.MonkeyPat
         after = _state()
     finally:
         _restore(snap)
+        fcntl.flock(lock, fcntl.LOCK_UN)
+        lock.close()
     assert {"doctor", "card", "readme-table", "release-notes", "results"} <= set(ran)
     assert after == before, "a run step changed a committed file: commit its output"

@@ -48,7 +48,7 @@ Caveats: gpt-6.1-sol: calibrated, held-out kappa 0.598 [0.468, 0.711] on 231 pub
 
 ## Artifacts
 
-Release `v2` (`gemma-e2b-grounded-v2-q4`), 20 files, 18,771,038,208 bytes, lineage verified from `artifacts/parity_v2/manifest.json` (5 stages), plan problems: 0. "published" means the file on the Hub was downloaded back with this sha256 (tag `v2.0.0`).
+Release `v2` (`gemma-e2b-grounded-v2-q4`), 20 files, 18,771,038,223 bytes, lineage verified from `artifacts/parity_v2/manifest.json` (5 stages), plan problems: 0. "published" means the file on the Hub was downloaded back with this sha256 (tag `v2.0.0`).
 
 | File | Size | sha256 | Hub |
 |---|---|---|---|
@@ -62,7 +62,7 @@ Release `v2` (`gemma-e2b-grounded-v2-q4`), 20 files, 18,771,038,208 bytes, linea
 | `biplob123/gemma-4-e2b-grounded-health/ggh_merge.json` | 4.07 KB | `558fbdbda2567142579e7b23cdb74e9f79bf8d509b032876e683600974a50cca` | published |
 | `biplob123/gemma-4-e2b-grounded-health/adapter/adapter_config.json` | 1.58 KB | `17c0c0526c410b1a2aecbf74d67594f8f5f961993b7c9d7a955341674274bcf9` | published |
 | `biplob123/gemma-4-e2b-grounded-health/adapter/adapter_model.safetensors` | 96.69 MB | `8ea0959ffae6cdc5122a5158112f84c6545857b64e6b4751825cc25a8ad9ee01` | published |
-| `biplob123/gemma-4-e2b-grounded-health/README.md` | 26.99 KB | `7c36271fda03bed6d697f13484b654bb9ca6a327250b545aba0b406a06968718` | published |
+| `biplob123/gemma-4-e2b-grounded-health/README.md` | 27.00 KB | `dc9b38568e3d1da538e7c1b0776cd2d2837a9418543a394ed16751cb14c203d5` | published |
 | `biplob123/gemma-4-e2b-grounded-health/results_bundle.json` | 107.17 KB | `2deb2e839756b392003c9775a83bc952d0ee6d532a09c189f73e2bf7eec93f56` | published |
 | `biplob123/gemma-4-e2b-grounded-health/lineage.json` | 8.05 KB | `1ddb6a73cfbcc125cf7b29debb951bffdece00ce2d255fdafadfaaff6c39c037` | published |
 | `biplob123/gemma-4-e2b-grounded-health-GGUF/gemma-4-e2b-grounded-health-Q4_K_M.gguf` | 3.43 GB | `6da2c13ee1a3b94c99f9107bb27f344539364cdad371caea4b1114ef91b5be45` | published |
