@@ -11,7 +11,7 @@
   "page_http": 200,
   "pages_run": "completed success on 10af2ce",
   "checked_at": "2026-11-21",
-  "evalkit_gates": "PR CI green on Linux, macOS and Windows; merge result passed ruff, format, pyright and pytest (3275 passed), per EvalKit's session; node_converge B5.17 12/12 three times on the branch",
+  "evalkit_gates": "node_converge B5.17 12/12 three times (twice by the builder before verifier round 1, per EvalKit's B5.17 RUN-STATE; once by the GGH session after the round-1 fixes at 47af04f); PR CI green on Linux, macOS and Windows; the merge result passed ruff, format, pyright and pytest (3275 passed), per EvalKit's merge commit; main CI on 10af2ce green (run 44814241213, 11/11 jobs)",
   "evalkit_verifier": "round 1 PASS (GEM-01..04), notes applied in 47af04f; EvalKit's session marked GEM-01..04 green on merge",
   "approvals": [
     "OWNER D-64 in GGH's session (PR + page, aim rule as an issue)",

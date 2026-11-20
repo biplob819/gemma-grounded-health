@@ -6,4 +6,4 @@
 - [x] 4. PR #1 and issue #2 opened
 - [x] 5. EvalKit session review and owner-approved merge; /gemma/ live
 - [x] 6. Proof cells, records
-- [ ] 7. Converge, verifier, green
+- [x] 7. Converge, verifier, green
