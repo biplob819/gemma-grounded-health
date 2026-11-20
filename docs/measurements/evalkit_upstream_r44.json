@@ -1,0 +1,21 @@
+{
+  "node": "R4.4",
+  "evalkit_node": "B5.17",
+  "pr": "https://github.com/biplob819/evalkit/pull/1",
+  "pr_state": "MERGED",
+  "merge_commit": "10af2ce",
+  "label_fix_commit": "9a46065",
+  "issue": "https://github.com/biplob819/evalkit/issues/2",
+  "issue_state": "open",
+  "page": "https://biplob819.github.io/evalkit/gemma/",
+  "page_http": 200,
+  "pages_run": "completed success on 10af2ce",
+  "checked_at": "2026-11-21",
+  "evalkit_gates": "PR CI green on Linux, macOS and Windows; merge result passed ruff, format, pyright and pytest (3275 passed), per EvalKit's session; node_converge B5.17 12/12 three times on the branch",
+  "evalkit_verifier": "round 1 PASS (GEM-01..04), notes applied in 47af04f; EvalKit's session marked GEM-01..04 green on merge",
+  "approvals": [
+    "OWNER D-64 in GGH's session (PR + page, aim rule as an issue)",
+    "merge approved by the owner in EvalKit's own session"
+  ],
+  "screenshot": "docs/assets/screenshots/evalkit_gemma_page.png"
+}
