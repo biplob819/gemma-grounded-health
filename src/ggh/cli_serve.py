@@ -2,7 +2,8 @@
 `serve`, `serve-check`, `tasks`, `evalkit-check` and `behaviour`; X3.1 adds `merge`, `parity`
 and `export-records`; X3.2 adds `bench`;
 E3.2 adds `serve-hf` and
-`probe build`."""
+`probe build`; `probe report` and `parity-headline` recompute E3.2's (v1) and V2.2's (v2) probe
+and judged-parity records from the committed EvalKit runs ($0, no API call)."""
 
 from __future__ import annotations
 
@@ -129,13 +130,45 @@ def _cmd_export_records(args: argparse.Namespace) -> int:
     root = Path(args.root)
     try:
         base = gguf.hf_snapshot(gguf.BASE_ID, gguf.BASE_REVISION)
-        recs = artifacts.write_all(root, base)
+        v2 = args.model == "ft2"
+        recs = (artifacts.write_v2 if v2 else artifacts.write_all)(root, base)
     except (OSError, ValueError, KeyError) as exc:
         return _fail("export-records", exc)
     for r in recs:
         q = r.quant or ""
         print(f"{r.kind:12} {r.model:4} {q:7} {r.sha256[:12]}…  parent {r.parent_key[:12]}…")
-    print(f"export-records: {len(recs)} artifacts ({artifacts.RECORDS})")
+    out = artifacts.RECORDS_V2 if v2 else artifacts.RECORDS
+    print(f"export-records: {len(recs)} artifacts ({out})")
+    return 0
+
+
+def _cmd_probe_report(args: argparse.Namespace) -> int:
+    from ggh.evals import probe
+    from ggh.results.runs import ResultsError
+
+    try:
+        out = probe.write_report(Path(args.root), args.release)
+    except (OSError, ValueError, KeyError, ResultsError) as exc:
+        return _fail("probe report", exc)
+    for m, r in json.loads(out.read_text(encoding="utf-8"))["models"].items():
+        d = r["drop"]
+        print(f"{m}: drop {d['point']:+.3f} [{d['lo']:+.3f}, {d['hi']:+.3f}], "
+              f"contamination signal {r['contamination_signal']}")  # fmt: skip
+    print(f"probe report: wrote {out}")
+    return 0
+
+
+def _cmd_parity_headline(args: argparse.Namespace) -> int:
+    from ggh.export import parity
+    from ggh.results.runs import ResultsError
+
+    try:
+        out = parity.write_headline(Path(args.root), args.model)
+    except (OSError, ValueError, KeyError, ResultsError) as exc:
+        return _fail("parity-headline", exc)
+    for j, d in json.loads(out.read_text(encoding="utf-8"))["bf16_minus_q4_headline"].items():
+        print(f"{j}: bf16 minus Q4_K_M {d['point']:+.3f} [{d['lo']:+.3f}, {d['hi']:+.3f}]")
+    print(f"parity-headline: wrote {out}")
     return 0
 
 
@@ -371,6 +404,8 @@ def register(sub: Any) -> None:
     pa.set_defaults(func=_cmd_parity)
 
     er = sub.add_parser("export-records", help="stage manifests and ExportArtifact records (X3.1)")
+    er.add_argument("--model", default="ft", choices=("ft", "ft2"),
+                    help="ft (v1) or ft2 (v2: export_artifacts_v2.json, lineage *_v2)")  # fmt: skip
     er.add_argument("--root", default=".", help="repo root")
     er.set_defaults(func=_cmd_export_records)
 
@@ -385,6 +420,19 @@ def register(sub: Any) -> None:
     pbb = pbs.add_parser("build", help="paraphrase and check 100 PQA-L questions (paid)")
     pbb.add_argument("--root", default=".", help="repo root")
     pbb.set_defaults(func=_cmd_probe_build)
+    pbr = pbs.add_parser("report", help="the paraphrase drop from the committed probe runs ($0)")
+    pbr.add_argument("--release", default="v1", choices=("v1", "v2"),
+                     help="v1: probe_report.json; v2: probe_report_v2.json")  # fmt: skip
+    pbr.add_argument("--root", default=".", help="repo root")
+    pbr.set_defaults(func=_cmd_probe_report)
+
+    ph = sub.add_parser(
+        "parity-headline", help="judged headline, bf16 minus Q4_K_M, from the committed runs ($0)"
+    )
+    ph.add_argument("--model", default="ft", choices=("ft", "ft2"),
+                    help="ft: parity_headline.json; ft2: parity_headline_v2.json")  # fmt: skip
+    ph.add_argument("--root", default=".", help="repo root")
+    ph.set_defaults(func=_cmd_parity_headline)
 
     bn = sub.add_parser("bench", help="laptop benchmark under Tech Spec §8 (X3.2)")
     bn.add_argument(

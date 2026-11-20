@@ -359,9 +359,21 @@ def _ledger_rows(root: Path) -> list[dict[str, Any]]:
     return [json.loads(x) for x in path.read_text(encoding="utf-8").splitlines() if x.strip()]
 
 
-def build(root: Path, *, full_lineage: bool = False, config: Path = CONFIG) -> Built:
+def build(
+    root: Path,
+    *,
+    full_lineage: bool = False,
+    config: Path = CONFIG,
+    versions: tuple[str, ...] | None = None,
+) -> Built:
+    """`versions` limits the bundle to those releases (the v1 release fixture is v1 alone);
+    by default every release whose primary run is committed is in it."""
     cfg = yaml.safe_load((root / config).read_text(encoding="utf-8"))
-    included = [r for r in cfg["releases"] if Run.exists(root, r["primary_run"])]
+    included = [
+        r
+        for r in cfg["releases"]
+        if Run.exists(root, r["primary_run"]) and (versions is None or r["version"] in versions)
+    ]
     if not included:
         raise ResultsError("no release has its primary run under docs/results/")
     runs: dict[str, Run] = {}

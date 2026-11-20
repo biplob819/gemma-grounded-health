@@ -1,0 +1,174 @@
+{
+ "current": {
+  "schema_version": "1.0",
+  "task": "pubmedqa",
+  "judge_prompt_hash": "9a3a8246049f6f85",
+  "scored_at": "2026-11-19T16:35:42.780380Z",
+  "n_answers": 50,
+  "n_claims": 233,
+  "heldout_digest": "513b3662fbd3134f8c37f4155190f5c4c3af07cf37deb02aaa17d933d5efc9d4",
+  "agreements": [
+   {
+    "judge": "claude-opus-5-5",
+    "task": "pubmedqa",
+    "judge_prompt_hash": "9a3a8246049f6f85",
+    "split": "heldout",
+    "n_claims": 231,
+    "coverage": 1.0,
+    "kappa": {
+     "point": 0.39668851328044147,
+     "lo": 0.26339506560472503,
+     "hi": 0.5107568717386441
+    },
+    "agreement": 0.7705627705627706,
+    "confusion": [
+     [
+      151,
+      1
+     ],
+     [
+      52,
+      27
+     ]
+    ],
+    "by_family": {
+     "anthropic": {
+      "point": 0.43681318681318687,
+      "lo": 0.28997844080327084,
+      "hi": 0.5648582792629847
+     },
+     "openai": {
+      "point": 0.3053691275167787,
+      "lo": 0.05677314857674547,
+      "hi": 0.5140302955053389
+     }
+    }
+   },
+   {
+    "judge": "gpt-6.1-sol",
+    "task": "pubmedqa",
+    "judge_prompt_hash": "9a3a8246049f6f85",
+    "split": "heldout",
+    "n_claims": 231,
+    "coverage": 1.0,
+    "kappa": {
+     "point": 0.5978191148171905,
+     "lo": 0.4680856337329988,
+     "hi": 0.7112119349604802
+    },
+    "agreement": 0.8354978354978355,
+    "confusion": [
+     [
+      148,
+      4
+     ],
+     [
+      34,
+      45
+     ]
+    ],
+    "by_family": {
+     "anthropic": {
+      "point": 0.6409807355516638,
+      "lo": 0.5025402383318965,
+      "hi": 0.7663781046012986
+     },
+     "openai": {
+      "point": 0.5149700598802397,
+      "lo": 0.20040624684768957,
+      "hi": 0.7257326220109064
+     }
+    }
+   }
+  ],
+  "extraction_error_rate": 0.008676789587852495,
+  "self_consistency": null
+ },
+ "history": [
+  {
+   "schema_version": "1.0",
+   "task": "pubmedqa",
+   "judge_prompt_hash": "9a3a8246049f6f85",
+   "scored_at": "2026-11-19T16:35:42.780380Z",
+   "n_answers": 50,
+   "n_claims": 233,
+   "heldout_digest": "513b3662fbd3134f8c37f4155190f5c4c3af07cf37deb02aaa17d933d5efc9d4",
+   "agreements": [
+    {
+     "judge": "claude-opus-5-5",
+     "task": "pubmedqa",
+     "judge_prompt_hash": "9a3a8246049f6f85",
+     "split": "heldout",
+     "n_claims": 231,
+     "coverage": 1.0,
+     "kappa": {
+      "point": 0.39668851328044147,
+      "lo": 0.26339506560472503,
+      "hi": 0.5107568717386441
+     },
+     "agreement": 0.7705627705627706,
+     "confusion": [
+      [
+       151,
+       1
+      ],
+      [
+       52,
+       27
+      ]
+     ],
+     "by_family": {
+      "anthropic": {
+       "point": 0.43681318681318687,
+       "lo": 0.28997844080327084,
+       "hi": 0.5648582792629847
+      },
+      "openai": {
+       "point": 0.3053691275167787,
+       "lo": 0.05677314857674547,
+       "hi": 0.5140302955053389
+      }
+     }
+    },
+    {
+     "judge": "gpt-6.1-sol",
+     "task": "pubmedqa",
+     "judge_prompt_hash": "9a3a8246049f6f85",
+     "split": "heldout",
+     "n_claims": 231,
+     "coverage": 1.0,
+     "kappa": {
+      "point": 0.5978191148171905,
+      "lo": 0.4680856337329988,
+      "hi": 0.7112119349604802
+     },
+     "agreement": 0.8354978354978355,
+     "confusion": [
+      [
+       148,
+       4
+      ],
+      [
+       34,
+       45
+      ]
+     ],
+     "by_family": {
+      "anthropic": {
+       "point": 0.6409807355516638,
+       "lo": 0.5025402383318965,
+       "hi": 0.7663781046012986
+      },
+      "openai": {
+       "point": 0.5149700598802397,
+       "lo": 0.20040624684768957,
+       "hi": 0.7257326220109064
+      }
+     }
+    }
+   ],
+   "extraction_error_rate": 0.008676789587852495,
+   "self_consistency": null
+  }
+ ]
+}

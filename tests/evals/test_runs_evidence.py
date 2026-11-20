@@ -80,7 +80,11 @@ RUN_DIRS = {"main": "main", "offscope": "offscope", "probe_original": "probe_ori
             "probe_paraphrase": "probe_paraphrase", "parity": "parity",
             "main_citation": "main_citation", "dev_ground_v1": "dev_ground_v1",
             "dev_ground_v2_sol": "dev_ground_v2_sol",
-            "dev_ground_v2_dual_partial": "dev_ground_v2_dual_partial"}  # fmt: skip
+            "dev_ground_v2_dual_partial": "dev_ground_v2_dual_partial",
+            # V2.2 (OWNER D-57, GPT-6.1 Sol alone)
+            "main_v2": "main_v2", "offscope_v2": "offscope_v2",
+            "probe_original_v2": "probe_original_v2", "probe_paraphrase_v2": "probe_paraphrase_v2",
+            "parity_v2": "parity_v2"}  # fmt: skip
 
 
 def test_every_paid_run_is_in_the_ledger_with_its_own_cost():
@@ -351,3 +355,63 @@ def test_v2_dev_bars_were_committed_before_either_v2_dev_run_started():
     for run in ("dev_ground_v2_dual_partial", "dev_ground_v2_sol"):
         started = load(run, "run.json")["started_at"].replace("Z", "+00:00")
         assert added < dt.datetime.fromisoformat(started), run
+
+
+# V2.2 (OWNER D-57: GPT-6.1 Sol alone): the probe and judged-parity records, recomputed
+
+
+V2 = "gemma-e2b-grounded-v2-q4"
+SOL = "gpt-6.1-sol"
+
+
+def test_the_v1_probe_and_parity_records_are_what_the_report_code_writes():
+    from ggh.export import parity
+
+    assert P.report(ROOT, "v1") == json.loads((M / "probe_report.json").read_text("utf-8"))
+    assert parity.headline(ROOT, "ft") == json.loads(
+        (M / "parity_headline.json").read_text("utf-8")
+    )
+
+
+def test_the_v2_probe_report_recomputes_and_shows_no_contamination_signal():
+    rep = json.loads((M / "probe_report_v2.json").read_text(encoding="utf-8"))
+    o, p = records("probe_original_v2"), records("probe_paraphrase_v2")
+    assert len(o) == len(p) == 100 and {r["case_id"] for r in o} == {r["case_id"] for r in p}
+    got = P.paired_drop(P.correct_by_case(o, V2), P.correct_by_case(p, V2))
+    assert rep["models"] == {V2: got} and got["n"] == 100 and not got["contamination_signal"]
+    assert rep["runs"] == {
+        "original": load("probe_original_v2", "run.json")["run_id"],
+        "paraphrase": load("probe_paraphrase_v2", "run.json")["run_id"],
+    }
+    assert rep == P.report(ROOT, "v2")
+
+
+def test_v2_parity_ran_the_v2_bf16_on_200_cases_of_the_v2_main_run_under_sol():
+    run = load("parity_v2", "run.json")
+    assert run["n"] == 200 and run["models"] == ["gemma-e2b-grounded-v2-bf16"]
+    assert run["judges"] == [SOL]
+    main_ids = {r["case_id"] for r in records("main_v2") if r["completion"]["model"] == V2}
+    par = records("parity_v2")
+    assert len(par) == 200 and {r["case_id"] for r in par} <= main_ids
+
+
+def test_the_v2_headline_difference_against_q4_recomputes_and_is_reported_sol_only():
+    from ggh.export import parity
+
+    rep = json.loads((M / "parity_headline_v2.json").read_text(encoding="utf-8"))
+    par = records("parity_v2")
+    q4 = {r["case_id"]: r for r in records("main_v2") if r["completion"]["model"] == V2}
+    bf = sum(bool(r["scores"]["correct_and_grounded"][SOL]) for r in par) / 200
+    qq = sum(bool(q4[r["case_id"]]["scores"]["correct_and_grounded"][SOL]) for r in par) / 200
+    assert round(bf, 3) == rep["bf16"][f"headline_{SOL}"]
+    assert round(qq, 3) == rep["q4_k_m"][f"headline_{SOL}"]
+    (d,) = rep["bf16_minus_q4_headline"].values()
+    assert set(rep["bf16_minus_q4_headline"]) == {SOL} and set(rep["bf16"]) == {
+        "accuracy",
+        f"headline_{SOL}",
+    }
+    assert d["lo"] <= d["point"] <= d["hi"] and d["point"] == round(bf - qq, 3)
+    assert rep["run_bf16"] == load("parity_v2", "run.json")["run_id"]
+    assert rep["run_q4"] == load("main_v2", "run.json")["run_id"]
+    assert rep["method"].endswith("reported, not gated (Tech Spec §6)")
+    assert rep == parity.headline(ROOT, "ft2")

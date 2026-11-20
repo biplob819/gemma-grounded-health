@@ -1,0 +1,28 @@
+{
+  "stage": "train",
+  "code_version": "1",
+  "key": "fa11eddc3791fa601e277ba0219b1a721c220818af2a3fddc4b2ea2df13a8afb",
+  "inputs": {
+    "artifacts/targets/train.jsonl": "93d8daa30b55b15f3b5fe41f443573cf94a81167c1f60e04140e2a3b63bfd13c",
+    "artifacts/targets/val.jsonl": "c0bd8f2038024e28b8a7e65454a9814e26ecc361be7c97ed80a1f52808a3de89",
+    "configs/recipe_v2.yaml": "77a458adb8bc58be67801155e4e362bcde6c72a74d6fb11e9db7d04376a25a95"
+  },
+  "outputs": {
+    "artifacts/adapter_v2/adapter_config.json": "17c0c0526c410b1a2aecbf74d67594f8f5f961993b7c9d7a955341674274bcf9",
+    "artifacts/adapter_v2/adapter_model.safetensors": "8ea0959ffae6cdc5122a5158112f84c6545857b64e6b4751825cc25a8ad9ee01",
+    "docs/measurements/v2/train_run.json": "01711d0eb9ec77a496f7e2c29b6041de0ce4deea55356732e1c527cb5c4ad7ac"
+  },
+  "params": {
+    "kaggle_kernel": "ggh-v21-train v1",
+    "repo_commit": "8ff61b977580700c592ee2c8443d46570e0126f1",
+    "selected_step": 340,
+    "base": "google/gemma-4-E2B-it@4adf15748de9e1a0097b6274cee9c15836c41c37"
+  },
+  "seed": 7,
+  "parents": [
+    "11fec5f2fd418f86965412737cbbe11da5400db01bd5d9b1ee3442c75a114f9f"
+  ],
+  "started_at": "2026-11-18T10:17:09Z",
+  "finished_at": "2026-11-18T11:57:21Z",
+  "host": "kaggle"
+}

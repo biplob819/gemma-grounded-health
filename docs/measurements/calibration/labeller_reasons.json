@@ -1,0 +1,1505 @@
+{
+ "k0b8832ad737d": {
+  "reason": "Sentence 8 gives 24% vs 2% failures for IC (combination) vs IM with P=.09."
+ },
+ "k073694a1ca61": {
+  "reason": "Cited sentence gives accuracy figures but never names 3D ultrasound-validated LCNB or calls it reliable."
+ },
+ "ke17bdee1e6ea": {
+  "reason": "Sentences 10-12 show deteriorated performance when pain-related cognitions were provoked, especially when provocation succeeded; hedged 'support' matches."
+ },
+ "k9f97e60f9027": {
+  "reason": "Aim and outcome sentences show satisfaction was the measure; clinical acceptability is plainly absent."
+ },
+ "k67b56915a7cd": {
+  "reason": "None of the cited sentences mentions guidelines or their adequacy."
+ },
+ "k88345f772e45": {
+  "reason": "Sentence 9 states more than one third expressed stress, depression, guilt and isolation."
+ },
+ "k43e1b930554c": {
+  "reason": "The cited result sentences report the QT/arrhythmia finding with no magnitude of risk."
+ },
+ "ka449eec5fe11": {
+  "reason": "Sentence 2 states QT interval changed significantly depending on oxybutynin use."
+ },
+ "k0e76512ee6a3": {
+  "reason": "Sentence 7: eight had min/max thermometers but only one was monitored daily."
+ },
+ "kf42dc6a82a63": {
+  "reason": "Sentence 4 states presenting symptoms, clinical features, endocrine status and outcome were compared."
+ },
+ "k16655af241c3": {
+  "reason": "Sentence 3 states the QT changes increased cardiac arrhythmia in children."
+ },
+ "kb80c1c1adf1c": {
+  "reason": "Sentence 8 states 11 AGC cases were picked up by RPS only and not by FS."
+ },
+ "k9e6491b79870": {
+  "reason": "Sentence 10 states only the TKA group showed enhancement in stair climbing."
+ },
+ "k1591ea7cce63": {
+  "reason": "Sentence 8 reports reduced diameters with stable performance over mean 70-month follow-up."
+ },
+ "k9840de371367": {
+  "reason": "Sentence 11 states no response to load in either T1DM or control group."
+ },
+ "k71c1a48f09de": {
+  "reason": "Cross-sectional age-group prevalences do not establish that non-retractility resolves with age."
+ },
+ "k4cf301d63cf5": {
+  "reason": "Sentence 9 states local political debate influenced selection and rating of factors."
+ },
+ "k4a856bd0d7c5": {
+  "reason": "Sentence 2 states relevance for clinical management of individual patients is open to question."
+ },
+ "kf10198135ea4": {
+  "reason": "Sentence 8 states the strong hospital-level negative associations for rectum mortality/morbidity and colon morbidity."
+ },
+ "k4312217b4cb7": {
+  "reason": "Sentence 12 states no deaths, amputations or permanent disability in antivenin recipients."
+ },
+ "kfae66fe9e33d": {
+  "reason": "Vague 'some differences' is not clearly established; sentence 7 says the gender difference disappeared after adjustment."
+ },
+ "k76afa2d60e14": {
+  "reason": "Sentence 6 states mortality patterns were similar for men and women."
+ },
+ "k4e6ed9d2fa68": {
+  "reason": "Sentence 12 shows a higher false-negative rate for acceleration response with late vs variable decelerations (29% vs 8%)."
+ },
+ "k39c2bdc4222d": {
+  "reason": "Sentence 6 lists all four associations with the higher TB quartile."
+ },
+ "k70e0a22c036e": {
+  "reason": "No cited sentence states PIBS points are unrepresentative of vaginal dose."
+ },
+ "ke39fc78a4b1a": {
+  "reason": "Sentence 9 matches exactly."
+ },
+ "kef7c94e69ab1": {
+  "reason": "Cited sentences give yields but never name DBE or state it is for small-bowel disorders."
+ },
+ "k2d18b619d5ce": {
+  "reason": "Sentence 5 defines success as expectancy at least 1 point above actual pain."
+ },
+ "kcb894fc3478f": {
+  "reason": "Sentence 7 states significant group differences on all three measures."
+ },
+ "k2049a58d5d83": {
+  "reason": "Sentences 3, 9 and 11: Group 3 (>7.5 mm contralateral laxity) had significantly lower functional scores vs Groups 1 and 2."
+ },
+ "kba4fe5023360": {
+  "reason": "Cited sentences give 4/90 prevalence but draw no conclusion about HPV as a risk factor."
+ },
+ "kd2e52c96850f": {
+  "reason": "Sentence 9 states waist circumference was a predictor of BP changes."
+ },
+ "k2018ab731d76": {
+  "reason": "Sentence 10 matches exactly."
+ },
+ "kcf8ecc8fa926": {
+  "reason": "Sentence 6 reports a nonsignificant increase in stroke risk."
+ },
+ "kf8026ebf5834": {
+  "reason": "Sentence 10 gives 24.4% vs 16.7% conversion, P=.04."
+ },
+ "k1ba264ecc45c": {
+  "reason": "Sentence 8 states 4 of 90 pterygia harboured HPV."
+ },
+ "kc3397e14fbef": {
+  "reason": "Cited sentences give the aim and a mortality result; cannot tell whether LOS is reported elsewhere."
+ },
+ "kf1f7eda23129": {
+  "reason": "No cited sentence mentions the isolated right hemisphere."
+ },
+ "k533fb547b2e2": {
+  "reason": "ISI(OGTT) is not defined as insulin sensitivity and the text restricts the finding to parity>3 rather than 'particularly'."
+ },
+ "ke067f6df893f": {
+  "reason": "Sentence 1 states OM has been suggested as such a cause."
+ },
+ "k5609c7c29f5a": {
+  "reason": "Sentence 7 matches."
+ },
+ "kc5635f7c228e": {
+  "reason": "Cited sentences do not restrict the population to severely injured patients."
+ },
+ "k0e7c31c2b0ad": {
+  "reason": "Text reports a within-group lesion reduction only in genuine acupuncture; 'showed efficacy' overstates it."
+ },
+ "kdf4160118e7b": {
+  "reason": "Sentence 9 reports dissatisfaction with the health care system, not physicians specifically."
+ },
+ "kb4a348c20329": {
+  "reason": "Post hoc group comparison does not show ICS changed relationships, and BHR in ICS-naive patients is not reported."
+ },
+ "kb89c52ce4f21": {
+  "reason": "Sentence 7 states surgery was cancelled in 6 cases."
+ },
+ "kecd4da2cf59a": {
+  "reason": "Sentence 7 lists stenosis preventing micturition, constrictive ring, balanopostitis and xerosol balanitis."
+ },
+ "k0dbd84d7242a": {
+  "reason": "Sentence 7 matches."
+ },
+ "k5c4c1fd013e3": {
+  "reason": "Sentence 8 lists different independent DSS predictors in the two cohorts."
+ },
+ "k28c589007dc3": {
+  "reason": "Sentence 1 describes feasibility of an angioplasty service, not a feasibility assessment of satisfaction; absence of clinical outcomes not shown."
+ },
+ "k6d10ee94ba92": {
+  "reason": "Sentence 7 reports nonzero false-negative (3.1%/3.5%) and underestimation (3.4%) rates."
+ },
+ "k0314c8cac642": {
+  "reason": "Sentence 9 matches."
+ },
+ "k14d7d65da06a": {
+  "reason": "Sentences 7-8 show associations varying by patient/hospital level, rectum/colon, and mortality/morbidity."
+ },
+ "kf5f275d49110": {
+  "reason": "Sentences 7-8 list these clinician-specific, environmental and education factors."
+ },
+ "k42e6fe765166": {
+  "reason": "Text restricts the trend to the 26 Group 1 patients; claim drops that scope and the comparator."
+ },
+ "k2e4a378db77a": {
+  "reason": "Cited sentences are a descriptive retrospective series with no comparator, so benefit is plainly not settled."
+ },
+ "k1ce22ac05ece": {
+  "reason": "No cited sentence gives the sample size or says it is small."
+ },
+ "k5b8692df62c1": {
+  "reason": "Sentence 6 gives the endoscopic counts but 'small' is an evaluation the text does not make."
+ },
+ "kee2965af5b3d": {
+  "reason": "Sentences 7 and 10 say the depth effect could be explained by larger size; hedge matches."
+ },
+ "ka4618aaacc9a": {
+  "reason": "Sentence 12 matches."
+ },
+ "kb80c62ef68a6": {
+  "reason": "No recommendation is stated, and sentence 9 says depth influenced prognosis in a subset."
+ },
+ "k9cda5b1973e5": {
+  "reason": "Sentence 9 shows continence and stool pattern scores differed between groups."
+ },
+ "k791c4f17696e": {
+  "reason": "Sentence 10 matches."
+ },
+ "k43476e00572b": {
+  "reason": "Sentence 11 matches."
+ },
+ "ka88d8081e5ea": {
+  "reason": "Only the aim sentence is cited; it does not establish reliability as a finding."
+ },
+ "k7b7e5d202a34": {
+  "reason": "Sentence 6 reports low-user improvement and a trend favouring teleconsultation, P=0.084."
+ },
+ "k7671acace06c": {
+  "reason": "Sentences 8-9: men divorced/single living alone vs women single living with a partner."
+ },
+ "kd8798b674728": {
+  "reason": "Cited sentences give background controversy and findings with no management conclusion."
+ },
+ "k199d725bef8e": {
+  "reason": "Retrospective design and 38 of 60 are stated, but 'small' is an evaluation the text does not make."
+ },
+ "k8d43021448ee": {
+  "reason": "Text shows US-EFW is an independent risk factor but never calls it modifiable."
+ },
+ "kf7f0c1349a17": {
+  "reason": "Sentence 6 reports significant SF-36 PCS, MCS and PGWB improvements."
+ },
+ "kba67e059a0b5": {
+  "reason": "Cited sentences never say the nurses' aides were Norwegian."
+ },
+ "kbc0abf0ae77b": {
+  "reason": "Onset and desmoid associations are stated, but the inference about management relevance is not, and sentence 2 questions it."
+ },
+ "k3bd51696c137": {
+  "reason": "Cited sentences are background, aim and methods only, with no result on protection."
+ },
+ "ke12b934aaa8d": {
+  "reason": "Sentences 2 and 5-7 show no outcome better with E2+antag/ML; OCP/ML had higher ongoing pregnancy."
+ },
+ "k268b4f6c24c7": {
+  "reason": "Sentence 9 matches."
+ },
+ "kac99ea25e437": {
+  "reason": "Sentence 8: for 12 risk factors, a strategy was present in over 80% of records when the factor was present."
+ },
+ "k8a0b1111ede0": {
+  "reason": "Sentence 7 gives 86% vs 27%, P<0.001."
+ },
+ "k429b5c37ebc1": {
+  "reason": "Sentence 12 states SF-12 summary scores equalled a matched normative population."
+ },
+ "keb52c3594f2b": {
+  "reason": "Sentence 11 matches (17.5% vs 5.1%)."
+ },
+ "kf143343b35d7": {
+  "reason": "Cited sentences describe the cohort but cannot confirm the abstract has no such comparison group."
+ },
+ "kcd7c90b1932a": {
+  "reason": "Sentences 3 and 5 state the 2009 tax increase brought no retail price increase."
+ },
+ "k3f43dfcda3fe": {
+  "reason": "Sentence 2 states this aim; claim is about the aim only."
+ },
+ "k39228aa0da1a": {
+  "reason": "Sentence 5 states no significant difference in number of embryos transferred."
+ },
+ "k8f7d439e3e97": {
+  "reason": "Cited sentences report poor awareness and temperature excursions but not a 'community' or 'cold chain weak link' conclusion."
+ },
+ "k4936a95d77a4": {
+  "reason": "Sentence [11] says 'in addition to the measured variables' but the cited text never names age, sex, education, depression and cognition."
+ },
+ "k718e3ef8cf5d": {
+  "reason": "Sentence [7] states stent thrombosis was significantly reduced in E-ZES recipients."
+ },
+ "kfff07bf47991": {
+  "reason": "Sentence [7] gives near-identical sensitivity, specificity and error rates for excised lesions and all lesions."
+ },
+ "kb114a3762b42": {
+  "reason": "Sentence [9] reports large phenotypic variation even among patients with identical germline mutations."
+ },
+ "k279e7f8e7fb6": {
+  "reason": "Sentence [6] says the prepuce adheres again in many boys after forced dilation, which is the failure claimed."
+ },
+ "kc321d0812492": {
+  "reason": "Sentences [6]-[7] show BMS worse on MACE, MI, TVR and stent thrombosis with no bleeding advantage in HBR patients."
+ },
+ "k9ea4e51ce12d": {
+  "reason": "Sentences [3] and [7]-[11] show the highest-laxity group had worse laxity and functional scores."
+ },
+ "ke0b01b3ba027": {
+  "reason": "The cited sentences do not define 'technology per se' or make clear what the findings can or cannot establish about it."
+ },
+ "k2e6544c2b93e": {
+  "reason": "Sentence [10] gives the survivors' Barthel Index as 89 +/- 17."
+ },
+ "k01654bed8493": {
+  "reason": "Sentence [9] says patients were slower, but no cited sentence says the task was a hand task not involving the back."
+ },
+ "k7294125ee227": {
+  "reason": "'The answer' is not identified, and the cited sentences do not establish that the evidence is limited in scope."
+ },
+ "k11c9ae76d172": {
+  "reason": "Sentence [4] states this and [2] gives the Australian setting."
+ },
+ "kb0245aba9dd9": {
+  "reason": "Sentence [3] states both the absence of a retail price rise and the STMA reason."
+ },
+ "k5ebd0b5cdb22": {
+  "reason": "Sentence [1] describes a retrospective single cohort of reoperated patients with no alternative-treatment comparator."
+ },
+ "k057c2e2e870d": {
+  "reason": "Sentences [3] and [11] show Group 3 (>7.5 mm) had significantly greater laxity than Groups 1 and 2."
+ },
+ "ke050298b1583": {
+  "reason": "Sentence [8] shows both were raised, not that leptin is involved in causing NADPH oxidase overactivity."
+ },
+ "kdc0c7f62e056": {
+  "reason": "The 12-month time point is not in the cited sentences."
+ },
+ "k04c2fd806bbb": {
+  "reason": "Sentence [7] lists the model covariates and [11] says IADL disability predicted dementia in addition to them."
+ },
+ "k731fd32a5dcc": {
+  "reason": "Sentence [10] does not name the comparator ('other second-line agents')."
+ },
+ "k859a43712165": {
+  "reason": "Sentences [7]-[9] show mixed results: similar HbA1c, more failures but less weight gain and fewer hypoglycaemic events with combination."
+ },
+ "kfdbbcd1f4e49": {
+  "reason": "Consensus is stated in [9], but the Delphi design and the 'good practice' framing are not in the cited sentences."
+ },
+ "kc8992c890253": {
+  "reason": "Sentence [5] reports type V (completely retractile) in 82.3% of adolescent boys."
+ },
+ "k1d7e019b558a": {
+  "reason": "Sentence [3] states this directly."
+ },
+ "k992b5071e412": {
+  "reason": "Sentence [2] states this aim."
+ },
+ "ka9b074e058de": {
+  "reason": "Sentence [3] describes one randomized study of 42 patients."
+ },
+ "kbbf2660374e2": {
+  "reason": "Sentence [4] says the study analyzes changes in participants' communication behavior."
+ },
+ "k85302890a0bc": {
+  "reason": "Sentences [10]-[11] show Group 3 had the lowest IKDC score and significantly lower functional scores than Groups 1 and 2."
+ },
+ "k6342efba0bd3": {
+  "reason": "Sentence [11] reports no load response in either the T1DM or the control group."
+ },
+ "k40bc34325c91": {
+  "reason": "The question is not identified, and the cited sentences do not show what cannot be settled."
+ },
+ "k5bbade66ad93": {
+  "reason": "Sentences [4]-[5] give the data, the models and the link between higher benefits and lower disability."
+ },
+ "k3caaed0d24b5": {
+  "reason": "A bare 'Yes.' is a fragment with no assertion."
+ },
+ "kbbe56d99bb57": {
+  "reason": "Sentence [8] states no significant between-group differences at all three time points."
+ },
+ "k4925624352c5": {
+  "reason": "Sentences [4] and [10] state that patients' hand-task performance deteriorated in the provoking condition compared with lying."
+ },
+ "kd2d73ca260da": {
+  "reason": "Sentence [7] says residual urine was significantly higher in the control group, which [8] identifies as without IONM."
+ },
+ "k42d93f95527f": {
+  "reason": "Sentence [10] hedges that size 'could explain' the effect; the claim states confounding as fact."
+ },
+ "kbe583edc11c5": {
+  "reason": "Sentences [5] and [7] show most prepuces become retractile and only 2.7% needed circumcision, which does not support routine circumcision."
+ },
+ "ke677164f6c18": {
+  "reason": "Sentence [6] gives a sensitivity of 45.5% for disc protrusion with HIZ."
+ },
+ "k33a1eedd253d": {
+  "reason": "Sentence [8] ranks groups I-IV, but no cited sentence maps the groups to ICS status or obstruction."
+ },
+ "k58f6f1d65947": {
+  "reason": "EMS providers and a simulator are not in the cited sentences, and 'sufficient' rests only on the below-range rate."
+ },
+ "k8dcf675dde42": {
+  "reason": "Sentence [7] states this directly."
+ },
+ "k956b94270e5f": {
+  "reason": "The 14/44 (32%) figure is in [5], but 'the later cohort' implies a comparison cohort absent from the cited sentences."
+ },
+ "k89e6627c58c2": {
+  "reason": "'Promising but limited' is an evaluative judgment that the cited sentences do not state."
+ },
+ "k8b4bc13f434f": {
+  "reason": "Sentence [2] gives the aim as evaluating the roles of physicians."
+ },
+ "kdd0810828179": {
+  "reason": "The cited evidence concerns one zotarolimus-eluting stent, not drug-eluting stents as a class."
+ },
+ "k6c364fd7746f": {
+  "reason": "Sentence [7] reports a nonsignificant trend to improved implantation (20% vs 12%) in the OCP/ML-first comparison."
+ },
+ "k1bc8ddea9b86": {
+  "reason": "Sentence [5] states this directly."
+ },
+ "kc8a87abb5f6b": {
+  "reason": "Sentence [10] limits the 1.5% to breaths delivered with the pediatric BVM; the claim drops that scope."
+ },
+ "kc308ae5b0670": {
+  "reason": "Sentence [7] reports a nonsignificant trend to more oocytes (7.7 vs 5.9)."
+ },
+ "k8ede188034d3": {
+  "reason": "Sentence [11] shows only 17.5% of pediatric BVM breaths were in range, so most were outside."
+ },
+ "kee068c3cca25": {
+  "reason": "Sentence [3] describes a 21-year-old female with rheumatoid arthritis."
+ },
+ "kd18b7bd2720d": {
+  "reason": "Sentence [5] says use of this one system varies; it says nothing about uptake or Web-based systems in general."
+ },
+ "k2a8d850ca775": {
+  "reason": "Sentence [10] reports tubules without germ cells in an additional 4 (7%), one specimen per patient per [7]."
+ },
+ "k252de23922c2": {
+  "reason": "Sentence [7] shows the improvements also occurred with sham acupuncture."
+ },
+ "k586ad9cba26b": {
+  "reason": "Sentence [9] states this directly."
+ },
+ "kd38cf71f1eac": {
+  "reason": "Sentence [6] states 67%."
+ },
+ "k9e76139fc079": {
+  "reason": "Sentence [8] states this directly."
+ },
+ "k603d9bd8783f": {
+  "reason": "Sentence [5] states significantly longer survival for lower BMI in stage 2."
+ },
+ "k091050def19a": {
+  "reason": "Stable long-term performance is in [8], but 'ascending' aortoplasty is not stated in the cited sentences."
+ },
+ "k5b2208bd73fb": {
+  "reason": "The two cited sentences cannot show what the whole abstract does or does not say about physicians."
+ },
+ "kda0f365ab6a9": {
+  "reason": "The cited sentences describe the controversy and the findings but state no management recommendation."
+ },
+ "k9f799e999b8d": {
+  "reason": "Sentence [7] says only one of the eight with thermometers was monitored daily."
+ },
+ "kd6fc5b352669": {
+  "reason": "Sentence [11] states no new diagnosis, but the acute diverticulitis setting is not in the cited sentences."
+ },
+ "k4fe4e5658d53": {
+  "reason": "Sentence [7] shows functional gains with sham as well, which fits the hedged 'may be partly non-specific'."
+ },
+ "kc04e34389a7a": {
+  "reason": "Sentence [8] compares intervention and control sites; no cited sentence identifies the control sites as thrombolysis sites."
+ },
+ "kd66dfd7a0357": {
+  "reason": "Sentences [4] and [8] state that Group 1 (regular diet on the first morning) vomited more often (44% vs 25%)."
+ },
+ "kec21a471d67e": {
+  "reason": "Sentence [6] gives the nonsignificant stroke increase, but the cited sentences say 'conventional PCI', not 'primary PCI'."
+ },
+ "kdf8a598bb770": {
+  "reason": "Sentences [3] and [7] give 400 boys and 11 (2.7%) needing circumcision."
+ },
+ "k999e392f6b7d": {
+  "reason": "Sentence [6] states the 0.46-point fall per $100 monthly increase among single elderly individuals."
+ },
+ "k5a3e276ac84a": {
+  "reason": "The cited sentences report no new diagnosis but say nothing of management or the acute diverticulitis setting."
+ },
+ "k1041117a79e7": {
+  "reason": "The cited sentences report satisfaction only and do not mention thrombolysis or acceptability as an alternative."
+ },
+ "kc1b524c21030": {
+  "reason": "Sentence [7] covers only mortality, reinfarction and the combined outcome, not the thrombectomy effects in general."
+ },
+ "kedc89addb7e2": {
+  "reason": "The cited sentences cannot show whether the full abstract settles this question."
+ },
+ "k68bef7358e00": {
+  "reason": "Sentence [10] says 'treatment'; fenofibrate is not named in the cited sentences."
+ },
+ "k609c54f7e0d6": {
+  "reason": "Sentence [10] states gestational age at TOPFA was comparable."
+ },
+ "ka3f151b53b11": {
+  "reason": "Sentences [6]-[9] report differences between the cohorts in distribution and predictors."
+ },
+ "k4ed4397b628c": {
+  "reason": "Sentences [4], [5] and [8] state that the regular-diet group vomited more than the traditionally fed group."
+ },
+ "k9de3ed4572f5": {
+  "reason": "Sentence [12] gives a PPV of 67% in both deceleration groups, so the overall PPV is exactly 67% as well."
+ },
+ "k04f847b1bf94": {
+  "reason": "Sentence [2] hedges with 'may be secondary'; the claim states it as fact."
+ },
+ "k306403ee5792": {
+  "reason": "No cited sentence mentions guidelines or the standard being audited against."
+ },
+ "k3bd1ea1a984f": {
+  "reason": "Sentence [10] says age did not significantly affect the outcome after controlling for it."
+ },
+ "k94b8c12259a4": {
+  "reason": "Sentences [9]-[10] state this."
+ },
+ "keb939eec24d3": {
+  "reason": "Sentences [3] and [8] give raised odds (OR 1.29) of sick leave over 8 weeks in the ETS-exposed group, matching the long-term sick-leave hypothesis."
+ },
+ "k6e015b5081dd": {
+  "reason": "Sentence [7] states this directly."
+ },
+ "k5e51b47b2af2": {
+  "reason": "Sentence 7 states ultrasonography missed abdominal testes in non-palpable cases."
+ },
+ "k718053deb227": {
+  "reason": "Randomized 42 patients, 48-hour re-siting, PVT 100% vs 9.5% covers all parts."
+ },
+ "kd56ec40a8f23": {
+  "reason": "Cited sentences never identify well-differentiated HCC or state the not-early-cancer conclusion."
+ },
+ "ka620c0847b91": {
+  "reason": "Sentence 2 says reduction aortoplasty can be an optional therapy and sentence 5 adds external reinforcement."
+ },
+ "kcf5dfd13e072": {
+  "reason": "Text reports the percentage of students seeing each condition varied, not the number of conditions per student."
+ },
+ "kc4f90b29d8a6": {
+  "reason": "Sentence 7 reports meta-regression found no difference by ischemic time."
+ },
+ "kdc7450ba4d11": {
+  "reason": "Sentence 7 gives overall disability RR 1.76 (1.44-2.14) highest vs lowest quartile."
+ },
+ "k4919454a4ee0": {
+  "reason": "Sentence 6 states the $100 SSI increase caused a 0.46-point fall in mobility limitations among single elderly."
+ },
+ "kd853dea48eb5": {
+  "reason": "Aim is stated, but no cited sentence concludes early feeding was feasible; it is inferred from mixed outcomes."
+ },
+ "ke536f322f59d": {
+  "reason": "4 of 90, all HPV type 6, all DNA ISH negative are stated; about 4% is correct rounding."
+ },
+ "kd4b5fca4d945": {
+  "reason": "Text reports an association with pH<7.20, not that VAS is an effective predictor of fetal acidosis."
+ },
+ "k2a87d3ec3401": {
+  "reason": "Sentence 11 states this verbatim."
+ },
+ "k132e19cc88b1": {
+  "reason": "Sentence 10 says healthy subjects' performance remained equal between provoking and lying."
+ },
+ "k71cf6de75de1": {
+  "reason": "Sentence 8 says estimates were similar after adjustment for confounders."
+ },
+ "kf68771f22744": {
+  "reason": "Text gives Barthel, NYHA and SF-12 values but does not call functional status good; that judgement is outside the text."
+ },
+ "k829e4ba508d5": {
+  "reason": "Sentence 9 says continence score was significantly better in the ABD (transabdominal) group."
+ },
+ "ke3987387e89d": {
+  "reason": "Sentence 11 gives OR 2.20 (1.51-3.13) at 1-year follow-up."
+ },
+ "kdd46caaa84c2": {
+  "reason": "No cited sentence draws a conclusion about routine circumcision being unwarranted."
+ },
+ "ke3b20371e5fe": {
+  "reason": "Nothing in the cited sentences characterises the evidence as limited."
+ },
+ "kc3194e9396b5": {
+  "reason": "Missed retractile and abdominal testes and 67% detection directly entail ultrasonography is not reliable."
+ },
+ "k0c581e099340": {
+  "reason": "Cited sentences cover only uptake factors and variable use, with no outcome evidence that the system standardizes care."
+ },
+ "kaec49049c3e6": {
+  "reason": "Cited sentences compare admissions by province with differing treatment proportions, not by medication."
+ },
+ "k7e537753dcd6": {
+  "reason": "Sentence 8 says overall scores were similar between groups."
+ },
+ "k369a12d43107": {
+  "reason": "Sentence 3 gives nine of the 50, and sentence 4 identifies them as high falls risk patients."
+ },
+ "kd2f49c79c567": {
+  "reason": "Sentences 8 and 10 give 65 treated and 43 receiving 10 or more vials."
+ },
+ "ke8cf8f9fc035": {
+  "reason": "Sentence 8 states no significant differences in mean %EBWL among the three groups."
+ },
+ "k0e1bda706cb8": {
+  "reason": "Vague interpretive claim; cited text never states what consistency is partial."
+ },
+ "k3f10b7bb8e02": {
+  "reason": "Sentence 8 reports CT and echo diameters significantly smaller after reduction."
+ },
+ "k1107970688bd": {
+  "reason": "Sentence 7 gives 13 of 24 (54.2%) flagged."
+ },
+ "k3bae6019a989": {
+  "reason": "Sentence 9 states this."
+ },
+ "k9ba77f0b5235": {
+  "reason": "Sentence 9 says the nature of local health care systems influenced selection and rating."
+ },
+ "kb41f74dff94e": {
+  "reason": "Sentences 1 and 9 give patients aged 80 or over and a further 19.0% died during follow-up."
+ },
+ "k0387cf840dc0": {
+  "reason": "Cited sentences compare two unnamed groups; well-differentiated HCC is never identified."
+ },
+ "k3b9959d4f255": {
+  "reason": "No cited sentence states the study design or a limitation on causal inference."
+ },
+ "k6111cfe73cd7": {
+  "reason": "The denominator of 65 patients is not in the cited sentences."
+ },
+ "ke9d89ae87b5d": {
+  "reason": "Groups defined by contralateral laxity differed significantly in laxity and functional scores."
+ },
+ "k3a854cf4347d": {
+  "reason": "Text says the effect 'could be explained' by size; the claim states it as established."
+ },
+ "k147805a8a986": {
+  "reason": "Sentences 12 and 13 give the median volumes and lower pediatric volumes in all airway types."
+ },
+ "kfa6b59a75ce8": {
+  "reason": "Sentence 7 gives 18.7% and 12.5%."
+ },
+ "k901889a4213b": {
+  "reason": "Sentence 7 gives a false-negative rate of 3.1% for all lesions."
+ },
+ "ka3d35edd1db0": {
+  "reason": "Sentence 5 states no significant reduction in all four outcomes vs conventional PCI."
+ },
+ "k7265139c2b00": {
+  "reason": "Sentence 8 states these factors were also associated with other unexplained syndromes."
+ },
+ "kb903ce8f7acf": {
+  "reason": "Sentence 7 lists the specific reasons for the 11 boys."
+ },
+ "kb839a227ec3d": {
+  "reason": "Sentence 13 states lower median tidal volumes with pediatric BVM in all three categories."
+ },
+ "k43562e8d040d": {
+  "reason": "Sentence 7 says bleeding events did not differ between stent groups."
+ },
+ "k5d8a303b67e2": {
+  "reason": "Cited methods sentences cannot show the whole abstract contains no results."
+ },
+ "kab4d27a877a2": {
+  "reason": "No cited sentence states the design is retrospective or addresses causation."
+ },
+ "k1c8a42f98d94": {
+  "reason": "Sentence 8 says alcohol predicted central systolic BP at follow-up, not BP changes."
+ },
+ "kc02ba067a8f7": {
+  "reason": "Sentence 10 states within-country discordance on prioritising cultural differences."
+ },
+ "k2a13d81db877": {
+  "reason": "Sentence 10 says age did not significantly affect the long-term scoring outcome."
+ },
+ "k767ae63bda18": {
+  "reason": "Sentence 8 says structural improvement, a reduction in lesion size, was seen only in genuine acupuncture."
+ },
+ "kd4b19770af9a": {
+  "reason": "Cited sentences show ICS loaded on a separate factor from PD and give no direct ICS-PD association."
+ },
+ "k6b0d219ac4f6": {
+  "reason": "Sentence 8 gives kappa 0.52 and 0.47, moderate agreement."
+ },
+ "kd769aab30f2f": {
+  "reason": "Sentence 11 states all four were DNA ISH negative."
+ },
+ "k1b3615aae458": {
+  "reason": "Sentence 9 states this."
+ },
+ "k16669e3edfbb": {
+  "reason": "Sentence 9 reports significantly higher hematologic complications in July, contradicting 'no evidence'."
+ },
+ "kddbc81a80e65": {
+  "reason": "Numbers match group 2, but cited sentences never define group 2 as the second-line group."
+ },
+ "kc3ec7b9ac0ad": {
+  "reason": "Type V was 82.3% in adolescents vs 5.5% under 1 year."
+ },
+ "k5f5758b1404a": {
+  "reason": "Sentence 7 gives PFS 34.7 vs 11.6 months, p = 0.03 in the entire TKI cohort."
+ },
+ "kfcdff54c6b03": {
+  "reason": "Sentence 16 says no other complications occurred."
+ },
+ "k67d195b4efe7": {
+  "reason": "Sentence 6 reports significantly improved GSRS total and reflux scores."
+ },
+ "k5b957b61900e": {
+  "reason": "A sensitivity of 45.5% means more than half of concordant discs are missed (trivial arithmetic)."
+ },
+ "k1c232c697215": {
+  "reason": "Matched open TME pairs show less urinary and anorectal dysfunction with IONM (p = 0.031)."
+ },
+ "k12ff3c70bfe5": {
+  "reason": "Sentence 8 reports worse psychological but similar physical symptom burden."
+ },
+ "kce8b9b5be64f": {
+  "reason": "Two cited sentences cannot show what the whole abstract does or does not conclude."
+ },
+ "kfbc27d0b30a0": {
+  "reason": "Sentence 7 gives 11 boys, 2.7% of examined boys."
+ },
+ "kd05e22420250": {
+  "reason": "Sentence 7 gives 16 of 40."
+ },
+ "k52113029a86d": {
+  "reason": "A hedged inference directly entailed by near-half dissatisfaction and distress in sentence 9."
+ },
+ "k769f66d7af05": {
+  "reason": "No cited sentence concludes early feeding is possible; outcomes are mixed and the conclusion is not stated."
+ },
+ "k79eb5557899a": {
+  "reason": "Sentence 8 states this."
+ },
+ "k4a9665b36d9b": {
+  "reason": "Sentence 12 states verbal memory and receptive vocabulary correlated with average-reader levels."
+ },
+ "kef7c5d95624e": {
+  "reason": "Sentence 7 gives 9 (17.3%) mismatches for convictions."
+ },
+ "ke44624c79071": {
+  "reason": "Sentence 10 reports 2.7-fold more virologic failures on third-line regimens (p = 0.007)."
+ },
+ "k3eb52300814e": {
+  "reason": "Sentence 9 says level of immigration influenced selection and rating."
+ },
+ "k1a227f8d0a64": {
+  "reason": "All cited sentences are background, aim and methods, with no results."
+ },
+ "k753a9fc14441": {
+  "reason": "Cited sentences are province-level comparisons only and cannot establish medication causation."
+ },
+ "k541614557a74": {
+  "reason": "Sentence 8 states this."
+ },
+ "k310124ad89b9": {
+  "reason": "Sentence 10 does not specify well-differentiated HCC."
+ },
+ "k8d4286ee1beb": {
+  "reason": "The 32% figure is given, but the acute diverticulitis population is not in the cited sentences."
+ },
+ "k80c71861fa40": {
+  "reason": "Sentence 8 states this."
+ },
+ "k6ffa84210577": {
+  "reason": "Cited sentences do not describe the study as observational or small."
+ },
+ "k9a507fbf086f": {
+  "reason": "The OR and adjustment match, but the Dutch adolescent population is not in the cited sentences."
+ },
+ "kb23440ae6fe0": {
+  "reason": "Sentence 7 states no significant survival difference."
+ },
+ "ka8086e166c89": {
+  "reason": "Sentence 8 states the three individual findings were not helpful."
+ },
+ "kb0ddb3959022": {
+  "reason": "Sentence 11 gives the Web-recruitment association with the upper psychological tertile, adjusted OR 2.20."
+ },
+ "k11c7d1c1bded": {
+  "reason": "The cited results sentences cannot show that no other abstract sentence states whether resection is worthwhile."
+ },
+ "k279432e425a3": {
+  "reason": "The cited sentences give an aim and a health-system dissatisfaction finding but cannot show that the abstract leaves the physician question unsettled."
+ },
+ "k588d2e755d74": {
+  "reason": "The TOPFA figures match, but 'population-based' and 'congenital heart defects' are not in the cited sentences."
+ },
+ "k9aa64d7f6838": {
+  "reason": "Group 1 received a regular diet the morning after laparotomy with no difference in ileus, so early feeding was done after open surgery."
+ },
+ "k376c52c4cc1e": {
+  "reason": "Sentence 10 states that both groups improved in the 6-min walk test."
+ },
+ "kc87ae45d60d1": {
+  "reason": "The comparator 'other second-line agents' is not stated in the cited sentences."
+ },
+ "kda1d95ff1730": {
+  "reason": "The cited background and results sentences cannot show that the abstract states no conclusion on surgical necessity."
+ },
+ "k57153f1d9d22": {
+  "reason": "The cited sentences report only survival, but they cannot show that morbidity results are absent from the whole abstract."
+ },
+ "k407fcc56d03b": {
+  "reason": "Only lower p53 in XGC is stated; PCNA is not mentioned."
+ },
+ "k2cc9ee57ad98": {
+  "reason": "Being an independent predictor does not establish that TB discriminates cardioembolic stroke from other subtypes."
+ },
+ "k24b3f4ebb923": {
+  "reason": "Sentence 10 states that deep-seated tumors had poorer survival in the high-grade, large-tumor subset."
+ },
+ "k6843a45b5412": {
+  "reason": "Sentence 10 states that the 20 normal specimens were HPV negative."
+ },
+ "k0dea1d292aab": {
+  "reason": "Sentence 3 calls prior results inconclusive, but nothing cited says the association remains unsettled after this study."
+ },
+ "kc4e935fd3558": {
+  "reason": "Sentence 2 states the hypothesis that ICSs reverse the effect of airway inflammation on PD."
+ },
+ "kcad14e0bc507": {
+  "reason": "Linking the fibrinogen and FSP changes to reduced fibrinolysis needs outside knowledge; sentence 2 only hedges about expected effect."
+ },
+ "k2285b332ef2a": {
+  "reason": "The finding matches sentence 9, but the cited sentences never identify the patients as having CLBP."
+ },
+ "k5cd29cc4d88e": {
+  "reason": "Sentence 8 says RPS caught 11 AGC cases that full screening missed, which supports the hedged claim of complementary value."
+ },
+ "kcca877e6735d": {
+  "reason": "Sentence 6 states this verbatim."
+ },
+ "k8d7e67b3400e": {
+  "reason": "Sentence 3 mentions variable reports of viable germ cell elements in remnants."
+ },
+ "k45d018f88764": {
+  "reason": "Sentence 9 states that there was no statistical difference after adjustment for confounders."
+ },
+ "k7495ec0632b0": {
+  "reason": "The outcome is long-term sick leave and the exposure is self-reported at baseline, so the design is observational and the link is an association."
+ },
+ "kecb9664b57b3": {
+  "reason": "Sentences 5-6 cover the optimal-BP Africans followed for 5 years and the higher baseline GGT in those who became hypertensive."
+ },
+ "k992176fedd2a": {
+  "reason": "'Contributing' is causal, and alcohol predicted central SBP and CSWA, not conversion to hypertension."
+ },
+ "kc423717457f6": {
+  "reason": "Sentence 8 states that analyses of those least likely to receive SSI showed no measurable effect."
+ },
+ "kab732c53bbfb": {
+  "reason": "Sentence 8 reports no difference in ileus duration (3.6 vs 3.4 days)."
+ },
+ "kc7dd699a659c": {
+  "reason": "The 11/835 (1.3%) figures match, but the cited sentence never says the cancers were colorectal."
+ },
+ "k185ac54ea9e0": {
+  "reason": "The text gives 36.4% flagged but does not call detection poor; that is an added judgment."
+ },
+ "kb1439d68a350": {
+  "reason": "The text says side effects were mostly urticaria but never calls them mild."
+ },
+ "k3ee72ccf8bed": {
+  "reason": "Sentence 7 states that bleeding events did not differ between stent groups."
+ },
+ "k0006a86ddac6": {
+  "reason": "Group 2 is never identified as second-line, and 'depended on' overstates 'independent predictors'."
+ },
+ "ke642fbe32f78": {
+  "reason": "The age pattern matches, but the cited sentence never names ofloxacin."
+ },
+ "k1b068d840a59": {
+  "reason": "Sentence 9 states this directly."
+ },
+ "kf328f05e2b08": {
+  "reason": "Sentence 1 gives the aim of discussing and comparing septal suturing with nasal packing."
+ },
+ "k56e1915d2ee9": {
+  "reason": "Sentence 5 states the independent risk factor with OR 1.44."
+ },
+ "k68843d7d9473": {
+  "reason": "Sentence 11 states that the small number of preterm fetuses limited conclusions."
+ },
+ "kceeb880e8d83": {
+  "reason": "Sentence 9 states that overall survival was not influenced by PPM."
+ },
+ "k485ee309f2ee": {
+  "reason": "The cited association sentences cannot show that accuracy measures are absent from the whole abstract."
+ },
+ "ke9e2c2bd8e97": {
+  "reason": "Sentence 10 states this directly."
+ },
+ "k24e53af48f65": {
+  "reason": "Sentence 9 states that the stool pattern score was better in the TERPT group."
+ },
+ "ka03c82753b0d": {
+  "reason": "Sentence 7 reports both groups reaching 7.6%."
+ },
+ "kf5469a3f9c5d": {
+  "reason": "The P=0.879 result matches, but the cited sentences never name IDA."
+ },
+ "kf097d3af58f1": {
+  "reason": "Only 17.5% of pediatric BVM breaths were in range, so most were outside it (trivial arithmetic)."
+ },
+ "k73485930faec": {
+  "reason": "'Yes.' is a bare answer fragment with no assertion to check."
+ },
+ "k2d69538d21fb": {
+  "reason": "Sentence 7 states 16 of 40."
+ },
+ "kaae80cac53bb": {
+  "reason": "Sentence 7 lists the common strategies."
+ },
+ "kddac10b91cac": {
+  "reason": "The numbers match, but the cited sentences never define PVT as peripheral venous thrombophlebitis."
+ },
+ "k554491c2a0fa": {
+  "reason": "Sentence 11 states this directly."
+ },
+ "ka513f199b4ca": {
+  "reason": "Sentence 8 states that 2 of the 11 RPS-only AGC cases were endometrial adenocarcinoma."
+ },
+ "kf607be090b7d": {
+  "reason": "The background describes controversy, but the cited sentences do not establish that the answer remains uncertain."
+ },
+ "k478d8ede4900": {
+  "reason": "The 'in-hospital' time frame and risk framing are not stated; sentence 8 gives only a higher death rate."
+ },
+ "k7e1077815c70": {
+  "reason": "Sentence 8 states 93% of 6,096 contacts."
+ },
+ "kf66f0fbc9910": {
+  "reason": "Sentence 7 reports a cluster-analysis finding on acceptability, which contradicts 'none of its sentences reports a finding'."
+ },
+ "k4980c6edb2ae": {
+  "reason": "Sentence 7 states low postoperative morbidity."
+ },
+ "k998d0faba36c": {
+  "reason": "'Adequate volumes' and 'lung-protective ranges' are not stated; only 17.5% of breaths were in the recommended range."
+ },
+ "ke2c48e7f3efe": {
+  "reason": "Sentence 7 gives log-rank p = 0.086 for the PTC cohort, which is not significant."
+ },
+ "k1f7ddabf82aa": {
+  "reason": "The rates match, but the cited sentences never describe a retrospective cohort."
+ },
+ "k53d7a1b51be2": {
+  "reason": "Sentence 9 reports fewer hypoglycemic events in the IC (insulin plus oral) group, 2.7 vs 4.3."
+ },
+ "k7ab18c04678b": {
+  "reason": "Sentence 7 states that stent thrombosis was significantly reduced with E-ZES."
+ },
+ "k9e4052ae73cf": {
+  "reason": "The text gives correlations with size, orbital invasion and pagetoid spread, not 'progression'."
+ },
+ "ke4985ddbd031": {
+  "reason": "'Preterm infants' is not in the cited sentence, and 'no evidence of a difference' is weaker than 'not noisier'."
+ },
+ "k58ad38e437f7": {
+  "reason": "Sentence 2 states the aim verbatim."
+ },
+ "kd48dccdbb51a": {
+  "reason": "Sentence 8 says group II had the lowest VAS, but no cited sentence identifies group II as ICS-treated."
+ },
+ "kdc31f909685c": {
+  "reason": "Sentence 6 states a median of 6.5 of 16."
+ },
+ "k9fdcfa94ad5e": {
+  "reason": "Converters smoked more and had greater waist circumference, and waist predicted BP change; the claim is hedged."
+ },
+ "k0e99c4a38f26": {
+  "reason": "Sentences 5-6 show no significant benefit on mortality, reinfarction or stent thrombosis."
+ },
+ "k68ba5025181b": {
+  "reason": "Sentence 9 says intra-group strength and position sense did not differ across time points."
+ },
+ "k262e8cc15b6b": {
+  "reason": "18/24 matches, but the cited sentences never name DBE as the procedure."
+ },
+ "k2936524b4b76": {
+  "reason": "Sentence 10 says the difference could be explained by larger size, and sentence 7 says depth had no effect once size was accounted for."
+ },
+ "ka6c0d0b54566": {
+  "reason": "The cited sentences report only survival and cannot show what the whole abstract establishes about morbidity."
+ },
+ "ka933357ac608": {
+  "reason": "Sentences 4-6 give the census fixed-effect design and higher benefits causing lower disability."
+ },
+ "k5b31556726c2": {
+  "reason": "Sentences 2-4 give the retrospective analysis of 59 patients split 22 and 37."
+ },
+ "k833897d3d58b": {
+  "reason": "Sentence 2 states this."
+ },
+ "kc1e0f222356a": {
+  "reason": "Sentence 2 calls reduction aortoplasty optional but lists external reinforcement as not established, so the combination is not stated."
+ },
+ "kbf78cea2553f": {
+  "reason": "Sentence 6 reports lower MI and TVR in the E-ZES arm than with BMS."
+ },
+ "kdf3b0b0f5a1c": {
+  "reason": "Sentence 4 states type V (completely retractile) at 5.5% under 1 year."
+ },
+ "k0017b62daa87": {
+  "reason": "Sentence 5 reports no difference but never identifies the groups as well- vs less-differentiated HCC."
+ },
+ "k3cf98588a052": {
+  "reason": "No cited sentence says group 1 received desmopressin alone, so the comparison is not established."
+ },
+ "k6bbe3b8a2e7a": {
+  "reason": "No cited sentence identifies the control sites as thrombolysis."
+ },
+ "k955eaa0155fd": {
+  "reason": "Sentence 11 gives 17.5% vs 5.1% in range, with the adult BVM as the comparator."
+ },
+ "k1b237d06041d": {
+  "reason": "Sentence 9 states this."
+ },
+ "k415db7e8c019": {
+  "reason": "The OS figures match, but no cited sentence identifies group 2 as second-line and group 1 as first-line."
+ },
+ "k3099418c2c6f": {
+  "reason": "Sentences 2-4 give more steroid use in Oulu (93%), more cromones in Kuopio, and fewer admissions in Oulu."
+ },
+ "k7a4dd4eead05": {
+  "reason": "Sentence 7 says only one measure was negatively associated with rectum-carcinoma morbidity at the patient level."
+ },
+ "kf368ea72901a": {
+  "reason": "Sentence 9 reports no DFS difference between 'the two groups' but no cited sentence identifies them as well- versus less-differentiated HCC."
+ },
+ "k442c57ad8b75": {
+  "reason": "Sentence 9 states no significant D-dimer difference between histopathologic groups."
+ },
+ "k31891eb71df9": {
+  "reason": "Sentences 4-5 give the univariate parity-ISI(OGTT) relation and its loss of significance after the stated adjustments."
+ },
+ "kd98863e71206": {
+  "reason": "Sentence 9 states up to 46 percent more convictions in the 5 years before entry when both sources were used."
+ },
+ "k90c950d872ee": {
+  "reason": "No significant between-group differences are reported, but no cited sentence identifies either group as bicompartmental."
+ },
+ "k5e2ffd7c4a55": {
+  "reason": "Sentence 3 states 82 consecutive patients with metastatic RAIR thyroid carcinoma."
+ },
+ "k3cb5bc48b28b": {
+  "reason": "Sentence 15 says the patient had a prior reaction and needed epinephrine, but does not say the epinephrine was needed because of the prior reaction."
+ },
+ "kb7dd5fe9c942": {
+  "reason": "No %EBWL difference by resected volume is stated, but the cited sentences never mention laparoscopic sleeve gastrectomy."
+ },
+ "k97486a77e491": {
+  "reason": "No malignancy was detected, but the cited sentences do not mention acute diverticulitis as the population or setting."
+ },
+ "kac329a9fa59b": {
+  "reason": "Sentences 4-5 give 17 trials, 20,960 patients and nonsignificant reductions for all four outcomes versus conventional PCI."
+ },
+ "kfea689cb43f5": {
+  "reason": "Sentence 2 sets out the zeolite QC swine extremity arterial model and sentence 10 states decreased total blood loss."
+ },
+ "k28759a345b8b": {
+  "reason": "Equal IC50 values are stated, but no cited sentence draws the inference that they support a link between c-Kit inhibition and reduced growth."
+ },
+ "k7720ee84d869": {
+  "reason": "Sentences 10-12 report a good Barthel index, NYHA class, living at home and normative SF-12 scores among survivors."
+ },
+ "k6fa8e8d75452": {
+  "reason": "Sentence 9 states the null association, but the Dutch adolescent population is not in the cited sentences."
+ },
+ "kf492590d5713": {
+  "reason": "Sentence 9 says stool pattern was better in the TERPT group, but no cited sentence defines TERPT as the transanal group."
+ },
+ "k3d0051db94dc": {
+  "reason": "Sentence 10 gives a 75% (33/44) yield but no cited sentence names DBE as the procedure."
+ },
+ "k375597ec3339": {
+  "reason": "Sentence 6 states longer mean survival for the higher-BMI group in stage 3a."
+ },
+ "k263cf0874726": {
+  "reason": "The cited sentences give only the aim and methods, not a finding about storage quality."
+ },
+ "k51d39f00cf2c": {
+  "reason": "Sentences 4 and 11 state no load response in either group over the 4 days after the 10 km run."
+ },
+ "k1d3a778c6382": {
+  "reason": "Sentence 9 says satisfaction with speed was higher at intervention sites, but no cited sentence states that intervention sites are the angioplasty sites."
+ },
+ "kd78cee909b2f": {
+  "reason": "Sentence 11 gives the 2-year OR 2.11 (95% CI 1.33-3.33) for IADL disability predicting dementia."
+ },
+ "kbd6369874655": {
+  "reason": "Sentence 3 lists granulomatous enteritis among the features of the severe systemic reaction to sulfasalazine."
+ },
+ "kfef871410fc6": {
+  "reason": "The cited sentences are background, aim and methods only, with no finding on quality of life."
+ },
+ "kd5acaf757f9c": {
+  "reason": "Smoking, waist and GGT differences are stated, but no cited sentence says GGT is a marker of alcohol intake."
+ },
+ "kfb1d08c53a0f": {
+  "reason": "Sentences 2-5 describe the trial's aim (protection against PCI-related lesions) and its primary outcome (troponin increase in 24 h)."
+ },
+ "kaf5cd93382f7": {
+  "reason": "Group 2 got both drugs and had higher fibrinogen, but no cited sentence states that group 1 got desmopressin alone."
+ },
+ "k908028215be5": {
+  "reason": "Sentence 3 says earlier studies of HPV as a risk factor for pterygia were inconclusive."
+ },
+ "k84090e62b0c2": {
+  "reason": "Sentence 11 states that phonological awareness strongly correlated with word reading."
+ },
+ "kbec520dec164": {
+  "reason": "Sentence 6 states that Korean UTG cases were more often undifferentiated, diffuse type and advanced stage than LTG and MTG."
+ },
+ "k37c7dcf6e1d4": {
+  "reason": "The MACE rates 22.6% vs 29% are stated, but the 12-month time point is not in the cited sentences."
+ },
+ "k3efdaad1a798": {
+  "reason": "Sentence 7 states no major prognostic effect of depth once grade and size are taken into account."
+ },
+ "k06d1f2ea70e1": {
+  "reason": "Improvement in the 38 patients is stated, but the 6-month time point is not in the cited sentences."
+ },
+ "k495b5ce068b8": {
+  "reason": "Poor awareness and temperature exposures are reported, but the cited sentences do not establish 'community' storage as a 'weak link in the cold chain'."
+ },
+ "k199ae5a4263f": {
+  "reason": "Sentences 4 and 7 give similar motor improvement (21% vs 24%, p=0.39) in elderly MSCC patients with and without added surgery."
+ },
+ "k016071a5e381": {
+  "reason": "Sentence 5 shows the parity-insulin sensitivity relationship lost significance after adjustment, so causation is not established."
+ },
+ "kef37c4dfe762": {
+  "reason": "The question being referred to is unidentified, so the cited sentences cannot establish that it is unresolved."
+ },
+ "keea376568d7b": {
+  "reason": "Sentence 4 lists appropriateness of stay as an outcome measure."
+ },
+ "k795268e16668": {
+  "reason": "Sentence 6 states adjustment for age, sex, smoking and body mass index."
+ },
+ "k899b7477ffdf": {
+  "reason": "Sentence 4 gives a bleeding source in 15/20, but no cited sentence names DBE as the procedure."
+ },
+ "kc9ade23e4d5f": {
+  "reason": "Sentence 11 says only 1.3% of cancers were missed in the adenoma phase."
+ },
+ "k321f2ae443cb": {
+  "reason": "Sentences 6-7 give the stronger marriage benefit for men and say the gender difference disappeared after adjustment for living arrangements."
+ },
+ "k6e4e6c72c0d4": {
+  "reason": "Sentence 10 gives sensitivity and specificity only; it names neither the STANDING test nor the emergency department, and does not judge usefulness."
+ },
+ "kca227a0ba8ca": {
+  "reason": "Sentence 7 gives the multivariable OR 1.091 per unit with P = 0.008."
+ },
+ "k18b60148f99a": {
+  "reason": "Sentences 11-12 state that provocation succeeded in 54% and that this group especially showed deteriorated performance."
+ },
+ "k2718fece5767": {
+  "reason": "Sentence 12 states that QC generated significant heat production."
+ },
+ "k79b4f41e1901": {
+  "reason": "Sentence 4 states these aims."
+ },
+ "kf3681045a091": {
+  "reason": "Sentence 10 states that the 20 normal conjunctival specimens were HPV negative."
+ },
+ "k3762b70cb4ba": {
+  "reason": "Sentence 8 limits the highest risk to divorced and single men living alone; the claim widens it to all men living alone."
+ },
+ "ka8c6316a9643": {
+  "reason": "Sentence 8 gives similar physical symptom burden, with means 0.78 vs 0.70."
+ },
+ "k920ec7528bbe": {
+  "reason": "Sentence 9 states viable germ cell elements in 8 specimens (14%)."
+ },
+ "kf2cc63853470": {
+  "reason": "Sentence 8 says caregivers saw a need to improve the CCB to better address these determinants, which supports the hedged claim."
+ },
+ "k98b1b92bca9b": {
+  "reason": "Sentences 7, 8 and 11 give larger effects in likely recipients, no effect in unlikely ones, robustness, and no confounding by Medicaid."
+ },
+ "k7e50f8f7df7a": {
+  "reason": "Sentence 6 states the risk increased when US-EFW was above 3500 g (OR 1.8)."
+ },
+ "k81b10be9d5e5": {
+  "reason": "Sentence 7 states a collision mismatch for 7 (13.5%)."
+ },
+ "k0aa7fbef2245": {
+  "reason": "Sentence 5 states higher revenue, lower industry profits and no retail price increase."
+ },
+ "kdeeab219aaae": {
+  "reason": "Sentences 11-12 state that provocation succeeded in 54% and that this group especially deteriorated."
+ },
+ "k9c918e2f8c63": {
+  "reason": "Sentence 2 states that urologists disagree on the need for surgical exploration."
+ },
+ "k812f7f5a8595": {
+  "reason": "Sentences 6-7 state the marriage benefit was stronger for men, with the difference disappearing only after adjustment for living arrangements."
+ },
+ "k651fedab99cf": {
+  "reason": "Sentences 2-3 link oxybutynin to QT changes and the QT changes to increased arrhythmia in children."
+ },
+ "k9903776e325c": {
+  "reason": "Sentences 1 and 8 give 84 patients aged 80 or over and 32.1% in-hospital mortality."
+ },
+ "k0f2e081be716": {
+  "reason": "Sentence 8 states that STI571, which blocks c-kit autophosphorylation, caused cell death in uveal melanoma lines."
+ },
+ "kb86c58cb53aa": {
+  "reason": "Sentences 10-11 show higher pharmacy and mental-health costs and no difference in total costs, so there were no savings."
+ },
+ "ka6f13c75cd56": {
+  "reason": "Sentence 9 states the IC50 values were equal and below 2.5 microM."
+ },
+ "kc2e5b53d08a9": {
+  "reason": "Sentence 11 gives the SEM OR 2.11 (1.33-3.33) at 2 years."
+ },
+ "k7f891b34b482": {
+  "reason": "Sentence 10 states seminiferous tubules without germ cell elements in an additional 4 (7%)."
+ },
+ "kdb61a1495e30": {
+  "reason": "Sentences 7 and 9 show viable germ cell elements in 8 removed remnants."
+ },
+ "k312922702fe8": {
+  "reason": "The cited sentences never name MRI, and they do not state the interpretive conclusion of a partial, specificity-driven role."
+ },
+ "k368fcceda38a": {
+  "reason": "Sentences 2 and 8 define the sites and report high overall satisfaction at both."
+ },
+ "kcf640005bfa1": {
+  "reason": "Sentence 8 says albumin was a significant univariate predictor but does not give the direction (low albumin, worse survival)."
+ },
+ "k0b676a3b70de": {
+  "reason": "Sentence 3 describes prior results as inconclusive."
+ },
+ "kcce4f94bb9df": {
+  "reason": "Side effects were mostly urticaria, with 1 serious case, but the cited sentences do not call the antivenin use aggressive or test an association with dose."
+ },
+ "k7c116b81a930": {
+  "reason": "Sentence 5 states exactly this."
+ },
+ "kfa06db5ea720": {
+  "reason": "Sentence 3 states that outcome was retrospectively analyzed."
+ },
+ "k08574b7847a1": {
+  "reason": "Sentence 7 shows only 2.7% of boys needed circumcision, so routine circumcision is not supported."
+ },
+ "kfe9495f75a43": {
+  "reason": "Sentences 7 and 9 give 56 removals with viable germ cells in 8 (14%)."
+ },
+ "k6afb78d3fe66": {
+  "reason": "Sentence 6 states an average 10 percent underestimation over 5 to 18 mm."
+ },
+ "k93c941074f82": {
+  "reason": "Sentence 6 states 39 of 107 (36.4%) were flagged as R on RPS."
+ },
+ "k6f70d84c90d4": {
+  "reason": "Two cited sentences cannot show what the whole abstract omits."
+ },
+ "k276288ec58ab": {
+  "reason": "Sentences 5-6 cover the optimal-BP cohort followed 5 years and the higher smoking among those who became hypertensive."
+ },
+ "k93808bd1736e": {
+  "reason": "Sentence 11 states that total healthcare costs were not different."
+ },
+ "k5bafcb942548": {
+  "reason": "Sentence 7 states that BRAF mutation influenced PFS."
+ },
+ "kc191a8c75c7b": {
+  "reason": "Sentence 1 states that oncology is embracing Web-based systems to standardize care."
+ },
+ "kb85b1cb339cb": {
+  "reason": "'No.' is a bare fragment with no assertion."
+ },
+ "k7754f2d08935": {
+  "reason": "Sentence 7 states that baseline GGT independently explained the 5-year BP change."
+ },
+ "k5448837d4f54": {
+  "reason": "The cited aim and caregiver finding cannot show that no physician findings are reported anywhere in the abstract."
+ },
+ "k8f0770c71880": {
+  "reason": "The cited sentences never identify the compared groups as well-differentiated versus less-differentiated HCC."
+ },
+ "k74fcf4c1feaa": {
+  "reason": "Sentences 5 and 7 state external reinforcement was added and the procedure had low hospital mortality."
+ },
+ "k07a286a86f44": {
+  "reason": "Sentences 2 and 7 give the swine model, zeolite QC and the slower drop in blood pressure."
+ },
+ "k41dfe4ca7721": {
+  "reason": "Sentence 7 states T stage was relatively evenly distributed across locations in the U.S. cohort."
+ },
+ "ke3300c20a9ba": {
+  "reason": "Sentence 9 states PVT severity was lower in the study group, which sentence 6 defines as electively re-sited."
+ },
+ "k0cebd719be3c": {
+  "reason": "Sentence 11 states this directly."
+ },
+ "kafac968a5102": {
+  "reason": "Sentence 15 states the prior reaction and the short course of IV epinephrine for blood pressure."
+ },
+ "k2be3a5e95b27": {
+  "reason": "Sentence 5 gives type V (defined as completely retractile in sentence 4) in 82.3% of adolescents."
+ },
+ "k4a2279ba5030": {
+  "reason": "Sentence 7 states improvement in both acupuncture groups but not in the no-treatment group."
+ },
+ "ke880c2180a0d": {
+  "reason": "The cited sentences give only aim and methods; they cannot show the abstract fails to answer the question."
+ },
+ "k5e431ae6ef6c": {
+  "reason": "Sentence 2 states the aim was to evaluate the roles of physicians."
+ },
+ "k850e293b1871": {
+  "reason": "Sentence 8 gives 1/15 vs 6/15 impaired anorectal function, p = 0.031."
+ },
+ "kab7529f6e224": {
+  "reason": "Sentence 4 gives type I (non-retractile) in 71.5% of boys under 1 year."
+ },
+ "kafbd6570544d": {
+  "reason": "Sentence 2 states that indications for reduction aortoplasty, including external reinforcement, are not established."
+ },
+ "kd8f237971f7f": {
+  "reason": "Only 4 of 90 pterygia had HPV and all were ISH negative, which does not establish a risk factor."
+ },
+ "k52f725644c80": {
+  "reason": "The cited sentences give 11 boys and 2.7%, but the denominator of 400 is not in them."
+ },
+ "k4a1d31b8b783": {
+  "reason": "Sentence 7 gives a median of two cores with 96.9% sensitivity and 100% specificity for all lesions."
+ },
+ "kb72dea62158c": {
+  "reason": "Sentence 6 states PIP, PEEP and ventilation index distinguished outcome by day 3."
+ },
+ "kaa82b5d538eb": {
+  "reason": "Sentence 5 shows limited assessment for osteoporosis (8), footwear (4) and vision (1) among 50 patients."
+ },
+ "k0d9d3befcfd5": {
+  "reason": "The cited background and germ-cell findings do not show the abstract leaves the need for surgery unresolved."
+ },
+ "k49dc0406621a": {
+  "reason": "Sentence 7 states the gender difference disappeared after adjusting for living arrangements; the claim is hedged."
+ },
+ "k91bb3ce8a460": {
+  "reason": "A fragment with no checkable assertion about the study."
+ },
+ "keb40cf7200e1": {
+  "reason": "Sentence 8 states all 186 factors were aggregated into 9 themes."
+ },
+ "kcd9b3b2325d6": {
+  "reason": "Sentence 10 states healthy subjects' performance stayed equal between the provoking and lying conditions."
+ },
+ "k49ad653ff162": {
+  "reason": "Sentences 5 and 6 show lower BMI was better in stage 2 and higher BMI was better in stage 3a."
+ },
+ "k6c0bdaa13d00": {
+  "reason": "Sentence 9 states stage, treatment and CRP remained significant on multivariate analysis."
+ },
+ "ka6b4a737f7ec": {
+  "reason": "Sentence 10 states only one polyp was an advanced adenoma."
+ },
+ "k383674701d7a": {
+  "reason": "Sentence 7 states this directly."
+ },
+ "kd7bfe49b1a7e": {
+  "reason": "Sentence 9 gives less weight gain with combination therapy than with insulin alone (1.3 vs 4.2 kg, P=.01)."
+ },
+ "k1f2e2231903e": {
+  "reason": "The cited sentences report yields but cannot show that no formal accuracy measure was reported."
+ },
+ "k92c91c867d79": {
+  "reason": "Sentence 7 states both kinds of reporting error."
+ },
+ "k4411bb00d67e": {
+  "reason": "The text shows no independent depth effect, but 'proxy' and 'need not be included separately' go beyond what it states."
+ },
+ "k1785ba96861a": {
+  "reason": "Sentence 8 gives worse psychological burden in the Web sample (1.61 vs 1.36)."
+ },
+ "k4ccc8bdc9c4c": {
+  "reason": "Sentence 9 shows less weight gain and fewer hypoglycemic events in the IC group, so a general benefit is covered."
+ },
+ "kfe183f060a20": {
+  "reason": "Sentences 1, 4 and 8 give a randomized trial, a regular diet on day 1, and no ileus difference (3.6 vs 3.4 days)."
+ },
+ "kb7d263958bfb": {
+  "reason": "Sentence 9 states the continence score was significantly better in the ABD group."
+ },
+ "kb7b7bb446b84": {
+  "reason": "That the provoking condition was meant to trigger pain-related cognitions is not in the cited sentences."
+ },
+ "k440dd4c23f60": {
+  "reason": "Sentence 16 states this directly."
+ },
+ "k5a1202652e77": {
+  "reason": "Sentence 7 says BRAF positively influenced PFS in the TKI-treated PTC cohort, with log-rank p = 0.086."
+ },
+ "k518f9dcd6022": {
+  "reason": "The cited sentences do not link the provoking condition to pain-related cognitions, so this inference is not covered."
+ },
+ "kd8811346ffdf": {
+  "reason": "Sentence 7 states the gender difference disappeared after adjusting for living arrangements."
+ },
+ "k457511c9b479": {
+  "reason": "Sentences 7 and 8 state the findings were robust to sensitivity analyses, with more than one described."
+ },
+ "k3d1c503a1ca8": {
+  "reason": "Only GGT is stated to be an independent predictor; waist circumference is called just 'another predictor'."
+ },
+ "k6c6490f92226": {
+  "reason": "Sentence 7 gives low hospital mortality of 2%."
+ },
+ "kfa494b7e38f2": {
+  "reason": "Sentence 7 states this directly."
+ },
+ "k739242a2eea6": {
+  "reason": "The cited sentences report the age-group difference but not an interpretation of development over time."
+ },
+ "k446b3aa3f549": {
+  "reason": "Sentence 6 gives significantly higher ongoing pregnancy rates with OCP/ML (40% vs 15%)."
+ },
+ "k402af250b6c1": {
+  "reason": "Sentences 1 to 3 describe differing opinions on managing the remnant."
+ },
+ "k4fcd5b7eae04": {
+  "reason": "Sentence 11 gives the SEM OR of 2.20 (95% CI 1.51-3.13) at 1-year follow-up."
+ },
+ "k3aae225ffbe8": {
+  "reason": "Total costs did not differ despite higher pharmacy costs, so the text does not establish that there was no offset."
+ },
+ "k16158f7f9a79": {
+  "reason": "Sentence 2 states that indications for reduction aortoplasty, including external reinforcement, are not established."
+ },
+ "ke3578445d271": {
+  "reason": "Sentence 7 states other structures were sometimes falsely read as a testis."
+ },
+ "k85c9984cc362": {
+  "reason": "Sentences 7 and 8 show the low back pain CI includes 1 while the other sick-leave ORs are elevated."
+ },
+ "kd8bc49e53574": {
+  "reason": "A pre-post difference is turned into a causal 'affected' claim."
+ },
+ "k65eed5b25f88": {
+  "reason": "Sentence 5 states Dacron external reinforcement was added to stabilize the aortic wall."
+ },
+ "k53e3f669eb90": {
+  "reason": "The cited sentences report background controversy and trial results only, with nothing on BMS justifiability beyond the trial."
+ },
+ "k5d66cb93cf88": {
+  "reason": "Sentence 15 reports a patient who needed IV epinephrine for blood pressure, which counts against the claim."
+ },
+ "k1fd55f54e616": {
+  "reason": "Sentences 8 and 10 give similar overall long-term scores; the hedged conclusion is covered."
+ },
+ "kfed8bec27be4": {
+  "reason": "Sentence 11 states carers accepted the inconvenience of visiting angioplasty sites given the life-saving treatment."
+ },
+ "k2e546faa8aab": {
+  "reason": "Sentence 10 states stress had no moderating effect on drinking along with peers."
+ },
+ "kb1f22caea0d2": {
+  "reason": "Sentences 6 and 7 show E-ZES had fewer MACE and no bleeding difference with 30-day DAPT."
+ },
+ "k9fb0703f8dd3": {
+  "reason": "Sentence 11 reports fibrin split products, a direct fibrinolysis measure, which counts against the claim."
+ },
+ "k99e8c7f59d3b": {
+  "reason": "The group size of seven participants is not in the cited sentences."
+ },
+ "ke35b295d03f9": {
+  "reason": "Sentences 5 and 6 give the optimal-BP cohort over 5 years and the greater baseline waist circumference."
+ },
+ "ka2db2eeaa54d": {
+  "reason": "Sentence 6 gives specificity 97.8%, PPV 87.0% and a significant correlation."
+ },
+ "k119aa9b75e1d": {
+  "reason": "Sentence 6 reports adjusted ORs for surveillance versus nonsurveillance."
+ },
+ "k96092cadd537": {
+  "reason": "Sentence 2 states intraoperative management, including external reinforcement, is not established."
+ },
+ "k95570cc3de51": {
+  "reason": "The trend applied only to the 26 Group 1 patients who did not need tube reinsertion, not to all patients fed early."
+ },
+ "k342c92e97096": {
+  "reason": "Sentence 7 gives lower halitosis after 3 months of PD (2.39 vs 3.90)."
+ },
+ "k29cc084b64c7": {
+  "reason": "Sentence 8 shows c-kit blockade killed melanoma cell lines; the hedged 'potential target' is covered."
+ },
+ "kda19e496e743": {
+  "reason": "A single case sentence cannot show what the whole abstract does or does not establish about Crohn's disease."
+ },
+ "kbbb68ddd23bb": {
+  "reason": "Sentence 11 states 93% of patients were living at home, given in the follow-up context of survivors."
+ },
+ "k61c48e019e1f": {
+  "reason": "Sentences 3 and 8 give the nurses' aides, childhood ETS and OR 1.29 (1.08-1.55) for sick leave over 8 weeks."
+ },
+ "kb35c504f8ed5": {
+  "reason": "Sentence 14 states acute side effects were solely urticaria in all but one patient."
+ },
+ "k2d9cd4b6dfc8": {
+  "reason": "Sentence 14 states this directly."
+ },
+ "kbceed067188c": {
+  "reason": "Sentences 8 and 9 show NSC was associated with sports participation but facility availability was not."
+ },
+ "ke67cca709cea": {
+  "reason": "The population-based design and the congenital heart defect population are not in the cited sentences."
+ },
+ "k545187704681": {
+  "reason": "Sentence 6 gives 1/15 IONM vs 6/15 control (the matched non-IONM group), p = 0.031."
+ },
+ "k858b4c2874d0": {
+  "reason": "Sentence 10 states discordance remained between countries on consistent governance."
+ },
+ "kc55e7bdf63e3": {
+  "reason": "Sentence 5 states there was no significant difference in cancellation rate."
+ }
+}

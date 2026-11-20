@@ -151,3 +151,90 @@ def test_the_train_manifest_spans_the_kaggle_session_from_the_ledger(repo):
     assert m.finished_at == dt.datetime.fromisoformat(row["at"])
     assert (m.finished_at - m.started_at).total_seconds() == pytest.approx(row["gpu_hours"] * 3600)
     assert m.host == "kaggle" and m.params["kaggle_kernel"] == "ggh-t22-train v1"
+
+
+# v2 (`ft2`, V2.1): `write_v2`, `ggh export-records --model ft2`
+
+
+@pytest.fixture
+def repo_v2(repo):
+    from ggh.versions import version
+
+    root, base = repo
+    v = version("ft2")
+    put(root, v.recipe, (ROOT / v.recipe).read_bytes())
+    put(root, v.train_run, (ROOT / v.train_run).read_bytes())  # step 340 on recipe_v2
+    for f in ADAPTER_FILES:
+        put(root, v.adapter_dir / f, f"v2 {f}".encode())
+    frozen = adapter_hash(root / v.adapter_dir)
+    put(root, v.selection, json.dumps({"adapter_sha256": frozen, "selected_step": 340}).encode())
+    for f in A.MERGED_FILES:
+        put(root, v.merged_dir / f, f"v2 {f}".encode())
+    files = {rel.name: {"sha256": put(root, rel)} for rel in A._gguf_rels("ft2")}
+    gg = {"files": files, "source": {"revision": frozen},
+          "llama_cpp": {"tag": llama.TAG, "release_sha256": llama.BIN_SHA256}}  # fmt: skip
+    put(root, A.GGUF_RECORD_V2, json.dumps(gg).encode())
+    put(root, A.MERGE_RECORD_V2, json.dumps({"adapter_sha256": frozen}).encode())
+    for rel in parity.paths("ft2"):
+        put(root, rel)
+    A.write_all(root, base, now=lambda: T0)  # v1 first: its export_base manifest is v2's base
+    return root, base
+
+
+def test_v2_chain_verifies_beside_v1_and_leaves_v1_alone(repo_v2):
+    root, base = repo_v2
+    v1 = {p: p.read_bytes() for p in [root / A.RECORDS, *(root / A.LINEAGE_COPY).glob("*.json")]}
+    recs = A.write_v2(root, base, now=lambda: T0)
+    assert {p: p.read_bytes() for p in v1} == v1
+    for name, d in A.V2_STAGE_DIRS.items():
+        assert lineage.verify(root / d / "manifest.json", root) == [], name
+        assert (root / A.LINEAGE_COPY / f"{name}.json").read_bytes() == (
+            root / d / "manifest.json"
+        ).read_bytes()
+    m = {n: lineage.read_manifest(root / d / "manifest.json") for n, d in A.V2_STAGE_DIRS.items()}
+    targets = lineage.read_manifest(root / A.TARGETS_MANIFEST)
+    data = lineage.read_manifest(root / A.DATA_MANIFEST)
+    base_m = lineage.read_manifest(root / A.STAGE_DIRS["export_base"] / "manifest.json")
+    assert m["train_v2"].parents == (targets.key,) and m["train_v2"].host == "kaggle"
+    assert m["train_v2"].params["kaggle_kernel"] == "ggh-v21-train v1"
+    assert "configs/recipe_v2.yaml" in m["train_v2"].inputs
+    assert m["export_ft2"].parents == (m["train_v2"].key,)
+    assert m["parity_v2"].parents == (m["export_ft2"].key, data.key)
+    assert set(m["parity_v2"].outputs) == {p.as_posix() for p in parity.paths("ft2")}
+    copy = lineage.read_manifest(root / A.LINEAGE_COPY / "targets_v2.json")
+    assert copy == targets.model_copy(update={"host": "local"})
+    assert recs == [ExportArtifact.model_validate(x) for x in
+                    json.loads((root / A.RECORDS_V2).read_text(encoding="utf-8"))]  # fmt: skip
+    assert [(r.kind, r.model, r.quant) for r in recs] == [
+        ("adapter", "ft", None), ("merged_bf16", "ft", None),
+        *(("gguf", k, q) for k in ("base", "ft") for q in ("F16", "Q4_K_M", "Q8_0"))]  # fmt: skip
+    for r in recs:
+        hashed = (
+            root / r.path / "adapter_model.safetensors" if r.kind == "adapter" else root / r.path
+        )
+        assert r.sha256 == sha256_file(hashed)
+        if r.model == "base":
+            assert r.parent_key == base_m.key and r.path.startswith("artifacts/gguf/base-")
+        else:
+            assert "ft2" in r.path or "adapter_v2" in r.path
+            assert r.parent_key == (m["train_v2"] if r.kind == "adapter" else m["export_ft2"]).key
+
+
+def test_v2_records_must_match_what_v21_recorded(repo_v2):
+    root, base = repo_v2
+    gg = json.loads((root / A.GGUF_RECORD_V2).read_text(encoding="utf-8"))
+    gg["files"]["ft2-Q4_K_M.gguf"]["sha256"] = "0" * 64
+    (root / A.GGUF_RECORD_V2).write_text(json.dumps(gg), encoding="utf-8")
+    with pytest.raises(ValueError, match=r"ft2-Q4_K_M\.gguf differs from what"):
+        A.write_v2(root, base, now=lambda: T0)
+    (root / A.MERGE_RECORD_V2).write_text(json.dumps({"adapter_sha256": "1" * 64}), "utf-8")
+    with pytest.raises(ValueError, match="names another adapter"):
+        A.write_v2(root, base, now=lambda: T0)
+    assert not (root / A.RECORDS_V2).exists()
+
+
+def test_v2_refuses_base_ggufs_that_differ_from_v1s_export(repo_v2):
+    root, base = repo_v2
+    (root / llama.GGUF_DIR / "base-Q4_K_M.gguf").write_bytes(b"swapped")
+    with pytest.raises(ValueError, match="base GGUFs differ"):
+        A.write_v2(root, base, now=lambda: T0)

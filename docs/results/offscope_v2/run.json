@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "run_id": "r-be3c15967d01",
+  "task": "ggh_offscope",
+  "task_ref": "configs/tasks/offscope.yaml",
+  "config_hash": "92bc9254e136f54d",
+  "seed": 7,
+  "n": 20,
+  "models": [
+    "gemma-e2b-grounded-v2-q4"
+  ],
+  "judges": [
+    "gpt-6.1-sol"
+  ],
+  "judge_mode": "single",
+  "families": {
+    "gemma-e2b-grounded-v2-q4": "other"
+  },
+  "thresholds": [
+    {
+      "metric": "headline",
+      "op": ">=",
+      "value": 0.6
+    }
+  ],
+  "live_judges": false,
+  "started_at": "2026-11-19T13:31:09.807043Z",
+  "finished_at": "2026-11-19T23:45:34.933705Z",
+  "spent_usd": 0.03460710000000001
+}

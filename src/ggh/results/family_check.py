@@ -1,14 +1,16 @@
 """The Gemma-family judge check (E3.3, RES-03, OWNER D-24, Tech Spec §7.5).
 
-The owner labels 40 claims drawn from Gemma answers, and each judge's verdicts on those claims
-are scored against the labels. Nothing here calls an API: the verdicts are the ones already in
-the run's records (V2.2, OWNER D-57: GPT-6.1 Sol on GPT-6 Luna's claims in `main_v2`).
+A reference labeller labels 40 claims drawn from Gemma answers, and each judge's verdicts on
+those claims are scored against the labels (OWNER D-60: Claude Opus 5.5 with
+`configs/labeller_prompt.md`, since the owner is not a domain expert). Nothing here calls an
+API: the verdicts are the ones already in the run's records (V2.2, OWNER D-57: GPT-6.1 Sol
+on GPT-6 Luna's claims in `main_v2`).
 
 - `draw` picks the claims from one committed run, seeded: half from the base model and the rest
   split evenly over the fine-tunes (§7.5's 20 base / 20 fine-tuned), one claim per answer and
   one answer per question, so two models' claims on one abstract never sit side by side.
 - `write_sheet` writes `docs/measurements/gemma_family_sheet.json`. It is the private join (it
-  names models and claim ids) and holds no verdicts; the owner never opens it.
+  names models and claim ids) and holds no verdicts; the labeller never sees it.
 - `serve` opens EvalKit's own labelling page (`evalkit.pipeline.labeller`, 127.0.0.1 only) on
   the sheet's blind rows: the claim and its cited sentences, nothing else. Labels save to
   `docs/measurements/gemma_family_labels.json` in EvalKit's `LabelFile` shape as they are made.
@@ -87,8 +89,11 @@ class JudgeCheck(Model):
     coverage: float
     agreement: float
     kappa: dict[str, float]  # point, lo, hi
-    confusion: tuple[tuple[int, int], tuple[int, int]]  # ((tp, fn), (fp, tn)), owner rows
+    confusion: tuple[tuple[int, int], tuple[int, int]]  # ((tp, fn), (fp, tn)), reference rows
     by_model: FrozenMap[float]  # agreement per Gemma model
+
+
+LABELLER = "claude-opus-5-5 with configs/labeller_prompt.md (OWNER D-60)"
 
 
 class FamilyReport(Model):
@@ -98,7 +103,8 @@ class FamilyReport(Model):
     scored_at: NonBlank
     n_labelled: PosInt
     extraction_errors: NonNegInt
-    owner_supported: NonNegInt
+    labeller: NonBlank
+    reference_supported: NonNegInt
     judges: tuple[JudgeCheck, ...]
 
 
@@ -243,7 +249,7 @@ def _verdicts(run: Run, judge: str) -> dict[str, dict[str, Any]]:
 def score(
     root: Path, *, results_root: Path | None = None, now: datetime | None = None
 ) -> FamilyReport:
-    """Every judge of the sheet's run against the owner's labels. Refuses an incomplete label
+    """Every judge of the sheet's run against the reference labels. Refuses an incomplete label
     file, labels for another sheet, a run that changed since the draw, verdicts under another
     rubric, and a judge that ruled on fewer than 95% of the eligible claims."""
     sheet = load_sheet(root)
@@ -313,7 +319,8 @@ def score(
         scored_at=stamp,
         n_labelled=len(sheet.items),
         extraction_errors=len(sheet.items) - len(eligible),
-        owner_supported=sum(labels.labels[i.key].label == "supported" for i in eligible),
+        labeller=LABELLER,
+        reference_supported=sum(labels.labels[i.key].label == "supported" for i in eligible),
         judges=tuple(checks),
     )
 

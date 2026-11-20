@@ -146,3 +146,62 @@ def run(
     rep = build_report(bf16, q4)
     write(root, rows, bf16, q4, rep, model)
     return rep
+
+
+# ---- E3.2 / V2.2: the judged headline of bf16 against Q4_K_M on the parity run's cases ----
+
+HEADLINE_METHOD = ("paired bootstrap 95%, 10,000 resamples, seed 7; reported, not gated "
+                   "(Tech Spec §6)")  # fmt: skip
+# per fine-tune: the bf16 EvalKit run and its model, the run holding the Q4_K_M answers on the
+# same cases and that model, and the report
+HEADLINES: dict[str, tuple[str, str, str, str, Path]] = {
+    "ft": ("parity", "gemma-e2b-grounded-bf16", "main", "gemma-e2b-grounded-q4",
+           MEASURE / "parity_headline.json"),
+    "ft2": ("parity_v2", "gemma-e2b-grounded-v2-bf16", "main_v2", "gemma-e2b-grounded-v2-q4",
+            MEASURE / "parity_headline_v2.json"),
+}  # fmt: skip
+
+
+def headline(root: Path, model: str = "ft") -> dict[str, Any]:
+    """Accuracy and each judge's headline (mean `correct_and_grounded`) for the bf16 run and
+    for the Q4_K_M answers to the same case ids, and bf16 minus Q4_K_M per judge with the
+    probe's paired bootstrap; rounded to 3 places. The judges are the bf16 run's."""
+    from ggh.evals.probe import paired_drop
+    from ggh.results.runs import Run
+
+    if model not in HEADLINES:
+        raise ValueError(f"headline runs on ft or ft2, got {model!r}")
+    bf_run, bf_model, q_run, q_model, _ = HEADLINES[model]
+    bf, qr = Run(root, bf_run), Run(root, q_run)
+    b = {r["case_id"]: r for r in bf.raw_records if r["completion"]["model"] == bf_model}
+    q = {r["case_id"]: r for r in qr.raw_records if r["completion"]["model"] == q_model}
+    if not b or set(b) - set(q):
+        raise ValueError(f"{q_run} lacks {q_model} answers for some of {bf_run}'s cases")
+    q = {i: q[i] for i in b}
+    judges = list(bf.manifest["judges"])
+
+    def side(recs: dict[str, dict[str, Any]]) -> dict[str, float]:
+        n = len(recs)
+        out = {"accuracy": round(sum(bool(r["scores"]["label_correct"]) for r in
+                                     recs.values()) / n, 3)}  # fmt: skip
+        for j in judges:
+            hits = sum(bool(r["scores"]["correct_and_grounded"][j]) for r in recs.values())
+            out[f"headline_{j}"] = round(hits / n, 3)
+        return out
+
+    delta = {}
+    for j in judges:
+        d = paired_drop(
+            {i: bool(r["scores"]["correct_and_grounded"][j]) for i, r in b.items()},
+            {i: bool(r["scores"]["correct_and_grounded"][j]) for i, r in q.items()},
+        )
+        delta[j] = {k: round(v, 3) for k, v in d["drop"].items()}  # fmt: skip
+    return {"n": len(b), "run_bf16": bf.manifest["run_id"], "run_q4": qr.manifest["run_id"],
+            "bf16": side(b), "q4_k_m": side(q), "bf16_minus_q4_headline": delta,
+            "method": HEADLINE_METHOD}  # fmt: skip
+
+
+def write_headline(root: Path, model: str = "ft") -> Path:
+    out = root / HEADLINES[model][4]
+    out.write_text(json.dumps(headline(root, model), indent=2) + "\n", encoding="utf-8")
+    return out

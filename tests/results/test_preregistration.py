@@ -62,7 +62,8 @@ def test_v2_plan_names_the_primary_comparisons_judge_metric_and_rule():
     assert "tie" in d["rule"]
     assert d["shown_not_compared"] == ["claude-haiku-5-5", "gpt-6-luna"]  # OWNER D-57
     caps = [load_run_config(ROOT / r.spec["config"]).max_cost_usd for r in V2.runs]
-    assert sum(caps) == 25  # OWNER D-53's $25, split across the V2.2 runs (D-57)
+    # OWNER D-53's $25, split across the V2.2 runs (D-57)
+    assert None not in caps and sum(c or 0 for c in caps) == 25
     assert any(r.name == "parity_v2" for r in V2.runs)  # judged parity runs (OWNER D-53)
     assert d["built_after_test_seen"] is True  # OWNER D-43
 

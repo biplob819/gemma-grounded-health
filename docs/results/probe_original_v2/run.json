@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "run_id": "r-1ba7c0e6a17c",
+  "task": "ggh_probe_original",
+  "task_ref": "configs/tasks/probe_original.yaml",
+  "config_hash": "92bc9254e136f54d",
+  "seed": 7,
+  "n": 100,
+  "models": [
+    "gemma-e2b-grounded-v2-q4"
+  ],
+  "judges": [
+    "gpt-6.1-sol"
+  ],
+  "judge_mode": "single",
+  "families": {
+    "gemma-e2b-grounded-v2-q4": "other"
+  },
+  "thresholds": [
+    {
+      "metric": "headline",
+      "op": ">=",
+      "value": 0.6
+    }
+  ],
+  "live_judges": false,
+  "started_at": "2026-11-19T14:23:47.769394Z",
+  "finished_at": "2026-11-19T15:09:52.647593Z",
+  "spent_usd": 0.08598939999999998
+}

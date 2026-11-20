@@ -1,0 +1,37 @@
+{
+  "stage": "export",
+  "code_version": "1",
+  "key": "711402b7a283d4ea160822d60fe4b800525ae50eab9e2da8ba2125e4ccf16600",
+  "inputs": {
+    "hf://google/gemma-4-E2B-it@4adf15748de9e1a0097b6274cee9c15836c41c37/model.safetensors": "2db5482b20d746879bb3ef79b5203e9075a2e2b98f54ec7c2f281c1477ddc550",
+    "artifacts/adapter_v2/adapter_config.json": "17c0c0526c410b1a2aecbf74d67594f8f5f961993b7c9d7a955341674274bcf9",
+    "artifacts/adapter_v2/adapter_model.safetensors": "8ea0959ffae6cdc5122a5158112f84c6545857b64e6b4751825cc25a8ad9ee01"
+  },
+  "outputs": {
+    "artifacts/merged/ft2-bf16/model.safetensors": "01a0ff9cef3cf852ac5d61f016f5b849d7331d058aa92196594fa3cea25dd9f9",
+    "artifacts/merged/ft2-bf16/config.json": "44d5e8d9938ed73b132bbdb17f0902860d585400b706615aab648baf69d4243a",
+    "artifacts/merged/ft2-bf16/tokenizer.json": "ab26b2add729e6f645bd869f228f14190a06615538f3be6f7786f33d13d78ad2",
+    "artifacts/merged/ft2-bf16/tokenizer_config.json": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+    "artifacts/merged/ft2-bf16/chat_template.jinja": "0a2c8073c878ab1da004bee933a998606537bbb62016310352c7285c3f01c5b5",
+    "artifacts/gguf/ft2-f16.gguf": "0745f67d9122054c6d23deec40c16acceebd0da3760b4a60eaa20709738023d2",
+    "artifacts/gguf/ft2-Q4_K_M.gguf": "6da2c13ee1a3b94c99f9107bb27f344539364cdad371caea4b1114ef91b5be45",
+    "artifacts/gguf/ft2-Q8_0.gguf": "d581fb869346708a6d1fa6c2bd45da8b368a611ce6a18302ee4f8c0d4e2138a8"
+  },
+  "params": {
+    "llama_cpp": "b12421",
+    "release_sha256": "bdeff25d862f1c9b9526ce2c373492e67656659b2ac386308c28b4808f4d074d",
+    "steps": [
+      "convert_hf_to_gguf.py --outtype f16",
+      "llama-quantize Q4_K_M",
+      "llama-quantize Q8_0"
+    ],
+    "merge": "bf16 on CPU, peft merge_and_unload"
+  },
+  "seed": 7,
+  "parents": [
+    "fa11eddc3791fa601e277ba0219b1a721c220818af2a3fddc4b2ea2df13a8afb"
+  ],
+  "started_at": "2026-11-20T00:07:25.755307Z",
+  "finished_at": "2026-11-20T00:07:25.755307Z",
+  "host": "local"
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "run_id": "r-49fbcc60b2a1",
+  "task": "ggh_probe_paraphrase",
+  "task_ref": "configs/tasks/probe_paraphrase.yaml",
+  "config_hash": "92bc9254e136f54d",
+  "seed": 7,
+  "n": 100,
+  "models": [
+    "gemma-e2b-grounded-v2-q4"
+  ],
+  "judges": [
+    "gpt-6.1-sol"
+  ],
+  "judge_mode": "single",
+  "families": {
+    "gemma-e2b-grounded-v2-q4": "other"
+  },
+  "thresholds": [
+    {
+      "metric": "headline",
+      "op": ">=",
+      "value": 0.6
+    }
+  ],
+  "live_judges": false,
+  "started_at": "2026-11-19T14:23:47.769397Z",
+  "finished_at": "2026-11-19T18:11:07.875708Z",
+  "spent_usd": 0.0558816
+}

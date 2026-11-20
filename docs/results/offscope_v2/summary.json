@@ -1,0 +1,103 @@
+{
+  "calibration_status": "uncalibrated",
+  "comparisons": [],
+  "config_hash": "92bc9254e136f54d",
+  "extraction_error_rate": null,
+  "finished_at": "2026-11-19T23:45:34.933705Z",
+  "judge_mode": "single",
+  "judges": [],
+  "judging_status": "complete",
+  "models": [
+    {
+      "accuracy": {
+        "hi": 1.0,
+        "lo": 0.75,
+        "point": 0.9
+      },
+      "citation_validity": {
+        "hi": 1.0,
+        "lo": 0.85,
+        "point": 0.95
+      },
+      "cost_per_100_usd": 0.0,
+      "cost_per_correct_usd": 0.0,
+      "coverage": {
+        "hi": 1.0,
+        "lo": 0.9,
+        "point": 0.95
+      },
+      "efficiency": {
+        "cache_hit_share": 0.05062908907901359,
+        "cost_per_case_usd": {
+          "hi": 0.0,
+          "lo": 0.0,
+          "point": 0.0
+        },
+        "cost_per_correct_usd": {
+          "hi": 0.0,
+          "lo": 0.0,
+          "point": 0.0
+        },
+        "error_rate": 0.0,
+        "eval_overhead_cost_usd": 0.0346071,
+        "latency_p50_ms": {
+          "hi": 2752.0,
+          "lo": 2535.0,
+          "point": 2600.0
+        },
+        "latency_p95_ms": {
+          "hi": 3157.0,
+          "lo": 2949.0,
+          "point": 3054.0
+        },
+        "latency_p99_ms": {
+          "hi": 3157.0,
+          "lo": 2975.0,
+          "point": 3157.0
+        },
+        "mode": "live",
+        "n": 20,
+        "n_correct": 18,
+        "n_errored": 0,
+        "n_latency": 20,
+        "n_retried": null,
+        "price_date": null,
+        "retry_rate": null,
+        "system_cost_usd": 0.0,
+        "tokens_cached_per_case": 25.15,
+        "tokens_in_per_case": 496.75,
+        "tokens_out_per_case": 61.55,
+        "tokens_reasoning_per_case": 0.0
+      },
+      "failed_thresholds": [
+        "headline >= 0.6 (observed 0)"
+      ],
+      "family": "other",
+      "groundedness_mean": {
+        "gpt-6.1-sol": {
+          "hi": 0.29168749999999966,
+          "lo": 0.05,
+          "point": 0.15916666666666665
+        }
+      },
+      "headline": {
+        "gpt-6.1-sol": {
+          "hi": 0.0,
+          "lo": 0.0,
+          "point": 0.0
+        }
+      },
+      "latency_p50_ms": 2600,
+      "latency_p95_ms": 3054,
+      "model": "gemma-e2b-grounded-v2-q4",
+      "n": 20,
+      "n_errors": {},
+      "passes_threshold": false
+    }
+  ],
+  "run_id": "r-be3c15967d01",
+  "schema_version": "1.0",
+  "self_preference": {},
+  "started_at": "2026-11-19T13:31:09.807043Z",
+  "task": "ggh_offscope"
+}

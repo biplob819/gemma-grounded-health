@@ -1,5 +1,8 @@
 """A throwaway copy of the committed results, and a synthetic v2 built from v1's records, so the
-bundle's v2 path is tested before V2.2 has run. Nothing here is a real v2 number."""
+bundle's v2 path is tested on numbers whose answers are known (v2 minus v1 is exactly zero).
+The synthetic v2 writes to the paths configs/results.yaml names for the real v2 (V2.1's
+docs/measurements/v2/, the ft2 GGUF), overwriting the real v2 files in the copy. Nothing here is
+a real v2 number; the real v2 is tested on the committed repo in tests/results/test_bundle.py."""
 
 from __future__ import annotations
 
@@ -8,6 +11,7 @@ import hashlib
 import json
 import shutil
 from pathlib import Path
+from typing import cast
 
 ROOT = Path(__file__).resolve().parents[2]
 V1 = "gemma-e2b-grounded-q4"
@@ -58,7 +62,7 @@ def _records(folder: Path) -> list[dict]:
 
 
 def _as_v2(obj: dict) -> dict:
-    text = json.dumps(obj).replace(V1, V2).replace("ft-Q4_K_M.gguf", "ft-v2-Q4_K_M.gguf")
+    text = json.dumps(obj).replace(V1, V2).replace("ft-Q4_K_M.gguf", "ft2-Q4_K_M.gguf")
     return json.loads(text)
 
 
@@ -85,7 +89,7 @@ def sol_only(obj):
 
 def _sol_only_file(path: Path) -> None:
     if path.name.endswith(".gz"):
-        rows = [sol_only(r) for r in _records(path.parent)]
+        rows = [cast(dict, sol_only(r)) for r in _records(path.parent)]
         path.write_bytes(_gz(rows))
     else:
         data = sol_only(json.loads(path.read_text(encoding="utf-8")))
@@ -158,10 +162,11 @@ def add_v2(root: Path, *, started: str = V2_STARTED, finalise: bool = True) -> N
     p["started_at"] = started
     (root / "docs/results/parity_v2/run.json").write_text(json.dumps(p), encoding="utf-8")
     m = root / "docs/measurements"
+    (m / "v2").mkdir(exist_ok=True)
     for a, b in (
-        ("train_run", "train_run_v2"),
-        ("train_selection", "train_selection_v2"),
-        ("parity_report", "parity_report_v2"),
+        ("train_run", "v2/train_run"),
+        ("train_selection", "v2/train_selection"),
+        ("parity_report", "v2/parity"),
         ("parity_headline", "parity_headline_v2"),
     ):
         shutil.copy(m / f"{a}.json", m / f"{b}.json")

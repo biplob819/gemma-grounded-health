@@ -3,10 +3,12 @@ golden card and README block generated from it.
 
 Run: uv run python -m tests.release.build_v1_bundle
 
-The bundle is `ggh.results.bundle.build` over the committed files (E3.3, RES-06), exactly what
-`ggh results bundle` writes to docs/results/results_bundle.json; the fixture is a frozen copy so
-the generators are tested on real v1 numbers. Only v1 is in it until V2.2's main run lands, and
-the same generators then run unchanged on the v1 + v2 bundle.
+The bundle is `ggh.results.bundle.build` over the committed files (E3.3, RES-06), limited to the
+v1 release: what `ggh results bundle` writes to docs/results/results_bundle.json, less v2. The
+fixture is a frozen copy so the generators are tested on real v1 numbers (the v1 card, its
+recipe and targets lineage). V2.2's runs are committed, so the full bundle now holds v1 and v2;
+tests/results/test_bundle.py checks it on the real data, and tests/release/test_card_v2.py runs
+the same generators on a v1 + v2 bundle. Only `spend_usd` (the whole ledger) moves with v2.
 """
 
 from __future__ import annotations
@@ -33,7 +35,7 @@ SUMMARIES = (
 def bundle_json() -> str:
     from ggh.results.bundle import build
 
-    return build(ROOT).bundle.model_dump_json(indent=2) + "\n"
+    return build(ROOT, versions=("v1",)).bundle.model_dump_json(indent=2) + "\n"
 
 
 def bundle() -> dict[str, Any]:

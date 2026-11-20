@@ -1,0 +1,26 @@
+{
+ "labeller": "claude-opus-5-5 (fresh Claude Code subagents, OWNER D-60)",
+ "prompt": "configs/labeller_prompt.md",
+ "prompt_sha256": "0cb60eae08fb113d90c0d5b68a3c521dc847c2cf4b3b85cfe3d2c2742020dc14",
+ "first_pass": {
+  "claims": 501,
+  "evalkit_sheet": 461,
+  "gemma_sheet": 40,
+  "batches": 6,
+  "supported": 341,
+  "unsupported": 160,
+  "extraction_errors": 4
+ },
+ "self_consistency": {
+  "claims": 88,
+  "answers": 20,
+  "identical": 81,
+  "kappa": {
+   "point": 0.806775,
+   "lo": 0.66186,
+   "hi": 0.927891
+  },
+  "method": "evalkit.calibration.cluster_kappa, answer-clustered, 10,000 resamples, seed 7"
+ },
+ "note": "EvalKit's calibrate score ran before the relabel was imported (the CSV import's --relabel needs --criterion), so calibration.json has self_consistency null; EvalKit scores a held-out set once per rubric, so it was not re-scored. Self-consistency is computed here from the same two label files with EvalKit's own function."
+}

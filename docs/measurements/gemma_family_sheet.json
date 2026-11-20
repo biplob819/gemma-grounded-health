@@ -1,0 +1,781 @@
+{
+ "sheet_id": "gf4e32c13cc2aa",
+ "run": "main_v2",
+ "run_id": "r-715fc213a8a5",
+ "seed": 24,
+ "allocation": {
+  "gemma-e2b-base-q4": 20,
+  "gemma-e2b-grounded-q4": 10,
+  "gemma-e2b-grounded-v2-q4": 10
+ },
+ "items": [
+  {
+   "key": "kf328f05e2b08",
+   "answer": "a20dce365a5",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-17914515",
+   "claim_id": "pqa-17914515:gemma-e2b-base-q4:0",
+   "claim_sha256": "b73f8822115ba043b721c4314a4a70fffe94b1d4d5b1c616140e9492c9916ed8",
+   "claim_text": "The study discussed the results of suturing the nasal septum after septoplasty and nasal packing.",
+   "cited": [
+    [
+     1,
+     "To discuss and compare the results of suturing the nasal septum after septoplasty with the results of nasal packing."
+    ],
+    [
+     2,
+     "A prospective study, which was performed at Prince Hashem Military Hospital in Zarqa, Jordan and Prince Rashed Military Hospital in Irbid, Jordan between September 2005 and August 2006 included 169 consecutive patients that underwent septoplasty."
+    ],
+    [
+     4,
+     "After completion of surgery, the nasal septum was sutured in the first group while nasal packing was performed in the second group."
+    ]
+   ]
+  },
+  {
+   "key": "k92c91c867d79",
+   "answer": "aa0d3723b25",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-18375490",
+   "claim_id": "pqa-18375490:gemma-e2b-base-q4:0",
+   "claim_sha256": "feeb4be02c000c3e8303bc70a15baeaefb2d897e6be025c3d7f279376aeebc50",
+   "claim_text": "Errors were identified in participant reporting of intact hCG results as total beta hCG and total beta hCG as intact hCG.",
+   "cited": [
+    [
+     7,
+     "We identified errors in participant reporting of intact hCG results as total beta hCG (9.3%; 22 of 235 laboratories) and total beta hCG as intact hCG (13.1%; 8 of 61 laboratories)."
+    ]
+   ]
+  },
+  {
+   "key": "ke4985ddbd031",
+   "answer": "add6fc8880c",
+   "model": "gemma-e2b-grounded-v2-q4",
+   "case_id": "pqa-24625433",
+   "claim_id": "pqa-24625433:gemma-e2b-grounded-v2-q4:0",
+   "claim_sha256": "e8a45ab2195a1d7244d2ae06070c78605410c623d32b0aceffe65970541cbdf9",
+   "claim_text": "HFNC are not noisier than BCPAP for preterm infants.",
+   "cited": [
+    [
+     10,
+     "There was no evidence of a difference in average noise levels measured at the EAM: mean difference (95% CI) of -1.6 (-4.0 to 0.9) dBA for HFNC compared to BCPAP."
+    ]
+   ]
+  },
+  {
+   "key": "k79b4f41e1901",
+   "answer": "a8df3656fb1",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-25280365",
+   "claim_id": "pqa-25280365:gemma-e2b-base-q4:0",
+   "claim_sha256": "8a7612af4cfc1f681e4f6a4e9e09d4f6c6ce02a8bc214252b739ed0193ead65d",
+   "claim_text": "The study aimed to identify areas of agreement and discordance between clinicians and clinical pathologists regarding RBC-M terms and their clinical value.",
+   "cited": [
+    [
+     2,
+     "However, reporting is subjective, semiquantitative, and potentially biased."
+    ],
+    [
+     3,
+     "Reporting decisions vary among CPs, and reports may not be interpreted by clinicians as intended."
+    ],
+    [
+     4,
+     "The aims of this study were to survey clinicians and CPs about RBC-M terms and their clinical value, and identify areas of agreement and discordance."
+    ],
+    [
+     8,
+     "Analyzable responses were obtained from 1662 clinicians and 82 CPs."
+    ],
+    [
+     9,
+     "Both clinicians and CPs considered some terms, e.g., agglutination, useful, whereas only CPs considered other terms, e.g., ghost cells, useful."
+    ],
+    [
+     10,
+     "All groups interpreted certain terms, e.g., Heinz bodies, correctly, whereas some clinicians misinterpreted others, e.g., eccentrocytes."
+    ]
+   ]
+  },
+  {
+   "key": "k263cf0874726",
+   "answer": "af8ed687180",
+   "model": "gemma-e2b-grounded-q4",
+   "case_id": "pqa-1571683",
+   "claim_id": "pqa-1571683:gemma-e2b-grounded-q4:0",
+   "claim_sha256": "4163c314126d886743e2ff52c52300e45f0cd8b2a9413df17014eead5add8909",
+   "claim_text": "The storage of vaccines in the community is weak.",
+   "cited": [
+    [
+     1,
+     "To assess quality of storage of vaccines in the community."
+    ],
+    [
+     2,
+     "Questionnaire survey of general practices and child health clinics, and monitoring of storage temperatures of selected refrigerators."
+    ]
+   ]
+  },
+  {
+   "key": "k478d8ede4900",
+   "answer": "a6c4054db3b",
+   "model": "gemma-e2b-grounded-v2-q4",
+   "case_id": "pqa-17062234",
+   "claim_id": "pqa-17062234:gemma-e2b-grounded-v2-q4:0",
+   "claim_sha256": "8c0361be3b3b4efe6bd6cebee899bdc140d9e5ee28b378a5dabdd635d4697660",
+   "claim_text": "The use of endoaortic occlusion is associated with a higher risk of in-hospital death.",
+   "cited": [
+    [
+     8,
+     "The death rate of patients treated by endoaortic occlusion was significantly higher compared with all other patients (4.2%, p<0.0001) and with the expected estimate by European System for Cardiac Operative Risk Evaluation (10.5%, p = 0.05)."
+    ]
+   ]
+  },
+  {
+   "key": "k2a87d3ec3401",
+   "answer": "aa20174ff0f",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-8921484",
+   "claim_id": "pqa-8921484:gemma-e2b-base-q4:0",
+   "claim_sha256": "8cebfa9710374d4c08aa1d14a9de1f5eb1824a263459e47b3d2db86174b74887",
+   "claim_text": "Extreme types of misclassification were required to remove the divergence in median birthweights for Aborigines and whites.",
+   "cited": [
+    [
+     1,
+     "After 34 weeks gestation, summary measures of location for birthweight (e.g means and centiles) increase more slowly for Australian Aborigines than for whites."
+    ],
+    [
+     3,
+     "This study tests whether the reported pattern is due to differential misclassification of gestational age."
+    ],
+    [
+     11,
+     "Extreme types of misclassification were required to remove the divergence in median birthweights for Aborigines and whites."
+    ]
+   ]
+  },
+  {
+   "key": "kb89c52ce4f21",
+   "answer": "a1c5ace821e",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-14978612",
+   "claim_id": "pqa-14978612:gemma-e2b-base-q4:2",
+   "claim_sha256": "b87d49ff8eb26a6be3a583c6f203633f50cd4ff9c0c48c64bb630c848d3ee4d2",
+   "claim_text": "Surgery was cancelled in 6 cases.",
+   "cited": [
+    [
+     2,
+     "This study therefore prospectively assesses the impact of position emission tomography scanning on the management of primary rectal cancer."
+    ],
+    [
+     7,
+     "In 8 of 46 cases (17 percent), management was altered because of the position emission tomography scan findings, including 6 cases (13 percent) in which surgery was cancelled and 2 other cases (4 percent) in which the radiotherapy field was changed."
+    ],
+    [
+     10,
+     "Overall tumor stage was changed following position emission tomography in 18 of 46 patients (39 percent)."
+    ]
+   ]
+  },
+  {
+   "key": "k442c57ad8b75",
+   "answer": "a0c1702f409",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-19683101",
+   "claim_id": "pqa-19683101:gemma-e2b-base-q4:0",
+   "claim_sha256": "be22249e1d65566b61f38107ba18724c4f2f7e5f052e47d78910a146a1e1ca39",
+   "claim_text": "No statistically significant difference was determined regarding D-dimer levels between the histopathologic study groups.",
+   "cited": [
+    [
+     6,
+     "According the duration of pain, 63.2% of the patients were referred to the hospital within the first 24 hours, 26.5% of the patients were referred to the hospital within 24 to 48 hours, and 10.3% were referred to the hospital within a period of more than 48 hours."
+    ],
+    [
+     9,
+     "There was no statistically significant difference related with D-dimer levels between histopathologic study groups (P>.05)."
+    ]
+   ]
+  },
+  {
+   "key": "ke642fbe32f78",
+   "answer": "afcdda9d5e7",
+   "model": "gemma-e2b-grounded-v2-q4",
+   "case_id": "pqa-17105833",
+   "claim_id": "pqa-17105833:gemma-e2b-grounded-v2-q4:0",
+   "claim_sha256": "0a26e5a87bb70e4c149d29ef220c99a9d0509d157af576d2195221d1043d30cc",
+   "claim_text": "Resistance rates to ofloxacin were highest among the oldest women.",
+   "cited": [
+    [
+     11,
+     "Resistance was lowest among the youngest (aged 41-50 y) women (3.2%; 95% CI 1.11 to 5.18), approached 10% in women aged 51-55 years (7.1%; 95% CI 3.4 to 10.9), and reached 19.86% (95% CI 13.2 to 26.5) among the oldest women (aged 56-75 y)."
+    ]
+   ]
+  },
+  {
+   "key": "k119aa9b75e1d",
+   "answer": "ada154b1024",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-15530261",
+   "claim_id": "pqa-15530261:gemma-e2b-base-q4:1",
+   "claim_sha256": "80747107bdb114a4f91066eaad4364c20479c516b3bf0c7f9dcc9bcea824cabc",
+   "claim_text": "The study compared outcomes between surveillance and nonsurveillance groups.",
+   "cited": [
+    [
+     6,
+     "The adjusted odds ratios for surveillance versus nonsurveillance were 0.58 (95% CI, 0.35-0.97), 0.45 (95% CI, 0.27-0.74), and 0.44 (95% CI, 0.26-0.73)."
+    ],
+    [
+     9,
+     "There were significant gradient relationships between prognostic outcomes and extent of screening history."
+    ]
+   ]
+  },
+  {
+   "key": "k407fcc56d03b",
+   "answer": "abd1da66d6a",
+   "model": "gemma-e2b-grounded-q4",
+   "case_id": "pqa-21459725",
+   "claim_id": "pqa-21459725:gemma-e2b-grounded-q4:0",
+   "claim_sha256": "032de26f12cb5d3e4cc6109e6a9df140b3d670fadb879c84d2676846bcaa9703",
+   "claim_text": "The expression of p53 and PCNA in XGC is lower than in GBC.",
+   "cited": [
+    [
+     9,
+     "p53 mutation was positive in 52% of GBC cases and 3% of XGC, but was not expressed in chronic cholecystitis and control gallbladders. p53 expression was lower in XGC than in GBC (P<0.0001)."
+    ]
+   ]
+  },
+  {
+   "key": "ke39fc78a4b1a",
+   "answer": "a7ddfd67e5f",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-17192736",
+   "claim_id": "pqa-17192736:gemma-e2b-base-q4:0",
+   "claim_sha256": "30a93e951cb22e9fd7374634aa48df578d0dcda81143cf6ea7ba1292bc464877",
+   "claim_text": "Complete clearance without the use of fluoroscopy was achieved in 99 patients (94.2%).",
+   "cited": [
+    [
+     6,
+     "A fluoroscope was kept standby."
+    ],
+    [
+     9,
+     "Complete clearance without the use of fluoroscopy was achieved in 99 patients (94.2%)."
+    ],
+    [
+     10,
+     "Fluoroscopy was required in 6 patients (4%) for calcified stricture (n = 1), duplex system (n = 1), narrow and tortuous meatus causing difficulty in passing the 5-Fr balloon dilator (n = 3), and confirmation of spontaneous passage of the stone (n = 1)."
+    ]
+   ]
+  },
+  {
+   "key": "kf66f0fbc9910",
+   "answer": "aab8f422eae",
+   "model": "gemma-e2b-grounded-v2-q4",
+   "case_id": "pqa-16816043",
+   "claim_id": "pqa-16816043:gemma-e2b-grounded-v2-q4:1",
+   "claim_sha256": "8ef60b1edc38a46f9989ed28720f12921856081818726069460f1d0f5d429f02",
+   "claim_text": "None of its sentences reports a finding that answers this.",
+   "cited": [
+    [
+     1,
+     "To determine under what conditions lay people and health professionals find it acceptable for a physician to breach confidentiality to protect the wife of a patient with a sexually transmitted disease (STD)."
+    ],
+    [
+     7,
+     "A cluster analysis showed groups of lay participants who found breaching confidentiality \"always acceptable\" (n = 14), \"depending on the many circumstances\" (n = 87), requiring \"consultation with an expert\" (n = 30) and \"never acceptable (n = 13)\"."
+    ]
+   ]
+  },
+  {
+   "key": "k16669e3edfbb",
+   "answer": "a2e6c2a8f2e",
+   "model": "gemma-e2b-grounded-q4",
+   "case_id": "pqa-24666444",
+   "claim_id": "pqa-24666444:gemma-e2b-grounded-q4:0",
+   "claim_sha256": "c62509755e0cb603b85309283b3013101b41d7fcff4838507a5ad7be52d0b8ac",
+   "claim_text": "There is no evidence of a July effect in patients undergoing major cancer surgery.",
+   "cited": [
+    [
+     3,
+     "Uniformity of care, regardless of time of year, is required for patients undergoing major cancer surgery."
+    ],
+    [
+     4,
+     "We therefore sought to perform a population-level assessment for the presence of a July effect in this field."
+    ],
+    [
+     5,
+     "We used the Nationwide Inpatient Sample to abstract data on patients undergoing 1 of 8 major cancer surgeries at academic medical centres between Jan. 1, 1999, and Dec. 30, 2009."
+    ],
+    [
+     7,
+     "Univariate analyses and subsequently multivariate analyses, controlling for patient and hospital characteristics, were performed to identify whether the time of surgery was an independent predictor of outcome after major cancer surgery."
+    ],
+    [
+     9,
+     "However, on multivariate analysis, only hematologic complications were significantly higher in July, with no difference in overall postoperative complication rate or in-hospital mortality for all 8 surgeries considered separately or together."
+    ]
+   ]
+  },
+  {
+   "key": "k199ae5a4263f",
+   "answer": "a2c97fa565d",
+   "model": "gemma-e2b-grounded-q4",
+   "case_id": "pqa-22349635",
+   "claim_id": "pqa-22349635:gemma-e2b-grounded-q4:0",
+   "claim_sha256": "0c829c46affd9b3ebcc747e1986e66e185db42035309b45d09296f7e58d72373",
+   "claim_text": "In addition to radiotherapy, surgery does not appear to improve motor function in elderly patients with MSCC.",
+   "cited": [
+    [
+     2,
+     "One question regarding the treatment of metastatic spinal cord compression (MSCC) is whether elderly patients benefit from surgery in addition to radiotherapy?"
+    ],
+    [
+     4,
+     "Data from 42 elderly (age> 65 years) patients receiving surgery plus radiotherapy (S + RT) were matched to 84 patients (1:2) receiving radiotherapy alone (RT)."
+    ],
+    [
+     7,
+     "Improvement of motor function occurred in 21% after S + RT and 24% after RT (p = 0.39)."
+    ],
+    [
+     9,
+     "In the matched-pair analysis of patients receiving DDSS, improvement of motor function occurred in 22% after DDSS + RT and 24% after RT alone (p = 0.92)."
+    ]
+   ]
+  },
+  {
+   "key": "k3f43dfcda3fe",
+   "answer": "a75654d780f",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-25986020",
+   "claim_id": "pqa-25986020:gemma-e2b-base-q4:0",
+   "claim_sha256": "9a1023fb3baa689308bc45486ac6bad10d14edd7fb36399ee2c681be00b7088a",
+   "claim_text": "The study evaluated whether the reduction in CLABSI rate was sustainable for at least 1 year.",
+   "cited": [
+    [
+     2,
+     "The purpose of this study is to evaluate whether this rate reduction is sustainable for at least 1 year and to identify key determinants of this sustainability at the NICU of the Floating Hospital for Children at Tufts Medical Center."
+    ],
+    [
+     7,
+     "Ongoing training, surveillance, and vigilance with catheter insertion and maintenance practices and improved documentation were identified as key drivers for success."
+    ]
+   ]
+  },
+  {
+   "key": "k6e4e6c72c0d4",
+   "answer": "aabc27a5784",
+   "model": "gemma-e2b-grounded-v2-q4",
+   "case_id": "pqa-25756710",
+   "claim_id": "pqa-25756710:gemma-e2b-grounded-v2-q4:0",
+   "claim_sha256": "d3cfc92820eb75079924b499f099294b58d950a4f45f3eaaf576428980a71dd0",
+   "claim_text": "The STANDING test is a useful tool for the assessment of acute vertigo in the emergency department.",
+   "cited": [
+    [
+     10,
+     "There were 13 true positives, three false positives, 81 true negatives and one false negative, with a high sensitivity (92.9%, 95% CI 70-100%) and specificity (96.4%, 95% CI 93-38%) for central acute vertigo according to senior audiologist evaluation."
+    ]
+   ]
+  },
+  {
+   "key": "k6afb78d3fe66",
+   "answer": "ab64a4ae5ff",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-24352924",
+   "claim_id": "pqa-24352924:gemma-e2b-base-q4:2",
+   "claim_sha256": "50040c70535a0a3e1349851df40d0b856c220860001d8018afcec5d1c0a8f987",
+   "claim_text": "Ultrasonography underestimates Schanz pin protrusion measurements by an average of 10 percent over the range of 5 to 18 mm.",
+   "cited": [
+    [
+     6,
+     "Schanz pin protrusion measurements are underestimated by ultrasonography (p<0.01) by an average of 10 percent over the range of 5 to 18 mm, and they display a proportional bias that increases the under reporting as the magnitude of pin protrusion increases."
+    ],
+    [
+     7,
+     "Ultrasound data demonstrate good linear correlation and closely represent actual protrusion values in the 5 to 12 mm range."
+    ]
+   ]
+  },
+  {
+   "key": "kceeb880e8d83",
+   "answer": "ad057b7f047",
+   "model": "gemma-e2b-grounded-v2-q4",
+   "case_id": "pqa-26237424",
+   "claim_id": "pqa-26237424:gemma-e2b-grounded-v2-q4:0",
+   "claim_sha256": "b19803df919d6f13ba07601d11aa76a7f2824535a3c5660db822495b949b4cbc",
+   "claim_text": "PPM did not affect survival in this population.",
+   "cited": [
+    [
+     9,
+     "Overall survival at 5 years was 78 ± 4.5% and was not influenced by PPM (P = NS)."
+    ]
+   ]
+  },
+  {
+   "key": "k0dbd84d7242a",
+   "answer": "a97b18becc7",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-18251357",
+   "claim_id": "pqa-18251357:gemma-e2b-base-q4:0",
+   "claim_sha256": "ead768f10605944a99ec23865e3c7fd2f8bcfb4241928d57fdfb23c0cb9b8144",
+   "claim_text": "The presence of 1 or more clinical indicators was significantly associated with the presence of histologic chorioamnionitis.",
+   "cited": [
+    [
+     7,
+     "The presence of 1 or more clinical indicators was significantly associated with the presence of histologic chorioamnionitis (p = 0.019)."
+    ]
+   ]
+  },
+  {
+   "key": "k9e4052ae73cf",
+   "answer": "af3a27a02da",
+   "model": "gemma-e2b-grounded-q4",
+   "case_id": "pqa-20813740",
+   "claim_id": "pqa-20813740:gemma-e2b-grounded-q4:0",
+   "claim_sha256": "b9695cc3eeacc442acebcfcf7f4b8506d47ea85e39df40dcf03ae54b18d6a4b8",
+   "claim_text": "Overexpression of β-catenin is associated with the progression of SbCC.",
+   "cited": [
+    [
+     2,
+     "Cytoplasmic overexpression of β-catenin was seen in 66% cases of SbCC which correlated positively with tumour size, orbital invasion and pagetoid spread."
+    ]
+   ]
+  },
+  {
+   "key": "k58ad38e437f7",
+   "answer": "a52dd1ef786",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-23240452",
+   "claim_id": "pqa-23240452:gemma-e2b-base-q4:0",
+   "claim_sha256": "5fc2ffc66e1a5ad17e9736e165e3d22a18d1a89d41db87eabde0ee745aac19ee",
+   "claim_text": "The study aimed to find correlations between the chemical content of the stones and the concentration of chosen elements in the urine and hair of stone formers.",
+   "cited": [
+    [
+     2,
+     "This study was aimed to attempt to find the correlations between the chemical content of the stones and the concentration of chosen elements in the urine and hair of stone formers."
+    ],
+    [
+     7,
+     "Only a few correlations between the composition of stones and the distribution of elements in urine and in hair were found."
+    ],
+    [
+     8,
+     "All were considered incidental."
+    ]
+   ]
+  },
+  {
+   "key": "ka88d8081e5ea",
+   "answer": "a1c39887cfe",
+   "model": "gemma-e2b-grounded-q4",
+   "case_id": "pqa-22540518",
+   "claim_id": "pqa-22540518:gemma-e2b-grounded-q4:0",
+   "claim_sha256": "cb8956af2ca0299ec8836e0fde167f420b7148cce9388bea577255615d000b23",
+   "claim_text": "Micro-CT is reliable to determine the microstructure of the maxillary alveolar bone.",
+   "cited": [
+    [
+     1,
+     "To analyze the reliability of micro-computed tomography (micro-CT) to assess bone density and the microstructure of the maxillary bones at the alveolar process in human clinics by direct comparison with conventional stereologic-based histomorphometry."
+    ]
+   ]
+  },
+  {
+   "key": "k992b5071e412",
+   "answer": "a558bf55b77",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-27281318",
+   "claim_id": "pqa-27281318:gemma-e2b-base-q4:0",
+   "claim_sha256": "f4ebe4096f4a00781ab5bec6f2b38d483a7ce3bc418605cc14e6806e08706b4e",
+   "claim_text": "The study aimed to determine whether femoral tunnel lengths of greater than 20 mm can be created with a flexible reamer system at 90° of knee flexion.",
+   "cited": [
+    [
+     2,
+     "The purpose of this cadaveric study was twofold: 1. to determine whether femoral tunnel lengths of greater than 20 mm can be created with a flexible reamer system at 90 ° of knee flexion and 2. to determine whether the lateral structures of the knee are safe with this technique."
+    ]
+   ]
+  },
+  {
+   "key": "ka4618aaacc9a",
+   "answer": "ad94a2e939b",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-17910536",
+   "claim_id": "pqa-17910536:gemma-e2b-base-q4:2",
+   "claim_sha256": "1fc473a5e4ce085f034261028ec9deeb34fe4fb3dcbd32ebf020e26fec634238",
+   "claim_text": "The variance of general reading comprehension ability was explained only moderately by the strategies trained.",
+   "cited": [
+    [
+     10,
+     "Third, even more substantial was the transfer effect to general text comprehension."
+    ],
+    [
+     12,
+     "Finally, the variance of general reading comprehension ability was best explained by the test of RCS, and only moderately by the strategies trained."
+    ]
+   ]
+  },
+  {
+   "key": "ke44624c79071",
+   "answer": "a8a3d8b621b",
+   "model": "gemma-e2b-grounded-v2-q4",
+   "case_id": "pqa-23949294",
+   "claim_id": "pqa-23949294:gemma-e2b-grounded-v2-q4:0",
+   "claim_sha256": "8f005ffea724028f474beb6a4dab194d4f1a08f949d7b47c924302c5c67a348a",
+   "claim_text": "The use of third-line ART regimens is associated with a higher risk of virologic failure.",
+   "cited": [
+    [
+     10,
+     "Thirteen patients (16.5%) were receiving third-line ART regimens, with an average of 2.7-fold more virologic failures than those on first- or second-line regimens (p = 0.007)."
+    ]
+   ]
+  },
+  {
+   "key": "ke050298b1583",
+   "answer": "aa6dfdf2f6f",
+   "model": "gemma-e2b-grounded-q4",
+   "case_id": "pqa-20577124",
+   "claim_id": "pqa-20577124:gemma-e2b-grounded-q4:0",
+   "claim_sha256": "a57e1f49fde5bb2b0c6e4b3c6b6072a1f74105d9310d07f3a6a1185757cec25b",
+   "claim_text": "Leptin is involved in the development of NADPH oxidase overactivity in obese patients.",
+   "cited": [
+    [
+     1,
+     "Hyperleptinemia and oxidative stress play a major role in the development of cardiovascular diseases in obesity."
+    ],
+    [
+     2,
+     "This study aimed to investigate whether there is a relationship between plasma levels of leptin and phagocytic nicotinamide adenine dinucleotide phosphate (NADPH) oxidase activity, and its potential relevance in the vascular remodeling in obese patients."
+    ],
+    [
+     8,
+     "Phagocytic NADPH oxidase activity and leptin levels were enhanced (P<0.05) in obese patients compared with controls."
+    ]
+   ]
+  },
+  {
+   "key": "k7c116b81a930",
+   "answer": "a03e774a79d",
+   "model": "gemma-e2b-grounded-q4",
+   "case_id": "pqa-25981682",
+   "claim_id": "pqa-25981682:gemma-e2b-grounded-q4:0",
+   "claim_sha256": "489b74d5cddd6f362c0fe787bdeb9354b0f2dc9cc5e48f7bc0394916e39a7aac",
+   "claim_text": "There was limited evidence of assessment for osteoporosis, footwear and visual assessment in the previous 2 years.",
+   "cited": [
+    [
+     5,
+     "There was limited evidence of assessment for osteoporosis (n = 8), footwear (n = 4) and visual assessment in the previous 2 years (n = 1)."
+    ]
+   ]
+  },
+  {
+   "key": "k70e0a22c036e",
+   "answer": "ae0bc427e8d",
+   "model": "gemma-e2b-grounded-q4",
+   "case_id": "pqa-26778755",
+   "claim_id": "pqa-26778755:gemma-e2b-grounded-q4:0",
+   "claim_sha256": "bb03670074c0aa80ca2d89fa3449d384bbf048a2f0db65f173b9ff149c8c5108",
+   "claim_text": "The PIBS points are not representative of the vaginal dose.",
+   "cited": [
+    [
+     1,
+     "Although dose-volume parameters in image-guided brachytherapy have become a standard, the use of posterior-inferior border of the pubic symphysis (PIBS) points has been recently proposed in the reporting of vaginal doses."
+    ],
+    [
+     5,
+     "Doses delivered to the PIBS points were evaluated on each plan, considering that they were representative of one-third of the treatment."
+    ]
+   ]
+  },
+  {
+   "key": "keea376568d7b",
+   "answer": "ad2e71376a5",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-10966337",
+   "claim_id": "pqa-10966337:gemma-e2b-base-q4:3",
+   "claim_sha256": "9a619b329f5d13a4363e30fdd127a8b201d47525bbf4156b52bf50779e72dc7d",
+   "claim_text": "The study reported appropriateness of stay as an outcome.",
+   "cited": [
+    [
+     1,
+     "We evaluated the usefulness of a short stay or 23-hour ward in a pediatric unit of a large teaching hospital, Westmead Hospital, and an academic Children's hospital, The New Children's Hospital, to determine if they are a useful addition to the emergency service."
+    ],
+    [
+     4,
+     "The following outcome measures were used: length of stay, appropriateness of stay, rate of admission to an in-hospital bed, and rate of unscheduled visits within 72 hours of discharge."
+    ],
+    [
+     5,
+     "Adverse events were reported and patient follow-up was attempted at 48 hours after discharge in all cases."
+    ],
+    [
+     11,
+     "There were no adverse events reported at either short stay ward, with parental satisfaction high."
+    ]
+   ]
+  },
+  {
+   "key": "ke067f6df893f",
+   "answer": "a05e0c3a18a",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-23916653",
+   "claim_id": "pqa-23916653:gemma-e2b-base-q4:0",
+   "claim_sha256": "e7579d4c77e2b2dd0147b5e55e29b28cf0fd49b2e843fdf98469a8859924b4c2",
+   "claim_text": "Orthostatic myoclonus (OM) has been suggested as a cause of gait impairment and unsteadiness in neurodegenerative diseases.",
+   "cited": [
+    [
+     1,
+     "Recently, orthostatic myoclonus (OM) has been suggested as a cause of gait impairment and unsteadiness in neurodegenerative diseases."
+    ],
+    [
+     2,
+     "The aim of this study was to investigate the frequency of orthostatic myoclonus, its clinical characteristics and the underlying associated neurological disorders."
+    ]
+   ]
+  },
+  {
+   "key": "k68bef7358e00",
+   "answer": "a9e9c6732a0",
+   "model": "gemma-e2b-grounded-v2-q4",
+   "case_id": "pqa-20297950",
+   "claim_id": "pqa-20297950:gemma-e2b-grounded-v2-q4:1",
+   "claim_sha256": "867edff9534572cde52517b872670d9ad13e66d48a7c60228a62bce8d23eec43",
+   "claim_text": "Fenofibrate treatment significantly reduced non-cortical micro-awakenings per hour.",
+   "cited": [
+    [
+     10,
+     "Treatment reduced obstructive apnoeas (by 44%, from 18.5 at baseline to 15.0 at end of treatment vs. 29.0 to 30.5 on placebo, p = 0.048), and non-cortical micro-awakenings per hour (from 23.5 to 18.0 vs. 24.0 to 25.0 with placebo, p = 0.004)."
+    ]
+   ]
+  },
+  {
+   "key": "k7265139c2b00",
+   "answer": "ab1237636f6",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-17919952",
+   "claim_id": "pqa-17919952:gemma-e2b-base-q4:1",
+   "claim_sha256": "1d0f5d0c173b28ce3321833369b73ef9ad64ac1feffcb67191d13551023cb317",
+   "claim_text": "These factors were also commonly associated with the reporting of other frequently unexplained syndromes.",
+   "cited": [
+    [
+     4,
+     "The study examined the association of chronic oro-facial pain with a variety of self-reported mechanical factors: teeth grinding, facial trauma, missing teeth and the feeling that the teeth did not fit together properly."
+    ],
+    [
+     8,
+     "However, these factors were also commonly associated with the reporting of other frequently unexplained syndromes: teeth grinding (odds ratio (OR) 1.8, 95% CI 1.5-2.2), facial trauma (OR 2.1; 95% CI 1.7-2.6)."
+    ]
+   ]
+  },
+  {
+   "key": "kfef871410fc6",
+   "answer": "ad4158303e6",
+   "model": "gemma-e2b-grounded-q4",
+   "case_id": "pqa-18403945",
+   "claim_id": "pqa-18403945:gemma-e2b-grounded-q4:0",
+   "claim_sha256": "b97864e2922510f7438ee6c5216dba733a8c35a8e57c2f0e907f161ea56664af",
+   "claim_text": "Laparoscopic antireflux surgery improves quality of life in patients whose symptoms are well controlled on medical therapy.",
+   "cited": [
+    [
+     1,
+     "Both medical therapy and laparoscopic antireflux surgery have been shown to improve quality of life in gastro-oesophageal reflux disease."
+    ],
+    [
+     2,
+     "Although patients with poor symptom control or side effects on medical therapy might be expected to have improved quality of life after surgery, our aim was to determine, for the first time, whether patients whose symptoms are well controlled on medical therapy but who decide to undergo surgery (patient preference) would experience improved quality of life."
+    ],
+    [
+     3,
+     "Retrospective analysis of our patient database (1998-2003, n=313) identified 60 patients who underwent laparoscopic antireflux surgery for the indication of patient preference."
+    ]
+   ]
+  },
+  {
+   "key": "kbbf2660374e2",
+   "answer": "a0d5416ccfa",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-14551704",
+   "claim_id": "pqa-14551704:gemma-e2b-base-q4:1",
+   "claim_sha256": "b98623fee6dfac6d26484c6eff4fd021bee36977f7b0192134e03af519402514",
+   "claim_text": "Changes in participants' communication behavior were analyzed.",
+   "cited": [
+    [
+     4,
+     "This study describes the realization of a 2-day course model based on the experiences of the first three courses of this kind in Rhineland-Palatinate, and analyzes changes of participants' communication behavior."
+    ],
+    [
+     12,
+     "3 months after the course, participants described multiple changes indicating increased sensibility and professionalism in communication behavior."
+    ]
+   ]
+  },
+  {
+   "key": "k2e546faa8aab",
+   "answer": "a31f4925b78",
+   "model": "gemma-e2b-grounded-v2-q4",
+   "case_id": "pqa-23025584",
+   "claim_id": "pqa-23025584:gemma-e2b-grounded-v2-q4:0",
+   "claim_sha256": "8aacd0d80aa0b1cbd2dcdb5fe9bb7de98380e7901ab38479256793e491a67b92",
+   "claim_text": "Stress did not increase the tendency to imitate drinking behavior.",
+   "cited": [
+    [
+     10,
+     "No moderating effect of stress on the tendency to drink along with peers was found."
+    ]
+   ]
+  },
+  {
+   "key": "kcf5dfd13e072",
+   "answer": "aabbdf98c9d",
+   "model": "gemma-e2b-grounded-v2-q4",
+   "case_id": "pqa-24973051",
+   "claim_id": "pqa-24973051:gemma-e2b-grounded-v2-q4:0",
+   "claim_sha256": "e31c83685a965b974adb50d1d55b1bd1ad104d5427695b6d2b9cd2d810e6fc07",
+   "claim_text": "The number of core conditions seen by students varied widely.",
+   "cited": [
+    [
+     10,
+     "The percentage of students who saw each condition varied, ranging from 100% (chest pain and abdominal pain) to 31% (cardiac arrest)."
+    ]
+   ]
+  },
+  {
+   "key": "k2018ab731d76",
+   "answer": "a94194959fc",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-21904069",
+   "claim_id": "pqa-21904069:gemma-e2b-base-q4:0",
+   "claim_sha256": "ac00c37dd35e5aa61d45cd093cb3d4a7ee16934ad22082925146dfb8fa7508e7",
+   "claim_text": "In all cases, the gastroepiploic arcade was the main arterial pathway feeding the spleen.",
+   "cited": [
+    [
+     10,
+     "In all cases, the gastroepiploic arcade was the main arterial pathway feeding the spleen."
+    ]
+   ]
+  },
+  {
+   "key": "k7e1077815c70",
+   "answer": "af2fffb01f1",
+   "model": "gemma-e2b-base-q4",
+   "case_id": "pqa-18832500",
+   "claim_id": "pqa-18832500:gemma-e2b-base-q4:1",
+   "claim_sha256": "2c5c9774414186010a662e55daaf981c0b241223125aeba777b4b96f6ccf2ee0",
+   "claim_text": "PHQ-9 scores influenced clinical decision making for 93% of 6,096 patient contacts.",
+   "cited": [
+    [
+     6,
+     "Two of the 19 practices dropped out during the course of the project."
+    ],
+    [
+     7,
+     "By the conclusion of the study, all remaining 17 practices had adopted PHQ-9 as a routine part of depression care in their practice."
+    ],
+    [
+     8,
+     "On the basis of responses from 17 psychiatrists from those practices, PHQ-9 scores influenced clinical decision making for 93% of 6,096 patient contacts."
+    ]
+   ]
+  }
+ ]
+}
