@@ -28,9 +28,10 @@ card:
 
 # Hub release plan (R4.2, Tech Spec §10.2): a dry run that lists every file and checks lineage
 # and sha256s. Pushing needs `uv run ggh release --push --owner <owner>`, HF_TOKEN and the
-# owner's go-ahead
+# owner's go-ahead. It follows the shipped release (v2: parity_v2 -> export_ft2 -> train_v2 ->
+# targets_v2 -> data); `--release v1` plans v1
 release:
-	uv run ggh lineage verify artifacts/export/ft/manifest.json
+	uv run ggh lineage verify artifacts/parity_v2/manifest.json
 	uv run ggh release --dry-run
 
 status:

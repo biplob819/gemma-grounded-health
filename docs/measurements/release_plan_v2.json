@@ -1,0 +1,204 @@
+{
+  "schema": 1,
+  "release": "v2",
+  "model": "gemma-e2b-grounded-v2-q4",
+  "owner": "biplob123",
+  "repos": {
+    "main": "biplob123/gemma-4-e2b-grounded-health",
+    "gguf": "biplob123/gemma-4-e2b-grounded-health-GGUF"
+  },
+  "lineage_verified_from": "artifacts/parity_v2/manifest.json",
+  "lineage_chain": [
+    "parity:a4a772e5402147192ecd50b159a3ab0904ea8e92b798246c14b5c34e118b8620",
+    "export:711402b7a283d4ea160822d60fe4b800525ae50eab9e2da8ba2125e4ccf16600",
+    "train:fa11eddc3791fa601e277ba0219b1a721c220818af2a3fddc4b2ea2df13a8afb",
+    "targets:11fec5f2fd418f86965412737cbbe11da5400db01bd5d9b1ee3442c75a114f9f",
+    "data:e1a3f6bc37ab7be4e335b18e76b0b3bf442607f196d61546a0466ffa92378066"
+  ],
+  "ollama_ref": "hf.co/biplob123/gemma-4-e2b-grounded-health-GGUF:Q4_K_M",
+  "files": [
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health",
+      "path_in_repo": "chat_template.jinja",
+      "local": "artifacts/merged/ft2-bf16/chat_template.jinja",
+      "size": 18569,
+      "sha256": "0a2c8073c878ab1da004bee933a998606537bbb62016310352c7285c3f01c5b5",
+      "status": "ok",
+      "record": "docs/measurements/lineage/export_ft2.json"
+    },
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health",
+      "path_in_repo": "config.json",
+      "local": "artifacts/merged/ft2-bf16/config.json",
+      "size": 4538,
+      "sha256": "44d5e8d9938ed73b132bbdb17f0902860d585400b706615aab648baf69d4243a",
+      "status": "ok",
+      "record": "docs/measurements/lineage/export_ft2.json"
+    },
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health",
+      "path_in_repo": "model.safetensors",
+      "local": "artifacts/merged/ft2-bf16/model.safetensors",
+      "size": 10246621918,
+      "sha256": "01a0ff9cef3cf852ac5d61f016f5b849d7331d058aa92196594fa3cea25dd9f9",
+      "status": "ok",
+      "record": "docs/measurements/lineage/export_ft2.json"
+    },
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health",
+      "path_in_repo": "tokenizer.json",
+      "local": "artifacts/merged/ft2-bf16/tokenizer.json",
+      "size": 32155733,
+      "sha256": "ab26b2add729e6f645bd869f228f14190a06615538f3be6f7786f33d13d78ad2",
+      "status": "ok",
+      "record": "docs/measurements/lineage/export_ft2.json"
+    },
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health",
+      "path_in_repo": "tokenizer_config.json",
+      "local": "artifacts/merged/ft2-bf16/tokenizer_config.json",
+      "size": 3082,
+      "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+      "status": "ok",
+      "record": "docs/measurements/lineage/export_ft2.json"
+    },
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health",
+      "path_in_repo": "generation_config.json",
+      "local": "artifacts/merged/ft2-bf16/generation_config.json",
+      "size": 208,
+      "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+      "status": "unrecorded",
+      "record": null
+    },
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health",
+      "path_in_repo": "processor_config.json",
+      "local": "artifacts/merged/ft2-bf16/processor_config.json",
+      "size": 1689,
+      "sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c",
+      "status": "unrecorded",
+      "record": null
+    },
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health",
+      "path_in_repo": "ggh_merge.json",
+      "local": "artifacts/merged/ft2-bf16/ggh_merge.json",
+      "size": 4068,
+      "sha256": "558fbdbda2567142579e7b23cdb74e9f79bf8d509b032876e683600974a50cca",
+      "status": "ok",
+      "record": "docs/measurements/v2/merge_record.json"
+    },
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health",
+      "path_in_repo": "adapter/adapter_config.json",
+      "local": "artifacts/adapter_v2/adapter_config.json",
+      "size": 1580,
+      "sha256": "17c0c0526c410b1a2aecbf74d67594f8f5f961993b7c9d7a955341674274bcf9",
+      "status": "ok",
+      "record": "docs/measurements/lineage/train_v2.json"
+    },
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health",
+      "path_in_repo": "adapter/adapter_model.safetensors",
+      "local": "artifacts/adapter_v2/adapter_model.safetensors",
+      "size": 96693360,
+      "sha256": "8ea0959ffae6cdc5122a5158112f84c6545857b64e6b4751825cc25a8ad9ee01",
+      "status": "ok",
+      "record": "docs/measurements/lineage/train_v2.json"
+    },
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health",
+      "path_in_repo": "README.md",
+      "local": "(generated)",
+      "size": 25624,
+      "sha256": "52a1677a4bb83a3c7bf4470e276692672c4fe2324ba1bd352843e174f99f6014",
+      "status": "generated",
+      "record": "MODEL_CARD.md"
+    },
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health",
+      "path_in_repo": "results_bundle.json",
+      "local": "(generated)",
+      "size": 107173,
+      "sha256": "2deb2e839756b392003c9775a83bc952d0ee6d532a09c189f73e2bf7eec93f56",
+      "status": "generated",
+      "record": "docs/results/results_bundle.json"
+    },
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health",
+      "path_in_repo": "lineage.json",
+      "local": "(generated)",
+      "size": 8055,
+      "sha256": "1ddb6a73cfbcc125cf7b29debb951bffdece00ce2d255fdafadfaaff6c39c037",
+      "status": "generated",
+      "record": null
+    },
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health-GGUF",
+      "path_in_repo": "gemma-4-e2b-grounded-health-Q4_K_M.gguf",
+      "local": "artifacts/gguf/ft2-Q4_K_M.gguf",
+      "size": 3427874336,
+      "sha256": "6da2c13ee1a3b94c99f9107bb27f344539364cdad371caea4b1114ef91b5be45",
+      "status": "ok",
+      "record": "docs/measurements/lineage/export_ft2.json"
+    },
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health-GGUF",
+      "path_in_repo": "gemma-4-e2b-grounded-health-Q8_0.gguf",
+      "local": "artifacts/gguf/ft2-Q8_0.gguf",
+      "size": 4967491104,
+      "sha256": "d581fb869346708a6d1fa6c2bd45da8b368a611ce6a18302ee4f8c0d4e2138a8",
+      "status": "ok",
+      "record": "docs/measurements/lineage/export_ft2.json"
+    },
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health-GGUF",
+      "path_in_repo": "README.md",
+      "local": "(generated)",
+      "size": 1442,
+      "sha256": "fbaea54e2a7c088f1b9acf747d91a3077e7e8fdf2343baa043e4fcdd2dee3a59",
+      "status": "generated",
+      "record": null
+    },
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health",
+      "path_in_repo": "LICENSE",
+      "local": "LICENSE",
+      "size": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "status": "ok",
+      "record": null
+    },
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health-GGUF",
+      "path_in_repo": "LICENSE",
+      "local": "LICENSE",
+      "size": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "status": "ok",
+      "record": null
+    },
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health",
+      "path_in_repo": "NOTICE",
+      "local": "NOTICE",
+      "size": 604,
+      "sha256": "808f130d75b533804bdf328dc5a530cbce3176af011d51e03edacd75a8f05ee3",
+      "status": "ok",
+      "record": null
+    },
+    {
+      "repo": "biplob123/gemma-4-e2b-grounded-health-GGUF",
+      "path_in_repo": "NOTICE",
+      "local": "NOTICE",
+      "size": 604,
+      "sha256": "808f130d75b533804bdf328dc5a530cbce3176af011d51e03edacd75a8f05ee3",
+      "status": "ok",
+      "record": null
+    }
+  ],
+  "total_bytes": 18771036403,
+  "problems": [],
+  "ready": true
+}

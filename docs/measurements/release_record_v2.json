@@ -1,0 +1,136 @@
+{
+  "ollama": {
+    "ref": "hf.co/biplob123/gemma-4-e2b-grounded-health-GGUF:Q4_K_M",
+    "ok": true,
+    "answer": "{\"label\": \"no\", \"answer\": \"Increased immunoreactive beta-endorphin secretion in polycystic ovary syndrome is not influenced by the body weight but is instead associated with elevated insulin levels.\", \"citations\": [9]}",
+    "label": "no",
+    "citations": [
+      9
+    ],
+    "error": null,
+    "started_server": false,
+    "sample_id": "dev-1471704",
+    "command": "ollama run --nowordwrap --think=false <ref>",
+    "sampling_note": "Ollama's default sampling (not greedy) was used, so the answer can differ from the benchmark's greedy answer for the same sample (llama-server cited sentence 8 here)"
+  },
+  "release": "v2",
+  "tag": "v2.0.0",
+  "repos": {
+    "main": "biplob123/gemma-4-e2b-grounded-health",
+    "gguf": "biplob123/gemma-4-e2b-grounded-health-GGUF"
+  },
+  "downloads": [
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/chat_template.jinja",
+      "sha256": "0a2c8073c878ab1da004bee933a998606537bbb62016310352c7285c3f01c5b5",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/config.json",
+      "sha256": "44d5e8d9938ed73b132bbdb17f0902860d585400b706615aab648baf69d4243a",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/model.safetensors",
+      "sha256": "01a0ff9cef3cf852ac5d61f016f5b849d7331d058aa92196594fa3cea25dd9f9",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/tokenizer.json",
+      "sha256": "ab26b2add729e6f645bd869f228f14190a06615538f3be6f7786f33d13d78ad2",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/tokenizer_config.json",
+      "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/generation_config.json",
+      "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/processor_config.json",
+      "sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/ggh_merge.json",
+      "sha256": "558fbdbda2567142579e7b23cdb74e9f79bf8d509b032876e683600974a50cca",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/adapter/adapter_config.json",
+      "sha256": "17c0c0526c410b1a2aecbf74d67594f8f5f961993b7c9d7a955341674274bcf9",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/adapter/adapter_model.safetensors",
+      "sha256": "8ea0959ffae6cdc5122a5158112f84c6545857b64e6b4751825cc25a8ad9ee01",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/README.md",
+      "sha256": "52a1677a4bb83a3c7bf4470e276692672c4fe2324ba1bd352843e174f99f6014",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/results_bundle.json",
+      "sha256": "2deb2e839756b392003c9775a83bc952d0ee6d532a09c189f73e2bf7eec93f56",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/lineage.json",
+      "sha256": "1ddb6a73cfbcc125cf7b29debb951bffdece00ce2d255fdafadfaaff6c39c037",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health-GGUF/gemma-4-e2b-grounded-health-Q4_K_M.gguf",
+      "sha256": "6da2c13ee1a3b94c99f9107bb27f344539364cdad371caea4b1114ef91b5be45",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health-GGUF/gemma-4-e2b-grounded-health-Q8_0.gguf",
+      "sha256": "d581fb869346708a6d1fa6c2bd45da8b368a611ce6a18302ee4f8c0d4e2138a8",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health-GGUF/README.md",
+      "sha256": "fbaea54e2a7c088f1b9acf747d91a3077e7e8fdf2343baa043e4fcdd2dee3a59",
+      "ok": true,
+      "note": "re-uploaded 2026-11-21 with the --think=false guidance; tag v2.0.0 moved to that commit"
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health-GGUF/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/NOTICE",
+      "sha256": "808f130d75b533804bdf328dc5a530cbce3176af011d51e03edacd75a8f05ee3",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health-GGUF/NOTICE",
+      "sha256": "808f130d75b533804bdf328dc5a530cbce3176af011d51e03edacd75a8f05ee3",
+      "ok": true
+    }
+  ],
+  "ollama_ref": "hf.co/biplob123/gemma-4-e2b-grounded-health-GGUF:Q4_K_M",
+  "problems": [],
+  "ollama_first_attempt": {
+    "command": "ollama run --nowordwrap <ref>",
+    "reported_ok": true,
+    "label": null,
+    "citations": [],
+    "finding": "Ollama ran the model with its thinking channel on, so the reply began with a thought block and, with that prefix, did not parse (the JSON after the block was well formed); the check wrongly reported ok. Fixed: the check now runs with --think=false (as `ggh serve` runs llama-server with --reasoning off) and passes only on a parsed label with citations.",
+    "answer": "<|channel>thought\n1.  **Analyze the Request:** The user wants to know if the elevated circulating levels of immunoreactive beta-endorphin in patients with polycystic ovary syndrome (pcos) is caused by increased pituitary secretion.\n\n2.  **Scan the Abstract for Keywords:** Look for information comparing pituitary response (CRH/ACTH/LH) to the response of immunoreactive beta-endorphin and adrenal androgen secretion in pcos.\n\n3.  **Evaluate the Sentences:**\n    *   [8] Immunoreactive beta-endorphin secretion is correlated with adrenal androgen secretion.\n\n4.  **Synthesize the Answer:** The level of immunoreactive beta-endorphin is not related to changes in pituitary secretion that regulate adrenal androgen secretion.\n\n5.  **Format the Output:** Create the JSON response based on the findings. (Sentence [8] covers this perfectly.)<channel|>{\"label\": \"no\", \"answer\": \"The hypothalamic and pituitary output are not related to levels of immunoreactive beta-endorphin in patients with polycystic ovary syndrome.\", \"citations\": [8]}"
+  },
+  "assembled": "merged by hand on 2026-11-21 from the push's own record (downloads, tag) and a separate `ggh release --ollama-check` run after the check was fixed; the GGUF README re-upload and tag move were done with huggingface_hub directly"
+}

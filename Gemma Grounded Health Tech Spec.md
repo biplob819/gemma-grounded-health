@@ -1112,4 +1112,4 @@ Checked on 15 November 2026.
 - [Unsloth documentation](https://docs.unsloth.ai/)
 - [Hugging Face model cards](https://huggingface.co/docs/hub/model-cards)
 - [Anthropic: Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
-- Kova harness: `~/kova-hrtech/docs/sdd/kova-graph/NODE-RUNBOOK.md`
+- Kova's harness (private): its node runbook
