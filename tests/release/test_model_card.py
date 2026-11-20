@@ -275,3 +275,13 @@ def test_the_cards_audit_is_the_one_on_the_targets_the_release_trained_on():
     ok = result["overall"]["ok"] / result["labelled"]
     card = (root / "MODEL_CARD.md").read_text("utf-8")
     assert f"{ok:.3f} judged ok overall" in card and "blind Claude reviewer" in card
+
+
+def test_the_targets_line_describes_the_rule_not_a_guarantee():
+    """The audit found weak and aim/method answer citations (OWNER D-50), so the card may not
+    say every citation supports its answer."""
+    from pathlib import Path as _Path
+
+    card = (_Path(__file__).resolve().parents[2] / "MODEL_CARD.md").read_text("utf-8")
+    assert "cites only sentences that support it" not in card
+    assert "Citations are chosen by rule" in card and "A selection rule is not a guarantee" in card

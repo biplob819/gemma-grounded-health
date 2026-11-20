@@ -77,7 +77,7 @@ PubMedQA `qiaojin/PubMedQA` at revision `9001f2853fb87cab8d220904e0de81ac6973b31
 | train_pool | no 14942, yes 193827 |
 | val | no 140, yes 1860 |
 
-Targets: 8436 training and 843 validation examples from 35538 scored rows. Each answer cites only sentences that support it (support ≥ 0.500, entailment ≥ 0.500, at most 4 citations, at most 80 words).
+Targets: 8436 training and 843 validation examples from 35538 scored rows. Citations are chosen by rule, not checked by hand: each cited sentence must on its own entail the claim under the pinned NLI model, the cited set must entail it (≥ 0.500) and share its content words (≥ 0.500), with at most 4 citations and at most 80 words. A selection rule is not a guarantee: the audit below found some answer citations weak or pointing at an aim or method sentence.
 
 Label mix:
 

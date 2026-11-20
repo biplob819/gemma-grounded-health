@@ -693,10 +693,14 @@ def training_data(src: Sources) -> str:
             table(["Split", "Rows by reference label"], split_rows),
             "",
             f"Targets: {t['train']} training and {t['val']} validation examples from "
-            f"{t['rows_scored']} scored rows. Each answer cites only sentences that support it "
-            f"(support ≥ {f3(t['thresholds']['support_min'])}, entailment ≥ "
-            f"{f3(t['thresholds']['entail_min'])}, at most {t['thresholds']['max_cites']} "
-            f"citations, at most {t['thresholds']['max_words']} words).",
+            f"{t['rows_scored']} scored rows. Citations are chosen by rule, not checked by "
+            "hand: each cited sentence must on its own entail the claim under the pinned NLI "
+            f"model, the cited set must entail it (≥ {f3(t['thresholds']['entail_min'])}) and "
+            f"share its content words (≥ {f3(t['thresholds']['support_min'])}), with at most "
+            f"{t['thresholds']['max_cites']} citations and at most "
+            f"{t['thresholds']['max_words']} words. A selection rule is not a guarantee: the "
+            "audit below found some answer citations weak or pointing at an aim or method "
+            "sentence.",
             "",
             "Label mix:",
             "",
