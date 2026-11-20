@@ -226,6 +226,17 @@ def release_extractor(root: Path, plan: Plan) -> str | None:
     return want
 
 
+def release_bench(root: Path, cfg: dict[str, Any], rel: dict[str, Any]) -> tuple[LaptopBench, str]:
+    """The release's own laptop bench: its `bench` file (else the top-level one) and its
+    `bench_variant` (else the top-level `bench_shipped`, else ft-Q4_K_M)."""
+    rel_file = rel.get("bench", cfg["bench"])
+    variant = rel.get("bench_variant", cfg.get("bench_shipped", "ft-Q4_K_M"))
+    variants = _json(root, rel_file)["variants"]
+    if variant not in variants:
+        raise ResultsError(f"{rel['version']}: {rel_file} has no bench variant {variant}")
+    return LaptopBench.model_validate(variants[variant]), f"{rel_file}#{variant}"
+
+
 def audits(root: Path, specs: list[dict[str, Any]]) -> list[AuditSummary]:
     out = []
     for a in specs:
@@ -395,6 +406,7 @@ def build(
     blockers: list[str] = []
     extractors: dict[str, str | None] = {}
     review = T.load_b8_review(root / cfg["b8_review"])
+    reviewers = T.load_b8_reviewers(root / cfg["b8_review"])
     sample_sums: list[SampleReadSummary] = []
     cal = C.stamp(root, cfg.get("calibration"), runs, cfg.get("gemma_family_check"))
     blockers += cal.problems
@@ -416,7 +428,7 @@ def build(
         behaviour += T.run_rows(brun, citation=cit)
         behaviour += T.b5_rows(sample_sums, brun.models(), brun.name)
         off = runs[rel["offscope_run"]]
-        behaviour += T.b8_rows(off, review)
+        behaviour += T.b8_rows(off, review, reviewers=reviewers)
         artifacts = [ExportArtifact.model_validate(a) for a in _json(root, rel["artifacts"])]
         lineage_problems += committed_lineage_problems(root, rel["lineage"])
         if full_lineage:
@@ -429,6 +441,7 @@ def build(
         if parity is not None and ph is not None:
             parity["judged_headline_delta"] = ph["bf16_minus_q4_headline"]
         selection = _opt_json(root, rel.get("train_selection")) or {}
+        bench, bench_source = release_bench(root, cfg, rel)
         if plan.status != "final":
             blockers.append(f"{rel['version']}: plan {plan.path} is {plan.status}")
         releases.append(
@@ -451,6 +464,8 @@ def build(
                     "artifacts": [a.model_dump() for a in artifacts],
                     "calibration_judges": relied,
                     "calibration_status": cal.release_status(relied),
+                    "bench": bench.model_dump(),
+                    "bench_source": bench_source,
                 }
             )
         )
@@ -469,7 +484,8 @@ def build(
     for row in behaviour:
         if row.value is None and row.source in ("owner_review", "model_review"):
             blockers.append(f"{row.run}: {row.rule} {row.metric} for {row.model} is not reviewed")
-    bench_raw = _json(root, cfg["bench"])["variants"]
+    shipped = included[-1]
+    bench_raw = _json(root, shipped.get("bench", cfg["bench"]))["variants"]
     bundle = ResultsBundle.model_validate(
         {
             "evalkit_run_ids": [r.run_id for r in refs],
@@ -487,7 +503,7 @@ def build(
             "primary_comparisons": [c.model_dump() for c in primary],
             "secondary": [c.model_dump() for c in secondary],
             "behaviour": [b.model_dump() for b in behaviour],
-            "bench": LaptopBench.model_validate(bench_raw[cfg.get("bench_shipped", "ft-Q4_K_M")]),
+            "bench": releases[-1].bench,
             "bench_variants": {
                 k: LaptopBench.model_validate(v).model_dump() for k, v in sorted(bench_raw.items())
             },

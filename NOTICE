@@ -5,10 +5,12 @@ This product includes software and model weights licensed under the Apache Licen
 Version 2.0 (see LICENSE).
 
 The fine-tuned model is a derivative of Google DeepMind's Gemma 4 E2B, released under the
-Apache License, Version 2.0. Any NOTICE text distributed with Gemma 4 is reproduced with
-the released model weights.
+Apache License, Version 2.0. The Gemma 4 E2B release used (google/gemma-4-E2B-it at
+revision 4adf157) ships no NOTICE file of its own.
 
 Training and evaluation data: PubMedQA (Jin et al., 2019), MIT licence,
 https://pubmedqa.github.io/
+
+Evaluation: EvalKit (MIT licence), https://github.com/biplob819/evalkit
 
 Research only. Not medical advice.

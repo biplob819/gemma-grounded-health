@@ -9,11 +9,13 @@ is regenerated from it.
 
 from __future__ import annotations
 
+import hashlib
 import json
 from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Any
 
+import yaml
 from evalkit.schemas import RunSummary
 from evalkit.schemas.summary import ModelSummary
 
@@ -40,6 +42,35 @@ SHIPPED_INPUTS: dict[str, tuple[Path, Path, Path]] = {
         Path("configs") / "recipe_v2.yaml",
         Path("docs") / "measurements" / "lineage" / "targets_v2.json",
         TARGETS_REPORT,
+    ),
+}
+
+
+# OWNER D-62: the post-hoc aim-rule count, read only for the release whose plan it names and
+# only while the run summaries it records still match the bundle's
+AIM_CHECK = Path("docs") / "measurements" / "aim_rule_check.json"
+# CRD-05: what was read about the base model's licence, when and from where
+LICENCE_RECORD = Path("docs") / "licence_check.json"
+
+
+@dataclass(frozen=True)
+class DevCheck:
+    """A release's pre-registered dev grounding check (V2.1, D-52): the committed EvalKit
+    summary, the bars file and the file recording the bars' sha256, and the decision under
+    which a missed bar was disclosed rather than gated (OWNER D-55)."""
+
+    summary: Path
+    bars: Path
+    bars_sha256: Path
+    decision: str
+
+
+DEV_CHECKS: dict[str, DevCheck] = {
+    "v2": DevCheck(
+        Path("docs") / "results" / "dev_ground_v2_sol" / "summary.json",
+        Path("configs") / "v2_dev_bars.yaml",
+        Path("docs") / "measurements" / "v2_dev_bars.sha256",
+        "OWNER D-55",
     ),
 }
 
@@ -71,6 +102,10 @@ class Sources:
     recipe: RecipeConfig
     paths: Paths
     raw: dict[str, Any] = field(default_factory=dict[str, Any])  # every input as parsed JSON
+    plan: dict[str, Any] = field(default_factory=dict[str, Any])  # the shipped release's plan
+    aim_check: dict[str, Any] | None = None  # OWNER D-62, when it covers the shipped release
+    licence: dict[str, Any] | None = None  # LICENCE_RECORD
+    dev_check: dict[str, Any] | None = None  # {"summary", "bars", "decision", "path", ...}
 
     @property
     def ft_model(self) -> str:
@@ -202,4 +237,80 @@ def load(root: Path, paths: Paths | None = None) -> Sources:
         raise SourceError(f"{p.targets_report} does not match the targets lineage manifest")
     targets = _read_json(targets_file)
     raw["targets"] = targets
-    return Sources(bundle, tuple(summaries), data, targets, recipe, p, raw)
+
+    shipped = bundle.shipped
+    plan = _read_plan(root, shipped.plan, shipped.plan_sha256)
+    raw["plan"] = plan
+    aim = _read_aim_check(root, bundle)
+    if aim is not None:
+        raw["aim_check"] = aim
+    licence = _read_licence(root, recipe)
+    if licence is not None:
+        raw["licence"] = licence
+    dev = _read_dev_check(root, version)
+    if dev is not None:
+        raw["dev_check"] = dev
+    return Sources(bundle, tuple(summaries), data, targets, recipe, p, raw, plan, aim, licence, dev)
+
+
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _read_plan(root: Path, rel: str, sha: str | None) -> dict[str, Any]:
+    f = root / rel
+    if not f.is_file():
+        raise SourceError(f"the shipped release's plan {rel} is missing")
+    if sha is not None and _sha256(f) != sha:
+        raise SourceError(f"{rel} is not the plan the bundle records")
+    return yaml.safe_load(f.read_text(encoding="utf-8")) or {}
+
+
+def _read_aim_check(root: Path, bundle: ResultsBundle) -> dict[str, Any] | None:
+    """OWNER D-62's post-hoc count, if it covers the shipped release's plan. Each run it read
+    must still be the run in the bundle (summary sha256), or the count is stale and refused."""
+    f = root / AIM_CHECK
+    if not f.is_file():
+        return None
+    aim = _read_json(f)
+    if aim.get("plan") != bundle.shipped.plan:
+        return None
+    refs = {r.name: r for r in bundle.runs}
+    for run, s in (aim.get("sources") or {}).items():
+        r = refs.get(run)
+        if r is not None and r.summary_sha256 != s.get("summary_sha256"):
+            raise SourceError(f"{AIM_CHECK} read another {run} summary than the bundle's")
+    return aim
+
+
+def _read_licence(root: Path, recipe: RecipeConfig) -> dict[str, Any] | None:
+    f = root / LICENCE_RECORD
+    if not f.is_file():
+        return None
+    rec = _read_json(f)
+    base = rec.get("base_model") or {}
+    if (base.get("id"), base.get("revision")) != (recipe.base_model, recipe.base_revision):
+        raise SourceError(f"{LICENCE_RECORD} records another base model than the recipe's")
+    return rec
+
+
+def _read_dev_check(root: Path, version: str) -> dict[str, Any] | None:
+    d = DEV_CHECKS.get(version)
+    if d is None or not (root / d.summary).is_file():
+        return None
+    bars_file, sha_file = root / d.bars, root / d.bars_sha256
+    if not bars_file.is_file() or not sha_file.is_file():
+        raise SourceError(f"{d.bars} or its recorded sha256 is missing")
+    if _sha256(bars_file) != sha_file.read_text(encoding="utf-8").split()[0]:
+        raise SourceError(f"{d.bars} does not match {d.bars_sha256}")
+    bars = yaml.safe_load(bars_file.read_text(encoding="utf-8")) or {}
+    summary = _read_json(root / d.summary)
+    if summary.get("task") != bars.get("task"):
+        raise SourceError(f"{d.summary} is not a run of the {bars.get('task')!r} task")
+    return {
+        "summary": summary,
+        "bars": bars,
+        "path": d.summary.as_posix(),
+        "bars_path": d.bars.as_posix(),
+        "decision": d.decision,
+    }

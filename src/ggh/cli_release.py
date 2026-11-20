@@ -47,12 +47,20 @@ def _cmd_card(args: argparse.Namespace) -> int:
     from ggh.release import card, sources
 
     try:
-        text = card.render(_sources(args))
+        src = _sources(args)
+        text = card.render(src)
         problems = card.metadata_problems(card.split_front_matter(text)[0])
     except (sources.SourceError, ValueError, OSError) as exc:
         return _fail("card", exc)
     if problems:
         return _fail("card", "; ".join(problems))
+    terms = (src.licence or {}).get("terms_page") or {}
+    if not terms.get("reread_at"):  # CRD-05: the owner re-reads the page before publishing
+        print(
+            f"card: note: the Gemma terms page {terms.get('url', '')} is not re-read yet "
+            f"({sources.LICENCE_RECORD}: terms_page.reread_at)",
+            file=sys.stderr,
+        )
     if args.stdout:
         sys.stdout.write(text)
         return 0

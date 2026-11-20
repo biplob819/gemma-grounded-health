@@ -81,6 +81,10 @@ class BehaviourRow(Model):
     n: NonNegInt
     source: Source
     run: NonBlank | None = None  # the results folder under docs/results/ the row was read from
+    # a `model_review` row (OWNER D-61): who reviewed, as the review file records it, and the
+    # committed prompt the reviewer was given
+    reviewer: NonBlank | None = None
+    review_prompt: NonBlank | None = None
 
 
 Version = Literal["v1", "v2"]
@@ -265,6 +269,10 @@ class ReleaseEntry(Model):
     # Sol), and "calibrated" only when every one of them is stamped and Gemma-family checked
     calibration_judges: tuple[NonBlank, ...] = ()
     calibration_status: Literal["calibrated", "uncalibrated"] = "uncalibrated"
+    # the release's own laptop bench (configs/results.yaml: the release's `bench` file and
+    # `bench_variant`), so the card quotes the shipped model's speed, not an earlier one's
+    bench: LaptopBench | None = None
+    bench_source: NonBlank | None = None  # "<file>#<variant>"
 
 
 class CitedSentenceVerdict(Model):
@@ -330,6 +338,7 @@ class SampleReadSummary(Model):
     read: NonNegInt
     findings: FrozenMap[NonNegInt]
     complete: bool  # every drawn record has a finding
+    read_by: tuple[NonBlank, ...] = ()  # each distinct `read_by` of the rows (OWNER D-61)
 
 
 class ResultsBundle(Model):
@@ -359,8 +368,8 @@ class ResultsBundle(Model):
     primary_comparisons: tuple[Comparison, ...]
     secondary: tuple[Comparison, ...]
     behaviour: tuple[BehaviourRow, ...]
-    bench: LaptopBench  # the shipped variant, ft-Q4_K_M (base and fine-tunes share the speed)
-    bench_variants: FrozenMap[LaptopBench]  # every measured variant
+    bench: LaptopBench  # the shipped release's own bench (its ReleaseEntry.bench)
+    bench_variants: FrozenMap[LaptopBench]  # every variant in the shipped release's bench file
     sample_read: tuple[SampleReadSummary, ...]
     spend_usd: NonNegFloat  # the spend ledger's total
     lineage_ok: bool

@@ -3,7 +3,7 @@
 # `primary_run` has a summary under docs/results/; once included, every non-optional file must
 # exist or the bundle refuses. v2 (V2.2) appears automatically when docs/results/main_v2/ lands.
 ledger: docs/measurements/spend-ledger.jsonl
-bench: docs/measurements/laptop_bench.json
+bench: docs/measurements/laptop_bench.json   # default for a release that names no `bench`
 b8_review: docs/measurements/b8_review.jsonl          # optional until RES-02
 gemma_family_check: docs/measurements/gemma_family_check.json   # optional until RES-03
 # RES-03 (OWNER D-24, D-59, D-60): the judges' stamp reads the committed copy of EvalKit's
@@ -29,6 +29,8 @@ releases:
     citation_run: main_citation
     offscope_run: offscope
     runs: [main, main_citation, offscope, probe_original, probe_paraphrase, parity]
+    bench: docs/measurements/laptop_bench.json      # v1's laptop bench (X3.2)
+    bench_variant: ft-Q4_K_M
     train_run: docs/measurements/train_run.json
     train_selection: docs/measurements/train_selection.json
     audits:
@@ -48,12 +50,17 @@ releases:
     citation_run: main_v2
     offscope_run: offscope_v2
     runs: [main_v2, offscope_v2, probe_original_v2, probe_paraphrase_v2, parity_v2]
+    bench: docs/measurements/v2/laptop_bench.json   # v2's own laptop bench (V2.1)
+    bench_variant: ft2-Q4_K_M
     train_run: docs/measurements/v2/train_run.json
     train_selection: docs/measurements/v2/train_selection.json
     audits:
-      - {name: "v2 round 1 (AUD-R4, owner)", kind: result, path: docs/measurements/audit_v2_result.json}
-      - {name: "v2.1 round 2 (AUD-R4, blind reviewer)", kind: result, path: docs/measurements/audit_v2r1_result.json}
-      - {name: "v2.2 round 3 (AUD-R4, blind reviewer)", kind: result, path: docs/measurements/audit_v2r2_result.json}
+      # in round order; the last is the audit of the targets v2 trained on (its sample is the
+      # targets_v2 lineage's audit_sample). Files were renamed in 1e0e624: v2r1 = round 1,
+      # v2r2 = round 2, v2 = round 3
+      - {name: "v2 round 1 (AUD-R4, owner)", kind: result, path: docs/measurements/audit_v2r1_result.json}
+      - {name: "v2.1 round 2 (AUD-R4, blind Claude reviewer, OWNER D-47)", kind: result, path: docs/measurements/audit_v2r2_result.json}
+      - {name: "v2.2 round 3 (AUD-R4, blind Claude reviewer, OWNER D-47, D-50)", kind: result, path: docs/measurements/audit_v2_result.json}
     parity: docs/measurements/v2/parity.json   # V2.1, label agreement 0.92 < 0.95: disclosed (OWNER D-55)
     parity_headline: docs/measurements/parity_headline_v2.json   # ggh parity-headline --model ft2
     probe: docs/measurements/probe_report_v2.json   # ggh probe report --release v2

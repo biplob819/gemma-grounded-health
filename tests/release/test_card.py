@@ -91,7 +91,7 @@ def test_every_number_in_the_card_comes_from_the_inputs(src, text):  # CRD-02
 def test_a_changed_bundle_changes_the_card(tmp_path, src):
     data = json.loads(B.BUNDLE.read_text(encoding="utf-8"))
     data["releases"][-1]["parity"]["label_agreement"] = 0.987654
-    data["bench"]["gen_tps_p50"] = 321.0
+    data["releases"][-1]["bench"]["gen_tps_p50"] = 321.0  # the release's own bench
     bundle = tmp_path / "bundle.json"
     bundle.write_text(json.dumps(data), encoding="utf-8")
     other = card.render(sources.load(ROOT, sources.Paths(bundle=bundle)))
@@ -107,7 +107,11 @@ def test_stamps_word_for_word(src, text):  # CRD-03
     for line in lines:
         assert f"- ⚠ {line}\n" in text
     assert f"Judge mode: **{src.bundle.judge_mode}**" in text
-    assert f"Calibration: **{src.bundle.calibration_status}**" in text
+    rel = src.bundle.shipped
+    assert f"Calibration of {rel.version}: **{rel.calibration_status}**" in text
+    for c in src.bundle.calibration:  # each judge as the bundle words it (OWNER D-59, D-60)
+        assert f"  - {c.wording}" in text
+    assert "owner-labelled" not in text  # OWNER D-60: the labels are a model's
 
 
 def test_hub_metadata_validates(text):  # CRD-04
@@ -151,6 +155,7 @@ def test_an_input_that_does_not_match_its_hash_is_refused(tmp_path):
         "docs/measurements/targets_drop_report_v1.json",  # v1's kept copy (lineage.KEPT_COPIES)
         sources.TARGETS_LINEAGE,
         sources.RECIPE,
+        "configs/eval_plan.yaml",  # the shipped release's plan, checked against its hash
     ):
         dest = tmp_path / rel
         dest.parent.mkdir(parents=True, exist_ok=True)

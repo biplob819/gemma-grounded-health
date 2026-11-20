@@ -20,6 +20,9 @@ def src(tmp_path_factory):
     root = fake.copy_repo(tmp_path_factory.mktemp("v2card"))
     fake.add_v2(root)
     B.write(root, B.build(root))
+    # the post-hoc aim-rule count (OWNER D-62) read the real main_v2; on the synthetic v2 it is
+    # stale and sources.load refuses it, so it is left out here (test_model_card covers it)
+    (root / sources.AIM_CHECK).unlink()
     # the synthetic v2 copies v1's training run (tests/results/fake.py), so it trained on v1's
     # recipe and targets; the real v2's own inputs are sources.SHIPPED_INPUTS["v2"]
     paths = sources.Paths(
@@ -33,6 +36,14 @@ def src(tmp_path_factory):
 @pytest.fixture(scope="module")
 def text(src):
     return card.render(src)
+
+
+def _not_as_judge(text: str) -> str:
+    """The text less the lines where Claude Opus 5.5 is named as the reference labeller or the
+    B5/B8 reviewer (OWNER D-60, D-61), which every card must say; elsewhere it must not appear
+    as a v2 judge."""
+    keep = [x for x in text.splitlines() if "OWNER D-60" not in x and "OWNER D-61" not in x]
+    return "\n".join(keep)
 
 
 def _section(text: str, start: str, end: str) -> str:
@@ -59,7 +70,7 @@ def test_haiku_and_luna_appear_only_as_published_numbers_not_compared(text):
     assert f"`{HAIKU}` and `{LUNA}` were not re-scored for v2" in pub
     assert f"claims extracted by `{HAIKU}`, judged by `{OPUS}` and `{SOL}`" in pub
     assert f"| {HAIKU} |" in pub and f"| {LUNA} |" in pub
-    rest = text.replace(pub, "")
+    rest = _not_as_judge(text.replace(pub, ""))
     assert f"| {HAIKU} |" not in rest and f"| {LUNA} |" not in rest
     assert OPUS not in rest and HAIKU not in rest  # Luna is still named, as v2's extractor
 
@@ -86,7 +97,7 @@ def test_behaviour_shows_v2s_runs_only_each_labelled(text):
     assert f"`main_v2`: claims extracted by `{LUNA}`, judged by `{SOL}` alone" in beh
     runs = {line.split(" | ")[5] for line in beh.splitlines() if line.startswith("| B")}
     assert runs == {"`main_v2`", "`offscope_v2`"}
-    assert OPUS not in beh and HAIKU not in beh
+    assert OPUS not in _not_as_judge(beh) and HAIKU not in beh
 
 
 def test_model_index_reports_v2_under_sol_only(src, text):
