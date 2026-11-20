@@ -23,7 +23,7 @@ LINKS: dict[str, tuple[str, str | None]] = {
     ),
     "space": ("Demo (local, recorded; OWNER D-63)", "docs/assets/demo.gif"),
     "evalkit_report": ("EvalKit report page", None),  # R4.4
-    "evalkit_pr": ("EvalKit upstream pull request", None),  # R4.4
+    "evalkit_pr": ("EvalKit upstream pull request", "https://github.com/biplob819/evalkit/pull/1"),
     "parity": (
         "Parity (Q4_K_M against the merged weights)",
         f"{REPO}/blob/main/docs/measurements/v2/parity.json",

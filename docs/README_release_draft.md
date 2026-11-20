@@ -90,7 +90,7 @@ make release   # dry run: lists every file for the two Hub repos and checks line
 - [Hugging Face GGUF](https://huggingface.co/biplob123/gemma-4-e2b-grounded-health-GGUF)
 - [Demo (local, recorded; OWNER D-63)](docs/assets/demo.gif)
 - EvalKit report page (link pending)
-- EvalKit upstream pull request (link pending)
+- [EvalKit upstream pull request](https://github.com/biplob819/evalkit/pull/1)
 - [Parity (Q4_K_M against the merged weights)](https://github.com/biplob819/gemma-grounded-health/blob/main/docs/measurements/v2/parity.json)
 - [Benchmark results](https://github.com/biplob819/gemma-grounded-health/tree/main/docs/results)
 - [DATA_CARD.md](DATA_CARD.md)

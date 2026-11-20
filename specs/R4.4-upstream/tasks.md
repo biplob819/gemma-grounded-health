@@ -1,0 +1,9 @@
+# R4.4 tasks
+
+- [x] 1. Spec, criteria; OWNER D-64
+- [ ] 2. node_start GO
+- [x] 3. EvalKit node B5.17 built, converged, verified (round 1 PASS)
+- [x] 4. PR #1 and issue #2 opened
+- [ ] 5. EvalKit session review and owner-approved merge; /gemma/ live
+- [ ] 6. Proof cells, records
+- [ ] 7. Converge, verifier, green
