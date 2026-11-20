@@ -22,7 +22,7 @@ ${table}
 
 - **v1's citations pointed at the aim.** Under ${v2_judge}, ${v1_aim_v2run} of v1's answers cite an aim sentence that does not support the claim; base: ${base_aim_v2run}. Training targets had picked citations by word overlap with the author's conclusion, and the study's aim shares most of its words with the conclusion.
 - **v2 cites what supports the answer.** Its targets cite only sentences that each support the answer on their own (OWNER D-43, D-48); its aim-citation rate is ${v2_aim_v2run}.
-- **The headline did not follow.** On average ${v2_grounded} of v2's claims are judged supported; many still go beyond the sentence they cite.
+- **The headline did not follow.** Per answer, on average ${v2_grounded} of v2's claims are judged supported; many still go beyond the sentence they cite.
 
 ![The same answer from v1 and v2: v1 cites the study's aim sentence, v2 cites the result sentence](../assets/screenshots/v1_vs_v2_citation.png)
 

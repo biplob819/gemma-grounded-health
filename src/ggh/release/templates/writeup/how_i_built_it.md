@@ -8,7 +8,7 @@ Every number in it is filled in by `ggh writeup` from the [results bundle](../re
 
 ## The problem
 
-A health feature needs a model that answers only from the source in front of it and shows where each claim came from; small open models tend to answer from memory.
+A health feature needs a model that answers only from its source and shows where each claim came from; small open models answer from memory.
 
 The model gets a research question and one study's abstract, split into numbered sentences. It answers as JSON: a yes, no or maybe label, a short answer, and the numbers of the sentences that support it. The test set is PubMedQA's expert-labelled set, all ${n} questions, kept out of training (a leakage check removes any overlap) and scored in full (OWNER D-17). The model is Gemma 4 E2B, tuned with LoRA; its ${quant} file runs offline on a laptop.
 
@@ -45,7 +45,7 @@ On an ${chip} (${ram} GB) the v2 file (${file_mb} MB) generates ${gen_tps} token
 
 ## Evaluation with EvalKit
 
-Every benchmark number comes from EvalKit, my open-source grounded-answer benchmark. One model splits each answer into claims; a judge rules on each claim using only the sentences the answer cites. Every metric gets a bootstrap interval, comparisons are paired and Holm-corrected, and a gap is "separated" only when its interval excludes zero. The comparisons are hashed before each run.
+Every benchmark number comes from EvalKit, my open-source grounded-answer benchmark. One model splits each answer into claims; a judge rules on each claim using only the sentences the answer cites. Every metric gets a bootstrap interval, comparisons are paired and Holm-corrected, and a gap is "separated" only when its Holm-corrected interval excludes zero. The comparisons are hashed before each run.
 
 v1's main run compared ${v1_models} models (base, v1, Claude Haiku 5.5 and GPT-6 Luna), judged by ${v1_judges}, for ${v1_spend}. All paid runs together cost ${total_spend}. Against the frontier models, v1 was level with Claude Haiku 5.5 under Claude Opus 5.5 and ahead of it under GPT-6.1 Sol, and level with GPT-6 Luna under Claude Opus 5.5 (the Sol comparison with Luna is not claimed, see below).
 
@@ -67,7 +67,7 @@ A second pre-registered run followed on the same ${n} questions. Base and v1 ans
 - **The headline did not move:** ${v2_head_v2run} against v1's ${v1_head_v2run} (${d_v2v1_head}).
 - **Base is still better on the headline:** ${base_head_v2run} against v2's ${v2_head_v2run} (${d_v2base_head}).
 
-On average only ${v2_grounded} of v2's claims are judged supported: many still go beyond the sentence they cite.
+On average per answer, only ${v2_grounded} of v2's claims are judged supported: many still go beyond the sentence they cite.
 
 ## The caveats
 

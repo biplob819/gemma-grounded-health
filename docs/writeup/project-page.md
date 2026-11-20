@@ -26,7 +26,7 @@ From the pre-registered v2 run, scored by GPT-6 Luna (claims) and GPT-6.1 Sol (j
 
 - **v1's citations pointed at the aim.** Under GPT-6.1 Sol, 0.560 of v1's answers cite an aim sentence that does not support the claim; base: 0.138. Training targets had picked citations by word overlap with the author's conclusion, and the study's aim shares most of its words with the conclusion.
 - **v2 cites what supports the answer.** Its targets cite only sentences that each support the answer on their own (OWNER D-43, D-48); its aim-citation rate is 0.084.
-- **The headline did not follow.** On average 0.493 of v2's claims are judged supported; many still go beyond the sentence they cite.
+- **The headline did not follow.** Per answer, on average 0.493 of v2's claims are judged supported; many still go beyond the sentence they cite.
 
 ![The same answer from v1 and v2: v1 cites the study's aim sentence, v2 cites the result sentence](../assets/screenshots/v1_vs_v2_citation.png)
 

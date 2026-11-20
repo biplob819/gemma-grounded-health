@@ -307,3 +307,31 @@ def test_writeup_link_is_live_in_the_readme_but_not_in_the_published_notes():
     assert "- Write-up (link pending)" in notes  # v1.0.0's notes, exactly as published
     assert links.md_abs("writeup", as_released=True) == "Write-up (link pending)"
     assert links.md_abs("writeup").startswith("[Write-up](https://github.com/")
+
+
+def test_frontier_sentence_matches_the_bundle_verdicts():
+    """The note's v1-vs-frontier words follow the bundle's primary verdicts (model_a = v1)."""
+    import json as _json
+
+    b = _json.loads((ROOT / "docs/results/results_bundle.json").read_text(encoding="utf-8"))
+    found = {}
+
+    def walk(o):
+        if isinstance(o, dict):
+            if o.get("metric") == "headline" and o.get("model_a") == "gemma-e2b-grounded-q4":
+                found[(o.get("model_b"), o.get("judge"))] = o.get("verdict")
+            for v in o.values():
+                walk(v)
+        elif isinstance(o, list):
+            for v in o:
+                walk(v)
+
+    walk(b)
+    assert found[("claude-haiku-5-5", "claude-opus-5-5")] == "tie"
+    assert found[("claude-haiku-5-5", "gpt-6.1-sol")] == "a_better"
+    assert found[("gpt-6-luna", "claude-opus-5-5")] == "tie"
+    note = (ROOT / "docs/writeup/how-i-built-it.md").read_text(encoding="utf-8")
+    assert (
+        "level with Claude Haiku 5.5 under Claude Opus 5.5 and ahead of it under GPT-6.1 Sol, "
+        "and level with GPT-6 Luna under Claude Opus 5.5" in note
+    )

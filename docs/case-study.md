@@ -1,6 +1,6 @@
 Gemma Grounded Health is a small open model (Gemma 4 E2B, 3.3 GB at 4-bit) fine-tuned to answer a research question only from the numbered sentences of a given abstract, with a yes / no / maybe label, a short answer and the sentences it relied on. It runs offline on a laptop. Research only, not medical advice.
 
-The first fine-tune raised label accuracy on all 1,000 expert-labelled PubMedQA questions from 0.501 to 0.728, but it did not beat its own base model on the metric that matters, "correct and fully grounded" (0.388 against 0.418, Claude Opus 5.5 judging), because its citations often pointed at the study's aim instead of its results. The project measured that failure, traced it to the training data, and is building a v2 chosen on dev data only. v2, retrained on cleaner citation targets, fixed the citations against v1 (citation precision 0.736 against 0.362 in the same run) but tied v1 on the headline (0.329 against 0.331), and base stays ahead (0.404); v1's published numbers stay as published, and v2 is not claimed to beat base on citations (OWNER D-62).
+The first fine-tune raised label accuracy on all 1,000 expert-labelled PubMedQA questions from 0.501 to 0.728, but it did not beat its own base model on the metric that matters, "correct and fully grounded" (0.388 against 0.418, Claude Opus 5.5 judging), because its citations often pointed at the study's aim instead of its results. The project measured that failure, traced it to the training data, and built a v2 chosen on dev data only. v2, retrained on cleaner citation targets, fixed the citations against v1 (citation precision 0.736 against 0.362 in the same run) but tied v1 on the headline (0.329 against 0.331), and base stays ahead (0.404); v1's published numbers stay as published, and v2 is not claimed to beat base on citations (OWNER D-62).
 
 ## My role
 
@@ -14,7 +14,7 @@ I set the goals, wrote the PRD and made every product call recorded as an owner 
 
 ## How it is evaluated: EvalKit
 
-Every evaluation runs through [EvalKit](https://github.com/biplob819/evalkit), my open-source grounded-answer benchmark harness, pinned to one commit (`06591f8`) so every number can be rerun. What it does for this project:
+Every evaluation runs through [EvalKit](https://github.com/biplob819/evalkit), my open-source grounded-answer benchmark harness, pinned to one commit per run so every number can be rerun (v1's runs: `06591f8`; the v2 run: evalkit-harness 0.4.0, OWNER D-56). What it did for v1's main run (the v2 run used GPT-6 Luna to extract claims and GPT-6.1 Sol alone to judge them, OWNER D-57):
 
 - **One task, four models, one prompt.** EvalKit's built-in `pubmedqa` task renders the same prompt for every model. The two Gemma models are reached through its `endpoints` adapter (a local llama.cpp server), Haiku 5.5 and GPT-6 Luna through their APIs, all with the same JSON schema enforced (structured output).
 - **Claim-level judging against the cited sentences.** Claude Haiku 5.5 splits each answer into claims; Claude Opus 5.5 and GPT-6.1 Sol each judge every claim **only against the sentences the answer cites**. Two judges from different model families, so no model is judged only by its own family.

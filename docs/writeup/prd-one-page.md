@@ -40,7 +40,7 @@ Non-goals: clinical use, training on frontier-model outputs, the larger Gemma 4 
 | Reproducibility (the notebook reruns on a free GPU) | Yes |
 | Community signal in the first two weeks | Tracked, no target |
 
-The PRD named the risk that came true: "heuristic citation targets teach weak citing", mitigated by checking 50 targets by hand before training. That check passed and was the wrong test for this failure; the write-up tells how it was found and fixed.
+The PRD named the risk that came true: "heuristic citation targets teach weak citing", mitigated by checking 50 targets by hand before training. That check passed and was the wrong test for this failure; the write-up tells how it was found and how v2 fixed the citations.
 
 ## What changed later
 

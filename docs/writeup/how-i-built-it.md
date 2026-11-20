@@ -8,7 +8,7 @@ Every number in it is filled in by `ggh writeup` from the [results bundle](../re
 
 ## The problem
 
-A health feature needs a model that answers only from the source in front of it and shows where each claim came from; small open models tend to answer from memory.
+A health feature needs a model that answers only from its source and shows where each claim came from; small open models answer from memory.
 
 The model gets a research question and one study's abstract, split into numbered sentences. It answers as JSON: a yes, no or maybe label, a short answer, and the numbers of the sentences that support it. The test set is PubMedQA's expert-labelled set, all 1,000 questions, kept out of training (a leakage check removes any overlap) and scored in full (OWNER D-17). The model is Gemma 4 E2B, tuned with LoRA; its Q4_K_M file runs offline on a laptop.
 
@@ -23,7 +23,7 @@ I set the goals, wrote the PRD and made the product calls. Claude Code wrote the
 - **Converge gates**: 13 automated checks per node, from lint and tests to the secret scan and the records.
 - **A skeptical verifier**: a fresh agent that tries to break each node. After the harness node took many rounds, rounds were capped (OWNER D-33); what is left goes into the known-issues file.
 
-Across 18 nodes the verifiers ran 55 rounds; the harness node alone took 17. Any node that touches real data or a real model also reads real outputs before it can turn green (D-18).
+Across 19 nodes the verifiers ran 57 rounds; the harness node alone took 17. Any node that touches real data or a real model also reads real outputs before it can turn green (D-18).
 
 ## Data and targets
 
@@ -45,7 +45,7 @@ On an Apple M3 Max (64 GB) the v2 file (3269.1 MB) generates 73.1 tokens a secon
 
 ## Evaluation with EvalKit
 
-Every benchmark number comes from EvalKit, my open-source grounded-answer benchmark. One model splits each answer into claims; a judge rules on each claim using only the sentences the answer cites. Every metric gets a bootstrap interval, comparisons are paired and Holm-corrected, and a gap is "separated" only when its interval excludes zero. The comparisons are hashed before each run.
+Every benchmark number comes from EvalKit, my open-source grounded-answer benchmark. One model splits each answer into claims; a judge rules on each claim using only the sentences the answer cites. Every metric gets a bootstrap interval, comparisons are paired and Holm-corrected, and a gap is "separated" only when its Holm-corrected interval excludes zero. The comparisons are hashed before each run.
 
 v1's main run compared 4 models (base, v1, Claude Haiku 5.5 and GPT-6 Luna), judged by Claude Opus 5.5 and GPT-6.1 Sol, for $53.68. All paid runs together cost $118.04. Against the frontier models, v1 was level with Claude Haiku 5.5 under Claude Opus 5.5 and ahead of it under GPT-6.1 Sol, and level with GPT-6 Luna under Claude Opus 5.5 (the Sol comparison with Luna is not claimed, see below).
 
@@ -67,7 +67,7 @@ A second pre-registered run followed on the same 1,000 questions. Base and v1 an
 - **The headline did not move:** 0.329 against v1's 0.331 (−0.002 [−0.034, 0.030], a tie).
 - **Base is still better on the headline:** 0.404 against v2's 0.329 (−0.075 [−0.113, −0.037], separated, base better).
 
-On average only 0.493 of v2's claims are judged supported: many still go beyond the sentence they cite.
+On average per answer, only 0.493 of v2's claims are judged supported: many still go beyond the sentence they cite.
 
 ## The caveats
 
