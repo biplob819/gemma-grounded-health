@@ -7,4 +7,4 @@
 - [x] 5. Calibration stamp (D-59, D-60) in the bundle; tests
 - [x] 6. Bundle, behaviour table and README block published; lineage
 - [x] 7. Proof cells, records
-- [ ] 8. Converge, verifier, green
+- [x] 8. Converge, verifier, green

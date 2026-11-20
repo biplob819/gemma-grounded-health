@@ -7,8 +7,9 @@ records and EvalKit 0.4.0's code (`evalkit/pipeline/judge.py`, `extract.py`, `ag
 measured each pattern over the whole run. **None is a code or alignment bug**: every citation
 verdict belongs to the claim and sentence it names (`parse_citations` stamps the claim id from
 the call's own input and requires each cited sentence answered once; batch results are matched by
-a hash that includes the claim id). They are judge and extractor behaviour. One of them changes a
-published conclusion, disclosed under OWNER D-62. The aim-rule, extractor-drop and label-only
+a hash that includes the claim id). They are judge and extractor behaviour. Two of them bear on a
+published conclusion: the aim rule (the v2-vs-base citation results, disclosed under OWNER
+D-62) and the label-only claims (v1 beating Luna under Sol would no longer hold). The aim-rule, extractor-drop and label-only
 counts are in `docs/measurements/aim_rule_check.json`, written by `ggh results aim-check`; the
 label-correct split of the extractor drops and the judge-error rate were computed from the same
 records as defined in their sections. The blind batches the reviewers saw, their outputs and the
@@ -34,26 +35,31 @@ citations says this.
 
 ## part-of-claim
 
-Records: `main_v2` base pqa-27928673, pqa-27615402 (and the result-sentence halves of
-pqa-21550158 and pqa-15588538 above).
+Records: `main_v2` base pqa-27928673, pqa-27615402 (and the second halves of pqa-21550158 and
+pqa-15588538 above).
 
 EvalKit gives every claim the answer's full citation list (`ground_on_answer_citations`, EvalKit
 D-52), and the rubric counts a sentence that supports "the part of the claim it is cited for".
 So a result sentence can be marked supporting for a claim about the study's design or about
 previous work. A sentence counts as supporting if it supports any claim, so this moves nothing
 when the sentence also supports another claim of the answer (pqa-27615402: sentence 6 also
-supports claim 1; pqa-15588538: sentence 5's mark is the design claim's, and sentence 2 supports
-claim 1). When it supports no other claim, the lenient mark is the only reason the sentence counts
-as supporting, and it raises that answer's citation precision (pqa-27928673: sentence 10, this
-study's odds ratios, marked supporting for "previous studies have shown ..." and not for claim 1,
-so the answer scores 2/2 instead of 1/2, in base's favour).
+supports claim 1; pqa-21550158: sentences 11 and 13 also support claims 1 and 2). When it
+supports no other claim, the mark is the only reason the sentence counts as supporting, and if it
+is the lenient reading it raises that answer's citation precision in that model's favour:
+pqa-27928673 (sentence 10, this study's odds ratios, marked supporting for "previous studies
+have shown ..." and not for claim 1: 2/2 instead of 1/2) and pqa-15588538 (sentence 5, a method
+sentence giving the patient groups, marked supporting only for the design claim: 3/6 instead of
+2/6 if that mark is lenient; it is a defensible mark, since the sentence does describe the
+design's groups). Both are base answers.
 
 How often this happens over a whole run was not measured: it needs a reading of each mark. As an
-upper gauge, the cited sentences counted as supporting that appear in no supported verdict's
-evidence are 11.3% (base), 11.0% (v1) and 25.3% (v2) of cited sentences in `main_v2`; many are
-correct marks for claims rejected on other grounds. Even if every one of them were wrong, v2 would
-still lead v1 on citation precision (about 0.55 against 0.32), so v2-vs-v1 holds; v2-vs-base would
-favour base, which the README already allows (OWNER D-62).
+upper gauge, the cited sentences counted as supporting that are not in the evidence of a
+supported verdict for any claim they are marked supporting are 11.3% (base), 11.0% (v1) and
+25.3% (v2) of cited sentences in `main_v2`; many are correct marks for claims rejected on other
+grounds. Even if every one of them were wrong, citation precision (supporting cited sentences over
+all cited sentences) would be 0.483 for v2 against 0.252 for v1 ((758 − 261)/1030 and
+(718 − 219)/1982), so v2-vs-v1 holds; base would be 0.634, so v2-vs-base would favour base, which
+the README already allows (OWNER D-62).
 
 ## extractor-drop
 
@@ -92,12 +98,13 @@ Sol.
 
 Record: `main_v2` v2 pqa-27131771.
 
-The claim judge marked unsupported a claim its cited sentence plainly states, while the citation
+The claim judge marked unsupported a claim its cited sentence largely states (Sol's rationale: the
+sentence reports 6 months only, the claim says "follow-up visits"), while the citation
 check (a separate call) marked that sentence as supporting it. The two calls disagree in both
 directions. In this record's direction, an unsupported verdict with a cited sentence the citation
 check marks supporting for that claim, the loose count is 55% (base), 38% (v1) and 49% (v2) of
-unsupported claims in `main_v2`, mostly the part-of-claim clause above (a sentence supports part
-of a claim the claim judge rejects as a whole), not judge error. In the other direction, a
+unsupported claims in `main_v2`, plausibly much of it the part-of-claim clause above (a sentence
+supports part of a claim the claim judge rejects as a whole) rather than judge error. In the other direction, a
 supported verdict all of whose evidence sentences are marked non-supporting for that claim, it is
 4.7% (base), 5.9% (v1) and 2.3% (v2) of supported claims. How many of either are true claim-judge
 errors, as here, was not measured. The headline uses the claim judge's verdicts, whose agreement
@@ -107,6 +114,7 @@ with the reference labeller is what the calibration reports (Sol held-out kappa 
 ## presentation
 
 v2's off-scope answers reached the B8 reviewers with their citations appended (" [n]") for 19 of
-its 20 answers; no other model's did, though all have citations in their records. No model name
-was shown, but v2's answers were visually distinguishable from the rest in the blind batches
+its 20 answers; no other model's answers had citations appended, though all have citations in
+their records (GPT-6 Luna's own answer text cites inline as "[n]" in at least 6 of its 20). No
+model name was shown, but v2's answers were easier to tell apart in the blind batches
 (`docs/measurements/blind_reviews/b8_batch*.json`). All 20 were labelled no advice.
