@@ -1,0 +1,74 @@
+[
+  {
+    "kind": "adapter",
+    "model": "ft",
+    "quant": null,
+    "path": "artifacts/adapter_v2",
+    "sha256": "8ea0959ffae6cdc5122a5158112f84c6545857b64e6b4751825cc25a8ad9ee01",
+    "llama_cpp_commit": null,
+    "parent_key": "fa11eddc3791fa601e277ba0219b1a721c220818af2a3fddc4b2ea2df13a8afb"
+  },
+  {
+    "kind": "merged_bf16",
+    "model": "ft",
+    "quant": null,
+    "path": "artifacts/merged/ft2-bf16/model.safetensors",
+    "sha256": "01a0ff9cef3cf852ac5d61f016f5b849d7331d058aa92196594fa3cea25dd9f9",
+    "llama_cpp_commit": null,
+    "parent_key": "711402b7a283d4ea160822d60fe4b800525ae50eab9e2da8ba2125e4ccf16600"
+  },
+  {
+    "kind": "gguf",
+    "model": "base",
+    "quant": "F16",
+    "path": "artifacts/gguf/base-f16.gguf",
+    "sha256": "3603ca946c831e445491397ba39f3b391802f678f7efbaee5127e82407341097",
+    "llama_cpp_commit": "b12421",
+    "parent_key": "f7e228d1c3dc286d69ec3b08eb77458331f72b9ce6d834b793f9224db6e7c951"
+  },
+  {
+    "kind": "gguf",
+    "model": "base",
+    "quant": "Q4_K_M",
+    "path": "artifacts/gguf/base-Q4_K_M.gguf",
+    "sha256": "c1f9a87cbd9a62eecd592748be99f59d83fa6dd0bff2019ce52c7a73d7a5099c",
+    "llama_cpp_commit": "b12421",
+    "parent_key": "f7e228d1c3dc286d69ec3b08eb77458331f72b9ce6d834b793f9224db6e7c951"
+  },
+  {
+    "kind": "gguf",
+    "model": "base",
+    "quant": "Q8_0",
+    "path": "artifacts/gguf/base-Q8_0.gguf",
+    "sha256": "e4c44bc02248a9a688dbc2df4a48e62c5e0607eb2464fa7ea21e1ceb0d634bb3",
+    "llama_cpp_commit": "b12421",
+    "parent_key": "f7e228d1c3dc286d69ec3b08eb77458331f72b9ce6d834b793f9224db6e7c951"
+  },
+  {
+    "kind": "gguf",
+    "model": "ft",
+    "quant": "F16",
+    "path": "artifacts/gguf/ft2-f16.gguf",
+    "sha256": "0745f67d9122054c6d23deec40c16acceebd0da3760b4a60eaa20709738023d2",
+    "llama_cpp_commit": "b12421",
+    "parent_key": "711402b7a283d4ea160822d60fe4b800525ae50eab9e2da8ba2125e4ccf16600"
+  },
+  {
+    "kind": "gguf",
+    "model": "ft",
+    "quant": "Q4_K_M",
+    "path": "artifacts/gguf/ft2-Q4_K_M.gguf",
+    "sha256": "6da2c13ee1a3b94c99f9107bb27f344539364cdad371caea4b1114ef91b5be45",
+    "llama_cpp_commit": "b12421",
+    "parent_key": "711402b7a283d4ea160822d60fe4b800525ae50eab9e2da8ba2125e4ccf16600"
+  },
+  {
+    "kind": "gguf",
+    "model": "ft",
+    "quant": "Q8_0",
+    "path": "artifacts/gguf/ft2-Q8_0.gguf",
+    "sha256": "d581fb869346708a6d1fa6c2bd45da8b368a611ce6a18302ee4f8c0d4e2138a8",
+    "llama_cpp_commit": "b12421",
+    "parent_key": "711402b7a283d4ea160822d60fe4b800525ae50eab9e2da8ba2125e4ccf16600"
+  }
+]

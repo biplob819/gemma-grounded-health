@@ -1,4 +1,4 @@
-# EvalKit run configuration (Tech Spec §7.1). EvalKit is pinned by git commit 06591f8 (D-28).
+# EvalKit run configuration (Tech Spec §7.1). EvalKit is pinned to its 0.4.0 release (D-48); v1 ran at git commit 06591f8 (D-28).
 # Gemma reaches EvalKit through the `endpoints` route: llama-server started by `ggh serve` (D-7).
 models: [gemma-e2b-base-q4, gemma-e2b-grounded-q4, claude-haiku-5-5, gpt-6-luna]
 endpoints:

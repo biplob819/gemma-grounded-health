@@ -32,6 +32,7 @@ def test_one_fixture_per_schema_except_the_yaml_recipe():
         "LaptopBench",
         "BehaviourRow",
         "ResultsBundle",
+        "SampleReadRow",
     }
     assert set(FIXTURE_SCHEMAS) == expected
 

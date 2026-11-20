@@ -1,0 +1,202 @@
+{
+  "measured_at": "2026-11-19T06:17:08Z",
+  "host_platform": "arm64",
+  "protocol": {
+    "section": "Tech Spec \u00a78",
+    "prompts": "50 dev_eval prompts drawn with seed 7, 3 more as warm-ups",
+    "repetitions": 3,
+    "request": "chat completions with EvalKit's answer schema (response_format json_schema)",
+    "max_tokens": 256,
+    "deviations": [
+      "context 8192 (ggh serve's --ctx-size), not llama-server's default: \u00a78 asks for both",
+      "cache_prompt false, so every prompt is processed fresh (EvalKit's request leaves the server default, prompt caching on)",
+      "max_tokens 256 per \u00a78 (EvalKit sends max_completion_tokens 2048) and temperature 0 (the server is already greedy: --temp 0 --top-k 1)",
+      "output laptop_bench.json with a measured_at stamp, not \u00a78's laptop-bench-<date>.json"
+    ],
+    "llama_bench": "-p 512 -n 128 -ngl 999 -r 5, run on every variant in turn for 3 rounds before the workloads; each value is the median across rounds",
+    "metrics": {
+      "ttft_ms": "server prompt_ms plus one generated token's mean time",
+      "gen_tps": "server predicted_per_second per request; its p95 is the fast tail",
+      "latency_ms": "wall time around the request",
+      "aggregate": "median across repetitions of each repetition's p50 (or p95)",
+      "peak_rss_mb": "ps rss of the llama-server process every 50 ms from /health to shutdown; on Apple Silicon it may leave out Metal private buffers such as the KV cache"
+    }
+  },
+  "variants": {
+    "ft-Q4_K_M": {
+      "chip": "Apple M3 Max",
+      "ram_gb": 64,
+      "os": "macOS 26.5.2",
+      "power": "ac",
+      "llama_cpp_commit": "b12421",
+      "quant": "Q4_K_M",
+      "model_file_mb": 3269.1,
+      "n_prompts": 50,
+      "repetitions": 3,
+      "prompt_tps_p50": 3781.3,
+      "gen_tps_p50": 104.6,
+      "gen_tps_p95": 108.2,
+      "ttft_ms_p50": 136,
+      "answer_latency_ms_p50": 604,
+      "answer_latency_ms_p95": 748,
+      "peak_rss_mb": 4504.3,
+      "llama_bench": {
+        "pp512": 7047.074822,
+        "tg128": 131.383625
+      }
+    },
+    "ft2-Q4_K_M": {
+      "chip": "Apple M3 Max",
+      "ram_gb": 64,
+      "os": "macOS 26.5.2",
+      "power": "ac",
+      "llama_cpp_commit": "b12421",
+      "quant": "Q4_K_M",
+      "model_file_mb": 3269.1,
+      "n_prompts": 50,
+      "repetitions": 3,
+      "prompt_tps_p50": 2868.2,
+      "gen_tps_p50": 73.1,
+      "gen_tps_p95": 80.1,
+      "ttft_ms_p50": 185,
+      "answer_latency_ms_p50": 840,
+      "answer_latency_ms_p95": 1011,
+      "peak_rss_mb": 4506.6,
+      "llama_bench": {
+        "pp512": 7066.748653,
+        "tg128": 129.197687
+      }
+    },
+    "ft-Q8_0": {
+      "chip": "Apple M3 Max",
+      "ram_gb": 64,
+      "os": "macOS 26.5.2",
+      "power": "ac",
+      "llama_cpp_commit": "b12421",
+      "quant": "Q8_0",
+      "model_file_mb": 4737.4,
+      "n_prompts": 50,
+      "repetitions": 3,
+      "prompt_tps_p50": 2920.9,
+      "gen_tps_p50": 74.9,
+      "gen_tps_p95": 80.7,
+      "ttft_ms_p50": 177,
+      "answer_latency_ms_p50": 805,
+      "answer_latency_ms_p95": 1044,
+      "peak_rss_mb": 5903.2,
+      "llama_bench": {
+        "pp512": 7212.256003,
+        "tg128": 98.471506
+      }
+    },
+    "ft2-Q8_0": {
+      "chip": "Apple M3 Max",
+      "ram_gb": 64,
+      "os": "macOS 26.5.2",
+      "power": "ac",
+      "llama_cpp_commit": "b12421",
+      "quant": "Q8_0",
+      "model_file_mb": 4737.4,
+      "n_prompts": 50,
+      "repetitions": 3,
+      "prompt_tps_p50": 3104.7,
+      "gen_tps_p50": 80.0,
+      "gen_tps_p95": 82.6,
+      "ttft_ms_p50": 167,
+      "answer_latency_ms_p50": 716,
+      "answer_latency_ms_p95": 1093,
+      "peak_rss_mb": 5905.0,
+      "llama_bench": {
+        "pp512": 7203.904805,
+        "tg128": 95.777971
+      }
+    }
+  },
+  "details": {
+    "ft-Q4_K_M": {
+      "prompt_tokens_p50": 486.0,
+      "answer_tokens_p50": 49.5,
+      "answer_tokens_mean": 49.5,
+      "rss_samples": 1334,
+      "llama_bench_rounds": [
+        {
+          "pp512": 7047.074822,
+          "tg128": 132.793667
+        },
+        {
+          "pp512": 7094.529932,
+          "tg128": 131.383625
+        },
+        {
+          "pp512": 6503.402853,
+          "tg128": 123.603013
+        }
+      ]
+    },
+    "ft2-Q4_K_M": {
+      "prompt_tokens_p50": 486.0,
+      "answer_tokens_p50": 47.5,
+      "answer_tokens_mean": 48.7,
+      "rss_samples": 1754,
+      "llama_bench_rounds": [
+        {
+          "pp512": 7134.575845,
+          "tg128": 133.383302
+        },
+        {
+          "pp512": 7066.748653,
+          "tg128": 122.443427
+        },
+        {
+          "pp512": 7054.599638,
+          "tg128": 129.197687
+        }
+      ]
+    },
+    "ft-Q8_0": {
+      "prompt_tokens_p50": 486.0,
+      "answer_tokens_p50": 48.5,
+      "answer_tokens_mean": 49.3,
+      "rss_samples": 1731,
+      "llama_bench_rounds": [
+        {
+          "pp512": 7059.563259,
+          "tg128": 102.668144
+        },
+        {
+          "pp512": 7263.130436,
+          "tg128": 94.482548
+        },
+        {
+          "pp512": 7212.256003,
+          "tg128": 98.471506
+        }
+      ]
+    },
+    "ft2-Q8_0": {
+      "prompt_tokens_p50": 486.0,
+      "answer_tokens_p50": 45.0,
+      "answer_tokens_mean": 47.5,
+      "rss_samples": 1610,
+      "llama_bench_rounds": [
+        {
+          "pp512": 7203.904805,
+          "tg128": 101.320028
+        },
+        {
+          "pp512": 7231.048324,
+          "tg128": 95.612463
+        },
+        {
+          "pp512": 7192.488207,
+          "tg128": 95.777971
+        }
+      ]
+    }
+  },
+  "conditions": {
+    "idle_servers_listening": [
+      8083
+    ]
+  }
+}

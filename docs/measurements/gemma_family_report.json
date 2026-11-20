@@ -1,0 +1,39 @@
+{
+  "sheet_id": "gf4e32c13cc2aa",
+  "run": "main_v2",
+  "run_id": "r-715fc213a8a5",
+  "scored_at": "2026-11-19T22:03:35+05:30",
+  "n_labelled": 40,
+  "extraction_errors": 0,
+  "labeller": "claude-opus-5-5 with configs/labeller_prompt.md (OWNER D-60)",
+  "reference_supported": 25,
+  "judges": [
+    {
+      "judge": "gpt-6.1-sol",
+      "judge_prompt_hash": "9a3a8246049f6f85",
+      "n_claims": 40,
+      "coverage": 1.0,
+      "agreement": 0.95,
+      "kappa": {
+        "point": 0.8933333333333332,
+        "lo": 0.7222222222222222,
+        "hi": 1.0
+      },
+      "confusion": [
+        [
+          24,
+          1
+        ],
+        [
+          1,
+          14
+        ]
+      ],
+      "by_model": {
+        "gemma-e2b-base-q4": 0.95,
+        "gemma-e2b-grounded-q4": 0.9,
+        "gemma-e2b-grounded-v2-q4": 1.0
+      }
+    }
+  ]
+}

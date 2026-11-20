@@ -80,7 +80,11 @@ RUN_DIRS = {"main": "main", "offscope": "offscope", "probe_original": "probe_ori
             "probe_paraphrase": "probe_paraphrase", "parity": "parity",
             "main_citation": "main_citation", "dev_ground_v1": "dev_ground_v1",
             "dev_ground_v2_sol": "dev_ground_v2_sol",
-            "dev_ground_v2_dual_partial": "dev_ground_v2_dual_partial"}  # fmt: skip
+            "dev_ground_v2_dual_partial": "dev_ground_v2_dual_partial",
+            # V2.2 (OWNER D-57, GPT-6.1 Sol alone)
+            "main_v2": "main_v2", "offscope_v2": "offscope_v2",
+            "probe_original_v2": "probe_original_v2", "probe_paraphrase_v2": "probe_paraphrase_v2",
+            "parity_v2": "parity_v2"}  # fmt: skip
 
 
 def test_every_paid_run_is_in_the_ledger_with_its_own_cost():
@@ -199,17 +203,69 @@ KNOWN_MISSING_VERDICTS = {
 }
 
 
+def unexplained_missing(run, recs):
+    """(run, claim, judge) with neither a verdict nor a recorded final failure. EvalKit 0.4
+    records final failures in `judge_errors` (omitted when empty, so absent from every v1
+    record) and counts the rest as pending; 06591f8 left them silent."""
+    out = set()
+    for r in recs:
+        have = {(v["claim_id"], v["judge"]) for v in r["verdicts"]}
+        errors = r.get("judge_errors", {})
+        for c in r["claims"]:
+            for j in JUDGES:
+                if (c["id"], j) not in have and c["id"] not in errors.get(j, {}):
+                    out.add((run, c["id"], j))
+    return out
+
+
 def test_every_claim_has_both_verdicts_except_the_two_disclosed():
     missing = set()
     for run in ("main", "parity", "offscope", "probe_original", "probe_paraphrase"):
-        for r in records(run):
-            have = {(v["claim_id"], v["judge"]) for v in r["verdicts"]}
-            for c in r["claims"]:
-                for j in JUDGES:
-                    if (c["id"], j) not in have:
-                        missing.add((run, c["id"], j))
+        missing |= unexplained_missing(run, records(run))
     assert missing == KNOWN_MISSING_VERDICTS
     assert "Two verdicts are missing" in RUN_STATE
+
+
+def test_a_recorded_judge_error_explains_a_missing_verdict():
+    (cid,) = [c for run, c, _ in KNOWN_MISSING_VERDICTS if run == "main"]
+    rec = next(r for r in records("main") if any(c["id"] == cid for c in r["claims"]))
+    assert unexplained_missing("main", [rec]) == {("main", cid, "claude-opus-5-5")}
+    rec["judge_errors"] = {"claude-opus-5-5": {cid: "refusal"}}
+    assert unexplained_missing("main", [rec]) == set()
+
+
+V1_RUNS = ("main", "parity", "offscope", "probe_original", "probe_paraphrase", "main_citation",
+           "dev_ground_v1")  # fmt: skip
+
+
+def test_committed_v1_runs_read_under_the_evalkit_0_4_schemas():
+    """D-56: the v1 folders were written by EvalKit 06591f8 (ee59699 for the B5.12 runs) and
+    stay as written. 0.4 reads them: its new fields are omitted when empty, so a v1 record has
+    no `judge_errors` and a v1 summary no `missing_verdicts` or `efficiency`."""
+    from evalkit.schemas import Record, RunSummary
+
+    for run in V1_RUNS:
+        s = RunSummary.model_validate(load(run, "summary.json"))
+        assert s.judging_status == "complete", run
+        assert all(m.missing_verdicts == {} and m.efficiency is None for m in s.models), run
+        for r in records(run):
+            assert "judge_errors" not in r and Record.model_validate(r).judge_errors == {}, run
+
+
+def test_evalkit_0_4_would_hold_the_v1_main_run_pending():
+    """Why the v1 summaries are never re-aggregated with 0.4 (D-56): its completeness rule
+    (EvalKit D-78) finds the disclosed Opus gap unexplained in the v1 records (06591f8 did not
+    record final failures), so a 0.4 re-summary of the folder would stamp the main run pending.
+    A 0.4 rerun of the config instead reads the cached final failure ("schema") into
+    `judge_errors`, completes, and scores the claim unsupported; the parity gap is not cached,
+    so a rerun resends that one claim."""
+    from evalkit.pipeline.aggregate import verdict_gaps
+    from evalkit.schemas import Record
+
+    recs = [Record.model_validate(r) for r in records("main")]
+    gaps, unexplained = verdict_gaps(recs, JUDGES)
+    assert {m: g for m, g in gaps.items() if g} == {"claude-haiku-5-5": {"claude-opus-5-5": 1}}
+    assert unexplained
 
 
 KNOWN_CITATION_GAPS = 9  # main_citation, all GPT-6.1 Sol (EvalKit 'complete but missing')
@@ -299,3 +355,63 @@ def test_v2_dev_bars_were_committed_before_either_v2_dev_run_started():
     for run in ("dev_ground_v2_dual_partial", "dev_ground_v2_sol"):
         started = load(run, "run.json")["started_at"].replace("Z", "+00:00")
         assert added < dt.datetime.fromisoformat(started), run
+
+
+# V2.2 (OWNER D-57: GPT-6.1 Sol alone): the probe and judged-parity records, recomputed
+
+
+V2 = "gemma-e2b-grounded-v2-q4"
+SOL = "gpt-6.1-sol"
+
+
+def test_the_v1_probe_and_parity_records_are_what_the_report_code_writes():
+    from ggh.export import parity
+
+    assert P.report(ROOT, "v1") == json.loads((M / "probe_report.json").read_text("utf-8"))
+    assert parity.headline(ROOT, "ft") == json.loads(
+        (M / "parity_headline.json").read_text("utf-8")
+    )
+
+
+def test_the_v2_probe_report_recomputes_and_shows_no_contamination_signal():
+    rep = json.loads((M / "probe_report_v2.json").read_text(encoding="utf-8"))
+    o, p = records("probe_original_v2"), records("probe_paraphrase_v2")
+    assert len(o) == len(p) == 100 and {r["case_id"] for r in o} == {r["case_id"] for r in p}
+    got = P.paired_drop(P.correct_by_case(o, V2), P.correct_by_case(p, V2))
+    assert rep["models"] == {V2: got} and got["n"] == 100 and not got["contamination_signal"]
+    assert rep["runs"] == {
+        "original": load("probe_original_v2", "run.json")["run_id"],
+        "paraphrase": load("probe_paraphrase_v2", "run.json")["run_id"],
+    }
+    assert rep == P.report(ROOT, "v2")
+
+
+def test_v2_parity_ran_the_v2_bf16_on_200_cases_of_the_v2_main_run_under_sol():
+    run = load("parity_v2", "run.json")
+    assert run["n"] == 200 and run["models"] == ["gemma-e2b-grounded-v2-bf16"]
+    assert run["judges"] == [SOL]
+    main_ids = {r["case_id"] for r in records("main_v2") if r["completion"]["model"] == V2}
+    par = records("parity_v2")
+    assert len(par) == 200 and {r["case_id"] for r in par} <= main_ids
+
+
+def test_the_v2_headline_difference_against_q4_recomputes_and_is_reported_sol_only():
+    from ggh.export import parity
+
+    rep = json.loads((M / "parity_headline_v2.json").read_text(encoding="utf-8"))
+    par = records("parity_v2")
+    q4 = {r["case_id"]: r for r in records("main_v2") if r["completion"]["model"] == V2}
+    bf = sum(bool(r["scores"]["correct_and_grounded"][SOL]) for r in par) / 200
+    qq = sum(bool(q4[r["case_id"]]["scores"]["correct_and_grounded"][SOL]) for r in par) / 200
+    assert round(bf, 3) == rep["bf16"][f"headline_{SOL}"]
+    assert round(qq, 3) == rep["q4_k_m"][f"headline_{SOL}"]
+    (d,) = rep["bf16_minus_q4_headline"].values()
+    assert set(rep["bf16_minus_q4_headline"]) == {SOL} and set(rep["bf16"]) == {
+        "accuracy",
+        f"headline_{SOL}",
+    }
+    assert d["lo"] <= d["point"] <= d["hi"] and d["point"] == round(bf - qq, 3)
+    assert rep["run_bf16"] == load("parity_v2", "run.json")["run_id"]
+    assert rep["run_q4"] == load("main_v2", "run.json")["run_id"]
+    assert rep["method"].endswith("reported, not gated (Tech Spec §6)")
+    assert rep == parity.headline(ROOT, "ft2")

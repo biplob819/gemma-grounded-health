@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 260" width="960" height="260" role="img" aria-labelledby="t d">
+<title id="t">Base, v1 and v2 on 1,000 PubMedQA questions</title>
+<desc id="d">Base: correct and fully grounded 0.404 [0.373, 0.434], cited sentences that support a claim 0.747 [0.722, 0.772], answers citing an aim sentence 0.138 [0.117, 0.161]; v1: correct and fully grounded 0.331 [0.302, 0.361], cited sentences that support a claim 0.362 [0.343, 0.382], answers citing an aim sentence 0.560 [0.529, 0.590]; v2: correct and fully grounded 0.329 [0.300, 0.358], cited sentences that support a claim 0.736 [0.708, 0.763], answers citing an aim sentence 0.084 [0.067, 0.102]</desc>
+<style>.s{fill:#fcfcfb}.t{fill:#0b0b0b}.m{fill:#52514e}.g{stroke:#e1e0d9}.ax{stroke:#c3c2b7}.c0{stroke:#2a78d6;fill:#2a78d6}.c1{stroke:#eb6834;fill:#eb6834}.c2{stroke:#1baf7a;fill:#1baf7a}@media (prefers-color-scheme:dark){.s{fill:#1a1a19}.t{fill:#f0efec}.m{fill:#c3c2b7}.g{stroke:#2c2c2a}.ax{stroke:#383835}.c0{stroke:#3987e5;fill:#3987e5}.c1{stroke:#d95926;fill:#d95926}.c2{stroke:#199e70;fill:#199e70}}text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}</style>
+<rect class="s" width="960" height="260" rx="8"/>
+<text class="t" x="20" y="30" font-size="17" font-weight="600">v2 fixed the citations, not the headline</text>
+<text class="m" x="20" y="50" font-size="12.5">1,000 PubMedQA questions. Claims extracted by GPT-6 Luna, judged by GPT-6.1 Sol (OWNER D-57).</text>
+<text class="m" x="20" y="66" font-size="12.5">Point and 95% bootstrap interval; EvalKit run r-715fc213a8a5.</text>
+<text class="t" x="80" y="92" font-size="12.5" font-weight="600">Correct and fully grounded</text>
+<text class="m" x="80" y="106" font-size="11">higher is better</text>
+<line class="g" x1="88.0" x2="88.0" y1="114" y2="216" stroke-width="1"/>
+<text class="m" x="88.0" y="232" font-size="11" text-anchor="middle">0</text>
+<line class="g" x1="190.0" x2="190.0" y1="114" y2="216" stroke-width="1"/>
+<text class="m" x="190.0" y="232" font-size="11" text-anchor="middle">0.5</text>
+<line class="g" x1="292.0" x2="292.0" y1="114" y2="216" stroke-width="1"/>
+<text class="m" x="292.0" y="232" font-size="11" text-anchor="middle">1</text>
+<text class="t" x="20" y="135.0" font-size="13" font-weight="600">Base</text>
+<line class="c0" x1="164.1" x2="176.5" y1="131.0" y2="131.0" stroke-width="2" stroke-linecap="round"/>
+<circle class="c0" cx="170.4" cy="131.0" r="5"/>
+<text class="t" x="302" y="135.0" font-size="12" font-variant-numeric="tabular-nums">0.404</text>
+<text class="t" x="20" y="169.0" font-size="13" font-weight="600">v1</text>
+<line class="c1" x1="149.6" x2="161.6" y1="165.0" y2="165.0" stroke-width="2" stroke-linecap="round"/>
+<circle class="c1" cx="155.5" cy="165.0" r="5"/>
+<text class="t" x="302" y="169.0" font-size="12" font-variant-numeric="tabular-nums">0.331</text>
+<text class="t" x="20" y="203.0" font-size="13" font-weight="600">v2</text>
+<line class="c2" x1="149.2" x2="161.0" y1="199.0" y2="199.0" stroke-width="2" stroke-linecap="round"/>
+<circle class="c2" cx="155.1" cy="199.0" r="5"/>
+<text class="t" x="302" y="203.0" font-size="12" font-variant-numeric="tabular-nums">0.329</text>
+<line class="ax" x1="88" x2="292" y1="216" y2="216" stroke-width="1"/>
+<text class="t" x="370" y="92" font-size="12.5" font-weight="600">Cited sentences that support a claim</text>
+<text class="m" x="370" y="106" font-size="11">higher is better</text>
+<line class="g" x1="378.0" x2="378.0" y1="114" y2="216" stroke-width="1"/>
+<text class="m" x="378.0" y="232" font-size="11" text-anchor="middle">0</text>
+<line class="g" x1="480.0" x2="480.0" y1="114" y2="216" stroke-width="1"/>
+<text class="m" x="480.0" y="232" font-size="11" text-anchor="middle">0.5</text>
+<line class="g" x1="582.0" x2="582.0" y1="114" y2="216" stroke-width="1"/>
+<text class="m" x="582.0" y="232" font-size="11" text-anchor="middle">1</text>
+<line class="c0" x1="525.3" x2="535.6" y1="131.0" y2="131.0" stroke-width="2" stroke-linecap="round"/>
+<circle class="c0" cx="530.4" cy="131.0" r="5"/>
+<text class="t" x="592" y="135.0" font-size="12" font-variant-numeric="tabular-nums">0.747</text>
+<line class="c1" x1="448.1" x2="456.0" y1="165.0" y2="165.0" stroke-width="2" stroke-linecap="round"/>
+<circle class="c1" cx="451.9" cy="165.0" r="5"/>
+<text class="t" x="592" y="169.0" font-size="12" font-variant-numeric="tabular-nums">0.362</text>
+<line class="c2" x1="522.5" x2="533.7" y1="199.0" y2="199.0" stroke-width="2" stroke-linecap="round"/>
+<circle class="c2" cx="528.1" cy="199.0" r="5"/>
+<text class="t" x="592" y="203.0" font-size="12" font-variant-numeric="tabular-nums">0.736</text>
+<line class="ax" x1="378" x2="582" y1="216" y2="216" stroke-width="1"/>
+<text class="t" x="660" y="92" font-size="12.5" font-weight="600">Answers citing an aim sentence</text>
+<text class="m" x="660" y="106" font-size="11">unsupporting; lower is better</text>
+<line class="g" x1="668.0" x2="668.0" y1="114" y2="216" stroke-width="1"/>
+<text class="m" x="668.0" y="232" font-size="11" text-anchor="middle">0</text>
+<line class="g" x1="770.0" x2="770.0" y1="114" y2="216" stroke-width="1"/>
+<text class="m" x="770.0" y="232" font-size="11" text-anchor="middle">0.5</text>
+<line class="g" x1="872.0" x2="872.0" y1="114" y2="216" stroke-width="1"/>
+<text class="m" x="872.0" y="232" font-size="11" text-anchor="middle">1</text>
+<line class="c0" x1="691.9" x2="700.8" y1="131.0" y2="131.0" stroke-width="2" stroke-linecap="round"/>
+<circle class="c0" cx="696.2" cy="131.0" r="5"/>
+<text class="t" x="882" y="135.0" font-size="12" font-variant-numeric="tabular-nums">0.138</text>
+<line class="c1" x1="775.8" x2="788.4" y1="165.0" y2="165.0" stroke-width="2" stroke-linecap="round"/>
+<circle class="c1" cx="782.3" cy="165.0" r="5"/>
+<text class="t" x="882" y="169.0" font-size="12" font-variant-numeric="tabular-nums">0.560</text>
+<line class="c2" x1="681.8" x2="688.9" y1="199.0" y2="199.0" stroke-width="2" stroke-linecap="round"/>
+<circle class="c2" cx="685.2" cy="199.0" r="5"/>
+<text class="t" x="882" y="203.0" font-size="12" font-variant-numeric="tabular-nums">0.084</text>
+<line class="ax" x1="668" x2="872" y1="216" y2="216" stroke-width="1"/>
+</svg>

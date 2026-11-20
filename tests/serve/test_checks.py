@@ -2,7 +2,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from evalkit.adapters.base import RawCompletion
+from evalkit.adapters import RawCompletion
 
 from ggh.evals import tasks
 from ggh.serve import checks, llama

@@ -1,6 +1,6 @@
 # Pipeline targets are added by the nodes that build them (Tech Spec §2.2): `data` (N1.2), `targets` (N1.3), `bench` (X3.2).
 # The other targets run the build harness.
-.PHONY: check status converge selftest data targets bench
+.PHONY: check status converge selftest data targets bench card release
 
 # check runs every CI step except the self-tests, which selftest runs
 check:
@@ -21,6 +21,17 @@ targets:
 # laptop benchmark, Tech Spec §8 (X3.2): mains power, no evaluation run in progress
 bench:
 	uv run ggh bench
+
+# model card from the results bundle (R4.1, D-20)
+card:
+	uv run ggh card
+
+# Hub release plan (R4.2, Tech Spec §10.2): a dry run that lists every file and checks lineage
+# and sha256s. Pushing needs `uv run ggh release --push --owner <owner>`, HF_TOKEN and the
+# owner's go-ahead
+release:
+	uv run ggh lineage verify artifacts/export/ft/manifest.json
+	uv run ggh release --dry-run
 
 status:
 	uv run python scripts/status.py

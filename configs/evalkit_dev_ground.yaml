@@ -1,4 +1,4 @@
-# V2.1 dev grounding check (VTG-03): the two Gemma models only, on the dev_ground task. EvalKit is pinned by git commit ee59699 (OWNER D-44).
+# V2.1 dev grounding check (VTG-03): the two Gemma models only, on the dev_ground task. v1 ran at EvalKit git commit ee59699 (OWNER D-44); EvalKit is now pinned to 0.4.0 (D-48).
 # Gemma reaches EvalKit through the `endpoints` route: llama-server started by `ggh serve` (D-7).
 models: [gemma-e2b-base-q4, gemma-e2b-grounded-q4]
 endpoints:

@@ -1,0 +1,166 @@
+{
+ "sheet_id": "gf4e32c13cc2aa",
+ "round": "first",
+ "labels": {
+  "kf328f05e2b08": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "k92c91c867d79": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "ke4985ddbd031": {
+   "label": "unsupported",
+   "extraction_error": false
+  },
+  "k79b4f41e1901": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "k263cf0874726": {
+   "label": "unsupported",
+   "extraction_error": false
+  },
+  "k478d8ede4900": {
+   "label": "unsupported",
+   "extraction_error": false
+  },
+  "k2a87d3ec3401": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "kb89c52ce4f21": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "k442c57ad8b75": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "ke642fbe32f78": {
+   "label": "unsupported",
+   "extraction_error": false
+  },
+  "k119aa9b75e1d": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "k407fcc56d03b": {
+   "label": "unsupported",
+   "extraction_error": false
+  },
+  "ke39fc78a4b1a": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "kf66f0fbc9910": {
+   "label": "unsupported",
+   "extraction_error": false
+  },
+  "k16669e3edfbb": {
+   "label": "unsupported",
+   "extraction_error": false
+  },
+  "k199ae5a4263f": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "k3f43dfcda3fe": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "k6e4e6c72c0d4": {
+   "label": "unsupported",
+   "extraction_error": false
+  },
+  "k6afb78d3fe66": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "kceeb880e8d83": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "k0dbd84d7242a": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "k9e4052ae73cf": {
+   "label": "unsupported",
+   "extraction_error": false
+  },
+  "k58ad38e437f7": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "ka88d8081e5ea": {
+   "label": "unsupported",
+   "extraction_error": false
+  },
+  "k992b5071e412": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "ka4618aaacc9a": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "ke44624c79071": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "ke050298b1583": {
+   "label": "unsupported",
+   "extraction_error": false
+  },
+  "k7c116b81a930": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "k70e0a22c036e": {
+   "label": "unsupported",
+   "extraction_error": false
+  },
+  "keea376568d7b": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "ke067f6df893f": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "k68bef7358e00": {
+   "label": "unsupported",
+   "extraction_error": false
+  },
+  "k7265139c2b00": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "kfef871410fc6": {
+   "label": "unsupported",
+   "extraction_error": false
+  },
+  "kbbf2660374e2": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "k2e546faa8aab": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "kcf5dfd13e072": {
+   "label": "unsupported",
+   "extraction_error": false
+  },
+  "k2018ab731d76": {
+   "label": "supported",
+   "extraction_error": false
+  },
+  "k7e1077815c70": {
+   "label": "supported",
+   "extraction_error": false
+  }
+ }
+}

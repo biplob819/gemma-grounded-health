@@ -44,14 +44,14 @@ def _spec_caps() -> list[tuple[str, str]]:
 def test_graph_matches_tech_spec():
     nodes = load_graph()
     spec = _spec_nodes()
-    assert len(nodes) == len(spec) == 20  # V2.1, V2.2 by OWNER D-43
+    assert len(nodes) == len(spec) == 19  # V2.1, V2.2 by OWNER D-43; O6.1 cut by D-58
     assert {n: (v.title, v.depends_on) for n, v in nodes.items()} == spec
 
 
 @pytest.mark.contract
 def test_catalog_matches_tech_spec():
     caps = load_catalog()
-    assert len(caps) == 128  # SPC-08, OSS-06 (OWNER D-36, D-37); VTG, VEV (OWNER D-43)
+    assert len(caps) == 124  # SPC-08, OSS-06 (D-36, D-37); VTG, VEV (D-43); no DPO (D-58)
     assert [(c.cap_id, c.node) for c in caps] == _spec_caps()
     nodes = load_graph()
     assert {c.node for c in caps} == set(nodes)
@@ -61,8 +61,8 @@ def test_decisions_d1_onwards_with_owner_rulings():
     text = (ROOT / "docs" / "decisions.md").read_text(encoding="utf-8")
     ids = {int(n) for n in re.findall(r"^\| (?:OWNER )?D-(\d+) \|", text, re.M)}
     # D-1..33 seeded; 34-35 N1.3; 36-39 owner; 40 T2.1; 41 X3.1; 42 E3.2; 43-50 owner;
-    # 51-52 V2.1; 53-55 owner
-    assert ids == set(range(1, 56))
+    # 51-52 V2.1; 53-55 owner; 56 the EvalKit 0.4.0 pin; 57-60 owner (OpenAI, O6.1 cut, calibration)
+    assert ids == set(range(1, 61))
     owner = {int(n) for n in re.findall(r"^\| OWNER D-(\d+) \|", text, re.M)}
     assert owner == {
         15,
@@ -89,6 +89,10 @@ def test_decisions_d1_onwards_with_owner_rulings():
         53,
         54,
         55,
+        57,
+        58,
+        59,
+        60,
     }
 
 
@@ -114,7 +118,7 @@ def test_decisions_equal_tech_spec_section_1():
         for line in text.splitlines()
         if re.match(r"^\| (OWNER )?D-\d+ \|", line)
     ]
-    assert len(spec_rows) == 55
+    assert len(spec_rows) == 60
     assert [r[:1] + r[2:] for r in log_rows] == spec_rows  # drop the date column
     assert "DeepMind" not in text
 
@@ -132,7 +136,8 @@ def test_changelog_has_w01_entry():
 def test_status_prints_graph_node_and_ledgers(capsys):
     assert status.main([]) == 0
     out = capsys.readouterr().out
-    assert "W0.1" in out and "O6.1" in out and "capabilities green" in out
+    assert "W0.1" in out and "P5.1" in out and "capabilities green" in out
+    assert "O6.1" not in out  # cut, OWNER D-58
     assert "API spend: $" in out and "Kaggle GPU:" in out
     assert status.main(["W0.1"]) == 0
     assert "HAR-08" in capsys.readouterr().out

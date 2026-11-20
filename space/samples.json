@@ -1,0 +1,113 @@
+[
+  {
+    "id": "dev-1471704",
+    "question": "Is increased circulating levels of immunoreactive beta-endorphin in polycystic ovary syndrome caused by increased pituitary secretion?",
+    "context": [
+      "Our purpose was to investigate the source and role of elevated levels of immunoreactive beta-endorphin in polycystic ovary syndrome.",
+      "We wished to determine whether immunoreactive beta-endorphin secretion in patients with polycystic ovary syndrome is influenced by body weight and whether the pituitary release of immunoreactive beta-endorphin with corticotropin-releasing hormone is related to luteinizing hormone levels or adrenal androgen secretion.",
+      "Eighteen patients with polycystic ovary syndrome and 10 ovulatory controls were studied.",
+      "Each subject received 1 microgram/kg intravenous corticotropin-releasing hormone and an oral glucose tolerance test on alternate days.",
+      "Levels of plasma immunoreactive beta-endorphin, corticotropin, luteinizing hormone, cortisol, adrenal androgens, and insulin were measured.",
+      "Although immunoreactive beta-endorphin levels were elevated in patients with polycystic ovary syndrome (p < 0.01), incremental responses after corticotropin-releasing hormone were similar to controls and were not influenced by body weight.",
+      "Serum luteinizing hormone levels were not affected by corticotropin-releasing hormone and did not correlate with immunoreactive beta-endorphin levels.",
+      "Adrenal androgen responses after corticotropin-releasing hormone were increased in patients with polycystic ovary syndrome (p < 0.01) but were not correlated with immunoreactive beta-endorphin secretion.",
+      "After oral glucose was given, elevated fasting insulin levels increased significantly in patients with polycystic ovary syndrome (p < 0.01), as did immunoreactive beta-endorphin levels (p < 0.05).",
+      "The increases in insulin and immunoreactive beta-endorphin levels were correlated (p < 0.05)."
+    ],
+    "reference_label": "no",
+    "base_raw": "{\n\"label\": \"no\",\n\"answer\": \"The study investigated the source and role of elevated levels of immunoreactive beta-endorphin in polycystic ovary syndrome, but the incremental responses after corticotropin-releasing hormone were similar to controls and were not influenced by body weight.\",\n\"citations\": [\n2,\n6]\n}",
+    "ft_raw": "{\"label\": \"no\", \"answer\": \"The pituitary release of immunoreactive beta-endorphin is not related to luteinizing hormone levels or adrenal androgen secretion.\", \"citations\": [2, 7, 8]}",
+    "source": "evalkit:r-67b40f1ce1f5:gemma-e2b-base-q4|gemma-e2b-grounded-q4"
+  },
+  {
+    "id": "dev-16716359",
+    "question": "Does early cognitive impairment predict long-term depressive symptoms and quality of life after stroke?",
+    "context": [
+      "The aim of the present study was to examine the predictive value of cognitive impairment in the acute phase after stroke as a risk factor for long-term (six to ten months after stroke) depressive symptoms (DS) and a reduced quality of life (QOL), independent of demographic and neurological predictors.",
+      "We evaluated 143 patients within the first 3 weeks post-stroke.",
+      "Predictor variables included domain-specific cognitive function, demographic data, vascular risk factors, lesion characteristics, and clinical factors.",
+      "Predictor variables associated with long-term DS (Montgomery Asberg Depression Rating Scale >or=7) and QOL (Stroke-Specific Quality of Life Scale) were identified with multiple logistic and linear regression.",
+      "Long-term DS were independently predicted by cognitive impairment at baseline, DS at baseline, female sex, diabetes mellitus, and previous TIA(s).",
+      "Cognitive impairment, increasing age, and functional dependence predicted a reduced QOL, whereas hypercholesterolaemia predicted a better QOL.",
+      "Among all cognitive disorders, unilateral neglect was the greatest risk factor for DS after 6 months, whereas a disorder in visual perception and construction affected QOL the most."
+    ],
+    "reference_label": "yes",
+    "base_raw": "{\n\"label\": \"yes\",\n\"answer\": \"Cognitive impairment in the acute phase after stroke was examined as a risk factor for long-term depressive symptoms and a reduced quality of life.\",\n\"citations\": [\n1,\n4]\n}",
+    "ft_raw": "{\"label\": \"yes\", \"answer\": \"Cognitive impairment in the acute phase after stroke is a risk factor for long-term DS and QOL.\", \"citations\": [1]}",
+    "source": "evalkit:r-67b40f1ce1f5:gemma-e2b-base-q4|gemma-e2b-grounded-q4"
+  },
+  {
+    "id": "dev-17683644",
+    "question": "Do different strategies moderate primary motor cortex involvement in mental rotation : a TMS study?",
+    "context": [
+      "Regions of the dorsal visual stream are known to play an essential role during the process of mental rotation.",
+      "The functional role of the primary motor cortex (M1) in mental rotation is however less clear.",
+      "It has been suggested that the strategy used to mentally rotate objects determines M1 involvement.",
+      "Based on the strategy hypothesis that distinguishes between an internal and an external strategy, our study was designed to specifically test the relation between strategy and M1 activity.",
+      "Twenty-two subjects were asked to participate in a standard mental rotation task.",
+      "We used specific picture stimuli that were supposed to trigger either the internal (e.g. pictures of hands or tools) or the external strategy (e.g. pictures of houses or abstract figures).",
+      "The strategy hypothesis predicts an involvement of M1 only in case of stimuli triggering the internal strategy (imagine grasping and rotating the object by oneself).",
+      "Single-pulse Transcranial Magnetic Stimulation (TMS) was employed to quantify M1 activity during task performance by measuring Motor Evoked Potentials (MEPs) at the right hand muscle.",
+      "Contrary to the strategy hypothesis, we found no interaction between stimulus category and corticospinal excitability.",
+      "Instead, corticospinal excitability was generally increased compared with a resting baseline although subjects indicated more frequent use of the external strategy for all object categories."
+    ],
+    "reference_label": "no",
+    "base_raw": "{\n\"label\": \"no\",\n\"answer\": \"We found no interaction between stimulus category and corticospinal excitability.\",\n\"citations\": [\n9]\n}",
+    "ft_raw": "{\"label\": \"no\", \"answer\": \"The strategy hypothesis does not hold in this study.\", \"citations\": [3, 4, 7, 9]}",
+    "source": "evalkit:r-67b40f1ce1f5:gemma-e2b-base-q4|gemma-e2b-grounded-q4"
+  },
+  {
+    "id": "dev-21857142",
+    "question": "Does low-dose rosuvastatin improve arterial stiffness in high-risk Japanese patients with dyslipdemia in a primary prevention group?",
+    "context": [
+      "The treatment effects of rosuvastatin on arterial stiffness were assessed and compared to those of fluvastatin in high-risk Japanese patients with dyslipidemia in a primary prevention group.",
+      "Patients were randomly assigned to either 2.5-5 mg/day of rosuvastatin (Group A) or 20-40 mg/day of fluvastatin (Group B) and followed up for 12 months.",
+      "In Group A (n=38), there was a progressive reduction in brachial-ankle pulse wave velocity (baPWV) along with a decrease in the low-density lipoprotein cholesterol/high-density lipoprotein cholesterol (L/H) ratio and high-sensitivity C-reactive protein (hsCRP), and the change in baPWV correlated significantly with that of the L/H ratio and that of hsCRP after rosuvastatin treatment.",
+      "In Group B (n=37), although fluvastatin achieved a significant improvement in baPWV, L/H ratio, and hsCRP, baPWV was significantly greater than that in Group A and showed a significant correlation with that of hsCRP alone after fluvastatin treatment.",
+      "In a subgroup of patients (n=26), switching from fluvastatin to rosuvastatin further improved baPWV and the L/H ratio without altering hsCRP after 12 months."
+    ],
+    "reference_label": "yes",
+    "base_raw": "{\n\"label\": \"yes\",\n\"answer\": \"In Group A (rosuvastatin group), there was a progressive reduction in brachial-ankle pulse wave velocity (baPWV) along with a decrease in the low-density lipoprotein cholesterol/high-density lipoprotein cholesterol (L/H) ratio and high-sensitivity C-reactive protein (hsCRP), and the change in baPWV correlated significantly with that of the L/H ratio and that of hsCRP after rosuvastatin treatment.\",\n\"citations\": [\n3]\n}",
+    "ft_raw": "{\"label\": \"yes\", \"answer\": \"Low-dose rosuvastatin improved arterial stiffness in high-risk Japanese patients with dyslipidemia in a primary prevention group.\", \"citations\": [1]}",
+    "source": "evalkit:r-67b40f1ce1f5:gemma-e2b-base-q4|gemma-e2b-grounded-q4"
+  },
+  {
+    "id": "dev-23251408",
+    "question": "Are insulin receptor isoforms A and B as well as insulin receptor substrates-1 and -2 differentially expressed in prostate cancer?",
+    "context": [
+      "In different cancers types, insulin receptor isoform composition or insulin receptor substrate (IRS) isoforms are different to healthy tissue.",
+      "This may be a molecular link to increased cancer risk in diabetes and obesity.",
+      "Since this is yet unclear for prostate cancer, we investigated IR isoform composition and IRS balance in prostate cancer compared to benign and tumor adjacent benign prostate tissue and brought this into relation to cell proliferation.",
+      "We studied 23 benign prostate samples from radical cystectomy or benign prostatic hyperplasia surgery, 30 samples from benign tissue directly adjacent to prostate cancer foci and 35 cancer samples from different patients.",
+      "RNA expression levels for insulin receptor isoforms A and B, IRS-1, IRS-2, and IGF-1 receptor were assessed by quantitative real-time RT-PCR.",
+      "In addition, RNA- and protein expression of the cell cycle regulator p27(Kip1) was quantified by real-time RT-PCR and immunohistochemistry.",
+      "Insulin receptor isoform A to B ratio was significantly higher in cancer as well as in tumor adjacent benign prostate tissue compared to purely benign prostates (p<0.05).",
+      "IRS-1 to IRS-2 ratios were lower in malignant than in benign prostatic tissue (p<0.05).",
+      "These altered ratios both in cancer and adjacent tissue were significantly associated with reduced p27(Kip1) content (p<0.02).",
+      "Interestingly, IGF-1 receptor levels were significantly lower in patients with type 2 diabetes (p = 0.0019)."
+    ],
+    "reference_label": "yes",
+    "base_raw": "{\n\"label\": \"yes\",\n\"answer\": \"The study investigated IR isoform composition and IRS balance in prostate cancer compared to benign and tumor adjacent benign prostate tissue.\",\n\"citations\": [\n3,\n5,\n7,\n8]\n}",
+    "ft_raw": "{\"label\": \"yes\", \"answer\": \"The insulin receptor isoform composition and IRS balance are different in prostate cancer compared to benign prostate tissue.\", \"citations\": [3]}",
+    "source": "evalkit:r-67b40f1ce1f5:gemma-e2b-base-q4|gemma-e2b-grounded-q4"
+  },
+  {
+    "id": "dev-26383970",
+    "question": "Does gDF11 rescue aging-related pathological hypertrophy?",
+    "context": [
+      "Growth differentiation factor 11 (GDF11) is a member of the transforming growth factor-\u03b2 super family of secreted factors.",
+      "A recent study showed that reduced GDF11 blood levels with aging was associated with pathological cardiac hypertrophy (PCH) and restoring GDF11 to normal levels in old mice rescued PCH.",
+      "To determine whether and by what mechanism GDF11 rescues aging dependent PCH.",
+      "Twenty-four-month-old C57BL/6 mice were given a daily injection of either recombinant (r) GDF11 at 0.1 mg/kg or vehicle for 28 days. rGDF11 bioactivity was confirmed in vitro.",
+      "After treatment, rGDF11 levels were significantly increased, but there was no significant effect on either heart weight or body weight.",
+      "Heart weight/body weight ratios of old mice were not different from 8- or 12-week-old animals, and the PCH marker atrial natriuretic peptide was not different in young versus old mice.",
+      "Ejection fraction, internal ventricular dimension, and septal wall thickness were not significantly different between rGDF11 and vehicle-treated animals at baseline and remained unchanged at 1, 2, and 4 weeks of treatment.",
+      "There was no difference in myocyte cross-sectional area rGDF11 versus vehicle-treated old animals.",
+      "In vitro studies using phenylephrine-treated neonatal rat ventricular myocytes, to explore the putative antihypertrophic effects of GDF11, showed that GDF11 did not reduce neonatal rat ventricular myocytes hypertrophy, but instead induced hypertrophy."
+    ],
+    "reference_label": "no",
+    "base_raw": "{\n\"label\": \"no\",\n\"answer\": \"Restoring GDF11 to normal levels in old mice rescued pathological cardiac hypertrophy (PCH).\",\n\"citations\": [\n2]\n}",
+    "ft_raw": "{\"label\": \"no\", \"answer\": \"GDF11 does not rescue aging-dependent PCH.\", \"citations\": [2, 3]}",
+    "source": "evalkit:r-67b40f1ce1f5:gemma-e2b-base-q4|gemma-e2b-grounded-q4"
+  }
+]

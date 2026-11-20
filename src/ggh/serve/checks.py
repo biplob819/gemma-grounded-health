@@ -21,8 +21,9 @@ from collections.abc import Callable, Sequence
 from pathlib import Path
 from typing import Any
 
-from evalkit.adapters.base import CompletionRequest, RawCompletion
-from evalkit.pipeline.answer import SchemaError, answer_schema, parse_answer
+from evalkit.adapters import CompletionRequest, RawCompletion
+from evalkit.errors import SchemaError
+from evalkit.pipeline.answer import answer_schema, parse_answer
 
 from ggh.evals.tasks import LABELS, SMOKE_TASK, prompts
 from ggh.serve import llama

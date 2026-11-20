@@ -1,0 +1,41 @@
+{
+  "answer": "Tailored interventions increased mammography use.",
+  "case_id": "pqa-10808977",
+  "citations": [
+    1
+  ],
+  "cited_sentences": {
+    "1": "The aim was to test tailored interventions."
+  },
+  "claims": [
+    {
+      "cited": [
+        1
+      ],
+      "id": "pqa-10808977:gemma-e2b-grounded-q4:0",
+      "text": "Tailored interventions increased mammography use.",
+      "verdicts": {
+        "opus": {
+          "citation_support": [
+            {
+              "n": 1,
+              "role": "aim",
+              "supports": false
+            }
+          ],
+          "evidence": [],
+          "rationale": "Sentence 1 states the aim, not a result.",
+          "verdict": "unsupported"
+        }
+      }
+    }
+  ],
+  "finding": "model_fault",
+  "label": "yes",
+  "model": "gemma-e2b-grounded-q4",
+  "note": "cites the aim sentence for the finding",
+  "read_by": "builder",
+  "record_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "reference_label": "yes",
+  "run": "main"
+}

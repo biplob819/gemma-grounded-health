@@ -1,0 +1,396 @@
+{
+  "calibration_status": "uncalibrated",
+  "comparisons": [
+    {
+      "diff": {
+        "hi": -0.193,
+        "lo": -0.263,
+        "point": -0.227
+      },
+      "judge": null,
+      "metric": "accuracy",
+      "model_a": "gemma-e2b-base-q4",
+      "model_b": "gemma-e2b-grounded-q4",
+      "p_value": 0.00019998000199980003,
+      "separated": true
+    },
+    {
+      "diff": {
+        "hi": -0.143,
+        "lo": -0.211,
+        "point": -0.177
+      },
+      "judge": null,
+      "metric": "accuracy",
+      "model_a": "gemma-e2b-base-q4",
+      "model_b": "gemma-e2b-grounded-v2-q4",
+      "p_value": 0.00019998000199980003,
+      "separated": true
+    },
+    {
+      "diff": {
+        "hi": 0.068,
+        "lo": 0.032,
+        "point": 0.05
+      },
+      "judge": null,
+      "metric": "accuracy",
+      "model_a": "gemma-e2b-grounded-q4",
+      "model_b": "gemma-e2b-grounded-v2-q4",
+      "p_value": 0.00019998000199980003,
+      "separated": true
+    },
+    {
+      "diff": {
+        "hi": 0.111,
+        "lo": 0.034,
+        "point": 0.073
+      },
+      "judge": "gpt-6.1-sol",
+      "metric": "headline",
+      "model_a": "gemma-e2b-base-q4",
+      "model_b": "gemma-e2b-grounded-q4",
+      "p_value": 0.00039996000399960006,
+      "separated": true
+    },
+    {
+      "diff": {
+        "hi": 0.113,
+        "lo": 0.037,
+        "point": 0.075
+      },
+      "judge": "gpt-6.1-sol",
+      "metric": "headline",
+      "model_a": "gemma-e2b-base-q4",
+      "model_b": "gemma-e2b-grounded-v2-q4",
+      "p_value": 0.00019998000199980003,
+      "separated": true
+    },
+    {
+      "diff": {
+        "hi": 0.034,
+        "lo": -0.03,
+        "point": 0.002
+      },
+      "judge": "gpt-6.1-sol",
+      "metric": "headline",
+      "model_a": "gemma-e2b-grounded-q4",
+      "model_b": "gemma-e2b-grounded-v2-q4",
+      "p_value": 0.9271072892710729,
+      "separated": false
+    }
+  ],
+  "config_hash": "50c600c60bbd3e4d",
+  "extraction_error_rate": null,
+  "finished_at": "2026-11-19T14:36:31.353755Z",
+  "judge_mode": "single",
+  "judges": [],
+  "judging_status": "complete",
+  "models": [
+    {
+      "accuracy": {
+        "hi": 0.532,
+        "lo": 0.469,
+        "point": 0.501
+      },
+      "aim_citation_rate": {
+        "gpt-6.1-sol": {
+          "hi": 0.16076845298281092,
+          "lo": 0.11717171717171718,
+          "point": 0.1383838383838384
+        }
+      },
+      "citation_precision": {
+        "gpt-6.1-sol": {
+          "hi": 0.7723722146446752,
+          "lo": 0.7218515429524603,
+          "point": 0.7472340425531915
+        }
+      },
+      "citation_validity": {
+        "hi": 0.999,
+        "lo": 0.99,
+        "point": 0.995
+      },
+      "cost_per_100_usd": 0.0,
+      "cost_per_correct_usd": 0.0,
+      "coverage": {
+        "hi": 0.9837836904761905,
+        "lo": 0.9675448214285715,
+        "point": 0.9759809523809524
+      },
+      "efficiency": {
+        "cache_hit_share": 0.03520671572015122,
+        "cost_per_case_usd": {
+          "hi": 0.0,
+          "lo": 0.0,
+          "point": 0.0
+        },
+        "cost_per_correct_usd": {
+          "hi": 0.0,
+          "lo": 0.0,
+          "point": 0.0
+        },
+        "error_rate": 0.0,
+        "eval_overhead_cost_usd": 3.9931011,
+        "latency_p50_ms": {
+          "hi": 3618.0,
+          "lo": 3523.0,
+          "point": 3566.0
+        },
+        "latency_p95_ms": {
+          "hi": 4947.0,
+          "lo": 4759.0,
+          "point": 4883.0
+        },
+        "latency_p99_ms": {
+          "hi": 5987.0,
+          "lo": 5372.0,
+          "point": 5731.0
+        },
+        "mode": "live",
+        "n": 1000,
+        "n_correct": 501,
+        "n_errored": 0,
+        "n_latency": 1000,
+        "n_retried": null,
+        "price_date": null,
+        "retry_rate": null,
+        "system_cost_usd": 0.0,
+        "tokens_cached_per_case": 17.321,
+        "tokens_in_per_case": 491.98,
+        "tokens_out_per_case": 80.513,
+        "tokens_reasoning_per_case": 0.0
+      },
+      "failed_thresholds": [
+        "headline >= 0.6 (observed 0.404)"
+      ],
+      "family": "other",
+      "groundedness_mean": {
+        "gpt-6.1-sol": {
+          "hi": 0.8586261904761905,
+          "lo": 0.8197924404761905,
+          "point": 0.8397261904761905
+        }
+      },
+      "headline": {
+        "gpt-6.1-sol": {
+          "hi": 0.434,
+          "lo": 0.373,
+          "point": 0.404
+        }
+      },
+      "latency_p50_ms": 3566,
+      "latency_p95_ms": 4883,
+      "model": "gemma-e2b-base-q4",
+      "n": 1000,
+      "n_errors": {},
+      "passes_threshold": false
+    },
+    {
+      "accuracy": {
+        "hi": 0.755,
+        "lo": 0.7,
+        "point": 0.728
+      },
+      "aim_citation_rate": {
+        "gpt-6.1-sol": {
+          "hi": 0.5901803607214429,
+          "lo": 0.5285857572718154,
+          "point": 0.5601202404809619
+        }
+      },
+      "citation_precision": {
+        "gpt-6.1-sol": {
+          "hi": 0.38235368994848445,
+          "lo": 0.3434529525595976,
+          "point": 0.3622603430877901
+        }
+      },
+      "citation_validity": {
+        "hi": 1.0,
+        "lo": 1.0,
+        "point": 1.0
+      },
+      "cost_per_100_usd": 0.0,
+      "cost_per_correct_usd": 0.0,
+      "coverage": {
+        "hi": 0.9638374999999999,
+        "lo": 0.938,
+        "point": 0.9511666666666666
+      },
+      "efficiency": {
+        "cache_hit_share": 0.03520671572015122,
+        "cost_per_case_usd": {
+          "hi": 0.0,
+          "lo": 0.0,
+          "point": 0.0
+        },
+        "cost_per_correct_usd": {
+          "hi": 0.0,
+          "lo": 0.0,
+          "point": 0.0
+        },
+        "error_rate": 0.0,
+        "eval_overhead_cost_usd": 1.8039357,
+        "latency_p50_ms": {
+          "hi": 2267.0,
+          "lo": 2241.0,
+          "point": 2257.0
+        },
+        "latency_p95_ms": {
+          "hi": 2638.0,
+          "lo": 2561.0,
+          "point": 2610.0
+        },
+        "latency_p99_ms": {
+          "hi": 2939.0,
+          "lo": 2758.0,
+          "point": 2875.0
+        },
+        "mode": "live",
+        "n": 1000,
+        "n_correct": 728,
+        "n_errored": 0,
+        "n_latency": 1000,
+        "n_retried": null,
+        "price_date": null,
+        "retry_rate": null,
+        "system_cost_usd": 0.0,
+        "tokens_cached_per_case": 17.321,
+        "tokens_in_per_case": 491.98,
+        "tokens_out_per_case": 46.856,
+        "tokens_reasoning_per_case": 0.0
+      },
+      "failed_thresholds": [
+        "headline >= 0.6 (observed 0.331)"
+      ],
+      "family": "other",
+      "groundedness_mean": {
+        "gpt-6.1-sol": {
+          "hi": 0.48733333333333334,
+          "lo": 0.42675,
+          "point": 0.4569166666666667
+        }
+      },
+      "headline": {
+        "gpt-6.1-sol": {
+          "hi": 0.361,
+          "lo": 0.302,
+          "point": 0.331
+        }
+      },
+      "latency_p50_ms": 2257,
+      "latency_p95_ms": 2610,
+      "model": "gemma-e2b-grounded-q4",
+      "n": 1000,
+      "n_errors": {},
+      "passes_threshold": false
+    },
+    {
+      "accuracy": {
+        "hi": 0.706,
+        "lo": 0.649,
+        "point": 0.678
+      },
+      "aim_citation_rate": {
+        "gpt-6.1-sol": {
+          "hi": 0.10230692076228685,
+          "lo": 0.06740442655935613,
+          "point": 0.08433734939759036
+        }
+      },
+      "citation_precision": {
+        "gpt-6.1-sol": {
+          "hi": 0.7633365664403492,
+          "lo": 0.7083714171694171,
+          "point": 0.7359223300970874
+        }
+      },
+      "citation_validity": {
+        "hi": 1.0,
+        "lo": 1.0,
+        "point": 1.0
+      },
+      "cost_per_100_usd": 0.0,
+      "cost_per_correct_usd": 0.0,
+      "coverage": {
+        "hi": 0.9529166666666666,
+        "lo": 0.9243833333333333,
+        "point": 0.9391499999999999
+      },
+      "efficiency": {
+        "cache_hit_share": 0.035208748323102564,
+        "cost_per_case_usd": {
+          "hi": 0.0,
+          "lo": 0.0,
+          "point": 0.0
+        },
+        "cost_per_correct_usd": {
+          "hi": 0.0,
+          "lo": 0.0,
+          "point": 0.0
+        },
+        "error_rate": 0.0,
+        "eval_overhead_cost_usd": 1.5908765,
+        "latency_p50_ms": {
+          "hi": 4113.0,
+          "lo": 4030.0,
+          "point": 4075.0
+        },
+        "latency_p95_ms": {
+          "hi": 5121.0,
+          "lo": 4972.0,
+          "point": 5057.0
+        },
+        "latency_p99_ms": {
+          "hi": 5649.0,
+          "lo": 5318.0,
+          "point": 5454.0
+        },
+        "mode": "live",
+        "n": 1000,
+        "n_correct": 678,
+        "n_errored": 0,
+        "n_latency": 1000,
+        "n_retried": null,
+        "price_date": null,
+        "retry_rate": null,
+        "system_cost_usd": 0.0,
+        "tokens_cached_per_case": 17.322,
+        "tokens_in_per_case": 491.98,
+        "tokens_out_per_case": 47.989,
+        "tokens_reasoning_per_case": 0.0
+      },
+      "failed_thresholds": [
+        "headline >= 0.6 (observed 0.329)"
+      ],
+      "family": "other",
+      "groundedness_mean": {
+        "gpt-6.1-sol": {
+          "hi": 0.52325,
+          "lo": 0.46258124999999994,
+          "point": 0.49275
+        }
+      },
+      "headline": {
+        "gpt-6.1-sol": {
+          "hi": 0.358,
+          "lo": 0.3,
+          "point": 0.329
+        }
+      },
+      "latency_p50_ms": 4075,
+      "latency_p95_ms": 5057,
+      "model": "gemma-e2b-grounded-v2-q4",
+      "n": 1000,
+      "n_errors": {},
+      "passes_threshold": false
+    }
+  ],
+  "run_id": "r-715fc213a8a5",
+  "schema_version": "1.0",
+  "self_preference": {},
+  "started_at": "2026-11-19T10:29:48.603734Z",
+  "task": "pubmedqa"
+}

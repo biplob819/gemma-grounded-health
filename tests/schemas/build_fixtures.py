@@ -70,6 +70,34 @@ ARTIFACT = {
     "parent_key": H,
 }
 
+RUN_REF = {
+    "name": "main",
+    "run_id": "r-1",
+    "task": "pubmedqa",
+    "n": 1000,
+    "models": ["gemma-e2b-grounded-q4", "gemma-e2b-base-q4"],
+    "judges": ["opus", "sol"],
+    "judge_mode": "dual",
+    "calibration_status": "calibrated",
+    "judging_status": "complete",
+    "started_at": "2026-11-17T04:34:06Z",
+    "spent_usd": 53.68,
+    "summary_sha256": H,
+    "records_sha256": H,
+}
+COMPARISON = {
+    "plan": "configs/eval_plan.yaml",
+    "run": "main",
+    "model_a": "gemma-e2b-grounded-q4",
+    "model_b": "gemma-e2b-base-q4",
+    "metric": "headline",
+    "judge": "opus",
+    "diff": {"point": -0.03, "lo": -0.07, "hi": 0.01},
+    "p_value": 0.2,
+    "separated": False,
+    "verdict": "tie",
+}
+
 FIXTURES = {
     "TrainExample": {
         "id": "pqa-a-21645374",
@@ -117,12 +145,62 @@ FIXTURES = {
     "ResultsBundle": {
         "schema_version": "1.0",
         "evalkit_run_ids": ["r-1"],
-        "evalkit_version": "0.1.0+06591f8",
+        "evalkit_version": "06591f8de9b1",
         "judge_mode": "dual",
         "calibration_status": "calibrated",
         "gemma_family_check": {"opus": 0.9, "sol": 0.85},
-        "summary_paths": ["docs/results/summary.json"],
-        "primary": {"ft_minus_base:opus": IV},
+        "summary_paths": ["docs/results/main/summary.json"],
+        "runs": [RUN_REF],
+        "releases": [
+            {
+                "version": "v1",
+                "model": "gemma-e2b-grounded-q4",
+                "plan": "configs/eval_plan.yaml",
+                "plan_sha256": H,
+                "plan_status": "final",
+                "built_after_test_seen": False,
+                "runs": ["main"],
+                "train": TRAIN_RUN,
+                "adapter_sha256": H,
+                "audits": [
+                    {
+                        "name": "v1",
+                        "path": "docs/measurements/audit_labels.jsonl",
+                        "labelled": 50,
+                        "pass_rate": 0.94,
+                        "passed": True,
+                    }
+                ],
+                "parity": PARITY,
+                "probe": {
+                    "model": "gemma-e2b-grounded-q4",
+                    "n": 100,
+                    "accuracy_original": 0.79,
+                    "accuracy_paraphrase": 0.84,
+                    "drop": {"point": -0.05, "lo": -0.1, "hi": 0.0},
+                    "contamination_signal": False,
+                },
+                "artifacts": [ARTIFACT],
+            }
+        ],
+        "results": [
+            {
+                "run": "main",
+                "model": "gemma-e2b-grounded-q4",
+                "n": 1000,
+                "accuracy": IV,
+                "headline": {"opus": IV},
+                "groundedness_mean": {"opus": IV},
+                "citation_validity": IV,
+                "citation_precision": None,
+                "aim_citation_rate": None,
+            }
+        ],
+        "primary": {
+            "headline: gemma-e2b-grounded-q4 minus gemma-e2b-base-q4 (opus)": COMPARISON["diff"]
+        },
+        "primary_comparisons": [COMPARISON],
+        "secondary": [],
         "behaviour": [
             {
                 "rule": "B1",
@@ -131,14 +209,55 @@ FIXTURES = {
                 "value": 0.99,
                 "n": 1000,
                 "source": "evalkit:n_errors",
+                "run": "main",
             }
         ],
-        "parity": PARITY,
         "bench": BENCH,
-        "train": TRAIN_RUN,
-        "audit_pass_rate": 0.94,
-        "artifacts": [ARTIFACT],
+        "bench_variants": {"ft-Q4_K_M": BENCH},
+        "sample_read": [
+            {
+                "run": "main",
+                "model": "gemma-e2b-grounded-q4",
+                "drawn": 20,
+                "read": 20,
+                "findings": {"ok": 19, "model_fault": 1},
+                "complete": True,
+            }
+        ],
+        "spend_usd": 113.05,
         "lineage_ok": True,
+        "lineage_scope": "committed",
+        "lineage_problems": [],
+        "publish_blockers": [],
+    },
+    "SampleReadRow": {
+        "run": "main",
+        "model": "gemma-e2b-grounded-q4",
+        "case_id": "pqa-10808977",
+        "record_sha256": H,
+        "reference_label": "yes",
+        "label": "yes",
+        "answer": "Tailored interventions increased mammography use.",
+        "citations": [1],
+        "cited_sentences": {"1": "The aim was to test tailored interventions."},
+        "claims": [
+            {
+                "id": "pqa-10808977:gemma-e2b-grounded-q4:0",
+                "text": "Tailored interventions increased mammography use.",
+                "cited": [1],
+                "verdicts": {
+                    "opus": {
+                        "verdict": "unsupported",
+                        "evidence": [],
+                        "rationale": "Sentence 1 states the aim, not a result.",
+                        "citation_support": [{"n": 1, "supports": False, "role": "aim"}],
+                    }
+                },
+            }
+        ],
+        "finding": "model_fault",
+        "note": "cites the aim sentence for the finding",
+        "read_by": "builder",
     },
 }
 

@@ -22,7 +22,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-import evalkit
 import pyarrow.parquet as pq
 from evalkit.schemas import Case
 from evalkit.tasks import builtin_task, render_prompt
@@ -33,7 +32,12 @@ from ggh.lineage import StageManifest, sha256_file, stage_key, write_manifest
 from ggh.schemas import DataManifest
 
 CODE_VERSION = "1"
-EVALKIT_COMMIT = "06591f8de9b178078c971940a83019a6530fd119"  # D-28
+# The EvalKit that rendered and split the committed data (D-28), stamped into the manifest and
+# the stage key. Its sentence splitter, `pubmedqa` template and sampler are byte-identical in
+# the 0.4.0 the project now runs (D-56), so a rebuild reproduces the committed manifest; the
+# stamp names the data's EvalKit, not the installed one, and moves only if the data does.
+DATA_EVALKIT_VERSION = "0.1.0"
+DATA_EVALKIT_COMMIT = "06591f8de9b178078c971940a83019a6530fd119"
 SEED = 7
 N_VAL, N_DEV_EVAL = 2_000, 500
 SHINGLE = 8
@@ -344,9 +348,9 @@ def build(
     manifest = DataManifest(
         dataset=fetch.DATASET,
         dataset_revision=fetch.REVISION,
-        evalkit_version=f"{evalkit.__version__}+{EVALKIT_COMMIT[:7]}",
+        evalkit_version=f"{DATA_EVALKIT_VERSION}+{DATA_EVALKIT_COMMIT[:7]}",
         template_hash=template_hash(),
-        splitter_version=EVALKIT_COMMIT[:7],
+        splitter_version=DATA_EVALKIT_COMMIT[:7],
         seed=seed,
         counts={
             "train_pool": label_counts(pool),
@@ -371,7 +375,7 @@ def build(
         "n_dev_eval": n_dev,
         "shingle": SHINGLE,
         "jaccard_drop": JACCARD_DROP,
-        "evalkit": EVALKIT_COMMIT,
+        "evalkit": DATA_EVALKIT_COMMIT,
     }
     write_manifest(
         out,

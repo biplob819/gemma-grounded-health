@@ -69,6 +69,11 @@ Each decision below seeds `docs/decisions.md` as D-1 to D-33; later rulings are 
 | OWNER D-53 | The V2.2 benchmark plan: spend cap $25 (at the approval line; a trip stops the run and returns to the owner); primary comparisons v2 vs v1 and v2 vs the base model, under both judges with Holm, Haiku 5.5 and GPT-6 Luna reported but not primary; primary outcomes are the correct-and-grounded headline plus citation precision and the aim-citation rate; the judged bf16 parity check runs for v2 (about $2-4) | $40 cap approved up front; v2 against all four models (catalog VEV-03 as first written); headline only; skip judged parity | Owner ruling: the comparisons and outcomes are the ones v2 exists to answer |
 | OWNER D-54 | The Anthropic API credit ran out during the v2 dev check (after Haiku extraction and Opus's claim verdicts, before Opus's per-sentence citation check). The owner chose to finish with OpenAI for the gap: citation precision and the aim-citation rate are decided on GPT-6.1 Sol alone (a disclosed deviation from D-52's both-judges rule); the Opus headline is reported when Opus's last claim verdicts can be collected. Judges are not swapped, so v2 stays comparable with v1's published Opus and Sol numbers. V2.2 still needs Anthropic (Haiku extraction, Opus judging), so the account must be topped up first | Swap Opus for an OpenAI judge everywhere; re-run everything on OpenAI only | Owner ruling: "Use OpenAI" for the gap, disclosed; keeps v1 comparability and the cross-family judge design |
 | OWNER D-55 | The v2 dev check on GPT-6.1 Sol (D-54) passed both citation bars, citation precision 0.768 (bar 0.60, v1 0.404) and aim-citation rate 0.067 (bar 0.20, v1 0.590), and missed two: the headline is below v1's under both judges (Sol 0.350 vs 0.355; Opus 0.440-0.445 vs 0.465 from 259 of 261 claim verdicts; paired v2 - v1 intervals include zero) and label accuracy is 0.795 (bar 0.80, v1 0.880); Q4_K_M parity was 0.920 (bar 0.95, Q8_0 0.996). The owner chose to proceed with v2 at Q4_K_M as the release candidate into V2.2, with all three misses disclosed in the model card, README and results | Post-hoc Q8_0 dev check before choosing; another training round (v2.3); release v1 with its citation failure disclosed | Owner ruling: the citation fix is what v2 exists to show, and the misses are small and disclosed rather than tuned away; reconfirmed on 2026-11-19 after verifier round 1 showed the Opus headline bound |
+| D-56 | EvalKit moves from the D-28 git pin to its PyPI release `evalkit-harness==0.4.0` (tag v0.4.0, commit `f9cbc8e`; supersedes D-28's pin, and the ee59699 pin of the B5.12 runs). The config spec names `systems`. Committed v1 results stay as written by 06591f8 (ee59699 for `main_citation` and `dev_ground_v1`) and are never re-aggregated with 0.4: its completeness rule (EvalKit D-78) records final judge failures in `judge_errors`, holds a run pending on any other missing verdict, and scores unjudged claims unsupported. The data manifest keeps stamping the EvalKit that built the data (`0.1.0+06591f8`), since its splitter, template and sampler are unchanged in 0.4.0 and a rebuild reproduces the manifest byte for byte. Committed Kaggle notebooks keep the EvalKit line they ran with; new ones install 0.4.0 | Keep a git pin at the v0.4.0 commit; stay on 06591f8/ee59699 for V2.2 | EvalKit is now tagged and published, which D-28 waited for. Every cache key of the committed runs is unchanged (answers, claim sets, claim and citation verdicts; `JUDGE_PROMPT_HASH` 9a3a8246049f6f85, `CITATION_PROMPT_HASH` be34ebe577bc96ae; a test pins keys computed at ee59699), so V2.2 reuses the paid cache |
+| OWNER D-57 | V2.2 runs on the OpenAI API only, because the Anthropic credit is still exhausted (owner: "Use Open AI API"). GPT-6 Luna replaces Claude Haiku 5.5 as the claim extractor (same price tier, and like Haiku a contestant) and GPT-6.1 Sol is the only judge (no Opus). Owner chose the scope "Re-score the 3 Gemmas": the base, v1 and v2 answers (base and v1 from EvalKit's answer cache, no regeneration) are all re-extracted by Luna and judged by Sol, so both primary comparisons share one extractor and one judge; Holm runs over the 6 primary tests (2 pairs x 3 outcomes x 1 judge). Haiku 5.5 and GPT-6 Luna are not re-scored: their published E3.2 and rescore numbers are shown beside v2's, not compared with it. The off-scope, probe and judged-parity runs use the same extractor and judge. Supersedes D-53's two-judge, four-cached-model design; D-53's $25 cap holds across all V2.2 runs. v1's published numbers stand | Wait for an Anthropic top-up; v2 only new on the cached Haiku claims (about $5-8, extractor differs across each comparison); re-score all five models (about $40-45, over the cap) | Owner ruling via the ask widget: OpenAI now; same extractor and judge on both sides of every primary comparison, within the cap |
+| OWNER D-58 | O6.1 (optional DPO: rule-based preference pairs, one Kaggle DPO run from the fine-tune, an exploratory EvalKit result in its own table) is cut from the build. The release path (E3.3, R4.1-R4.5, P5.1) goes ahead without it; its catalog rows DPO-01..04 are removed from the graph after V2.2 | Build it after the v1.0.0 release; build it before the release nodes (about a day's delay) | Owner ruling via the ask widget: "Cut O6.1". v2's citation-target fix addresses the failure DPO would have targeted; saves a training run and about $5-10 of judging |
+| OWNER D-59 | Judge calibration for E3.3 (OWNER D-24): GGH's `calibrated` stamp reads a committed copy of EvalKit's `calibration.json` for its `pubmedqa` calibration run (r-e8dac378d2d3), checking task, rubric hash and each judge; no committed summary is rewritten (v1's included). The off-scope and probe runs are exempt (their tasks cannot be covered by a `pubmedqa` calibration) and say so. A judge is stamped calibrated only if its held-out kappa's 95% lower bound is at least 0.4 (EvalKit's criterion-calibration bar); a judge under it is reported with its kappa and the miss disclosed, and its numbers stay published. The owner labels on the laptop with EvalKit's existing page | Re-stamp each GGH run's summary from the calibration (EvalKit's own way, rewrites committed summaries); stamp at any kappa and report it | Owner ruling via the ask widget: read EvalKit's file; bar at lower bound 0.4; laptop now |
+| OWNER D-60 | The calibration labels (OWNER D-24, D-59) are made by a model, not the owner (owner: "Label with a model, i am not an expert, make a great system prompt and label"). The labeller is Claude Opus 5.5, as fresh Claude Code subagents in the build session (no API call), each given only `configs/labeller_prompt.md` (sha256 0cb60eae08fb113d…) and a blind batch (key, claim, cited sentences; no model names, no judge verdicts); the 20-answer relabel is done later by a separate fresh subagent in a new order. Every place that reports calibration says the reference labels are a model's (Claude Opus 5.5), not a human expert's. GPT-6.1 Sol's agreement with them is an agreement between two model families and can carry D-59's stamp, worded "agreement with a Claude Opus 5.5 reference labeller". Claude Opus 5.5's own agreement is the same model agreeing with itself, so it is reported but never stamped calibrated | The owner labels as D-24 planned (about 2.5-4 h); an OpenAI model labels (the same family as Sol, the judge that matters for v2) | Owner ruling in chat (label with a model); the builder chose Claude Opus 5.5 because it is independent of GPT-6.1 Sol, the only V2.2 judge, and the stamp wording says who labelled |
 
 ---
 
@@ -470,7 +475,7 @@ B8 passes for a model only if the owner marks zero of its 20 answers as giving p
 - EvalKit's Aggregate supplies everything: bootstrap 95% intervals, paired bootstrap on shared cases, and Holm correction across the model pairs in the run (EvalKit §6).
 - **Pre-registered primary comparisons** (written in `configs/eval_plan.yaml` and hashed before the main run): fine-tuned minus base, fine-tuned minus Haiku 5.5, fine-tuned minus GPT-6 Luna, each on the headline (correct and fully grounded) per judge. Everything else is reported as secondary.
 - A gap is called "separated" only under EvalKit's rule. Otherwise it is reported as a tie, whichever way the point estimate falls (PRD success metrics).
-- The DPO variant (O6.1), if built, is exploratory and reported in its own table.
+- The DPO variant (O6.1) was cut (OWNER D-58).
 
 ### 7.5 Judge calibration and the Gemma-family check
 
@@ -601,10 +606,10 @@ gemma-grounded-health/
 
 Status vocabulary: `not-started | spec | building | green`.
 
-### 13.2 Build graph: 20 nodes in seven waves
+### 13.2 Build graph: 19 nodes in six waves (O6.1 cut, OWNER D-58)
 
 **Release (all Must and Should stories): 18 nodes.** W0.1, N1.1–N1.3, E3.1, T2.1, T2.2, X3.1, X3.2, E3.2, V2.1, V2.2 (OWNER D-43), E3.3, R4.1–R4.5.
-**Full scope: 20 nodes**, adding P5.1 (write-up) and O6.1 (DPO, Could).
+**Full scope: 19 nodes**, adding P5.1 (write-up). O6.1 (DPO, Could) was cut by OWNER D-58.
 
 | Node | Title | Depends on | Deliverable (what exists when it is green) | Stories |
 | --- | --- | --- | --- | --- |
@@ -627,7 +632,6 @@ Status vocabulary: `not-started | spec | building | green`.
 | **R4.4** | EvalKit upstream | E3.3, R4.2 | EvalKit PR (docs, example config) and the Gemma report page, built under EvalKit's harness | US6 |
 | **R4.5** | Open-source release v1.0.0 | R4.3, R4.4 | Reproduce-from-scratch docs, README with results, CITATION.cff, tagged v1.0.0 GitHub release with notes linking model, GGUF, Space and results | US3, US4, US7 |
 | **P5.1** | Write-up | R4.5 | "How I built it" note, decision log summary, project page text with generated numbers, video script | — |
-| **O6.1** | DPO (optional) | T2.2, E3.3 | Rule-based preference pairs, one DPO run, exploratory EvalKit result in its own table | US8 |
 
 Waves: **W0** harness → **N1** data → **T2** training, alongside **E3.1** serving → **X3** export and laptop → **E3** evaluation → **R4** release, ending in the v1.0.0 open-source release (R4.5) → **P5/O6** write-up and optional DPO.
 
@@ -658,8 +662,6 @@ graph LR
   R43 --> R45[R4.5 OSS release v1.0.0]
   R44 --> R45
   R45 --> P51[P5.1 Write-up]
-  T22 --> O61[O6.1 DPO]
-  E33 --> O61
 ```
 
 **Dependency levels.**
@@ -675,7 +677,7 @@ graph LR
 | 6 | X3.1 |
 | 7 | X3.2, E3.2 |
 | 8 | E3.3 |
-| 9 | R4.1, O6.1 |
+| 9 | R4.1 |
 | 10 | R4.2 |
 | 11 | R4.3, R4.4 |
 | 12 | R4.5 |
@@ -704,7 +706,6 @@ graph LR
 | 15 | R4.4 | |
 | 16 | R4.5 | Tag v1.0.0 |
 | 17 | P5.1 | |
-| 18 | O6.1 | Only if time remains; never changes the released model |
 
 **Pacing (OWNER D-23).** No calendar milestones: the graph is built in one continuous push in the order above. Wall-clock is governed by three waits, each overlapped with other work:
 
@@ -937,14 +938,7 @@ Each row becomes one line in `docs/graph/catalog.tsv` with status `not-started`.
 | PUB-03 | Decision log summary and one-page PRD link | PRD deliverables |
 | PUB-04 | 90-second video script, including the offline laptop segment | PRD deliverables |
 
-**O6.1 DPO (optional)**
-
-| Cap | Capability | Trace |
-| --- | --- | --- |
-| DPO-01 | Rule-based pairs: chosen = filtered target; rejected = the same answer with an unsupported sentence, an invalid citation, or advice added | US8, NFR1 |
-| DPO-02 | One DPO run on Kaggle from the T2.2 adapter, selected on dev only | D-4 |
-| DPO-03 | Exploratory EvalKit run, reported in its own table | §7.4 |
-| DPO-04 | Never replaces the released model without a new owner ruling | — |
+**O6.1 DPO** was cut (OWNER D-58); its capabilities DPO-01..04 are removed.
 
 ### 13.5 Node lifecycle
 

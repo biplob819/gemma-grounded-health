@@ -57,7 +57,19 @@ def test_committed_notebook_equals_its_template():
     commit = src.split("git checkout -q ")[1][:40]
     tool = src.split("--tool ")[1].split()[0].strip('")')
     steps = int(src.split("--max-steps ")[1].split('"')[0]) if "--max-steps" in src else None
-    assert text == notebook.dumps(notebook.render(commit, tool, steps))
+    # the EvalKit it was rendered with: the D-28 git pin for the committed runs (not re-rendered)
+    evalkit = src.split("pip install -q --no-deps '")[1].split("'")[0]
+    assert text == notebook.dumps(notebook.render(commit, tool, steps, evalkit=evalkit))
+
+
+def test_new_notebooks_install_the_d56_evalkit_release():
+    from ggh.evals.config import EVALKIT_REQUIREMENT
+
+    src = code(notebook.render(SHA, "trl", None))
+    assert f"pip install -q --no-deps '{EVALKIT_REQUIREMENT}'" in src
+    assert EVALKIT_REQUIREMENT == "evalkit-harness==0.4.0"
+    with pytest.raises(ValueError, match="evalkit"):
+        notebook.render(SHA, "trl", None, evalkit="evalkit-harness>=0.4")
 
 
 def test_committed_v2_notebook_equals_its_template_and_uses_the_v2_recipe():
@@ -66,8 +78,9 @@ def test_committed_v2_notebook_equals_its_template_and_uses_the_v2_recipe():
     commit = src.split("git checkout -q ")[1][:40]
     assert "--config configs/recipe_v2.yaml" in src and "ggh dev-eval" in src
     assert src.count("--config configs/recipe_v2.yaml") == 2  # train and dev-eval
+    evalkit = src.split("pip install -q --no-deps '")[1].split("'")[0]  # as rendered (pre-D-56)
     assert text == notebook.dumps(
-        notebook.render(commit, "unsloth", None, "configs/recipe_v2.yaml")
+        notebook.render(commit, "unsloth", None, "configs/recipe_v2.yaml", evalkit=evalkit)
     )
     meta_path = ROOT / "notebooks" / "v2" / "kernel-metadata.json"
     meta = json.loads(meta_path.read_text(encoding="utf-8"))

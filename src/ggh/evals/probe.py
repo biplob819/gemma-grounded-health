@@ -218,3 +218,36 @@ def paired_drop(orig: dict[str, bool], para: dict[str, bool], seed: int = SEED,
             "accuracy_paraphrase": sum(para[i] for i in ids) / n,
             "drop": {"point": point, "lo": lo, "hi": hi},
             "contamination_signal": lo > 0}  # fmt: skip
+
+
+REPORT_V2 = Path("docs") / "measurements" / "probe_report_v2.json"
+METHOD = ("accuracy on original minus paraphrased wording, paired bootstrap 95% interval, "
+          "10,000 resamples, seed 7 (EvalKit DATA_CARD, D-42)")  # fmt: skip
+# per release: the two EvalKit runs, the models compared, and where the report goes
+RELEASES: dict[str, tuple[str, str, tuple[str, ...], Path]] = {
+    "v1": ("probe_original", "probe_paraphrase",
+           ("gemma-e2b-base-q4", "gemma-e2b-grounded-q4"), REPORT),
+    "v2": ("probe_original_v2", "probe_paraphrase_v2", ("gemma-e2b-grounded-v2-q4",), REPORT_V2),
+}  # fmt: skip
+
+
+def report(root: Path, release: str = "v1") -> dict[str, Any]:
+    """The probe report for a release from its two committed EvalKit run folders: each model's
+    `paired_drop`, with both run ids."""
+    from ggh.results.runs import Run
+
+    if release not in RELEASES:
+        raise ValueError(f"release must be one of {sorted(RELEASES)}, got {release!r}")
+    orig_name, para_name, models, _ = RELEASES[release]
+    orig, para = Run(root, orig_name), Run(root, para_name)
+    o, p = orig.raw_records, para.raw_records
+    return {"method": METHOD,
+            "runs": {"original": orig.manifest["run_id"], "paraphrase": para.manifest["run_id"]},
+            "models": {m: paired_drop(correct_by_case(o, m), correct_by_case(p, m))
+                       for m in models}}  # fmt: skip
+
+
+def write_report(root: Path, release: str = "v1") -> Path:
+    out = root / RELEASES[release][3]
+    out.write_text(json.dumps(report(root, release), indent=2) + "\n", encoding="utf-8")
+    return out

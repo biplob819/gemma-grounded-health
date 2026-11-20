@@ -1,0 +1,30 @@
+{
+  "stage": "targets",
+  "code_version": "1",
+  "key": "11fec5f2fd418f86965412737cbbe11da5400db01bd5d9b1ee3442c75a114f9f",
+  "inputs": {
+    "artifacts/data/val.jsonl": "73bf3f4ca5715e0bd552e34b541b44949587aba9a14bf7149d3bada81ece628a",
+    "artifacts/data/train_pool.jsonl": "2b0fbc29466ef0f44f07a8538e5b301a1fd037412472109bbb9c841514c0eb8d"
+  },
+  "outputs": {
+    "artifacts/targets/train.jsonl": "93d8daa30b55b15f3b5fe41f443573cf94a81167c1f60e04140e2a3b63bfd13c",
+    "artifacts/targets/val.jsonl": "c0bd8f2038024e28b8a7e65454a9814e26ecc361be7c97ed80a1f52808a3de89",
+    "artifacts/targets/nli_scores.jsonl": "78a8f8d3f01207427ced54f79e4f45e0a93a1995b76b4fcafe43ba4766f27866",
+    "artifacts/targets/audit_sample.jsonl": "b50b76148df25ad9beb53ae71439f26aaced85b14dc7173da5380348e20272d7",
+    "artifacts/targets/drop_report.json": "34da7f4f8231da2c47628d635da33e033a81e8753b75235c2f1264a2ded02b48",
+    "docs/measurements/targets_drop_report.json": "34da7f4f8231da2c47628d635da33e033a81e8753b75235c2f1264a2ded02b48"
+  },
+  "params": {
+    "seed": 7,
+    "cap": 20000,
+    "rules_sha256": "92ea28fbd7e80352e6158dd95eec3449ac0de97b3c2c583c451737c9a9167e19",
+    "nli_model": "cross-encoder/nli-deberta-v3-base@6c749ce3425cd33b46d187e45b92bbf96ee12ec7"
+  },
+  "seed": 7,
+  "parents": [
+    "e1a3f6bc37ab7be4e335b18e76b0b3bf442607f196d61546a0466ffa92378066"
+  ],
+  "started_at": "2026-11-18T10:03:17.240417Z",
+  "finished_at": "2026-11-18T10:04:30.614132Z",
+  "host": "local"
+}

@@ -16,12 +16,15 @@ from pathlib import Path
 from typing import Any
 
 from evalkit.config import load_run_config
-from evalkit.pipeline.extract import EXTRACTOR_VERSION
-from evalkit.pipeline.judge import JUDGE_PROMPT_HASH
+from evalkit.identity import EXTRACTOR_VERSION, JUDGE_PROMPT_HASH
 from evalkit.schemas import RunConfig
 from evalkit.tasks import builtin_task
 
-from ggh.data.build import EVALKIT_COMMIT
+# The EvalKit release this project runs (D-56): the PyPI version pinned in pyproject.toml and
+# the commit its tag v0.4.0 names, which a run stamps (EVALKIT_GIT_SHA) and reuse compares.
+EVALKIT_VERSION = "0.4.0"
+EVALKIT_COMMIT = "f9cbc8e5396c4fc638021cb426cc34e2d6853d78"
+EVALKIT_REQUIREMENT = f"evalkit-harness=={EVALKIT_VERSION}"
 
 MAIN = Path("configs") / "evalkit.yaml"
 DEV = Path("configs") / "evalkit_dev.yaml"
@@ -45,6 +48,7 @@ SPEC: dict[str, Any] = {
     "max_cost_usd": 70.0,
     "efforts": {},
     "thresholds": (),
+    "systems": {},  # EvalKit's systems under test (0.2+); this project runs models only
 }
 # the dev config may differ from the main one only here
 DEV_MAY_DIFFER = frozenset({"models", "endpoints", "max_cost_usd"})
@@ -52,7 +56,7 @@ DEV_MAY_DIFFER = frozenset({"models", "endpoints", "max_cost_usd"})
 
 def _value(cfg: RunConfig, field: str) -> Any:
     v = getattr(cfg, field)
-    return dict(v) if field in ("endpoints", "concurrency", "efforts") else v
+    return dict(v) if field in ("endpoints", "concurrency", "efforts", "systems") else v
 
 
 def config_problems(root: Path) -> list[str]:
@@ -72,19 +76,34 @@ def config_problems(root: Path) -> list[str]:
     return problems
 
 
-def pinned_commit(root: Path) -> str:
-    """The EvalKit commit pinned in pyproject.toml."""
+def pinned_version(root: Path) -> str:
+    """The EvalKit version pinned (`==`) in pyproject.toml."""
     deps = tomllib.loads((root / "pyproject.toml").read_text(encoding="utf-8"))["project"][
         "dependencies"
     ]
     pins = [d for d in deps if d.startswith("evalkit-harness")]
-    if len(pins) != 1 or "@" not in pins[0]:
-        raise ValueError("pyproject.toml must pin evalkit-harness to one git commit")
-    return pins[0].rsplit("@", 1)[1].strip()
+    if len(pins) != 1 or "==" not in pins[0] or "@" in pins[0]:
+        raise ValueError("pyproject.toml must pin evalkit-harness to one release with ==")
+    return pins[0].split("==", 1)[1].strip()
+
+
+def pinned_commit(root: Path) -> str:
+    """The commit of the pinned EvalKit release (its tag), as a run stamps it."""
+    version = pinned_version(root)
+    if version != EVALKIT_VERSION:
+        raise ValueError(f"no known commit for EvalKit {version}; D-56 pins {EVALKIT_VERSION}")
+    return EVALKIT_COMMIT
+
+
+def installed_version() -> str:
+    from importlib.metadata import version
+
+    return version("evalkit-harness")
 
 
 def installed_commit() -> str | None:
-    """The commit the installed EvalKit was built from (PEP 610 direct_url.json)."""
+    """The commit a git install of EvalKit was built from (PEP 610 direct_url.json); None for
+    a release installed from PyPI, which carries no commit."""
     from importlib.metadata import distribution
 
     text = distribution("evalkit-harness").read_text("direct_url.json")
@@ -95,12 +114,18 @@ def installed_commit() -> str | None:
 
 def pin_problems(root: Path) -> list[str]:
     problems = []
-    pin = pinned_commit(root)
-    if pin != EVALKIT_COMMIT:
-        problems.append(f"pyproject pins EvalKit {pin[:12]}, D-28 says {EVALKIT_COMMIT[:12]}")
-    got = installed_commit()
+    pin = pinned_version(root)
+    if pin != EVALKIT_VERSION:
+        problems.append(f"pyproject pins EvalKit {pin}, D-56 says {EVALKIT_VERSION}")
+    got = installed_version()
     if got != pin:
-        problems.append(f"installed EvalKit is {str(got)[:12]}, pyproject pins {pin[:12]}")
+        problems.append(f"installed EvalKit is {got}, pyproject pins {pin}")
+    commit = installed_commit()
+    if commit is not None and commit != EVALKIT_COMMIT:
+        problems.append(
+            f"installed EvalKit is a git build of {commit[:12]}, not v{EVALKIT_VERSION}"
+            f" ({EVALKIT_COMMIT[:12]})"
+        )
     return problems
 
 

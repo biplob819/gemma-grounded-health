@@ -203,14 +203,16 @@ def test_evalkit_check_compares_the_pinned_commit(tmp_path, monkeypatch, capsys)
     run = tmp_path / "run"
     run.mkdir()
     (run / "run.json").write_text(json.dumps({"seed": 7}), encoding="utf-8")
-    shutil.copy(FIX / "record.json", run / "records.jsonl")
+    # the fixture record as a run at the pinned release would stamp it (EVALKIT_GIT_SHA)
+    rec = json.loads((FIX / "record.json").read_text(encoding="utf-8"))
+    rec["git_sha"] = config.pinned_commit(ROOT)
+    (run / "records.jsonl").write_text(json.dumps(rec) + "\n", encoding="utf-8")
     cli.main(["evalkit-check", "--root", str(ROOT), "--reference", str(run),
               "--reference-config", str(ROOT / "configs" / "evalkit.yaml")])  # fmt: skip
-    assert seen["sha"] == config.pinned_commit(ROOT)
+    assert seen["sha"] == config.pinned_commit(ROOT) == config.EVALKIT_COMMIT
     out = json.loads(capsys.readouterr().out)
-    # the fixture run stamped the pinned commit, so the version is not a blocker; passing any
+    # the run stamped the pinned commit, so the version is not a blocker; passing any
     # other string (e.g. "unknown") would make it one
-    assert json.loads((FIX / "record.json").read_text(encoding="utf-8"))["git_sha"] == seen["sha"]
     assert not any(p.startswith("evalkit:") for p in out["reuse_problems"])
 
 

@@ -201,3 +201,17 @@ def test_freeze_out_overrides_the_folder_and_generations_must_be_the_selected_st
     gens.write_text(gens.read_text(encoding="utf-8").replace('"step": 340', '"step": 300', 1),
                     encoding="utf-8")  # fmt: skip
     assert cli.main(_freeze_args(root, adapter, files, "--generations", str(gens))) == 2
+
+
+def test_serve_hf_serves_v2_bf16_under_the_judged_parity_config_model_id():
+    from ggh.evals.config import load_run_config
+    from ggh.serve import hf
+
+    assert hf.MODEL_IDS == {"ft": hf.MODEL_ID, "ft2": "gemma-e2b-grounded-v2-bf16"}
+    parity = load_run_config(ROOT / "configs/evalkit_v2_parity.yaml")
+    assert list(parity.models) == [hf.MODEL_IDS["ft2"]]
+    assert parity.endpoints[hf.MODEL_IDS["ft2"]].endswith(":8084/v1")
+    parser = cli.build_parser()
+    args = parser.parse_args(["serve-hf", "--model", "ft2", "--port", "8084"])
+    assert args.model == "ft2" and args.port == 8084
+    assert parser.parse_args(["serve-hf"]).model == "ft"  # v1 unchanged

@@ -1,0 +1,21 @@
+{
+  "n": 200,
+  "run_bf16": "r-ec7cd4e9573c",
+  "run_q4": "r-715fc213a8a5",
+  "bf16": {
+    "accuracy": 0.715,
+    "headline_gpt-6.1-sol": 0.365
+  },
+  "q4_k_m": {
+    "accuracy": 0.705,
+    "headline_gpt-6.1-sol": 0.395
+  },
+  "bf16_minus_q4_headline": {
+    "gpt-6.1-sol": {
+      "point": -0.03,
+      "lo": -0.09,
+      "hi": 0.03
+    }
+  },
+  "method": "paired bootstrap 95%, 10,000 resamples, seed 7; reported, not gated (Tech Spec \u00a76)"
+}
