@@ -12,6 +12,87 @@
   "judge_mode": "dual",
   "calibration_status": "uncalibrated",
   "gemma_family_check": null,
+  "calibration": [
+    {
+      "judge": "claude-opus-5-5",
+      "task": "pubmedqa",
+      "judge_prompt_hash": "9a3a8246049f6f85",
+      "split": "heldout",
+      "n_claims": 231,
+      "coverage": 1.0,
+      "agreement": 0.7705627705627706,
+      "kappa": {
+        "point": 0.39668851328044147,
+        "lo": 0.26339506560472503,
+        "hi": 0.5107568717386441
+      },
+      "bar": 0.4,
+      "meets_bar": false,
+      "reference_labeller": "claude-opus-5-5 (configs/labeller_prompt.md, OWNER D-60)",
+      "reference_model": "claude-opus-5-5",
+      "status": "not_stampable_self_reference",
+      "wording": "claude-opus-5-5: never stamped calibrated: the reference labels are its own model's (Claude Opus 5.5), so its held-out kappa 0.397 [0.263, 0.511] on 231 pubmedqa claims is the same model agreeing with itself (OWNER D-60), and its lower bound is under the 0.4 bar; reported only, its numbers stay published",
+      "source": "docs/measurements/calibration/evalkit_pubmedqa_calibration.json",
+      "scored_at": "2026-11-19T16:35:42.780380Z",
+      "gemma_family": null
+    },
+    {
+      "judge": "gpt-6.1-sol",
+      "task": "pubmedqa",
+      "judge_prompt_hash": "9a3a8246049f6f85",
+      "split": "heldout",
+      "n_claims": 231,
+      "coverage": 1.0,
+      "agreement": 0.8354978354978355,
+      "kappa": {
+        "point": 0.5978191148171905,
+        "lo": 0.4680856337329988,
+        "hi": 0.7112119349604802
+      },
+      "bar": 0.4,
+      "meets_bar": true,
+      "reference_labeller": "claude-opus-5-5 (configs/labeller_prompt.md, OWNER D-60)",
+      "reference_model": "claude-opus-5-5",
+      "status": "calibrated",
+      "wording": "gpt-6.1-sol: calibrated, held-out kappa 0.598 [0.468, 0.711] on 231 pubmedqa claims, lower bound at least 0.4 (OWNER D-59): agreement with a Claude Opus 5.5 reference labeller (a model's labels, not a human expert's; OWNER D-60). Gemma-family check (40 claims from main_v2): agreement 0.950, kappa 0.893 [0.722, 1.000]",
+      "source": "docs/measurements/calibration/evalkit_pubmedqa_calibration.json",
+      "scored_at": "2026-11-19T16:35:42.780380Z",
+      "gemma_family": {
+        "run": "main_v2",
+        "run_id": "r-715fc213a8a5",
+        "judge_prompt_hash": "9a3a8246049f6f85",
+        "n_claims": 40,
+        "coverage": 1.0,
+        "agreement": 0.95,
+        "kappa": {
+          "point": 0.8933333333333332,
+          "lo": 0.7222222222222222,
+          "hi": 1.0
+        },
+        "by_model": {
+          "gemma-e2b-base-q4": 0.95,
+          "gemma-e2b-grounded-q4": 0.9,
+          "gemma-e2b-grounded-v2-q4": 1.0
+        },
+        "source": "docs/measurements/gemma_family_report.json"
+      }
+    }
+  ],
+  "labeller_consistency": {
+    "labeller": "claude-opus-5-5 (fresh Claude Code subagents, OWNER D-60)",
+    "prompt": "configs/labeller_prompt.md",
+    "prompt_sha256": "0cb60eae08fb113d90c0d5b68a3c521dc847c2cf4b3b85cfe3d2c2742020dc14",
+    "claims": 88,
+    "answers": 20,
+    "identical": 81,
+    "kappa": {
+      "point": 0.806775,
+      "lo": 0.66186,
+      "hi": 0.927891
+    },
+    "method": "evalkit.calibration.cluster_kappa, answer-clustered, 10,000 resamples, seed 7",
+    "source": "docs/measurements/calibration/labeller.json"
+  },
   "summary_paths": [
     "docs/results/main/summary.json",
     "docs/results/main_citation/summary.json",
@@ -43,7 +124,8 @@
       "spent_usd": 53.68107,
       "summary_sha256": "11b1ae81f2dd251f7b45a042715e9a4f7f5ba6594ccb45bec96a17b9d21ddbe1",
       "records_sha256": "086d626f131e04f76dea134ca75d3ef01bd4748868950f43e63855575fb57b0b",
-      "extractor": "claude-haiku-5-5"
+      "extractor": "claude-haiku-5-5",
+      "calibration_exempt": null
     },
     {
       "name": "main_citation",
@@ -67,7 +149,8 @@
       "spent_usd": 48.239756,
       "summary_sha256": "8377d6aab5fb61567dc08182442f9dd9f0ea7dbb2277422f6e3c8f816e7daafd",
       "records_sha256": "0ca906588e0eca793aa5e43559d8199c8156a91869fdf87d9db6bd576a774f0f",
-      "extractor": "claude-haiku-5-5"
+      "extractor": "claude-haiku-5-5",
+      "calibration_exempt": null
     },
     {
       "name": "offscope",
@@ -91,7 +174,8 @@
       "spent_usd": 1.23623,
       "summary_sha256": "791af3d302fe1a20da10fdcbd6e012bd56f57e9bf63d629b9e0089e861c5aa9a",
       "records_sha256": "4c4431056201221b4429f547860a06b8aa14002ad46362a1a265f00e13bf56d8",
-      "extractor": "claude-haiku-5-5"
+      "extractor": "claude-haiku-5-5",
+      "calibration_exempt": "exempt: task ggh_offscope is not pubmedqa, so the pubmedqa calibration cannot cover it (OWNER D-59); its judges' numbers here carry no calibrated stamp"
     },
     {
       "name": "parity",
@@ -112,7 +196,8 @@
       "spent_usd": 1.029112,
       "summary_sha256": "7ee318a17a8de17e9d13711629f256836582c3a5668207348f0410d2ab3a18c0",
       "records_sha256": "a994adf31738f4dfef9fd4c4e92e842597f240f635d504bf418c2c42a9efbfa8",
-      "extractor": "claude-haiku-5-5"
+      "extractor": "claude-haiku-5-5",
+      "calibration_exempt": null
     },
     {
       "name": "probe_original",
@@ -134,7 +219,8 @@
       "spent_usd": 1.403682,
       "summary_sha256": "9dbae70dcbadefa996fe8132e3f0a4d86a1c9e202b37b6131d70ae9b373023a8",
       "records_sha256": "97a613fcbbad72069983b75f2ab33d5b84784fdd338c90f65a71c2fddfd69cae",
-      "extractor": "claude-haiku-5-5"
+      "extractor": "claude-haiku-5-5",
+      "calibration_exempt": "exempt: task ggh_probe_original is not pubmedqa, so the pubmedqa calibration cannot cover it (OWNER D-59); its judges' numbers here carry no calibrated stamp"
     },
     {
       "name": "probe_paraphrase",
@@ -156,7 +242,8 @@
       "spent_usd": 1.017916,
       "summary_sha256": "4a56d32d734c96bc77c670bf6ad2061d61bdda19d42f2c6ef87d46714d7effcb",
       "records_sha256": "9435a9cbf274ef995acc96c5139ce2963fe9c19f1c5bb7a2312c79f985e6fc47",
-      "extractor": "claude-haiku-5-5"
+      "extractor": "claude-haiku-5-5",
+      "calibration_exempt": "exempt: task ggh_probe_paraphrase is not pubmedqa, so the pubmedqa calibration cannot cover it (OWNER D-59); its judges' numbers here carry no calibrated stamp"
     }
   ],
   "releases": [
@@ -329,7 +416,12 @@
           "llama_cpp_commit": "b12421",
           "parent_key": "f5dccf8a3851c0497fe4d14f20388c9477791855a4f484c4754814968295fbf3"
         }
-      ]
+      ],
+      "calibration_judges": [
+        "claude-opus-5-5",
+        "gpt-6.1-sol"
+      ],
+      "calibration_status": "uncalibrated"
     }
   ],
   "results": [
@@ -2218,36 +2310,36 @@
       "rule": "B5",
       "model": "gemma-e2b-base-q4",
       "metric": "sample_read_ok_share",
-      "value": null,
-      "n": 0,
-      "source": "owner_review",
+      "value": 0.3,
+      "n": 20,
+      "source": "model_review",
       "run": "main"
     },
     {
       "rule": "B5",
       "model": "gemma-e2b-grounded-q4",
       "metric": "sample_read_ok_share",
-      "value": null,
-      "n": 0,
-      "source": "owner_review",
+      "value": 0.45,
+      "n": 20,
+      "source": "model_review",
       "run": "main"
     },
     {
       "rule": "B5",
       "model": "claude-haiku-5-5",
       "metric": "sample_read_ok_share",
-      "value": null,
-      "n": 0,
-      "source": "owner_review",
+      "value": 0.55,
+      "n": 20,
+      "source": "model_review",
       "run": "main"
     },
     {
       "rule": "B5",
       "model": "gpt-6-luna",
       "metric": "sample_read_ok_share",
-      "value": null,
-      "n": 0,
-      "source": "owner_review",
+      "value": 0.95,
+      "n": 20,
+      "source": "model_review",
       "run": "main"
     },
     {
@@ -2263,9 +2355,9 @@
       "rule": "B8",
       "model": "gemma-e2b-base-q4",
       "metric": "gives_advice_count",
-      "value": null,
-      "n": 0,
-      "source": "owner_review",
+      "value": 0.0,
+      "n": 20,
+      "source": "model_review",
       "run": "offscope"
     },
     {
@@ -2281,9 +2373,9 @@
       "rule": "B8",
       "model": "gemma-e2b-grounded-q4",
       "metric": "gives_advice_count",
-      "value": null,
-      "n": 0,
-      "source": "owner_review",
+      "value": 2.0,
+      "n": 20,
+      "source": "model_review",
       "run": "offscope"
     },
     {
@@ -2299,9 +2391,9 @@
       "rule": "B8",
       "model": "claude-haiku-5-5",
       "metric": "gives_advice_count",
-      "value": null,
-      "n": 0,
-      "source": "owner_review",
+      "value": 1.0,
+      "n": 20,
+      "source": "model_review",
       "run": "offscope"
     },
     {
@@ -2317,9 +2409,9 @@
       "rule": "B8",
       "model": "gpt-6-luna",
       "metric": "gives_advice_count",
-      "value": null,
-      "n": 0,
-      "source": "owner_review",
+      "value": 0.0,
+      "n": 20,
+      "source": "model_review",
       "run": "offscope"
     }
   ],
@@ -2435,20 +2527,57 @@
       }
     }
   },
-  "sample_read": [],
+  "sample_read": [
+    {
+      "run": "main",
+      "model": "gemma-e2b-base-q4",
+      "drawn": 20,
+      "read": 20,
+      "findings": {
+        "model_fault": 13,
+        "ok": 6,
+        "pipeline_fault": 1
+      },
+      "complete": true
+    },
+    {
+      "run": "main",
+      "model": "gemma-e2b-grounded-q4",
+      "drawn": 20,
+      "read": 20,
+      "findings": {
+        "model_fault": 11,
+        "ok": 9
+      },
+      "complete": true
+    },
+    {
+      "run": "main",
+      "model": "claude-haiku-5-5",
+      "drawn": 20,
+      "read": 20,
+      "findings": {
+        "model_fault": 7,
+        "ok": 11,
+        "pipeline_fault": 2
+      },
+      "complete": true
+    },
+    {
+      "run": "main",
+      "model": "gpt-6-luna",
+      "drawn": 20,
+      "read": 20,
+      "findings": {
+        "ok": 19,
+        "pipeline_fault": 1
+      },
+      "complete": true
+    }
+  ],
   "spend_usd": 118.035054,
   "lineage_ok": true,
   "lineage_scope": "committed",
   "lineage_problems": [],
-  "publish_blockers": [
-    "judges are uncalibrated (OWNER D-24: calibration before E3.3 is green)",
-    "main: B5 sample_read_ok_share for claude-haiku-5-5 is not reviewed",
-    "main: B5 sample_read_ok_share for gemma-e2b-base-q4 is not reviewed",
-    "main: B5 sample_read_ok_share for gemma-e2b-grounded-q4 is not reviewed",
-    "main: B5 sample_read_ok_share for gpt-6-luna is not reviewed",
-    "offscope: B8 gives_advice_count for claude-haiku-5-5 is not reviewed",
-    "offscope: B8 gives_advice_count for gemma-e2b-base-q4 is not reviewed",
-    "offscope: B8 gives_advice_count for gemma-e2b-grounded-q4 is not reviewed",
-    "offscope: B8 gives_advice_count for gpt-6-luna is not reviewed"
-  ]
+  "publish_blockers": []
 }

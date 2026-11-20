@@ -2,7 +2,7 @@
 
 This project fine-tunes a small open Gemma model (Gemma 4 E2B, 3.3 GB at 4-bit, runs offline on a laptop) to answer health research questions **only from a given abstract**, with a yes / no / maybe label, a short answer and the numbered sentences it relied on. Every model is scored with [EvalKit](https://github.com/biplob819/evalkit) on all 1,000 expert-labelled PubMedQA questions.
 
-> **Status.** v1 and v2 are trained and benchmarked. Next: the results bundle (build node E3.3), then the Hugging Face release with the recipe, a laptop GGUF and a demo (nodes R4.2 and R4.3). Research only, not medical advice.
+> **Status.** v1 and v2 are trained and benchmarked. Next: the model card (build node R4.1), then the Hugging Face release with the recipe, a laptop GGUF and a demo (nodes R4.2 and R4.3). Research only, not medical advice.
 
 ## v2 result: the citations are fixed, the headline is not
 
@@ -17,8 +17,8 @@ v1 cited the study's aim instead of its results in more than half its answers, s
 | Gemma v2 | 0.329 | 0.736 | **0.084** | 0.678 |
 
 - **v2 vs v1:** citation precision +0.374 and aim-citation rate −0.476, both separated; headline −0.002, a tie.
-- **v2 vs base:** aim-citation rate −0.054, separated (v2 better); citation precision a tie; headline −0.075, separated (base better).
-- Six pre-registered tests, paired bootstrap, Holm-corrected. About half of v2's claims still go beyond the sentence it cites, which is why the headline did not move.
+- **v2 vs base:** headline −0.075, separated (base better). On citations the pre-registered tests give aim-citation rate −0.054, separated in v2's favour, and citation precision a tie, but these depend on how the judge reads base's many answers that only restate the study's aim: the citation check marks the aim sentence as not supporting even when the claim is the aim itself. Counted the other way (a post-hoc check, [`aim_rule_check.json`](docs/measurements/aim_rule_check.json)), base is better than v2 on both. So v2 does not beat base on citations; it comes close to base's citation quality (within about 0.05 on either count) while v1 did not (OWNER D-62).
+- Six pre-registered tests, paired bootstrap, Holm-corrected. The v2-vs-v1 results hold under either count. About half of v2's claims still go beyond the sentence it cites, which is why the headline did not move.
 - **How it was scored:** GPT-6 Luna extracted claims and GPT-6.1 Sol judged them (OWNER D-57: the Anthropic API credit ran out, so V2.2 ran on OpenAI only). Base and v1 answers come from EvalKit's cache, byte-identical to the v1 run, and were re-scored the same way. Sol's agreement with a Claude Opus 5.5 reference labeller is kappa 0.60 [0.47, 0.71] on held-out claims (OWNER D-59, D-60; the labels are a model's, not a human expert's).
 
 ![v1 and v2 give the same answer to "Is there a connection between sublingual varices and hypertension?", but v1 cites sentence 2, the study's aim, which GPT-6.1 Sol marks as not supporting the claim, while v2 cites sentence 11, the result (OR 2.25, p<0.002), which it marks as supporting](docs/assets/screenshots/v1_vs_v2_citation.png)

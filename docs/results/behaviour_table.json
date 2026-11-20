@@ -1,0 +1,1225 @@
+[
+  {
+    "rule": "B1",
+    "model": "gemma-e2b-base-q4",
+    "metric": "schema_failures_or_zero_citations",
+    "value": 0.005,
+    "n": 1000,
+    "source": "ggh:b1",
+    "run": "main"
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-base-q4",
+    "metric": "headline:claude-opus-5-5",
+    "value": {
+      "point": 0.418,
+      "lo": 0.387,
+      "hi": 0.448
+    },
+    "n": 1000,
+    "source": "evalkit:headline",
+    "run": "main"
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-base-q4",
+    "metric": "groundedness_mean:claude-opus-5-5",
+    "value": {
+      "point": 0.8627404761904762,
+      "lo": 0.8443567261904763,
+      "hi": 0.8805725595238095
+    },
+    "n": 1000,
+    "source": "evalkit:groundedness",
+    "run": "main"
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-base-q4",
+    "metric": "headline:gpt-6.1-sol",
+    "value": {
+      "point": 0.394,
+      "lo": 0.364,
+      "hi": 0.424
+    },
+    "n": 1000,
+    "source": "evalkit:headline",
+    "run": "main"
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-base-q4",
+    "metric": "groundedness_mean:gpt-6.1-sol",
+    "value": {
+      "point": 0.8186666666666667,
+      "lo": 0.7976927976190477,
+      "hi": 0.8388358928571428
+    },
+    "n": 1000,
+    "source": "evalkit:groundedness",
+    "run": "main"
+  },
+  {
+    "rule": "B3",
+    "model": "gemma-e2b-base-q4",
+    "metric": "maybe_recall",
+    "value": {
+      "point": 0.4909090909090909,
+      "lo": 0.3978494623655914,
+      "hi": 0.5855855855855856
+    },
+    "n": 110,
+    "source": "ggh:b3",
+    "run": "main"
+  },
+  {
+    "rule": "B3",
+    "model": "gemma-e2b-base-q4",
+    "metric": "maybe_precision",
+    "value": {
+      "point": 0.12735849056603774,
+      "lo": 0.09523809523809523,
+      "hi": 0.16080402010050251
+    },
+    "n": 424,
+    "source": "ggh:b3",
+    "run": "main"
+  },
+  {
+    "rule": "B4",
+    "model": "gemma-e2b-base-q4",
+    "metric": "over_80_words_share",
+    "value": 0.013,
+    "n": 1000,
+    "source": "ggh:b4",
+    "run": "main"
+  },
+  {
+    "rule": "B6",
+    "model": "gemma-e2b-base-q4",
+    "metric": "unsupported_claim_share:claude-opus-5-5",
+    "value": 0.1165670367207515,
+    "n": 2342,
+    "source": "evalkit:verdicts",
+    "run": "main"
+  },
+  {
+    "rule": "B6",
+    "model": "gemma-e2b-base-q4",
+    "metric": "unsupported_claim_share:gpt-6.1-sol",
+    "value": 0.15627668659265584,
+    "n": 2342,
+    "source": "evalkit:verdicts",
+    "run": "main"
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-base-q4",
+    "metric": "citation_validity",
+    "value": {
+      "point": 0.995,
+      "lo": 0.99,
+      "hi": 0.999
+    },
+    "n": 1000,
+    "source": "evalkit:citation_valid",
+    "run": "main"
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-base-q4",
+    "metric": "citation_precision:claude-opus-5-5",
+    "value": {
+      "point": 0.7246252676659529,
+      "lo": 0.6980254716869057,
+      "hi": 0.7515317403000493
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_citation"
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-base-q4",
+    "metric": "citation_precision:gpt-6.1-sol",
+    "value": {
+      "point": 0.7460385438972162,
+      "lo": 0.7209588618745595,
+      "hi": 0.7714886141834744
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_citation"
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-base-q4",
+    "metric": "aim_citation_rate:claude-opus-5-5",
+    "value": {
+      "point": 0.05708460754332314,
+      "lo": 0.04290091930541369,
+      "hi": 0.07222787385554426
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_citation"
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-base-q4",
+    "metric": "aim_citation_rate:gpt-6.1-sol",
+    "value": {
+      "point": 0.14169215086646278,
+      "lo": 0.12032260574783372,
+      "hi": 0.16411824668705402
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_citation"
+  },
+  {
+    "rule": "B1",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "schema_failures_or_zero_citations",
+    "value": 0.0,
+    "n": 1000,
+    "source": "ggh:b1",
+    "run": "main"
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "headline:claude-opus-5-5",
+    "value": {
+      "point": 0.388,
+      "lo": 0.358,
+      "hi": 0.419
+    },
+    "n": 1000,
+    "source": "evalkit:headline",
+    "run": "main"
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "groundedness_mean:claude-opus-5-5",
+    "value": {
+      "point": 0.51925,
+      "lo": 0.48925,
+      "hi": 0.5498354166666667
+    },
+    "n": 1000,
+    "source": "evalkit:groundedness",
+    "run": "main"
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "headline:gpt-6.1-sol",
+    "value": {
+      "point": 0.33,
+      "lo": 0.301,
+      "hi": 0.359
+    },
+    "n": 1000,
+    "source": "evalkit:headline",
+    "run": "main"
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "groundedness_mean:gpt-6.1-sol",
+    "value": {
+      "point": 0.4439166666666667,
+      "lo": 0.41424791666666666,
+      "hi": 0.4745833333333333
+    },
+    "n": 1000,
+    "source": "evalkit:groundedness",
+    "run": "main"
+  },
+  {
+    "rule": "B3",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "maybe_recall",
+    "value": {
+      "point": 0.045454545454545456,
+      "lo": 0.009615384615384616,
+      "hi": 0.08620689655172414
+    },
+    "n": 110,
+    "source": "ggh:b3",
+    "run": "main"
+  },
+  {
+    "rule": "B3",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "maybe_precision",
+    "value": {
+      "point": 0.22727272727272727,
+      "lo": 0.058823529411764705,
+      "hi": 0.4090909090909091
+    },
+    "n": 22,
+    "source": "ggh:b3",
+    "run": "main"
+  },
+  {
+    "rule": "B4",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "over_80_words_share",
+    "value": 0.0,
+    "n": 1000,
+    "source": "ggh:b4",
+    "run": "main"
+  },
+  {
+    "rule": "B6",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "unsupported_claim_share:claude-opus-5-5",
+    "value": 0.44718909710391824,
+    "n": 1174,
+    "source": "evalkit:verdicts",
+    "run": "main"
+  },
+  {
+    "rule": "B6",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "unsupported_claim_share:gpt-6.1-sol",
+    "value": 0.5238500851788757,
+    "n": 1174,
+    "source": "evalkit:verdicts",
+    "run": "main"
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "citation_validity",
+    "value": {
+      "point": 1.0,
+      "lo": 1.0,
+      "hi": 1.0
+    },
+    "n": 1000,
+    "source": "evalkit:citation_valid",
+    "run": "main"
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "citation_precision:claude-opus-5-5",
+    "value": {
+      "point": 0.3381074168797954,
+      "lo": 0.31935752319762617,
+      "hi": 0.35740913150722203
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_citation"
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "citation_precision:gpt-6.1-sol",
+    "value": {
+      "point": 0.359079283887468,
+      "lo": 0.3400785518078642,
+      "hi": 0.37934563020809764
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_citation"
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "aim_citation_rate:claude-opus-5-5",
+    "value": {
+      "point": 0.556910569105691,
+      "lo": 0.5253023657628921,
+      "hi": 0.5878187971081372
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_citation"
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "aim_citation_rate:gpt-6.1-sol",
+    "value": {
+      "point": 0.5670731707317073,
+      "lo": 0.5355691056910569,
+      "hi": 0.5977599578636326
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_citation"
+  },
+  {
+    "rule": "B1",
+    "model": "claude-haiku-5-5",
+    "metric": "schema_failures_or_zero_citations",
+    "value": 0.0,
+    "n": 1000,
+    "source": "ggh:b1",
+    "run": "main"
+  },
+  {
+    "rule": "B2",
+    "model": "claude-haiku-5-5",
+    "metric": "headline:claude-opus-5-5",
+    "value": {
+      "point": 0.345,
+      "lo": 0.316,
+      "hi": 0.374
+    },
+    "n": 1000,
+    "source": "evalkit:headline",
+    "run": "main"
+  },
+  {
+    "rule": "B2",
+    "model": "claude-haiku-5-5",
+    "metric": "groundedness_mean:claude-opus-5-5",
+    "value": {
+      "point": 0.8168619047619047,
+      "lo": 0.8022904563492064,
+      "hi": 0.8309059623015873
+    },
+    "n": 1000,
+    "source": "evalkit:groundedness",
+    "run": "main"
+  },
+  {
+    "rule": "B2",
+    "model": "claude-haiku-5-5",
+    "metric": "headline:gpt-6.1-sol",
+    "value": {
+      "point": 0.231,
+      "lo": 0.205,
+      "hi": 0.257
+    },
+    "n": 1000,
+    "source": "evalkit:headline",
+    "run": "main"
+  },
+  {
+    "rule": "B2",
+    "model": "claude-haiku-5-5",
+    "metric": "groundedness_mean:gpt-6.1-sol",
+    "value": {
+      "point": 0.7371964285714285,
+      "lo": 0.721623373015873,
+      "hi": 0.7527836507936507
+    },
+    "n": 1000,
+    "source": "evalkit:groundedness",
+    "run": "main"
+  },
+  {
+    "rule": "B3",
+    "model": "claude-haiku-5-5",
+    "metric": "maybe_recall",
+    "value": {
+      "point": 0.5272727272727272,
+      "lo": 0.4298245614035088,
+      "hi": 0.6203703703703703
+    },
+    "n": 110,
+    "source": "ggh:b3",
+    "run": "main"
+  },
+  {
+    "rule": "B3",
+    "model": "claude-haiku-5-5",
+    "metric": "maybe_precision",
+    "value": {
+      "point": 0.2049469964664311,
+      "lo": 0.15808823529411764,
+      "hi": 0.25396825396825395
+    },
+    "n": 283,
+    "source": "ggh:b3",
+    "run": "main"
+  },
+  {
+    "rule": "B4",
+    "model": "claude-haiku-5-5",
+    "metric": "over_80_words_share",
+    "value": 0.143,
+    "n": 1000,
+    "source": "ggh:b4",
+    "run": "main"
+  },
+  {
+    "rule": "B6",
+    "model": "claude-haiku-5-5",
+    "metric": "unsupported_claim_share:claude-opus-5-5",
+    "value": 0.158816660179058,
+    "n": 5138,
+    "source": "evalkit:verdicts",
+    "run": "main"
+  },
+  {
+    "rule": "B6",
+    "model": "claude-haiku-5-5",
+    "metric": "unsupported_claim_share:gpt-6.1-sol",
+    "value": 0.2383732243627165,
+    "n": 5139,
+    "source": "evalkit:verdicts",
+    "run": "main"
+  },
+  {
+    "rule": "B7",
+    "model": "claude-haiku-5-5",
+    "metric": "citation_validity",
+    "value": {
+      "point": 1.0,
+      "lo": 1.0,
+      "hi": 1.0
+    },
+    "n": 1000,
+    "source": "evalkit:citation_valid",
+    "run": "main"
+  },
+  {
+    "rule": "B7",
+    "model": "claude-haiku-5-5",
+    "metric": "citation_precision:claude-opus-5-5",
+    "value": {
+      "point": 0.8476291955247736,
+      "lo": 0.8355614081044737,
+      "hi": 0.8597842716901625
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_citation"
+  },
+  {
+    "rule": "B7",
+    "model": "claude-haiku-5-5",
+    "metric": "citation_precision:gpt-6.1-sol",
+    "value": {
+      "point": 0.8819925412892914,
+      "lo": 0.8718013992100154,
+      "hi": 0.8926949045675939
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_citation"
+  },
+  {
+    "rule": "B7",
+    "model": "claude-haiku-5-5",
+    "metric": "aim_citation_rate:claude-opus-5-5",
+    "value": {
+      "point": 0.18575851393188855,
+      "lo": 0.1617187854115301,
+      "hi": 0.21036269430051813
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_citation"
+  },
+  {
+    "rule": "B7",
+    "model": "claude-haiku-5-5",
+    "metric": "aim_citation_rate:gpt-6.1-sol",
+    "value": {
+      "point": 0.22497420020639836,
+      "lo": 0.19855948459662698,
+      "hi": 0.2510330578512397
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_citation"
+  },
+  {
+    "rule": "B1",
+    "model": "gpt-6-luna",
+    "metric": "schema_failures_or_zero_citations",
+    "value": 0.001,
+    "n": 1000,
+    "source": "ggh:b1",
+    "run": "main"
+  },
+  {
+    "rule": "B2",
+    "model": "gpt-6-luna",
+    "metric": "headline:claude-opus-5-5",
+    "value": {
+      "point": 0.431,
+      "lo": 0.401,
+      "hi": 0.462
+    },
+    "n": 1000,
+    "source": "evalkit:headline",
+    "run": "main"
+  },
+  {
+    "rule": "B2",
+    "model": "gpt-6-luna",
+    "metric": "groundedness_mean:claude-opus-5-5",
+    "value": {
+      "point": 0.8520964285714285,
+      "lo": 0.8365785119047618,
+      "hi": 0.8669977380952382
+    },
+    "n": 1000,
+    "source": "evalkit:groundedness",
+    "run": "main"
+  },
+  {
+    "rule": "B2",
+    "model": "gpt-6-luna",
+    "metric": "headline:gpt-6.1-sol",
+    "value": {
+      "point": 0.29,
+      "lo": 0.262,
+      "hi": 0.319
+    },
+    "n": 1000,
+    "source": "evalkit:headline",
+    "run": "main"
+  },
+  {
+    "rule": "B2",
+    "model": "gpt-6-luna",
+    "metric": "groundedness_mean:gpt-6.1-sol",
+    "value": {
+      "point": 0.7679853174603174,
+      "lo": 0.7495951785714285,
+      "hi": 0.7860272222222222
+    },
+    "n": 1000,
+    "source": "evalkit:groundedness",
+    "run": "main"
+  },
+  {
+    "rule": "B3",
+    "model": "gpt-6-luna",
+    "metric": "maybe_recall",
+    "value": {
+      "point": 0.5454545454545454,
+      "lo": 0.45045045045045046,
+      "hi": 0.6396396396396397
+    },
+    "n": 110,
+    "source": "ggh:b3",
+    "run": "main"
+  },
+  {
+    "rule": "B3",
+    "model": "gpt-6-luna",
+    "metric": "maybe_precision",
+    "value": {
+      "point": 0.15228426395939088,
+      "lo": 0.11666666666666667,
+      "hi": 0.18798955613577023
+    },
+    "n": 394,
+    "source": "ggh:b3",
+    "run": "main"
+  },
+  {
+    "rule": "B4",
+    "model": "gpt-6-luna",
+    "metric": "over_80_words_share",
+    "value": 0.0,
+    "n": 1000,
+    "source": "ggh:b4",
+    "run": "main"
+  },
+  {
+    "rule": "B6",
+    "model": "gpt-6-luna",
+    "metric": "unsupported_claim_share:claude-opus-5-5",
+    "value": 0.12747723620782003,
+    "n": 3734,
+    "source": "evalkit:verdicts",
+    "run": "main"
+  },
+  {
+    "rule": "B6",
+    "model": "gpt-6-luna",
+    "metric": "unsupported_claim_share:gpt-6.1-sol",
+    "value": 0.20728441349758972,
+    "n": 3734,
+    "source": "evalkit:verdicts",
+    "run": "main"
+  },
+  {
+    "rule": "B7",
+    "model": "gpt-6-luna",
+    "metric": "citation_validity",
+    "value": {
+      "point": 0.999,
+      "lo": 0.997,
+      "hi": 1.0
+    },
+    "n": 1000,
+    "source": "evalkit:citation_valid",
+    "run": "main"
+  },
+  {
+    "rule": "B7",
+    "model": "gpt-6-luna",
+    "metric": "citation_precision:claude-opus-5-5",
+    "value": {
+      "point": 0.8650619985412108,
+      "lo": 0.8511240403196391,
+      "hi": 0.8790442566065303
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_citation"
+  },
+  {
+    "rule": "B7",
+    "model": "gpt-6-luna",
+    "metric": "citation_precision:gpt-6.1-sol",
+    "value": {
+      "point": 0.8935083880379285,
+      "lo": 0.8814004279720811,
+      "hi": 0.9054306051151578
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_citation"
+  },
+  {
+    "rule": "B7",
+    "model": "gpt-6-luna",
+    "metric": "aim_citation_rate:claude-opus-5-5",
+    "value": {
+      "point": 0.09435897435897436,
+      "lo": 0.07636563058055047,
+      "hi": 0.11270491803278689
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_citation"
+  },
+  {
+    "rule": "B7",
+    "model": "gpt-6-luna",
+    "metric": "aim_citation_rate:gpt-6.1-sol",
+    "value": {
+      "point": 0.1158974358974359,
+      "lo": 0.09611451942740286,
+      "hi": 0.13613101330603888
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_citation"
+  },
+  {
+    "rule": "B5",
+    "model": "gemma-e2b-base-q4",
+    "metric": "sample_read_ok_share",
+    "value": 0.3,
+    "n": 20,
+    "source": "model_review",
+    "run": "main"
+  },
+  {
+    "rule": "B5",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "sample_read_ok_share",
+    "value": 0.45,
+    "n": 20,
+    "source": "model_review",
+    "run": "main"
+  },
+  {
+    "rule": "B5",
+    "model": "claude-haiku-5-5",
+    "metric": "sample_read_ok_share",
+    "value": 0.55,
+    "n": 20,
+    "source": "model_review",
+    "run": "main"
+  },
+  {
+    "rule": "B5",
+    "model": "gpt-6-luna",
+    "metric": "sample_read_ok_share",
+    "value": 0.95,
+    "n": 20,
+    "source": "model_review",
+    "run": "main"
+  },
+  {
+    "rule": "B8",
+    "model": "gemma-e2b-base-q4",
+    "metric": "presort_flagged_share",
+    "value": 0.1,
+    "n": 20,
+    "source": "ggh:b8",
+    "run": "offscope"
+  },
+  {
+    "rule": "B8",
+    "model": "gemma-e2b-base-q4",
+    "metric": "gives_advice_count",
+    "value": 0.0,
+    "n": 20,
+    "source": "model_review",
+    "run": "offscope"
+  },
+  {
+    "rule": "B8",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "presort_flagged_share",
+    "value": 0.0,
+    "n": 20,
+    "source": "ggh:b8",
+    "run": "offscope"
+  },
+  {
+    "rule": "B8",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "gives_advice_count",
+    "value": 2.0,
+    "n": 20,
+    "source": "model_review",
+    "run": "offscope"
+  },
+  {
+    "rule": "B8",
+    "model": "claude-haiku-5-5",
+    "metric": "presort_flagged_share",
+    "value": 0.25,
+    "n": 20,
+    "source": "ggh:b8",
+    "run": "offscope"
+  },
+  {
+    "rule": "B8",
+    "model": "claude-haiku-5-5",
+    "metric": "gives_advice_count",
+    "value": 1.0,
+    "n": 20,
+    "source": "model_review",
+    "run": "offscope"
+  },
+  {
+    "rule": "B8",
+    "model": "gpt-6-luna",
+    "metric": "presort_flagged_share",
+    "value": 0.4,
+    "n": 20,
+    "source": "ggh:b8",
+    "run": "offscope"
+  },
+  {
+    "rule": "B8",
+    "model": "gpt-6-luna",
+    "metric": "gives_advice_count",
+    "value": 0.0,
+    "n": 20,
+    "source": "model_review",
+    "run": "offscope"
+  },
+  {
+    "rule": "B1",
+    "model": "gemma-e2b-base-q4",
+    "metric": "schema_failures_or_zero_citations",
+    "value": 0.005,
+    "n": 1000,
+    "source": "ggh:b1",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-base-q4",
+    "metric": "headline:gpt-6.1-sol",
+    "value": {
+      "point": 0.404,
+      "lo": 0.373,
+      "hi": 0.434
+    },
+    "n": 1000,
+    "source": "evalkit:headline",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-base-q4",
+    "metric": "groundedness_mean:gpt-6.1-sol",
+    "value": {
+      "point": 0.8397261904761905,
+      "lo": 0.8197924404761905,
+      "hi": 0.8586261904761905
+    },
+    "n": 1000,
+    "source": "evalkit:groundedness",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B3",
+    "model": "gemma-e2b-base-q4",
+    "metric": "maybe_recall",
+    "value": {
+      "point": 0.4909090909090909,
+      "lo": 0.3978494623655914,
+      "hi": 0.5855855855855856
+    },
+    "n": 110,
+    "source": "ggh:b3",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B3",
+    "model": "gemma-e2b-base-q4",
+    "metric": "maybe_precision",
+    "value": {
+      "point": 0.12735849056603774,
+      "lo": 0.09523809523809523,
+      "hi": 0.16080402010050251
+    },
+    "n": 424,
+    "source": "ggh:b3",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B4",
+    "model": "gemma-e2b-base-q4",
+    "metric": "over_80_words_share",
+    "value": 0.013,
+    "n": 1000,
+    "source": "ggh:b4",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B6",
+    "model": "gemma-e2b-base-q4",
+    "metric": "unsupported_claim_share:gpt-6.1-sol",
+    "value": 0.1422813381700927,
+    "n": 2481,
+    "source": "evalkit:verdicts",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-base-q4",
+    "metric": "citation_validity",
+    "value": {
+      "point": 0.995,
+      "lo": 0.99,
+      "hi": 0.999
+    },
+    "n": 1000,
+    "source": "evalkit:citation_valid",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-base-q4",
+    "metric": "citation_precision:gpt-6.1-sol",
+    "value": {
+      "point": 0.7472340425531915,
+      "lo": 0.7218515429524603,
+      "hi": 0.7723722146446752
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-base-q4",
+    "metric": "aim_citation_rate:gpt-6.1-sol",
+    "value": {
+      "point": 0.1383838383838384,
+      "lo": 0.11717171717171718,
+      "hi": 0.16076845298281092
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B1",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "schema_failures_or_zero_citations",
+    "value": 0.0,
+    "n": 1000,
+    "source": "ggh:b1",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "headline:gpt-6.1-sol",
+    "value": {
+      "point": 0.331,
+      "lo": 0.302,
+      "hi": 0.361
+    },
+    "n": 1000,
+    "source": "evalkit:headline",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "groundedness_mean:gpt-6.1-sol",
+    "value": {
+      "point": 0.4569166666666667,
+      "lo": 0.42675,
+      "hi": 0.48733333333333334
+    },
+    "n": 1000,
+    "source": "evalkit:groundedness",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B3",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "maybe_recall",
+    "value": {
+      "point": 0.045454545454545456,
+      "lo": 0.009615384615384616,
+      "hi": 0.08620689655172414
+    },
+    "n": 110,
+    "source": "ggh:b3",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B3",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "maybe_precision",
+    "value": {
+      "point": 0.22727272727272727,
+      "lo": 0.058823529411764705,
+      "hi": 0.4090909090909091
+    },
+    "n": 22,
+    "source": "ggh:b3",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B4",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "over_80_words_share",
+    "value": 0.0,
+    "n": 1000,
+    "source": "ggh:b4",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B6",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "unsupported_claim_share:gpt-6.1-sol",
+    "value": 0.5229357798165137,
+    "n": 1199,
+    "source": "evalkit:verdicts",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "citation_validity",
+    "value": {
+      "point": 1.0,
+      "lo": 1.0,
+      "hi": 1.0
+    },
+    "n": 1000,
+    "source": "evalkit:citation_valid",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "citation_precision:gpt-6.1-sol",
+    "value": {
+      "point": 0.3622603430877901,
+      "lo": 0.3434529525595976,
+      "hi": 0.38235368994848445
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "aim_citation_rate:gpt-6.1-sol",
+    "value": {
+      "point": 0.5601202404809619,
+      "lo": 0.5285857572718154,
+      "hi": 0.5901803607214429
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B1",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "schema_failures_or_zero_citations",
+    "value": 0.0,
+    "n": 1000,
+    "source": "ggh:b1",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "headline:gpt-6.1-sol",
+    "value": {
+      "point": 0.329,
+      "lo": 0.3,
+      "hi": 0.358
+    },
+    "n": 1000,
+    "source": "evalkit:headline",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "groundedness_mean:gpt-6.1-sol",
+    "value": {
+      "point": 0.49275,
+      "lo": 0.46258124999999994,
+      "hi": 0.52325
+    },
+    "n": 1000,
+    "source": "evalkit:groundedness",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B3",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "maybe_recall",
+    "value": {
+      "point": 0.05454545454545454,
+      "lo": 0.01818181818181818,
+      "hi": 0.09803921568627451
+    },
+    "n": 110,
+    "source": "ggh:b3",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B3",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "maybe_precision",
+    "value": {
+      "point": 0.24,
+      "lo": 0.08695652173913043,
+      "hi": 0.4090909090909091
+    },
+    "n": 25,
+    "source": "ggh:b3",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B4",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "over_80_words_share",
+    "value": 0.0,
+    "n": 1000,
+    "source": "ggh:b4",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B6",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "unsupported_claim_share:gpt-6.1-sol",
+    "value": 0.46898263027295284,
+    "n": 1209,
+    "source": "evalkit:verdicts",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "citation_validity",
+    "value": {
+      "point": 1.0,
+      "lo": 1.0,
+      "hi": 1.0
+    },
+    "n": 1000,
+    "source": "evalkit:citation_valid",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "citation_precision:gpt-6.1-sol",
+    "value": {
+      "point": 0.7359223300970874,
+      "lo": 0.7083714171694171,
+      "hi": 0.7633365664403492
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "aim_citation_rate:gpt-6.1-sol",
+    "value": {
+      "point": 0.08433734939759036,
+      "lo": 0.06740442655935613,
+      "hi": 0.10230692076228685
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B5",
+    "model": "gemma-e2b-base-q4",
+    "metric": "sample_read_ok_share",
+    "value": 0.25,
+    "n": 20,
+    "source": "model_review",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B5",
+    "model": "gemma-e2b-grounded-q4",
+    "metric": "sample_read_ok_share",
+    "value": 0.45,
+    "n": 20,
+    "source": "model_review",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B5",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "sample_read_ok_share",
+    "value": 0.55,
+    "n": 20,
+    "source": "model_review",
+    "run": "main_v2"
+  },
+  {
+    "rule": "B8",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "presort_flagged_share",
+    "value": 0.0,
+    "n": 20,
+    "source": "ggh:b8",
+    "run": "offscope_v2"
+  },
+  {
+    "rule": "B8",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "gives_advice_count",
+    "value": 0.0,
+    "n": 20,
+    "source": "model_review",
+    "run": "offscope_v2"
+  }
+]

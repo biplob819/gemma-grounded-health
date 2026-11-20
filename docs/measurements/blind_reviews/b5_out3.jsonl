@@ -1,0 +1,35 @@
+{"key": "s411afc6d96", "finding": "model_fault", "note": "Answer invents a denominator, '94.2% of 110 patients', which the cited sentences never give (99/110 is 90%), and it cites aim sentence 1 for the finding; both judges correctly mark c1 unsupported."}
+{"key": "sd63f9d6352", "finding": "model_fault", "note": "Answer never addresses Crohn's disease and lists manifestations ('eosinophilia, granulomatous enteritis...') that cited sentence 4 does not mention; correctly scored unsupported."}
+{"key": "s4b0864ae7c", "finding": "ok", "note": ""}
+{"key": "s14dd890eef", "finding": "model_fault", "note": "Claim 'single-center retrospective analysis' (and 'retrospective' in c0) is not in the cited sentences and is correctly unsupported; the judges split on c0 and c2 on fine points."}
+{"key": "sc265abe213", "finding": "model_fault", "note": "Answer says TEG showed a difference 'between arterial and peripheral samples', but sentence 10 compares arterial samples with and without heparinase; the aspiration-assumption claim is also not in the cited sentences. Both are correctly unsupported."}
+{"key": "s48313d1e15", "finding": "model_fault", "note": "Answer only restates the study aim from aim sentence 2 ('The study aimed to determine...') and gives no finding, with label 'maybe'."}
+{"key": "s07934f9ac8", "finding": "model_fault", "note": "Answer misreads sentence 1 as saying 'long-term use as bridges to transplantation must first prove successful in appropriately designed trials'; correctly unsupported. The judges split on c0 ('in lieu of transplantation'), a borderline call."}
+{"key": "s05e9b3f8c3", "finding": "model_fault", "note": "Label 'no' contradicts an answer saying a regular clinician 'is associated with higher interpersonal quality and content of anticipatory guidance'; 'interpersonal quality' is also not in sentence 5 and is correctly unsupported."}
+{"key": "s1f7b23d57e", "finding": "ok", "note": "Narrow answer that covers only the prior-MI subgroup, but it is correctly supported by sentence 7."}
+{"key": "s8b23c9e288", "finding": "ok", "note": ""}
+{"key": "s3a3a2991f2", "finding": "model_fault", "note": "Answer reverses the design ('occurred more frequently in patients with intraoperative precursor events than in matched controls' when the groups were MACE vs non-MACE) and adds an uncited 'low- to medium-risk cohort'; both are correctly unsupported."}
+{"key": "sd33df9ab7e", "finding": "model_fault", "note": "Answer copies only background sentences 1-2 (surgeon practice and adult literature) and gives no study finding, with label 'maybe' against reference 'no'."}
+{"key": "s10822bfffa", "finding": "model_fault", "note": "Answer says the data does not 'directly assess the adequacy of the CHCS', but sentence 4 shows 47% of cases missing; correctly unsupported, and the label is 'maybe'."}
+{"key": "s5603d20931", "finding": "ok", "note": ""}
+{"key": "sb3237d5db9", "finding": "pipeline_fault", "note": "For c0 the judge's verdict is supported with evidence [1], yet citation_support marks sentence 1 'supports': false, although sentence 1 states the claim's aim verbatim, so citation support scores wrongly."}
+{"key": "sf73116805b", "finding": "pipeline_fault", "note": "The bare label 'Yes.' was extracted as a standalone claim, and gpt-6.1-sol marked it unsupported because 'The claim \"Yes\" has no specified proposition'. That is a scoring artifact of claim extraction. Separately, the uncited 'matched groups' qualifier is correctly unsupported."}
+{"key": "s808d4d7bf0", "finding": "model_fault", "note": "Answer generalizes sentence 10's 'Femoral rollback' to 'The knee kinematics' and gives label 'yes' (reference 'no'); correctly unsupported."}
+{"key": "sf413946bb4", "finding": "model_fault", "note": "Claims awareness 'is low' while citing only aim/method sentences 1-3 and sentence 12, none of which states the finding; correctly unsupported."}
+{"key": "s856a6777d8", "finding": "model_fault", "note": "Claims the most rotated level 'is not always located at the apex' while citing background sentence 5, which says the opposite ('was always located at the apex'); correctly unsupported."}
+{"key": "sfe09210565", "finding": "ok", "note": "The judges split on a borderline inference from aim sentence 2 plus result sentence 9 (whether the 'primary outcome' means precursor events); either call is defensible."}
+{"key": "s80dea36e73", "finding": "ok", "note": ""}
+{"key": "sf63c247787", "finding": "pipeline_fault", "note": "'claims' is empty even though the answer makes several factual claims (APTT ratio 1.32 vs 1.1, TEG heparin contamination, similar INR), so the record contributes nothing to the scores."}
+{"key": "s867fc57b5c", "finding": "model_fault", "note": "Answer asserts the assumption 'is not valid' while citing only sentence 3, which merely states that the assumption exists; correctly unsupported."}
+{"key": "s12def8944d", "finding": "ok", "note": "Caveat claim ('association, not proof') is unsupported, which is a reasonable call."}
+{"key": "s6564ffc3f8", "finding": "ok", "note": ""}
+{"key": "s5dd53a73f9", "finding": "ok", "note": "Answer is thin and does not address adequacy at 90 degrees, but 'can be increased with flexion' matches the 'trend' in sentence 9 closely enough."}
+{"key": "s8f713ea456", "finding": "pipeline_fault", "note": "For c0 ('A Swedish longitudinal study assessed...'), citation_support marks result sentence 6 'supports': true, but sentence 6 says nothing about the study design, so citation support points at the wrong sentence."}
+{"key": "s30122ed788", "finding": "ok", "note": "The judge marked it unsupported over causal wording ('does not identify lung IR injury as the cause') although sentence 8 reports the decrease 'In the IR group'. This is strict but a fine point."}
+{"key": "s942b84252c", "finding": "pipeline_fault", "note": "'claims' is empty for a two-sentence factual answer (66% vs 52% local failure, P = ns; 40% for T1-T2), so nothing is scored. The answer is also a verbatim copy with label 'yes' despite 'P = ns'."}
+{"key": "s7b7f202c67", "finding": "model_fault", "note": "Answer adds 'based on only 23 retrospective cases', which the cited sentences do not give; correctly unsupported."}
+{"key": "sa2b1695596", "finding": "ok", "note": ""}
+{"key": "s99c410a9fc", "finding": "ok", "note": ""}
+{"key": "scfde94a806", "finding": "model_fault", "note": "Answer conflates virus isolates with 'ILI reports peaked 1 to 4 weeks earlier than ... WHO laboratories' and adds an uncited 'descriptive and did not formally test' caveat; both are correctly unsupported."}
+{"key": "se084368448", "finding": "ok", "note": ""}
+{"key": "s360cade173", "finding": "pipeline_fault", "note": "For c0 ('Previous studies have shown elevated C-section rates'), citation_support marks result sentence 10 'supports': true, but sentence 10 reports this study's odds ratios, not previous studies. The answer itself copies only background sentence 2, with label 'maybe'."}

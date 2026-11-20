@@ -98,6 +98,39 @@ COMPARISON = {
     "verdict": "tie",
 }
 
+
+def judge_calibration(judge: str, gemma_agreement: float) -> dict:
+    return {
+        "judge": judge,
+        "task": "pubmedqa",
+        "judge_prompt_hash": "9a3a8246049f6f85",
+        "split": "heldout",
+        "n_claims": 231,
+        "coverage": 1.0,
+        "agreement": 0.83,
+        "kappa": {"point": 0.6, "lo": 0.47, "hi": 0.71},
+        "bar": 0.4,
+        "meets_bar": True,
+        "reference_labeller": "ref-model (configs/labeller_prompt.md, OWNER D-60)",
+        "reference_model": "ref-model",
+        "status": "calibrated",
+        "wording": f"{judge}: calibrated",
+        "source": "docs/measurements/calibration/evalkit_pubmedqa_calibration.json",
+        "scored_at": "2026-11-19T16:35:42.780380Z",
+        "gemma_family": {
+            "run": "main_v2",
+            "run_id": "r-2",
+            "judge_prompt_hash": "9a3a8246049f6f85",
+            "n_claims": 40,
+            "coverage": 1.0,
+            "agreement": gemma_agreement,
+            "kappa": {"point": 0.89, "lo": 0.72, "hi": 1.0},
+            "by_model": {"gemma-e2b-base-q4": 0.95},
+            "source": "docs/measurements/gemma_family_report.json",
+        },
+    }
+
+
 FIXTURES = {
     "TrainExample": {
         "id": "pqa-a-21645374",
@@ -149,6 +182,18 @@ FIXTURES = {
         "judge_mode": "dual",
         "calibration_status": "calibrated",
         "gemma_family_check": {"opus": 0.9, "sol": 0.85},
+        "calibration": [judge_calibration("opus", 0.9), judge_calibration("sol", 0.85)],
+        "labeller_consistency": {
+            "labeller": "ref-model (subagents)",
+            "prompt": "configs/labeller_prompt.md",
+            "prompt_sha256": H,
+            "claims": 88,
+            "answers": 20,
+            "identical": 81,
+            "kappa": {"point": 0.8, "lo": 0.66, "hi": 0.93},
+            "method": "evalkit.calibration.cluster_kappa",
+            "source": "docs/measurements/calibration/labeller.json",
+        },
         "summary_paths": ["docs/results/main/summary.json"],
         "runs": [RUN_REF],
         "releases": [
@@ -181,6 +226,8 @@ FIXTURES = {
                     "contamination_signal": False,
                 },
                 "artifacts": [ARTIFACT],
+                "calibration_judges": ["opus", "sol"],
+                "calibration_status": "calibrated",
             }
         ],
         "results": [

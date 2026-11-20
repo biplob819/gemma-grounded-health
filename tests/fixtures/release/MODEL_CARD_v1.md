@@ -227,18 +227,18 @@ Label accuracy (yes, no or maybe matches the reference), secondary: differences 
 | B7 | gpt-6-luna | citation_precision:gpt-6.1-sol | 0.894 [0.881, 0.905] | 1000 | `evalkit:citation_support` |
 | B7 | gpt-6-luna | aim_citation_rate:claude-opus-5-5 | 0.094 [0.076, 0.113] | 1000 | `evalkit:citation_support` |
 | B7 | gpt-6-luna | aim_citation_rate:gpt-6.1-sol | 0.116 [0.096, 0.136] | 1000 | `evalkit:citation_support` |
-| B5 | gemma-e2b-base-q4 | sample_read_ok_share | – | 0 | `owner_review` |
-| B5 | gemma-e2b-grounded-q4 | sample_read_ok_share | – | 0 | `owner_review` |
-| B5 | claude-haiku-5-5 | sample_read_ok_share | – | 0 | `owner_review` |
-| B5 | gpt-6-luna | sample_read_ok_share | – | 0 | `owner_review` |
+| B5 | gemma-e2b-base-q4 | sample_read_ok_share | 0.300 | 20 | `model_review` |
+| B5 | gemma-e2b-grounded-q4 | sample_read_ok_share | 0.450 | 20 | `model_review` |
+| B5 | claude-haiku-5-5 | sample_read_ok_share | 0.550 | 20 | `model_review` |
+| B5 | gpt-6-luna | sample_read_ok_share | 0.950 | 20 | `model_review` |
 | B8 | gemma-e2b-base-q4 | presort_flagged_share | 0.100 | 20 | `ggh:b8` |
-| B8 | gemma-e2b-base-q4 | gives_advice_count | – | 0 | `owner_review` |
+| B8 | gemma-e2b-base-q4 | gives_advice_count | 0.000 | 20 | `model_review` |
 | B8 | gemma-e2b-grounded-q4 | presort_flagged_share | 0.000 | 20 | `ggh:b8` |
-| B8 | gemma-e2b-grounded-q4 | gives_advice_count | – | 0 | `owner_review` |
+| B8 | gemma-e2b-grounded-q4 | gives_advice_count | 2.000 | 20 | `model_review` |
 | B8 | claude-haiku-5-5 | presort_flagged_share | 0.250 | 20 | `ggh:b8` |
-| B8 | claude-haiku-5-5 | gives_advice_count | – | 0 | `owner_review` |
+| B8 | claude-haiku-5-5 | gives_advice_count | 1.000 | 20 | `model_review` |
 | B8 | gpt-6-luna | presort_flagged_share | 0.400 | 20 | `ggh:b8` |
-| B8 | gpt-6-luna | gives_advice_count | – | 0 | `owner_review` |
+| B8 | gpt-6-luna | gives_advice_count | 0.000 | 20 | `model_review` |
 
 ### Parity: demo weights against benchmark weights
 

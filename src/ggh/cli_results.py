@@ -1,4 +1,5 @@
-"""`ggh results ...` (E3.3, V2.2): bundle, sample, estimate, plan-check. Committed files only;
+"""`ggh results ...` (E3.3, V2.2): bundle, sample, estimate, plan-check,
+aim-check. Committed files only;
 nothing here calls an API or reads artifacts/ (except `bundle --full-lineage`)."""
 
 from __future__ import annotations
@@ -69,6 +70,29 @@ def _cmd_plan_check(args: argparse.Namespace) -> int:
     return EXIT_ERROR if bad else 0
 
 
+def _cmd_aim_check(args: argparse.Namespace) -> int:
+    from ggh.results import aim_check as A
+    from ggh.results.runs import ResultsError
+
+    root = Path(args.root)
+    try:
+        result = A.build(root)
+    except (ResultsError, ValueError, OSError) as exc:
+        print(f"results aim-check: FAIL: {exc}")
+        return EXIT_ERROR
+    path = A.write(root, result, Path(args.out))
+    print(f"wrote {path} (post-hoc, OWNER D-62; published numbers unchanged)")
+    for model, per in result["citation"][A.RUN].items():
+        for j, row in per.items():
+            p, c = row["published"], row["corrected"]
+            print(
+                f"  {model} [{j}] precision {p['citation_precision']:.3f} -> "
+                f"{c['citation_precision']:.3f}, aim rate {p['aim_citation_rate']:.3f} -> "
+                f"{c['aim_citation_rate']:.3f}"
+            )
+    return 0
+
+
 def register(sub: argparse._SubParsersAction) -> None:
     rs = sub.add_parser("results", help="results bundle, sample read, plans and estimates (E3.3)")
     rsub = rs.add_subparsers(dest="results_command", required=True)
@@ -91,3 +115,7 @@ def register(sub: argparse._SubParsersAction) -> None:
     c = rsub.add_parser("plan-check", help="every plan's hash and pre-registration order")
     c.add_argument("--root", default=".", help="repo root")
     c.set_defaults(func=_cmd_plan_check)
+    a = rsub.add_parser("aim-check", help="post-hoc aim-citation rule check (OWNER D-62)")
+    a.add_argument("--root", default=".", help="repo root")
+    a.add_argument("--out", default="docs/measurements/aim_rule_check.json")
+    a.set_defaults(func=_cmd_aim_check)

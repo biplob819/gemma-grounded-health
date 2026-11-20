@@ -6,6 +6,18 @@ ledger: docs/measurements/spend-ledger.jsonl
 bench: docs/measurements/laptop_bench.json
 b8_review: docs/measurements/b8_review.jsonl          # optional until RES-02
 gemma_family_check: docs/measurements/gemma_family_check.json   # optional until RES-03
+# RES-03 (OWNER D-24, D-59, D-60): the judges' stamp reads the committed copy of EvalKit's
+# calibration.json for its pubmedqa calibration run r-e8dac378d2d3 (no summary is rewritten).
+# A judge is stamped when its held-out kappa's 95% lower bound reaches `bar` and it is not the
+# reference labeller's own model; runs of another task (off-scope, probes) are exempt.
+calibration:
+  evalkit: docs/measurements/calibration/evalkit_pubmedqa_calibration.json
+  task: pubmedqa
+  bar: 0.4
+  reference_labeller: claude-opus-5-5            # OWNER D-60: a model's labels, not a human's
+  labeller_prompt: configs/labeller_prompt.md
+  labeller: docs/measurements/calibration/labeller.json
+  gemma_family_report: docs/measurements/gemma_family_report.json
 sample_read: docs/measurements/sample_read_{run}.jsonl  # optional per run until RES-05
 releases:
   - version: v1

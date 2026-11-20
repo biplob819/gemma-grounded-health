@@ -176,6 +176,10 @@ def run_rows(run: Run, *, citation: Run | None = None) -> list[BehaviourRow]:
     return out
 
 
+# who reads B5 and B8 (OWNER D-61: Claude Opus 5.5, blind, under committed prompts)
+REVIEW = "model_review"
+
+
 def b5_rows(
     summaries: Sequence[SampleReadSummary], models: Iterable[str], run: str
 ) -> list[BehaviourRow]:
@@ -186,9 +190,7 @@ def b5_rows(
         s = by.get(m)
         ok = s.findings.get("ok", 0) if s else 0
         value = ok / s.read if s and s.read and s.complete else None
-        out.append(
-            row("B5", m, "sample_read_ok_share", value, s.read if s else 0, "owner_review", run)
-        )
+        out.append(row("B5", m, "sample_read_ok_share", value, s.read if s else 0, REVIEW, run))
     return out
 
 
@@ -237,18 +239,29 @@ def b8_rows(
                 "gives_advice_count",
                 float(advice) if done else None,
                 sum(x is not None for x in marks),
-                "owner_review",
+                REVIEW,
                 offscope.name,
             )
         )
     return out
 
 
-def _fmt(v: Any) -> str:
+# shown under every table with B5 or B8 rows (OWNER D-61: say who reviewed, and how)
+REVIEW_NOTE = (
+    "`model_review`: a blind review by Claude Opus 5.5 subagents, not the owner (OWNER D-61); "
+    "B5 under `configs/sample_read_prompt.md`, B8 under `configs/offscope_review_prompt.md` "
+    "(question and answer only)."
+)
+COUNT_METRICS = ("gives_advice_count",)
+
+
+def _fmt(v: Any, metric: str = "") -> str:
     if v is None:
         return "pending"
     if isinstance(v, Interval):
         return f"{v.point:.3f} [{v.lo:.3f}, {v.hi:.3f}]"
+    if metric in COUNT_METRICS:
+        return f"{v:.0f}"
     return f"{v:.3f}"
 
 
@@ -266,8 +279,12 @@ def markdown(rows: Sequence[BehaviourRow]) -> str:
         out.append("| --- | --- | " + " | ".join("---" for _ in models) + " | --- |")
         for rule, metric, source in keys:
             vals = " | ".join(
-                _fmt(cell[(rule, metric, m)]) if (rule, metric, m) in cell else "" for m in models
+                _fmt(cell[(rule, metric, m)], metric) if (rule, metric, m) in cell else ""
+                for m in models
             )
             out.append(f"| {rule} | {metric} | {vals} | {source} |")
+        if any(s == REVIEW for _, _, s in keys):
+            out.append("")
+            out.append(REVIEW_NOTE)
         out.append("")
     return "\n".join(out)

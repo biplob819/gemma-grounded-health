@@ -170,14 +170,48 @@ def read_manifest(path: Path) -> StageManifest:
         raise LineageError(f"cannot read manifest {path}: {exc}") from exc
 
 
+# Downloaded Kaggle kernel outputs (`kaggle kernels output` into artifacts/kaggle/<kernel>/):
+# a mirror of the remote run's working tree, never a local stage. Remote stages enter local
+# lineage as manifests reconstructed under artifacts/ (X3.1 known issue), not from here.
+MIRROR_DIRS = ("artifacts/kaggle",)
+
+
+def _is_other_checkout(directory: Path) -> bool:
+    """A git worktree or clone nested under the root (`.claude/worktrees/<agent>/`, the repo
+    clone inside a Kaggle mirror): its own `.git` file or folder marks it. Its manifests are a
+    copy of another checkout's lineage, so they are neither this root's parents nor duplicates."""
+    return (directory / ".git").exists()
+
+
+def _skipped(root: Path, directory: Path) -> bool:
+    name = directory.name
+    if name in SKIP_DIRS or name.startswith(".venv"):
+        return True
+    rel = directory.relative_to(root).as_posix()
+    if any(rel == m or rel.startswith(f"{m}/") for m in MIRROR_DIRS):
+        return True
+    return _is_other_checkout(directory)
+
+
+def manifest_paths(root: Path) -> list[Path]:
+    """Every `manifest.json` under root, pruning .git, .venv*, node_modules, __pycache__, other
+    git checkouts nested inside root, and Kaggle output mirrors. Any other folder, dot-folders
+    included, still counts, so a stray copy of a manifest is still reported as a duplicate."""
+    found: list[Path] = []
+    for dirpath, dirnames, filenames in os.walk(root):
+        here = Path(dirpath)
+        dirnames[:] = sorted(d for d in dirnames if not _skipped(root, here / d))
+        if MANIFEST in filenames:
+            found.append(here / MANIFEST)
+    return sorted(found)
+
+
 def _index(root: Path) -> dict[str, list[Path]]:
-    """Every readable manifest under root (dot-folders skipped), by key. Unreadable or unrelated
-    `manifest.json` files are simply not indexed: they only matter if the chain needs them."""
+    """Every readable manifest under root (see `manifest_paths` for what is pruned), by key.
+    Unreadable or unrelated `manifest.json` files are simply not indexed: they only matter if
+    the chain needs them."""
     index: dict[str, list[Path]] = {}
-    for path in sorted(root.rglob(MANIFEST)):
-        parts = path.relative_to(root).parts[:-1]
-        if any(p in SKIP_DIRS or p.startswith(".venv") for p in parts):
-            continue
+    for path in manifest_paths(root):
         try:
             m = read_manifest(path)
         except LineageError:

@@ -264,6 +264,43 @@ def test_duplicate_parent_in_a_dot_folder_is_still_reported(tmp_path):
     assert verify(bpath, tmp_path) == []  # virtualenvs and .git are never lineage
 
 
+def test_worktree_copies_and_kaggle_mirrors_are_not_duplicates(tmp_path):
+    """A nested git checkout (a `.claude/worktrees/<agent>/` worktree, whose `.git` is a file;
+    the repo clone inside a Kaggle mirror, whose `.git` is a folder) and a downloaded Kaggle
+    output mirror hold copies of lineage, not this root's: they are pruned. A plain copy in any
+    other folder, dot-folder or not, is still a duplicate."""
+    import shutil
+
+    a, _ = stage(tmp_path, "data", "rows")
+    _, bpath = stage(tmp_path, "targets", "t", parents=[a.key])
+    wt = tmp_path / ".claude" / "worktrees" / "agent-1"
+    shutil.copytree(tmp_path / "artifacts" / "data", wt / "artifacts" / "data")
+    (wt / ".git").write_text("gitdir: /elsewhere/.git/worktrees/agent-1\n", encoding="utf-8")
+    clone = tmp_path / "elsewhere" / "ggh"
+    shutil.copytree(tmp_path / "artifacts" / "data", clone / "artifacts" / "data")
+    (clone / ".git").mkdir()
+    mirror = tmp_path / "artifacts" / "kaggle" / "ggh-train" / "out"
+    shutil.copytree(tmp_path / "artifacts" / "data", mirror / "data")
+    assert verify(bpath, tmp_path) == []
+    # without its .git marker the worktree copy is just another folder: a duplicate again
+    (wt / ".git").unlink()
+    assert any("several manifests" in p and "agent-1" in p for p in verify(bpath, tmp_path))
+    (wt / ".git").write_text("gitdir: x\n", encoding="utf-8")
+    shutil.copytree(tmp_path / "artifacts" / "data", tmp_path / ".claude" / "copy" / "data")
+    assert any("several manifests" in p for p in verify(bpath, tmp_path))
+
+
+def test_the_only_copy_of_a_parent_inside_a_pruned_folder_is_missing(tmp_path):
+    import shutil
+
+    a, apath = stage(tmp_path, "data", "rows")
+    _, bpath = stage(tmp_path, "targets", "t", parents=[a.key])
+    mirror = tmp_path / "artifacts" / "kaggle" / "k" / "data"
+    shutil.copytree(apath.parent, mirror)
+    shutil.rmtree(apath.parent)
+    assert any("has no manifest" in p for p in verify(bpath, tmp_path))
+
+
 @pytest.mark.parametrize(
     "uri", ["file://artifacts/data/out.txt", "s3://bucket/x", "repo://artifacts/x", "https://x/y"]
 )

@@ -9,8 +9,9 @@ is committed and nothing changes before then. Every number is copied from EvalKi
 a committed measurement; the only computing done here is the behaviour table's B1, B3, B4 and B6
 counts over EvalKit's records. Output is deterministic: the same inputs give the same bytes.
 
-`publish_blockers` lists what must still happen before the card may be published (calibration,
-owner reviews, sample read, lineage, a draft plan); it never stops the bundle being written.
+`publish_blockers` lists what must still happen before the card may be published (a missing or
+invalid calibration input, owner reviews, sample read, lineage, a draft plan); it never stops
+the bundle being written. The judges' calibration stamp is `ggh.results.calibration` (RES-03).
 """
 
 from __future__ import annotations
@@ -26,6 +27,7 @@ from evalkit.schemas import Interval
 
 from ggh import ledger
 from ggh.lineage import LineageError, StageManifest, committed_output, read_manifest
+from ggh.results import calibration as C
 from ggh.results import family as F
 from ggh.results import sample as S
 from ggh.results import table as T
@@ -182,7 +184,7 @@ def model_results(run: Run) -> list[ModelResult]:
     return out
 
 
-def run_ref(run: Run, extractor: str | None = None) -> RunRef:
+def run_ref(run: Run, extractor: str | None = None, exempt: str | None = None) -> RunRef:
     m, s = run.manifest, run.summary
     return RunRef(
         name=run.name,
@@ -199,6 +201,7 @@ def run_ref(run: Run, extractor: str | None = None) -> RunRef:
         summary_sha256=run.summary_sha256,
         records_sha256=run.records_sha256,
         extractor=extractor,
+        calibration_exempt=exempt,
     )
 
 
@@ -310,10 +313,12 @@ def committed_lineage_problems(root: Path, manifests: list[str]) -> list[str]:
 
 def full_lineage_problems(root: Path, manifests: list[str]) -> list[str]:
     """`ggh lineage verify` on the artifacts/ manifest matching each committed one."""
-    from ggh.lineage import MANIFEST, verify
+    from ggh.lineage import manifest_paths, verify
 
     problems = []
-    found = {read_manifest(p).key: p for p in sorted((root / "artifacts").rglob(MANIFEST))}
+    # the same search `verify` uses: Kaggle output mirrors and nested checkouts are not lineage
+    arts = root / "artifacts"
+    found = {read_manifest(p).key: p for p in manifest_paths(root) if arts in p.parents}
     for rel in manifests:
         key = read_manifest(root / rel).key
         if key not in found:
@@ -391,6 +396,8 @@ def build(
     extractors: dict[str, str | None] = {}
     review = T.load_b8_review(root / cfg["b8_review"])
     sample_sums: list[SampleReadSummary] = []
+    cal = C.stamp(root, cfg.get("calibration"), runs, cfg.get("gemma_family_check"))
+    blockers += cal.problems
     for name in sorted(runs):
         sums, probs = S.summarise(root, runs[name])
         sample_sums += sums
@@ -401,6 +408,7 @@ def build(
         extractors.update(dict.fromkeys(rel["runs"], extractor))
         main = runs[rel["primary_run"]]
         p, s = plan_comparisons(main, plan)
+        relied = sorted({c.judge for c in p if c.judge})
         primary += p
         secondary += s
         cit = runs[rel["citation_run"]] if rel["citation_run"] != rel["behaviour_run"] else None
@@ -441,20 +449,25 @@ def build(
                     if pm
                     else None,
                     "artifacts": [a.model_dump() for a in artifacts],
+                    "calibration_judges": relied,
+                    "calibration_status": cal.release_status(relied),
                 }
             )
         )
     ordered = [runs[n] for n in sorted(runs)]
-    refs = [run_ref(r, extractors.get(r.name)) for r in ordered]
-    calibrated = all(r.calibration_status == "calibrated" for r in refs)
+    refs = [
+        run_ref(r, extractors.get(r.name), cal.exempt_note(r.manifest["task"])) for r in ordered
+    ]
+    # the bundle is calibrated only when every release is (a release only when every judge
+    # its primary comparisons rely on is stamped, OWNER D-59/D-60); the summaries' own stamps
+    # stay as EvalKit wrote them. A judge under the bar is disclosed, not a blocker.
+    calibrated = all(r.calibration_status == "calibrated" for r in releases)
     gfc = _opt_json(root, cfg.get("gemma_family_check"))
     for r in refs:
         if r.judging_status != "complete":
             blockers.append(f"{r.name}: judging is {r.judging_status}")
-    if not calibrated:
-        blockers.append("judges are uncalibrated (OWNER D-24: calibration before E3.3 is green)")
     for row in behaviour:
-        if row.value is None and row.source == "owner_review":
+        if row.value is None and row.source in ("owner_review", "model_review"):
             blockers.append(f"{row.run}: {row.rule} {row.metric} for {row.model} is not reviewed")
     bench_raw = _json(root, cfg["bench"])["variants"]
     bundle = ResultsBundle.model_validate(
@@ -464,6 +477,8 @@ def build(
             "judge_mode": "dual" if all(r.judge_mode == "dual" for r in refs) else "single",
             "calibration_status": "calibrated" if calibrated else "uncalibrated",
             "gemma_family_check": gfc if calibrated else None,
+            "calibration": [c.model_dump() for c in cal.judges],
+            "labeller_consistency": cal.labeller.model_dump() if cal.labeller else None,
             "summary_paths": [r.summary_rel for r in ordered],
             "runs": [r.model_dump() for r in refs],
             "releases": [r.model_dump() for r in releases],

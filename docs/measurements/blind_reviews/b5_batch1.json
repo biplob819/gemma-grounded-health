@@ -1,0 +1,2803 @@
+[
+ {
+  "key": "s8d79718c91",
+  "question": "Traumatic aortic injury: does the anatomy of the aortic arch influence aortic trauma severity?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The aortic arch angle is associated with the occurrence of type III damage.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "A multivariate analysis confirmed that the aortic arch angle was significantly associated with the occurrence of type III damage (OR 1.5; 95% CI 1.03-2.2)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The aortic arch angle is associated with the occurrence of type III damage.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 directly reports a significant multivariate association between the aortic arch angle and type III damage.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states the association asserted in the claim.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s25bf627714",
+  "question": "Inpatient Pediatric Tonsillectomy: Does Hospital Type Affect Cost and Outcomes of Care?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Children's teaching hospitals (CTHs) had significantly higher risk-adjusted total cost and length of stay (LOS) per tonsillectomy compared with non-children's teaching hospitals (NCTHs) and nonteaching hospitals (NTHs). Furthermore, CTHs had higher odds of major perioperative complications compared with NCTHs.",
+  "citations": [
+   8,
+   9
+  ],
+  "cited_sentences": {
+   "8": "The CTHs had significantly higher risk-adjusted total cost and LOS per tonsillectomy compared with NCTHs and NTHs ($9423.34/2.8 days, $6250.78/2.11 days, and $5905.10/2.08 days, respectively; P<.001).",
+   "9": "The CTHs had higher odds of complications compared with NCTHs (odds ratio [OR], 1.48; 95% CI, 1.15-1.91; P = .002) but not when compared with NTHs (OR, 1.19; 95% CI, 0.89-1.59; P = .23)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Children's teaching hospitals (CTHs) had significantly higher risk-adjusted total cost per tonsillectomy compared with non-children's teaching hospitals (NCTHs) and nonteaching hospitals (NTHs).",
+    "cited": [
+     8,
+     9
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states that CTHs had significantly higher risk-adjusted total cost per tonsillectomy than both NCTHs and NTHs (P<.001).",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 9,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Children's teaching hospitals (CTHs) had significantly higher risk-adjusted length of stay (LOS) per tonsillectomy compared with non-children's teaching hospitals (NCTHs) and nonteaching hospitals (NTHs).",
+    "cited": [
+     8,
+     9
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states that CTHs had significantly higher risk-adjusted LOS per tonsillectomy than both NCTHs and NTHs (P<.001).",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 9,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "CTHs had higher odds of major perioperative complications compared with NCTHs.",
+    "cited": [
+     8,
+     9
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 9 establishes higher odds of complications generally, but does not specify major perioperative complications.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 9,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s8e35f8d5c6",
+  "question": "Does anterior laxity of the uninjured knee influence clinical outcomes of ACL reconstruction?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Anterior laxity of the uninjured knee is associated with postoperative anterior laxity of the reconstructed knee and functional outcomes of the knee.",
+  "citations": [
+   1,
+   4,
+   6
+  ],
+  "cited_sentences": {
+   "1": "The purpose of this study was to evaluate the association between the postoperative outcomes of anterior cruciate ligament (ACL) reconstruction and the anterior laxity of the uninjured knee.",
+   "4": "Anterior laxity of the uninjured knee was assessed preoperatively, and anterior laxity of the reconstructed knee was assessed at twenty-four months postoperatively.",
+   "6": "Functional outcomes were assessed with the Lysholm score and the International Knee Documentation Committee (IKDC) score."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Anterior laxity of the uninjured knee is associated with postoperative anterior laxity of the reconstructed knee.",
+    "cited": [
+     1,
+     4,
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences describe the study's objective and measurements but do not report an association between uninjured-knee laxity and postoperative reconstructed-knee laxity.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "method"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Anterior laxity of the uninjured knee is associated with functional outcomes of the knee.",
+    "cited": [
+     1,
+     4,
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences describe the study's aim and assessments but do not report that anterior laxity of the uninjured knee was associated with functional outcomes.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "method"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sf9d83516f1",
+  "question": "Should early extubation be the goal for children after congenital cardiac surgery?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Early extubation was associated with lower mortality (1% vs 9%, P<.001) and a lower rate of reintubation (4% vs 23%, P<.001) compared with delayed extubation.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "Early extubation was associated with lower mortality (1% vs 9%, P<.001) and a lower rate of reintubation (4% vs 23%, P<.001) compared with delayed extubation."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Early extubation was associated with lower mortality (1% vs 9%, P<.001) compared with delayed extubation.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states the claimed mortality association, comparison, and statistics.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Early extubation was associated with a lower rate of reintubation (4% vs 23%, P<.001) compared with delayed extubation.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states the claimed association, including the reintubation rates and P value.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s7f3134a891",
+  "question": "Do family physicians make good sentinels for influenza?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Family physicians are good sentinels for influenza.",
+  "citations": [
+   1
+  ],
+  "cited_sentences": {
+   "1": "To determine whether volunteer family physician reports of the frequency of influenza-like illness (ILI) usefully supplement information from other influenza surveillance systems conducted by the Centers for Disease Control and Prevention."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Family physicians are good sentinels for influenza.",
+    "cited": [
+     1
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence only states the study's objective of testing whether family physician reports are useful. It reports no finding that family physicians are good sentinels for influenza.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence states an objective to evaluate family physician reports, not a finding that family physicians are good influenza sentinels.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sd99318509d",
+  "question": "Assessment of appropriate antimicrobial prescribing: do experts agree?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Experts showed substantial, though not complete, agreement: specialists agreed with the modal expert reference standard in 80% of cases. They agreed with the index expert in 76% of cases, while the index expert agreed with his own previous assessments in 71%.",
+  "citations": [
+   7,
+   9
+  ],
+  "cited_sentences": {
+   "7": "Specialists agreed with the reference standard in 80% of cases (range 75%-86%), with a sensitivity and specificity of 75% and 84%, respectively.",
+   "9": "Specialists agreed with the index expert in 76% of cases and the index expert agreed with his previous assessments in 71% of cases."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Experts showed substantial, though not complete, agreement.",
+    "cited": [
+     7,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7,
+       9
+      ],
+      "rationale": "Agreement rates of 71-86% between experts, the index expert, and the reference standard show substantial but incomplete agreement.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7,
+       9
+      ],
+      "rationale": "Agreement rates of 76%–80% directly support substantial, but not complete, agreement among experts.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Specialists agreed with the modal expert reference standard in 80% of cases.",
+    "cited": [
+     7,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 directly states the 80% agreement with the reference standard, though it does not itself describe that standard as the modal expert assessment.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 7 states 80% agreement with the reference standard, but neither sentence identifies that standard as the modal expert reference standard.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Specialists agreed with the index expert in 76% of cases.",
+    "cited": [
+     7,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 states this exact figure.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 explicitly states the claim.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "The index expert agreed with his own previous assessments in 71% of cases.",
+    "cited": [
+     7,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 directly states the index expert agreed with his previous assessments in 71% of cases.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 explicitly states the claimed agreement rate with his previous assessments.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s6b48db309a",
+  "question": "Do socioeconomic differences in mortality persist after retirement?",
+  "reference_label": "yes",
+  "label": "no",
+  "answer": "The ability of employment grade to predict mortality declined after retirement.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "After retirement the ability of grade to predict mortality declined (rate ratio 1.86; 1.6 to 2.2)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The ability of employment grade to predict mortality declined after retirement.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 directly states that grade's predictive ability for mortality declined after retirement, which matches the claim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 directly states that grade's ability to predict mortality declined after retirement.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "scbe9646591",
+  "question": "Ovarian torsion in children: is oophorectomy necessary?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Oophorectomy is not necessary in all cases of ovarian torsion.",
+  "citations": [
+   2
+  ],
+  "cited_sentences": {
+   "2": "However, the adult gynecology literature suggests that many ovaries can be treated by detorsion alone."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Oophorectomy is not necessary in all cases of ovarian torsion.",
+    "cited": [
+     2
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Treatment by detorsion alone directly implies that oophorectomy is not necessary in every case.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": true,
+        "role": "background"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "se616dd03b6",
+  "question": "Chronic functional somatic symptoms: a single syndrome?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Patients with chronic functional somatic symptoms have a higher rate of use of somatic and psychotropic drugs.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "In the 10 years before the diagnosis of chronic functional somatic symptoms, significantly more patients than controls presented functional somatic symptoms in at least two body systems, and used more somatic and psychotropic drugs."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Patients with chronic functional somatic symptoms have a higher rate of use of somatic and psychotropic drugs.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 directly states that patients used more somatic and psychotropic drugs than controls in the 10 years before diagnosis.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s41c3fc87b0",
+  "question": "Do family physicians know the costs of medical care?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "In this survey, few family physicians estimated costs within 25% of the true cost, and their estimates varied widely. They tended to underestimate expensive drugs and laboratory investigations and overestimate inexpensive drugs.",
+  "citations": [
+   10,
+   11
+  ],
+  "cited_sentences": {
+   "10": "Few respondents estimated costs within 25% of true cost, and estimates were highly variable.",
+   "11": "Physicians underestimated costs of expensive drugs and laboratory investigations and overestimated costs of inexpensive drugs."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "In this survey, few family physicians estimated costs within 25% of the true cost.",
+    "cited": [
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10,
+       11
+      ],
+      "rationale": "Sentence 10 says few respondents estimated within 25% of true cost, and sentence 11 shows the respondents were physicians, though the cited sentences never specify 'family' physicians.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences establish that few respondents estimated costs accurately, but do not identify them as family physicians.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "In this survey, family physicians' estimates of costs varied widely.",
+    "cited": [
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 states directly that the respondents' cost estimates were highly variable, which matches the claim that they varied widely.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences establish that cost estimates were highly variable, but do not identify the respondents as family physicians.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Family physicians tended to underestimate the cost of expensive drugs and laboratory investigations.",
+    "cited": [
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 directly states that physicians underestimated the costs of expensive drugs and laboratory investigations; the 'family' qualifier presumably comes from the study context.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 11 states that physicians underestimated these costs, but neither sentence identifies them as family physicians.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "Family physicians tended to overestimate the cost of inexpensive drugs.",
+    "cited": [
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 directly states that physicians overestimated the costs of inexpensive drugs, though it says 'physicians' rather than specifying family physicians.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 11 states that physicians overestimated inexpensive drug costs, but neither sentence identifies them as family physicians.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s3164cd4a95",
+  "question": "Do Wound Cultures Give Information About the Microbiology of Blood Cultures in Severe Burn Patients?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Wound cultures can provide information about the microbiology of blood cultures in severe burn patients.",
+  "citations": [
+   1,
+   2,
+   3,
+   7
+  ],
+  "cited_sentences": {
+   "1": "Blood stream infection (BSI) and the subsequent development of sepsis are among the most common infection complications occurring in severe burn patients.",
+   "2": "This study was designed to evaluate the relationship between the burn wound flora and BSI pathogens.",
+   "3": "Documentation of all bacterial and fungal wound and blood isolates from severe burn patients hospitalized in the burn unit and intensive care unit was obtained from medical records retrieved retrospectively from a computerized, hospital-wide database over a 13-year period.",
+   "7": "There were a total of 263 bacteremic episodes in 88 study patients, 44% of blood isolates were documented previously in wound cultures, and transmission of the same pathogen from wound to blood was noted in 65% of bacteremic patients."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Wound cultures can provide information about the microbiology of blood cultures in severe burn patients.",
+    "cited": [
+     1,
+     2,
+     3,
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3,
+       7
+      ],
+      "rationale": "In severe burn patients, prior wound cultures identified pathogens subsequently found in blood, directly supporting their ability to inform blood-culture microbiology.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "background"
+       },
+       {
+        "n": 2,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 3,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sa402466428",
+  "question": "Are intraoperative precursor events associated with postoperative major adverse events?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The primary outcome (MACE) occurred more frequently in the MACE group than in the non-MACE group (33% vs 24%; P = .015), and the incidence of the individual events of bleeding and difficulty weaning from cardiopulmonary bypass was significantly higher in the MACE group.",
+  "citations": [
+   1,
+   9,
+   10
+  ],
+  "cited_sentences": {
+   "1": "Precursor events are undesirable events that can lead to a subsequent adverse event and have been associated with postoperative mortality.",
+   "9": "The primary outcome occurred more frequently in the MACE group than in the non-MACE group (33% vs 24%; P = .015).",
+   "10": "The incidence of the individual events of bleeding and difficulty weaning from cardiopulmonary bypass was significantly higher in the MACE group."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The primary outcome (MACE) occurred more frequently in the MACE group than in the non-MACE group (33% vs 24%; P = .015).",
+    "cited": [
+     1,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sources never say the primary outcome is MACE, and since the groups are defined by MACE that reading would be circular. The context suggests the primary outcome is precursor events, so the parenthetical misidentifies it.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 9 supports the comparison and statistics, but the cited sentences do not establish that the primary outcome was MACE.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The incidence of the individual event of bleeding was significantly higher in the MACE group.",
+    "cited": [
+     1,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 directly states that bleeding incidence was significantly higher in the MACE group.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states that the incidence of bleeding was significantly higher in the MACE group.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The incidence of the individual event of difficulty weaning from cardiopulmonary bypass was significantly higher in the MACE group.",
+    "cited": [
+     1,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 states directly that difficulty weaning from cardiopulmonary bypass was significantly more frequent in the MACE group.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states that difficulty weaning from cardiopulmonary bypass was significantly more frequent in the MACE group.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s06d16b91ad",
+  "question": "Does intra-abdominal desmoid disease affect patients with an ileal pouch differently than those with an ileorectal anastomosis?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The study found that desmoid-related complication rates and individual complications were similar for patients with an ileal pouch and those with an ileorectal anastomosis. The study was limited by the relatively small number of patients.",
+  "citations": [
+   10,
+   11,
+   12
+  ],
+  "cited_sentences": {
+   "10": "The overall complication rate of desmoids was similar, approaching 70%.",
+   "11": "The risk of individual complications was also similar (bleeding (2.0% vs 0.0%), fistula (10.2% vs 13.5%), bowel obstruction (32.7% vs 48.6%), pain (34.7% vs 21.6%), and death related to desmoid tumors (2.0% vs 10.8%)); 38.8% of the restorative proctocolectomy group and 51.4% the ileorectal group had surgery for desmoid tumor complications (P = .21), and 22.4% and 22.2% of patients ultimately had permanent stomas.",
+   "12": "This study was limited by the relatively small numbers of patients."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study found that desmoid-related complication rates and individual complications were similar for patients with an ileal pouch and those with an ileorectal anastomosis.",
+    "cited": [
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10,
+       11
+      ],
+      "rationale": "Sentences 10 and 11 state that both the overall desmoid complication rate and the individual complication risks were similar between the restorative proctocolectomy (ileal pouch) and ileorectal groups.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences report similar overall and individual complication rates, but do not establish that the restorative proctocolectomy group consisted of patients with an ileal pouch.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The study was limited by the relatively small number of patients.",
+    "cited": [
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       12
+      ],
+      "rationale": "Sentence 12 states the claim nearly verbatim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       12
+      ],
+      "rationale": "Sentence 12 explicitly identifies the relatively small number of patients as a study limitation.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sf1b684f9ef",
+  "question": "Assessment of appropriate antimicrobial prescribing: do experts agree?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Specialists agreed with the reference standard in 80% of cases (range 75%-86%), with a sensitivity and specificity of 75% and 84%, respectively.",
+  "citations": [
+   7
+  ],
+  "cited_sentences": {
+   "7": "Specialists agreed with the reference standard in 80% of cases (range 75%-86%), with a sensitivity and specificity of 75% and 84%, respectively."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Specialists agreed with the reference standard in 80% of cases (range 75%-86%).",
+    "cited": [
+     7
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 states the claim word for word, including the 80% agreement figure and the 75%-86% range.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 explicitly states the claimed agreement rate and range.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Specialists' assessments had a sensitivity of 75% against the reference standard.",
+    "cited": [
+     7
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 says the specialists' assessments, compared against the reference standard, had a sensitivity of 75%, which matches the claim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 explicitly states that specialists' sensitivity against the reference standard was 75%.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Specialists' assessments had a specificity of 84% against the reference standard.",
+    "cited": [
+     7
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 gives specialists' specificity against the reference standard as 84%, which matches the claim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 explicitly reports specialists' specificity against the reference standard as 84%.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s65c5a54994",
+  "question": "Can Flexible Instruments Create Adequate Femoral Tunnel Lengths at 90° of Knee Flexion in Anterior Cruciate Ligament Reconstruction?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The intra-osseous length can be increased with increased flexion of the knee.",
+  "citations": [
+   9
+  ],
+  "cited_sentences": {
+   "9": "There is a trend for progressively increasing mean intra-osseous length associated with increased flexion of the knee."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The intra-osseous length can be increased with increased flexion of the knee.",
+    "cited": [
+     9
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 directly describes a trend of increasing intra-osseous length with increased knee flexion.",
+      "citation_support": [
+       {
+        "n": 9,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s1a1b674abe",
+  "question": "Chronic functional somatic symptoms: a single syndrome?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Patients with chronic functional somatic symptoms are more likely to have multiple somatic symptoms, use more somatic and psychotropic drugs, and have more psychiatric morbidity.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "In the 10 years before the diagnosis of chronic functional somatic symptoms, significantly more patients than controls presented functional somatic symptoms in at least two body systems, and used more somatic and psychotropic drugs."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Patients with chronic functional somatic symptoms are more likely to have multiple somatic symptoms.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Patients later diagnosed with chronic functional somatic symptoms were more likely than controls to have symptoms in multiple body systems, directly supporting multiple somatic symptoms.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Patients with chronic functional somatic symptoms use more somatic and psychotropic drugs.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 states that patients used more somatic and psychotropic drugs than controls in the 10 years before diagnosis.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Patients with chronic functional somatic symptoms have more psychiatric morbidity.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence reports greater psychotropic drug use, but does not establish greater psychiatric morbidity.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sac463cf0b9",
+  "question": "Can we rely on arterial line sampling in performing activated plasma thromboplastin time after cardiac surgery?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Arterial line sampling should not be relied on for APTT after cardiac surgery: arterial APTT ratios were significantly higher than peripheral values, and TEG confirmed heparin contamination in arterial samples. Heparinized arterial lines were also the most common ports used for APTT sampling in surveyed units. [8,10,11]",
+  "citations": [
+   8,
+   10,
+   11
+  ],
+  "cited_sentences": {
+   "8": "The median arterial APTT ratio value was 1.32 +/- 0.52 as compared to the median peripheral APTT ratio value which was 1.1 +/- 0.24 (P<0.001).",
+   "10": "Heparin contamination was confirmed by TEG which revealed that the R-value for arterial catheter blood samples without heparinase in the cup was higher (406.00 +/- 64.44 s) compared with the value for arterial samples with heparinase in the cup (318.28 +/- 47.26s, P<0.05).",
+   "11": "The survey of 22 UK cardiothoracic intensive care units showed that heparinized arterial lines were by far the commonest ports used for blood withdrawal for the measurement of APTT ratio results."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Arterial line sampling should not be relied on for APTT after cardiac surgery",
+    "cited": [
+     8,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8,
+       10
+      ],
+      "rationale": "Arterial-line APTT ratios were significantly higher than peripheral values, and TEG confirmed heparin contamination, which directly implies arterial-line samples are unreliable for APTT.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences show higher arterial APTT ratios and heparin contamination, but do not establish that arterial sampling should not be relied on specifically after cardiac surgery.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Arterial APTT ratios were significantly higher than peripheral values",
+    "cited": [
+     8,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 reports a median arterial APTT ratio of 1.32 against a peripheral median of 1.1, with P<0.001, so arterial values were significantly higher.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 reports a higher arterial than peripheral APTT ratio, with a statistically significant difference (P<0.001).",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "TEG confirmed heparin contamination in arterial samples",
+    "cited": [
+     8,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 states directly that TEG confirmed heparin contamination in arterial catheter samples.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states that TEG confirmed heparin contamination and identifies the tested samples as arterial catheter blood.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "Heparinized arterial lines were also the most common ports used for APTT sampling in surveyed units",
+    "cited": [
+     8,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 directly states that, in the survey of UK cardiothoracic ICUs, heparinized arterial lines were the most common ports used for APTT sampling.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 explicitly states that heparinized arterial lines were the most common ports used for APTT sampling in the surveyed units.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sc9797d8e2d",
+  "question": "Traumatic aortic injury: does the anatomy of the aortic arch influence aortic trauma severity?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "There were substantial differences in both the aortic arch index and the aortic arch angle of the type III and IV groups.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "A multivariate analysis confirmed that the aortic arch angle was significantly associated with the occurrence of type III damage (OR 1.5; 95% CI 1.03-2.2)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "There were substantial differences in the aortic arch index of the type III and IV groups.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence [8] links aortic arch angle to type III damage but does not compare the aortic arch index between type III and IV groups.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "There were substantial differences in the aortic arch angle of the type III and IV groups.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 8 reports an association between aortic arch angle and type III damage, but does not compare angles between type III and type IV groups.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s426b3de343",
+  "question": "Can normal knee kinematics be restored with unicompartmental knee replacement?",
+  "reference_label": "no",
+  "label": "yes",
+  "answer": "The knee kinematics and quadriceps tension were similar in the unicompartmental and tricompartmental conditions.",
+  "citations": [
+   4,
+   11
+  ],
+  "cited_sentences": {
+   "4": "To test this hypothesis, knee kinematics and quadriceps tension were recorded before and after replacement with a unicompartmental design and then with a tricompartmental design.",
+   "11": "Quadriceps tension was also similar among all three conditions."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The knee kinematics were similar in the unicompartmental and tricompartmental conditions.",
+    "cited": [
+     4,
+     11
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence [4] states that knee kinematics were recorded, but gives no comparison results; sentence [11] reports similarity only in quadriceps tension.",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 11,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Quadriceps tension was similar in the unicompartmental and tricompartmental conditions.",
+    "cited": [
+     4,
+     11
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       4,
+       11
+      ],
+      "rationale": "Sentence 4 identifies the unicompartmental and tricompartmental conditions, and sentence 11 states that quadriceps tension was similar among all three conditions.",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 11,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sf58b525f46",
+  "question": "Does growth hormone replacement therapy reduce mortality in adults with growth hormone deficiency?",
+  "reference_label": "no",
+  "label": "maybe",
+  "answer": "The effect of GH treatment on mortality remains to be established. This nationwide cohort study investigated the effect of GH treatment on all-cause and cause-specific mortality and analyzed patient characteristics influencing mortality in GHD adults.",
+  "citations": [
+   2,
+   3
+  ],
+  "cited_sentences": {
+   "2": "The effect of GH treatment on mortality remains to be established.",
+   "3": "This nationwide cohort study investigates the effect of GH treatment on all-cause and cause-specific mortality and analyzes patient characteristics influencing mortality in GHD adults."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The effect of GH treatment on mortality remains to be established.",
+    "cited": [
+     2,
+     3
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 states the claim verbatim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 states the claim verbatim.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "This nationwide cohort study investigated the effect of GH treatment on all-cause and cause-specific mortality.",
+    "cited": [
+     2,
+     3
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 directly states that the nationwide cohort study examines GH treatment's effect on all-cause and cause-specific mortality.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 explicitly states the study design and the mortality outcomes investigated.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "This nationwide cohort study analyzed patient characteristics influencing mortality in GHD adults.",
+    "cited": [
+     2,
+     3
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 states directly that the nationwide cohort study analyzes patient characteristics influencing mortality in GHD adults.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 explicitly states that the nationwide cohort study analyzes patient characteristics influencing mortality in GHD adults.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sdefd79b3cc",
+  "question": "Are income-related differences in active travel associated with physical environmental characteristics?",
+  "reference_label": "no",
+  "label": "yes",
+  "answer": "The relationship between income and active travel is affected by physical environmental characteristics.",
+  "citations": [
+   2,
+   3
+  ],
+  "cited_sentences": {
+   "2": "Aspects of both social and built environments have been shown to affect active travel, but little research has explored the influence of physical environmental characteristics, and less has examined whether physical environment affects socio-economic inequality in active travel.",
+   "3": "This study explored income-related differences in active travel in relation to multiple physical environmental characteristics including air pollution, climate and levels of green space, in urban areas across England."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The relationship between income and active travel is affected by physical environmental characteristics.",
+    "cited": [
+     2,
+     3
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences only say this question is under-researched and that the study explored it. They do not report a finding that physical environment actually affects the income–active travel relationship.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences describe a research question and study scope, but do not establish that physical environmental characteristics affect the relationship between income and active travel.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s7bd1fb3b4f",
+  "question": "Is fluoroscopy essential for retrieval of lower ureteric stones?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Fluoroscopy is not essential for the retrieval of lower ureteric stones.",
+  "citations": [
+   1
+  ],
+  "cited_sentences": {
+   "1": "The aim of this study was to assess the efficacy of ureteroscopy for lower ureteric stones without the use of fluoroscopy."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Fluoroscopy is not essential for the retrieval of lower ureteric stones.",
+    "cited": [
+     1
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence only gives the study's aim of assessing ureteroscopy without fluoroscopy; it reports no result showing fluoroscopy is unnecessary.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence states a study aim, not findings establishing that fluoroscopy is unnecessary for stone retrieval.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sff64c034be",
+  "question": "Discharging patients earlier from Winnipeg hospitals: does it adversely affect quality of care?",
+  "reference_label": "no",
+  "label": "maybe",
+  "answer": "The study investigated whether decreasing lengths of stay were associated with increased hospital readmission rates and mean number of physician visits after discharge for selected diagnostic categories. While the length of stay decreased significantly over the 4 years for all categories, the readmission rates for AMI, bronchitis or asthma, and TURP showed no consistent change over the 4 years. Furthermore, there was no significant correlation observed between length of stay and readmission rates or mean number of physician visits for individual hospitals in 1992-93 in any of the four categories.",
+  "citations": [
+   1,
+   6,
+   7,
+   8,
+   9,
+   12,
+   13
+  ],
+  "cited_sentences": {
+   "1": "To determine whether decreasing lengths of stay over time for selected diagnostic categories were associated with increased hospital readmission rates and mean number of physician visits after discharge.",
+   "6": "Length of hospital stay, and rate of readmission within 30 days after discharge for all four categories and mean number of physician visits within 30 days after discharge for two categories (AMI and bronchitis or asthma.",
+   "7": "The length of stay decreased significantly over the 4 years for all of the four categories, the smallest change being observed for patients with AMI (11.1%) and the largest for those with bronchitis or asthma (22.0%).",
+   "8": "The readmission rates for AMI, bronchitis or asthma, and TURP showed no consistent change over the 4 years.",
+   "9": "The readmission rate for uterine or adnexal procedures increased significantly between the first and second year (chi 2 = 4.28, p = 0.04) but then remained constant over the next 3 years.",
+   "12": "There was no significant correlation between length of stay and readmission rates for individual hospitals in 1992-93 in any of the four categories.",
+   "13": "Also, no correlation was observed between length of stay and mean number of physician visits for individual hospitals in 1992-93 in the categories AMI and bronchitis or asthma."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study investigated whether decreasing lengths of stay were associated with increased hospital readmission rates and mean number of physician visits after discharge for selected diagnostic categories.",
+    "cited": [
+     1,
+     6,
+     7,
+     8,
+     9,
+     12,
+     13
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       1
+      ],
+      "rationale": "Sentence 1 states the study objective almost verbatim, matching the claim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1
+      ],
+      "rationale": "Sentence 1 explicitly states the study objective described in the claim.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The length of stay decreased significantly over the 4 years for all categories.",
+    "cited": [
+     1,
+     6,
+     7,
+     8,
+     9,
+     12,
+     13
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 states that length of stay decreased significantly over the 4 years in all four categories, which matches the claim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 explicitly states that length of stay decreased significantly over the four years for all four categories.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The readmission rates for AMI, bronchitis or asthma, and TURP showed no consistent change over the 4 years.",
+    "cited": [
+     1,
+     6,
+     7,
+     8,
+     9,
+     12,
+     13
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 says the same thing as the claim, word for word.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 states the claim verbatim.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "There was no significant correlation observed between length of stay and readmission rates for individual hospitals in 1992-93 in any of the four categories.",
+    "cited": [
+     1,
+     6,
+     7,
+     8,
+     9,
+     12,
+     13
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       12
+      ],
+      "rationale": "Sentence 12 states the claim almost word for word.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       12
+      ],
+      "rationale": "Sentence 12 explicitly states the claim.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "There was no significant correlation observed between length of stay and mean number of physician visits for individual hospitals in 1992-93 in any of the four categories.",
+    "cited": [
+     1,
+     6,
+     7,
+     8,
+     9,
+     12,
+     13
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Physician visits were measured and assessed for only two categories (AMI and bronchitis or asthma), not all four, so the claim overgeneralizes.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The source reports no correlation with physician visits for only two categories; the finding covering all four categories concerns readmission rates.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s7b653d9364",
+  "question": "Is there a relationship between homocysteine and vitiligo?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The level of Hcy is higher in patients with vitiligo than in controls.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "The mean serum level of Hcy was significantly higher in patients with vitiligo than in controls (21.61 +/- 13.28 vs. 13.1 +/- 4.88 micromol L(-1); P<0.001)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The level of Hcy is higher in patients with vitiligo than in controls.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 directly states that mean serum Hcy was higher in patients with vitiligo than in controls.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s1359174f28",
+  "question": "Can autologous platelet-rich plasma gel enhance healing after surgical extraction of mandibular third molars?",
+  "reference_label": "yes",
+  "label": "no",
+  "answer": "The application of PRP gel did not significantly improve the healing and bone regeneration potential on mandibular third molar extraction sockets.",
+  "citations": [
+   1,
+   4,
+   6
+  ],
+  "cited_sentences": {
+   "1": "This investigation assesses the effect of platelet-rich plasma (PRP) gel on postoperative pain, swelling, and trismus as well as healing and bone regeneration potential on mandibular third molar extraction sockets.",
+   "4": "The predictor variable was application of PRP gel to the socket of the third molar in the test group, whereas the control group had no PRP.",
+   "6": "Socket healing was assessed radiographically by allocating scores for lamina dura, overall density, and trabecular pattern."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The application of PRP gel did not significantly improve the healing and bone regeneration potential on mandibular third molar extraction sockets.",
+    "cited": [
+     1,
+     4,
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The cited sentences describe the study objective, intervention, and assessment methods but provide no results establishing that PRP gel failed to significantly improve healing or bone regeneration.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "method"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sf0d89eef9f",
+  "question": "Is fluoroscopy essential for retrieval of lower ureteric stones?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Fluoroscopy was not essential for routine retrieval: complete clearance was achieved without it in 99 patients (94.2%). It was needed in six patients for specific difficulties or confirmation of stone passage, so it may be required in some cases.",
+  "citations": [
+   9,
+   10
+  ],
+  "cited_sentences": {
+   "9": "Complete clearance without the use of fluoroscopy was achieved in 99 patients (94.2%).",
+   "10": "Fluoroscopy was required in 6 patients (4%) for calcified stricture (n = 1), duplex system (n = 1), narrow and tortuous meatus causing difficulty in passing the 5-Fr balloon dilator (n = 3), and confirmation of spontaneous passage of the stone (n = 1)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Fluoroscopy was not essential for routine retrieval of lower ureteric stones.",
+    "cited": [
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9,
+       10
+      ],
+      "rationale": "Most patients (94.2%) had complete clearance without fluoroscopy, and it was needed only in a few special cases, which implies it was not essential for routine retrieval.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences show that fluoroscopy was usually unnecessary, but do not establish that the stones were in the lower ureter.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Complete clearance was achieved without fluoroscopy in 99 patients (94.2%).",
+    "cited": [
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 says the same thing as the claim, in nearly the same words.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 explicitly states the claim, including the patient count and percentage.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Fluoroscopy was needed in six patients for specific difficulties or confirmation of stone passage.",
+    "cited": [
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 says fluoroscopy was needed in 6 patients, for specific anatomical difficulties and, in one case, to confirm stone passage.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states that six patients required fluoroscopy for specified difficulties or confirmation of spontaneous stone passage.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "Fluoroscopy may be required in some cases.",
+    "cited": [
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 says fluoroscopy was needed in a subset of patients for specific reasons, which matches the claim that it may be required in some cases.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states that fluoroscopy was required in some patients, establishing that it may be required in some cases.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s418a47354b",
+  "question": "Is it Crohn's disease?",
+  "reference_label": "maybe",
+  "label": "maybe",
+  "answer": "The abstract describes granulomatous enteritis as part of a severe sulfasalazine reaction in a patient with rheumatoid arthritis, but it does not identify Crohn's disease as the diagnosis. The sentences do not settle whether the enteritis was Crohn's disease. [3]",
+  "citations": [
+   3
+  ],
+  "cited_sentences": {
+   "3": "A severe systemic reaction to sulfasalazine developed in a 21-year old female with rheumatoid arthritis characterized by eosinophilia, granulomatous enteritis and myelotoxicity, cholestatic hepatitis, and seizures."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The abstract describes granulomatous enteritis as part of a severe sulfasalazine reaction in a patient with rheumatoid arthritis.",
+    "cited": [
+     3
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 lists granulomatous enteritis among the features of a severe sulfasalazine reaction in a patient with rheumatoid arthritis, which establishes the claim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 explicitly identifies granulomatous enteritis as a feature of a severe sulfasalazine reaction in a patient with rheumatoid arthritis.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The abstract does not identify Crohn's disease as the diagnosis.",
+    "cited": [
+     3
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "The sentence names rheumatoid arthritis as the patient's condition and attributes the granulomatous enteritis to a sulfasalazine reaction, not to Crohn's disease.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "The cited sentence identifies rheumatoid arthritis and a systemic reaction to sulfasalazine, not Crohn's disease.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The sentences do not settle whether the enteritis was Crohn's disease.",
+    "cited": [
+     3
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence presents the granulomatous enteritis as part of the sulfasalazine reaction, which points to a drug cause rather than leaving the question open, so it does not establish that the matter is unsettled.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "The sentence describes granulomatous enteritis but neither identifies it as Crohn's disease nor rules Crohn's disease out.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s56e52ed38e",
+  "question": "Traumatic aortic injury: does the anatomy of the aortic arch influence aortic trauma severity?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The aortic arch angle is associated with the occurrence of type III damage.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "A multivariate analysis confirmed that the aortic arch angle was significantly associated with the occurrence of type III damage (OR 1.5; 95% CI 1.03-2.2)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The aortic arch angle is associated with the occurrence of type III damage.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states the association asserted in the claim.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "scd38f33fbe",
+  "question": "Chemical shift MRI: is there any contribution to morphologic evaluation of solid breast masses?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Chemical shift imaging is valuable for assessment of the margins of solid breast masses.",
+  "citations": [
+   1
+  ],
+  "cited_sentences": {
+   "1": "To investigate the contribution of chemical shift magnetic resonance imaging for assessment of the margins of solid breast masses by benefiting from India ink artifact."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Chemical shift imaging is valuable for assessment of the margins of solid breast masses.",
+    "cited": [
+     1
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence only states the study's aim of investigating chemical shift imaging for this use. It gives no finding that the technique is actually valuable.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence states an aim to investigate chemical shift imaging's contribution, not a finding that it is valuable for assessing mass margins.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s12a917ff2b",
+  "question": "Is it Crohn's disease?",
+  "reference_label": "maybe",
+  "label": "maybe",
+  "answer": "The abstract does not address whether the patient has Crohn's disease. It describes a 21-year-old woman with rheumatoid arthritis who had a severe systemic reaction to sulfasalazine, including granulomatous enteritis, but it does not diagnose Crohn's disease. Sulfasalazine is mentioned as used for inflammatory bowel disease in general, so the sentences cannot settle the question.",
+  "citations": [
+   1,
+   3
+  ],
+  "cited_sentences": {
+   "1": "Sulfasalazine is a widely used anti-inflammatory agent in the treatment of inflammatory bowel disease and several rheumatological disorders.",
+   "3": "A severe systemic reaction to sulfasalazine developed in a 21-year old female with rheumatoid arthritis characterized by eosinophilia, granulomatous enteritis and myelotoxicity, cholestatic hepatitis, and seizures."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The abstract does not address whether the patient has Crohn's disease.",
+    "cited": [
+     1,
+     3
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The cited sentences never mention Crohn's disease, but two sentences cannot show what the rest of the abstract leaves out, and the reported granulomatous enteritis may bear on the question.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The cited sentences do not mention Crohn's disease, but they do not establish that the abstract as a whole does not address it.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The abstract describes a 21-year-old woman with rheumatoid arthritis who had a severe systemic reaction to sulfasalazine, including granulomatous enteritis.",
+    "cited": [
+     1,
+     3
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 directly states a severe systemic reaction to sulfasalazine in a 21-year-old woman with rheumatoid arthritis, and that reaction included granulomatous enteritis.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 directly describes the patient's age, sex, rheumatoid arthritis, and severe systemic reaction to sulfasalazine, including granulomatous enteritis.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The abstract does not diagnose Crohn's disease.",
+    "cited": [
+     1,
+     3
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 3 links the granulomatous enteritis to a sulfasalazine reaction in a rheumatoid arthritis patient, but two cited sentences cannot show that the whole abstract never diagnoses Crohn's disease.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The cited sentences describe rheumatoid arthritis and a sulfasalazine reaction but do not establish that the abstract does not diagnose Crohn's disease.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "Sulfasalazine is mentioned as used for inflammatory bowel disease in general.",
+    "cited": [
+     1,
+     3
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       1
+      ],
+      "rationale": "Sentence 1 states outright that sulfasalazine is used to treat inflammatory bowel disease in general.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1
+      ],
+      "rationale": "Sentence 1 explicitly states that sulfasalazine is used to treat inflammatory bowel disease generally.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "The sentences cannot settle the question of whether the patient has Crohn's disease.",
+    "cited": [
+     1,
+     3
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       3
+      ],
+      "rationale": "The sentences give rheumatoid arthritis as the patient's condition and attribute the granulomatous enteritis to a sulfasalazine reaction, but never confirm or rule out Crohn's disease, so the question stays open.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       3
+      ],
+      "rationale": "The sentences describe sulfasalazine’s uses and a reaction in a patient with rheumatoid arthritis, but neither confirm nor rule out Crohn’s disease.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s99e11d364c",
+  "question": "Traumatic aortic injury: does the anatomy of the aortic arch influence aortic trauma severity?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The abstract reports that aortic arch anatomy differs across injury severity groups: mean arch index and arch angle were highest in type I injuries and lower in type III and IV injuries, with substantial differences between type III and IV groups. A multivariate analysis found that the aortic arch angle was significantly associated with the occurrence of type III damage (OR 1.5; 95% CI 1.03-2.2). This is a small retrospective study of 22 cases, so the association supports but does not fully establish an influence.",
+  "citations": [
+   3,
+   6,
+   7,
+   8
+  ],
+  "cited_sentences": {
+   "3": "This is a retrospective study of twenty-two cases treated with TEVAR for TAI in our department from 2009 to 2014.",
+   "6": "The mean aortic arch index and mean aortic arch angle were 6.8 cm and 58.3°, respectively, in the type I injury group; 4.4 cm and 45.9° in the type III group; 3.3 cm and 37° in the type IV group.",
+   "7": "There were substantial differences in both the aortic arch index and the aortic arch angle of the type III and IV groups.",
+   "8": "A multivariate analysis confirmed that the aortic arch angle was significantly associated with the occurrence of type III damage (OR 1.5; 95% CI 1.03-2.2)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The abstract reports that aortic arch anatomy differs across injury severity groups.",
+    "cited": [
+     3,
+     6,
+     7,
+     8
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       6,
+       7
+      ],
+      "rationale": "Sentence 6 gives different arch index and angle values for injury types I, III, and IV, and sentence 7 states there were substantial differences, so arch anatomy is reported to differ across severity groups.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6,
+       7
+      ],
+      "rationale": "The cited sentences report different aortic arch indices and angles across injury types I, III, and IV, directly supporting anatomical differences across injury severity groups.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Mean arch index and arch angle were highest in type I injuries and lower in type III and IV injuries.",
+    "cited": [
+     3,
+     6,
+     7,
+     8
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 gives the means: type I has the highest arch index and arch angle, and types III and IV have lower values.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 reports the highest mean arch index and angle in type I, with lower values in types III and IV.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "There were substantial differences between type III and IV groups.",
+    "cited": [
+     3,
+     6,
+     7,
+     8
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 states directly that the type III and IV groups differed substantially in aortic arch index and arch angle.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 explicitly states that the type III and IV groups differed substantially in both measured aortic arch features.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "A multivariate analysis found that the aortic arch angle was significantly associated with the occurrence of type III damage (OR 1.5; 95% CI 1.03-2.2).",
+    "cited": [
+     3,
+     6,
+     7,
+     8
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 states the claim directly, with the same odds ratio and confidence interval.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states the claim, including the analysis type, association, odds ratio, and confidence interval.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "This is a small retrospective study of 22 cases.",
+    "cited": [
+     3,
+     6,
+     7,
+     8
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 states it is a retrospective study of twenty-two cases; 'small' is a fair characterization of a 22-case sample rather than an additional factual claim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 explicitly identifies a retrospective study of 22 cases, directly supporting the characterization as small.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c5",
+    "text": "The association supports but does not fully establish an influence.",
+    "cited": [
+     3,
+     6,
+     7,
+     8
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       3,
+       8
+      ],
+      "rationale": "A significant multivariate association from a small retrospective series supports a possible influence without fully establishing it, which matches the claim's hedge.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3,
+       8
+      ],
+      "rationale": "The significant association in a retrospective study supports a possible influence but does not establish it causally.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s7ca58921c4",
+  "question": "Ovarian torsion in children: is oophorectomy necessary?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Oophorectomy is not necessary in all cases of ovarian torsion.",
+  "citations": [
+   1,
+   2,
+   3,
+   5
+  ],
+  "cited_sentences": {
+   "1": "Most pediatric surgeons perform oophorectomy in girls presenting with ovarian torsion in which the ovary appears necrotic.",
+   "2": "However, the adult gynecology literature suggests that many ovaries can be treated by detorsion alone.",
+   "3": "All children with ovarian torsion on the gynecology and general surgery services between 1988 and 2002 were reviewed.",
+   "5": "Seventeen underwent detorsion with or without ovarian cystectomy, and 19 had oophorectomy (mean age 10 years in both groups)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Oophorectomy is not necessary in all cases of ovarian torsion.",
+    "cited": [
+     1,
+     2,
+     3,
+     5
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       5
+      ],
+      "rationale": "Detorsion alone is described as sufficient for many ovaries, and 17 children underwent detorsion with or without cystectomy rather than oophorectomy.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "background"
+       },
+       {
+        "n": 2,
+        "supports": true,
+        "role": "background"
+       },
+       {
+        "n": 3,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s61e284ffe4",
+  "question": "Are income-related differences in active travel associated with physical environmental characteristics?",
+  "reference_label": "no",
+  "label": "yes",
+  "answer": "This study explored income-related differences in active travel in relation to multiple physical environmental characteristics including air pollution, climate and levels of green space, in urban areas across England.",
+  "citations": [
+   3
+  ],
+  "cited_sentences": {
+   "3": "This study explored income-related differences in active travel in relation to multiple physical environmental characteristics including air pollution, climate and levels of green space, in urban areas across England."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "This study explored income-related differences in active travel in relation to multiple physical environmental characteristics.",
+    "cited": [
+     3
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 states the claim verbatim and adds only the specific characteristics and the setting.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 explicitly states the claim.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The study examined air pollution as a physical environmental characteristic in relation to income-related differences in active travel.",
+    "cited": [
+     3
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 directly states the study explored income-related differences in active travel in relation to physical environmental characteristics, including air pollution.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 explicitly identifies air pollution as a physical environmental characteristic examined in relation to income-related differences in active travel.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The study examined climate as a physical environmental characteristic in relation to income-related differences in active travel.",
+    "cited": [
+     3
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 explicitly lists climate among the physical environmental characteristics examined in relation to income-related differences in active travel.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 explicitly identifies climate as a physical environmental characteristic examined in relation to income-related differences in active travel.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "The study examined levels of green space as a physical environmental characteristic in relation to income-related differences in active travel.",
+    "cited": [
+     3
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 states directly that the study explored income-related differences in active travel in relation to physical environmental characteristics, and green space levels are listed among them.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 explicitly identifies levels of green space as a physical environmental characteristic examined in relation to income-related differences in active travel.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "The study was conducted in urban areas across England.",
+    "cited": [
+     3
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 states that the study explored active travel differences in urban areas across England.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 explicitly states that the study explored active travel in urban areas across England.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s12cf516bb4",
+  "question": "Does lung ischemia and reperfusion have an impact on coronary flow?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Lung IR injury causes a significant decrease in coronary blood flow.",
+  "citations": [
+   2,
+   8
+  ],
+  "cited_sentences": {
+   "2": "To determine the hemodynamic effect due to lung IR injury, we performed a quantitative coronary blood-flow analysis in a swine model of in situ lung ischemia and reperfusion.",
+   "8": "In the IR group, total coronary flow (TCF=LAD+Cx+RCA blood-flow) decreased precipitously and significantly from baseline (113±41 ml min\"1) during IR (p<0.05), with the lowest value observed at 60 min of reperfusion (-37.1%, p<0.003)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Lung IR injury causes a significant decrease in coronary blood flow.",
+    "cited": [
+     2,
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       8
+      ],
+      "rationale": "Sentence 2 identifies lung IR injury as the studied intervention, and sentence 8 reports a statistically significant decrease in total coronary flow during IR.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s49e8a99e29",
+  "question": "Can autologous platelet-rich plasma gel enhance healing after surgical extraction of mandibular third molars?",
+  "reference_label": "yes",
+  "label": "maybe",
+  "answer": "The investigation assessed the effect of platelet-rich plasma (PRP) gel on postoperative pain, swelling, and trismus as well as healing and bone regeneration potential on mandibular third molar extraction sockets. The mean postoperative pain score was lower for the PRP group at all time points and this was statistically significant (P<.05). Similarly, the scores for lamina dura, trabecular pattern, and bone density were better among patients in the PRP group.",
+  "citations": [
+   1,
+   11,
+   13
+  ],
+  "cited_sentences": {
+   "1": "This investigation assesses the effect of platelet-rich plasma (PRP) gel on postoperative pain, swelling, and trismus as well as healing and bone regeneration potential on mandibular third molar extraction sockets.",
+   "11": "The mean postoperative pain score (visual analog scale) was lower for the PRP group at all time points and this was statistically significant (P<.05).",
+   "13": "Similarly, the scores for lamina dura, trabecular pattern, and bone density were better among patients in the PRP group."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The investigation assessed the effect of platelet-rich plasma (PRP) gel on postoperative pain, swelling, and trismus as well as healing and bone regeneration potential on mandibular third molar extraction sockets.",
+    "cited": [
+     1,
+     11,
+     13
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1
+      ],
+      "rationale": "Sentence 1 explicitly states the investigation's scope exactly as described in the claim.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 11,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 13,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The mean postoperative pain score was lower for the PRP group at all time points, and this was statistically significant (P<.05).",
+    "cited": [
+     1,
+     11,
+     13
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 explicitly states that postoperative pain scores were lower for the PRP group at all time points, with statistical significance (P<.05).",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 11,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 13,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The scores for lamina dura, trabecular pattern, and bone density were better among patients in the PRP group.",
+    "cited": [
+     1,
+     11,
+     13
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       13
+      ],
+      "rationale": "Sentence 13 explicitly states the claim.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 11,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 13,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ }
+]

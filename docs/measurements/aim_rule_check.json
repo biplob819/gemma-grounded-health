@@ -1,0 +1,671 @@
+{
+  "citation": {
+    "main_citation": {
+      "claude-haiku-5-5": {
+        "claude-opus-5-5": {
+          "change": {
+            "aim_citation_rate": -0.048504,
+            "citation_precision": 0.01252
+          },
+          "corrected": {
+            "aim_citation_rate": 0.137255,
+            "citation_precision": 0.860149
+          },
+          "counts": {
+            "aim_evidence_entries": 466,
+            "aim_evidence_entries_not_supporting": 349,
+            "aim_hits_cleared": 47,
+            "aim_hits_corrected": 133,
+            "aim_hits_published": 180,
+            "answers_with_citations": 969,
+            "cited_sentences": 3754,
+            "entries_flipped": 75,
+            "sentences_flipped": 47,
+            "supported_verdicts_with_evidence": 4322,
+            "supporting_sentences_corrected": 3229,
+            "supporting_sentences_published": 3182
+          },
+          "published": {
+            "aim_citation_rate": 0.185759,
+            "citation_precision": 0.847629
+          }
+        },
+        "gpt-6.1-sol": {
+          "change": {
+            "aim_citation_rate": -0.054696,
+            "citation_precision": 0.014118
+          },
+          "corrected": {
+            "aim_citation_rate": 0.170279,
+            "citation_precision": 0.896111
+          },
+          "counts": {
+            "aim_evidence_entries": 414,
+            "aim_evidence_entries_not_supporting": 344,
+            "aim_hits_cleared": 53,
+            "aim_hits_corrected": 165,
+            "aim_hits_published": 218,
+            "answers_with_citations": 969,
+            "cited_sentences": 3754,
+            "entries_flipped": 73,
+            "sentences_flipped": 53,
+            "supported_verdicts_with_evidence": 3914,
+            "supporting_sentences_corrected": 3364,
+            "supporting_sentences_published": 3311
+          },
+          "published": {
+            "aim_citation_rate": 0.224974,
+            "citation_precision": 0.881993
+          }
+        }
+      },
+      "gemma-e2b-base-q4": {
+        "claude-opus-5-5": {
+          "change": {
+            "aim_citation_rate": -0.014271,
+            "citation_precision": 0.005996
+          },
+          "corrected": {
+            "aim_citation_rate": 0.042813,
+            "citation_precision": 0.730621
+          },
+          "counts": {
+            "aim_evidence_entries": 283,
+            "aim_evidence_entries_not_supporting": 58,
+            "aim_hits_cleared": 14,
+            "aim_hits_corrected": 42,
+            "aim_hits_published": 56,
+            "answers_with_citations": 981,
+            "cited_sentences": 2335,
+            "entries_flipped": 25,
+            "sentences_flipped": 14,
+            "supported_verdicts_with_evidence": 2069,
+            "supporting_sentences_corrected": 1706,
+            "supporting_sentences_published": 1692
+          },
+          "published": {
+            "aim_citation_rate": 0.057085,
+            "citation_precision": 0.724625
+          }
+        },
+        "gpt-6.1-sol": {
+          "change": {
+            "aim_citation_rate": -0.088685,
+            "citation_precision": 0.038116
+          },
+          "corrected": {
+            "aim_citation_rate": 0.053007,
+            "citation_precision": 0.784154
+          },
+          "counts": {
+            "aim_evidence_entries": 274,
+            "aim_evidence_entries_not_supporting": 153,
+            "aim_hits_cleared": 87,
+            "aim_hits_corrected": 52,
+            "aim_hits_published": 139,
+            "answers_with_citations": 981,
+            "cited_sentences": 2335,
+            "entries_flipped": 113,
+            "sentences_flipped": 89,
+            "supported_verdicts_with_evidence": 1976,
+            "supporting_sentences_corrected": 1831,
+            "supporting_sentences_published": 1742
+          },
+          "published": {
+            "aim_citation_rate": 0.141692,
+            "citation_precision": 0.746039
+          }
+        }
+      },
+      "gemma-e2b-grounded-q4": {
+        "claude-opus-5-5": {
+          "change": {
+            "aim_citation_rate": -0.006098,
+            "citation_precision": 0.003069
+          },
+          "corrected": {
+            "aim_citation_rate": 0.550813,
+            "citation_precision": 0.341176
+          },
+          "counts": {
+            "aim_evidence_entries": 159,
+            "aim_evidence_entries_not_supporting": 154,
+            "aim_hits_cleared": 6,
+            "aim_hits_corrected": 542,
+            "aim_hits_published": 548,
+            "answers_with_citations": 984,
+            "cited_sentences": 1955,
+            "entries_flipped": 8,
+            "sentences_flipped": 6,
+            "supported_verdicts_with_evidence": 649,
+            "supporting_sentences_corrected": 667,
+            "supporting_sentences_published": 661
+          },
+          "published": {
+            "aim_citation_rate": 0.556911,
+            "citation_precision": 0.338107
+          }
+        },
+        "gpt-6.1-sol": {
+          "change": {
+            "aim_citation_rate": -0.006098,
+            "citation_precision": 0.003069
+          },
+          "corrected": {
+            "aim_citation_rate": 0.560976,
+            "citation_precision": 0.362148
+          },
+          "counts": {
+            "aim_evidence_entries": 110,
+            "aim_evidence_entries_not_supporting": 104,
+            "aim_hits_cleared": 6,
+            "aim_hits_corrected": 552,
+            "aim_hits_published": 558,
+            "answers_with_citations": 984,
+            "cited_sentences": 1955,
+            "entries_flipped": 8,
+            "sentences_flipped": 6,
+            "supported_verdicts_with_evidence": 559,
+            "supporting_sentences_corrected": 708,
+            "supporting_sentences_published": 702
+          },
+          "published": {
+            "aim_citation_rate": 0.567073,
+            "citation_precision": 0.359079
+          }
+        }
+      },
+      "gpt-6-luna": {
+        "claude-opus-5-5": {
+          "change": {
+            "aim_citation_rate": -0.026667,
+            "citation_precision": 0.009847
+          },
+          "corrected": {
+            "aim_citation_rate": 0.067692,
+            "citation_precision": 0.874909
+          },
+          "counts": {
+            "aim_evidence_entries": 233,
+            "aim_evidence_entries_not_supporting": 190,
+            "aim_hits_cleared": 26,
+            "aim_hits_corrected": 66,
+            "aim_hits_published": 92,
+            "answers_with_citations": 975,
+            "cited_sentences": 2742,
+            "entries_flipped": 46,
+            "sentences_flipped": 27,
+            "supported_verdicts_with_evidence": 3258,
+            "supporting_sentences_corrected": 2399,
+            "supporting_sentences_published": 2372
+          },
+          "published": {
+            "aim_citation_rate": 0.094359,
+            "citation_precision": 0.865062
+          }
+        },
+        "gpt-6.1-sol": {
+          "change": {
+            "aim_citation_rate": -0.04,
+            "citation_precision": 0.014588
+          },
+          "corrected": {
+            "aim_citation_rate": 0.075897,
+            "citation_precision": 0.908096
+          },
+          "counts": {
+            "aim_evidence_entries": 232,
+            "aim_evidence_entries_not_supporting": 204,
+            "aim_hits_cleared": 39,
+            "aim_hits_corrected": 74,
+            "aim_hits_published": 113,
+            "answers_with_citations": 975,
+            "cited_sentences": 2742,
+            "entries_flipped": 51,
+            "sentences_flipped": 40,
+            "supported_verdicts_with_evidence": 2960,
+            "supporting_sentences_corrected": 2490,
+            "supporting_sentences_published": 2450
+          },
+          "published": {
+            "aim_citation_rate": 0.115897,
+            "citation_precision": 0.893508
+          }
+        }
+      }
+    },
+    "main_v2": {
+      "gemma-e2b-base-q4": {
+        "gpt-6.1-sol": {
+          "change": {
+            "aim_citation_rate": -0.084848,
+            "citation_precision": 0.03617
+          },
+          "corrected": {
+            "aim_citation_rate": 0.053535,
+            "citation_precision": 0.783404
+          },
+          "counts": {
+            "aim_evidence_entries": 270,
+            "aim_evidence_entries_not_supporting": 144,
+            "aim_hits_cleared": 84,
+            "aim_hits_corrected": 53,
+            "aim_hits_published": 137,
+            "answers_with_citations": 990,
+            "cited_sentences": 2350,
+            "entries_flipped": 112,
+            "sentences_flipped": 85,
+            "supported_verdicts_with_evidence": 2128,
+            "supporting_sentences_corrected": 1841,
+            "supporting_sentences_published": 1756
+          },
+          "published": {
+            "aim_citation_rate": 0.138384,
+            "citation_precision": 0.747234
+          }
+        }
+      },
+      "gemma-e2b-grounded-q4": {
+        "gpt-6.1-sol": {
+          "change": {
+            "aim_citation_rate": -0.006012,
+            "citation_precision": 0.003027
+          },
+          "corrected": {
+            "aim_citation_rate": 0.554108,
+            "citation_precision": 0.365288
+          },
+          "counts": {
+            "aim_evidence_entries": 128,
+            "aim_evidence_entries_not_supporting": 118,
+            "aim_hits_cleared": 6,
+            "aim_hits_corrected": 553,
+            "aim_hits_published": 559,
+            "answers_with_citations": 998,
+            "cited_sentences": 1982,
+            "entries_flipped": 8,
+            "sentences_flipped": 6,
+            "supported_verdicts_with_evidence": 572,
+            "supporting_sentences_corrected": 724,
+            "supporting_sentences_published": 718
+          },
+          "published": {
+            "aim_citation_rate": 0.56012,
+            "citation_precision": 0.36226
+          }
+        }
+      },
+      "gemma-e2b-grounded-v2-q4": {
+        "gpt-6.1-sol": {
+          "change": {
+            "aim_citation_rate": -0.001004,
+            "citation_precision": 0.000971
+          },
+          "corrected": {
+            "aim_citation_rate": 0.083333,
+            "citation_precision": 0.736893
+          },
+          "counts": {
+            "aim_evidence_entries": 17,
+            "aim_evidence_entries_not_supporting": 13,
+            "aim_hits_cleared": 1,
+            "aim_hits_corrected": 83,
+            "aim_hits_published": 84,
+            "answers_with_citations": 996,
+            "cited_sentences": 1030,
+            "entries_flipped": 1,
+            "sentences_flipped": 1,
+            "supported_verdicts_with_evidence": 642,
+            "supporting_sentences_corrected": 759,
+            "supporting_sentences_published": 758
+          },
+          "published": {
+            "aim_citation_rate": 0.084337,
+            "citation_precision": 0.735922
+          }
+        }
+      }
+    }
+  },
+  "citation_rubric_hash": "be34ebe577bc96ae",
+  "decision": "OWNER D-62",
+  "extractor": {
+    "main": {
+      "claude-haiku-5-5": {
+        "claims": 5139,
+        "empty_claims": 31,
+        "empty_claims_nonempty_answer": 31,
+        "label_only_claims": 9,
+        "records": 1000,
+        "records_with_label_only_claims": 9
+      },
+      "gemma-e2b-base-q4": {
+        "claims": 2342,
+        "empty_claims": 14,
+        "empty_claims_nonempty_answer": 14,
+        "label_only_claims": 0,
+        "records": 1000,
+        "records_with_label_only_claims": 0
+      },
+      "gemma-e2b-grounded-q4": {
+        "claims": 1174,
+        "empty_claims": 16,
+        "empty_claims_nonempty_answer": 16,
+        "label_only_claims": 0,
+        "records": 1000,
+        "records_with_label_only_claims": 0
+      },
+      "gpt-6-luna": {
+        "claims": 3734,
+        "empty_claims": 24,
+        "empty_claims_nonempty_answer": 24,
+        "label_only_claims": 70,
+        "records": 1000,
+        "records_with_label_only_claims": 70
+      }
+    },
+    "main_citation": {
+      "claude-haiku-5-5": {
+        "claims": 5139,
+        "empty_claims": 31,
+        "empty_claims_nonempty_answer": 31,
+        "label_only_claims": 9,
+        "records": 1000,
+        "records_with_label_only_claims": 9
+      },
+      "gemma-e2b-base-q4": {
+        "claims": 2342,
+        "empty_claims": 14,
+        "empty_claims_nonempty_answer": 14,
+        "label_only_claims": 0,
+        "records": 1000,
+        "records_with_label_only_claims": 0
+      },
+      "gemma-e2b-grounded-q4": {
+        "claims": 1174,
+        "empty_claims": 16,
+        "empty_claims_nonempty_answer": 16,
+        "label_only_claims": 0,
+        "records": 1000,
+        "records_with_label_only_claims": 0
+      },
+      "gpt-6-luna": {
+        "claims": 3734,
+        "empty_claims": 24,
+        "empty_claims_nonempty_answer": 24,
+        "label_only_claims": 70,
+        "records": 1000,
+        "records_with_label_only_claims": 70
+      }
+    },
+    "main_v2": {
+      "gemma-e2b-base-q4": {
+        "claims": 2481,
+        "empty_claims": 5,
+        "empty_claims_nonempty_answer": 5,
+        "label_only_claims": 0,
+        "records": 1000,
+        "records_with_label_only_claims": 0
+      },
+      "gemma-e2b-grounded-q4": {
+        "claims": 1199,
+        "empty_claims": 2,
+        "empty_claims_nonempty_answer": 2,
+        "label_only_claims": 0,
+        "records": 1000,
+        "records_with_label_only_claims": 0
+      },
+      "gemma-e2b-grounded-v2-q4": {
+        "claims": 1209,
+        "empty_claims": 4,
+        "empty_claims_nonempty_answer": 4,
+        "label_only_claims": 0,
+        "records": 1000,
+        "records_with_label_only_claims": 0
+      }
+    }
+  },
+  "family": {
+    "main_v2": {
+      "corrected": [
+        {
+          "better": "higher",
+          "diff": {
+            "hi": 0.03,
+            "lo": -0.034,
+            "point": -0.002
+          },
+          "family_size": 6,
+          "judge": "gpt-6.1-sol",
+          "metric": "headline",
+          "model_a": "gemma-e2b-grounded-v2-q4",
+          "model_b": "gemma-e2b-grounded-q4",
+          "p_value": 0.927107,
+          "separated": false
+        },
+        {
+          "better": "higher",
+          "diff": {
+            "hi": 0.401208,
+            "lo": 0.341413,
+            "point": 0.371606
+          },
+          "family_size": 6,
+          "judge": "gpt-6.1-sol",
+          "metric": "citation_precision",
+          "model_a": "gemma-e2b-grounded-v2-q4",
+          "model_b": "gemma-e2b-grounded-q4",
+          "p_value": 0.0002,
+          "separated": true
+        },
+        {
+          "better": "lower",
+          "diff": {
+            "hi": -0.437729,
+            "lo": -0.502811,
+            "point": -0.470775
+          },
+          "family_size": 6,
+          "judge": "gpt-6.1-sol",
+          "metric": "aim_citation_rate",
+          "model_a": "gemma-e2b-grounded-v2-q4",
+          "model_b": "gemma-e2b-grounded-q4",
+          "p_value": 0.0002,
+          "separated": true
+        },
+        {
+          "better": "higher",
+          "diff": {
+            "hi": -0.037,
+            "lo": -0.113,
+            "point": -0.075
+          },
+          "family_size": 6,
+          "judge": "gpt-6.1-sol",
+          "metric": "headline",
+          "model_a": "gemma-e2b-grounded-v2-q4",
+          "model_b": "gemma-e2b-base-q4",
+          "p_value": 0.0002,
+          "separated": true
+        },
+        {
+          "better": "higher",
+          "diff": {
+            "hi": -0.01162,
+            "lo": -0.080743,
+            "point": -0.046511
+          },
+          "family_size": 6,
+          "judge": "gpt-6.1-sol",
+          "metric": "citation_precision",
+          "model_a": "gemma-e2b-grounded-v2-q4",
+          "model_b": "gemma-e2b-base-q4",
+          "p_value": 0.009399,
+          "separated": true
+        },
+        {
+          "better": "lower",
+          "diff": {
+            "hi": 0.05131,
+            "lo": 0.007809,
+            "point": 0.029798
+          },
+          "family_size": 6,
+          "judge": "gpt-6.1-sol",
+          "metric": "aim_citation_rate",
+          "model_a": "gemma-e2b-grounded-v2-q4",
+          "model_b": "gemma-e2b-base-q4",
+          "p_value": 0.008599,
+          "separated": true
+        }
+      ],
+      "published": [
+        {
+          "better": "higher",
+          "diff": {
+            "hi": 0.03,
+            "lo": -0.034,
+            "point": -0.002
+          },
+          "family_size": 6,
+          "judge": "gpt-6.1-sol",
+          "metric": "headline",
+          "model_a": "gemma-e2b-grounded-v2-q4",
+          "model_b": "gemma-e2b-grounded-q4",
+          "p_value": 0.927107,
+          "separated": false
+        },
+        {
+          "better": "higher",
+          "diff": {
+            "hi": 0.403351,
+            "lo": 0.343505,
+            "point": 0.373662
+          },
+          "family_size": 6,
+          "judge": "gpt-6.1-sol",
+          "metric": "citation_precision",
+          "model_a": "gemma-e2b-grounded-v2-q4",
+          "model_b": "gemma-e2b-grounded-q4",
+          "p_value": 0.0002,
+          "separated": true
+        },
+        {
+          "better": "lower",
+          "diff": {
+            "hi": -0.443132,
+            "lo": -0.5082,
+            "point": -0.475783
+          },
+          "family_size": 6,
+          "judge": "gpt-6.1-sol",
+          "metric": "aim_citation_rate",
+          "model_a": "gemma-e2b-grounded-v2-q4",
+          "model_b": "gemma-e2b-grounded-q4",
+          "p_value": 0.0002,
+          "separated": true
+        },
+        {
+          "better": "higher",
+          "diff": {
+            "hi": -0.037,
+            "lo": -0.113,
+            "point": -0.075
+          },
+          "family_size": 6,
+          "judge": "gpt-6.1-sol",
+          "metric": "headline",
+          "model_a": "gemma-e2b-grounded-v2-q4",
+          "model_b": "gemma-e2b-base-q4",
+          "p_value": 0.0002,
+          "separated": true
+        },
+        {
+          "better": "higher",
+          "diff": {
+            "hi": 0.023204,
+            "lo": -0.045563,
+            "point": -0.011312
+          },
+          "family_size": 6,
+          "judge": "gpt-6.1-sol",
+          "metric": "citation_precision",
+          "model_a": "gemma-e2b-grounded-v2-q4",
+          "model_b": "gemma-e2b-base-q4",
+          "p_value": 0.50435,
+          "separated": false
+        },
+        {
+          "better": "lower",
+          "diff": {
+            "hi": -0.028054,
+            "lo": -0.08043,
+            "point": -0.054046
+          },
+          "family_size": 6,
+          "judge": "gpt-6.1-sol",
+          "metric": "aim_citation_rate",
+          "model_a": "gemma-e2b-grounded-v2-q4",
+          "model_b": "gemma-e2b-base-q4",
+          "p_value": 0.0002,
+          "separated": true
+        }
+      ]
+    }
+  },
+  "label_only_headline": {
+    "judge": "gpt-6.1-sol",
+    "models": {
+      "claude-haiku-5-5": {
+        "answers_gained": 5,
+        "answers_lost": 0,
+        "change": 0.005,
+        "label_only_dropped": 0.236,
+        "label_only_verdicts": {
+          "unsupported": 9
+        },
+        "published": 0.231
+      },
+      "gpt-6-luna": {
+        "answers_gained": 44,
+        "answers_lost": 0,
+        "change": 0.044,
+        "label_only_dropped": 0.334,
+        "label_only_verdicts": {
+          "supported": 1,
+          "unsupported": 69
+        },
+        "published": 0.29
+      }
+    },
+    "run": "main"
+  },
+  "note": "Post-hoc robustness check, made after the V2.2 results were read. The pre-registered numbers stay as published; 'corrected' counts an aim-role cited sentence as supporting when the claim judge used it as evidence for a supported claim that restates the study's aim or design.",
+  "plan": "configs/eval_plan_v2.yaml",
+  "post_hoc": true,
+  "rule": {
+    "aim_or_design_pattern": "\\b(aim|aimed|objective|purpose|goal|sought|investigat|assess|evaluat|examin|explor|determin|hypothes|this study|the study|the investigation|was to|were to|design|randomi[sz]ed|prospective|retrospective|cohort|trial)",
+    "conditions": [
+      "citation-judge role for the (claim, sentence) pair is 'aim'",
+      "claim judge's verdict for the claim is 'supported'",
+      "the sentence is in that verdict's evidence",
+      "the claim text matches aim_or_design_pattern"
+    ],
+    "label_only_pattern": "^\\W*(yes|no|maybe)\\W*$",
+    "name": "restates_aim"
+  },
+  "sources": {
+    "main": {
+      "records_sha256": "086d626f131e04f76dea134ca75d3ef01bd4748868950f43e63855575fb57b0b",
+      "summary_sha256": "11b1ae81f2dd251f7b45a042715e9a4f7f5ba6594ccb45bec96a17b9d21ddbe1"
+    },
+    "main_citation": {
+      "records_sha256": "0ca906588e0eca793aa5e43559d8199c8156a91869fdf87d9db6bd576a774f0f",
+      "summary_sha256": "8377d6aab5fb61567dc08182442f9dd9f0ea7dbb2277422f6e3c8f816e7daafd"
+    },
+    "main_v2": {
+      "records_sha256": "b13935297f87a6b28935bbec800174708316a009f7a17df4f1daab248d311ad0",
+      "summary_sha256": "04798004b9a88195820d1a8253ef5d9de846de40eaa037ebc52532739535ec26"
+    }
+  }
+}

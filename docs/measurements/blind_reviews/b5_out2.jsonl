@@ -1,0 +1,35 @@
+{"key": "s91c439f48f", "finding": "ok", "note": "Unsupported is fair: the cited sentences never define LS/GS or say general surgeons \"perform only laparoscopic cholecystectomy\"; sentence 6 (age) is irrelevant."}
+{"key": "s48b95491de", "finding": "model_fault", "note": "Answer \"the rate of local recurrence was 56% for the group as a whole\" says nothing about margins or T-stage, yet label is \"yes\"; scored supported correctly."}
+{"key": "s75867a1ce5", "finding": "ok", "note": ""}
+{"key": "sfbe88c4def", "finding": "ok", "note": ""}
+{"key": "see42d1781c", "finding": "ok", "note": ""}
+{"key": "s5d0ad4235f", "finding": "ok", "note": "Abstention with zero claims; label maybe matches reference. The answer calls the cited sentences \"aim and methods\" though they are background/case description."}
+{"key": "sdd1ac687b6", "finding": "model_fault", "note": "Answer frames regional-vs-global coronal apex agreement (sentence 10) as the \"comparison of the most rotated levels (transverse apex)\", so it never answers the transverse-vs-coronal question; claims drop that framing and score supported."}
+{"key": "s62ddab130e", "finding": "ok", "note": ""}
+{"key": "sc4c9d30902", "finding": "ok", "note": ""}
+{"key": "s707e73f968", "finding": "ok", "note": ""}
+{"key": "s0792a1cfd2", "finding": "ok", "note": "c2 unsupported on \"would need to\" vs \"could be addressed\" is a fine point but defensible."}
+{"key": "s9557002340", "finding": "pipeline_fault", "note": "c0 citation_support marks sentence 2 (\"To identify distinctive features...\") supports=false and sentence 5 (patient counts) supports=true, contradicting the judge's own evidence [2, 3]. Model also only restates the aim."}
+{"key": "sfc4c6005df", "finding": "ok", "note": "Unsupported (subgroup \"fresh transferred embryos and slow freezing\" generalised to all ART) is defensible; citation_support supports=true for sentence 10 is inconsistent with the verdict but minor."}
+{"key": "seb486049f7", "finding": "model_fault", "note": "Claims \"feasible and effective\" cite only aim sentence 5 and method sentence 7; correctly scored unsupported."}
+{"key": "sffa27e6be3", "finding": "pipeline_fault", "note": "Answer says \"higher interpersonal quality and content of anticipatory guidance\" (two outcomes); extractor made c0 \"higher interpersonal quality of anticipatory guidance\", which the judge then marked unsupported though sentence 4 supports interpersonal quality."}
+{"key": "s5a60fba622", "finding": "ok", "note": ""}
+{"key": "s7864756a94", "finding": "ok", "note": "c0 unsupported because cited sentences never say \"intravenous\" is strict but correct under cited-only rule; c5 split is borderline."}
+{"key": "s4597787289", "finding": "pipeline_fault", "note": "c2 drops the answer's qualifier \"on the day of surgery\" (\"16% among patients who did not have coronary angiography\"), and both judges mark it unsupported for exactly that missing qualifier, which the answer itself contained."}
+{"key": "sc9ba6f11e2", "finding": "model_fault", "note": "Finding \"does not alter the echocardiography and ECG parameters\" cites only background sentence 1 and aim sentence 2; correctly unsupported, label contradicts reference."}
+{"key": "s93ab72b376", "finding": "ok", "note": ""}
+{"key": "s4ec202f02e", "finding": "model_fault", "note": "\"Genetic traits may influence the prognosis\" cites background sentences, one of which says this is \"not well known\"; correctly unsupported."}
+{"key": "s1b7ac42c65", "finding": "ok", "note": "c5 judge split on \"after retirement\" is a fine point."}
+{"key": "s046271f656", "finding": "ok", "note": "c3 split (\"abstract concludes\" vs sentence 2 being background) is borderline."}
+{"key": "s278db82240", "finding": "ok", "note": "c2 judge split is borderline."}
+{"key": "s4203f562be", "finding": "model_fault", "note": "Answer says results \"are not explicitly stated as a direct comparison\" while its own cited sentence 11 directly compares the groups; correctly unsupported."}
+{"key": "scbdbb6d81f", "finding": "model_fault", "note": "Answer \"Mortality was higher in women than in men\" is copied text unrelated to whether GH reduces mortality; label no is not backed by it."}
+{"key": "s9e2b912bf6", "finding": "ok", "note": ""}
+{"key": "s055255a38e", "finding": "ok", "note": ""}
+{"key": "s3e60452bff", "finding": "model_fault", "note": "Answer \"LVADs can be used as a bridge to transplantation\" does not address whether they are an alternative, and cites aim/method sentences 2 and 3; judge split on \"severe heart failure\" is a fine point."}
+{"key": "s5865c6ab75", "finding": "ok", "note": ""}
+{"key": "sc2f061e4ce", "finding": "ok", "note": "c0 is a method description, so method sentences legitimately support it."}
+{"key": "s1fa9202220", "finding": "ok", "note": ""}
+{"key": "s343a1f3a63", "finding": "ok", "note": "c0 split on \"adults with GHD\" and c3 unsupported on \"matched the background population\" are strict but defensible."}
+{"key": "sb47eb155a3", "finding": "model_fault", "note": "Answer copies background sentence 1 verbatim and cites all 11 sentences without answering the question; scored supported as a verbatim claim."}
+{"key": "s7500e4cd7b", "finding": "model_fault", "note": "Finding \"is not able to predict\" cites only aim sentence 1 (\"To assess if the Hawkins sign can predict...\"); correctly unsupported."}

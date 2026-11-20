@@ -6,7 +6,8 @@ the answer, the cited sentences, every claim with each judge's verdict, rational
 per-sentence citation support, and empty `finding`, `note` and `read_by` fields. The reader
 fills those three in place. `summarise` validates the sheet against the run (a record edited
 after it was drawn is caught by its digest) and counts the findings per model; any
-`pipeline_fault` stops publication until it is explained.
+`pipeline_fault` stops publication until its `explanation` names a committed file that
+explains it.
 """
 
 from __future__ import annotations
@@ -125,7 +126,12 @@ def summarise(root: Path, run: Run) -> tuple[list[SampleReadSummary], list[str]]
         elif want != r.record_sha256:
             problems.append(f"{path.name}: {r.model} {r.case_id} changed since it was drawn")
         if r.finding == "pipeline_fault":
-            problems.append(f"{path.name}: pipeline fault on {r.model} {r.case_id}: {r.note}")
+            doc = r.explanation.split("#", 1)[0].split(":", 1)[0]
+            if not r.explanation:
+                problems.append(f"{path.name}: pipeline fault on {r.model} {r.case_id}: {r.note}")
+            elif not (root / doc).is_file():
+                problems.append(f"{path.name}: {r.model} {r.case_id} is explained by {doc}, "
+                                "which is not committed")  # fmt: skip
     out = []
     for model in run.models():
         mine = [r for r in rows if r.model == model]

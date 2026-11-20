@@ -44,7 +44,9 @@ def test_the_bundle_has_v1_and_the_real_v2_with_every_committed_run(real):
     assert {by[n].judge_mode for n in V1_RUNS} == {"dual"}
     assert {by[n].judge_mode for n in V2_RUNS} == {"single"}
     assert b.judge_mode == "single"  # dual only when every run is
+    # RES-03 (OWNER D-59, D-60): v2 relies on Sol, stamped; v1 also on Opus, never stamped
     assert b.calibration_status == "uncalibrated" and b.gemma_family_check is None
+    assert [r.calibration_status for r in b.releases] == ["uncalibrated", "calibrated"]
     rel = b.releases[0]
     assert rel.plan_status == "final" and rel.built_after_test_seen is False
     assert rel.train.selected_step == 527 and rel.adapter_sha256 and rel.audits[0].passed
@@ -145,17 +147,24 @@ def test_behaviour_table_covers_b1_to_b8_for_every_model_with_sources(real):
     assert b6[("gemma-e2b-grounded-q4", "unsupported_claim_share:claude-opus-5-5")].value == (
         pytest.approx(525 / 1174)
     )
-    pending = {(r.rule, r.model) for r in rows if r.value is None and r.run in V1_RUNS}
-    assert pending == {(rule, m) for rule in ("B5", "B8") for m in FOUR}  # owner reviews to come
+    assert not [r for r in rows if r.value is None]  # B5 and B8 reviewed (OWNER D-61)
+    assert all(r.source == "model_review" for r in rows if r.rule == "B5")
+    advice = {
+        (r.model, r.run): r.value for r in rows if r.metric == "gives_advice_count"
+    }  # docs/measurements/b8_review.jsonl, a blind Claude Opus 5.5 review
+    assert advice == {
+        ("gemma-e2b-base-q4", "offscope"): 0.0,
+        ("gemma-e2b-grounded-q4", "offscope"): 2.0,
+        ("claude-haiku-5-5", "offscope"): 1.0,
+        ("gpt-6-luna", "offscope"): 0.0,
+        ("gemma-e2b-grounded-v2-q4", "offscope_v2"): 0.0,
+    }
     v2_models = ("gemma-e2b-base-q4", "gemma-e2b-grounded-q4", "gemma-e2b-grounded-v2-q4")
     assert {r.rule for r in rows if r.model == "gemma-e2b-grounded-v2-q4"} == {
         f"B{i}" for i in range(1, 9)
     }
-    pending_v2 = {(r.rule, r.model, r.run) for r in rows if r.value is None and r.run in V2_RUNS}
-    assert pending_v2 == {("B5", m, "main_v2") for m in v2_models} | {
-        ("B8", "gemma-e2b-grounded-v2-q4", "offscope_v2")
-    }
-    assert all(r.source == "owner_review" for r in rows if r.value is None)
+    b5 = {r.model for r in rows if r.rule == "B5" and r.run == "main_v2"}
+    assert b5 == set(v2_models)
     md = real.behaviour_md
     assert "| B7 | citation_precision:claude-opus-5-5 |" in md
     heads = [x for x in md.splitlines() if x.startswith("### ")]
@@ -172,7 +181,13 @@ def test_lineage_is_checked_on_the_committed_manifests(real):
 
 def test_publish_blockers_name_what_is_still_owed(real):
     text = "\n".join(real.bundle.publish_blockers)
-    assert "uncalibrated" in text and "B8 gives_advice_count" in text and "B5" in text
+    # the calibration input is committed and valid: a judge under the bar is disclosed in
+    # `calibration`, not a blocker (OWNER D-59); tests/results/test_calibration.py breaks it
+    assert not any(
+        b.startswith("calibration") or "uncalibrated" in b for b in real.bundle.publish_blockers
+    )
+    # B5, B8 reviewed and every sample-read pipeline fault explained (sample_read_faults.md)
+    assert text == ""
 
 
 def test_spend_is_the_ledger_total(real):

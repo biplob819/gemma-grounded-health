@@ -1,0 +1,35 @@
+{"key": "s8d79718c91", "finding": "ok", "note": ""}
+{"key": "s25bf627714", "finding": "model_fault", "note": "Answer adds 'major perioperative' complications; sentence 9 only says 'higher odds of complications', and the judge correctly marks c2 unsupported."}
+{"key": "s8e35f8d5c6", "finding": "model_fault", "note": "Cites aim (1) and method (4, 6) sentences for association findings; both claims correctly scored unsupported."}
+{"key": "sf9d83516f1", "finding": "ok", "note": ""}
+{"key": "s7f3134a891", "finding": "model_fault", "note": "Cites only the aim sentence 'To determine whether...' for the finding 'Family physicians are good sentinels'; correctly unsupported."}
+{"key": "sd99318509d", "finding": "ok", "note": "Judges split on c1 over the word 'modal'; borderline."}
+{"key": "s6b48db309a", "finding": "ok", "note": "Label 'no' misreads 'declined' (rate ratio 1.86 still shows persistence), but the claim is faithful and supported; wrong label scored against reference."}
+{"key": "scbe9646591", "finding": "ok", "note": "Supported from a background sentence on adult literature; acceptable."}
+{"key": "se616dd03b6", "finding": "ok", "note": ""}
+{"key": "s41c3fc87b0", "finding": "ok", "note": "gpt-6.1-sol marks all four claims unsupported only because the sentences say 'physicians'/'respondents', not 'family physicians'; strict but a fine point, and the other judge supports."}
+{"key": "s3164cd4a95", "finding": "ok", "note": "Supported via sentence 7; also cites background/aim/method sentences 1-3."}
+{"key": "sa402466428", "finding": "model_fault", "note": "Answer mislabels the primary outcome as '(MACE)' when groups are defined by MACE; both judges correctly mark c0 unsupported."}
+{"key": "s06d16b91ad", "finding": "ok", "note": "Judges split on c0 over whether 'restorative proctocolectomy' equals ileal pouch; a fine point."}
+{"key": "sf1b684f9ef", "finding": "ok", "note": ""}
+{"key": "s65c5a54994", "finding": "ok", "note": ""}
+{"key": "s1a1b674abe", "finding": "model_fault", "note": "Claim 'have more psychiatric morbidity' is not in sentence 8 (only psychotropic drug use); correctly unsupported."}
+{"key": "sac463cf0b9", "finding": "ok", "note": "Judges split on the conclusion c0; borderline."}
+{"key": "sc9797d8e2d", "finding": "model_fault", "note": "Claims 'substantial differences ... of the type III and IV groups' cite sentence 8, which only reports the arch angle association with type III; correctly unsupported."}
+{"key": "s426b3de343", "finding": "model_fault", "note": "Cites method sentence 4 for 'knee kinematics were similar'; correctly unsupported, and label 'yes' vs reference 'no'."}
+{"key": "sf58b525f46", "finding": "model_fault", "note": "Answer just copies background and aim sentences ('remains to be established', 'This nationwide cohort study investigated...') with no findings."}
+{"key": "sdefd79b3cc", "finding": "model_fault", "note": "Cites background and aim sentences 2-3 for the finding 'is affected by physical environmental characteristics'; correctly unsupported."}
+{"key": "s7bd1fb3b4f", "finding": "model_fault", "note": "Cites only the aim sentence 1 for 'Fluoroscopy is not essential'; correctly unsupported."}
+{"key": "sff64c034be", "finding": "model_fault", "note": "Answer (~95 words) extends physician-visit result to 'any of the four categories' though sentence 13 covers only two; c4 correctly unsupported."}
+{"key": "s7b653d9364", "finding": "ok", "note": ""}
+{"key": "s1359174f28", "finding": "model_fault", "note": "Cites aim (1) and method (4, 6) sentences for the result 'did not significantly improve the healing'; correctly unsupported."}
+{"key": "sf0d89eef9f", "finding": "ok", "note": "gpt-6.1-sol marks c0 unsupported for not saying 'lower ureter'; pedantic, the other judge supports."}
+{"key": "s418a47354b", "finding": "ok", "note": "Judges split on c2 ('do not settle'); borderline."}
+{"key": "s56e52ed38e", "finding": "ok", "note": ""}
+{"key": "scd38f33fbe", "finding": "model_fault", "note": "Cites only the aim sentence 'To investigate the contribution...' for 'is valuable'; correctly unsupported."}
+{"key": "s12a917ff2b", "finding": "ok", "note": "Both judges mark the meta-claims about what the abstract does not address unsupported from two sentences; defensible."}
+{"key": "s99e11d364c", "finding": "ok", "note": ""}
+{"key": "s7ca58921c4", "finding": "ok", "note": ""}
+{"key": "s61e284ffe4", "finding": "model_fault", "note": "Answer copies the aim sentence 3 verbatim with no finding, yet labels 'yes'; claims are supported only as a study description."}
+{"key": "s12cf516bb4", "finding": "ok", "note": "Supported via result sentence 8; aim sentence 2 also cited."}
+{"key": "s49e8a99e29", "finding": "pipeline_fault", "note": "For c0 (the study's scope, evidence [1]) citation_support marks sentence 1 'supports': false and results 11 and 13 'supports': true, pointing at the wrong sentences."}

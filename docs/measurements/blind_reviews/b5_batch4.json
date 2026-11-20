@@ -1,0 +1,2677 @@
+[
+ {
+  "key": "sd26a02b3c9",
+  "question": "Does a special interest in laparoscopy affect the treatment of acute cholecystitis?",
+  "reference_label": "yes",
+  "label": "no",
+  "answer": "The treatment of patients with AC is not improved by the care of laparoscopic specialists.",
+  "citations": [
+   1
+  ],
+  "cited_sentences": {
+   "1": "We tested the hypothesis that the treatment of patients with acute cholecystitis (AC) would be improved under the care of laparoscopic specialists."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The treatment of patients with AC is not improved by the care of laparoscopic specialists.",
+    "cited": [
+     1
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence states a hypothesis being tested, not a finding that specialist care does not improve treatment.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s6f697ef037",
+  "question": "Assessment of appropriate antimicrobial prescribing: do experts agree?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Infectious disease doctors' assessments are similar to the assessments of a senior infectious disease physician.",
+  "citations": [
+   2,
+   9
+  ],
+  "cited_sentences": {
+   "2": "We investigated how infectious disease doctors' assessments compared with a reference standard (modal expert opinion) and with the assessments of their colleagues.",
+   "9": "Specialists agreed with the index expert in 76% of cases and the index expert agreed with his previous assessments in 71% of cases."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Infectious disease doctors' assessments are similar to the assessments of a senior infectious disease physician.",
+    "cited": [
+     2,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Specialists agreed with the index expert in 76% of cases, so their assessments were largely similar to that expert's, though the sentences never call him 'senior'.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences report 76% agreement with an index expert but do not identify that expert as a senior infectious disease physician.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s1ec090b936",
+  "question": "Is breast cancer prognosis inherited?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The abstract reports that breast cancer prognosis clusters within families: daughters and sisters of a proband with poor prognosis had about a 60% higher 5-year breast cancer mortality than those of a proband with good prognosis (HR 1.6), and survival among relatives differed by the proband's outcome. This supports a familial, and therefore plausibly inherited, component to prognosis, though the sentences do not separate genetic from shared environmental effects.",
+  "citations": [
+   4,
+   6,
+   7,
+   8,
+   9
+  ],
+  "cited_sentences": {
+   "4": "Among all women with breast cancer diagnosed from 1961 to 2001, 2,787 mother-daughter pairs and 831 sister pairs with breast cancer were identified; we achieved complete follow-up and classified 5-year breast cancer-specific prognosis among proband (mother or oldest sister) into tertiles as poor, intermediary, or good.",
+   "6": "The 5-year survival proportion among daughters whose mothers died within 5 years was 87% compared to 91% if the mother was alive (p = 0.03).",
+   "7": "Among sisters, the corresponding proportions were 70% and 88%, respectively (p = 0.001).",
+   "8": "After adjustment for potential confounders, daughters and sisters of a proband with poor prognosis had a 60% higher 5-year breast cancer mortality compared to those of a proband with good prognosis (hazard ratio [HR], 1.6; 95% confidence interval [CI], 1.2 to 2.2; p for trend 0.002).",
+   "9": "This association was slightly stronger among sisters (HR, 1.8; 95% CI, 1.0 to 3.4) than among daughters (HR, 1.6; 95% CI, 1.1 to 2.3)."
+  },
+  "claims": []
+ },
+ {
+  "key": "s066e4d69f9",
+  "question": "Can normal knee kinematics be restored with unicompartmental knee replacement?",
+  "reference_label": "no",
+  "label": "maybe",
+  "answer": "It was hypothesized that the knee kinematics after unicompartmental replacement may also be unchanged. Knee kinematics were measured before and after replacement with a unicompartmental design and then with a tricompartmental design.",
+  "citations": [
+   3,
+   4,
+   7
+  ],
+  "cited_sentences": {
+   "3": "Therefore, it was hypothesized that the knee kinematics after unicompartmental replacement may also be unchanged.",
+   "4": "To test this hypothesis, knee kinematics and quadriceps tension were recorded before and after replacement with a unicompartmental design and then with a tricompartmental design.",
+   "7": "The knee kinematics were measured with use of an electromagnetic tracking device while the knee was put through dynamic simulated stair-climbing under peak flexion moments of approximately 40 N-m. Quadriceps tension was also measured for all three conditions."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "It was hypothesized that the knee kinematics after unicompartmental replacement may also be unchanged.",
+    "cited": [
+     3,
+     4,
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 explicitly states the claim.",
+      "citation_support": [
+       {
+        "n": 3,
+        "supports": true,
+        "role": "aim"
+       },
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "method"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Knee kinematics were measured before and after replacement with a unicompartmental design and then with a tricompartmental design.",
+    "cited": [
+     3,
+     4,
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       4
+      ],
+      "rationale": "Sentence 4 explicitly states that knee kinematics were recorded before and after the two replacement designs in the claimed sequence.",
+      "citation_support": [
+       {
+        "n": 3,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 4,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 7,
+        "supports": true,
+        "role": "method"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s6170b3cfee",
+  "question": "Does transverse apex coincide with coronal apex levels (regional or global) in adolescent idiopathic scoliosis?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The most rotated vertebral level is not always at the apex of the curve.",
+  "citations": [
+   5
+  ],
+  "cited_sentences": {
+   "5": "One study suggested that the most rotated vertebral level was always located at the apex."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The most rotated vertebral level is not always at the apex of the curve.",
+    "cited": [
+     5
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The cited sentence reports that the most rotated level was always at the apex, not that it was sometimes elsewhere.",
+      "citation_support": [
+       {
+        "n": 5,
+        "supports": false,
+        "role": "background"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s78d569ef05",
+  "question": "Traumatic aortic injury: does the anatomy of the aortic arch influence aortic trauma severity?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "There were substantial differences in both the aortic arch index and the aortic arch angle of the type III and IV groups.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "A multivariate analysis confirmed that the aortic arch angle was significantly associated with the occurrence of type III damage (OR 1.5; 95% CI 1.03-2.2)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "There were substantial differences in both the aortic arch index and the aortic arch angle of the type III and IV groups.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence only links the aortic arch angle to type III damage; it says nothing about the aortic arch index or about differences between the type III and IV groups.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 8 associates aortic arch angle with type III damage but does not compare types III and IV or report differences in the aortic arch index.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s90c360497a",
+  "question": "Do Wound Cultures Give Information About the Microbiology of Blood Cultures in Severe Burn Patients?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The same pathogen was found in both wound and blood cultures in 44% of bacteremic patients.",
+  "citations": [
+   7
+  ],
+  "cited_sentences": {
+   "7": "There were a total of 263 bacteremic episodes in 88 study patients, 44% of blood isolates were documented previously in wound cultures, and transmission of the same pathogen from wound to blood was noted in 65% of bacteremic patients."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The same pathogen was found in both wound and blood cultures in 44% of bacteremic patients.",
+    "cited": [
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The 44% figure refers to blood isolates, not bacteremic patients; the patient-level figure is 65%.",
+      "citation_support": [
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sc3d8d9ac77",
+  "question": "Cancer of the buccal mucosa: are margins and T-stage accurate predictors of local control?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The rate of local recurrence was 56% for the group as a whole.",
+  "citations": [
+   9
+  ],
+  "cited_sentences": {
+   "9": "The rate of local recurrence was 56% for the group as a whole."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The rate of local recurrence was 56% for the group as a whole.",
+    "cited": [
+     9
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 states the claim verbatim.",
+      "citation_support": [
+       {
+        "n": 9,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s24906d9448",
+  "question": "Do family physicians know the costs of medical care?",
+  "reference_label": "no",
+  "label": "maybe",
+  "answer": "The study aimed to assess British Columbia family doctors' awareness of the costs of 46 commonly used investigations and therapies, but the results indicate that estimates were highly variable and awareness did not correlate with various respondent characteristics.",
+  "citations": [
+   6,
+   7,
+   10,
+   12
+  ],
+  "cited_sentences": {
+   "6": "Estimates within 25% of actual cost were considered correct.",
+   "7": "Associations between cost awareness and respondents'characteristics (eg, sex, practice location) were sought.",
+   "10": "Few respondents estimated costs within 25% of true cost, and estimates were highly variable.",
+   "12": "Cost awareness did not correlate with sex, practice location, College certification, faculty appointment, or years in practice."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study aimed to assess British Columbia family doctors' awareness of the costs of 46 commonly used investigations and therapies.",
+    "cited": [
+     6,
+     7,
+     10,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The cited sentences discuss cost awareness and how estimates were judged, but never mention British Columbia, family doctors, or the 46 investigations and therapies.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences discuss cost awareness but do not establish the study's aim, identify respondents as British Columbia family doctors, or mention 46 investigations and therapies.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The results indicate that estimates of costs by British Columbia family doctors were highly variable.",
+    "cited": [
+     6,
+     7,
+     10,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 directly states that respondents' cost estimates were highly variable; the cited sentences call them respondents rather than British Columbia family doctors, but that is the study's population.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences establish that estimates were highly variable but do not identify respondents as British Columbia family doctors.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Family doctors' awareness of medical care costs did not correlate with various respondent characteristics.",
+    "cited": [
+     6,
+     7,
+     10,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7,
+       12
+      ],
+      "rationale": "Sentence 12 states directly that cost awareness did not correlate with several respondent characteristics, and sentence 7 confirms these associations were tested.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       12
+      ],
+      "rationale": "Sentence 12 explicitly reports no correlation between cost awareness and several respondent characteristics.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s5ee6a5d709",
+  "question": "Do family physicians know the costs of medical care?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The survey found that few family physicians estimated costs within 25% of the true cost, and their estimates were highly variable. Physicians tended to underestimate expensive drugs and laboratory investigations and overestimate inexpensive drugs. Cost awareness did not correlate with respondent characteristics such as sex, practice location, or years in practice.",
+  "citations": [
+   10,
+   11,
+   12
+  ],
+  "cited_sentences": {
+   "10": "Few respondents estimated costs within 25% of true cost, and estimates were highly variable.",
+   "11": "Physicians underestimated costs of expensive drugs and laboratory investigations and overestimated costs of inexpensive drugs.",
+   "12": "Cost awareness did not correlate with sex, practice location, College certification, faculty appointment, or years in practice."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The survey found that few family physicians estimated costs within 25% of the true cost.",
+    "cited": [
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10,
+       11
+      ],
+      "rationale": "Sentence 10 states the finding directly, and sentence 11 identifies the respondents as physicians; the 'family' qualifier is only implied by the College certification and practice context.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences establish the finding for respondents but do not identify them as family physicians.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Family physicians' cost estimates were highly variable.",
+    "cited": [
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10,
+       11
+      ],
+      "rationale": "Sentence 10 says outright that the estimates were highly variable; sentence 11 names the respondents as physicians.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 10 states that estimates were highly variable, but the cited sentences do not identify the respondents as family physicians.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Physicians tended to underestimate expensive drugs and laboratory investigations.",
+    "cited": [
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 says physicians underestimated the costs of expensive drugs and laboratory investigations, which is what the claim states.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 directly states that physicians underestimated the costs of expensive drugs and laboratory investigations.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "Physicians tended to overestimate inexpensive drugs.",
+    "cited": [
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 says directly that physicians overestimated the costs of inexpensive drugs, which is what the claim states.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 directly states that physicians overestimated the costs of inexpensive drugs.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "Cost awareness did not correlate with respondent characteristics such as sex, practice location, or years in practice.",
+    "cited": [
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       12
+      ],
+      "rationale": "Sentence 12 directly states that cost awareness did not correlate with sex, practice location, or years in practice.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       12
+      ],
+      "rationale": "Sentence 12 explicitly states that cost awareness did not correlate with any of the respondent characteristics named in the claim.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s44626c5330",
+  "question": "Discharging patients earlier from Winnipeg hospitals: does it adversely affect quality of care?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "There was no significant correlation between length of stay and readmission rates for individual hospitals in 1992-93 in any of the four categories.",
+  "citations": [
+   12
+  ],
+  "cited_sentences": {
+   "12": "There was no significant correlation between length of stay and readmission rates for individual hospitals in 1992-93 in any of the four categories."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "There was no significant correlation between length of stay and readmission rates for individual hospitals in 1992-93 in any of the four categories.",
+    "cited": [
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       12
+      ],
+      "rationale": "The cited sentence states the claim word for word.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       12
+      ],
+      "rationale": "Sentence 12 states the claim verbatim.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s70f06ae637",
+  "question": "Does having a regular primary care clinician improve quality of preventive care for young children?",
+  "reference_label": "yes",
+  "label": "maybe",
+  "answer": "Bivariate analyses showed that parents of children with a regular clinician for preventive care reported slightly higher interpersonal quality and greater content of anticipatory guidance. However, in multivariate analyses controlling for other factors, interpersonal quality was not higher for children with a regular clinician, but the content of anticipatory guidance was higher.",
+  "citations": [
+   4,
+   5,
+   7
+  ],
+  "cited_sentences": {
+   "4": "In bivariate analysis, parents of children with a regular clinician for preventive care reported slightly higher interpersonal quality (69 vs. 65 on a 0-100 scale, P = 0.01).",
+   "5": "Content of anticipatory guidance received was slightly greater for children with a regular clinician (82 vs. 80 on a 0-100 scale, P = 0.03).",
+   "7": "In multivariate analyses, controlling for factors that could independently influence self-reports of experiences with care, interpersonal quality but not anticipatory guidance content was higher for children with a regular clinician."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Bivariate analyses showed that parents of children with a regular clinician for preventive care reported slightly higher interpersonal quality.",
+    "cited": [
+     4,
+     5,
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       4
+      ],
+      "rationale": "Sentence 4 explicitly states the claim.",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Bivariate analyses showed that parents of children with a regular clinician for preventive care reported greater content of anticipatory guidance.",
+    "cited": [
+     4,
+     5,
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       4,
+       5
+      ],
+      "rationale": "Sentence 4 establishes the bivariate analysis context, and sentence 5 reports greater anticipatory guidance content for children with a regular clinician.",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 5,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "In multivariate analyses controlling for other factors, interpersonal quality was not higher for children with a regular clinician.",
+    "cited": [
+     4,
+     5,
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence [7] states that interpersonal quality was higher after controlling for other factors, directly contradicting the claim.",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "In multivariate analyses controlling for other factors, the content of anticipatory guidance was higher for children with a regular clinician.",
+    "cited": [
+     4,
+     5,
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 7 explicitly states that anticipatory guidance content was not higher in multivariate analyses controlling for other factors.",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "se573b11296",
+  "question": "Is breast cancer prognosis inherited?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The study found associations between the prognosis of the proband (mother or oldest sister) and the 5-year breast cancer mortality of their daughters and sisters.",
+  "citations": [
+   8,
+   9
+  ],
+  "cited_sentences": {
+   "8": "After adjustment for potential confounders, daughters and sisters of a proband with poor prognosis had a 60% higher 5-year breast cancer mortality compared to those of a proband with good prognosis (hazard ratio [HR], 1.6; 95% confidence interval [CI], 1.2 to 2.2; p for trend 0.002).",
+   "9": "This association was slightly stronger among sisters (HR, 1.8; 95% CI, 1.0 to 3.4) than among daughters (HR, 1.6; 95% CI, 1.1 to 2.3)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study found associations between the prognosis of the proband (mother or oldest sister) and the 5-year breast cancer mortality of their daughters and sisters.",
+    "cited": [
+     8,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8,
+       9
+      ],
+      "rationale": "The sentences report an association between proband prognosis and the 5-year breast cancer mortality of daughters and sisters. The proband's role as mother or oldest sister is implied by the daughters/sisters framing.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences establish the prognosis–mortality association but do not identify the proband as the mother or oldest sister.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sf08fd01bc8",
+  "question": "Do Wound Cultures Give Information About the Microbiology of Blood Cultures in Severe Burn Patients?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Transmission of the same pathogen from wound to blood was documented in 30% of the patients, with a rising BSI frequency as the Ryan score increased, and transmission of the same pathogen from wound to blood was noted in 65% of bacteremic patients.",
+  "citations": [
+   6,
+   7
+  ],
+  "cited_sentences": {
+   "6": "Transmission of the same pathogen from wound to blood was documented in 30% of the patients, with a rising BSI frequency as the Ryan score increased.",
+   "7": "There were a total of 263 bacteremic episodes in 88 study patients, 44% of blood isolates were documented previously in wound cultures, and transmission of the same pathogen from wound to blood was noted in 65% of bacteremic patients."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Transmission of the same pathogen from wound to blood was documented in 30% of the patients.",
+    "cited": [
+     6,
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states the claim; sentence 7 gives a different percentage for the narrower group of bacteremic patients.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "BSI frequency rose as the Ryan score increased.",
+    "cited": [
+     6,
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that BSI frequency rose as the Ryan score increased.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Transmission of the same pathogen from wound to blood was noted in 65% of bacteremic patients.",
+    "cited": [
+     6,
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 explicitly states the claim, including the 65% figure and the bacteremic patient population.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s5cb4b08181",
+  "question": "Chemical shift MRI: is there any contribution to morphologic evaluation of solid breast masses?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Chemical shift MRI contributed to morphologic evaluation by helping demonstrate and differentiate solid breast masses. Chemical shift subtraction was valuable for benign lesions in fatty breasts and for both benign and malignant lesions in dense breasts.",
+  "citations": [
+   9,
+   11
+  ],
+  "cited_sentences": {
+   "9": "In fatty breast, chemical shift subtraction and T1-weighted images were valuable both for the demonstration and differentiation of benign lesions (P<.05).",
+   "11": "In dense breasts, chemical shift subtraction and dynamic contrast subtraction images were valuable for both the demonstration and differentiation of benign and malignant lesions."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Chemical shift MRI contributed to morphologic evaluation by helping demonstrate and differentiate solid breast masses.",
+    "cited": [
+     9,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9,
+       11
+      ],
+      "rationale": "Both sentences say chemical shift subtraction images helped demonstrate and differentiate breast lesions in fatty and dense breasts, which matches the claim's core.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences establish that chemical shift subtraction helped demonstrate and differentiate breast lesions, but do not specify solid masses or morphologic evaluation.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Chemical shift subtraction was valuable for benign lesions in fatty breasts.",
+    "cited": [
+     9,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 says directly that chemical shift subtraction was valuable for benign lesions in fatty breasts.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 explicitly states that chemical shift subtraction was valuable for demonstrating and differentiating benign lesions in fatty breast.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Chemical shift subtraction was valuable for both benign and malignant lesions in dense breasts.",
+    "cited": [
+     9,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 states directly that in dense breasts, chemical shift subtraction was valuable for both benign and malignant lesions.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 explicitly states that chemical shift subtraction was valuable for benign and malignant lesions in dense breasts.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s21f5b67253",
+  "question": "Do ART patients face higher C-section rates during their stage of delivery?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "ART patients face higher C-section rates.",
+  "citations": [
+   2
+  ],
+  "cited_sentences": {
+   "2": "After assisted reproductive technology (ART), previous studies have shown elevated C-section rates but few studies differentiated between elective and emergency operations and different protocols of cryopreservation."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "ART patients face higher C-section rates.",
+    "cited": [
+     2
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 directly states that studies have shown elevated C-section rates after ART.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": true,
+        "role": "background"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s432e4aadb5",
+  "question": "Do socioeconomic differences in mortality persist after retirement?",
+  "reference_label": "yes",
+  "label": "no",
+  "answer": "The ability of employment grade to predict mortality declined after retirement, and a relative index of inequality showed employment grade and car ownership to have independent associations with mortality of equal magnitude after retirement.",
+  "citations": [
+   8,
+   10
+  ],
+  "cited_sentences": {
+   "8": "After retirement the ability of grade to predict mortality declined (rate ratio 1.86; 1.6 to 2.2).",
+   "10": "Using a relative index of inequality that was sensitive to the distribution among socioeconomic groups showed employment grade and car ownership to have independent associations with mortality that were of equal magnitude after retirement."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The ability of employment grade to predict mortality declined after retirement.",
+    "cited": [
+     8,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 directly states that grade's ability to predict mortality declined after retirement.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 directly states that grade's ability to predict mortality declined after retirement.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "A relative index of inequality showed employment grade and car ownership to have independent associations with mortality of equal magnitude after retirement.",
+    "cited": [
+     8,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 states almost word for word that the relative index of inequality showed independent, equal-magnitude associations of grade and car ownership with mortality after retirement.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states that the relative index showed independent associations of equal magnitude after retirement.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sb1ebb5ca0c",
+  "question": "Do instrumental activities of daily living predict dementia at 1- and 2-year follow-up?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "IADL disability could help predict dementia in addition to the measured variables at 1-year follow-up (OR = 2.20, 95% CI = 1.51-3.13) and 2-year follow-up (OR = 2.11, 95% CI = 1.33-3.33).",
+  "citations": [
+   1,
+   6,
+   11
+  ],
+  "cited_sentences": {
+   "1": "To investigate whether problems in instrumental activities of daily living (IADL) can add to conventionally used clinical measurements in helping to predict a diagnosis of dementia at 1- and 2-year follow-up.",
+   "6": "Structural equation modeling (SEM) was used to investigate the relation between IADLs and dementia.",
+   "11": "SEM showed that IADL disability could help predict dementia in addition to the measured variables at 1-year follow-up (odds ratio (OR) = 2.20, 95% confidence interval (CI) = 1.51-3.13) and 2-year follow-up (OR = 2.11, 95% CI = 1.33-3.33)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "IADL disability could help predict dementia in addition to the measured variables at 1-year follow-up (OR = 2.20, 95% CI = 1.51-3.13).",
+    "cited": [
+     1,
+     6,
+     11
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 directly states the claim, including the 1-year follow-up odds ratio and confidence interval.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 11,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "IADL disability could help predict dementia in addition to the measured variables at 2-year follow-up (OR = 2.11, 95% CI = 1.33-3.33).",
+    "cited": [
+     1,
+     6,
+     11
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 explicitly establishes the additional predictive value at 2-year follow-up with the stated OR and confidence interval.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 11,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s30d9a8b8ad",
+  "question": "Does anterior laxity of the uninjured knee influence clinical outcomes of ACL reconstruction?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The anterior laxity of the uninjured knee was associated with the postoperative outcomes of ACL reconstruction.",
+  "citations": [
+   1
+  ],
+  "cited_sentences": {
+   "1": "The purpose of this study was to evaluate the association between the postoperative outcomes of anterior cruciate ligament (ACL) reconstruction and the anterior laxity of the uninjured knee."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The anterior laxity of the uninjured knee was associated with the postoperative outcomes of ACL reconstruction.",
+    "cited": [
+     1
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence states the study's aim to evaluate an association, not a finding that an association existed.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sb36bd97b6d",
+  "question": "Does the Child Health Computing System adequately identify children with cerebral palsy?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The CHCS does not adequately identify children with cerebral palsy.",
+  "citations": [
+   1,
+   4
+  ],
+  "cited_sentences": {
+   "1": "This paper assesses the usefulness of the Child Health Computing System as a source of information about children with cerebral palsy.",
+   "4": "Of the 135 cases recorded on the NICPR, 47 per cent were not found on the CHCS; the majority of these children had no computer record of any medical diagnosis."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The CHCS does not adequately identify children with cerebral palsy.",
+    "cited": [
+     1,
+     4
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       4
+      ],
+      "rationale": "Sentence 1 identifies the CHCS as the Child Health Computing System, and sentence 4 shows it missed nearly half of the registered cerebral palsy cases, which directly implies it does not adequately identify these children.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       4
+      ],
+      "rationale": "The CHCS missed nearly half of the recorded cases, directly implying inadequate identification of children with cerebral palsy.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s3d812313e4",
+  "question": "Inpatient Pediatric Tonsillectomy: Does Hospital Type Affect Cost and Outcomes of Care?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "CTHs had higher total cost and LOS per tonsillectomy compared with NCTHs and NTHs.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "The CTHs had significantly higher risk-adjusted total cost and LOS per tonsillectomy compared with NCTHs and NTHs ($9423.34/2.8 days, $6250.78/2.11 days, and $5905.10/2.08 days, respectively; P<.001)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "CTHs had higher total cost per tonsillectomy compared with NCTHs and NTHs.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 directly states that CTHs had higher risk-adjusted total cost per tonsillectomy than both NCTHs and NTHs.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "CTHs had higher LOS per tonsillectomy compared with NCTHs and NTHs.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states that CTHs had higher LOS per tonsillectomy than NCTHs and NTHs (2.8 versus 2.11 and 2.08 days).",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s198d203d5a",
+  "question": "Discharging patients earlier from Winnipeg hospitals: does it adversely affect quality of care?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Over the four years, length of stay fell significantly in all four diagnostic categories, yet readmission rates showed no consistent change for AMI, bronchitis or asthma, and TURP, and physician visits were essentially stable or slightly lower. The only notable rise was a readmission increase for uterine or adnexal procedures between the first and second year, which then stayed constant. Across hospitals in 1992-93, no correlation was found between length of stay and readmission rates or physician visits, so the abstract does not show that shorter stays adversely affected quality of care as measured here.",
+  "citations": [
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13
+  ],
+  "cited_sentences": {
+   "7": "The length of stay decreased significantly over the 4 years for all of the four categories, the smallest change being observed for patients with AMI (11.1%) and the largest for those with bronchitis or asthma (22.0%).",
+   "8": "The readmission rates for AMI, bronchitis or asthma, and TURP showed no consistent change over the 4 years.",
+   "9": "The readmission rate for uterine or adnexal procedures increased significantly between the first and second year (chi 2 = 4.28, p = 0.04) but then remained constant over the next 3 years.",
+   "10": "The mean number of physician visits increased slightly for AMI in the first year (1.92 to 2.01) and then remained virtually the same.",
+   "11": "It decreased slightly for bronchitis or asthma over the 4 years.",
+   "12": "There was no significant correlation between length of stay and readmission rates for individual hospitals in 1992-93 in any of the four categories.",
+   "13": "Also, no correlation was observed between length of stay and mean number of physician visits for individual hospitals in 1992-93 in the categories AMI and bronchitis or asthma."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Over the four years, length of stay fell significantly in all four diagnostic categories.",
+    "cited": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 directly says length of stay decreased significantly over the 4 years in all four categories.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 explicitly states that length of stay decreased significantly over four years in all four categories.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Readmission rates showed no consistent change for AMI, bronchitis or asthma, and TURP.",
+    "cited": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 says the same thing as the claim: readmission rates for these three categories showed no consistent change.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states that readmission rates showed no consistent change for all the listed categories.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Physician visits were essentially stable or slightly lower over the four years.",
+    "cited": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10,
+       11
+      ],
+      "rationale": "Physician visits for AMI rose only slightly (1.92 to 2.01) and then held virtually constant, and they fell slightly for bronchitis or asthma, which matches 'essentially stable or slightly lower.'",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10,
+       11
+      ],
+      "rationale": "Physician visits for AMI rose only slightly initially and then remained virtually unchanged, while visits for bronchitis or asthma decreased slightly over four years.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "The only notable rise was a readmission increase for uterine or adnexal procedures between the first and second year.",
+    "cited": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7,
+       8,
+       9,
+       10,
+       11
+      ],
+      "rationale": "Sentence 9 reports the significant uterine/adnexal readmission rise, while the other measures fell, showed no consistent change, or rose only slightly (AMI physician visits), so calling it the only notable rise is a reasonable reading.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7,
+       8,
+       9,
+       10,
+       11
+      ],
+      "rationale": "This was the only significant increase reported; other measures decreased, showed no consistent change, or increased only slightly.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "The readmission increase for uterine or adnexal procedures stayed constant after the second year.",
+    "cited": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 says the uterine/adnexal readmission rate rose between years one and two and then remained constant afterward, which is what the claim says.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 directly states that the readmission rate increased between years one and two and remained constant thereafter.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c5",
+    "text": "Across hospitals in 1992-93, no correlation was found between length of stay and readmission rates or physician visits.",
+    "cited": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       12,
+       13
+      ],
+      "rationale": "Sentence 12 reports no correlation between length of stay and readmission rates across hospitals in 1992-93, and sentence 13 reports none with physician visits, though only for the AMI and bronchitis/asthma categories.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       12,
+       13
+      ],
+      "rationale": "Sentences 12–13 report no significant correlation with readmissions in all four categories and no correlation with physician visits for AMI and bronchitis or asthma across individual hospitals in 1992–93.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c6",
+    "text": "The abstract does not show that shorter stays adversely affected quality of care as measured here.",
+    "cited": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7,
+       8,
+       12,
+       13
+      ],
+      "rationale": "Stays shortened, yet readmissions mostly showed no consistent change and had no correlation with length of stay, nor did physician visits. So no adverse effect on the quality measures is shown.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7,
+       8,
+       9,
+       10,
+       11,
+       12,
+       13
+      ],
+      "rationale": "Stays shortened, but the readmission and physician-visit findings did not establish adverse effects attributable to shorter stays, despite a temporary increase in one category’s readmissions.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s8d613dd2e7",
+  "question": "Does the familial transmission of drinking patterns persist into young adulthood?",
+  "reference_label": "maybe",
+  "label": "no",
+  "answer": "Familial drinking patterns do not persist into young adulthood.",
+  "citations": [
+   3,
+   6
+  ],
+  "cited_sentences": {
+   "3": "To explore the long-term (10-year) transmission of familial drinking during adolescence to offspring drinking patterns in young adulthood.",
+   "6": "Young adults whose families were abstainers in 2000 drank substantially less across quintiles in 2010 than offspring of non-abstaining families."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Familial drinking patterns do not persist into young adulthood.",
+    "cited": [
+     3,
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence [6] indicates that familial drinking patterns remain associated with drinking in young adulthood, contrary to the claim.",
+      "citation_support": [
+       {
+        "n": 3,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sf29ca7d1bc",
+  "question": "Is there a relationship between homocysteine and vitiligo?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The level of Hcy is significantly higher in patients with vitiligo than in controls.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "The mean serum level of Hcy was significantly higher in patients with vitiligo than in controls (21.61 +/- 13.28 vs. 13.1 +/- 4.88 micromol L(-1); P<0.001)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The level of Hcy is significantly higher in patients with vitiligo than in controls.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states that serum Hcy was significantly higher in patients with vitiligo than in controls (P<0.001).",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s84ef041fb8",
+  "question": "Do family physicians make good sentinels for influenza?",
+  "reference_label": "yes",
+  "label": "maybe",
+  "answer": "The abstract describes an evaluation of physician reports of influenza-like illness (ILI) and notes that influenza virus isolates from sentinel physicians peaked from 1 to 4 weeks earlier than those reported by World Health Organization laboratories, and physicians reported peak morbidity 1 to 4 weeks earlier than state and territorial health departments in four of five seasons.",
+  "citations": [
+   2,
+   11,
+   12
+  ],
+  "cited_sentences": {
+   "2": "Evaluation of physician reports from five influenza surveillance seasons (1987-88 through 1991-92).",
+   "11": "Influenza virus isolates from sentinel physicians peaked from 1 to 4 weeks earlier than those reported by World Health Organization laboratories.",
+   "12": "Physicians reported peak morbidity 1 to 4 weeks earlier than state and territorial health departments in four of five seasons and 2 to 5 weeks earlier than peak mortality reported by 121 cities during seasons with excess mortality associated with pneumonia and influenza."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The abstract describes an evaluation of physician reports of influenza-like illness (ILI).",
+    "cited": [
+     2,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 2 describes an evaluation of physician reports from influenza surveillance seasons, and sentence 12 mentions reported morbidity, but no cited sentence says the reports were of influenza-like illness.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences describe an evaluation of physician reports during influenza surveillance seasons but do not specify that the reports concerned influenza-like illness (ILI).",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Influenza virus isolates from sentinel physicians peaked from 1 to 4 weeks earlier than those reported by World Health Organization laboratories.",
+    "cited": [
+     2,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 states the claim word for word.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 states the claim verbatim.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Physicians reported peak morbidity 1 to 4 weeks earlier than state and territorial health departments in four of five seasons.",
+    "cited": [
+     2,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       12
+      ],
+      "rationale": "Sentence 12 states the claim verbatim: physicians reported peak morbidity 1 to 4 weeks earlier than state and territorial health departments in four of five seasons.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       12
+      ],
+      "rationale": "Sentence 12 explicitly states the claim.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s9fb623a327",
+  "question": "Does left atrial appendage (LAA) occlusion device alter the echocardiography and electrocardiogram parameters in patients with atrial fibrillation?",
+  "reference_label": "yes",
+  "label": "no",
+  "answer": "The LA diameter and ARD were larger during follow-up visits than at baseline.",
+  "citations": [
+   9,
+   10
+  ],
+  "cited_sentences": {
+   "9": "However, a larger left atrial (LA) diameter was detected by echocardiography during follow-up visit at 6months when compared with pre-operation parameters.",
+   "10": "Similarly, aortic root diameter (ARD) was also larger during follow-up at 12months than the baseline dimension in pre-operation."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The LA diameter was larger during follow-up visits than at baseline.",
+    "cited": [
+     9,
+     10
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 9 establishes a larger LA diameter only at the 6-month visit, not across follow-up visits; sentence 10 concerns aortic root diameter.",
+      "citation_support": [
+       {
+        "n": 9,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 10,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The ARD was larger during follow-up visits than at baseline.",
+    "cited": [
+     9,
+     10
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states that ARD was larger at the 12-month follow-up than at baseline.",
+      "citation_support": [
+       {
+        "n": 9,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 10,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s4e22863591",
+  "question": "Does left atrial appendage (LAA) occlusion device alter the echocardiography and electrocardiogram parameters in patients with atrial fibrillation?",
+  "reference_label": "yes",
+  "label": "maybe",
+  "answer": "The alterations of echocardiography and electrocardiogram (ECG) in patients received left atrial appendage LAA occlusion therapy are still unclear. There existed no significant difference in echocardiographic parameters between before and after device implantation.",
+  "citations": [
+   1,
+   8
+  ],
+  "cited_sentences": {
+   "1": "The alterations of echocardiography and electrocardiogram (ECG) in patients received left atrial appendage LAA occlusion therapy are still unclear.",
+   "8": "There existed no significant difference in echocardiographic parameters between before and after device implantation."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The alterations of echocardiography and electrocardiogram (ECG) in patients received left atrial appendage LAA occlusion therapy are still unclear.",
+    "cited": [
+     1,
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1
+      ],
+      "rationale": "Sentence 1 states the claim verbatim.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": true,
+        "role": "background"
+       },
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "There existed no significant difference in echocardiographic parameters between before and after device implantation.",
+    "cited": [
+     1,
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 states the claim verbatim.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "background"
+       },
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sf685b98c73",
+  "question": "Can autologous platelet-rich plasma gel enhance healing after surgical extraction of mandibular third molars?",
+  "reference_label": "yes",
+  "label": "no",
+  "answer": "The application of PRP gel did not significantly affect the healing and bone regeneration potential of the extraction socket.",
+  "citations": [
+   13
+  ],
+  "cited_sentences": {
+   "13": "Similarly, the scores for lamina dura, trabecular pattern, and bone density were better among patients in the PRP group."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The application of PRP gel did not significantly affect the healing and bone regeneration potential of the extraction socket.",
+    "cited": [
+     13
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence reports better scores in the PRP group but does not establish that PRP gel had no significant effect on healing or bone regeneration.",
+      "citation_support": [
+       {
+        "n": 13,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s790700af9b",
+  "question": "Is the Hawkins sign able to predict necrosis in fractures of the neck of the astragalus?",
+  "reference_label": "maybe",
+  "label": "yes",
+  "answer": "Differences were found when comparing the development of avascular necrosis with the Hawkins sign (P=.03).",
+  "citations": [
+   1,
+   11
+  ],
+  "cited_sentences": {
+   "1": "To assess if the Hawkins sign can predict whether or not astragalus fractures of the neck will develop avascular necrosis.",
+   "11": "Differences were found when comparing the development of avascular necrosis with the Hawkins sign (P=.03)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Differences were found when comparing the development of avascular necrosis with the Hawkins sign (P=.03).",
+    "cited": [
+     1,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 states the claim verbatim, including the P value.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 states the claim verbatim.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s9838572051",
+  "question": "Should early extubation be the goal for children after congenital cardiac surgery?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Early extubation is associated with lower mortality and a lower rate of reintubation.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "Early extubation was associated with lower mortality (1% vs 9%, P<.001) and a lower rate of reintubation (4% vs 23%, P<.001) compared with delayed extubation."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Early extubation is associated with lower mortality.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly associates early extubation with lower mortality compared with delayed extubation.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Early extubation is associated with a lower rate of reintubation.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly associates early extubation with a lower reintubation rate compared with delayed extubation.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s5fb9629120",
+  "question": "Are income-related differences in active travel associated with physical environmental characteristics?",
+  "reference_label": "no",
+  "label": "yes",
+  "answer": "Income-related differences in active travel were associated with physical environmental deprivation: the income gradient remained steep in the least-deprived areas, where higher-income groups were less likely than lower-income groups to choose active travel. However, active-trip likelihood among the lowest-income group was similar in the least- and most-deprived areas. [8][9]",
+  "citations": [
+   8,
+   9
+  ],
+  "cited_sentences": {
+   "8": "Likelihood of making an active trip among the lowest income group appeared unaffected by physical environmental deprivation; 15.4% of their non-recreational trips were active in both the least and most environmentally-deprived areas.",
+   "9": "The income-related gradient in making active trips remained steep in the least environmentally-deprived areas because those in the highest income groups were markedly less likely to choose active travel when physical environment was 'good', compared to those on the lowest incomes (OR = 0.44, 95% CI = 0.22 to 0.89)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Income-related differences in active travel were associated with physical environmental deprivation.",
+    "cited": [
+     8,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sources say the lowest-income group's active travel was unaffected and the income gradient stayed steep even in the least-deprived areas, so they do not establish that the income-related differences were associated with environmental deprivation.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8,
+       9
+      ],
+      "rationale": "The sentences link the income-related active-travel gradient to environmental conditions, while noting that active travel among the lowest-income group was unchanged across deprivation levels.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The income gradient in active travel remained steep in the least-deprived areas.",
+    "cited": [
+     8,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 states this directly. The claim's 'least-deprived areas' corresponds to the source's 'least environmentally-deprived areas'.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 explicitly states that the income gradient in active travel remained steep in the least environmentally-deprived areas.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "In the least-deprived areas, higher-income groups were less likely than lower-income groups to choose active travel.",
+    "cited": [
+     8,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 states that in the least environmentally-deprived areas, the highest-income groups were markedly less likely than the lowest-income groups to choose active travel (OR 0.44).",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 directly states that higher-income groups were less likely than the lowest-income group to choose active travel in the least environmentally-deprived areas.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "Active-trip likelihood among the lowest-income group was similar in the least-deprived and most-deprived areas.",
+    "cited": [
+     8,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 states that the lowest-income group made the same share of active trips (15.4%) in both the least- and most-deprived areas, which establishes the claim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 reports identical active-trip percentages for the lowest-income group in the least- and most-deprived areas.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s4490c72b16",
+  "question": "Does lung ischemia and reperfusion have an impact on coronary flow?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Total coronary flow (TCF=LAD+Cx+RCA blood-flow) decreased precipitously and significantly from baseline during ischemia and further decreased at 60 min of reperfusion.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "In the IR group, total coronary flow (TCF=LAD+Cx+RCA blood-flow) decreased precipitously and significantly from baseline (113±41 ml min\"1) during IR (p<0.05), with the lowest value observed at 60 min of reperfusion (-37.1%, p<0.003)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Total coronary flow (TCF) is LAD+Cx+RCA blood-flow.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly defines TCF as LAD+Cx+RCA blood-flow.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Total coronary flow decreased precipitously and significantly from baseline during ischemia.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence reports a decrease during IR, with the lowest value during reperfusion, but does not specifically establish a significant decrease during ischemia.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Total coronary flow further decreased at 60 min of reperfusion.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "The sentence states that total coronary flow decreased during IR and reached its lowest value at 60 min of reperfusion, directly implying a further decrease.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sd4e9d7d1ce",
+  "question": "Are income-related differences in active travel associated with physical environmental characteristics?",
+  "reference_label": "no",
+  "label": "yes",
+  "answer": "The study examined income-related differences in active travel across multiple physical environmental characteristics, including air pollution, climate and green space. The findings show that the income gradient in active travel varied with physical environmental deprivation: the lowest income group's active travel was unaffected by environment, while the income gradient remained steep in the least environmentally-deprived areas because higher income groups were less likely to travel actively when the environment was good. This indicates that income-related differences in active travel are associated with physical environmental characteristics.",
+  "citations": [
+   3,
+   7,
+   8,
+   9
+  ],
+  "cited_sentences": {
+   "3": "This study explored income-related differences in active travel in relation to multiple physical environmental characteristics including air pollution, climate and levels of green space, in urban areas across England.",
+   "7": "Three-level binary logistic regression models were used to explore how associations between the trip being active (by bike/walking) and three income groups, varied by level of multiple physical environmental deprivation.",
+   "8": "Likelihood of making an active trip among the lowest income group appeared unaffected by physical environmental deprivation; 15.4% of their non-recreational trips were active in both the least and most environmentally-deprived areas.",
+   "9": "The income-related gradient in making active trips remained steep in the least environmentally-deprived areas because those in the highest income groups were markedly less likely to choose active travel when physical environment was 'good', compared to those on the lowest incomes (OR = 0.44, 95% CI = 0.22 to 0.89)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study examined income-related differences in active travel across multiple physical environmental characteristics, including air pollution, climate and green space.",
+    "cited": [
+     3,
+     7,
+     8,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 states the claim almost word for word, naming air pollution, climate and green space among the physical environmental characteristics studied.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 explicitly states that the study examined income-related differences in active travel in relation to the specified environmental characteristics.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The income gradient in active travel varied with physical environmental deprivation.",
+    "cited": [
+     3,
+     7,
+     8,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences describe exploring the variation and report a steep gradient in the least-deprived areas with no change for the lowest income group, but they never compare the gradient across deprivation levels or show that it changed.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8,
+       9
+      ],
+      "rationale": "The lowest-income group's active travel was unchanged across environmental deprivation levels, while the highest-income group's lower active travel in good environments produced a steeper income gradient there.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The lowest income group's active travel was unaffected by environment.",
+    "cited": [
+     3,
+     7,
+     8,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 says the lowest income group's active trip likelihood appeared unaffected by physical environmental deprivation, with 15.4% of trips active in both the least and most deprived areas.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 directly reports that active-trip rates in the lowest income group were identical (15.4%) in the least and most environmentally deprived areas.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "The income gradient remained steep in the least environmentally-deprived areas because higher income groups were less likely to travel actively when the environment was good.",
+    "cited": [
+     3,
+     7,
+     8,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 states the claim almost verbatim: the gradient stayed steep in the least-deprived areas because the highest income groups were less likely to travel actively there.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 explicitly states both the steep income gradient in the least environmentally-deprived areas and the claimed explanation.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "Income-related differences in active travel are associated with physical environmental characteristics.",
+    "cited": [
+     3,
+     7,
+     8,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences show the study explored this relationship, but the results report the lowest-income group was unaffected by the environment and the income gradient stayed steep, so they do not establish that income-related differences are associated with physical environmental characteristics.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8,
+       9
+      ],
+      "rationale": "The findings link the income-related gradient in active travel to environmental conditions, while showing no environmental variation within the lowest-income group.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "saf96afe7a7",
+  "question": "Patient-Controlled Therapy of Breathlessness in Palliative Care: A New Therapeutic Concept for Opioid Administration?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "In this pilot observational study of 18 inpatients with advanced disease and refractory breathlessness, breathlessness scores decreased on intravenous opioid patient-controlled therapy (baseline median 5, Day 1 median 4, Day 2 median 4, both P < 0.01). Physiological parameters remained stable, and on Day 3 all 12 patients who were asked confirmed that this mode of application relieved their breathlessness. Because the study was a small uncontrolled pilot, these findings suggest feasibility and benefit but do not fully establish effectiveness.",
+  "citations": [
+   7,
+   12,
+   13,
+   14
+  ],
+  "cited_sentences": {
+   "7": "This was a pilot observational study with 18 inpatients with advanced disease and refractory breathlessness receiving opioid PCT.",
+   "12": "Numeric rating scale of current breathlessness decreased (baseline: median = 5 [range 1-10]; Day 1: median = 4 [range 0-8], P < 0.01; Day 2: median = 4 [range 0-5], P < 0.01).",
+   "13": "Physiological parameters were stable over time.",
+   "14": "On Day 3, 12/12 patients confirmed that this mode of application provided relief of breathlessness."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study was a pilot observational study of 18 inpatients with advanced disease and refractory breathlessness.",
+    "cited": [
+     7,
+     12,
+     13,
+     14
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 states the claim directly: a pilot observational study of 18 inpatients with advanced disease and refractory breathlessness.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 explicitly states the study design, sample size, inpatient status, advanced disease, and refractory breathlessness.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Breathlessness scores decreased on intravenous opioid patient-controlled therapy.",
+    "cited": [
+     7,
+     12,
+     13,
+     14
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences show breathlessness scores fell on opioid PCT, but none say the opioid was given intravenously, so the route in the claim is unsupported.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences report decreased breathlessness scores during opioid PCT but do not establish that the therapy was intravenous.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Baseline median breathlessness score was 5, Day 1 median was 4, and Day 2 median was 4, with both Day 1 and Day 2 differences from baseline at P < 0.01.",
+    "cited": [
+     7,
+     12,
+     13,
+     14
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       12
+      ],
+      "rationale": "Sentence 12 gives the baseline (5), Day 1 (4) and Day 2 (4) medians, each with P < 0.01, exactly as claimed.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       12
+      ],
+      "rationale": "Sentence 12 states all three median scores and directly implies that both follow-up decreases from baseline had P < 0.01.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "Physiological parameters remained stable during patient-controlled opioid therapy.",
+    "cited": [
+     7,
+     12,
+     13,
+     14
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7,
+       13
+      ],
+      "rationale": "Sentence 13 says physiological parameters were stable over time, and sentence 7 places this in patients receiving opioid PCT (patient-controlled therapy).",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7,
+       13
+      ],
+      "rationale": "Sentence 13 states that physiological parameters were stable, and sentence 7 establishes that the patients were receiving opioid PCT.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "On Day 3, all 12 patients who were asked confirmed that this mode of application relieved their breathlessness.",
+    "cited": [
+     7,
+     12,
+     13,
+     14
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       14
+      ],
+      "rationale": "Sentence 14 directly states that on Day 3 all 12 of 12 patients confirmed the mode of application relieved their breathlessness.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       14
+      ],
+      "rationale": "Sentence 14 directly states that all 12 patients confirmed relief of breathlessness on Day 3.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c5",
+    "text": "Because the study was a small uncontrolled pilot, the findings suggest feasibility and benefit but do not fully establish effectiveness.",
+    "cited": [
+     7,
+     12,
+     13,
+     14
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7,
+       12,
+       13,
+       14
+      ],
+      "rationale": "Sentence 7 shows a small, uncontrolled observational pilot, and sentences 12–14 report reduced breathlessness, stable physiology and patient-reported relief, which directly imply suggested feasibility and benefit without definitive proof of effectiveness.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences describe a small observational pilot and improvements in breathlessness, but do not establish that it was uncontrolled or explicitly assess feasibility or the limits of effectiveness evidence.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s57a7303890",
+  "question": "Does a special interest in laparoscopy affect the treatment of acute cholecystitis?",
+  "reference_label": "yes",
+  "label": "no",
+  "answer": "The treatment of patients with AC is not improved under the care of laparoscopic specialists.",
+  "citations": [
+   1
+  ],
+  "cited_sentences": {
+   "1": "We tested the hypothesis that the treatment of patients with acute cholecystitis (AC) would be improved under the care of laparoscopic specialists."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The treatment of patients with AC is not improved under the care of laparoscopic specialists.",
+    "cited": [
+     1
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence states a hypothesis being tested, not a finding that care by laparoscopic specialists does not improve treatment.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ }
+]
