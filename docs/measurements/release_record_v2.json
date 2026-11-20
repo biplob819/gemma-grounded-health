@@ -72,8 +72,9 @@
     },
     {
       "file": "biplob123/gemma-4-e2b-grounded-health/README.md",
-      "sha256": "52a1677a4bb83a3c7bf4470e276692672c4fe2324ba1bd352843e174f99f6014",
-      "ok": true
+      "sha256": "dc9b38568e3d1da538e7c1b0776cd2d2837a9418543a394ed16751cb14c203d5",
+      "ok": true,
+      "note": "re-uploaded 2026-11-21 under OWNER D-65 (base_model_relation finetune, How-to-use prompt section, p-values below 0.001 as <0.001, parity heading); tag v2.0.0 moved to that commit; downloaded back"
     },
     {
       "file": "biplob123/gemma-4-e2b-grounded-health/results_bundle.json",
@@ -97,9 +98,9 @@
     },
     {
       "file": "biplob123/gemma-4-e2b-grounded-health-GGUF/README.md",
-      "sha256": "fbaea54e2a7c088f1b9acf747d91a3077e7e8fdf2343baa043e4fcdd2dee3a59",
+      "sha256": "d068032d2c1101b3d86665e4ab7f039f3fb9086ed62f4d5c9156b2c5e4f5a66a",
       "ok": true,
-      "note": "re-uploaded 2026-11-21 with the --think=false guidance; tag v2.0.0 moved to that commit"
+      "note": "re-uploaded 2026-11-21 under OWNER D-65 (main: base_model_relation finetune and a How-to-use prompt section; GGUF: prompt-format line); tag v2.0.0 moved to that commit; downloaded back"
     },
     {
       "file": "biplob123/gemma-4-e2b-grounded-health/LICENSE",

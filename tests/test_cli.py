@@ -15,14 +15,14 @@ def test_cli_version_flag_prints_version(capsys):
     with pytest.raises(SystemExit) as exc:
         cli.main(["--version"])
     assert exc.value.code == 0
-    assert capsys.readouterr().out.strip() == "ggh 0.0.1"
+    assert capsys.readouterr().out.strip() == "ggh 1.0.0"
 
 
 @pytest.mark.contract
 def test_pyproject_distribution_metadata():
     meta = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]
     assert meta["name"] == "gemma-grounded-health"
-    assert meta["version"] == ggh.__version__ == "0.0.1"
+    assert meta["version"] == ggh.__version__ == "1.0.0"
     assert meta["requires-python"] == ">=3.11"
     assert meta["license"] == "Apache-2.0"
     assert meta["license-files"] == ["LICENSE", "NOTICE"]
@@ -62,7 +62,7 @@ def test_cli_runs_as_module():
         text=True,
         check=True,
     )
-    assert out.stdout.strip() == "ggh 0.0.1"
+    assert out.stdout.strip() == "ggh 1.0.0"
 
 
 @pytest.mark.safety

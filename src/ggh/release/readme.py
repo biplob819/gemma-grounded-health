@@ -2,8 +2,7 @@
 the links block, generated from `ggh.release.links` (OWNER D-37).
 
 `ggh readme-table` prints the results block; `--write FILE` replaces the text between each
-pair of markers in FILE (the README, or docs/README_release_draft.md while the release is being
-built).
+pair of markers in FILE (`uv run ggh readme-table --write README.md`).
 """
 
 from __future__ import annotations
@@ -87,10 +86,10 @@ def results_block(src: Sources) -> str:
     bench = shipped_bench(src)
     p = b.parity
     parity = (
-        "The demo runs bf16 weights; the benchmark scores Q4_K_M, which agrees with bf16 on "
-        f"the label for {f3(p.label_agreement)} of {p.n} dev prompts."
+        "The local demo serves the benchmarked Q4_K_M GGUF (OWNER D-63); the published bf16 "
+        f"weights agree with it on the label for {f3(p.label_agreement)} of {p.n} dev prompts."
         if p is not None
-        else "The demo runs bf16 weights; the benchmark scores Q4_K_M."
+        else "The local demo serves the benchmarked Q4_K_M GGUF (OWNER D-63)."
     )
     lines = [
         START,

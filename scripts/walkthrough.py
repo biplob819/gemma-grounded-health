@@ -9,7 +9,7 @@ updates the screens. No API keys, no network, no spend.
 Usage:
     uv run python scripts/walkthrough.py                 # capture and write the GIF
     uv run python scripts/walkthrough.py --html-only DIR # write the HTML pages only
-    uv run python scripts/walkthrough.py --summary docs/results/main_v2/summary.json
+    uv run python scripts/walkthrough.py --summary docs/results/main/summary.json  # v1's run
 
 Needs Google Chrome or Chromium (or GGH_CHROME=/path/to/chrome) and ffmpeg on PATH.
 The pure parts (screen list, rendering, scrubbing) are tested in tests/test_walkthrough.py;
@@ -19,6 +19,7 @@ capture and encoding are not run in CI.
 from __future__ import annotations
 
 import argparse
+import base64
 import getpass
 import gzip
 import html
@@ -50,6 +51,7 @@ FFMPEG_FILTER = (
 CREDENTIAL_HINTS = ("KEY", "TOKEN", "SECRET", "PASSWORD", "KAGGLE", "HF_")
 
 PRIMARY_JUDGE = "claude-opus-5-5"
+PARITY_BAR = 0.95  # dev label agreement, Q4_K_M against bf16 (Tech Spec §6)
 DISPLAY = {
     "gemma-e2b-base-q4": "Gemma 4 E2B base",
     "gemma-e2b-grounded-q4": "Gemma fine-tuned v1",
@@ -72,19 +74,22 @@ def name(model_id: str) -> str:
 class Paths:
     """Every committed input, relative to the repo root."""
 
-    summary: str = "docs/results/main/summary.json"
-    run: str = "docs/results/main/run.json"
-    # the v1 failure story stays on v1's run even when --summary points at v2
+    # the shipped release (v2, R4.5); --summary points at another run
+    summary: str = "docs/results/main_v2/summary.json"
+    run: str = "docs/results/main_v2/run.json"
+    bundle: str = "docs/results/results_bundle.json"
+    # the v1 failure story stays on v1's run
     failure_summary: str = "docs/results/main/summary.json"
     citation_summary: str = "docs/results/main_citation/summary.json"
-    laptop_bench: str = "docs/measurements/laptop_bench.json"
-    parity_headline: str = "docs/measurements/parity_headline.json"
-    parity_report: str = "docs/measurements/parity_report.json"
-    probe_report: str = "docs/measurements/probe_report.json"
+    laptop_bench: str = "docs/measurements/v2/laptop_bench.json"
+    parity_headline: str = "docs/measurements/parity_headline_v2.json"
+    parity_report: str = "docs/measurements/v2/parity.json"
+    probe_report: str = "docs/measurements/probe_report_v2.json"
     audit_sample: str = "docs/measurements/audit_sample.jsonl"
     audit_labels: str = "docs/measurements/audit_labels.jsonl"
     dataflow: str = "docs/assets/dataflow.svg"
-    architecture: str = "docs/assets/architecture.svg"
+    hf_page: str = "docs/assets/screenshots/hf_model_page.png"
+    demo: str = "docs/assets/screenshots/demo_answer.png"
     portfolio: str = "portfolio.yml"
 
 
@@ -101,6 +106,7 @@ def iter_jsonl_gz(root: Path, rel: str):
 
 # --------------------------------------------------------------------------- scrubbing
 
+DATA_URI = re.compile(r"data:image/[a-z]+;base64,[A-Za-z0-9+/=]+")
 EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 HOME_RE = re.compile(r"(?:/Users|/home)/[^/\s]+|[A-Za-z]:\\Users\\[^\\\s]+")
 
@@ -275,24 +281,57 @@ class Ctx:
         return self.cache[rel]
 
 
+def gemma_models(models: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Base first, then each fine-tuned Gemma in the summary's order (v1, v2)."""
+    base, _ = base_and_tuned(models)
+    return [base] + [m for m in models if m["model"].startswith("gemma") and m is not base]
+
+
+def _metric(m: dict[str, Any], key: str, j: str) -> dict[str, Any] | None:
+    v = m.get(key)
+    return v.get(j) if isinstance(v, dict) and isinstance(v.get(j), dict) else None
+
+
+def title_metrics(s: dict[str, Any], j: str) -> list[tuple[str, str, bool]]:
+    """(label, summary key, lower is better) for each tile the run measured."""
+    out = [("Label accuracy", "accuracy", False),
+           (f"Correct and fully grounded ({name(j)})", "headline", False)]  # fmt: skip
+    if any(_metric(m, "citation_precision", j) for m in s["models"]):
+        out += [
+            (f"Cited sentences that support a claim ({name(j)})", "citation_precision", False),
+            (f"Answers citing an unsupporting aim sentence ({name(j)})", "aim_citation_rate", True),
+        ]
+    else:
+        out.append((f"Claims supported by cited sentences ({name(j)})", "groundedness_mean", False))
+    return out
+
+
 def screen_title(c: Ctx) -> str:
     p = c.paths
     port = yaml.safe_load((c.root / p.portfolio).read_text(encoding="utf-8"))
     s, run = c.json(p.summary), c.json(p.run)
-    base, ft = base_and_tuned(s["models"])
-    j = PRIMARY_JUDGE
+    models = gemma_models(s["models"])
+    j = judges_of(s)[0]
 
-    def tile(label: str, a: float, b: float) -> str:
+    def point(m: dict[str, Any], key: str) -> float | None:
+        v = m["accuracy"] if key == "accuracy" else _metric(m, key, j)
+        return None if v is None else v["point"]
+
+    def tile(label: str, key: str, lower: bool) -> str:
+        vals = " <span style='color:var(--mute)'>&middot;</span> ".join(
+            f'<b class="acc">{f3(point(m, key))}</b>' if m is models[-1] else f3(point(m, key))
+            for m in models
+        )
+        names = " &middot; ".join(html.escape(name(m["model"])) for m in models)
+        hint = " (lower is better)" if lower else ""
         return (
-            f'<div class="card"><div class="lab">{html.escape(label)}</div>'
-            f'<div class="big">{f3(a)} <span style="color:var(--mute)">&rarr;</span> '
-            f'<b class="acc">{f3(b)}</b></div>'
-            f'<div class="lab">{html.escape(name(base["model"]))} &rarr; '
-            f"{html.escape(name(ft['model']))}</div></div>"
+            f'<div class="card"><div class="lab">{html.escape(label + hint)}</div>'
+            f'<div class="big" style="font-size:34px">{vals}</div>'
+            f'<div class="lab">{names}</div></div>'
         )
 
     chips = (
-        '<div style="margin-top:34px;display:flex;flex-wrap:wrap;gap:8px">'
+        '<div style="margin-top:22px;display:flex;flex-wrap:wrap;gap:8px">'
         + "".join(
             f'<span class="badge tie" style="font-size:14px;padding:5px 12px">{html.escape(t)}'
             "</span>"
@@ -300,32 +339,17 @@ def screen_title(c: Ctx) -> str:
         )
         + "</div>"
     )
-    nxt = "".join(
-        f'<p style="margin-top:26px;font-size:17px;max-width:1100px"><b>Next.</b> '
-        f"{html.escape(t)}</p>"
-        for t in port.get("story", {}).get("next", [])[:1]
-    )
-    tiles = (
-        tile("Label accuracy", base["accuracy"]["point"], ft["accuracy"]["point"])
-        + tile(
-            f"Correct and fully grounded ({name(j)} judge)",
-            base["headline"][j]["point"],
-            ft["headline"][j]["point"],
-        )
-        + tile(
-            f"Claims supported by cited sentences ({name(j)})",
-            base["groundedness_mean"][j]["point"],
-            ft["groundedness_mean"][j]["point"],
-        )
-    )
+    tiles = "".join(tile(*t) for t in title_metrics(s, j))
+    cols = 2 if len(title_metrics(s, j)) == 4 else 3
     body = (
-        f'<p style="font-size:24px;line-height:1.4;max-width:1080px;margin:10px 0 34px">'
+        f'<p style="font-size:22px;line-height:1.4;max-width:1080px;margin:4px 0 20px">'
         f"{html.escape(port['tagline'])}</p>"
-        f'<div class="grid" style="grid-template-columns:repeat(3,1fr)">{tiles}</div>'
-        f'<p class="lab" style="margin-top:30px;font-size:16px">Main run '
+        f'<div class="grid" style="grid-template-columns:repeat({cols},1fr)">{tiles}</div>'
+        f'<p class="lab" style="margin-top:18px;font-size:16px">Main run '
         f"<code>{html.escape(run['run_id'])}</code>: {run['n']:,} expert-labelled PubMedQA "
-        f"questions, {len(run['models'])} models, {len(run['judges'])} judges from different "
-        f"model families, ${run['spent_usd']:.2f} spent. Evaluated with EvalKit.</p>" + chips + nxt
+        f"questions, {len(run['models'])} models, judged by "
+        f"{', '.join(name(x) for x in run['judges'])}, ${run['spent_usd']:.2f} spent. "
+        "Evaluated with EvalKit; the verdicts are on the results screen.</p>" + chips
     )
     return page(
         "A small model that cites its evidence",
@@ -345,82 +369,171 @@ def _svg_screen(c: Ctx, rel: str, title: str, sub: str) -> str:
     return page(title, body, num=c.num, total=c.total, source=rel, sub=sub, extra_css=css)
 
 
+def _image_screen(c: Ctx, rel: str, title: str, sub: str) -> str:
+    """A committed screenshot, inlined (no file path in the page), top of the image shown."""
+    data = base64.b64encode((c.root / rel).read_bytes()).decode("ascii")
+    mime = "image/png" if rel.endswith(".png") else "image/gif"
+    body = (
+        '<div class="card" style="height:100%;padding:0;overflow:hidden">'
+        f'<img alt="" src="data:{mime};base64,{data}" style="width:100%;height:100%;'
+        'object-fit:cover;object-position:top"></div>'
+    )
+    css = "main{padding-bottom:4px}"
+    return page(title, body, num=c.num, total=c.total, source=rel, sub=sub, extra_css=css)
+
+
+def screen_hf(c: Ctx) -> str:
+    return _image_screen(
+        c,
+        c.paths.hf_page,
+        "Released on Hugging Face",
+        "Merged weights, the LoRA adapter and a card generated from the results bundle; the "
+        "GGUF repo holds the benchmarked Q4_K_M file.",
+    )
+
+
+def screen_demo(c: Ctx) -> str:
+    return _image_screen(
+        c,
+        c.paths.demo,
+        "The local demo: base against v2, from the abstract only",
+        "Served by llama-server on a laptop; sample answers need no passcode, live answers do.",
+    )
+
+
 def screen_dataflow(c: Ctx) -> str:
     return _svg_screen(
         c,
         c.paths.dataflow,
         "Data flow",
         "PubMedQA to training targets, Kaggle training, GGUF export, laptop serving and "
-        "EvalKit's dual-judge evaluation.",
+        "EvalKit's evaluation (v1 two judges, v2 one).",
     )
 
 
-def screen_architecture(c: Ctx) -> str:
-    return _svg_screen(
-        c,
-        c.paths.architecture,
-        "Architecture",
-        "The ggh package, its build harness and the external services it uses.",
-    )
+METRIC_LABEL = {
+    "accuracy": "Label accuracy",
+    "headline": "Correct and fully grounded",
+    "citation_precision": "Cited sentences that support a claim",
+    "aim_citation_rate": "Aim-citation rate (lower is better)",
+}
+
+
+def preregistered(c: Ctx, run_id: str) -> list[dict[str, Any]]:
+    """The bundle's pre-registered comparisons on this run, each with `aim_dependent` set when
+    its verdict changes under the post-hoc aim-rule count (OWNER D-62)."""
+    from ggh.release import card, sources
+
+    bundle = c.json(c.paths.bundle)
+    names = {r["name"] for r in bundle.get("runs", []) if r.get("run_id") == run_id}
+    comps = [x for x in bundle.get("primary_comparisons", []) if x.get("run") in names]
+    if not comps:
+        return []
+    src = sources.load(c.root, sources.Paths(bundle=Path(c.paths.bundle)))
+    flips = card.aim_dependent(src)
+    return [
+        {**x, "aim_dependent": (x["model_a"], x["model_b"], x["metric"], x["judge"] or "") in flips}
+        for x in comps
+    ]
+
+
+def _verdict_badge(cmp: dict[str, Any]) -> str:
+    if cmp.get("verdict") == "tie":
+        badge = '<span class="badge tie">tie</span>'
+    else:
+        a_better = cmp.get("verdict") == "a_better"
+        who = name(cmp["model_a"] if a_better else cmp["model_b"])
+        badge = f'<span class="badge sep">{html.escape(who)} better</span>'
+    if cmp.get("aim_dependent"):
+        badge += ' <span class="ci">depends on the aim rule (OWNER D-62)</span>'
+    return badge
 
 
 def screen_results(c: Ctx) -> str:
     p = c.paths
     s = c.json(p.summary)
     judges = judges_of(s)
+    j0 = judges[0]
     base, ft = base_and_tuned(s["models"])
+    cit = any(_metric(m, "citation_precision", j0) for m in s["models"])
     head = (
         "<tr><th>Model</th><th>Label accuracy</th>"
         + "".join(f"<th>Correct and fully grounded, {name(j)}</th>" for j in judges)
-        + f"<th>{name(judges[0])} interval</th>"
-        + f"<th class='n'>Claims supported ({name(judges[0])})</th></tr>"
+        + f"<th>{name(j0)} interval</th>"
+        + (
+            f"<th>Citation precision ({name(j0)})</th><th>Aim-citation rate ({name(j0)})</th>"
+            if cit
+            else f"<th class='n'>Claims supported ({name(j0)})</th>"
+        )
+        + "</tr>"
     )
     rows = []
     for m in s["models"]:
-        strong = m is ft
         nm = html.escape(name(m["model"]))
+        extra = (
+            f"<td class='nw'>{ci(_metric(m, 'citation_precision', j0))}</td>"
+            f"<td class='nw'>{ci(_metric(m, 'aim_citation_rate', j0))}</td>"
+            if cit
+            else f"<td class='n'>{f3(m['groundedness_mean'][j0]['point'])}</td>"
+        )
         rows.append(
             "<tr>"
-            + (f"<td class='nw'><b>{nm}</b></td>" if strong else f"<td class='nw'>{nm}</td>")
+            + (f"<td class='nw'><b>{nm}</b></td>" if m is ft else f"<td class='nw'>{nm}</td>")
             + f"<td class='nw'>{ci(m['accuracy'])}</td>"
             + "".join(f"<td class='nw'>{ci(m['headline'].get(j))}</td>" for j in judges)
-            + f"<td>{interval_svg(m['headline'][judges[0]], 0.2, 0.5)}</td>"
-            + f"<td class='n'>{f3(m['groundedness_mean'][judges[0]]['point'])}</td></tr>"
+            + f"<td>{interval_svg(m['headline'][j0], 0.2, 0.5, w=120)}</td>"
+            + extra
+            + "</tr>"
         )
     comps = []
-    for cmp in s["comparisons"]:
-        if {cmp["model_a"], cmp["model_b"]} != {base["model"], ft["model"]}:
-            continue
-        sign = -1 if cmp["model_a"] == base["model"] else 1  # show fine-tuned minus base
-        d = cmp["diff"]
-        lo, hi = sorted((sign * d["lo"], sign * d["hi"]))
-        metric = "Label accuracy" if cmp["metric"] == "accuracy" else "Correct and fully grounded"
-        judge = f" ({name(cmp['judge'])})" if cmp["judge"] else ""
-        badge = (
-            '<span class="badge sep">separated</span>'
-            if cmp["separated"]
-            else '<span class="badge tie">tie</span>'
-        )
-        comps.append(
-            f"<tr><td>{metric}{html.escape(judge)}</td>"
-            f"<td class='n'>{sign * d['point']:+.3f} <span class='ci'>[{lo:+.3f}, {hi:+.3f}]"
-            f"</span></td><td>{badge}</td></tr>"
-        )
+    pre = preregistered(c, s["run_id"])
+    if pre:
+        caption = "difference [95% paired bootstrap, Holm]"
+        for cmp in pre:
+            d = cmp["diff"]
+            comps.append(
+                f"<tr><td class='nw'>{html.escape(name(cmp['model_a']))} minus "
+                f"{html.escape(name(cmp['model_b']))}</td>"
+                f"<td>{METRIC_LABEL.get(cmp['metric'], cmp['metric'])}</td>"
+                f"<td class='n nw'>{d['point']:+.3f} <span class='ci'>[{d['lo']:+.3f}, "
+                f"{d['hi']:+.3f}]</span></td><td>{_verdict_badge(cmp)}</td></tr>"
+            )
+    else:  # a run the bundle does not carry: EvalKit's run-wide base-vs-fine-tune tests
+        caption = "fine-tuned minus base [95% paired bootstrap, Holm]"
+        for cmp in s["comparisons"]:
+            if {cmp["model_a"], cmp["model_b"]} != {base["model"], ft["model"]}:
+                continue
+            sign = -1 if cmp["model_a"] == base["model"] else 1  # fine-tuned minus base
+            d = cmp["diff"]
+            lo, hi = sorted((sign * d["lo"], sign * d["hi"]))
+            metric = METRIC_LABEL["accuracy" if cmp["metric"] == "accuracy" else "headline"]
+            judge = f" ({name(cmp['judge'])})" if cmp["judge"] else ""
+            badge = (
+                '<span class="badge sep">separated</span>'
+                if cmp["separated"]
+                else '<span class="badge tie">tie</span>'
+            )
+            comps.append(
+                f"<tr><td>{html.escape(name(ft['model']))} minus base</td>"
+                f"<td>{metric}{html.escape(judge)}</td><td class='n'>{sign * d['point']:+.3f} "
+                f"<span class='ci'>[{lo:+.3f}, {hi:+.3f}]</span></td><td>{badge}</td></tr>"
+            )
+    css = "td{padding:7px 8px;font-size:14.5px} th{padding:6px 8px}"
     body = (
-        f'<div class="card"><table>{head}{"".join(rows)}</table></div>'
-        '<div class="card" style="margin-top:16px"><table>'
-        f"<tr><th>{html.escape(name(ft['model']))} minus base</th><th class='n'>difference "
-        "[95% paired bootstrap, Holm]</th><th>verdict</th></tr>"
-        f"{''.join(comps)}</table></div>"
+        f'<div class="card" style="padding:10px 14px"><table>{head}{"".join(rows)}</table></div>'
+        '<div class="card" style="margin-top:12px;padding:10px 14px"><table>'
+        f"<tr><th>Comparison</th><th>Outcome</th><th class='n'>{caption}</th><th>verdict</th>"
+        f"</tr>{''.join(comps)}</table></div>"
     )
     return page(
-        "Results: four models, one prompt",
+        f"Results: {len(s['models'])} models, one prompt, one run",
         body,
         num=c.num,
         total=c.total,
-        source=f"{p.summary} (run {s['run_id']})",
+        source=f"{p.summary} (run {s['run_id']}), {p.bundle}",
         sub=f"All {base['n']:,} expert-labelled PubMedQA questions. 95% bootstrap intervals; "
         "a gap counts only when its corrected interval excludes zero.",
+        extra_css=css,
     )
 
 
@@ -604,7 +717,9 @@ def screen_checks(c: Ctx) -> str:
         '<div class="grid" style="grid-template-columns:1fr">'
         f'<div class="card"><div class="lab">Laptop file (Q4_K_M) against full precision (bf16), '
         f"{ph['n']} test questions. Dev label agreement on {pr['n']}: "
-        f"<b>{f3(pr['label_agreement'])}</b> (bar 0.95)</div><table>"
+        f"<b>{f3(pr['label_agreement'])}</b> (bar {f3(PARITY_BAR)}"
+        + ("" if pr["label_agreement"] >= PARITY_BAR else "; missed, disclosed, OWNER D-55")
+        + ")</div><table>"
         "<tr><th></th><th class='n'>bf16</th><th class='n'>Q4_K_M</th>"
         "<th class='n'>bf16 minus Q4 [95%]</th></tr>"
         f"{acc}{prow}</table></div>"
@@ -768,12 +883,14 @@ class Screen:
 def screens() -> list[Screen]:
     """The walkthrough, in order. The audit page is served live from committed data."""
     return [
-        Screen("title", "Overview", screen_title, "Tagline and v1 headline numbers."),
+        Screen("title", "Overview", screen_title, "Tagline and v2's headline numbers."),
+        Screen("results", "Results", screen_results, "v2 run table, pre-registered verdicts."),
+        Screen("failure", "Failure diagnosis", screen_failure, "Why v1 lost on grounding."),
+        Screen("hf", "Hugging Face", screen_hf, "The released model's page."),
+        Screen("demo", "Demo", screen_demo, "The local demo answering a sample question."),
         Screen("dataflow", "Data flow", screen_dataflow, "docs/assets/dataflow.svg."),
-        Screen(
-            "architecture", "Architecture", screen_architecture, "docs/assets/architecture.svg."
-        ),
-        Screen("cli", "CLI", screen_cli_help, "`ggh --help`, every pipeline step."),
+        Screen("laptop", "Laptop benchmark", screen_laptop, "Speed and memory on one laptop."),
+        Screen("checks", "Checks", screen_checks, "Quantisation parity and paraphrase probe."),
         Screen("doctor", "Doctor", screen_cli_doctor, "`ggh doctor` and `ggh audit score`."),
         Screen(
             "audit",
@@ -782,10 +899,6 @@ def screens() -> list[Screen]:
             "`ggh audit serve` on 127.0.0.1, the 50-example hand audit.",
             live=True,
         ),
-        Screen("results", "Results", screen_results, "Four-model table and base vs fine-tune."),
-        Screen("failure", "Failure diagnosis", screen_failure, "Why v1 lost on grounding."),
-        Screen("laptop", "Laptop benchmark", screen_laptop, "Speed and memory on one laptop."),
-        Screen("checks", "Checks", screen_checks, "Quantisation parity and paraphrase probe."),
     ]
 
 
@@ -800,7 +913,7 @@ def render_all(
     for i, s in enumerate(ss, 1):
         ctx.num = i
         text = s.render(ctx)
-        leaks = find_leaks(text)
+        leaks = find_leaks(DATA_URI.sub("", text))
         if leaks:
             raise SystemExit(f"walkthrough: screen {s.slug} would show {', '.join(leaks)}")
         path = out_dir / f"{i:02d}-{s.slug}.html"
@@ -928,12 +1041,12 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--out", default="docs/assets/walkthrough.gif")
     ap.add_argument("--frames", default=None, help="keep the PNG frames in this folder")
     ap.add_argument("--html-only", default=None, help="write the HTML pages here and stop")
-    ap.add_argument("--summary", default=None, help="results summary.json (default: v1 main)")
+    ap.add_argument("--summary", default=None, help="results summary.json (default: v2 main)")
     ap.add_argument("--citation-summary", default=None)
     args = ap.parse_args(argv)
     root = Path(args.root).resolve()
     paths = Paths()
-    if args.summary:  # e.g. the v2 run; the failure screen stays on v1's run
+    if args.summary:  # e.g. v1's run; the failure screen stays on v1's run
         paths.summary = args.summary
         paths.run = f"{Path(args.summary).parent.as_posix()}/run.json"
     if args.citation_summary:

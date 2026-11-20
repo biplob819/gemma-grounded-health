@@ -1,6 +1,7 @@
 ---
 license: apache-2.0
 base_model: google/gemma-4-E2B-it
+base_model_relation: finetune
 datasets:
 - qiaojin/PubMedQA
 language:
@@ -68,6 +69,32 @@ model-index:
 - Personal medical advice, for the user or anyone else.
 - Languages other than English.
 - Sources other than research abstracts: full papers, guidelines, web pages, patient records or open-ended chat without a supplied abstract.
+
+## How to use
+
+The model answers as JSON only when it gets EvalKit's PubMedQA prompt, the prompt it was trained and benchmarked on: the question and the abstract split into numbered sentences. A bare question gets free text. Send this as the user message (Gemma's chat template, thinking off), with the real question and one numbered line per sentence:
+
+```text
+You are answering a research question using only the numbered sentences from a
+scientific abstract below. This is a research benchmark, not medical advice.
+
+Question: <question>
+
+Abstract sentences:
+[1] <sentence 1>
+[2] <sentence 2>
+[3] <sentence 3>
+
+Reply with JSON only, in this shape:
+{"label": one of yes / no / maybe, "answer": "two to four sentences", "citations": [sentence numbers]}
+
+Rules:
+- Base every statement on the sentences above, not on outside knowledge.
+- Cite the sentence numbers (1 to 3) that support your answer.
+- Choose "maybe" when the sentences do not settle the question.
+```
+
+The reply is one JSON object, for example `{"label": "no", "answer": "...", "citations": [2]}`. The benchmark decoded greedily (temperature 0) with thinking off. Offline, the Q4_K_M GGUF runs with `ollama run --think=false hf.co/biplob123/gemma-4-e2b-grounded-health-GGUF:Q4_K_M`; the repository's `ggh space --local` demo and `ggh serve` build the prompt for you.
 
 ## Training data
 
@@ -180,11 +207,11 @@ From `configs/eval_plan_v2.yaml` (final). Differences with 95% paired bootstrap 
 | Comparison | Outcome | Judge | Difference | p | Verdict |
 |---|---|---|---|---|---|
 | gemma-e2b-grounded-v2-q4 minus gemma-e2b-grounded-q4 | headline | gpt-6.1-sol | -0.002 [-0.034, 0.030] | 0.927 | tie (not separated) |
-| gemma-e2b-grounded-v2-q4 minus gemma-e2b-grounded-q4 | citation_precision | gpt-6.1-sol | 0.374 [0.344, 0.403] | 0.000 | gemma-e2b-grounded-v2-q4 better |
-| gemma-e2b-grounded-v2-q4 minus gemma-e2b-grounded-q4 | aim_citation_rate (lower is better) | gpt-6.1-sol | -0.476 [-0.508, -0.443] | 0.000 | gemma-e2b-grounded-v2-q4 better |
-| gemma-e2b-grounded-v2-q4 minus gemma-e2b-base-q4 | headline | gpt-6.1-sol | -0.075 [-0.113, -0.037] | 0.000 | gemma-e2b-base-q4 better |
+| gemma-e2b-grounded-v2-q4 minus gemma-e2b-grounded-q4 | citation_precision | gpt-6.1-sol | 0.374 [0.344, 0.403] | <0.001 | gemma-e2b-grounded-v2-q4 better |
+| gemma-e2b-grounded-v2-q4 minus gemma-e2b-grounded-q4 | aim_citation_rate (lower is better) | gpt-6.1-sol | -0.476 [-0.508, -0.443] | <0.001 | gemma-e2b-grounded-v2-q4 better |
+| gemma-e2b-grounded-v2-q4 minus gemma-e2b-base-q4 | headline | gpt-6.1-sol | -0.075 [-0.113, -0.037] | <0.001 | gemma-e2b-base-q4 better |
 | gemma-e2b-grounded-v2-q4 minus gemma-e2b-base-q4 | citation_precision | gpt-6.1-sol | -0.011 [-0.046, 0.023] | 0.504 | tie (not separated; depends on the aim rule, OWNER D-62) |
-| gemma-e2b-grounded-v2-q4 minus gemma-e2b-base-q4 | aim_citation_rate (lower is better) | gpt-6.1-sol | -0.054 [-0.080, -0.028] | 0.000 | gemma-e2b-grounded-v2-q4 better (depends on the aim rule, OWNER D-62) |
+| gemma-e2b-grounded-v2-q4 minus gemma-e2b-base-q4 | aim_citation_rate (lower is better) | gpt-6.1-sol | -0.054 [-0.080, -0.028] | <0.001 | gemma-e2b-grounded-v2-q4 better (depends on the aim rule, OWNER D-62) |
 
 #### Citation results and the aim rule (OWNER D-62)
 
@@ -262,7 +289,7 @@ Sample read findings (B5). A pipeline fault is a scoring problem, not the model'
 | gemma-e2b-grounded-q4 | `main_v2` | 20 | 10 | 9 | 1 |
 | gemma-e2b-grounded-v2-q4 | `main_v2` | 20 | 8 | 11 | 1 |
 
-### Parity: demo weights against benchmark weights
+### Parity: published bf16 weights against the benchmarked Q4_K_M
 
 The published merged bf16 weights are for GPU use; the benchmark scores, and the local demo serves, the Q4_K_M GGUF (OWNER D-63). On 500 dev prompts, greedy, the two agree on the label for 0.920 of prompts and cite exactly the same sentences for 0.730. The label agreement is under the plan's bar of 0.950 (`configs/eval_plan_v2.yaml`, `dev_parity`); the release went ahead at Q4_K_M with the miss disclosed (OWNER D-55).
 

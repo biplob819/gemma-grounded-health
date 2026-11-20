@@ -15,13 +15,14 @@ from tests.release.test_card import DECIMAL, SECTIONS, _numbers
 
 ROOT = Path(__file__).resolve().parents[2]
 CARD = ROOT / "MODEL_CARD.md"
-DRAFT = ROOT / "docs" / "README_release_draft.md"
+README = ROOT / "README.md"
 BASE, V1, V2 = "gemma-e2b-base-q4", "gemma-e2b-grounded-q4", "gemma-e2b-grounded-v2-q4"
 SOL, OPUS, LUNA, HAIKU = "gpt-6.1-sol", "claude-opus-5-5", "gpt-6-luna", "claude-haiku-5-5"
 ORDER = (
     "## Summary",
     "## Intended use",
     "## Out-of-scope uses",
+    "## How to use",
     "## Training data",
     "## Training procedure",
     "## Evaluation",
@@ -249,7 +250,7 @@ def test_research_only_in_summary_and_footer(text):  # CRD-06
 def test_readme_block_carries_the_same_stamps():  # OSS-02 with R4.1's disclosures
     src = sources.load(ROOT)
     block = readme.results_block(src)
-    assert block in DRAFT.read_text(encoding="utf-8")
+    assert block in README.read_text(encoding="utf-8")
     assert "calibration of v2: calibrated" in block and "uncalibrated" not in block
     sol = next(c for c in src.bundle.calibration if c.judge == SOL)
     assert sol.wording in block

@@ -122,3 +122,29 @@ def test_cli_env_has_no_credentials(monkeypatch: pytest.MonkeyPatch):
     env = wt.cli_env()
     assert not any(h in k for k in env for h in wt.CREDENTIAL_HINTS)
     assert env["HOME"] != str(Path.home())
+
+
+def test_v2_screens_show_the_release():
+    """R4.5: the default walkthrough is v2's run, with the pre-registered verdicts and the
+    aim-rule caveat, the Hugging Face page and the demo (screenshots inlined, no file path)."""
+    assert wt.Paths().summary == "docs/results/main_v2/summary.json"
+    results = wt.screen_results(ctx())
+    assert "Gemma fine-tuned v2 minus Gemma fine-tuned v1" in results
+    assert results.count("depends on the aim rule (OWNER D-62)") == 2
+    for render in (wt.screen_hf, wt.screen_demo):
+        page = render(ctx())
+        assert "data:image/png;base64," in page and "file://" not in page
+        assert wt.find_leaks(wt.DATA_URI.sub("", page)) == []
+    title = wt.screen_title(ctx())
+    assert "Cited sentences that support a claim" in title and "r-715fc213a8a5" in title
+    assert {"hf", "demo", "results"} <= {s.slug for s in wt.screens()}
+
+
+def test_v1_summary_still_renders():
+    """--summary docs/results/main/summary.json: v1's two-judge run with its own plan's
+    comparisons, which the aim-rule caveat does not touch."""
+    paths = wt.Paths(summary="docs/results/main/summary.json", run="docs/results/main/run.json")
+    c = wt.Ctx(ROOT, paths, num=1, total=10)
+    results = wt.screen_results(c)
+    assert "Gemma fine-tuned v1 minus" in results and "aim rule" not in results
+    assert "Claims supported by cited sentences" in wt.screen_title(c)

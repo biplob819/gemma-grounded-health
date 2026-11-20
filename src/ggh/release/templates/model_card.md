@@ -23,6 +23,10 @@ $summary
 - Languages other than English.
 - Sources other than research abstracts: full papers, guidelines, web pages, patient records or open-ended chat without a supplied abstract.
 
+## How to use
+
+$how_to_use
+
 ## Training data
 
 $training_data
@@ -51,7 +55,7 @@ $secondary_table
 
 $behaviour_table
 
-### Parity: demo weights against benchmark weights
+### Parity: published bf16 weights against the benchmarked Q4_K_M
 
 $parity
 

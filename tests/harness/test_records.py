@@ -63,8 +63,8 @@ def test_decisions_d1_onwards_with_owner_rulings():
     # D-1..33 seeded; 34-35 N1.3; 36-39 owner; 40 T2.1; 41 X3.1; 42 E3.2; 43-50 owner;
     # 51-52 V2.1; 53-55 owner; 56 the EvalKit 0.4.0 pin; 57-62 owner (OpenAI, O6.1 cut, calibration,
     # model reviews, the aim rule, the local demo,
-    # the EvalKit contribution)
-    assert ids == set(range(1, 65))
+    # the EvalKit contribution, the v1.0.0 release)
+    assert ids == set(range(1, 66))
     owner = {int(n) for n in re.findall(r"^\| OWNER D-(\d+) \|", text, re.M)}
     assert owner == {
         15,
@@ -99,6 +99,7 @@ def test_decisions_d1_onwards_with_owner_rulings():
         62,
         63,
         64,
+        65,
     }
 
 
@@ -124,7 +125,7 @@ def test_decisions_equal_tech_spec_section_1():
         for line in text.splitlines()
         if re.match(r"^\| (OWNER )?D-\d+ \|", line)
     ]
-    assert len(spec_rows) == 64
+    assert len(spec_rows) == 65
     assert [r[:1] + r[2:] for r in log_rows] == spec_rows  # drop the date column
     assert "DeepMind" not in text
 

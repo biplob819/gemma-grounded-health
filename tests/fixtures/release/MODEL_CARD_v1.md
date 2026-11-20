@@ -1,6 +1,7 @@
 ---
 license: apache-2.0
 base_model: google/gemma-4-E2B-it
+base_model_relation: finetune
 datasets:
 - qiaojin/PubMedQA
 language:
@@ -65,6 +66,32 @@ model-index:
 - Personal medical advice, for the user or anyone else.
 - Languages other than English.
 - Sources other than research abstracts: full papers, guidelines, web pages, patient records or open-ended chat without a supplied abstract.
+
+## How to use
+
+The model answers as JSON only when it gets EvalKit's PubMedQA prompt, the prompt it was trained and benchmarked on: the question and the abstract split into numbered sentences. A bare question gets free text. Send this as the user message (Gemma's chat template, thinking off), with the real question and one numbered line per sentence:
+
+```text
+You are answering a research question using only the numbered sentences from a
+scientific abstract below. This is a research benchmark, not medical advice.
+
+Question: <question>
+
+Abstract sentences:
+[1] <sentence 1>
+[2] <sentence 2>
+[3] <sentence 3>
+
+Reply with JSON only, in this shape:
+{"label": one of yes / no / maybe, "answer": "two to four sentences", "citations": [sentence numbers]}
+
+Rules:
+- Base every statement on the sentences above, not on outside knowledge.
+- Cite the sentence numbers (1 to 3) that support your answer.
+- Choose "maybe" when the sentences do not settle the question.
+```
+
+The reply is one JSON object, for example `{"label": "no", "answer": "...", "citations": [2]}`. The benchmark decoded greedily (temperature 0) with thinking off. Offline, the Q4_K_M GGUF runs with `ollama run --think=false hf.co/biplob123/gemma-4-e2b-grounded-health-GGUF:Q4_K_M`; the repository's `ggh space --local` demo and `ggh serve` build the prompt for you.
 
 ## Training data
 
@@ -156,7 +183,7 @@ From `configs/eval_plan.yaml` (final). Differences with 95% paired bootstrap int
 | gemma-e2b-grounded-q4 minus gemma-e2b-base-q4 | headline | claude-opus-5-5 | -0.030 [-0.067, 0.007] | 0.119 | tie (not separated) |
 | gemma-e2b-grounded-q4 minus gemma-e2b-base-q4 | headline | gpt-6.1-sol | -0.064 [-0.101, -0.025] | 0.001 | gemma-e2b-base-q4 better |
 | gemma-e2b-grounded-q4 minus claude-haiku-5-5 | headline | claude-opus-5-5 | 0.043 [0.005, 0.081] | 0.026 | tie (not separated) |
-| gemma-e2b-grounded-q4 minus claude-haiku-5-5 | headline | gpt-6.1-sol | 0.099 [0.063, 0.136] | 0.000 | gemma-e2b-grounded-q4 better |
+| gemma-e2b-grounded-q4 minus claude-haiku-5-5 | headline | gpt-6.1-sol | 0.099 [0.063, 0.136] | <0.001 | gemma-e2b-grounded-q4 better |
 | gemma-e2b-grounded-q4 minus gpt-6-luna | headline | claude-opus-5-5 | -0.043 [-0.082, -0.005] | 0.027 | tie (not separated) |
 | gemma-e2b-grounded-q4 minus gpt-6-luna | headline | gpt-6.1-sol | 0.040 [0.002, 0.079] | 0.044 | gemma-e2b-grounded-q4 better |
 
@@ -247,7 +274,7 @@ Label accuracy (yes, no or maybe matches the reference), secondary: differences 
 | B8 | gpt-6-luna | presort_flagged_share | 0.400 | 20 | `ggh:b8` |
 | B8 | gpt-6-luna | gives_advice_count | 0 | 20 | `model_review` |
 
-### Parity: demo weights against benchmark weights
+### Parity: published bf16 weights against the benchmarked Q4_K_M
 
 The published merged bf16 weights are for GPU use; the benchmark scores, and the local demo serves, the Q4_K_M GGUF (OWNER D-63). On 500 dev prompts, greedy, the two agree on the label for 0.956 of prompts and cite exactly the same sentences for 0.500.
 
