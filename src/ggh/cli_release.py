@@ -89,22 +89,36 @@ def _cmd_readme_table(args: argparse.Namespace) -> int:
 
 
 def _cmd_release(args: argparse.Namespace) -> int:
+    import json
+
     from ggh.release import card, hub, sources
 
     root = Path(args.root)
+    if args.ollama_check:
+        return _ollama(root, args.owner, args.record_json)
     try:
         src = _sources(args)
+        layout = args.release or src.bundle.shipped.version
+        shipped = layout == src.bundle.shipped.version
+        card_path = args.card or ("MODEL_CARD.md" if shipped else None)
         p = hub.plan(
             root,
             src.paths.bundle,
             card.render(src),
             owner=args.owner,
-            export_manifest=Path(args.export_manifest),
-            train_manifest=Path(args.train_manifest),
+            layout=layout,
+            export_manifest=Path(args.export_manifest) if args.export_manifest else None,
+            train_manifest=Path(args.train_manifest) if args.train_manifest else None,
+            committed_card=Path(card_path) if card_path else None,
         )
     except (sources.SourceError, ValueError, OSError) as exc:
         return _fail("release", exc)
     print("\n".join(hub.describe(p)))
+    if args.plan_json:
+        out = root / args.plan_json
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(hub.plan_json(p), indent=2) + "\n", encoding="utf-8")
+        print(f"release: wrote the plan to {args.plan_json}")
     if not args.push:
         print("release: dry run, nothing pushed (add --push, with the owner's go-ahead)")
         return 0 if not p.problems else EXIT_ERROR
@@ -113,15 +127,48 @@ def _cmd_release(args: argparse.Namespace) -> int:
         return _fail("release", f"--push needs {hub.TOKEN_ENV} in the environment")
     if not p.ready:
         return _fail("release", "the plan has problems or no --owner; nothing pushed")
+    staging = root / "artifacts" / "release"  # pragma: no cover - network from here on
+    record: dict[str, object] = {}  # pragma: no cover
+
+    def check(ref: str) -> str | None:  # pragma: no cover
+        r = hub.ollama_check(ref, root)
+        record["ollama"] = {k: v for k, v in vars(r).items() if k != "answer"}
+        return r.answer if r.ok else None
+
     try:  # pragma: no cover - network; only with the owner's explicit go-ahead
         problems = hub.push(
-            p, root, hub.HfHubApi(token), tag=args.tag, staging=root / "artifacts" / "release"
+            p,
+            root,
+            hub.HfHubApi(token, staging / "download"),
+            tag=args.tag or f"{p.release}.0.0",
+            staging=staging,
+            ollama=None if args.no_ollama else check,
+            record=record,
         )
     except (hub.ReleaseError, ImportError, OSError) as exc:  # pragma: no cover
         return _fail("release", exc)
+    if args.record_json:  # pragma: no cover
+        (root / args.record_json).write_text(json.dumps(record, indent=2) + "\n", "utf-8")
     for x in problems:  # pragma: no cover
         print(f"  - {x}")
     return EXIT_ERROR if problems else 0  # pragma: no cover
+
+
+def _ollama(root: Path, owner: str, record_json: str | None) -> int:  # pragma: no cover
+    """HUB-05 on its own: the published GGUF answers one demo sample through Ollama."""
+    import json
+
+    from ggh.release import hub
+
+    if owner == hub.OWNER_PLACEHOLDER:
+        return _fail("release", "--ollama-check needs --owner")
+    ref = f"hf.co/{owner}/{hub.GGUF_REPO}:{hub.OLLAMA_QUANT}"
+    r = hub.ollama_check(ref, root)
+    print(f"ollama: {ref} sample {r.sample_id}: ok={r.ok} label={r.label} cites={r.citations}")
+    print(r.answer if r.ok else f"ollama: FAIL: {r.error}")
+    if record_json:
+        (root / record_json).write_text(json.dumps(vars(r), indent=2) + "\n", "utf-8")
+    return 0 if r.ok else EXIT_ERROR
 
 
 def _cmd_space(args: argparse.Namespace) -> int:  # pragma: no cover - starts a server
@@ -195,7 +242,7 @@ def _source_flags(p: argparse.ArgumentParser) -> None:
 
 
 def register(sub: argparse._SubParsersAction) -> None:  # pyright: ignore[reportPrivateUsage]
-    from ggh.release.hub import EXPORT_MANIFEST, OWNER_PLACEHOLDER, TRAIN_MANIFEST
+    from ggh.release.hub import LAYOUTS, OWNER_PLACEHOLDER
     from ggh.space.samples import RUN, SAMPLES
 
     cd = sub.add_parser("card", help="generate MODEL_CARD.md from the results bundle (R4.1)")
@@ -212,9 +259,19 @@ def register(sub: argparse._SubParsersAction) -> None:  # pyright: ignore[report
     rl.add_argument("--dry-run", action="store_true", help="the default; listed for clarity")
     rl.add_argument("--push", action="store_true", help="push (needs HF_TOKEN and a clean plan)")
     rl.add_argument("--owner", default=OWNER_PLACEHOLDER, help="Hub user or organisation")
-    rl.add_argument("--tag", default="v1.0.0")
-    rl.add_argument("--export-manifest", default=str(EXPORT_MANIFEST))
-    rl.add_argument("--train-manifest", default=str(TRAIN_MANIFEST))
+    rl.add_argument("--tag", default=None, help="Hub tag (default: the release, e.g. v2.0.0)")
+    rl.add_argument(
+        "--release", choices=sorted(LAYOUTS), default=None, help="default: the shipped release"
+    )
+    rl.add_argument("--export-manifest", default=None, help="default: the release's own")
+    rl.add_argument("--train-manifest", default=None, help="default: the release's own")
+    rl.add_argument(
+        "--card", default=None, help="committed card README.md must equal (shipped: MODEL_CARD.md)"
+    )
+    rl.add_argument("--plan-json", default=None, help="write the plan as JSON (evidence)")
+    rl.add_argument("--record-json", default=None, help="after --push: what was checked")
+    rl.add_argument("--no-ollama", action="store_true", help="skip the Ollama check after push")
+    rl.add_argument("--ollama-check", action="store_true", help="only run the Ollama check")
     rl.set_defaults(func=_cmd_release)
     sp = sub.add_parser("space", help="run the demo locally against ggh serve (R4.3, E7)")
     sp.add_argument("--local", action="store_true", help="use ggh serve's llama-servers")
