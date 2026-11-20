@@ -148,7 +148,7 @@ def build(
 
         pick.change(on_pick, pick, [msg, abstract, base_card, ft_card], api_name="sample")
         # SPC-03: the first sample is shown on arrival, not only after a pick
-        demo.load(on_pick, pick, [msg, abstract, base_card, ft_card], api_name=False)
+        demo.load(on_pick, pick, [msg, abstract, base_card, ft_card])
         go.click(
             on_go,
             [q, a, code, key, check],
