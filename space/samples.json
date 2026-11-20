@@ -16,8 +16,8 @@
     ],
     "reference_label": "no",
     "base_raw": "{\n\"label\": \"no\",\n\"answer\": \"The study investigated the source and role of elevated levels of immunoreactive beta-endorphin in polycystic ovary syndrome, but the incremental responses after corticotropin-releasing hormone were similar to controls and were not influenced by body weight.\",\n\"citations\": [\n2,\n6]\n}",
-    "ft_raw": "{\"label\": \"no\", \"answer\": \"The pituitary release of immunoreactive beta-endorphin is not related to luteinizing hormone levels or adrenal androgen secretion.\", \"citations\": [2, 7, 8]}",
-    "source": "evalkit:r-67b40f1ce1f5:gemma-e2b-base-q4|gemma-e2b-grounded-q4"
+    "ft_raw": "{\"label\": \"no\", \"answer\": \"The pituitary release of immunoreactive beta-endorphin is not related to luteinizing hormone levels or adrenal androgen secretion.\", \"citations\": [8]}",
+    "source": "evalkit:r-67b40f1ce1f5:gemma-e2b-base-q4|evalkit:r-4b7e3a0c3d19:gemma-e2b-grounded-v2-q4"
   },
   {
     "id": "dev-16716359",
@@ -33,8 +33,8 @@
     ],
     "reference_label": "yes",
     "base_raw": "{\n\"label\": \"yes\",\n\"answer\": \"Cognitive impairment in the acute phase after stroke was examined as a risk factor for long-term depressive symptoms and a reduced quality of life.\",\n\"citations\": [\n1,\n4]\n}",
-    "ft_raw": "{\"label\": \"yes\", \"answer\": \"Cognitive impairment in the acute phase after stroke is a risk factor for long-term DS and QOL.\", \"citations\": [1]}",
-    "source": "evalkit:r-67b40f1ce1f5:gemma-e2b-base-q4|gemma-e2b-grounded-q4"
+    "ft_raw": "{\"label\": \"yes\", \"answer\": \"Cognitive impairment is a risk factor for long-term DS and QOL.\", \"citations\": [5]}",
+    "source": "evalkit:r-67b40f1ce1f5:gemma-e2b-base-q4|evalkit:r-4b7e3a0c3d19:gemma-e2b-grounded-v2-q4"
   },
   {
     "id": "dev-17683644",
@@ -53,8 +53,8 @@
     ],
     "reference_label": "no",
     "base_raw": "{\n\"label\": \"no\",\n\"answer\": \"We found no interaction between stimulus category and corticospinal excitability.\",\n\"citations\": [\n9]\n}",
-    "ft_raw": "{\"label\": \"no\", \"answer\": \"The strategy hypothesis does not hold in this study.\", \"citations\": [3, 4, 7, 9]}",
-    "source": "evalkit:r-67b40f1ce1f5:gemma-e2b-base-q4|gemma-e2b-grounded-q4"
+    "ft_raw": "{\"label\": \"no\", \"answer\": \"The strategy used to mentally rotate objects does not determine M1 involvement.\", \"citations\": [9]}",
+    "source": "evalkit:r-67b40f1ce1f5:gemma-e2b-base-q4|evalkit:r-4b7e3a0c3d19:gemma-e2b-grounded-v2-q4"
   },
   {
     "id": "dev-21857142",
@@ -68,8 +68,8 @@
     ],
     "reference_label": "yes",
     "base_raw": "{\n\"label\": \"yes\",\n\"answer\": \"In Group A (rosuvastatin group), there was a progressive reduction in brachial-ankle pulse wave velocity (baPWV) along with a decrease in the low-density lipoprotein cholesterol/high-density lipoprotein cholesterol (L/H) ratio and high-sensitivity C-reactive protein (hsCRP), and the change in baPWV correlated significantly with that of the L/H ratio and that of hsCRP after rosuvastatin treatment.\",\n\"citations\": [\n3]\n}",
-    "ft_raw": "{\"label\": \"yes\", \"answer\": \"Low-dose rosuvastatin improved arterial stiffness in high-risk Japanese patients with dyslipidemia in a primary prevention group.\", \"citations\": [1]}",
-    "source": "evalkit:r-67b40f1ce1f5:gemma-e2b-base-q4|gemma-e2b-grounded-q4"
+    "ft_raw": "{\"label\": \"yes\", \"answer\": \"In this subgroup, switching from fluvastatin to rosuvastatin further improved baPWV and the L/H ratio without altering hsCRP after 12 months.\", \"citations\": [5]}",
+    "source": "evalkit:r-67b40f1ce1f5:gemma-e2b-base-q4|evalkit:r-4b7e3a0c3d19:gemma-e2b-grounded-v2-q4"
   },
   {
     "id": "dev-23251408",
@@ -88,8 +88,8 @@
     ],
     "reference_label": "yes",
     "base_raw": "{\n\"label\": \"yes\",\n\"answer\": \"The study investigated IR isoform composition and IRS balance in prostate cancer compared to benign and tumor adjacent benign prostate tissue.\",\n\"citations\": [\n3,\n5,\n7,\n8]\n}",
-    "ft_raw": "{\"label\": \"yes\", \"answer\": \"The insulin receptor isoform composition and IRS balance are different in prostate cancer compared to benign prostate tissue.\", \"citations\": [3]}",
-    "source": "evalkit:r-67b40f1ce1f5:gemma-e2b-base-q4|gemma-e2b-grounded-q4"
+    "ft_raw": "{\"label\": \"yes\", \"answer\": \"The insulin receptor isoform composition and IRS balance are altered in prostate cancer.\", \"citations\": [3]}",
+    "source": "evalkit:r-67b40f1ce1f5:gemma-e2b-base-q4|evalkit:r-4b7e3a0c3d19:gemma-e2b-grounded-v2-q4"
   },
   {
     "id": "dev-26383970",
@@ -107,7 +107,7 @@
     ],
     "reference_label": "no",
     "base_raw": "{\n\"label\": \"no\",\n\"answer\": \"Restoring GDF11 to normal levels in old mice rescued pathological cardiac hypertrophy (PCH).\",\n\"citations\": [\n2]\n}",
-    "ft_raw": "{\"label\": \"no\", \"answer\": \"GDF11 does not rescue aging-dependent PCH.\", \"citations\": [2, 3]}",
-    "source": "evalkit:r-67b40f1ce1f5:gemma-e2b-base-q4|gemma-e2b-grounded-q4"
+    "ft_raw": "{\"label\": \"no\", \"answer\": \"GDF11 does not rescue aging-dependent PCH.\", \"citations\": [2]}",
+    "source": "evalkit:r-67b40f1ce1f5:gemma-e2b-base-q4|evalkit:r-4b7e3a0c3d19:gemma-e2b-grounded-v2-q4"
   }
 ]

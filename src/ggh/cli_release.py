@@ -172,25 +172,32 @@ def _ollama(root: Path, owner: str, record_json: str | None) -> int:  # pragma: 
 
 
 def _cmd_space(args: argparse.Namespace) -> int:  # pragma: no cover - starts a server
+    from ggh.release import sources
     from ggh.serve import llama
-    from ggh.space import app
+    from ggh.space import app, passkey, ui
 
     root = Path(args.root)
     path = root / args.samples
     if not args.local:
-        return _fail("space", "only --local runs here; the Space itself runs space/app.py")
+        return _fail("space", "only --local runs here (OWNER D-63: the demo is the local app)")
+    ft_url = args.ft_url or f"http://{llama.HOST}:{llama.PORTS['ft2']}"
     try:
-        gens = app.local_generators(
-            f"http://{llama.HOST}:{llama.PORTS['base']}", f"http://{llama.HOST}:{llama.PORTS['ft']}"
-        )
-        space = app.make_space(os.environ, gens, path)
-        print(f"space: http://127.0.0.1:{args.port}/ against ggh serve (Ctrl-C to stop)")
-        app.launch(space, path, port=args.port)
+        env = app.passkey_env(os.environ, Path(args.env_file) if args.env_file else None)
+        space = app.make_space(env, app.local_generators(ft_url, args.base_url), path)
+        bundle = Path(args.bundle) if args.bundle else sources.BUNDLE
+        summary = ui.results_summary(sources.load(root, sources.Paths(bundle=bundle)))
+    except (sources.SourceError, passkey.PasskeyError, ValueError, OSError) as exc:
+        return _fail("space", exc)
+    if not env[passkey.SECRET_ENV].strip():
+        print(f"space: note: {passkey.SECRET_ENV} is not set; live answers stay off (OWNER D-36)")
+    print(f"space: http://127.0.0.1:{args.port}/ against {ft_url} (Ctrl-C to stop)")
+    try:
+        app.launch(space, path, port=args.port, summary=summary)
     except ImportError as exc:
         return _fail(
-            "space", f"{exc}; the page needs gradio: uv run --with gradio ggh space --local"
+            "space", f"{exc}; the page needs gradio: uv run --group demo ggh space --local"
         )
-    except (ValueError, OSError) as exc:
+    except OSError as exc:
         return _fail("space", exc)
     return 0
 
@@ -202,6 +209,7 @@ def _cmd_space_samples(args: argparse.Namespace) -> int:
     try:
         picked = samples.build(
             root / args.run,
+            base_run=root / args.base_run if args.base_run else None,
             base_model=args.base_model or samples.BASE_MODEL,
             ft_model=args.ft_model or samples.FT_MODEL,
         )
@@ -243,7 +251,7 @@ def _source_flags(p: argparse.ArgumentParser) -> None:
 
 def register(sub: argparse._SubParsersAction) -> None:  # pyright: ignore[reportPrivateUsage]
     from ggh.release.hub import LAYOUTS, OWNER_PLACEHOLDER
-    from ggh.space.samples import RUN, SAMPLES
+    from ggh.space.samples import BASE_RUN, RUN, SAMPLES
 
     cd = sub.add_parser("card", help="generate MODEL_CARD.md from the results bundle (R4.1)")
     _source_flags(cd)
@@ -273,15 +281,28 @@ def register(sub: argparse._SubParsersAction) -> None:  # pyright: ignore[report
     rl.add_argument("--no-ollama", action="store_true", help="skip the Ollama check after push")
     rl.add_argument("--ollama-check", action="store_true", help="only run the Ollama check")
     rl.set_defaults(func=_cmd_release)
-    sp = sub.add_parser("space", help="run the demo locally against ggh serve (R4.3, E7)")
-    sp.add_argument("--local", action="store_true", help="use ggh serve's llama-servers")
+    sp = sub.add_parser(
+        "space", help="run the demo locally against `ggh serve ft2` (R4.3, OWNER D-63)"
+    )
+    sp.add_argument("--local", action="store_true", help="use ggh serve's llama-server")
     sp.add_argument("--root", default=".")
     sp.add_argument("--samples", default=str(SAMPLES))
     sp.add_argument("--port", type=int, default=7860)
+    sp.add_argument("--ft-url", default=None, help="v2 GGUF server (default: ggh serve ft2)")
+    sp.add_argument(
+        "--base-url", default=None, help="also answer live with base (e.g. ggh serve base)"
+    )
+    sp.add_argument(
+        "--env-file", default=None, help="read GGH_SPACE_PASSKEY from this file if unset"
+    )
+    sp.add_argument("--bundle", default=None, help="results_bundle.json (default: docs/results/)")
     sp.set_defaults(func=_cmd_space)
     ss = sub.add_parser("space-samples", help="pick the six demo samples from a dev run (R4.3)")
     ss.add_argument("--root", default=".")
     ss.add_argument("--run", default=str(RUN), help="EvalKit run folder over dev_eval")
+    ss.add_argument(
+        "--base-run", default=str(BASE_RUN), help="run with base's replies ('': --run's)"
+    )
     ss.add_argument("--out", default=str(SAMPLES))
     ss.add_argument("--base-model", default=None)
     ss.add_argument("--ft-model", default=None)

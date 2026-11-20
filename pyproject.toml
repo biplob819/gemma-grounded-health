@@ -46,6 +46,11 @@ train = [
     "accelerate>=1.10",
     "xgrammar==0.2.9",
 ]
+# R4.3's local demo page only (`uv run --group demo ggh space --local`, OWNER D-63); never
+# installed in CI, where the page test skips
+demo = [
+    "gradio>=5,<7",
+]
 
 [build-system]
 requires = ["hatchling>=1.26"]

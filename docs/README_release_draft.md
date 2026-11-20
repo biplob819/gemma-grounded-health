@@ -63,7 +63,7 @@ What went wrong in v1 and how v2 fixed it: [case study](docs/case-study.md).
   ```
 
 - **Offline with llama.cpp:** `uv run ggh llama fetch && uv run ggh serve --model ft` and send EvalKit's PubMedQA prompt to `http://127.0.0.1:8081/v1/chat/completions`.
-- **The demo locally:** `uv run --with gradio ggh space --local` against `ggh serve`.
+- **The demo locally:** `uv run ggh serve --model ft2` (v2's Q4_K_M GGUF), then `uv run --group demo ggh space --local --env-file .env` (the passcode hash `GGH_SPACE_PASSKEY` from `ggh passkey set`; live answers need the passcode).
 
 ## The EvalKit report
 
