@@ -7,4 +7,4 @@
 - [x] 5. Ollama check
 - [x] 6. Hub page screenshot
 - [x] 7. Proof cells, records
-- [ ] 8. Converge, verifier, green
+- [x] 8. Converge, verifier, green

@@ -616,7 +616,7 @@ def ollama_check(
     card = to_card(ref, res.answer, sentences)
     res.label, res.citations = card.label, card.citations
     # HUB-05: passes only on a parsed answer with a label and in-range citations
-    if card.label is None or not card.citations:
+    if card.label is None or not card.citations or card.invalid_citations:
         res.error = "the answer did not parse to a label with citations"
         return res
     res.ok = True

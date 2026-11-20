@@ -447,3 +447,17 @@ def test_ollama_check_fails_when_the_answer_does_not_parse(tmp_path):
 
     res = hub.ollama_check("hf.co/o/r-GGUF:Q4_K_M", root, binary="ollama", run=run)
     assert res.ok is False and res.error
+
+
+def test_ollama_check_fails_on_out_of_range_citations():
+    import subprocess as _sp
+    from pathlib import Path as _Path
+
+    root = _Path(__file__).resolve().parents[2]
+    reply = '{"label": "no", "answer": "x", "citations": [99]}'
+
+    def run(cmd, **kw):
+        return _sp.CompletedProcess(cmd, 0, stdout=reply if cmd[1] == "run" else "", stderr="")
+
+    res = hub.ollama_check("hf.co/o/r-GGUF:Q4_K_M", root, binary="ollama", run=run)
+    assert res.ok is False
