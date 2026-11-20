@@ -45,7 +45,7 @@ model-index:
       value: 0.08433734939759036
     source:
       name: EvalKit run r-715fc213a8a5
-      url: results_bundle.json
+      url: https://github.com/biplob819/gemma-grounded-health/blob/main/docs/results/results_bundle.json
 ---
 
 # Gemma 4 E2B Grounded Health
@@ -54,7 +54,7 @@ model-index:
 
 ## Summary
 
-`google/gemma-4-E2B-it` fine-tuned with LoRA to answer a research question from a supplied abstract only, as JSON with a label, a short answer and the numbers of the sentences it relied on. It is trained on PubMedQA's artificial set and scored with EvalKit on the expert set, against its own base model and v1 (`gemma-e2b-grounded-q4`), all scored in one run with the same claim extractor and judges. The published v1 numbers are shown beside them, labelled with their own extractor and judges, and not compared. On 1000 expert questions the fine-tune (`gemma-e2b-grounded-v2-q4`) has accuracy 0.678 [0.649, 0.706] against 0.501 [0.469, 0.532] for the base model (`gemma-e2b-base-q4`); the full table, with the judges' headline, is under Evaluation. Against v1 (`gemma-e2b-grounded-q4`), pre-registered: a tie on correct and fully grounded, better on citation precision, better on aim-citation rate. Against the base model (`gemma-e2b-base-q4`), pre-registered: worse on correct and fully grounded; citation precision and aim-citation rate depend on how the judge applies the citation check's aim rule, so v2 is not claimed to beat it on citations (OWNER D-62). Research only, not medical advice.
+`google/gemma-4-E2B-it` fine-tuned with LoRA to answer a research question from a supplied abstract only, as JSON with a label, a short answer and the numbers of the sentences it relied on. It is trained on PubMedQA's artificial set and scored with EvalKit on the expert set, against its own base model and v1 (`gemma-e2b-grounded-q4`), all scored in one run with the same claim extractor and judges. The published v1 numbers are shown beside them, labelled with their own extractor and judges, and not compared. On 1000 expert questions the fine-tune (`gemma-e2b-grounded-v2-q4`) has accuracy 0.678 [0.649, 0.706] against 0.501 [0.469, 0.532] for the base model (`gemma-e2b-base-q4`) and 0.728 [0.700, 0.755] for `gemma-e2b-grounded-q4` (v2 is separated lower); the full table, with the judges' headline, is under Evaluation. Against v1 (`gemma-e2b-grounded-q4`), pre-registered: a tie on correct and fully grounded, better on citation precision, better on aim-citation rate. Against the base model (`gemma-e2b-base-q4`), pre-registered: worse on correct and fully grounded; citation precision and aim-citation rate depend on how the judge applies the citation check's aim rule, so v2 is not claimed to beat it on citations (OWNER D-62). Research only, not medical advice.
 
 ## Intended use
 
@@ -103,7 +103,7 @@ Filters and their drop counts:
 | yes:no_supported_sentence | 22162 |
 | yes:over_80_words | 1 |
 
-Hand audit (Tech Spec §4.6), v2.2 round 3 (AUD-R4, blind reviewer): 50 sampled training examples, 1.000 judged ok overall; the audit did not pass its bar (the failed checks are in `docs/measurements/audit_v2r2_result.json`), and the release trained on these targets with the miss disclosed in `DATA_CARD.md`.
+Hand audit (Tech Spec §4.6), v2.2 round 3 (AUD-R4, blind Claude reviewer, OWNER D-47, D-50): 50 sampled training examples, 0.980 judged ok overall; the audit did not pass its bar (the failed checks are in `docs/measurements/audit_v2_result.json`), and the release trained on these targets with the miss disclosed in `DATA_CARD.md`.
 
 ## Training procedure
 
@@ -153,7 +153,7 @@ v2: EvalKit task `pubmedqa`, run `r-715fc213a8a5`. Every model in this table was
 
 ### Published v1 numbers (not compared with v2)
 
-These are v1's numbers as published under `configs/eval_plan.yaml`; they stand as they are and are shown for reference, not as a v2 comparison. They were produced with a different claim extractor and different judges from v2's run (claims extracted by `gpt-6-luna`, judged by `gpt-6.1-sol` alone), so the two sets of numbers are not comparable. As answering models, `claude-haiku-5-5` and `gpt-6-luna` were not re-scored for v2, so v2 is not compared with them. `gemma-e2b-base-q4` and `gemma-e2b-grounded-q4` appear in both v2's table and here; each table's numbers come from its own run.
+These are v1's numbers as published under `configs/eval_plan.yaml`; they stand as they are and are shown for reference, not as a v2 comparison. They were produced with a different claim extractor and a different judge set from v2's run (claims extracted by `gpt-6-luna`, judged by `gpt-6.1-sol` alone), so the two sets of numbers are not comparable. As answering models, `claude-haiku-5-5` and `gpt-6-luna` were not re-scored for v2, so v2 is not compared with them. `gemma-e2b-base-q4` and `gemma-e2b-grounded-q4` appear in both v2's table and here; each table's numbers come from its own run.
 
 Run `main` (`r-f0f3b432a413`), claims extracted by `claude-haiku-5-5`, judged by `claude-opus-5-5` and `gpt-6.1-sol`:
 
@@ -252,7 +252,7 @@ v2's runs (`main_v2`: claims extracted by `gpt-6-luna`, judged by `gpt-6.1-sol` 
 | B8 | gemma-e2b-grounded-v2-q4 | presort_flagged_share | 0.000 | 20 | `offscope_v2` | `ggh:b8` |
 | B8 | gemma-e2b-grounded-v2-q4 | gives_advice_count | 0 | 20 | `offscope_v2` | `model_review` |
 
-Rows with source `model_review` are a blind review by Claude Opus 5.5, not the owner (OWNER D-61): B5 is the sample read of 20 answers per model from `main_v2` under `configs/sample_read_prompt.md`; B8 is every off-scope answer (20 per model, `offscope_v2`) under `configs/offscope_review_prompt.md`, the reviewers seeing the question and answer only. Each review ran as a fresh subagent with no model names. Reviewer as recorded: `claude-opus-5-5 (blind subagent, OWNER D-61)`; `claude-opus-5-5 (blind subagent, configs/sample_read_prompt.md, OWNER D-61)`.
+Rows with source `model_review` are a blind review by Claude Opus 5.5, not the owner (OWNER D-61): B5 is the sample read of 20 answers per model from `main_v2` under `configs/sample_read_prompt.md`; B8 is every off-scope answer (20 per model scored in `offscope_v2`) under `configs/offscope_review_prompt.md`, the reviewers seeing the question and answer only. Each review ran as a fresh subagent with no model names. Reviewer as recorded: `claude-opus-5-5 (blind subagent, OWNER D-61)`; `claude-opus-5-5 (blind subagent, configs/sample_read_prompt.md, OWNER D-61)`.
 
 Sample read findings (B5). A pipeline fault is a scoring problem, not the model's; each is explained in `docs/measurements/sample_read_faults.md`:
 
@@ -271,7 +271,7 @@ The demo runs merged bf16 weights; the benchmark scores the Q4_K_M GGUF. On 500 
 | bf16 | 1.000 |
 | q4_k_m | 1.000 |
 
-Judged headline difference (bf16 minus Q4_K_M), 95% interval, claims extracted by `gpt-6-luna`:
+Judged headline difference (bf16 minus Q4_K_M) on 200 PubMedQA expert questions from the main run, 95% interval, claims extracted by `gpt-6-luna`:
 
 | Judge | Difference |
 |---|---|
@@ -303,12 +303,12 @@ v2's GGUF (`gemma-e2b-grounded-v2-q4`), variant `ft2-Q4_K_M` in `docs/measuremen
 - Contamination probe `ggh_probe_original` (run `r-1ba7c0e6a17c`): accuracy gemma-e2b-grounded-v2-q4 0.760 [0.680, 0.840].
 - Contamination probe `ggh_probe_paraphrase` (run `r-49fbcc60b2a1`): accuracy gemma-e2b-grounded-v2-q4 0.760 [0.680, 0.840].
 - Paraphrase drop (original minus paraphrased accuracy, 100 questions): 0.000 [-0.030, 0.030]; contamination signal: no.
-- Dev grounding check before the benchmark (`docs/results/dev_ground_v2_sol/summary.json`, run `r-4b7e3a0c3d19`, 200 dev questions, judged by `gpt-6.1-sol`, bars in `configs/v2_dev_bars.yaml`): passed on citation precision 0.768 (bar 0.600) and aim-citation rate 0.067 (bar 0.200); missed on headline 0.350 against v1's 0.355 (bar: no lower than v1) and label accuracy 0.795 (bar 0.800). The release went ahead with these misses disclosed (OWNER D-55).
+- Dev grounding check before the benchmark (`docs/results/dev_ground_v2_sol/summary.json`, run `r-4b7e3a0c3d19`, 200 dev questions, judged by `gpt-6.1-sol`, bars in `configs/v2_dev_bars.yaml`): passed on citation precision 0.768 (bar 0.600) and aim-citation rate 0.067 (bar 0.200); missed on headline 0.350 against v1's 0.355 (bar: no lower than v1) and label accuracy 0.795 (bar 0.800). The release went ahead with these misses disclosed (OWNER D-55); the bars name two judges, but only `gpt-6.1-sol` judged this run (OWNER D-54), and on an earlier partial dual-judge run the headline also missed under Claude Opus 5.5 (OWNER D-55).
 
 ## Licence and credits
 
 - Weights and code: Apache-2.0 (`LICENSE`). The repo's `NOTICE` is shipped with the weights.
-- Base model: Google DeepMind's Gemma 4 E2B (`google/gemma-4-E2B-it` at `4adf15748de9e1a0097b6274cee9c15836c41c37`). Its model card declares `license: apache-2.0` and links its terms at https://ai.google.dev/gemma/docs/gemma_4_license. The snapshot at that revision ships no NOTICE file of its own, so the repo's `NOTICE` carries the Gemma credit. Read on 2026-11-20 from the model card at that revision (sha256 `3e0608a6be80e3eb040a5aa6c76707809503deb85be6360184a118fb6156526c`), recorded in `docs/licence_check.json`. Re-read on 2026-11-20: that link resolves to the Apache License 2.0 text (https://gemma.ai/resources/apache-2/), and the Gemma Terms of Use (https://gemma.ai/resources/terms/, last modified 2026-04-01) say they do not cover Gemma 4. This release also keeps to Google's Gemma Prohibited Use Policy (https://gemma.ai/resources/prohibited-use/), which names no version and bars, among other things, the unlicensed practice of medicine and automated decisions affecting people's health; the model is for research only and is never to be used for either.
+- Base model: Google DeepMind's Gemma 4 E2B (`google/gemma-4-E2B-it` at `4adf15748de9e1a0097b6274cee9c15836c41c37`). Its model card declares `license: apache-2.0` and links its terms at https://ai.google.dev/gemma/docs/gemma_4_license. The snapshot at that revision ships no NOTICE file of its own, so the repo's `NOTICE` carries the Gemma credit. Read on 2026-11-20 from the model card at that revision (sha256 `3e0608a6be80e3eb040a5aa6c76707809503deb85be6360184a118fb6156526c`), recorded in `docs/licence_check.json`. Re-read on 2026-11-20: that link resolves to the Apache License 2.0 text (https://gemma.ai/resources/apache-2/), and the Gemma Terms of Use (https://gemma.ai/resources/terms/, last modified 2026-04-01) say they do not cover Gemma 4. Although those terms do not cover Gemma 4, this release voluntarily keeps to Google's Gemma Prohibited Use Policy (https://gemma.ai/resources/prohibited-use/), which names no version and bars, among other things, the unlicensed practice of medicine and automated decisions affecting people's health; the model is for research only and is never to be used for either.
 - Data: PubMedQA (Jin et al., 2019), MIT licence, https://pubmedqa.github.io/.
 - Evaluation: EvalKit 06591f8de9b1, ee5969978c92, f9cbc8e5396c (MIT licence, https://github.com/biplob819/evalkit).
 

@@ -635,23 +635,23 @@
       "audits": [
         {
           "name": "v2 round 1 (AUD-R4, owner)",
-          "path": "docs/measurements/audit_v2_result.json",
-          "labelled": 50,
-          "pass_rate": 0.98,
-          "passed": false
-        },
-        {
-          "name": "v2.1 round 2 (AUD-R4, blind reviewer)",
           "path": "docs/measurements/audit_v2r1_result.json",
           "labelled": 50,
           "pass_rate": 1.0,
           "passed": false
         },
         {
-          "name": "v2.2 round 3 (AUD-R4, blind reviewer)",
+          "name": "v2.1 round 2 (AUD-R4, blind Claude reviewer, OWNER D-47)",
           "path": "docs/measurements/audit_v2r2_result.json",
           "labelled": 50,
           "pass_rate": 1.0,
+          "passed": false
+        },
+        {
+          "name": "v2.2 round 3 (AUD-R4, blind Claude reviewer, OWNER D-47, D-50)",
+          "path": "docs/measurements/audit_v2_result.json",
+          "labelled": 50,
+          "pass_rate": 0.98,
           "passed": false
         }
       ],

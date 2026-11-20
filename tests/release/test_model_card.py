@@ -257,3 +257,21 @@ def test_readme_block_carries_the_same_stamps():  # OSS-02 with R4.1's disclosur
     assert "so v2 is not claimed to beat base on citations" in block
     assert "v2-vs-v1 holds under both counts" in block
     assert "generates 73.1 tokens/s (p50)" in block
+
+
+def test_the_cards_audit_is_the_one_on_the_targets_the_release_trained_on():
+    """The last audit listed for the shipped release audited the sample its targets lineage
+    recorded (configs/results.yaml once rotated the v2 audit files)."""
+    import json as _json
+    from pathlib import Path as _Path
+
+    root = _Path(__file__).resolve().parents[2]
+    bundle = _json.loads((root / "docs/results/results_bundle.json").read_text("utf-8"))
+    shipped = bundle["releases"][-1]
+    last = shipped["audits"][-1]
+    result = _json.loads((root / last["path"]).read_text("utf-8"))
+    lineage = _json.loads((root / "docs/measurements/lineage/targets_v2.json").read_text("utf-8"))
+    assert result["sample_sha256"] == lineage["outputs"]["artifacts/targets/audit_sample.jsonl"]
+    ok = result["overall"]["ok"] / result["labelled"]
+    card = (root / "MODEL_CARD.md").read_text("utf-8")
+    assert f"{ok:.3f} judged ok overall" in card and "blind Claude reviewer" in card

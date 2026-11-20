@@ -172,13 +172,13 @@ def earlier_tables(src: Sources, heading: str = "### ") -> list[str]:
             what
             for what, bad in (
                 ("claim extractor", any(r.extractor != now.extractor for r in refs)),
-                ("judges", any(r.judges != now.judges for r in refs)),
+                ("judge set", any(r.judges != now.judges for r in refs)),
             )
             if bad
         ]
         if differs:
             notes.append(
-                f"They were produced with a different {' and different '.join(differs)} from "
+                f"They were produced with a different {' and a different '.join(differs)} from "
                 f"{s}'s run ({scoring(now)}), so the two sets of numbers are not comparable."
             )
         dropped = sorted({m for r in refs for m in r.models} - scored_now)
@@ -564,7 +564,7 @@ def model_review(src: Sources, rows: Sequence[BehaviourRow]) -> str:
     parts = []
     for rule, what in (
         ("B5", "the sample read of {n} answers per model from {runs}"),
-        ("B8", "every off-scope answer ({n} per model, {runs})"),
+        ("B8", "every off-scope answer ({n} per model scored in {runs})"),
     ):
         mine = [r for r in rev if r.rule == rule]
         if not mine:
@@ -624,7 +624,17 @@ def parity(src: Sources) -> str:
         if src.earlier():
             ext = src.ref(src.main()).extractor
             how = f", claims extracted by `{ext}`" if ext else ""
-        lines += ["", f"Judged headline difference (bf16 minus Q4_K_M), 95% interval{how}:", ""]
+        par = [
+            r
+            for r in src.bundle.runs
+            if r.name in src.bundle.shipped.runs and "bf16" in " ".join(r.models)
+        ]
+        on = f" on {par[0].n} PubMedQA expert questions from the main run" if par else ""
+        lines += [
+            "",
+            f"Judged headline difference (bf16 minus Q4_K_M){on}, 95% interval{how}:",
+            "",
+        ]
         lines.append(
             table(
                 ["Judge", "Difference"],
@@ -699,6 +709,11 @@ def training_data(src: Sources) -> str:
             audit_line(src),
         ]
     )
+
+
+BUNDLE_URL = (
+    "https://github.com/biplob819/gemma-grounded-health/blob/main/docs/results/results_bundle.json"
+)
 
 
 def audit_line(src: Sources) -> str:
@@ -822,6 +837,12 @@ def dev_check_lines(src: Sources) -> list[str]:
     if missed:
         line += ("; missed on " if passed else "missed on ") + " and ".join(missed)
         line += f". The release went ahead with these misses disclosed ({d['decision']})"
+    if len(m.get("headline") or {}) == 1:
+        line += (
+            f"; the bars name two judges, but only {judge} judged this run (OWNER D-54), and on "
+            "an earlier partial dual-judge run the headline also missed under Claude Opus 5.5 "
+            "(OWNER D-55)"
+        )
     return [line + "."]
 
 
@@ -855,6 +876,9 @@ def summary(src: Sources) -> str:
         )
         if base is not None:
             line += f" against {iv(base.accuracy)} for the base model (`{base.model}`)"
+            prev = next((by[r.model] for r in src.earlier() if r.model in by), None)
+            if prev is not None:
+                line += f" and {iv(prev.accuracy)} for `{prev.model}` (v2 is separated lower)"
         line += "; the full table, with the judges' headline, is under Evaluation."
         lines.append(line)
     if earlier:
@@ -941,7 +965,8 @@ def licence(src: Sources) -> str:
             line += f" The terms page {terms.get('url')} was re-read on {terms['reread_at']}."
         if pup:
             line += (
-                f" This release also keeps to Google's Gemma Prohibited Use Policy "
+                f" Although those terms do not cover Gemma 4, this release voluntarily keeps to "
+                f"Google's Gemma Prohibited Use Policy "
                 f"({pup.get('url')}), which names no version and bars, among other things, the "
                 "unlicensed practice of medicine and automated decisions affecting people's "
                 "health; the model is for research only and is never to be used for either."
@@ -1017,7 +1042,7 @@ def model_index(src: Sources) -> list[dict[str, Any]]:
                         "revision": src.data.dataset_revision,
                     },
                     "metrics": metrics,
-                    "source": {"name": f"EvalKit run {main.run_id}", "url": "results_bundle.json"},
+                    "source": {"name": f"EvalKit run {main.run_id}", "url": BUNDLE_URL},
                 }
             ],
         }

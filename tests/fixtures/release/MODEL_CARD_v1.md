@@ -42,7 +42,7 @@ model-index:
       value: 1.0
     source:
       name: EvalKit run r-f0f3b432a413
-      url: results_bundle.json
+      url: https://github.com/biplob819/gemma-grounded-health/blob/main/docs/results/results_bundle.json
 ---
 
 # Gemma 4 E2B Grounded Health
@@ -256,7 +256,7 @@ The demo runs merged bf16 weights; the benchmark scores the Q4_K_M GGUF. On 500 
 | bf16 | 1.000 |
 | q4_k_m | 1.000 |
 
-Judged headline difference (bf16 minus Q4_K_M), 95% interval:
+Judged headline difference (bf16 minus Q4_K_M) on 200 PubMedQA expert questions from the main run, 95% interval:
 
 | Judge | Difference |
 |---|---|
@@ -293,7 +293,7 @@ v1's GGUF (`gemma-e2b-grounded-q4`), variant `ft-Q4_K_M` in `docs/measurements/l
 ## Licence and credits
 
 - Weights and code: Apache-2.0 (`LICENSE`). The repo's `NOTICE` is shipped with the weights.
-- Base model: Google DeepMind's Gemma 4 E2B (`google/gemma-4-E2B-it` at `4adf15748de9e1a0097b6274cee9c15836c41c37`). Its model card declares `license: apache-2.0` and links its terms at https://ai.google.dev/gemma/docs/gemma_4_license. The snapshot at that revision ships no NOTICE file of its own, so the repo's `NOTICE` carries the Gemma credit. Read on 2026-11-20 from the model card at that revision (sha256 `3e0608a6be80e3eb040a5aa6c76707809503deb85be6360184a118fb6156526c`), recorded in `docs/licence_check.json`. Re-read on 2026-11-20: that link resolves to the Apache License 2.0 text (https://gemma.ai/resources/apache-2/), and the Gemma Terms of Use (https://gemma.ai/resources/terms/, last modified 2026-04-01) say they do not cover Gemma 4. This release also keeps to Google's Gemma Prohibited Use Policy (https://gemma.ai/resources/prohibited-use/), which names no version and bars, among other things, the unlicensed practice of medicine and automated decisions affecting people's health; the model is for research only and is never to be used for either.
+- Base model: Google DeepMind's Gemma 4 E2B (`google/gemma-4-E2B-it` at `4adf15748de9e1a0097b6274cee9c15836c41c37`). Its model card declares `license: apache-2.0` and links its terms at https://ai.google.dev/gemma/docs/gemma_4_license. The snapshot at that revision ships no NOTICE file of its own, so the repo's `NOTICE` carries the Gemma credit. Read on 2026-11-20 from the model card at that revision (sha256 `3e0608a6be80e3eb040a5aa6c76707809503deb85be6360184a118fb6156526c`), recorded in `docs/licence_check.json`. Re-read on 2026-11-20: that link resolves to the Apache License 2.0 text (https://gemma.ai/resources/apache-2/), and the Gemma Terms of Use (https://gemma.ai/resources/terms/, last modified 2026-04-01) say they do not cover Gemma 4. Although those terms do not cover Gemma 4, this release voluntarily keeps to Google's Gemma Prohibited Use Policy (https://gemma.ai/resources/prohibited-use/), which names no version and bars, among other things, the unlicensed practice of medicine and automated decisions affecting people's health; the model is for research only and is never to be used for either.
 - Data: PubMedQA (Jin et al., 2019), MIT licence, https://pubmedqa.github.io/.
 - Evaluation: EvalKit 06591f8de9b1, ee5969978c92 (MIT licence, https://github.com/biplob819/evalkit).
 

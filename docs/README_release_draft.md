@@ -26,7 +26,7 @@ v2 on 1000 expert-labelled PubMedQA questions (EvalKit run `r-715fc213a8a5`, cla
 
 #### Published v1 numbers (not compared with v2)
 
-These are v1's numbers as published under `configs/eval_plan.yaml`; they stand as they are and are shown for reference, not as a v2 comparison. They were produced with a different claim extractor and different judges from v2's run (claims extracted by `gpt-6-luna`, judged by `gpt-6.1-sol` alone), so the two sets of numbers are not comparable. As answering models, `claude-haiku-5-5` and `gpt-6-luna` were not re-scored for v2, so v2 is not compared with them. `gemma-e2b-base-q4` and `gemma-e2b-grounded-q4` appear in both v2's table and here; each table's numbers come from its own run.
+These are v1's numbers as published under `configs/eval_plan.yaml`; they stand as they are and are shown for reference, not as a v2 comparison. They were produced with a different claim extractor and a different judge set from v2's run (claims extracted by `gpt-6-luna`, judged by `gpt-6.1-sol` alone), so the two sets of numbers are not comparable. As answering models, `claude-haiku-5-5` and `gpt-6-luna` were not re-scored for v2, so v2 is not compared with them. `gemma-e2b-base-q4` and `gemma-e2b-grounded-q4` appear in both v2's table and here; each table's numbers come from its own run.
 
 Run `main` (`r-f0f3b432a413`), claims extracted by `claude-haiku-5-5`, judged by `claude-opus-5-5` and `gpt-6.1-sol`:
 
