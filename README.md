@@ -2,7 +2,7 @@
 
 This project fine-tunes a small open Gemma model (Gemma 4 E2B, 3.3 GB at 4-bit, runs offline on a laptop) to answer health research questions **only from a given abstract**, with a yes / no / maybe label, a short answer and the numbered sentences it relied on. Every model is scored with [EvalKit](https://github.com/biplob819/evalkit) on all 1,000 expert-labelled PubMedQA questions.
 
-> **Status.** v1 and v2 are trained and benchmarked. Next: the results bundle (build node E3.3), then the Hugging Face release with the recipe, a laptop GGUF and a demo (nodes R4.2 and R4.3). Research only, not medical advice.
+> **Status.** v1 and v2 are trained and benchmarked. Next: the model card (build node R4.1), then the Hugging Face release with the recipe, a laptop GGUF and a demo (nodes R4.2 and R4.3). Research only, not medical advice.
 
 ## v2 result: the citations are fixed, the headline is not
 

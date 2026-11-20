@@ -91,7 +91,7 @@ def test_docs_name_future_work_by_node():
     contributing = _read("CONTRIBUTING.md")
     assert "build node T2.1" in contributing and "(E3.3)" in contributing
     readme = _read("README.md")
-    assert "> **Status.**" in readme and "(build node E3.3)" in readme
+    assert "> **Status.**" in readme and "(build node R4.1)" in readme
     assert "(nodes R4.2 and R4.3)" in readme
     assert "Today nothing in the repo reads a key" in security
     assert "once released" in _read("CITATION.cff") and "build node T2.1" in _read("CITATION.cff")

@@ -34,14 +34,26 @@ citations says this.
 
 ## part-of-claim
 
-Records: `main_v2` base pqa-27928673, pqa-27615402.
+Records: `main_v2` base pqa-27928673, pqa-27615402 (and the result-sentence halves of
+pqa-21550158 and pqa-15588538 above).
 
 EvalKit gives every claim the answer's full citation list (`ground_on_answer_citations`, EvalKit
 D-52), and the rubric counts a sentence that supports "the part of the claim it is cited for".
 So a result sentence can be marked supporting for a claim about the study's design or about
-previous work. Because a sentence counts as supporting if it supports any claim, and these
-sentences support another claim of the same answer, the metrics do not move. Judge behaviour,
-no change to a published number.
+previous work. A sentence counts as supporting if it supports any claim, so this moves nothing
+when the sentence also supports another claim of the answer (pqa-27615402: sentence 6 also
+supports claim 1; pqa-15588538: sentence 5's mark is the design claim's, and sentence 2 supports
+claim 1). When it supports no other claim, the lenient mark is the only reason the sentence counts
+as supporting, and it raises that answer's citation precision (pqa-27928673: sentence 10, this
+study's odds ratios, marked supporting for "previous studies have shown ..." and not for claim 1,
+so the answer scores 2/2 instead of 1/2, in base's favour).
+
+How often this happens over a whole run was not measured: it needs a reading of each mark. As an
+upper gauge, the cited sentences counted as supporting that appear in no supported verdict's
+evidence are 11.3% (base), 11.0% (v1) and 25.3% (v2) of cited sentences in `main_v2`; many are
+correct marks for claims rejected on other grounds. Even if every one of them were wrong, v2 would
+still lead v1 on citation precision (about 0.55 against 0.32), so v2-vs-v1 holds; v2-vs-base would
+favour base, which the README already allows (OWNER D-62).
 
 ## extractor-drop
 
@@ -49,7 +61,7 @@ Records: `main` Haiku pqa-17598882, pqa-15141797; `main_v2` base pqa-11713724.
 
 The extractor returned no claims for an answer with factual content. The record then has
 coverage 0 and its headline counts as ungrounded. Measured over whole runs, in `main_v2` this
-holds 3, 2 and 1 label-correct answers for base, v1 and v2 (under 0.3 points of headline); in
+holds 3, 2 and 1 label-correct answers for base, v1 and v2 (at most 0.3 points of headline); in
 v1's `main` run, 10 for base, 6 for v1, 26 for Haiku and 16 for Luna (Haiku extracted those
 claims). Extractor behaviour, disclosed; the published headlines count these answers as
 ungrounded, which slightly understates Haiku and Luna in v1's table.
@@ -71,8 +83,9 @@ Haiku's extraction in v1's `main` run sometimes made a bare label ("Yes.") a cla
 the comparator models (Luna 70 claims, Haiku 9) and costs Luna's Sol headline about 4.4 points
 (44 answers) and Haiku's about 0.5. It does not touch the Gemma models or `main_v2`. Disclosed
 in v1's results. Without these claims Luna's Sol headline would be 0.334 against v1's 0.330,
-which reverses the published v1-beats-Luna comparison under Sol (separated in the bundle); the
-v1-vs-Luna comparison under Opus is unaffected. No published text may claim v1 beats Luna under
+so the published v1-beats-Luna comparison under Sol (separated in the bundle) would no longer
+hold: Luna would be 0.004 ahead on the point estimate, most likely a tie. The v1-vs-Luna
+comparison under Opus is unaffected. No published text may claim v1 beats Luna under
 Sol.
 
 ## judge-error
@@ -80,9 +93,20 @@ Sol.
 Record: `main_v2` v2 pqa-27131771.
 
 The claim judge marked unsupported a claim its cited sentence plainly states, while the citation
-check (a separate call) marked that sentence as supporting it. Measured over `main_v2`, a
-supported verdict all of whose evidence sentences the citation check marks non-supporting for
-that same claim happens for 4.7% (base), 5.9% (v1) and 2.3% (v2) of supported claims, and the
-mirror case occurs too. (A looser definition, any non-aim evidence sentence marked
-non-supporting, gives higher rates, up to 18.9% for v1.) Judge noise, within
-what the calibration (Sol held-out kappa 0.598 [0.468, 0.711]) already reports.
+check (a separate call) marked that sentence as supporting it. The two calls disagree in both
+directions. In this record's direction, an unsupported verdict with a cited sentence the citation
+check marks supporting for that claim, the loose count is 55% (base), 38% (v1) and 49% (v2) of
+unsupported claims in `main_v2`, mostly the part-of-claim clause above (a sentence supports part
+of a claim the claim judge rejects as a whole), not judge error. In the other direction, a
+supported verdict all of whose evidence sentences are marked non-supporting for that claim, it is
+4.7% (base), 5.9% (v1) and 2.3% (v2) of supported claims. How many of either are true claim-judge
+errors, as here, was not measured. The headline uses the claim judge's verdicts, whose agreement
+with the reference labeller is what the calibration reports (Sol held-out kappa 0.598 [0.468,
+0.711]).
+
+## presentation
+
+v2's off-scope answers reached the B8 reviewers with their citations appended (" [n]") for 19 of
+its 20 answers; no other model's did, though all have citations in their records. No model name
+was shown, but v2's answers were visually distinguishable from the rest in the blind batches
+(`docs/measurements/blind_reviews/b8_batch*.json`). All 20 were labelled no advice.
