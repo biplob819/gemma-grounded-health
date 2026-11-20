@@ -1,7 +1,7 @@
 # V2.2 run state
 
-**Now:** verifier round 1 PASS; notes applied; green
-**Next:** converge twice, fresh-context verifier, green, merge to main; then E3.3 (owner's B5 sample read and B8 off-scope review, calibration stamp)
+**Now:** V2.2 green (verifier round 1 PASS, converge PASS twice after the notes)
+**Next:** merge to main; then E3.3 (owner's B5 sample read and B8 off-scope review, calibration stamp)
 
 ## Log
 - 2026-11-19 — Anthropic credit still exhausted (400 "credit balance is too low", checked hourly since 14:35Z on 11-18). OWNER D-57 (owner: "Use Open AI API"; scope chosen in the ask widget, "Re-score the 3 Gemmas"): GPT-6 Luna extracts, GPT-6.1 Sol judges alone; base and v1 answers from EvalKit's store, re-extracted and re-judged with v2; Holm over 6 primary tests; Haiku 5.5 and GPT-6 Luna shown from their published runs, not compared with v2.

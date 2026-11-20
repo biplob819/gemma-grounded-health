@@ -7,4 +7,4 @@
 - [x] 5. Estimates recorded; main run (servers 8080/8081 stopped); check base/v1 answers equal E3.2's
 - [x] 6. Off-scope, probe and parity runs
 - [x] 7. Results committed, ledger, read the sample
-- [ ] 8. Converge, verifier, green
+- [x] 8. Converge, verifier, green
