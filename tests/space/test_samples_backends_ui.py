@@ -90,7 +90,7 @@ def test_local_footer_says_the_demo_serves_the_benchmarked_gguf():
     assert "benchmark numbers are for the Q4_K_M GGUF" in f and "exactly that GGUF" in f
     assert app.LOCAL_FT_MODEL in f and "Benchmark results" in f
     space_footer = ui.footer(local=False)
-    assert "ZeroGPU" in space_footer and "Parity figure" in space_footer
+    assert "ZeroGPU" in space_footer and "Parity (Q4_K_M against bf16)" in space_footer
 
 
 def test_results_summary_comes_from_the_committed_bundle():

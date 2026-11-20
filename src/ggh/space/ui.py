@@ -111,8 +111,10 @@ def build(
         if local:
             gr.Markdown(served_note())
         with gr.Tab("Samples"):
+            first = next(iter(samples_labels), None)
             pick = gr.Dropdown(
                 choices=[(v, k) for k, v in samples_labels.items()],
+                value=first,
                 label="Sample question (precomputed, no passcode)",
             )
         with gr.Tab("Your abstract"):
@@ -145,6 +147,8 @@ def build(
             return (*out, "", "")  # clear the passcode and key boxes after every request
 
         pick.change(on_pick, pick, [msg, abstract, base_card, ft_card], api_name="sample")
+        # SPC-03: the first sample is shown on arrival, not only after a pick
+        demo.load(on_pick, pick, [msg, abstract, base_card, ft_card], api_name=False)
         go.click(
             on_go,
             [q, a, code, key, check],
