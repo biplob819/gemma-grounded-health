@@ -1,6 +1,7 @@
 # portfolio.yml: this project's card and page on the portfolio site.
 # Publish with:  portfolio add .   (then `portfolio publish` in the site repo)
-# Keep the words honest: every number here must come from a published run in this repo.
+# Keep the words honest: every number here must come from a published run in this repo
+# (tests/test_portfolio.py traces each decimal to the results bundle or its sources).
 
 slug: gemma-grounded-health
 title: Gemma Grounded Health
@@ -13,50 +14,140 @@ featured: false
 order: 36
 tags: [fine-tuning, open models, grounding, evals]
 
-# v1 main run r-f0f3b432a413 (docs/results/main/summary.json); v2 numbers replace these when published.
+# v2 main run r-715fc213a8a5 (docs/results/main_v2/summary.json), GPT-6.1 Sol judging; v1's
+# published run r-f0f3b432a413 stays in docs/results/main/
 metrics:
-  - { value: "0.501 → 0.728", label: "label accuracy, base → fine-tuned v1, 1,000 PubMedQA questions" }
-  - { value: "0.418 → 0.388", label: "correct and fully grounded (Opus judge), base → v1: the failure v2 fixes" }
-  - { value: "$53.68", label: "v1 main run, 4,000 answers with dual judges" }
+  - { value: "0.362 → 0.736", label: "cited sentences that support a claim, v1 → v2, 1,000 PubMedQA questions" }
+  - { value: "0.560 → 0.084", label: "answers citing an unsupporting aim sentence, v1 → v2: the failure v2 fixed" }
+  - { value: "0.331 → 0.329", label: "correct and fully grounded, v1 → v2: a tie; base stays ahead at 0.404" }
 
 links:
   repo: https://github.com/biplob819/gemma-grounded-health
+  release: https://github.com/biplob819/gemma-grounded-health/releases/tag/v1.0.0
+  model: https://huggingface.co/biplob123/gemma-4-e2b-grounded-health
+  gguf: https://huggingface.co/biplob123/gemma-4-e2b-grounded-health-GGUF
+  report: https://biplob819.github.io/evalkit/gemma/
   prd: https://github.com/biplob819/gemma-grounded-health/blob/main/Gemma%20Grounded%20Health%20PRD.md
-  methodology: https://github.com/biplob819/gemma-grounded-health/blob/main/configs/eval_plan.yaml
+  methodology: https://github.com/biplob819/gemma-grounded-health/blob/main/configs/eval_plan_v2.yaml
 
-stack: [Gemma 4 E2B, Unsloth, Kaggle T4, llama.cpp, EvalKit, Claude API, OpenAI API]
-cost: "$53.68 for the v1 main run (1,000 questions, four models, dual judges)"
+stack: [Gemma 4 E2B, Unsloth, Kaggle T4, llama.cpp, EvalKit, Claude API, OpenAI API, Hugging Face]
+cost: "$53.68 for the v1 main run (1,000 questions, four models, dual judges); $4.00 for v2's, with base and v1 answers from EvalKit's cache"
 
 case_study: docs/case-study.md
 
 methodology:
-  - Evaluated with EvalKit (pinned commit), all 1,000 expert-labelled PubMedQA questions
+  - Evaluated with EvalKit (pinned release), all 1,000 expert-labelled PubMedQA questions
   - Claim-level judging against the cited sentences only
-  - Dual cross-family LLM judges (Claude Opus 5.5, GPT-6.1 Sol)
+  - v1 judged by Claude Opus 5.5 and GPT-6.1 Sol; v2 by GPT-6.1 Sol, calibrated against a Claude Opus 5.5 reference labeller
   - Paired bootstrap 95% intervals, Holm correction, fixed separation rule
-  - Pre-registered comparisons, hashed before the main run
+  - Pre-registered comparisons, hashed before each main run
   - Checkpoint chosen on dev data only; test set never used for tuning
 
 story:
   monitoring:
-    - { metric: "Correct and fully grounded (Opus judge)", kind: north-star, target: "Above base, separated", current: "0.388 (base 0.418)", how: "EvalKit main run on 1,000 PubMedQA questions, paired bootstrap with Holm correction" }
-    - { metric: "Claims supported by the cited sentences (Opus judge)", kind: quality, current: "0.519 (base 0.863)", how: "EvalKit claim-level verdicts; v2 bar fixed on dev before v2 is measured" }
-    - { metric: "Label accuracy", kind: quality, current: "0.728 (base 0.501)", how: "EvalKit label_correct with bootstrap intervals" }
-    - { metric: "Laptop file agrees with full precision on dev labels", kind: guardrail, target: "≥ 0.95", current: "0.956", how: "ggh parity on 500 dev questions before any benchmark" }
-    - { metric: "Spend per main run", kind: cost, target: "Hard cap $70", current: "$53.68", how: "EvalKit dry-run estimate first; every dollar in the spend ledger" }
+    - { metric: "Correct and fully grounded (Sol judge)", kind: north-star, target: "Above base, separated", current: "0.329 (v1 0.331, base 0.404)", how: "EvalKit main run on 1,000 PubMedQA questions, paired bootstrap with Holm correction" }
+    - { metric: "Cited sentences that support a claim (Sol judge)", kind: quality, current: "0.736 (v1 0.362, base 0.747)", how: "EvalKit citation check; v2 is not claimed to beat base on citations (the aim-rule caveat)" }
+    - { metric: "Label accuracy", kind: quality, current: "0.678 (v1 0.728, base 0.501)", how: "EvalKit label_correct with bootstrap intervals" }
+    - { metric: "Laptop file agrees with full precision on dev labels", kind: guardrail, target: "≥ 0.95", current: "0.920 (missed, disclosed)", how: "ggh parity on 500 dev questions before any benchmark" }
+    - { metric: "Spend per main run", kind: cost, target: "Hard cap $70", current: "$4.00 (v2, cached answers)", how: "EvalKit dry-run estimate first; every dollar in the spend ledger" }
   next:
-    - "v2: training citations from result sentences only, chosen on a dev grounding check, then a second pre-registered run on the same 1,000 questions; v1's results stay published"
+    - "Claude Opus 5.5 as a second judge on v2, a laptop benchmark re-run on a quiet machine, and the public write-up"
 
 images:
   # rebuilt from committed files by scripts/walkthrough.py (shot list: docs/walkthrough.md)
   - src: docs/assets/walkthrough.gif
-    alt: "Walkthrough of ten screens: v1 headline numbers, the data flow and architecture diagrams, the ggh CLI, ggh doctor and the audit score, the local hand-audit page, the four-model results with paired intervals, the failure diagnosis (citations of the study's aim), the laptop benchmark, and the quantisation parity and paraphrase probe checks"
+    alt: "Walkthrough of ten screens: v2's headline numbers against v1 and base, the v2 results table with the pre-registered verdicts and the aim-rule caveat, the v1 failure diagnosis (citations of the study's aim), the Hugging Face model page, the local demo, the data flow diagram, the laptop benchmark, the parity and paraphrase checks, ggh doctor with the audit score, and the local hand-audit page"
     caption: ten real screens, 25 seconds, loops; nothing live or paid
     kind: walkthrough
-  - { src: docs/assets/dataflow.svg, alt: "Data flow: PubMedQA to targets, Kaggle training, export, laptop serving and EvalKit's dual-judge evaluation", kind: dataflow }
+  - src: docs/assets/headline_v2.svg
+    alt: "Base, v1 and v2 on 1,000 PubMedQA questions: correct and fully grounded, cited sentences that support a claim, and answers citing an unsupporting aim sentence, each with a 95% interval"
+    caption: the v2 result, generated from the committed run
+    kind: chart
+  - src: docs/assets/demo.gif
+    alt: "Recording of the local demo: sample questions answered by base and fine-tuned v2 side by side with cited sentences highlighted, then a live answer refused without the passcode"
+    caption: the local demo against the benchmarked 4-bit file, recorded on a laptop
+    kind: demo
+  - src: docs/assets/screenshots/hf_model_page.png
+    alt: "The Hugging Face model page: research-only notice, the summary generated from the results bundle, tags and the evaluation results panel"
+    caption: the released model on Hugging Face
+    kind: screenshot
+  - src: docs/assets/screenshots/demo_answer.png
+    alt: "The local demo answering a sample question: base cites the study's aim, v2 cites the result sentence, highlighted in the abstract"
+    caption: base against v2 on one sample question
+    kind: screenshot
+  - src: docs/assets/screenshots/demo_passcode_gate.png
+    alt: "The local demo's Your abstract tab refusing a live answer with a wrong passcode"
+    caption: live answers need a passcode, even with your own API key
+    kind: screenshot
+  - src: docs/assets/screenshots/v1_vs_v2_citation.png
+    alt: "v1 and v2 give the same answer, but v1 cites the study's aim, marked not supporting, while v2 cites the result, marked supporting"
+    caption: the citation failure and its fix on one question
+    kind: screenshot
+  - src: docs/assets/screenshots/evalkit_report_main_v2.png
+    alt: "EvalKit's report for the v2 main run: headline with 95% intervals and the per-model table"
+    caption: EvalKit's report for the v2 run
+    kind: screenshot
+  - { src: docs/assets/dataflow.svg, alt: "Data flow: PubMedQA to targets, Kaggle training, export, laptop serving and EvalKit's evaluation", kind: dataflow }
   - { src: docs/assets/architecture.svg, alt: "Architecture: the ggh package, its build harness and the external services it uses", kind: architecture }
 
+# what was built, cut and left for later, in plain words; decision codes only in `source`
+priorities:
+  - item: Retrained v2 so every cited sentence must support the answer
+    call: built
+    why: v1 cited the study's aim instead of its results, so v2 trained on stricter citation targets.
+    source: OWNER D-43
+  - item: Every model scored with EvalKit on all expert-labelled PubMedQA questions
+    call: built
+    why: Pre-registered plans, paired intervals and Holm correction keep each comparison honest.
+    source: configs/eval_plan_v2.yaml
+  - item: Merged weights and a laptop GGUF published on Hugging Face
+    call: built
+    why: The benchmarked 4-bit file runs offline in Ollama or llama.cpp.
+    source: docs/measurements/release_record_v2.json
+  - item: Passcode-gated local demo comparing base and fine-tuned answers
+    call: built
+    why: Sample answers are open to everyone, while live answers need a passcode even with your own key.
+    source: OWNER D-36
+  - item: Model card and README numbers generated from one results bundle
+    call: built
+    why: Hand-copied numbers drift, so a test fails when any published number differs.
+    source: D-20
+  - item: Reproduce-from-scratch guide where each step is a tested command
+    call: built
+    why: Anyone can rebuild the release from a fresh clone and check each step.
+    source: docs/reproduce.md
+  - item: Preference tuning (DPO) after the fine-tune
+    call: cut
+    why: The citation-target fix addressed the failure preference tuning would have targeted, saving a training run.
+    source: OWNER D-58
+  - item: Hosted GPU demo on a ZeroGPU Space
+    call: cut
+    why: The free local app serves the exact benchmarked file with no spend.
+    source: OWNER D-63
+  - item: The owner hand-labelling the judge calibration claims
+    call: cut
+    why: A model labelled them under a committed prompt, and every report says the labels are a model's.
+    source: OWNER D-60
+  - item: Claude Opus as a second judge on v2's results
+    call: later
+    why: The v2 benchmark ran on one judge because the Anthropic credit ran out.
+    source: OWNER D-57
+  - item: Clarify the aim rule in EvalKit's citation rubric
+    call: later
+    why: The judge marks aim sentences unsupporting even for claims that restate the aim, so an upstream issue records it.
+    source: OWNER D-64
+  - item: A hosted demo with a global rate limit
+    call: later
+    why: The local demo limits passcode attempts per session, which a public host would need to tighten.
+    source: docs/known-issues.md
+  - item: Re-run the laptop benchmark on a quiet machine
+    call: later
+    why: v2's speed was measured on a busy laptop and its gap to v1 is unexplained.
+    source: docs/known-issues.md
+
 proof:
+  - { label: v2 main-run summary (JSON), url: https://github.com/biplob819/gemma-grounded-health/blob/main/docs/results/main_v2/summary.json }
   - { label: v1 main-run summary (JSON), url: https://github.com/biplob819/gemma-grounded-health/blob/main/docs/results/main/summary.json }
-  - { label: Pre-registered plan, url: https://github.com/biplob819/gemma-grounded-health/blob/main/configs/eval_plan.yaml }
+  - { label: Pre-registered v2 plan, url: https://github.com/biplob819/gemma-grounded-health/blob/main/configs/eval_plan_v2.yaml }
+  - { label: Results bundle, url: https://github.com/biplob819/gemma-grounded-health/blob/main/docs/results/results_bundle.json }
   - { label: Decision log (OWNER D-43, the v2 call), url: https://github.com/biplob819/gemma-grounded-health/blob/main/docs/decisions.md }
