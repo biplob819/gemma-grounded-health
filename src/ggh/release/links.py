@@ -24,7 +24,10 @@ LINKS: dict[str, tuple[str, str | None]] = {
     "space": ("Demo (local, recorded; OWNER D-63)", "docs/assets/demo.gif"),
     "evalkit_report": ("EvalKit report page", None),  # R4.4
     "evalkit_pr": ("EvalKit upstream pull request", None),  # R4.4
-    "parity": ("Parity (Q4_K_M against bf16)", "docs/measurements/v2/parity.json"),
+    "parity": (
+        "Parity (Q4_K_M against the merged weights)",
+        f"{REPO}/blob/main/docs/measurements/v2/parity.json",
+    ),
     "benchmark": ("Benchmark results", f"{REPO}/tree/main/docs/results"),
     "data_card": ("DATA_CARD.md", "DATA_CARD.md"),
     "model_card": ("MODEL_CARD.md", "MODEL_CARD.md"),

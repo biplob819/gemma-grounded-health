@@ -43,7 +43,7 @@ def served_note(model: str = SERVED_MODEL) -> str:
 def footer(local: bool = True, model: str = SERVED_MODEL) -> str:
     links = f"{md('benchmark')} · {md('hf_model')} · {md('hf_gguf')} · {md('repo')}"
     if local:  # OWNER D-63: the demo that ships
-        return f"{served_note(model)} {links}. {BANNER}"
+        return f"{served_note(model)} {md('parity')} · {links}. {BANNER}"
     return (
         "Runs on Hugging Face ZeroGPU, which has a free daily quota per visitor: if it runs out, "
         "the samples still work. The demo runs the merged bf16 weights; the benchmark scores the "

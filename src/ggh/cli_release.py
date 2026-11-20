@@ -172,6 +172,11 @@ def _ollama(root: Path, owner: str, record_json: str | None) -> int:  # pragma: 
 
 
 def _cmd_space(args: argparse.Namespace) -> int:  # pragma: no cover - starts a server
+    import logging
+
+    # SPC-05: the demo's own outcome lines (an outcome word and a latency) go to stderr, so a
+    # run's log shows what was logged; nothing a visitor types is ever in them
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
     from ggh.release import sources
     from ggh.serve import llama
     from ggh.space import app, passkey, ui
