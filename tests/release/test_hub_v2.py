@@ -151,7 +151,9 @@ def test_every_hash_is_the_committed_record(repo):  # HUB-02
     p = make_plan(repo)
     export = read_manifest(repo / hub.LINEAGE_COPIES / "export_ft2.json")
     train = read_manifest(repo / hub.LINEAGE_COPIES / "train_v2.json")
-    records = {r["path"]: r["sha256"] for r in json.loads((repo / RECORDS).read_text())}
+    records = {
+        r["path"]: r["sha256"] for r in json.loads((repo / RECORDS).read_text(encoding="utf-8"))
+    }
     for f in p.files:
         if f.local.startswith(MERGED_DIR) and f.path_in_repo in MERGED:
             assert f.sha256 == export.outputs[f.local] == sha256_file(repo / f.local)
@@ -314,7 +316,7 @@ def test_cli_defaults_to_v2_and_never_pushes_on_a_dry_run(monkeypatch, capsys, t
     assert "release v2 (gemma-e2b-grounded-v2-q4)" in out
     assert "dry run, nothing pushed" in out and "secret-value-123" not in out
     assert "artifacts/gguf/ft2-Q4_K_M.gguf" in out and "artifacts/gguf/ft-Q4_K_M.gguf" not in out
-    assert json.loads(out_json.read_text())["release"] == "v2"
+    assert json.loads(out_json.read_text(encoding="utf-8"))["release"] == "v2"
     assert code in (0, 2)  # 2 without artifacts/ (CI): the plan lists missing files
 
 
@@ -339,7 +341,9 @@ def test_committed_plan_matches_the_records():
     assert d["release"] == "v2" and d["problems"] == [] and d["ready"]
     export = read_manifest(ROOT / hub.LINEAGE_COPIES / "export_ft2.json").outputs
     train = read_manifest(ROOT / hub.LINEAGE_COPIES / "train_v2.json").outputs
-    records = {r["path"]: r["sha256"] for r in json.loads((ROOT / RECORDS).read_text())}
+    records = {
+        r["path"]: r["sha256"] for r in json.loads((ROOT / RECORDS).read_text(encoding="utf-8"))
+    }
     produced = {**export, **train}
     seen = 0
     for f in d["files"]:
