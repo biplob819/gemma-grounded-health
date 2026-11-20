@@ -2,7 +2,7 @@
 D-37), in one place. A link that does not exist yet is `None` and renders as a visible
 placeholder; R4.2 to R4.5 filled them in as each thing was published. Two R4.5 links point at
 pages that go live with an outward step the builder takes after the merge: the v1.0.0 GitHub
-release (the tag) and the EvalKit report page (live once EvalKit PR #1 merges). The write-up
+release (the tag; R4.5). EvalKit PR #1 merged and its report page is live (R4.4). The write-up
 (P5.1) may stay pending. `tests/release/test_links.py` checks every link offline: https on an
 allowed host, and every local or repo path exists.
 """

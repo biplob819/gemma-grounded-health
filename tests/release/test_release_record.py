@@ -10,10 +10,9 @@ M = ROOT / "docs/measurements"
 OWNER = "biplob123"
 MAIN = f"{OWNER}/gemma-4-e2b-grounded-health"
 GGUF = f"{MAIN}-GGUF"
-# R4.5 regenerated both cards (known issue R4.2: `base_model_relation: finetune`, the prompt
-# format); the plan holds the new hashes and the Hub still the R4.2 ones until the builder
-# re-uploads the two cards. Empty this set once release_record_v2.json records the re-upload.
-AWAITING_REUPLOAD = {f"{MAIN}/README.md", f"{GGUF}/README.md"}
+# R4.5 regenerated both cards (known issue R4.2) and re-uploaded them under OWNER D-65; the record
+# holds the downloaded-back hashes, so nothing awaits re-upload
+AWAITING_REUPLOAD: set[str] = set()
 
 
 def _json(name):

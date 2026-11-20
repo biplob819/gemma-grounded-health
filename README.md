@@ -156,7 +156,7 @@ Generated from `ggh.release.links` (OWNER D-37); `tests/release/test_links.py` c
 - [Hugging Face model](https://huggingface.co/biplob123/gemma-4-e2b-grounded-health)
 - [Hugging Face GGUF](https://huggingface.co/biplob123/gemma-4-e2b-grounded-health-GGUF)
 - [Demo (local, recorded; OWNER D-63)](docs/assets/demo.gif)
-- [EvalKit report page (live once EvalKit PR #1 merges)](https://biplob819.github.io/evalkit/gemma/)
+- [EvalKit report page](https://biplob819.github.io/evalkit/gemma/)
 - [EvalKit upstream pull request](https://github.com/biplob819/evalkit/pull/1)
 - [Parity (Q4_K_M against the merged weights)](https://github.com/biplob819/gemma-grounded-health/blob/main/docs/measurements/v2/parity.json)
 - [Benchmark results](https://github.com/biplob819/gemma-grounded-health/tree/main/docs/results)

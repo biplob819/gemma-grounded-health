@@ -48,7 +48,7 @@ Caveats: gpt-6.1-sol: calibrated, held-out kappa 0.598 [0.468, 0.711] on 231 pub
 
 ## Artifacts
 
-Release `v2` (`gemma-e2b-grounded-v2-q4`), 20 files, 18,771,038,204 bytes, lineage verified from `artifacts/parity_v2/manifest.json` (5 stages), plan problems: 0. "published" means the file on the Hub was downloaded back with this sha256 (tag `v2.0.0`); 2 regenerated card(s) are re-uploaded at this release (known issue R4.2).
+Release `v2` (`gemma-e2b-grounded-v2-q4`), 20 files, 18,771,038,204 bytes, lineage verified from `artifacts/parity_v2/manifest.json` (5 stages), plan problems: 0. "published" means the file on the Hub was downloaded back with this sha256 (tag `v2.0.0`).
 
 | File | Size | sha256 | Hub |
 |---|---|---|---|
@@ -62,12 +62,12 @@ Release `v2` (`gemma-e2b-grounded-v2-q4`), 20 files, 18,771,038,204 bytes, linea
 | `biplob123/gemma-4-e2b-grounded-health/ggh_merge.json` | 4.07 KB | `558fbdbda2567142579e7b23cdb74e9f79bf8d509b032876e683600974a50cca` | published |
 | `biplob123/gemma-4-e2b-grounded-health/adapter/adapter_config.json` | 1.58 KB | `17c0c0526c410b1a2aecbf74d67594f8f5f961993b7c9d7a955341674274bcf9` | published |
 | `biplob123/gemma-4-e2b-grounded-health/adapter/adapter_model.safetensors` | 96.69 MB | `8ea0959ffae6cdc5122a5158112f84c6545857b64e6b4751825cc25a8ad9ee01` | published |
-| `biplob123/gemma-4-e2b-grounded-health/README.md` | 26.99 KB | `de6ae083ed3568882e2d181158b9144e47ad528b1198c9f467d44050b269cb3c` | re-upload pending |
+| `biplob123/gemma-4-e2b-grounded-health/README.md` | 26.99 KB | `de6ae083ed3568882e2d181158b9144e47ad528b1198c9f467d44050b269cb3c` | published |
 | `biplob123/gemma-4-e2b-grounded-health/results_bundle.json` | 107.17 KB | `2deb2e839756b392003c9775a83bc952d0ee6d532a09c189f73e2bf7eec93f56` | published |
 | `biplob123/gemma-4-e2b-grounded-health/lineage.json` | 8.05 KB | `1ddb6a73cfbcc125cf7b29debb951bffdece00ce2d255fdafadfaaff6c39c037` | published |
 | `biplob123/gemma-4-e2b-grounded-health-GGUF/gemma-4-e2b-grounded-health-Q4_K_M.gguf` | 3.43 GB | `6da2c13ee1a3b94c99f9107bb27f344539364cdad371caea4b1114ef91b5be45` | published |
 | `biplob123/gemma-4-e2b-grounded-health-GGUF/gemma-4-e2b-grounded-health-Q8_0.gguf` | 4.97 GB | `d581fb869346708a6d1fa6c2bd45da8b368a611ce6a18302ee4f8c0d4e2138a8` | published |
-| `biplob123/gemma-4-e2b-grounded-health-GGUF/README.md` | 1.88 KB | `d068032d2c1101b3d86665e4ab7f039f3fb9086ed62f4d5c9156b2c5e4f5a66a` | re-upload pending |
+| `biplob123/gemma-4-e2b-grounded-health-GGUF/README.md` | 1.88 KB | `d068032d2c1101b3d86665e4ab7f039f3fb9086ed62f4d5c9156b2c5e4f5a66a` | published |
 | `biplob123/gemma-4-e2b-grounded-health/LICENSE` | 11.36 KB | `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30` | published |
 | `biplob123/gemma-4-e2b-grounded-health-GGUF/LICENSE` | 11.36 KB | `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30` | published |
 | `biplob123/gemma-4-e2b-grounded-health/NOTICE` | 604 B | `808f130d75b533804bdf328dc5a530cbce3176af011d51e03edacd75a8f05ee3` | published |
@@ -99,7 +99,6 @@ From [Known issues](https://github.com/biplob819/gemma-grounded-health/blob/main
 - **R4.1.** v2's laptop generation p50 is 73.1 tokens/s against v1's 104.6 in the same bench session, while llama-bench tg128 is the same (129 vs 131) and answer lengths are similar; unexplained *Status:* Open; the card prints the measured numbers; re-run the bench on a quiet machine before R4.2
 - **R4.1.** The card's number test checks that each number exists in the bundle or its sources, not that it sits in the right place (it let a rotated audit figure through, since fixed and now pinned by its own test) *Status:* Open; targeted per-section checks for the audit and training data were added; a cell-by-cell check is future work
 - **R4.2.** Through Ollama, Gemma 4 thinks first unless run with `--think=false`, and Ollama samples at its default temperature, so its answers can differ from the benchmark's greedy ones (one sample: [9] vs llama-server's [8]) *Status:* Disclosed on the GGUF card with the `--think=false` command; the check runs thinking off
-- **R4.2.** The Hub shows the main repo as an adapter of `google/gemma-4-E2B-it` although it holds merged weights (the card front matter lacks `base_model_relation: finetune`), and the GGUF card does not say a JSON answer needs EvalKit's PubMedQA prompt *Status:* Open until the R4.5 re-upload: both cards fixed in the repo (`base_model_relation: finetune`, a "How to use" section with the prompt, a prompt-format line on the GGUF card; tests/release/test_card_fixes.py); the plan holds the new card hashes
 
 ## Links
 
@@ -108,7 +107,7 @@ From [Known issues](https://github.com/biplob819/gemma-grounded-health/blob/main
 - [Hugging Face model](https://huggingface.co/biplob123/gemma-4-e2b-grounded-health)
 - [Hugging Face GGUF](https://huggingface.co/biplob123/gemma-4-e2b-grounded-health-GGUF)
 - [Demo (local, recorded; OWNER D-63)](https://github.com/biplob819/gemma-grounded-health/blob/main/docs/assets/demo.gif)
-- [EvalKit report page (live once EvalKit PR #1 merges)](https://biplob819.github.io/evalkit/gemma/)
+- [EvalKit report page](https://biplob819.github.io/evalkit/gemma/)
 - [EvalKit upstream pull request](https://github.com/biplob819/evalkit/pull/1)
 - [Parity (Q4_K_M against the merged weights)](https://github.com/biplob819/gemma-grounded-health/blob/main/docs/measurements/v2/parity.json)
 - [Benchmark results](https://github.com/biplob819/gemma-grounded-health/tree/main/docs/results)
