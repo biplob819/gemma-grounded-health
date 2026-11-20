@@ -68,7 +68,9 @@ class LaptopBench(Model):
     llama_bench: FrozenMap[NonNegFloat]  # pp512, tg128
 
 
-Source = Annotated[str, StringConstraints(pattern=r"^(?:(?:evalkit|ggh):\S+|owner_review)$")]
+Source = Annotated[
+    str, StringConstraints(pattern=r"^(?:(?:evalkit|ggh):\S+|owner_review|model_review)$")
+]
 
 
 class BehaviourRow(Model):
@@ -83,6 +85,75 @@ class BehaviourRow(Model):
 
 Version = Literal["v1", "v2"]
 Finding = Literal["ok", "model_fault", "pipeline_fault", "unclear"]
+
+
+CalibrationStamp = Literal["calibrated", "below_bar", "not_stampable_self_reference"]
+
+
+class GemmaFamilyAgreement(Model):
+    """One judge on the 40 Gemma-answer claims (OWNER D-24), from gemma_family_report.json."""
+
+    run: NonBlank  # the GGH run the claims were drawn from (main_v2)
+    run_id: NonBlank
+    judge_prompt_hash: NonBlank
+    n_claims: PosInt
+    coverage: Prob
+    agreement: Prob
+    kappa: Interval
+    by_model: FrozenMap[Prob]
+    source: NonBlank
+
+
+class JudgeCalibration(Model):
+    """One judge's calibration against the reference labels (OWNER D-24, D-59, D-60), read from
+    the committed copy of EvalKit's `calibration.json`. `status` follows from the numbers:
+    the reference labeller's own model is never stamped (it would be agreeing with itself);
+    any other judge is stamped exactly when its held-out kappa's 95% lower bound reaches
+    `bar`. A judge under the bar keeps its numbers published, with the miss disclosed."""
+
+    judge: NonBlank
+    task: NonBlank  # the EvalKit task the calibration covers ("pubmedqa")
+    judge_prompt_hash: NonBlank
+    split: Literal["heldout"]
+    n_claims: PosInt
+    coverage: Prob
+    agreement: Prob
+    kappa: Interval
+    bar: Prob  # the kappa lower bound needed (OWNER D-59: 0.4)
+    meets_bar: bool
+    reference_labeller: NonBlank  # who made the labels, as reports must say (OWNER D-60)
+    reference_model: NonBlank  # the labeller's model id, for the self-reference rule
+    status: CalibrationStamp
+    wording: NonBlank  # the sentence reports print
+    source: NonBlank  # the committed calibration file
+    scored_at: NonBlank
+    gemma_family: GemmaFamilyAgreement | None = None
+
+    @model_validator(mode="after")
+    def _status_follows_the_rule(self) -> JudgeCalibration:
+        if self.meets_bar != (self.kappa.lo >= self.bar):
+            raise ValueError("meets_bar must say whether the kappa lower bound reaches the bar")
+        if self.judge == self.reference_model:
+            want = "not_stampable_self_reference"
+        else:
+            want = "calibrated" if self.meets_bar else "below_bar"
+        if self.status != want:
+            raise ValueError(f"status {self.status!r} contradicts OWNER D-59/D-60 ({want})")
+        return self
+
+
+class LabellerConsistency(Model):
+    """The reference labeller's 20-answer relabel (OWNER D-24, D-60), from labeller.json."""
+
+    labeller: NonBlank
+    prompt: NonBlank
+    prompt_sha256: Sha256
+    claims: PosInt
+    answers: PosInt
+    identical: NonNegInt
+    kappa: Interval
+    method: NonBlank
+    source: NonBlank
 
 
 class RunRef(Model):
@@ -104,6 +175,11 @@ class RunRef(Model):
     # the claim extractor, from the release's plan or the EvalKit config it names (E3.2: Claude
     # Haiku 5.5; V2.2, OWNER D-57: GPT-6 Luna), so numbers from different set-ups stay labelled
     extractor: NonBlank | None = None
+    # `calibration_status` above is EvalKit's stamp in the committed summary, copied as is
+    # (OWNER D-59: summaries are never rewritten). The bundle's own stamp is per judge, in
+    # ResultsBundle.calibration; a run whose task a `pubmedqa` calibration cannot cover
+    # (off-scope, probe) is exempt from it, and this says so.
+    calibration_exempt: NonBlank | None = None
 
 
 class ModelResult(Model):
@@ -185,6 +261,10 @@ class ReleaseEntry(Model):
     parity: ParityReport | None = None  # judged_headline_delta: bf16 minus Q4_K_M, per judge
     probe: ProbeResult | None = None
     artifacts: tuple[ExportArtifact, ...]
+    # the judges the release's primary comparisons rely on (v1: Opus and Sol; v2, OWNER D-57:
+    # Sol), and "calibrated" only when every one of them is stamped and Gemma-family checked
+    calibration_judges: tuple[NonBlank, ...] = ()
+    calibration_status: Literal["calibrated", "uncalibrated"] = "uncalibrated"
 
 
 class CitedSentenceVerdict(Model):
@@ -226,9 +306,16 @@ class SampleReadRow(Model):
     finding: Finding | None = None
     note: str = ""
     read_by: NonBlank | None = None
+    # a pipeline fault stops publication until this names its committed explanation:
+    # "<path under docs/>#<section>: <what it is and what it changes>"
+    explanation: str = ""
 
     @model_validator(mode="after")
     def _fault_needs_a_note(self) -> SampleReadRow:
+        if self.explanation and self.finding != "pipeline_fault":
+            raise ValueError("only a pipeline fault takes an explanation")
+        if self.explanation and not self.explanation.startswith("docs/"):
+            raise ValueError("an explanation names the committed file that explains the fault")
         if self.finding in ("pipeline_fault", "model_fault", "unclear") and not self.note.strip():
             raise ValueError(f"a {self.finding} finding needs a note")
         if self.finding is not None and self.read_by is None:
@@ -254,8 +341,14 @@ class ResultsBundle(Model):
     evalkit_run_ids: tuple[NonBlank, ...]
     evalkit_version: NonBlank
     judge_mode: Literal["dual", "single"]
+    # "calibrated" only when every release in the bundle is (each release's own stamp is on
+    # its ReleaseEntry; each judge's on `calibration`)
     calibration_status: Literal["calibrated", "uncalibrated"]
-    gemma_family_check: FrozenMap[Prob] | None = None  # judge -> agreement on Gemma claims
+    # judge -> agreement on Gemma claims, set only with the bundle's `calibrated` stamp (the
+    # per-judge numbers are always in `calibration[].gemma_family`)
+    gemma_family_check: FrozenMap[Prob] | None = None
+    calibration: tuple[JudgeCalibration, ...] = ()  # one per judge of the pubmedqa runs
+    labeller_consistency: LabellerConsistency | None = None
     summary_paths: tuple[NonBlank, ...]
     runs: tuple[RunRef, ...]
     releases: tuple[ReleaseEntry, ...]
@@ -279,6 +372,25 @@ class ResultsBundle(Model):
     def _consistent(self) -> ResultsBundle:
         if self.calibration_status == "calibrated" and not self.gemma_family_check:
             raise ValueError("calibrated results need the Gemma-family judge check (OWNER D-24)")
+        judges = {c.judge: c for c in self.calibration}
+        if len(judges) != len(self.calibration):
+            raise ValueError("calibration must hold one entry per judge")
+        for rel in self.releases:
+            if rel.calibration_status != "calibrated":
+                continue
+            if not rel.calibration_judges:
+                raise ValueError(f"{rel.version} is calibrated but names no judges")
+            for j in rel.calibration_judges:
+                c = judges.get(j)
+                if c is None or c.status != "calibrated" or c.gemma_family is None:
+                    raise ValueError(
+                        f"{rel.version} is calibrated but {j} is not stamped and Gemma-family "
+                        "checked (OWNER D-24, D-59, D-60)"
+                    )
+        if self.calibration_status == "calibrated":
+            loose = [r.version for r in self.releases if r.calibration_status != "calibrated"]
+            if loose:
+                raise ValueError(f"the bundle is calibrated but {', '.join(loose)} is not")
         if self.lineage_ok == bool(self.lineage_problems):
             raise ValueError("lineage_ok must be true exactly when lineage_problems is empty")
         names = {r.name for r in self.runs}

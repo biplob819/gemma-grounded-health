@@ -10,7 +10,7 @@ is regenerated from it.
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Any
 
@@ -33,6 +33,17 @@ BASE_MODEL_NAME = "gemma-e2b-base-q4"
 FT_MODEL_NAME = "gemma-e2b-grounded-q4"  # v1's name; the default is the shipped release's model
 
 
+# each release's training inputs: (recipe, targets lineage manifest, targets drop report)
+SHIPPED_INPUTS: dict[str, tuple[Path, Path, Path]] = {
+    "v1": (RECIPE, TARGETS_LINEAGE, TARGETS_REPORT),
+    "v2": (
+        Path("configs") / "recipe_v2.yaml",
+        Path("docs") / "measurements" / "lineage" / "targets_v2.json",
+        TARGETS_REPORT,
+    ),
+}
+
+
 class SourceError(ValueError):
     """A release input that is missing, unreadable or does not match its recorded hash."""
 
@@ -43,9 +54,10 @@ class Paths:
 
     bundle: Path = BUNDLE
     data_manifest: Path = DATA_MANIFEST
-    targets_report: Path = TARGETS_REPORT
-    targets_lineage: Path = TARGETS_LINEAGE
-    recipe: Path = RECIPE
+    # None: the shipped release's own inputs (SHIPPED_INPUTS); a path given overrides
+    targets_report: Path | None = None
+    targets_lineage: Path | None = None
+    recipe: Path | None = None
     base_model: str = BASE_MODEL_NAME
     ft_model: str | None = None  # None: the bundle's shipped release model (--ft-model overrides)
 
@@ -145,6 +157,19 @@ def load(root: Path, paths: Paths | None = None) -> Sources:
     p = paths or Paths()
     bundle_path = root / p.bundle
     bundle = load_bundle(bundle_path)
+    version = bundle.shipped.version
+    if version not in SHIPPED_INPUTS and None in (p.recipe, p.targets_lineage, p.targets_report):
+        raise SourceError(f"no default training inputs for release {version}; pass them")
+    recipe_d, lineage_d, report_d = SHIPPED_INPUTS.get(
+        version, (RECIPE, TARGETS_LINEAGE, TARGETS_REPORT)
+    )
+    p = replace(
+        p,
+        recipe=p.recipe or recipe_d,
+        targets_lineage=p.targets_lineage or lineage_d,
+        targets_report=p.targets_report or report_d,
+    )
+    assert p.recipe and p.targets_lineage and p.targets_report
     raw: dict[str, Any] = {"bundle": _read_json(bundle_path)}
     summaries: list[tuple[str, RunSummary]] = []
     for rel in bundle.summary_paths:

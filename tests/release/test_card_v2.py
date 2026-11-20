@@ -20,7 +20,14 @@ def src(tmp_path_factory):
     root = fake.copy_repo(tmp_path_factory.mktemp("v2card"))
     fake.add_v2(root)
     B.write(root, B.build(root))
-    return sources.load(root, sources.Paths())
+    # the synthetic v2 copies v1's training run (tests/results/fake.py), so it trained on v1's
+    # recipe and targets; the real v2's own inputs are sources.SHIPPED_INPUTS["v2"]
+    paths = sources.Paths(
+        recipe=sources.RECIPE,
+        targets_lineage=sources.TARGETS_LINEAGE,
+        targets_report=sources.TARGETS_REPORT,
+    )
+    return sources.load(root, paths)
 
 
 @pytest.fixture(scope="module")

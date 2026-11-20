@@ -17,8 +17,8 @@ v1 cited the study's aim instead of its results in more than half its answers, s
 | Gemma v2 | 0.329 | 0.736 | **0.084** | 0.678 |
 
 - **v2 vs v1:** citation precision +0.374 and aim-citation rate −0.476, both separated; headline −0.002, a tie.
-- **v2 vs base:** aim-citation rate −0.054, separated (v2 better); citation precision a tie; headline −0.075, separated (base better).
-- Six pre-registered tests, paired bootstrap, Holm-corrected. About half of v2's claims still go beyond the sentence it cites, which is why the headline did not move.
+- **v2 vs base:** headline −0.075, separated (base better). On citations the pre-registered tests give aim-citation rate −0.054, separated in v2's favour, and citation precision a tie, but these depend on how the judge reads base's many answers that only restate the study's aim: the citation check marks the aim sentence as not supporting even when the claim is the aim itself. Counted the other way (a post-hoc check, [`aim_rule_check.json`](docs/measurements/aim_rule_check.json)), base is better than v2 on both. So v2 does not beat base on citations; it matches base's citation quality while v1 did not (OWNER D-62).
+- Six pre-registered tests, paired bootstrap, Holm-corrected. The v2-vs-v1 results hold under either count. About half of v2's claims still go beyond the sentence it cites, which is why the headline did not move.
 - **How it was scored:** GPT-6 Luna extracted claims and GPT-6.1 Sol judged them (OWNER D-57: the Anthropic API credit ran out, so V2.2 ran on OpenAI only). Base and v1 answers come from EvalKit's cache, byte-identical to the v1 run, and were re-scored the same way. Sol's agreement with a Claude Opus 5.5 reference labeller is kappa 0.60 [0.47, 0.71] on held-out claims (OWNER D-59, D-60; the labels are a model's, not a human expert's).
 
 ![v1 and v2 give the same answer to "Is there a connection between sublingual varices and hypertension?", but v1 cites sentence 2, the study's aim, which GPT-6.1 Sol marks as not supporting the claim, while v2 cites sentence 11, the result (OR 2.25, p<0.002), which it marks as supporting](docs/assets/screenshots/v1_vs_v2_citation.png)

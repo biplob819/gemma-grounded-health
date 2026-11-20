@@ -15,7 +15,10 @@ from tests.results import fake
 
 @pytest.fixture
 def root(tmp_path):
-    return fake.copy_repo(tmp_path)
+    root = fake.copy_repo(tmp_path)
+    for sheet in (root / "docs/measurements").glob("sample_read_*.jsonl"):
+        sheet.unlink()  # these tests draw and fill their own sheets
+    return root
 
 
 def test_draw_is_seeded_20_per_model_with_cited_sentences_and_verdicts(root):
@@ -70,3 +73,21 @@ def test_a_fault_needs_a_note_and_a_reader():
         SampleReadRow.model_validate({**d, "note": " "})
     with pytest.raises(ValidationError, match="needs read_by"):
         SampleReadRow.model_validate({**d, "finding": "ok", "read_by": None})
+
+
+def test_an_explained_pipeline_fault_stops_blocking_only_with_a_committed_explanation(root):
+    S.write_sheet(root, Run(root, "main"))
+    path = S.sheet_path(root, "main")
+    _fill(path, finding="pipeline_fault", note="claims split mid-sentence")
+    rows = [json.loads(x) for x in path.read_text(encoding="utf-8").splitlines()]
+    for r in rows:
+        r["explanation"] = "docs/measurements/nowhere.md#x: not committed"
+    path.write_text("".join(json.dumps(r) + "\n" for r in rows), encoding="utf-8")
+    blockers = "\n".join(B.build(root).bundle.publish_blockers)
+    assert "not committed" in blockers and "pipeline fault on" not in blockers
+    (root / "docs/measurements/nowhere.md").write_text("# x\n", encoding="utf-8")
+    assert not any("sample_read" in b for b in B.build(root).bundle.publish_blockers)
+    with pytest.raises(ValidationError, match="names the committed file"):
+        SampleReadRow.model_validate({**rows[0], "explanation": "see notes"})
+    with pytest.raises(ValidationError, match="only a pipeline fault"):
+        SampleReadRow.model_validate({**rows[0], "finding": "ok", "explanation": "docs/x.md"})

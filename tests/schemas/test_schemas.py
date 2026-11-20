@@ -237,7 +237,7 @@ def test_calibrated_bundle_requires_the_gemma_family_check():
 
 def test_behaviour_row_source_format():
     d = load("BehaviourRow")
-    for good in ("evalkit:citation_valid", "ggh:b8", "owner_review"):
+    for good in ("evalkit:citation_valid", "ggh:b8", "owner_review", "model_review"):
         d["source"] = good
         schemas.BehaviourRow.model_validate(d)
     d["source"] = "somebody"
