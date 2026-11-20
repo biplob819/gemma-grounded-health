@@ -165,6 +165,18 @@ def test_behaviour_table_covers_b1_to_b8_for_every_model_with_sources(real):
     }
     b5 = {r.model for r in rows if r.rule == "B5" and r.run == "main_v2"}
     assert b5 == set(v2_models)
+    # OWNER D-61: every model-review row names its reviewer and committed prompt (R4.1)
+    for r in rows:
+        if r.source == "model_review":
+            assert r.reviewer and r.reviewer.startswith("claude-opus-5-5 (blind subagent"), r
+            want = (
+                "configs/sample_read_prompt.md"
+                if r.rule == "B5"
+                else ("configs/offscope_review_prompt.md")
+            )
+            assert r.review_prompt == want, r
+        else:
+            assert r.reviewer is None and r.review_prompt is None, r
     md = real.behaviour_md
     assert "| B7 | citation_precision:claude-opus-5-5 |" in md
     heads = [x for x in md.splitlines() if x.startswith("### ")]
@@ -299,7 +311,14 @@ def test_r4_flat_fields_read_from_the_shipped_release(real, v2):
         b = built.bundle
         assert b.train == b.releases[-1].train and b.artifacts == b.releases[-1].artifacts
         assert b.audit_pass_rate == b.releases[-1].audits[-1].pass_rate
-        assert b.bench.quant == "Q4_K_M" and {"ft-Q4_K_M", "base-Q4_K_M"} <= set(b.bench_variants)
+        assert b.bench.quant == "Q4_K_M" and b.bench == b.releases[-1].bench
+    # each release quotes its own laptop bench; the shipped one is v2's (R4.1)
+    v1, v2 = real.bundle.releases
+    assert v1.bench_source == "docs/measurements/laptop_bench.json#ft-Q4_K_M"
+    assert v2.bench_source == "docs/measurements/v2/laptop_bench.json#ft2-Q4_K_M"
+    v2_file = json.loads((ROOT / "docs/measurements/v2/laptop_bench.json").read_text("utf-8"))
+    assert real.bundle.bench.model_dump() == v2_file["variants"]["ft2-Q4_K_M"]
+    assert {"ft2-Q4_K_M", "ft-Q4_K_M"} <= set(real.bundle.bench_variants)
     p = real.bundle.parity  # the shipped release's: the real v2, under Sol alone
     assert p and p.judged_headline_delta and set(p.judged_headline_delta) == {SOL}
     assert p == real.bundle.releases[1].parity

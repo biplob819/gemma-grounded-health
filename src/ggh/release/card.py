@@ -18,8 +18,8 @@ import yaml
 from evalkit.pipeline.aggregate import stamp_lines
 from evalkit.schemas import Interval, RunSummary
 
-from ggh.release.sources import Sources
-from ggh.schemas import Comparison, ReleaseEntry, RunRef
+from ggh.release.sources import AIM_CHECK, LICENCE_RECORD, Sources
+from ggh.schemas import BehaviourRow, Comparison, LaptopBench, ReleaseEntry, RunRef
 
 TEMPLATE = Path(__file__).parent / "templates" / "model_card.md"
 HUB_LICENSE = "apache-2.0"
@@ -224,25 +224,227 @@ def benchmark(src: Sources) -> str:
     return "\n".join([*lines, *earlier_tables(src)])
 
 
+# model ids as reports name them (OWNER D-60, D-61: say which model labelled or reviewed)
+DISPLAY = {"claude-opus-5-5": "Claude Opus 5.5", "gpt-6.1-sol": "GPT-6.1 Sol"}
+
+
+def display(model_or_note: str) -> str:
+    """ "claude-opus-5-5 (blind subagent, ...)" -> "Claude Opus 5.5"."""
+    head = model_or_note.split(" ", 1)[0]
+    return DISPLAY.get(head, head)
+
+
+def evalkit_stamps(src: Sources) -> list[str]:
+    """EvalKit's caveats for the shipped run. A release GGH stamps calibrated (OWNER D-59)
+    drops EvalKit's per-run "not calibrated" line: the committed summary keeps it (summaries
+    are never rewritten), but it is not the release's status."""
+    main = src.main()
+    if src.bundle.shipped.calibration_status == "calibrated":
+        main = main.model_copy(update={"calibration_status": "calibrated"})
+    return stamp_lines(main)
+
+
+def calibration_lines(src: Sources) -> list[str]:
+    """The shipped release's stamp and each judge's calibration, worded as the bundle words it
+    (OWNER D-59, D-60): the reference labels are a model's, the labeller's own model is
+    reported and never stamped."""
+    b, rel = src.bundle, src.bundle.shipped
+    v = rel.version
+    if not b.calibration:
+        return [f"- Calibration: **{b.calibration_status}**."]
+    relied = " and ".join(f"`{j}`" for j in rel.calibration_judges) or "no judge"
+    lines = [
+        f"- Calibration of {v}: **{rel.calibration_status}**. The stamp covers the judges "
+        f"{v}'s pre-registered comparisons rely on ({relied}) and is given only when each "
+        "is calibrated (OWNER D-59). Per judge, as the results bundle records it:"
+    ]
+    judges_now = set(src.ref(src.main()).judges)
+    order = sorted(b.calibration, key=lambda c: (c.judge not in rel.calibration_judges, c.judge))
+    for c in order:
+        note = "" if c.judge in judges_now else f" (not a judge of {v}'s runs)"
+        lines.append(f"  - {c.wording}{note}.")
+    lc = b.labeller_consistency
+    if lc is not None:
+        lines.append(
+            f"- Reference labeller consistency: {display(lc.labeller)} relabelled {lc.answers} "
+            f"answers ({lc.claims} claims) under `{lc.prompt}`: {lc.identical} labels "
+            f"identical, kappa {iv(lc.kappa)} (OWNER D-60)."
+        )
+    if b.gemma_family_check and not any(c.gemma_family for c in b.calibration):
+        checks = ", ".join(f"{j} {f3(a)}" for j, a in sorted(b.gemma_family_check.items()))
+        lines.append(
+            "- Gemma-family judge check (agreement with the reference labels on claims from "
+            f"Gemma answers, OWNER D-24, D-60): {checks}."
+        )
+    return lines
+
+
 def stamps(src: Sources) -> str:
     b = src.bundle
     main = src.main()
     ref = next((r for r in b.runs if r.run_id == main.run_id), None)
     mode = ref.judge_mode if ref is not None else b.judge_mode
-    lines = [f"- Judge mode: **{mode}**. Calibration: **{b.calibration_status}**."]
+    lines = [f"- Judge mode: **{mode}**."]
     if ref is not None and src.earlier():
         lines.append(f"- {b.shipped.version} scoring: {scoring(ref)}.")
-    lines += [f"- ⚠ {s}" for s in stamp_lines(main)]
-    if b.gemma_family_check:
-        checks = ", ".join(f"{j} {f3(a)}" for j, a in sorted(b.gemma_family_check.items()))
-        lines.append(f"- Gemma-family judge check (agreement on owner-labelled claims): {checks}.")
+    lines += calibration_lines(src)
+    lines += [f"- ⚠ {s}" for s in evalkit_stamps(src)]
+    if b.shipped.calibration_status == "calibrated" and main.calibration_status != "calibrated":
+        lines.append(
+            "- The committed EvalKit summaries keep EvalKit's own per-run stamp (\"judge not "
+            "calibrated for this task\"): they are never rewritten (OWNER D-59). The release's "
+            "stamp above is GGH's, read from EvalKit's calibration run."
+        )
+    own = set(b.shipped.runs)
+    for r in b.runs:
+        if r.name in own and r.calibration_exempt:
+            lines.append(f"- `{r.name}`: {r.calibration_exempt}.")
     return "\n".join(lines)
 
 
-def _verdict(c: Comparison) -> str:
+def _verdict(c: Comparison, note: str = "") -> str:
     if c.verdict == "tie":
-        return "tie (not separated)"
-    return f"{c.model_a if c.verdict == 'a_better' else c.model_b} better"
+        return f"tie (not separated{'; ' + note if note else ''})"
+    who = c.model_a if c.verdict == "a_better" else c.model_b
+    return f"{who} better" + (f" ({note})" if note else "")
+
+
+METRIC_NAME = {
+    "headline": "correct and fully grounded",
+    "citation_precision": "citation precision",
+    "aim_citation_rate": "aim-citation rate",
+}
+AIM_NOTE = "depends on the aim rule, OWNER D-62"
+
+
+def _ckey(model_a: str, model_b: str, metric: str, judge: str | None) -> tuple[str, ...]:
+    return (model_a, model_b, metric, judge or "")
+
+
+def aim_corrected(src: Sources) -> dict[tuple[str, ...], Comparison]:
+    """OWNER D-62's post-hoc family for the shipped release's primary run, as comparisons."""
+    if src.aim_check is None:
+        return {}
+    run = src.release_main(src.bundle.shipped)
+    name = src.ref(run).name
+    rows = ((src.aim_check.get("family") or {}).get(name) or {}).get("corrected") or []
+    out: dict[tuple[str, ...], Comparison] = {}
+    for t in rows:
+        c = Comparison.model_validate(
+            {
+                **t,
+                "plan": src.bundle.shipped.plan,
+                "run": name,
+                "method": "plan_family",
+                "verdict": _verdict_of(t["separated"], t["diff"]["point"], t["better"]),
+            }
+        )
+        out[_ckey(c.model_a, c.model_b, c.metric, c.judge)] = c
+    return out
+
+
+def _verdict_of(separated: bool, point: float, better: str) -> str:
+    a_ahead = point > 0 if better == "higher" else point < 0
+    return "tie" if not separated else ("a_better" if a_ahead else "b_better")
+
+
+def aim_dependent(src: Sources) -> set[tuple[str, ...]]:
+    """The primary comparisons whose verdict changes under the post-hoc count (OWNER D-62)."""
+    corrected = aim_corrected(src)
+    return {
+        k
+        for c in src.bundle.primary_comparisons
+        if (k := _ckey(c.model_a, c.model_b, c.metric, c.judge)) in corrected
+        and corrected[k].verdict != c.verdict
+    }
+
+
+def aim_outcome(src: Sources) -> tuple[list[str], list[str]]:
+    """Under the post-hoc count: the citation outcomes on which base beats the shipped model,
+    and the other opponents whose every verdict is unchanged (OWNER D-62)."""
+    corrected, flips = aim_corrected(src), aim_dependent(src)
+    shipped = src.bundle.shipped
+    base, ft = src.paths.base_model, shipped.model
+    comps = [c for c in src.bundle.primary_comparisons if c.plan == shipped.plan]
+    worse = [
+        METRIC_NAME.get(c.metric, c.metric)
+        for c in corrected.values()
+        if c.model_a == ft
+        and c.model_b == base
+        and c.metric != "headline"
+        and c.verdict == "b_better"
+    ]
+    others = list(dict.fromkeys(c.model_b for c in comps if c.model_b != base))
+    held = [
+        m
+        for m in others
+        if all(
+            _ckey(c.model_a, c.model_b, c.metric, c.judge) not in flips
+            for c in comps
+            if c.model_b == m
+        )
+    ]
+    return worse, held
+
+
+def aim_rule(src: Sources) -> str:
+    """OWNER D-62: the shipped release's citation results against base depend on how the judge
+    applies the citation rubric's aim rule; the post-hoc count and what it changes."""
+    aim, corrected = src.aim_check, aim_corrected(src)
+    if aim is None or not corrected:
+        return ""
+    shipped = src.bundle.shipped
+    comps = [c for c in src.bundle.primary_comparisons if c.plan == shipped.plan]
+    flips = aim_dependent(src)
+    base, ft = src.paths.base_model, shipped.model
+    run = src.ref(src.release_main(shipped)).name
+    cites = (aim.get("citation") or {}).get(run) or {}
+    moved = []
+    for j, d in sorted((cites.get(base) or {}).items()):
+        pub, cor = d["published"], d["corrected"]
+        moved.append(
+            f"under `{j}` it moves `{base}`'s aim-citation rate from "
+            f"{f3(pub['aim_citation_rate'])} to {f3(cor['aim_citation_rate'])} and its citation "
+            f"precision from {f3(pub['citation_precision'])} to "
+            f"{f3(cor['citation_precision'])}"
+        )
+    worse, held = aim_outcome(src)
+    holds = [f"`{ft}` against `{m}`" for m in held]
+    text = [
+        f"The {shipped.version}-vs-base citation results depend on how the judge applies the "
+        f"citation check's aim rule (EvalKit citation rubric `{aim.get('citation_rubric_hash')}`: "
+        "a sentence that only states an aim does not establish a claim). The judge applies it "
+        "even to claims that only restate the study's aim, while the claim judge cites that "
+        "sentence as evidence. This is not a code bug, and the pre-registered numbers above "
+        "stay as measured (OWNER D-62).",
+        "",
+        "A post-hoc count made after the results were read "
+        f"(`{AIM_CHECK.as_posix()}`) treats such aim sentences as supporting: "
+        + "; ".join(moved)
+        + (f", and `{base}` is then better than `{ft}` on {' and '.join(worse)}." if worse else ".")
+        + f" So this card does not claim that {shipped.version} beats base on citations."
+        + (f" The results of {', '.join(holds)} hold under both counts." if holds else ""),
+        "",
+    ]
+    rows = []
+    for c in comps:
+        k = _ckey(c.model_a, c.model_b, c.metric, c.judge)
+        cor = corrected.get(k)
+        if cor is None:
+            continue
+        rows.append(
+            [
+                f"{c.model_a} minus {c.model_b}",
+                c.metric + (" (lower is better)" if c.better == "lower" else ""),
+                c.judge or "–",
+                f"{iv(c.diff)}, {_verdict(c, AIM_NOTE if k in flips else '')}",
+                f"{iv(cor.diff)}, {_verdict(cor)}",
+            ]
+        )
+    text.append(
+        table(["Comparison", "Outcome", "Judge", "Pre-registered count", "Post-hoc count"], rows)
+    )
+    return "\n".join(text)
 
 
 def primary_table(src: Sources) -> str:
@@ -254,6 +456,7 @@ def primary_table(src: Sources) -> str:
     comps = [c for c in src.bundle.primary_comparisons if c.plan == shipped.plan]
     if not comps:
         return "No pre-registered comparison is recorded in this bundle."
+    flips = aim_dependent(src)
     rows = [
         [
             f"{c.model_a} minus {c.model_b}",
@@ -261,7 +464,9 @@ def primary_table(src: Sources) -> str:
             c.judge or "–",
             iv(c.diff),
             value(c.p_value),
-            _verdict(c),
+            _verdict(
+                c, AIM_NOTE if _ckey(c.model_a, c.model_b, c.metric, c.judge) in flips else ""
+            ),
         ]
         for c in comps
     ]
@@ -273,12 +478,16 @@ def primary_table(src: Sources) -> str:
         sizes = sorted({c.family_size for c in comps if c.family_size})
         holm = f" Holm runs over the plan's {sizes[0]} tests." if len(sizes) == 1 else ""
         family = f" Every model on both sides was scored the same way: {how}.{holm}"
-    return (
+    out = (
         f"From `{shipped.plan}` ({shipped.plan_status}). Differences with 95% paired bootstrap "
         "intervals on shared cases; a gap is separated only under the plan's Holm-corrected "
         f"rule, otherwise it is a tie (Tech Spec §7.4).{family}\n\n"
         + table(["Comparison", "Outcome", "Judge", "Difference", "p", "Verdict"], rows)
     )
+    aim = aim_rule(src)
+    if aim:
+        out += f"\n\n#### Citation results and the aim rule (OWNER D-62)\n\n{aim}"
+    return out
 
 
 def secondary_table(src: Sources) -> str:
@@ -303,13 +512,20 @@ def secondary_table(src: Sources) -> str:
     )
 
 
+def _bvalue(r: Any) -> str:
+    """A count (B8's advice answers) prints as an integer, everything else as `value`."""
+    if r.metric == "gives_advice_count" and isinstance(r.value, (int, float)):
+        return f"{r.value:.0f}"
+    return value(r.value)
+
+
 def behaviour_table(src: Sources) -> str:
     """B1-B8. With earlier releases in the bundle, only the shipped release's runs are shown,
     each row with its run and each run with its extractor and judges, so v1's rows (another
     extractor and other judges) are never mixed in unlabelled; they stay in the bundle."""
     if not src.earlier():
         rows = [
-            [r.rule, r.model, r.metric, value(r.value), str(r.n), f"`{r.source}`"]
+            [r.rule, r.model, r.metric, _bvalue(r), str(r.n), f"`{r.source}`"]
             for r in src.bundle.behaviour
         ]
         if not rows:
@@ -325,24 +541,81 @@ def behaviour_table(src: Sources) -> str:
     how = "; ".join(f"`{n}`: {scoring(refs[n])}" for n in used if n in refs)
     earlier = ", ".join(r.version for r in src.earlier())
     rows = [
-        [r.rule, r.model, r.metric, value(r.value), str(r.n), f"`{r.run}`", f"`{r.source}`"]
+        [r.rule, r.model, r.metric, _bvalue(r), str(r.n), f"`{r.run}`", f"`{r.source}`"]
         for r in picked
     ]
-    return (
+    out = (
         f"{shipped.version}'s runs ({how}). The rows of {earlier} are in the results bundle "
         "under their own runs.\n\n"
         + table(["Rule", "Model", "Metric", "Value", "n", "Run", "Source"], rows)
     )
+    review = model_review(src, picked)
+    return out + ("\n\n" + review if review else "")
+
+
+def model_review(src: Sources, rows: Sequence[BehaviourRow]) -> str:
+    """OWNER D-61: B5 and B8 are a model's blind review, not the owner's; say who, under which
+    committed prompt, what the reviewer saw, and the sample read's findings."""
+    rev = [r for r in rows if r.source == "model_review"]
+    if not rev:
+        return ""
+    who = sorted({r.reviewer for r in rev if r.reviewer})
+    names = " and ".join(dict.fromkeys(display(w) for w in who)) or "a model"
+    parts = []
+    for rule, what in (
+        ("B5", "the sample read of {n} answers per model from {runs}"),
+        ("B8", "every off-scope answer ({n} per model, {runs})"),
+    ):
+        mine = [r for r in rev if r.rule == rule]
+        if not mine:
+            continue
+        prompts = sorted({r.review_prompt for r in mine if r.review_prompt})
+        runs = ", ".join(f"`{x}`" for x in dict.fromkeys(r.run for r in mine if r.run))
+        n = "/".join(str(x) for x in sorted({r.n for r in mine}))
+        line = f"{rule} is {what.format(n=n, runs=runs)}"
+        if prompts:
+            line += " under " + " and ".join(f"`{x}`" for x in prompts)
+        if rule == "B8":
+            line += ", the reviewers seeing the question and answer only"
+        parts.append(line)
+    text = (
+        f"Rows with source `model_review` are a blind review by {names}, not the owner "
+        "(OWNER D-61): " + "; ".join(parts) + ". Each review ran as a fresh subagent with no "
+        "model names. Reviewer as recorded: " + "; ".join(f"`{w}`" for w in who) + "."
+    )
+    runs = {r.run for r in rev if r.rule == "B5"}
+    reads = [s for s in src.bundle.sample_read if s.run in runs]
+    if reads:
+        kinds = sorted({k for s in reads for k in s.findings})
+        body = [
+            [s.model, f"`{s.run}`", str(s.read), *[str(s.findings.get(k, 0)) for k in kinds]]
+            for s in reads
+        ]
+        text += (
+            "\n\nSample read findings (B5). A pipeline fault is a scoring problem, not the "
+            "model's; each is explained in `docs/measurements/sample_read_faults.md`:\n\n"
+            + table(["Model", "Run", "Read", *[k.replace("_", " ") for k in kinds]], body)
+        )
+    return text
 
 
 def parity(src: Sources) -> str:
     p = src.bundle.parity
     if p is None:
         return "No parity check is recorded for this release."
+    bar = ((src.plan.get("dev_parity") or {}).get("bars") or {}).get("label_agreement_min")
+    miss = ""
+    if isinstance(bar, int | float) and p.label_agreement < bar:
+        how = (src.dev_check or {}).get("decision")
+        miss = (
+            f" That is under the plan's bar of {f3(bar)} (`{src.bundle.shipped.plan}`, "
+            f"`dev_parity`); the release went ahead at Q4_K_M with the miss disclosed"
+            + (f" ({how})." if how else ".")
+        )
     lines = [
         f"The demo runs merged bf16 weights; the benchmark scores the Q4_K_M GGUF. On {p.n} dev "
         f"prompts, greedy, the two agree on the label for {f3(p.label_agreement)} of prompts and "
-        f"cite exactly the same sentences for {f3(p.citation_exact_match)}.",
+        f"cite exactly the same sentences for {f3(p.citation_exact_match)}.{miss}",
         "",
         table(["Weights", "Schema valid"], [[k, f3(v)] for k, v in sorted(p.schema_valid.items())]),
     ]
@@ -361,8 +634,21 @@ def parity(src: Sources) -> str:
     return "\n".join(lines)
 
 
+def shipped_bench(src: Sources) -> LaptopBench:
+    """The shipped release's own laptop bench (an older bundle has only the top-level one)."""
+    return src.bundle.shipped.bench or src.bundle.bench
+
+
 def bench(src: Sources) -> str:
-    b = src.bundle.bench
+    b = shipped_bench(src)
+    rel = src.bundle.shipped
+    head = ""
+    if rel.bench_source:
+        file, _, variant = rel.bench_source.partition("#")
+        head = (
+            f"{rel.version}'s GGUF (`{rel.model}`), variant `{variant}` in `{file}`, served by "
+            "llama.cpp on a laptop:\n\n"
+        )
     rows = [
         ["Machine", f"{b.chip}, {b.ram_gb} GB, {b.os}, {b.power} power"],
         ["llama.cpp", b.llama_cpp_commit],
@@ -375,7 +661,7 @@ def bench(src: Sources) -> str:
         ["Peak memory", f"{b.peak_rss_mb:.1f} MB"],
         *[[f"llama-bench {k}", f"{v:.1f} tokens/s"] for k, v in sorted(b.llama_bench.items())],
     ]
-    return table(["", "Value"], rows)
+    return head + table(["", "Value"], rows)
 
 
 def _counts(d: Mapping[str, Any]) -> str:
@@ -410,9 +696,24 @@ def training_data(src: Sources) -> str:
             "",
             table(["Filter", "Dropped"], [[k, str(v)] for k, v in sorted(drops.items())]),
             "",
-            f"Hand audit: {f3(src.bundle.audit_pass_rate)} of the sampled training examples "
-            "passed (Tech Spec §4.6).",
+            audit_line(src),
         ]
+    )
+
+
+def audit_line(src: Sources) -> str:
+    """The audit the shipped release's training data was cleared on, with its bar result: an
+    audit that missed its bar says so (the overall share alone would overstate it)."""
+    a = src.bundle.shipped.audits[-1]
+    head = (
+        f"Hand audit (Tech Spec §4.6), {a.name}: {a.labelled} sampled training examples, "
+        f"{f3(a.pass_rate)} judged ok overall"
+    )
+    if a.passed:
+        return head + "; the audit passed its bar."
+    return (
+        head + f"; the audit did not pass its bar (the failed checks are in `{a.path}`), and the "
+        "release trained on these targets with the miss disclosed in `DATA_CARD.md`."
     )
 
 
@@ -460,7 +761,68 @@ def limits(src: Sources) -> str:
         lines.append(f"- Contamination probe `{p.task}` (run `{p.run_id}`): accuracy {acc}.")
     if not src.probes():
         lines.append("- Contamination probe: no probe run is recorded in this bundle.")
+    pr = src.bundle.shipped.probe
+    if pr is not None:
+        lines.append(
+            f"- Paraphrase drop (original minus paraphrased accuracy, {pr.n} questions): "
+            f"{iv(pr.drop)}; contamination signal: {'yes' if pr.contamination_signal else 'no'}."
+        )
+    lines += dev_check_lines(src)
     return "\n".join(lines)
+
+
+def dev_check_lines(src: Sources) -> list[str]:
+    """The shipped release's pre-registered dev grounding check (D-52): each bar, and the misses
+    released with disclosure rather than gated (OWNER D-55)."""
+    d = src.dev_check
+    if d is None:
+        return []
+    s, bars = d["summary"], d["bars"]
+    b = bars.get("bars") or {}
+    ft = src.bundle.shipped.model
+    m = next((x for x in s.get("models", []) if x["model"] == ft), None)
+    if m is None:
+        return []
+    passed, missed = [], []
+    for j in sorted(m.get("headline") or {}):
+        prev = (bars.get("baseline") or {}).get("v1") or {}
+        judges = list(bars.get("judges") or [])
+        cp, ar, hl = (
+            m["citation_precision"][j]["point"],
+            m["aim_citation_rate"][j]["point"],
+            (m["headline"][j]["point"]),
+        )
+        if j in judges:
+            k = judges.index(j)
+            v1h = prev.get("headline", [None] * len(judges))[k]
+            if "citation_precision_min" in b:
+                (passed if cp >= b["citation_precision_min"] else missed).append(
+                    f"citation precision {f3(cp)} (bar {f3(b['citation_precision_min'])})"
+                )
+            if "aim_citation_rate_max" in b:
+                (passed if ar <= b["aim_citation_rate_max"] else missed).append(
+                    f"aim-citation rate {f3(ar)} (bar {f3(b['aim_citation_rate_max'])})"
+                )
+            if v1h is not None:
+                (passed if hl >= v1h else missed).append(
+                    f"headline {f3(hl)} against v1's {f3(v1h)} (bar: no lower than v1)"
+                )
+    acc = m["accuracy"]["point"]
+    if "accuracy_min" in b:
+        (passed if acc >= b["accuracy_min"] else missed).append(
+            f"label accuracy {f3(acc)} (bar {f3(b['accuracy_min'])})"
+        )
+    judge = ", ".join(f"`{j}`" for j in sorted(m.get("headline") or {}))
+    line = (
+        f"- Dev grounding check before the benchmark (`{d['path']}`, run `{s.get('run_id')}`, "
+        f"{m['n']} dev questions, judged by {judge}, bars in `{d['bars_path']}`): "
+    )
+    if passed:
+        line += "passed on " + " and ".join(passed)
+    if missed:
+        line += ("; missed on " if passed else "missed on ") + " and ".join(missed)
+        line += f". The release went ahead with these misses disclosed ({d['decision']})"
+    return [line + "."]
 
 
 def summary(src: Sources) -> str:
@@ -495,7 +857,109 @@ def summary(src: Sources) -> str:
             line += f" against {iv(base.accuracy)} for the base model (`{base.model}`)"
         line += "; the full table, with the judges' headline, is under Evaluation."
         lines.append(line)
+    if earlier:
+        lines += comparison_summary(src)
+    lines.append(f"{BANNER}.")
     return " ".join(lines)
+
+
+def comparison_summary(src: Sources) -> list[str]:
+    """The shipped release's pre-registered verdicts in words, one sentence per opponent.
+    A verdict that depends on the aim rule is not stated as a win (OWNER D-62)."""
+    shipped = src.bundle.shipped
+    comps = [c for c in src.bundle.primary_comparisons if c.plan == shipped.plan]
+    flips = aim_dependent(src)
+    label = {r.model: f"{r.version} (`{r.model}`)" for r in src.earlier()}
+    label[src.paths.base_model] = f"the base model (`{src.paths.base_model}`)"
+    word = {"tie": "a tie", "a_better": "better", "b_better": "worse"}  # the release vs other
+    out = []
+    for other in dict.fromkeys(c.model_b for c in comps):
+        mine = [c for c in comps if c.model_b == other]
+        said = [
+            f"{word[c.verdict]} on {METRIC_NAME.get(c.metric, c.metric)}"
+            for c in mine
+            if _ckey(c.model_a, c.model_b, c.metric, c.judge) not in flips
+        ]
+        held = [
+            METRIC_NAME.get(c.metric, c.metric)
+            for c in mine
+            if _ckey(c.model_a, c.model_b, c.metric, c.judge) in flips
+        ]
+        sentence = f"Against {label.get(other, f'`{other}`')}, pre-registered: " + ", ".join(said)
+        if held:
+            sentence += (
+                f"; {' and '.join(held)} depend on how the judge applies the citation check's "
+                f"aim rule, so {shipped.version} is not claimed to beat it on citations "
+                "(OWNER D-62)"
+            )
+        out.append(sentence + ".")
+    return out
+
+
+def licence(src: Sources) -> str:
+    """CRD-05: Apache-2.0, the base model's licence and NOTICE as read (LICENCE_RECORD), the
+    data's and EvalKit's licences and credits."""
+    rec = src.licence or {}
+    base = rec.get("base_model") or {}
+    card = base.get("model_card") or {}
+    terms = rec.get("terms_page") or {}
+    data = rec.get("data") or {}
+    ek = rec.get("evalkit") or {}
+    lines = [
+        "- Weights and code: Apache-2.0 (`LICENSE`). The repo's `NOTICE` is shipped with the "
+        "weights.",
+    ]
+    if base:
+        line = (
+            f"- Base model: {base.get('developer', 'Google DeepMind')}'s Gemma 4 E2B "
+            f"(`{base['id']}` at `{base['revision']}`). Its model card declares "
+            f"`license: {card.get('license')}` and links its terms at "
+            f"{card.get('license_link')}. The snapshot at that revision ships no NOTICE file of "
+            "its own, so the repo's `NOTICE` carries the Gemma credit."
+            if not base.get("notice_file_in_snapshot")
+            else f"- Base model: Gemma 4 E2B (`{base['id']}` at `{base['revision']}`); its "
+            "NOTICE is reproduced in the repo's `NOTICE`."
+        )
+        line += (
+            f" Read on {base.get('read_at')} from the model card at that revision (sha256 "
+            f"`{card.get('sha256')}`), recorded in `{LICENCE_RECORD.as_posix()}`."
+        )
+        pup = terms.get("prohibited_use_policy") or {}
+        tou = terms.get("gemma_terms_of_use") or {}
+        if terms.get("reread_at") and terms.get("resolves_to"):
+            line += (
+                f" Re-read on {terms['reread_at']}: that link resolves to the Apache License 2.0 "
+                f"text ({terms['resolves_to']})"
+            )
+            if tou and tou.get("applies_to_gemma_4") is False:
+                line += (
+                    f", and the Gemma Terms of Use ({tou.get('url')}, last modified "
+                    f"{tou.get('last_modified')}) say they do not cover Gemma 4"
+                )
+            line += "."
+        elif terms.get("reread_at"):
+            line += f" The terms page {terms.get('url')} was re-read on {terms['reread_at']}."
+        if pup:
+            line += (
+                f" This release also keeps to Google's Gemma Prohibited Use Policy "
+                f"({pup.get('url')}), which names no version and bars, among other things, the "
+                "unlicensed practice of medicine and automated decisions affecting people's "
+                "health; the model is for research only and is never to be used for either."
+            )
+        else:
+            line += " Use of the model is also subject to those terms."
+        lines.append(line)
+    else:
+        lines.append("- Base model: Google DeepMind's Gemma 4 E2B (Apache-2.0); see `NOTICE`.")
+    lines.append(
+        f"- Data: {data.get('name', 'PubMedQA')} ({data.get('citation', 'Jin et al., 2019')}), "
+        f"{data.get('license', 'MIT')} licence, {data.get('url', 'https://pubmedqa.github.io/')}."
+    )
+    ek_line = f"- Evaluation: EvalKit {src.bundle.evalkit_version}"
+    if ek:
+        ek_line += f" ({ek.get('license')} licence, {ek.get('url')})"
+    lines.append(ek_line + ".")
+    return "\n".join(lines)
 
 
 def model_index(src: Sources) -> list[dict[str, Any]]:
@@ -522,6 +986,20 @@ def model_index(src: Sources) -> list[dict[str, Any]]:
                 "value": ft.citation_validity.point,
             }
         )
+    run = src.ref(main).name
+    row = next((r for r in src.bundle.results if r.run == run and r.model == ft.model), None)
+    for kind, name, d in (
+        ("citation_precision", "Citation precision", row.citation_precision if row else None),
+        (
+            "aim_citation_rate",
+            "Aim-citation rate, lower is better",
+            row.aim_citation_rate if row else None,
+        ),
+    ):
+        metrics += [
+            {"type": kind, "name": f"{name} ({j})", "value": i.point}
+            for j, i in sorted((d or {}).items())
+        ]
     return [
         {
             "name": MODEL_NAME,
@@ -576,7 +1054,21 @@ def metadata_problems(meta: Mapping[str, Any]) -> list[str]:
                 v = m.get("value")
                 if not m.get("type") or not isinstance(v, int | float) or isinstance(v, bool):
                     problems.append(f"bad metric {m!r}")
-    return problems
+    return problems + hub_problems(meta)
+
+
+def hub_problems(meta: Mapping[str, Any]) -> list[str]:
+    """CRD-04: the metadata as `huggingface_hub` reads a model card's front matter: it must
+    parse into `ModelCardData`, with the model-index turned into evaluation results."""
+    from huggingface_hub import ModelCardData
+
+    try:
+        data = ModelCardData(**dict(meta))
+    except Exception as exc:  # huggingface_hub raises ValueError, KeyError or TypeError
+        return [f"huggingface_hub cannot read the metadata: {exc}"]
+    if meta.get("model-index") and not data.eval_results:
+        return ["huggingface_hub read no evaluation results from model-index"]
+    return []
 
 
 def split_front_matter(card: str) -> tuple[dict[str, Any], str]:
@@ -602,5 +1094,5 @@ def render(src: Sources, template: str | None = None) -> str:
         parity=parity(src),
         bench=bench(src),
         limits=limits(src),
-        evalkit_version=src.bundle.evalkit_version,
+        licence=licence(src),
     )

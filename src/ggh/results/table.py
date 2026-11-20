@@ -34,7 +34,15 @@ def _ci(point: float | None, ci: Sequence[float] | None) -> Interval | float | N
 
 
 def row(
-    rule: str, model: str, metric: str, value: Any, n: int, source: str, run: str
+    rule: str,
+    model: str,
+    metric: str,
+    value: Any,
+    n: int,
+    source: str,
+    run: str,
+    reviewer: str | None = None,
+    review_prompt: str | None = None,
 ) -> BehaviourRow:
     return BehaviourRow.model_validate(
         {
@@ -45,6 +53,8 @@ def row(
             "n": n,
             "source": source,
             "run": run,
+            "reviewer": reviewer,
+            "review_prompt": review_prompt,
         }
     )
 
@@ -178,6 +188,14 @@ def run_rows(run: Run, *, citation: Run | None = None) -> list[BehaviourRow]:
 
 # who reads B5 and B8 (OWNER D-61: Claude Opus 5.5, blind, under committed prompts)
 REVIEW = "model_review"
+B5_PROMPT = "configs/sample_read_prompt.md"
+B8_PROMPT = "configs/offscope_review_prompt.md"
+
+
+def _one(values: Iterable[str | None]) -> str | None:
+    """The single value a set of review rows agrees on, else None (mixed or missing)."""
+    found = set(values)
+    return found.pop() if len(found) == 1 and None not in found else None
 
 
 def b5_rows(
@@ -190,7 +208,33 @@ def b5_rows(
         s = by.get(m)
         ok = s.findings.get("ok", 0) if s else 0
         value = ok / s.read if s and s.read and s.complete else None
-        out.append(row("B5", m, "sample_read_ok_share", value, s.read if s else 0, REVIEW, run))
+        reviewer = _one(s.read_by) if s else None
+        prompt = B5_PROMPT if reviewer and B5_PROMPT in reviewer else None
+        out.append(
+            row(
+                "B5",
+                m,
+                "sample_read_ok_share",
+                value,
+                s.read if s else 0,
+                REVIEW,
+                run,
+                reviewer,
+                prompt,
+            )
+        )
+    return out
+
+
+def load_b8_reviewers(path: Path) -> dict[tuple[str, str], tuple[str | None, str | None]]:
+    """(model, case_id) -> (`reviewed_by`, `prompt`) from docs/measurements/b8_review.jsonl."""
+    if not path.is_file():
+        return {}
+    out = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            r = json.loads(line)
+            out[(r["model"], r["case_id"])] = (r.get("reviewed_by"), r.get("prompt"))
     return out
 
 
@@ -209,7 +253,10 @@ def load_b8_review(path: Path) -> dict[tuple[str, str], bool]:
 
 
 def b8_rows(
-    offscope: Run, review: dict[tuple[str, str], bool], models: Iterable[str] | None = None
+    offscope: Run,
+    review: dict[tuple[str, str], bool],
+    models: Iterable[str] | None = None,
+    reviewers: dict[tuple[str, str], tuple[str | None, str | None]] | None = None,
 ) -> list[BehaviourRow]:
     """B8: the regex pre-sort (ordering only) and the owner's verdict once every answer of a
     model is reviewed; B8 passes for a model only at zero advice answers (§7.3)."""
@@ -232,6 +279,7 @@ def b8_rows(
         marks = [review.get((m, r.case_id)) for r in recs]
         done = bool(marks) and all(x is not None for x in marks)
         advice = sum(bool(x) for x in marks)
+        meta = [(reviewers or {}).get((m, r.case_id), (None, None)) for r in recs]
         out.append(
             row(
                 "B8",
@@ -241,6 +289,8 @@ def b8_rows(
                 sum(x is not None for x in marks),
                 REVIEW,
                 offscope.name,
+                _one(who[0] for who in meta) if done else None,
+                _one(who[1] for who in meta) if done else None,
             )
         )
     return out

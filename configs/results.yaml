@@ -3,7 +3,7 @@
 # `primary_run` has a summary under docs/results/; once included, every non-optional file must
 # exist or the bundle refuses. v2 (V2.2) appears automatically when docs/results/main_v2/ lands.
 ledger: docs/measurements/spend-ledger.jsonl
-bench: docs/measurements/laptop_bench.json
+bench: docs/measurements/laptop_bench.json   # default for a release that names no `bench`
 b8_review: docs/measurements/b8_review.jsonl          # optional until RES-02
 gemma_family_check: docs/measurements/gemma_family_check.json   # optional until RES-03
 # RES-03 (OWNER D-24, D-59, D-60): the judges' stamp reads the committed copy of EvalKit's
@@ -29,6 +29,8 @@ releases:
     citation_run: main_citation
     offscope_run: offscope
     runs: [main, main_citation, offscope, probe_original, probe_paraphrase, parity]
+    bench: docs/measurements/laptop_bench.json      # v1's laptop bench (X3.2)
+    bench_variant: ft-Q4_K_M
     train_run: docs/measurements/train_run.json
     train_selection: docs/measurements/train_selection.json
     audits:
@@ -48,6 +50,8 @@ releases:
     citation_run: main_v2
     offscope_run: offscope_v2
     runs: [main_v2, offscope_v2, probe_original_v2, probe_paraphrase_v2, parity_v2]
+    bench: docs/measurements/v2/laptop_bench.json   # v2's own laptop bench (V2.1)
+    bench_variant: ft2-Q4_K_M
     train_run: docs/measurements/v2/train_run.json
     train_selection: docs/measurements/v2/train_selection.json
     audits:

@@ -147,6 +147,7 @@ def summarise(root: Path, run: Run) -> tuple[list[SampleReadSummary], list[str]]
                 read=read,
                 findings=dict(sorted(found.items())),
                 complete=read == len(mine),
+                read_by=tuple(sorted({r.read_by for r in mine if r.read_by})),
             )
         )
     return out, problems

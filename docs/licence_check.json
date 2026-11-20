@@ -1,0 +1,63 @@
+{
+  "purpose": "CRD-05 (D-12, H12): what was read about the licences the release depends on, when and from where. ggh card reads this file; nothing here is a measurement.",
+  "base_model": {
+    "id": "google/gemma-4-E2B-it",
+    "revision": "4adf15748de9e1a0097b6274cee9c15836c41c37",
+    "developer": "Google DeepMind",
+    "model_card": {
+      "file": "README.md",
+      "sha256": "3e0608a6be80e3eb040a5aa6c76707809503deb85be6360184a118fb6156526c",
+      "license": "apache-2.0",
+      "license_link": "https://ai.google.dev/gemma/docs/gemma_4_license"
+    },
+    "snapshot_files": [
+      ".gitattributes",
+      "README.md",
+      "chat_template.jinja",
+      "config.json",
+      "generation_config.json",
+      "model.safetensors",
+      "processor_config.json",
+      "tokenizer.json",
+      "tokenizer_config.json"
+    ],
+    "notice_file_in_snapshot": false,
+    "read_at": "2026-11-20",
+    "read_from": "the base model's Hugging Face snapshot at this revision, in the local cache (no network): its model card front matter and file list"
+  },
+  "terms_page": {
+    "url": "https://ai.google.dev/gemma/docs/gemma_4_license",
+    "reread_at": "2026-11-20",
+    "resolves_to": "https://gemma.ai/resources/apache-2/",
+    "finding": "the Gemma 4 licence link redirects (HTTP 301) to the Apache License 2.0 text ('Apache License 2.0 - Gemma Docs'), which carries no Gemma-specific terms",
+    "gemma_terms_of_use": {
+      "url": "https://gemma.ai/resources/terms/",
+      "last_modified": "2026-04-01",
+      "applies_to_gemma_4": false,
+      "quote": "For Gemma 4 terms, see the Gemma 4 license."
+    },
+    "prohibited_use_policy": {
+      "url": "https://gemma.ai/resources/prohibited-use/",
+      "last_modified": "2024-02-21",
+      "names_a_version": false,
+      "health_items": [
+        "unlicensed practice of medical/health professions",
+        "misleading claims of expertise in sensitive areas such as health",
+        "automated decisions in domains that affect individual rights or well-being, including healthcare"
+      ]
+    },
+    "read_by": "the builder's web fetch on 2026-11-20 (Claude Code session)"
+  },
+  "data": {
+    "name": "PubMedQA",
+    "citation": "Jin et al., 2019",
+    "license": "MIT",
+    "url": "https://pubmedqa.github.io/"
+  },
+  "evalkit": {
+    "package": "evalkit-harness",
+    "license": "MIT",
+    "url": "https://github.com/biplob819/evalkit",
+    "read_from": "the installed package's metadata (License-Expression, Project-URL)"
+  }
+}

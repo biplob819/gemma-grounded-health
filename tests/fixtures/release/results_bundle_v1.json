@@ -421,7 +421,30 @@
         "claude-opus-5-5",
         "gpt-6.1-sol"
       ],
-      "calibration_status": "uncalibrated"
+      "calibration_status": "uncalibrated",
+      "bench": {
+        "chip": "Apple M3 Max",
+        "ram_gb": 64,
+        "os": "macOS 26.5.2",
+        "power": "ac",
+        "llama_cpp_commit": "b12421",
+        "quant": "Q4_K_M",
+        "model_file_mb": 3269.1,
+        "n_prompts": 50,
+        "repetitions": 3,
+        "prompt_tps_p50": 3829.9,
+        "gen_tps_p50": 105.1,
+        "gen_tps_p95": 107.6,
+        "ttft_ms_p50": 137,
+        "answer_latency_ms_p50": 604,
+        "answer_latency_ms_p95": 759,
+        "peak_rss_mb": 4462.2,
+        "llama_bench": {
+          "pp512": 7017.9613,
+          "tg128": 124.946313
+        }
+      },
+      "bench_source": "docs/measurements/laptop_bench.json#ft-Q4_K_M"
     }
   ],
   "results": [
@@ -1597,7 +1620,9 @@
       "value": 0.005,
       "n": 1000,
       "source": "ggh:b1",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B2",
@@ -1610,7 +1635,9 @@
       },
       "n": 1000,
       "source": "evalkit:headline",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B2",
@@ -1623,7 +1650,9 @@
       },
       "n": 1000,
       "source": "evalkit:groundedness",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B2",
@@ -1636,7 +1665,9 @@
       },
       "n": 1000,
       "source": "evalkit:headline",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B2",
@@ -1649,7 +1680,9 @@
       },
       "n": 1000,
       "source": "evalkit:groundedness",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B3",
@@ -1662,7 +1695,9 @@
       },
       "n": 110,
       "source": "ggh:b3",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B3",
@@ -1675,7 +1710,9 @@
       },
       "n": 424,
       "source": "ggh:b3",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B4",
@@ -1684,7 +1721,9 @@
       "value": 0.013,
       "n": 1000,
       "source": "ggh:b4",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B6",
@@ -1693,7 +1732,9 @@
       "value": 0.1165670367207515,
       "n": 2342,
       "source": "evalkit:verdicts",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B6",
@@ -1702,7 +1743,9 @@
       "value": 0.15627668659265584,
       "n": 2342,
       "source": "evalkit:verdicts",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -1715,7 +1758,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_valid",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -1728,7 +1773,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_support",
-      "run": "main_citation"
+      "run": "main_citation",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -1741,7 +1788,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_support",
-      "run": "main_citation"
+      "run": "main_citation",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -1754,7 +1803,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_support",
-      "run": "main_citation"
+      "run": "main_citation",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -1767,7 +1818,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_support",
-      "run": "main_citation"
+      "run": "main_citation",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B1",
@@ -1776,7 +1829,9 @@
       "value": 0.0,
       "n": 1000,
       "source": "ggh:b1",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B2",
@@ -1789,7 +1844,9 @@
       },
       "n": 1000,
       "source": "evalkit:headline",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B2",
@@ -1802,7 +1859,9 @@
       },
       "n": 1000,
       "source": "evalkit:groundedness",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B2",
@@ -1815,7 +1874,9 @@
       },
       "n": 1000,
       "source": "evalkit:headline",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B2",
@@ -1828,7 +1889,9 @@
       },
       "n": 1000,
       "source": "evalkit:groundedness",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B3",
@@ -1841,7 +1904,9 @@
       },
       "n": 110,
       "source": "ggh:b3",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B3",
@@ -1854,7 +1919,9 @@
       },
       "n": 22,
       "source": "ggh:b3",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B4",
@@ -1863,7 +1930,9 @@
       "value": 0.0,
       "n": 1000,
       "source": "ggh:b4",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B6",
@@ -1872,7 +1941,9 @@
       "value": 0.44718909710391824,
       "n": 1174,
       "source": "evalkit:verdicts",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B6",
@@ -1881,7 +1952,9 @@
       "value": 0.5238500851788757,
       "n": 1174,
       "source": "evalkit:verdicts",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -1894,7 +1967,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_valid",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -1907,7 +1982,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_support",
-      "run": "main_citation"
+      "run": "main_citation",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -1920,7 +1997,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_support",
-      "run": "main_citation"
+      "run": "main_citation",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -1933,7 +2012,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_support",
-      "run": "main_citation"
+      "run": "main_citation",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -1946,7 +2027,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_support",
-      "run": "main_citation"
+      "run": "main_citation",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B1",
@@ -1955,7 +2038,9 @@
       "value": 0.0,
       "n": 1000,
       "source": "ggh:b1",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B2",
@@ -1968,7 +2053,9 @@
       },
       "n": 1000,
       "source": "evalkit:headline",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B2",
@@ -1981,7 +2068,9 @@
       },
       "n": 1000,
       "source": "evalkit:groundedness",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B2",
@@ -1994,7 +2083,9 @@
       },
       "n": 1000,
       "source": "evalkit:headline",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B2",
@@ -2007,7 +2098,9 @@
       },
       "n": 1000,
       "source": "evalkit:groundedness",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B3",
@@ -2020,7 +2113,9 @@
       },
       "n": 110,
       "source": "ggh:b3",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B3",
@@ -2033,7 +2128,9 @@
       },
       "n": 283,
       "source": "ggh:b3",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B4",
@@ -2042,7 +2139,9 @@
       "value": 0.143,
       "n": 1000,
       "source": "ggh:b4",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B6",
@@ -2051,7 +2150,9 @@
       "value": 0.158816660179058,
       "n": 5138,
       "source": "evalkit:verdicts",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B6",
@@ -2060,7 +2161,9 @@
       "value": 0.2383732243627165,
       "n": 5139,
       "source": "evalkit:verdicts",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -2073,7 +2176,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_valid",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -2086,7 +2191,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_support",
-      "run": "main_citation"
+      "run": "main_citation",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -2099,7 +2206,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_support",
-      "run": "main_citation"
+      "run": "main_citation",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -2112,7 +2221,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_support",
-      "run": "main_citation"
+      "run": "main_citation",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -2125,7 +2236,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_support",
-      "run": "main_citation"
+      "run": "main_citation",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B1",
@@ -2134,7 +2247,9 @@
       "value": 0.001,
       "n": 1000,
       "source": "ggh:b1",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B2",
@@ -2147,7 +2262,9 @@
       },
       "n": 1000,
       "source": "evalkit:headline",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B2",
@@ -2160,7 +2277,9 @@
       },
       "n": 1000,
       "source": "evalkit:groundedness",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B2",
@@ -2173,7 +2292,9 @@
       },
       "n": 1000,
       "source": "evalkit:headline",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B2",
@@ -2186,7 +2307,9 @@
       },
       "n": 1000,
       "source": "evalkit:groundedness",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B3",
@@ -2199,7 +2322,9 @@
       },
       "n": 110,
       "source": "ggh:b3",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B3",
@@ -2212,7 +2337,9 @@
       },
       "n": 394,
       "source": "ggh:b3",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B4",
@@ -2221,7 +2348,9 @@
       "value": 0.0,
       "n": 1000,
       "source": "ggh:b4",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B6",
@@ -2230,7 +2359,9 @@
       "value": 0.12747723620782003,
       "n": 3734,
       "source": "evalkit:verdicts",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B6",
@@ -2239,7 +2370,9 @@
       "value": 0.20728441349758972,
       "n": 3734,
       "source": "evalkit:verdicts",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -2252,7 +2385,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_valid",
-      "run": "main"
+      "run": "main",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -2265,7 +2400,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_support",
-      "run": "main_citation"
+      "run": "main_citation",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -2278,7 +2415,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_support",
-      "run": "main_citation"
+      "run": "main_citation",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -2291,7 +2430,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_support",
-      "run": "main_citation"
+      "run": "main_citation",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B7",
@@ -2304,7 +2445,9 @@
       },
       "n": 1000,
       "source": "evalkit:citation_support",
-      "run": "main_citation"
+      "run": "main_citation",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B5",
@@ -2313,7 +2456,9 @@
       "value": 0.3,
       "n": 20,
       "source": "model_review",
-      "run": "main"
+      "run": "main",
+      "reviewer": "claude-opus-5-5 (blind subagent, configs/sample_read_prompt.md, OWNER D-61)",
+      "review_prompt": "configs/sample_read_prompt.md"
     },
     {
       "rule": "B5",
@@ -2322,7 +2467,9 @@
       "value": 0.45,
       "n": 20,
       "source": "model_review",
-      "run": "main"
+      "run": "main",
+      "reviewer": "claude-opus-5-5 (blind subagent, configs/sample_read_prompt.md, OWNER D-61)",
+      "review_prompt": "configs/sample_read_prompt.md"
     },
     {
       "rule": "B5",
@@ -2331,7 +2478,9 @@
       "value": 0.55,
       "n": 20,
       "source": "model_review",
-      "run": "main"
+      "run": "main",
+      "reviewer": "claude-opus-5-5 (blind subagent, configs/sample_read_prompt.md, OWNER D-61)",
+      "review_prompt": "configs/sample_read_prompt.md"
     },
     {
       "rule": "B5",
@@ -2340,7 +2489,9 @@
       "value": 0.95,
       "n": 20,
       "source": "model_review",
-      "run": "main"
+      "run": "main",
+      "reviewer": "claude-opus-5-5 (blind subagent, configs/sample_read_prompt.md, OWNER D-61)",
+      "review_prompt": "configs/sample_read_prompt.md"
     },
     {
       "rule": "B8",
@@ -2349,7 +2500,9 @@
       "value": 0.1,
       "n": 20,
       "source": "ggh:b8",
-      "run": "offscope"
+      "run": "offscope",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B8",
@@ -2358,7 +2511,9 @@
       "value": 0.0,
       "n": 20,
       "source": "model_review",
-      "run": "offscope"
+      "run": "offscope",
+      "reviewer": "claude-opus-5-5 (blind subagent, OWNER D-61)",
+      "review_prompt": "configs/offscope_review_prompt.md"
     },
     {
       "rule": "B8",
@@ -2367,7 +2522,9 @@
       "value": 0.0,
       "n": 20,
       "source": "ggh:b8",
-      "run": "offscope"
+      "run": "offscope",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B8",
@@ -2376,7 +2533,9 @@
       "value": 2.0,
       "n": 20,
       "source": "model_review",
-      "run": "offscope"
+      "run": "offscope",
+      "reviewer": "claude-opus-5-5 (blind subagent, OWNER D-61)",
+      "review_prompt": "configs/offscope_review_prompt.md"
     },
     {
       "rule": "B8",
@@ -2385,7 +2544,9 @@
       "value": 0.25,
       "n": 20,
       "source": "ggh:b8",
-      "run": "offscope"
+      "run": "offscope",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B8",
@@ -2394,7 +2555,9 @@
       "value": 1.0,
       "n": 20,
       "source": "model_review",
-      "run": "offscope"
+      "run": "offscope",
+      "reviewer": "claude-opus-5-5 (blind subagent, OWNER D-61)",
+      "review_prompt": "configs/offscope_review_prompt.md"
     },
     {
       "rule": "B8",
@@ -2403,7 +2566,9 @@
       "value": 0.4,
       "n": 20,
       "source": "ggh:b8",
-      "run": "offscope"
+      "run": "offscope",
+      "reviewer": null,
+      "review_prompt": null
     },
     {
       "rule": "B8",
@@ -2412,7 +2577,9 @@
       "value": 0.0,
       "n": 20,
       "source": "model_review",
-      "run": "offscope"
+      "run": "offscope",
+      "reviewer": "claude-opus-5-5 (blind subagent, OWNER D-61)",
+      "review_prompt": "configs/offscope_review_prompt.md"
     }
   ],
   "bench": {
@@ -2538,7 +2705,10 @@
         "ok": 6,
         "pipeline_fault": 1
       },
-      "complete": true
+      "complete": true,
+      "read_by": [
+        "claude-opus-5-5 (blind subagent, configs/sample_read_prompt.md, OWNER D-61)"
+      ]
     },
     {
       "run": "main",
@@ -2549,7 +2719,10 @@
         "model_fault": 11,
         "ok": 9
       },
-      "complete": true
+      "complete": true,
+      "read_by": [
+        "claude-opus-5-5 (blind subagent, configs/sample_read_prompt.md, OWNER D-61)"
+      ]
     },
     {
       "run": "main",
@@ -2561,7 +2734,10 @@
         "ok": 11,
         "pipeline_fault": 2
       },
-      "complete": true
+      "complete": true,
+      "read_by": [
+        "claude-opus-5-5 (blind subagent, configs/sample_read_prompt.md, OWNER D-61)"
+      ]
     },
     {
       "run": "main",
@@ -2572,7 +2748,10 @@
         "ok": 19,
         "pipeline_fault": 1
       },
-      "complete": true
+      "complete": true,
+      "read_by": [
+        "claude-opus-5-5 (blind subagent, configs/sample_read_prompt.md, OWNER D-61)"
+      ]
     }
   ],
   "spend_usd": 118.035054,

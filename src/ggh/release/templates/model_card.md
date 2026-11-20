@@ -67,9 +67,7 @@ $limits
 
 ## Licence and credits
 
-- Weights and code: Apache-2.0. The model is a derivative of Google DeepMind's Gemma 4 E2B (Apache-2.0); the Gemma NOTICE is reproduced with the weights (see `NOTICE`).
-- Data: PubMedQA (Jin et al., 2019), MIT licence, https://pubmedqa.github.io/.
-- Evaluation: EvalKit $evalkit_version.
+$licence
 
 ## Research only, not medical advice
 
