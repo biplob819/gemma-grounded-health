@@ -7,4 +7,4 @@
 - [x] 5. Screenshots and GIF
 - [x] 6. Read the six samples on the running demo
 - [x] 7. Proof cells, records
-- [ ] 8. Converge, verifier, green
+- [x] 8. Converge, verifier, green
