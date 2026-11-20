@@ -1,6 +1,7 @@
 """HUB-02 to HUB-05 on the committed evidence of the real push (R4.2, 2026-11-20/21): the plan,
 the download-back record and the Ollama answer. No network."""
 
+import hashlib
 import json
 from pathlib import Path
 
@@ -9,6 +10,10 @@ M = ROOT / "docs/measurements"
 OWNER = "biplob123"
 MAIN = f"{OWNER}/gemma-4-e2b-grounded-health"
 GGUF = f"{MAIN}-GGUF"
+# R4.5 regenerated both cards (known issue R4.2: `base_model_relation: finetune`, the prompt
+# format); the plan holds the new hashes and the Hub still the R4.2 ones until the builder
+# re-uploads the two cards. Empty this set once release_record_v2.json records the re-upload.
+AWAITING_REUPLOAD = {f"{MAIN}/README.md", f"{GGUF}/README.md"}
 
 
 def _json(name):
@@ -20,7 +25,13 @@ def test_every_planned_file_was_downloaded_back_with_its_planned_hash():
     planned = {f"{f['repo']}/{f['path_in_repo']}": f["sha256"] for f in plan["files"]}
     got = {d["file"]: d["sha256"] for d in rec["downloads"]}
     assert plan["problems"] == [] and rec["problems"] == []
-    assert got == planned and all(d["ok"] for d in rec["downloads"])
+    assert set(got) == set(planned) and all(d["ok"] for d in rec["downloads"])
+    same = {k: v for k, v in planned.items() if k not in AWAITING_REUPLOAD}
+    assert {k: got[k] for k in same} == same
+    for k in AWAITING_REUPLOAD:  # the plan already holds the regenerated card's hash
+        assert planned[k] != got[k], f"{k} was re-uploaded: record it and empty the set"
+    card = hashlib.sha256((ROOT / "MODEL_CARD.md").read_bytes()).hexdigest()
+    assert planned[f"{MAIN}/README.md"] == card
     assert rec["release"] == "v2" and rec["tag"] == "v2.0.0"
 
 

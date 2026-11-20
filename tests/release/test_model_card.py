@@ -22,6 +22,7 @@ ORDER = (
     "## Summary",
     "## Intended use",
     "## Out-of-scope uses",
+    "## How to use",
     "## Training data",
     "## Training procedure",
     "## Evaluation",

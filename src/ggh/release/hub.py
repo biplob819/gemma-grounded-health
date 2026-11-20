@@ -38,6 +38,14 @@ OLLAMA_QUANT = "Q4_K_M"
 TOKEN_ENV = "HF_TOKEN"
 LEGAL = ("LICENSE", "NOTICE")
 PLAN_SCHEMA = 1
+# known issue R4.2 (fixed in R4.5): a bare question gets prose, not the JSON answer
+PROMPT_FORMAT = (
+    "**Prompt format.** The model answers as JSON (a yes, no or maybe label, a short answer "
+    "and the numbers of the sentences it cites) only when it gets EvalKit's PubMedQA prompt: "
+    "the question and the abstract's numbered sentences, as the benchmark sent them. A bare "
+    "question gets free text. The prompt and an example are on the main card: "
+    "[{main}](https://huggingface.co/{main})."
+)
 
 Status = Literal["ok", "missing", "hash mismatch", "generated", "unrecorded"]
 
@@ -189,6 +197,7 @@ def gguf_card(
         "with thinking on, Gemma 4 writes a reasoning block before the JSON answer. The "
         "benchmark decoded greedily (temperature 0); Ollama's default sampling can give a "
         "different answer to the same question.\n\n"
+        f"{PROMPT_FORMAT.format(main=main)}\n\n"
         "| File | Size | sha256 |\n|---|---|---|\n" + rows + "\n\n"
         f"Built with llama.cpp `{_gguf_commit(arts)}`. Licence: Apache-2.0 (see `NOTICE`).\n"
     )
