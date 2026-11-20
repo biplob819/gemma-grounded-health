@@ -95,6 +95,35 @@ def test_the_real_v2_primary_family_is_the_six_sol_tests_from_main_v2(real):
     assert all(c.method == "plan_family" for c in p2)
 
 
+# the published v2 numbers (README, changelog, RUN-STATE, headline chart), pinned to the bundle
+V2_FAMILY = {
+    ("gemma-e2b-grounded-q4", "headline"): (-0.002, -0.034, 0.030, "tie"),
+    ("gemma-e2b-grounded-q4", "citation_precision"): (0.374, 0.344, 0.403, "a_better"),
+    ("gemma-e2b-grounded-q4", "aim_citation_rate"): (-0.476, -0.508, -0.443, "a_better"),
+    ("gemma-e2b-base-q4", "headline"): (-0.075, -0.113, -0.037, "b_better"),
+    ("gemma-e2b-base-q4", "citation_precision"): (-0.011, -0.046, 0.023, "tie"),
+    ("gemma-e2b-base-q4", "aim_citation_rate"): (-0.054, -0.080, -0.028, "a_better"),
+}
+
+
+def test_the_real_v2_primary_family_has_the_published_numbers_and_verdicts(real):
+    p2 = [c for c in real.bundle.primary_comparisons if c.plan == "configs/eval_plan_v2.yaml"]
+    got = {
+        (c.model_b, c.metric): (
+            round(c.diff.point, 3),
+            round(c.diff.lo, 3),
+            round(c.diff.hi, 3),
+            c.verdict,
+        )
+        for c in p2
+    }
+    assert got == V2_FAMILY
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    for key, (point, *_) in V2_FAMILY.items():
+        if key != ("gemma-e2b-base-q4", "citation_precision"):  # the README says "a tie"
+            assert f"{point:+.3f}".replace("-", "−") in readme, key
+
+
 def test_numbers_are_copied_from_the_summaries(real):
     res = {(r.run, r.model): r for r in real.bundle.results}
     ft = res[("main", "gemma-e2b-grounded-q4")]

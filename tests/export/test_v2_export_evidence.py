@@ -84,3 +84,17 @@ def test_the_v2_parity_record_is_the_one_lineage_names_and_misses_the_bar_as_dis
     # OWNER D-55: 0.92 label agreement is under the 0.95 bar, disclosed and kept as measured
     assert rep.label_agreement == 0.92 and not parity.passes(rep)
     assert rep.schema_valid == {"bf16": 1.0, "q4_k_m": 1.0}
+
+
+def test_v2_template_parity_holds_on_the_served_q4_with_no_thought_channel():
+    """VEV-01's template clause: the V2.1 smoke on the GGUF the main run served."""
+    checks = json.loads((ROOT / "docs/measurements/serving_checks_ft2.json").read_text("utf-8"))
+    manifest = json.loads(
+        (ROOT / "docs/measurements/v2/gguf_ft2_manifest.json").read_text(encoding="utf-8")
+    )
+    assert checks["passed"] is True and checks["gguf"] == "ft2-Q4_K_M.gguf"
+    assert checks["gguf_sha256"] in json.dumps(manifest)
+    assert len(checks["parity"]) == 20 and all(p["equal"] for p in checks["parity"])
+    args = checks["server_args"]
+    assert args[args.index("--reasoning") + 1] == "off"
+    assert args[args.index("--reasoning-budget") + 1] == "0"
