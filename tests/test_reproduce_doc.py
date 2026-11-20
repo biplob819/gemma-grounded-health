@@ -73,7 +73,7 @@ def test_every_command_block_is_marked_and_the_steps_are_there():
 
 def test_dry_run_blocks_parse_and_name_committed_paths():
     parser = build_parser()
-    targets = set(re.findall(r"^([a-z]+):", (ROOT / "Makefile").read_text(), re.M))
+    targets = set(re.findall(r"^([a-z]+):", (ROOT / "Makefile").read_text(encoding="utf-8"), re.M))
     for mark, cmds in blocks():
         if mark == "run":
             continue

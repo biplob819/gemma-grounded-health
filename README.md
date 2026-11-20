@@ -4,7 +4,7 @@
 
 This project fine-tunes a small open Gemma model (Gemma 4 E2B with LoRA; its 4-bit GGUF runs offline on a laptop) to answer health research questions **only from a given abstract**, as JSON with a yes / no / maybe label, a short answer and the numbered sentences it relied on. Every model is scored with [EvalKit](https://github.com/biplob819/evalkit) on all 1,000 expert-labelled PubMedQA questions.
 
-> **Status: v1.0.0.** v2 is released on Hugging Face ([model](https://huggingface.co/biplob123/gemma-4-e2b-grounded-health), [GGUF](https://huggingface.co/biplob123/gemma-4-e2b-grounded-health-GGUF)), with a passcode-gated local demo, the EvalKit report and a [reproduce-from-scratch guide](docs/reproduce.md). [Release notes](docs/release_notes_v1.0.0.md) · [Known issues](docs/known-issues.md).
+> **Status.** v1.0.0: v2 is released on Hugging Face ([model](https://huggingface.co/biplob123/gemma-4-e2b-grounded-health), [GGUF](https://huggingface.co/biplob123/gemma-4-e2b-grounded-health-GGUF)), with a passcode-gated local demo, the EvalKit report and a [reproduce-from-scratch guide](docs/reproduce.md). [Release notes](docs/release_notes_v1.0.0.md) · [Known issues](docs/known-issues.md).
 
 **Contents:** [v2 result](#v2-result-the-citations-are-fixed-the-headline-is-not) · [Results](#results) · [Run it offline](#run-it-offline) · [Step-by-step guide](#step-by-step-guide) · [Screenshots](#screenshots) · [Links](#links) · [How it was built](#how-it-was-built) · [Licence and credits](#licence-and-credits)
 

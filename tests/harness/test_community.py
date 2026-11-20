@@ -90,11 +90,10 @@ def test_docs_name_future_work_by_node():
     assert "build node R4.5" in security
     contributing = _read("CONTRIBUTING.md")
     assert "build node T2.1" in contributing and "(E3.3)" in contributing
-    readme = _read("README.md")
-    assert "> **Status.**" in readme and "(build node R4.1)" in readme
-    assert "(nodes R4.2 and R4.3)" in readme
+    readme = _read("README.md")  # R4.5: released, so the status names the release
+    assert "> **Status.** v1.0.0:" in readme and "will be released" not in readme
     assert "Today nothing in the repo reads a key" in security
-    assert "once released" in _read("CITATION.cff") and "build node T2.1" in _read("CITATION.cff")
+    assert "once released" not in _read("CITATION.cff")  # R4.5: the model is released
     assert "will be frozen at node N1.2" in security
     assert "Once released (build node R4.2)" in security
     makefile = _read("Makefile")

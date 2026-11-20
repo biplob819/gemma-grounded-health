@@ -8,7 +8,7 @@ authors:
 license: Apache-2.0
 repository-code: "https://github.com/biplob819/gemma-grounded-health"
 url: "https://huggingface.co/biplob123/gemma-4-e2b-grounded-health"
-version: "1.0.0"
+version: 1.0.0
 date-released: "2026-11-21"
 abstract: "Gemma 4 E2B fine-tuned with LoRA to answer a biomedical research question only from a given abstract, as JSON with a yes, no or maybe label, a short answer and the numbers of the sentences it relied on, scored with EvalKit on all 1,000 expert-labelled PubMedQA questions. Research only, not medical advice."
 identifiers:
