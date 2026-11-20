@@ -6,4 +6,4 @@
 - [x] 4. Hub cards re-uploaded and checked (OWNER D-65)
 - [x] 5. Proof cells, records; full suite
 - [x] 6. Converge, verifier, green, merge
-- [ ] 7. Tag v1.0.0, GitHub release, live link check, fresh clone at the tag
+- [x] 7. Tag v1.0.0, GitHub release, live link check, fresh clone at the tag

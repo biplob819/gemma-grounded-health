@@ -1,0 +1,11 @@
+{
+  "tag": "v1.0.0",
+  "commit": "7436a4c",
+  "release": "https://github.com/biplob819/gemma-grounded-health/releases/tag/v1.0.0",
+  "created": "2026-11-21",
+  "approval": "OWNER D-65 (ask widget)",
+  "ci": "main CI run 44830641893 green on 7436a4c before tagging",
+  "body_equals_notes": "yes (docs/release_notes_v1.0.0.md; GitHub adds one trailing newline)",
+  "live_links": "24 public links in README and release notes return 200, including the release page; the two localhost demo addresses are local by design (OWNER D-63)",
+  "hub_cards": "both re-uploaded under OWNER D-65 and downloaded back (release_record_v2.json)"
+}

@@ -7,7 +7,7 @@ slug: gemma-grounded-health
 title: Gemma Grounded Health
 tagline: A small open Gemma model fine-tuned to answer health research questions only from a given abstract and cite its sentences. Research only, not medical advice.
 kind: case-study
-status: building
+status: released
 role: Product and build
 year: 2026
 featured: false
