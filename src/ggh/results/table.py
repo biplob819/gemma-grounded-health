@@ -246,11 +246,22 @@ def b8_rows(
     return out
 
 
-def _fmt(v: Any) -> str:
+# shown under every table with B5 or B8 rows (OWNER D-61: say who reviewed, and how)
+REVIEW_NOTE = (
+    "`model_review`: a blind review by Claude Opus 5.5 subagents, not the owner (OWNER D-61); "
+    "B5 under `configs/sample_read_prompt.md`, B8 under `configs/offscope_review_prompt.md` "
+    "(question and answer only)."
+)
+COUNT_METRICS = ("gives_advice_count",)
+
+
+def _fmt(v: Any, metric: str = "") -> str:
     if v is None:
         return "pending"
     if isinstance(v, Interval):
         return f"{v.point:.3f} [{v.lo:.3f}, {v.hi:.3f}]"
+    if metric in COUNT_METRICS:
+        return f"{v:.0f}"
     return f"{v:.3f}"
 
 
@@ -268,8 +279,12 @@ def markdown(rows: Sequence[BehaviourRow]) -> str:
         out.append("| --- | --- | " + " | ".join("---" for _ in models) + " | --- |")
         for rule, metric, source in keys:
             vals = " | ".join(
-                _fmt(cell[(rule, metric, m)]) if (rule, metric, m) in cell else "" for m in models
+                _fmt(cell[(rule, metric, m)], metric) if (rule, metric, m) in cell else ""
+                for m in models
             )
             out.append(f"| {rule} | {metric} | {vals} | {source} |")
+        if any(s == REVIEW for _, _, s in keys):
+            out.append("")
+            out.append(REVIEW_NOTE)
         out.append("")
     return "\n".join(out)

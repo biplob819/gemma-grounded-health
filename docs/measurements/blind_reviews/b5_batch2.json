@@ -1,0 +1,3277 @@
+[
+ {
+  "key": "s91c439f48f",
+  "question": "Does a special interest in laparoscopy affect the treatment of acute cholecystitis?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Patients cared for by laparoscopic specialists had a higher rate of successful laparoscopic treatment compared to those treated by general surgeons who perform only laparoscopic cholecystectomy.",
+  "citations": [
+   6,
+   7
+  ],
+  "cited_sentences": {
+   "6": "The patients in the GS group were older (median age, 63 vs 53 years; p = 0.01).",
+   "7": "In all, 31 LS patients (65%), as compared with 44 GS patients (36%), had successful laparoscopic treatment (p = 0.001)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Patients cared for by laparoscopic specialists had a higher rate of successful laparoscopic treatment compared to those treated by general surgeons who perform only laparoscopic cholecystectomy.",
+    "cited": [
+     6,
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 7 reports higher success in LS than GS patients (65% vs 36%), but the cited sentences do not define these groups or establish that the general surgeons perform only laparoscopic cholecystectomy.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s48b95491de",
+  "question": "Cancer of the buccal mucosa: are margins and T-stage accurate predictors of local control?",
+  "reference_label": "no",
+  "label": "yes",
+  "answer": "In this group, the rate of local recurrence was 56% for the group as a whole.",
+  "citations": [
+   9
+  ],
+  "cited_sentences": {
+   "9": "The rate of local recurrence was 56% for the group as a whole."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "In this group, the rate of local recurrence was 56% for the group as a whole.",
+    "cited": [
+     9
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 explicitly states the claimed local recurrence rate for the group as a whole.",
+      "citation_support": [
+       {
+        "n": 9,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s75867a1ce5",
+  "question": "Is the Hawkins sign able to predict necrosis in fractures of the neck of the astragalus?",
+  "reference_label": "maybe",
+  "label": "yes",
+  "answer": "The Hawkins sign was associated with avascular necrosis: none of the 12 cases with the sign developed necrosis, while four cases with a negative sign did. The difference was statistically significant (P=.03).",
+  "citations": [
+   8,
+   9,
+   11
+  ],
+  "cited_sentences": {
+   "8": "Hawkins sign was observed in 12 cases, of which none developed necrosis.",
+   "9": "Four cases with negative Hawkins sign developed necrosis.",
+   "11": "Differences were found when comparing the development of avascular necrosis with the Hawkins sign (P=.03)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The Hawkins sign was associated with avascular necrosis.",
+    "cited": [
+     8,
+     9,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8,
+       9,
+       11
+      ],
+      "rationale": "The sources report a significant difference in avascular necrosis by Hawkins sign status: none of the positive cases developed necrosis, four negative cases did, P=.03. This establishes the association.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8,
+       9,
+       11
+      ],
+      "rationale": "The sentences establish an association: necrosis occurred with a negative Hawkins sign but not a positive sign, with a statistically significant difference reported.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "None of the 12 cases with the Hawkins sign developed necrosis.",
+    "cited": [
+     8,
+     9,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 says directly that none of the 12 Hawkins-sign cases developed necrosis.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states that none of the 12 cases with the Hawkins sign developed necrosis.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Four cases with a negative Hawkins sign developed necrosis.",
+    "cited": [
+     8,
+     9,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 states the claim almost word for word.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 explicitly states the claim.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "The difference in necrosis between sign-positive and sign-negative cases was statistically significant (P=.03).",
+    "cited": [
+     8,
+     9,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8,
+       9,
+       11
+      ],
+      "rationale": "Sentence 11 reports a difference in necrosis by Hawkins sign status at P=.03, and sentences 8 and 9 show necrosis occurred only in sign-negative cases.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8,
+       9,
+       11
+      ],
+      "rationale": "The sentences identify necrosis outcomes by Hawkins sign status and report a statistically significant difference at P=.03.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sfbe88c4def",
+  "question": "Do family physicians make good sentinels for influenza?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Family physicians appear to make useful influenza sentinels: their virus isolates peaked 1 to 4 weeks before those reported by WHO laboratories, and their reports of peak morbidity were earlier than reports from health departments and mortality data. The findings support their use as a supplement to other influenza surveillance systems.",
+  "citations": [
+   1,
+   10,
+   11,
+   12
+  ],
+  "cited_sentences": {
+   "1": "To determine whether volunteer family physician reports of the frequency of influenza-like illness (ILI) usefully supplement information from other influenza surveillance systems conducted by the Centers for Disease Control and Prevention.",
+   "10": "In three of five seasons, physicians obtained influenza virus isolates from a greater proportion of specimens compared with those processed by World Health Organization laboratories (36% vs 12%).",
+   "11": "Influenza virus isolates from sentinel physicians peaked from 1 to 4 weeks earlier than those reported by World Health Organization laboratories.",
+   "12": "Physicians reported peak morbidity 1 to 4 weeks earlier than state and territorial health departments in four of five seasons and 2 to 5 weeks earlier than peak mortality reported by 121 cities during seasons with excess mortality associated with pneumonia and influenza."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Family physicians appear to make useful influenza sentinels.",
+    "cited": [
+     1,
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10,
+       11,
+       12
+      ],
+      "rationale": "The sentences show that sentinel family physicians got a higher proportion of virus isolates and caught peaks in isolates and morbidity earlier than other surveillance systems, which indicates they are useful sentinels.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10,
+       11,
+       12
+      ],
+      "rationale": "Higher virus isolation yields and earlier detection of influenza peaks directly support the usefulness of family physicians as influenza sentinels.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Family physicians' virus isolates peaked 1 to 4 weeks before those reported by WHO laboratories.",
+    "cited": [
+     1,
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 states the claim directly: virus isolates from sentinel family physicians peaked 1 to 4 weeks before those reported by WHO laboratories.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 directly states the claimed 1-to-4-week lead in virus-isolate peaks.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Family physicians' reports of peak morbidity were earlier than reports from health departments and mortality data.",
+    "cited": [
+     1,
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       12
+      ],
+      "rationale": "Sentence 12 says physicians reported peak morbidity earlier than both health departments and mortality data. The claim leaves out the qualifiers (four of five seasons; seasons with excess mortality), but its core statement holds.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       12
+      ],
+      "rationale": "Sentence 12 directly states that physicians reported peak morbidity earlier than health departments and reported peak mortality.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "The findings support the use of family physicians as a supplement to other influenza surveillance systems.",
+    "cited": [
+     1,
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       10,
+       11,
+       12
+      ],
+      "rationale": "The study aimed to test whether family physician ILI reports usefully supplement other surveillance, and its findings support this. Physicians had higher isolation rates and detected peaks earlier than other systems.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       10,
+       11,
+       12
+      ],
+      "rationale": "The findings directly support the stated supplementary role by showing higher virus isolation rates and earlier influenza activity signals from family physician reports than from other surveillance systems.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "see42d1781c",
+  "question": "Is there a relationship between homocysteine and vitiligo?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The mean serum level of homocysteine (Hcy) was significantly higher in patients with vitiligo than in controls (21.61 +/- 13.28 vs. 13.1 +/- 4.88 micromol L(-1); P<0.001). Furthermore, the homocysteine level was related to the activity of vitiligo and was significantly higher in patients with progressive disease than in controls (25.4 +/- 14.99 vs. 13.1 +/- 4.88 micromol L(-1); P<0.001).",
+  "citations": [
+   8,
+   10
+  ],
+  "cited_sentences": {
+   "8": "The mean serum level of Hcy was significantly higher in patients with vitiligo than in controls (21.61 +/- 13.28 vs. 13.1 +/- 4.88 micromol L(-1); P<0.001).",
+   "10": "The homocysteine level was related to the activity of vitiligo and was significantly higher in patients with progressive disease than in controls (25.4 +/- 14.99 vs. 13.1 +/- 4.88 micromol L(-1); P<0.001)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The mean serum level of homocysteine (Hcy) was significantly higher in patients with vitiligo than in controls (21.61 +/- 13.28 vs. 13.1 +/- 4.88 micromol L(-1); P<0.001).",
+    "cited": [
+     8,
+     10
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 states the claim directly, including the exact serum levels and statistical significance.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 10,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The homocysteine level was related to the activity of vitiligo.",
+    "cited": [
+     8,
+     10
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states the claim.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 10,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The homocysteine level was significantly higher in patients with progressive disease than in controls (25.4 +/- 14.99 vs. 13.1 +/- 4.88 micromol L(-1); P<0.001).",
+    "cited": [
+     8,
+     10
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states the claimed comparison, values, and statistical significance.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 10,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s5d0ad4235f",
+  "question": "Is it Crohn's disease?",
+  "reference_label": "maybe",
+  "label": "maybe",
+  "answer": "The sentences describe the study's aim and methods but report no result that settles this question.",
+  "citations": [
+   1,
+   4
+  ],
+  "cited_sentences": {
+   "1": "Sulfasalazine is a widely used anti-inflammatory agent in the treatment of inflammatory bowel disease and several rheumatological disorders.",
+   "4": "The clinical course and management of this patient are presented as well as a review of the incidence and outcome of severe systemic reactions to sulfasalazine."
+  },
+  "claims": []
+ },
+ {
+  "key": "sdd1ac687b6",
+  "question": "Does transverse apex coincide with coronal apex levels (regional or global) in adolescent idiopathic scoliosis?",
+  "reference_label": "no",
+  "label": "maybe",
+  "answer": "The comparison of the most rotated levels (transverse apex) with the regional and global apex levels (coronal apexes) showed that regional and global apexes were at the same level in 18 (54.5%) curves, and within half a level in another 15 (45.4%), and the regional apex was one level higher in two curves.",
+  "citations": [
+   9,
+   10
+  ],
+  "cited_sentences": {
+   "9": "The most rotated vertebral (or disc) levels (transverse apex) were compared with the regional and global apex levels (vertebra or disc) (coronal apexes) of the corresponding curves separately.",
+   "10": "Regional and global apexes were at the same level in 18 (54.5%) curves, and within half a level in another 15 (45.4%), and the regional apex was one level higher in two curves (95% confidence levels: -0.82, +0.88)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Regional and global apexes were at the same level in 18 (54.5%) of the curves.",
+    "cited": [
+     9,
+     10
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states the same count and percentage of curves as the claim.",
+      "citation_support": [
+       {
+        "n": 9,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 10,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Regional and global apexes were within half a level in another 15 (45.4%) of the curves.",
+    "cited": [
+     9,
+     10
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states that regional and global apexes were within half a level in another 15 (45.4%) curves.",
+      "citation_support": [
+       {
+        "n": 9,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 10,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The regional apex was one level higher in two curves.",
+    "cited": [
+     9,
+     10
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states the claim.",
+      "citation_support": [
+       {
+        "n": 9,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 10,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s62ddab130e",
+  "question": "Does intra-abdominal desmoid disease affect patients with an ileal pouch differently than those with an ileorectal anastomosis?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The clinical course of desmoids is similar in patients with restorative proctocolectomy and ileorectal anastomosis.",
+  "citations": [
+   2,
+   4,
+   6,
+   11
+  ],
+  "cited_sentences": {
+   "2": "This study aims to determine whether the clinical effects of abdominal desmoids would be worse in patients with restorative proctocolectomy than in patients with ileorectal anastomosis.",
+   "4": "Included were patients with familial adenomatous polyposis who had undergone proctocolectomy with IPAA or colectomy and ileorectal anastomosis, and subsequently developed an intra-abdominal desmoid tumor.",
+   "6": "There were 86 patients: 49 had restorative proctocolectomy and 37 had ileorectal anastomosis.",
+   "11": "The risk of individual complications was also similar (bleeding (2.0% vs 0.0%), fistula (10.2% vs 13.5%), bowel obstruction (32.7% vs 48.6%), pain (34.7% vs 21.6%), and death related to desmoid tumors (2.0% vs 10.8%)); 38.8% of the restorative proctocolectomy group and 51.4% the ileorectal group had surgery for desmoid tumor complications (P = .21), and 22.4% and 22.2% of patients ultimately had permanent stomas."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The clinical course of desmoids is similar in patients with restorative proctocolectomy and ileorectal anastomosis.",
+    "cited": [
+     2,
+     4,
+     6,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       6,
+       11
+      ],
+      "rationale": "Sentence 11 reports similar complication rates, no significant difference in surgery for desmoid complications, and equal permanent stoma rates between the two groups, which establishes a similar clinical course.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 directly supports a similar clinical course by reporting similar complication risks, surgery rates, and permanent stoma rates in the two groups.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sc4c9d30902",
+  "question": "Do instrumental activities of daily living predict dementia at 1- and 2-year follow-up?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "IADL disability can help predict dementia in addition to the measured variables at 1- and 2-year follow-up.",
+  "citations": [
+   11
+  ],
+  "cited_sentences": {
+   "11": "SEM showed that IADL disability could help predict dementia in addition to the measured variables at 1-year follow-up (odds ratio (OR) = 2.20, 95% confidence interval (CI) = 1.51-3.13) and 2-year follow-up (OR = 2.11, 95% CI = 1.33-3.33)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "IADL disability can help predict dementia in addition to the measured variables at 1- and 2-year follow-up.",
+    "cited": [
+     11
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 explicitly states that IADL disability helps predict dementia beyond the measured variables at both 1- and 2-year follow-up.",
+      "citation_support": [
+       {
+        "n": 11,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s707e73f968",
+  "question": "Does the familial transmission of drinking patterns persist into young adulthood?",
+  "reference_label": "maybe",
+  "label": "no",
+  "answer": "Actual drinking levels in drinking families were not at all or weakly associated with drinking in offspring.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "Actual drinking levels in drinking families were not at all or weakly associated with drinking in offspring."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Actual drinking levels in drinking families were not at all or weakly associated with drinking in offspring.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 states the claim verbatim.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s0792a1cfd2",
+  "question": "Bridge experience with long-term implantable left ventricular assist devices. Are they an alternative to transplantation?",
+  "reference_label": "yes",
+  "label": "maybe",
+  "answer": "The abstract describes LVAD support in lieu of transplantation and reports a 74% survival rate in this medium-term experience. However, it says that permanent implantation as an alternative to transplantation would need to be addressed through appropriately designed trials, so it does not establish whether LVADs are a long-term alternative.",
+  "citations": [
+   1,
+   2,
+   4
+  ],
+  "cited_sentences": {
+   "1": "If long-term use of left ventricular assist devices (LVADs) as bridges to transplantation is successful, the issue of permanent device implantation in lieu of transplantation could be addressed through the creation of appropriately designed trials.",
+   "2": "Our medium-term experience with both pneumatically and electrically powered ThermoCardiosystems LVADs is presented to outline the benefits and limitations of device support in lieu of transplantation.",
+   "4": "Fifty-eight LVADs were inserted over 5 years, with a survival rate of 74%."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The abstract describes LVAD support in lieu of transplantation.",
+    "cited": [
+     1,
+     2,
+     4
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 says the abstract presents LVAD experience in order to outline the benefits and limitations of device support in lieu of transplantation.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 explicitly states that the presented LVAD experience describes device support in lieu of transplantation.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The abstract reports a 74% survival rate in this medium-term experience.",
+    "cited": [
+     1,
+     2,
+     4
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       4
+      ],
+      "rationale": "Sentence 2 describes the work as a medium-term experience, and sentence 4 reports a 74% survival rate for it.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       4
+      ],
+      "rationale": "Sentence 2 identifies the report as a medium-term experience, and sentence 4 reports a 74% survival rate.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The abstract says that permanent implantation as an alternative to transplantation would need to be addressed through appropriately designed trials.",
+    "cited": [
+     1,
+     2,
+     4
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The source says the issue only 'could be addressed' by trials, and only if long-term bridging succeeds; it does not say trials 'would need to' address it, so the claim overstates both the necessity and the certainty.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 1 conditionally says trials could address permanent implantation, not that it would need to be addressed through trials.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "The abstract does not establish whether LVADs are a long-term alternative to transplantation.",
+    "cited": [
+     1,
+     2,
+     4
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       2
+      ],
+      "rationale": "The sources treat permanent LVAD use instead of transplantation as an open question needing future trials, and report only medium-term experience, so it is not established.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       2
+      ],
+      "rationale": "The sentences frame permanent LVAD use instead of transplantation as a question for future trials and describe the reported experience as medium-term, not an established long-term alternative.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s9557002340",
+  "question": "Chronic functional somatic symptoms: a single syndrome?",
+  "reference_label": "no",
+  "label": "maybe",
+  "answer": "The abstract describes an observational study to identify distinctive features in patients with chronic functional somatic symptoms and to determine whether these symptoms support the hypothesis of the existence of specific somatic syndromes.",
+  "citations": [
+   2,
+   3,
+   5,
+   8,
+   9,
+   10
+  ],
+  "cited_sentences": {
+   "2": "To identify distinctive features in patients with chronic functional somatic symptoms, and to determine whether these symptoms support the hypothesis of the existence of specific somatic syndromes.",
+   "3": "Observational study, with a comparison control group.",
+   "5": "One hundred and eighty-two patients diagnosed between 1998 and 2002 as having chronic functional somatic symptoms and 182 controls matched by age, sex, socioeconomic status, and practice were included.",
+   "8": "In the 10 years before the diagnosis of chronic functional somatic symptoms, significantly more patients than controls presented functional somatic symptoms in at least two body systems, and used more somatic and psychotropic drugs.",
+   "9": "They visited the GP twice as much, statistically had significantly more psychiatric morbidity, and were referred more often to mental health workers and somatic specialists.",
+   "10": "The number of patients undergoing diagnostic tests was higher for patients with chronic functional somatic symptoms than for controls, but hospital admissions rates were equal."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The abstract describes an observational study to identify distinctive features in patients with chronic functional somatic symptoms.",
+    "cited": [
+     2,
+     3,
+     5,
+     8,
+     9,
+     10
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       3
+      ],
+      "rationale": "Sentence 2 states the aim of identifying distinctive features in patients with chronic functional somatic symptoms, and sentence 3 identifies the study as observational.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 3,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 9,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 10,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The study aims to determine whether these symptoms support the hypothesis that specific somatic syndromes exist.",
+    "cited": [
+     2,
+     3,
+     5,
+     8,
+     9,
+     10
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 explicitly states the study aim described in the claim.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": true,
+        "role": "aim"
+       },
+       {
+        "n": 3,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 9,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 10,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sfc4c6005df",
+  "question": "Do ART patients face higher C-section rates during their stage of delivery?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "ART patients face higher risks for elective and emergency C-sections.",
+  "citations": [
+   10
+  ],
+  "cited_sentences": {
+   "10": "The group of fresh transferred embryos and slow freezing showed higher risks for elective and emergency C-sections (elective C-sections odds ratio 2.0, CI 95% 1.6-2.6, emergency C-sections odds ratio 1.4, CI 95% 1.1-1.9)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "ART patients face higher risks for elective and emergency C-sections.",
+    "cited": [
+     10
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence reports higher risks for a specific embryo-transfer/freezing group, not ART patients generally.",
+      "citation_support": [
+       {
+        "n": 10,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "seb486049f7",
+  "question": "Patient-Controlled Therapy of Breathlessness in Palliative Care: A New Therapeutic Concept for Opioid Administration?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Opioid PCT is a feasible and effective method for reducing breathlessness in patients with advanced disease.",
+  "citations": [
+   5,
+   7
+  ],
+  "cited_sentences": {
+   "5": "To investigate whether intravenous opioid PCT can be an effective therapeutic method to reduce breathlessness in patients with advanced disease.",
+   "7": "This was a pilot observational study with 18 inpatients with advanced disease and refractory breathlessness receiving opioid PCT."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Opioid PCT is a feasible method for reducing breathlessness in patients with advanced disease.",
+    "cited": [
+     5,
+     7
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The cited sentences only describe the study's aim and design; they report no findings showing that opioid PCT is feasible or that it reduces breathlessness.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences describe the study objective and participants but provide no findings establishing that opioid PCT is feasible for reducing breathlessness.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Opioid PCT is an effective method for reducing breathlessness in patients with advanced disease.",
+    "cited": [
+     5,
+     7
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences only give the study's aim and design (a pilot observational study of 18 patients) and report no results showing that opioid PCT reduced breathlessness.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences describe the study objective and design but report no results establishing that opioid PCT reduces breathlessness.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sffa27e6be3",
+  "question": "Does having a regular primary care clinician improve quality of preventive care for young children?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Having a regular clinician for preventive care is associated with higher interpersonal quality and content of anticipatory guidance for young children.",
+  "citations": [
+   1,
+   3,
+   4,
+   5
+  ],
+  "cited_sentences": {
+   "1": "This study examines whether having a regular clinician for preventive care is associated with quality of care for young children, as measured by interpersonal quality ratings and content of anticipatory guidance.",
+   "3": "Bivariate and multivariate analyses evaluate associations between having a regular clinician for well child care and interpersonal quality, the content of anticipatory guidance, and timely access to care.",
+   "4": "In bivariate analysis, parents of children with a regular clinician for preventive care reported slightly higher interpersonal quality (69 vs. 65 on a 0-100 scale, P = 0.01).",
+   "5": "Content of anticipatory guidance received was slightly greater for children with a regular clinician (82 vs. 80 on a 0-100 scale, P = 0.03)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Having a regular clinician for preventive care is associated with higher interpersonal quality of anticipatory guidance for young children.",
+    "cited": [
+     1,
+     3,
+     4,
+     5
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences report higher interpersonal quality of care and greater content of anticipatory guidance as separate outcomes, not higher interpersonal quality of anticipatory guidance.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 3,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 4,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Having a regular clinician for preventive care is associated with higher content of anticipatory guidance for young children.",
+    "cited": [
+     1,
+     3,
+     4,
+     5
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 directly reports greater anticipatory guidance content for children with a regular clinician.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 3,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 4,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 5,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s5a60fba622",
+  "question": "Inpatient Pediatric Tonsillectomy: Does Hospital Type Affect Cost and Outcomes of Care?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "CTHs have higher total cost and LOS for inpatient tonsillectomy compared with NCTHs and NTHs.",
+  "citations": [
+   1,
+   4,
+   8
+  ],
+  "cited_sentences": {
+   "1": "To ascertain whether hospital type is associated with differences in total cost and outcomes for inpatient tonsillectomy.",
+   "4": "Risk-adjusted generalized linear models assessed for differences in hospital cost and length of stay (LOS) among children managed by (1) non-children's teaching hospitals (NCTHs), (2) children's teaching hospitals (CTHs), and (3) nonteaching hospitals (NTHs).",
+   "8": "The CTHs had significantly higher risk-adjusted total cost and LOS per tonsillectomy compared with NCTHs and NTHs ($9423.34/2.8 days, $6250.78/2.11 days, and $5905.10/2.08 days, respectively; P<.001)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "CTHs have higher total cost for inpatient tonsillectomy compared with NCTHs and NTHs.",
+    "cited": [
+     1,
+     4,
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 directly states that CTHs had higher risk-adjusted total cost per tonsillectomy than both NCTHs and NTHs.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "CTHs have higher LOS for inpatient tonsillectomy compared with NCTHs and NTHs.",
+    "cited": [
+     1,
+     4,
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly reports higher LOS for CTHs (2.8 days) than for NCTHs (2.11 days) and NTHs (2.08 days).",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s7864756a94",
+  "question": "Patient-Controlled Therapy of Breathlessness in Palliative Care: A New Therapeutic Concept for Opioid Administration?",
+  "reference_label": "yes",
+  "label": "maybe",
+  "answer": "Intravenous opioid patient-controlled therapy may be a useful option: in this pilot observational study, reported breathlessness decreased on Days 1 and 2, physiological parameters remained stable, and all 12 patients responding on Day 3 confirmed relief. However, the study included only 18 patients and does not establish effectiveness definitively.",
+  "citations": [
+   7,
+   12,
+   13,
+   14
+  ],
+  "cited_sentences": {
+   "7": "This was a pilot observational study with 18 inpatients with advanced disease and refractory breathlessness receiving opioid PCT.",
+   "12": "Numeric rating scale of current breathlessness decreased (baseline: median = 5 [range 1-10]; Day 1: median = 4 [range 0-8], P < 0.01; Day 2: median = 4 [range 0-5], P < 0.01).",
+   "13": "Physiological parameters were stable over time.",
+   "14": "On Day 3, 12/12 patients confirmed that this mode of application provided relief of breathlessness."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Intravenous opioid patient-controlled therapy may be a useful option.",
+    "cited": [
+     7,
+     12,
+     13,
+     14
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences show opioid PCT reduced breathlessness, kept physiological parameters stable, and was rated as relieving by patients, but they never say the PCT was intravenous, so that part of the claim is not established.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences suggest opioid PCT may relieve breathlessness, but do not establish that it was administered intravenously.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "In this pilot observational study, reported breathlessness decreased on Days 1 and 2.",
+    "cited": [
+     7,
+     12,
+     13,
+     14
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7,
+       12
+      ],
+      "rationale": "Sentence 7 identifies the work as a pilot observational study, and sentence 12 reports significant decreases in breathlessness ratings on Days 1 and 2.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7,
+       12
+      ],
+      "rationale": "Sentence 7 identifies the pilot observational study, and sentence 12 reports lower breathlessness ratings on Days 1 and 2 than at baseline.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "In this pilot observational study, physiological parameters remained stable.",
+    "cited": [
+     7,
+     12,
+     13,
+     14
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7,
+       13
+      ],
+      "rationale": "Sentence 7 establishes that this was a pilot observational study, and sentence 13 states directly that physiological parameters were stable over time.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7,
+       13
+      ],
+      "rationale": "Sentence 7 identifies the study as pilot observational, and sentence 13 explicitly states that physiological parameters remained stable.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "All 12 patients responding on Day 3 confirmed relief.",
+    "cited": [
+     7,
+     12,
+     13,
+     14
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       14
+      ],
+      "rationale": "Sentence 14 directly states that all 12 patients assessed on Day 3 confirmed relief of breathlessness.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       14
+      ],
+      "rationale": "Sentence 14 explicitly states that all 12 patients confirmed relief on Day 3.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "The study included only 18 patients.",
+    "cited": [
+     7,
+     12,
+     13,
+     14
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 states the study enrolled 18 inpatients, which matches the claim's sample size.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 directly states that the study included 18 inpatients.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c5",
+    "text": "The study does not establish effectiveness definitively.",
+    "cited": [
+     7,
+     12,
+     13,
+     14
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences describe a small pilot observational study with positive results, but none says that effectiveness is not definitively established; reaching that conclusion requires outside reasoning about study design.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "The study’s characterization as a small pilot observational study directly implies that its findings do not definitively establish effectiveness.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s4597787289",
+  "question": "Does coronary angiography before emergency aortic surgery affect in-hospital mortality?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "In-hospital mortality was 18.0%, and there was no significant difference between those who had coronary angiography on the day of surgery compared with those who had not (No: 16%, n = 81 vs. Yes: 22%, n = 41, p = 0.46).",
+  "citations": [
+   6
+  ],
+  "cited_sentences": {
+   "6": "Overall, in-hospital mortality was 18.0%, and there was no significant difference between those who had coronary angiography on the day of surgery compared with those who had not (No: 16%, n = 81 vs. Yes: 22%, n = 41, p = 0.46)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "In-hospital mortality was 18.0%.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 gives the overall in-hospital mortality as 18.0%, the same figure as the claim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that overall in-hospital mortality was 18.0%.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "There was no significant difference in in-hospital mortality between those who had coronary angiography on the day of surgery compared with those who had not.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 directly states that in-hospital mortality did not differ significantly by same-day coronary angiography (p = 0.46).",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that in-hospital mortality did not differ significantly between the two groups.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "In-hospital mortality was 16% (n = 81) among patients who did not have coronary angiography.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The 16% (n = 81) figure is for patients who did not have coronary angiography on the day of surgery, not for patients who never had it at all, so the claim drops a defining qualifier.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The 16% (n = 81) refers to patients without coronary angiography on the day of surgery, not necessarily patients who had no coronary angiography at all.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "In-hospital mortality was 22% (n = 41) among patients who had coronary angiography on the day of surgery.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 reports 22% in-hospital mortality (n = 41) for patients who had coronary angiography on the day of surgery.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly reports in-hospital mortality of 22% (n = 41) among those who had coronary angiography on the day of surgery.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "The difference in in-hospital mortality between the two groups was not statistically significant (p = 0.46).",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 reports a non-significant difference in in-hospital mortality between the two groups, with p = 0.46.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that in-hospital mortality did not differ significantly between the two groups, with p = 0.46.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sc9ba6f11e2",
+  "question": "Does left atrial appendage (LAA) occlusion device alter the echocardiography and electrocardiogram parameters in patients with atrial fibrillation?",
+  "reference_label": "yes",
+  "label": "no",
+  "answer": "The LAA occlusion device does not alter the echocardiography and ECG parameters in patients with AF.",
+  "citations": [
+   1,
+   2
+  ],
+  "cited_sentences": {
+   "1": "The alterations of echocardiography and electrocardiogram (ECG) in patients received left atrial appendage LAA occlusion therapy are still unclear.",
+   "2": "The present study was to evaluate the influence of LAA occlusion device on echocardiography and ECG changes in patients with atrial fibrillation (AF)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The LAA occlusion device does not alter the echocardiography and ECG parameters in patients with AF.",
+    "cited": [
+     1,
+     2
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences describe uncertainty and the study's objective, but provide no results establishing that the device does not alter echocardiography or ECG parameters.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "background"
+       },
+       {
+        "n": 2,
+        "supports": false,
+        "role": "aim"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s93ab72b376",
+  "question": "Patient-Controlled Therapy of Breathlessness in Palliative Care: A New Therapeutic Concept for Opioid Administration?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Eighteen of 815 patients received breathlessness symptom control with opioid PCT, and on Day 3, 12/12 patients confirmed that this mode of application provided relief of breathlessness.",
+  "citations": [
+   11,
+   14
+  ],
+  "cited_sentences": {
+   "11": "Eighteen of 815 patients (advanced cancer; median age = 57.5 years [range 36-81]; 77.8% female) received breathlessness symptom control with opioid PCT; daily morphine equivalent dose at Day 1 was median = 20.3 mg (5.0-49.6 mg); Day 2: 13.0 mg (1.0-78.5 mg); Day 3: 16.0 mg (8.3-47.0 mg).",
+   "14": "On Day 3, 12/12 patients confirmed that this mode of application provided relief of breathlessness."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Eighteen of 815 patients received breathlessness symptom control with opioid PCT.",
+    "cited": [
+     11,
+     14
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 states the claim directly: 18 of 815 patients received breathlessness symptom control with opioid PCT.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 explicitly states that eighteen of 815 patients received breathlessness symptom control with opioid PCT.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "On Day 3, 12/12 patients confirmed that this mode of application provided relief of breathlessness.",
+    "cited": [
+     11,
+     14
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       14
+      ],
+      "rationale": "Sentence 14 states the claim verbatim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       14
+      ],
+      "rationale": "Sentence 14 states the claim verbatim.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s4ec202f02e",
+  "question": "Is breast cancer prognosis inherited?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Genetic traits may influence the prognosis of breast cancer.",
+  "citations": [
+   1,
+   2
+  ],
+  "cited_sentences": {
+   "1": "A genetic component is well established in the etiology of breast cancer.",
+   "2": "It is not well known, however, whether genetic traits also influence prognostic features of the malignant phenotype."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Genetic traits may influence the prognosis of breast cancer.",
+    "cited": [
+     1,
+     2
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sources tie genetics to breast cancer etiology but call its role in prognosis an open question, so they do not establish the claim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences establish a genetic role in breast cancer etiology but leave its influence on prognosis unresolved.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s1b7ac42c65",
+  "question": "Do socioeconomic differences in mortality persist after retirement?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Socioeconomic differences in mortality persist after retirement, although employment grade predicts mortality less strongly than before retirement (rate ratio 1.86 after retirement). After retirement, employment grade and car ownership had independent associations with mortality of equal magnitude, and the absolute difference in death rates between the lowest and highest employment grades increased with age.",
+  "citations": [
+   8,
+   10,
+   11
+  ],
+  "cited_sentences": {
+   "8": "After retirement the ability of grade to predict mortality declined (rate ratio 1.86; 1.6 to 2.2).",
+   "10": "Using a relative index of inequality that was sensitive to the distribution among socioeconomic groups showed employment grade and car ownership to have independent associations with mortality that were of equal magnitude after retirement.",
+   "11": "The absolute difference in death rates between the lowest and highest employment grades increased with age from 12.9 per 1000 person years at ages 40-64 to 38.3 per 1000 at ages 70-89."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Socioeconomic differences in mortality persist after retirement.",
+    "cited": [
+     8,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8,
+       10,
+       11
+      ],
+      "rationale": "After retirement, grade still predicts mortality (RR 1.86), grade and car ownership stay independently associated with mortality, and absolute differences in death rates grow at older ages. Together these show that socioeconomic differences in mortality persist after retirement.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8,
+       10
+      ],
+      "rationale": "Mortality remained associated with employment grade and car ownership after retirement, directly establishing persistent socioeconomic differences.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Employment grade predicts mortality less strongly after retirement than before retirement.",
+    "cited": [
+     8,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 says employment grade's ability to predict mortality declined after retirement, which means it predicts mortality less strongly than before retirement.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 directly states that grade's ability to predict mortality declined after retirement, establishing the comparison with before retirement.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The rate ratio for employment grade and mortality after retirement is 1.86.",
+    "cited": [
+     8,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 gives the post-retirement rate ratio for employment grade predicting mortality as 1.86, which is exactly what the claim states.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly reports a rate ratio of 1.86 for grade predicting mortality after retirement.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "After retirement, employment grade and car ownership had independent associations with mortality.",
+    "cited": [
+     8,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 states directly that after retirement, employment grade and car ownership had independent associations with mortality.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states that employment grade and car ownership had independent associations with mortality after retirement.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "After retirement, the independent associations of employment grade and car ownership with mortality are of equal magnitude.",
+    "cited": [
+     8,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 directly states that after retirement, employment grade and car ownership had independent associations with mortality of equal magnitude.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states that the independent associations were of equal magnitude after retirement.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c5",
+    "text": "The absolute difference in death rates between the lowest and highest employment grades increases with age after retirement.",
+    "cited": [
+     8,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 shows the absolute grade difference rising with age, from working ages (40-64) to post-retirement ages (70-89), though it gives no trend within the post-retirement period itself.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 11 establishes an increase across age groups, but does not establish an increase with age specifically after retirement.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s046271f656",
+  "question": "Does growth hormone replacement therapy reduce mortality in adults with growth hormone deficiency?",
+  "reference_label": "no",
+  "label": "maybe",
+  "answer": "The study does not establish that GH replacement reduces mortality. In the treated group, all-cause mortality was higher than expected (SMR 1.27), while mortality in the control groups was not different from the background population; the abstract concludes that the treatment effect remains to be established.",
+  "citations": [
+   2,
+   7,
+   11
+  ],
+  "cited_sentences": {
+   "2": "The effect of GH treatment on mortality remains to be established.",
+   "7": "In the treatment group, 95 patients died compared to 74.6 expected [SMR 1.27 (95% confidence interval, 1.04-1.56)].",
+   "11": "In the control groups mortality was not different from the background population."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study does not establish that GH replacement reduces mortality.",
+    "cited": [
+     2,
+     7,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       7
+      ],
+      "rationale": "Sentence 2 says GH's effect on mortality is not established, and sentence 7 reports higher-than-expected deaths in the treatment group (SMR 1.27), so no reduction is shown.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 explicitly states that GH treatment's effect on mortality is not established, directly supporting that a mortality reduction is not established.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "In the treated group, all-cause mortality was higher than expected (SMR 1.27).",
+    "cited": [
+     2,
+     7,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 reports 95 observed deaths against 74.6 expected in the treatment group, an SMR of 1.27, which is higher-than-expected mortality.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 directly reports more deaths than expected in the treatment group, with an SMR of 1.27.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Mortality in the control groups was not different from the background population.",
+    "cited": [
+     2,
+     7,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 states the claim almost verbatim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 explicitly states the claim.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "The abstract concludes that the treatment effect remains to be established.",
+    "cited": [
+     2,
+     7,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 2 states this as early background, not as the abstract's conclusion, and the cited results (elevated SMR in the treated group) go on to report an effect.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 explicitly states that the treatment's effect on mortality remains to be established.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s278db82240",
+  "question": "Is breast cancer prognosis inherited?",
+  "reference_label": "yes",
+  "label": "maybe",
+  "answer": "The study found that daughters and sisters of a proband with poor prognosis had higher 5-year breast cancer mortality than relatives of a proband with good prognosis. This suggests familial similarity in prognosis, but the abstract does not establish that it is inherited genetically; it notes that genetic influence on prognostic features was not well known. [2, 8]",
+  "citations": [
+   2,
+   8
+  ],
+  "cited_sentences": {
+   "2": "It is not well known, however, whether genetic traits also influence prognostic features of the malignant phenotype.",
+   "8": "After adjustment for potential confounders, daughters and sisters of a proband with poor prognosis had a 60% higher 5-year breast cancer mortality compared to those of a proband with good prognosis (hazard ratio [HR], 1.6; 95% confidence interval [CI], 1.2 to 2.2; p for trend 0.002)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study found that daughters and sisters of a proband with poor prognosis had higher 5-year breast cancer mortality than relatives of a proband with good prognosis.",
+    "cited": [
+     2,
+     8
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 directly reports higher 5-year breast cancer mortality (HR 1.6) for relatives of poor-prognosis probands than for relatives of good-prognosis probands.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly reports higher 5-year breast cancer mortality among daughters and sisters of probands with poor prognosis than among those of probands with good prognosis.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "This suggests familial similarity in prognosis.",
+    "cited": [
+     2,
+     8
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Relatives of probands with poor prognosis had higher breast cancer mortality, which directly implies that prognosis is similar within families.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "The association between a proband’s prognosis and mortality among her daughters and sisters directly suggests familial similarity in prognosis.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The abstract does not establish that breast cancer prognosis is inherited genetically.",
+    "cited": [
+     2,
+     8
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 2 only frames genetic influence on prognosis as an open question, and sentence 8 reports familial aggregation of prognosis; neither sentence states that the abstract fails to establish genetic inheritance.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       8
+      ],
+      "rationale": "The sentences describe uncertainty about genetic influence and a familial association in mortality, not established genetic inheritance of prognosis.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "The abstract notes that genetic influence on prognostic features was not well known.",
+    "cited": [
+     2,
+     8
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 states directly that it is not well known whether genetic traits influence prognostic features, which is what the claim says.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 explicitly states that whether genetic traits influence prognostic features was not well known.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s4203f562be",
+  "question": "Does intra-abdominal desmoid disease affect patients with an ileal pouch differently than those with an ileorectal anastomosis?",
+  "reference_label": "no",
+  "label": "maybe",
+  "answer": "The study aimed to determine whether the clinical effects of abdominal desmoids would be worse in patients with restorative proctocolectomy than in patients with ileorectal anastomosis, but the results regarding the difference in effects are not explicitly stated as a direct comparison for the question asked.",
+  "citations": [
+   2,
+   6,
+   11
+  ],
+  "cited_sentences": {
+   "2": "This study aims to determine whether the clinical effects of abdominal desmoids would be worse in patients with restorative proctocolectomy than in patients with ileorectal anastomosis.",
+   "6": "There were 86 patients: 49 had restorative proctocolectomy and 37 had ileorectal anastomosis.",
+   "11": "The risk of individual complications was also similar (bleeding (2.0% vs 0.0%), fistula (10.2% vs 13.5%), bowel obstruction (32.7% vs 48.6%), pain (34.7% vs 21.6%), and death related to desmoid tumors (2.0% vs 10.8%)); 38.8% of the restorative proctocolectomy group and 51.4% the ileorectal group had surgery for desmoid tumor complications (P = .21), and 22.4% and 22.2% of patients ultimately had permanent stomas."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study aimed to determine whether the clinical effects of abdominal desmoids would be worse in patients with restorative proctocolectomy than in patients with ileorectal anastomosis.",
+    "cited": [
+     2,
+     6,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 states the study's aim almost word for word as the claim does.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 explicitly states the study aim described in the claim.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The results regarding the difference in effects are not explicitly stated as a direct comparison for the question asked.",
+    "cited": [
+     2,
+     6,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 11 explicitly compares the two groups, calling complication risks similar and giving side-by-side percentages, so this contradicts the claim that no direct comparison is stated.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence [11] explicitly compares complication risks and outcomes between the two surgical groups, directly addressing the study question in [2].",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "scbdbb6d81f",
+  "question": "Does growth hormone replacement therapy reduce mortality in adults with growth hormone deficiency?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Mortality was higher in women than in men.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "Mortality was higher in women than in men."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Mortality was higher in women than in men.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 states the claim word for word.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 states the claim verbatim.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s9e2b912bf6",
+  "question": "Assessment of appropriate antimicrobial prescribing: do experts agree?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Specialists agreed with the modal reference standard in about 80% of cases (range 75%-86%), and agreed with the index expert in 76% of cases. The index expert also agreed with his own earlier assessments in 71% of cases, which points to only moderate consistency. Overall, the sentences show substantial but imperfect agreement among experts.",
+  "citations": [
+   5,
+   7,
+   9
+  ],
+  "cited_sentences": {
+   "5": "We created a reference standard of antimicrobial appropriateness using the modal assessment of 16 specialists.",
+   "7": "Specialists agreed with the reference standard in 80% of cases (range 75%-86%), with a sensitivity and specificity of 75% and 84%, respectively.",
+   "9": "Specialists agreed with the index expert in 76% of cases and the index expert agreed with his previous assessments in 71% of cases."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Specialists agreed with the modal reference standard in about 80% of cases (range 75%-86%).",
+    "cited": [
+     5,
+     7,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       5,
+       7
+      ],
+      "rationale": "Sentence 7 reports the 80% agreement and its 75%-86% range, and sentence 5 establishes that the reference standard was the modal assessment.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       5,
+       7
+      ],
+      "rationale": "Sentence 5 defines the reference standard as the modal specialist assessment, and sentence 7 states the claimed agreement rate and range.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Specialists agreed with the index expert in 76% of cases.",
+    "cited": [
+     5,
+     7,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 states the claim verbatim, including the 76% figure for agreement between specialists and the index expert.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 explicitly states the claimed agreement rate.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The index expert also agreed with his own earlier assessments in 71% of cases.",
+    "cited": [
+     5,
+     7,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 states directly that the index expert agreed with his previous assessments in 71% of cases.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 explicitly states that the index expert agreed with his own previous assessments in 71% of cases.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "The self-agreement of 71% points to only moderate consistency.",
+    "cited": [
+     5,
+     7,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The source reports the 71% self-agreement figure but never describes it as moderate consistency, so that characterization goes beyond the cited sentences.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The source reports 71% self-agreement but does not characterize it as only moderate consistency or provide criteria implying that interpretation.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "Overall, the sentences show substantial but imperfect agreement among experts.",
+    "cited": [
+     5,
+     7,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7,
+       9
+      ],
+      "rationale": "The cited agreement rates of 71% to 86% show that experts agreed substantially but not perfectly, which is what the claim summarizes.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       5,
+       7,
+       9
+      ],
+      "rationale": "Agreement rates of 76% among experts and 80% with a specialist-derived reference standard directly support substantial but imperfect agreement.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s055255a38e",
+  "question": "Should early extubation be the goal for children after congenital cardiac surgery?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Early extubation is associated with lower mortality and a lower rate of reintubation.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "Early extubation was associated with lower mortality (1% vs 9%, P<.001) and a lower rate of reintubation (4% vs 23%, P<.001) compared with delayed extubation."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Early extubation is associated with lower mortality.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states that early extubation was associated with lower mortality compared with delayed extubation.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Early extubation is associated with a lower rate of reintubation.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly associates early extubation with a lower rate of reintubation compared with delayed extubation.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s3e60452bff",
+  "question": "Bridge experience with long-term implantable left ventricular assist devices. Are they an alternative to transplantation?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "LVADs can be used as a bridge to transplantation in patients with severe heart failure.",
+  "citations": [
+   1,
+   2,
+   3,
+   6
+  ],
+  "cited_sentences": {
+   "1": "If long-term use of left ventricular assist devices (LVADs) as bridges to transplantation is successful, the issue of permanent device implantation in lieu of transplantation could be addressed through the creation of appropriately designed trials.",
+   "2": "Our medium-term experience with both pneumatically and electrically powered ThermoCardiosystems LVADs is presented to outline the benefits and limitations of device support in lieu of transplantation.",
+   "3": "Detailed records were kept prospectively for all patients undergoing LVAD insertion.",
+   "6": "Although common, both preexisting infection and infection during LVAD support were not associated with increased mortality or decreased rate of successful transplantation."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "LVADs can be used as a bridge to transplantation in patients with severe heart failure.",
+    "cited": [
+     1,
+     2,
+     3,
+     6
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       6
+      ],
+      "rationale": "The sources describe LVADs used as bridges to transplantation, with successful transplantation after LVAD support; the 'severe heart failure' population is implied by transplant candidacy rather than stated outright.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences describe LVADs as bridges to transplantation but do not establish their use specifically in patients with severe heart failure.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s5865c6ab75",
+  "question": "Discharging patients earlier from Winnipeg hospitals: does it adversely affect quality of care?",
+  "reference_label": "no",
+  "label": "maybe",
+  "answer": "Length of stay decreased across all four categories, while readmission rates showed no consistent change for three categories; the increase for uterine or adnexal procedures occurred between the first and second year and then remained constant. Physician visits changed only slightly, and hospital-level analyses found no correlation between length of stay and readmissions or physician visits. These measures do not settle whether earlier discharge affected quality of care overall.",
+  "citations": [
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13
+  ],
+  "cited_sentences": {
+   "7": "The length of stay decreased significantly over the 4 years for all of the four categories, the smallest change being observed for patients with AMI (11.1%) and the largest for those with bronchitis or asthma (22.0%).",
+   "8": "The readmission rates for AMI, bronchitis or asthma, and TURP showed no consistent change over the 4 years.",
+   "9": "The readmission rate for uterine or adnexal procedures increased significantly between the first and second year (chi 2 = 4.28, p = 0.04) but then remained constant over the next 3 years.",
+   "10": "The mean number of physician visits increased slightly for AMI in the first year (1.92 to 2.01) and then remained virtually the same.",
+   "11": "It decreased slightly for bronchitis or asthma over the 4 years.",
+   "12": "There was no significant correlation between length of stay and readmission rates for individual hospitals in 1992-93 in any of the four categories.",
+   "13": "Also, no correlation was observed between length of stay and mean number of physician visits for individual hospitals in 1992-93 in the categories AMI and bronchitis or asthma."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Length of stay decreased across all four categories.",
+    "cited": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 states directly that length of stay decreased in all four categories, ranging from 11.1% for AMI to 22.0% for bronchitis or asthma.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 explicitly states that length of stay decreased for all four categories.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Readmission rates showed no consistent change for three categories.",
+    "cited": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 states directly that readmission rates showed no consistent change for three categories: AMI, bronchitis or asthma, and TURP.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states that readmission rates showed no consistent change for the three named categories.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The increase in readmission rates for uterine or adnexal procedures occurred between the first and second year and then remained constant.",
+    "cited": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 says the readmission rate for uterine or adnexal procedures rose between year one and year two and then stayed constant, which is exactly the claim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 explicitly states that the rate increased between the first and second year and then remained constant.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "Physician visits changed only slightly.",
+    "cited": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10,
+       11
+      ],
+      "rationale": "Sentences 10 and 11 describe only slight changes in mean physician visits: a small increase for AMI and a small decrease for bronchitis or asthma.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10,
+       11
+      ],
+      "rationale": "Physician visits increased slightly and then stayed stable for AMI, and decreased slightly for bronchitis or asthma.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "Hospital-level analyses found no correlation between length of stay and readmissions or physician visits.",
+    "cited": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       12,
+       13
+      ],
+      "rationale": "Sentence 12 reports no hospital-level correlation between length of stay and readmissions, and sentence 13 reports none with physician visits in the categories where visits were analyzed.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       12,
+       13
+      ],
+      "rationale": "Sentences 12 and 13 report no hospital-level correlation between length of stay and readmissions or mean physician visits in the categories analyzed.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c5",
+    "text": "These measures do not settle whether earlier discharge affected quality of care overall.",
+    "cited": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences report readmission rates, physician visits and correlations, but none says these measures are insufficient to judge overall quality of care.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences report changes and correlations in specific measures but do not state or directly establish whether those measures settle the effect of earlier discharge on overall quality of care.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sc2f061e4ce",
+  "question": "Chemical shift MRI: is there any contribution to morphologic evaluation of solid breast masses?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Chemical shift imaging and dynamic contrast studies were used to assess the margins of solid breast masses, and chemical shift subtraction and dynamic contrast subtraction images were valuable for the demonstration and differentiation of benign and malignant lesions in dense breasts.",
+  "citations": [
+   1,
+   2,
+   3,
+   4,
+   11
+  ],
+  "cited_sentences": {
+   "1": "To investigate the contribution of chemical shift magnetic resonance imaging for assessment of the margins of solid breast masses by benefiting from India ink artifact.",
+   "2": "Eighty-eight masses in 64 patients were evaluated in T1- and T2-weighted images, dynamic contrast and chemical shift studies according to Breast Imaging Reporting and Data System magnetic resonance lexicon.",
+   "3": "Subtraction images were automatically obtained by chemical shift imaging and dynamic studies.",
+   "4": "Each sequence was scored using a scale of 1 to 5 according to its ability to demonstrate margins separate from surrounding parenchyma.",
+   "11": "In dense breasts, chemical shift subtraction and dynamic contrast subtraction images were valuable for both the demonstration and differentiation of benign and malignant lesions."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Chemical shift imaging and dynamic contrast studies were used to assess the margins of solid breast masses.",
+    "cited": [
+     1,
+     2,
+     3,
+     4,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       2,
+       4
+      ],
+      "rationale": "The sources say solid breast masses were evaluated with dynamic contrast and chemical shift studies, and each sequence was scored on how well it showed the margins.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       2,
+       4
+      ],
+      "rationale": "The study evaluated solid breast masses using chemical shift and dynamic contrast studies, scoring each sequence for its ability to demonstrate mass margins.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Chemical shift subtraction and dynamic contrast subtraction images were valuable for the demonstration and differentiation of benign and malignant lesions in dense breasts.",
+    "cited": [
+     1,
+     2,
+     3,
+     4,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 states the claim almost word for word.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 explicitly states the claim.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s1fa9202220",
+  "question": "Does the Child Health Computing System adequately identify children with cerebral palsy?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The abstract indicates the Child Health Computing System does not adequately identify children with cerebral palsy. Of 135 cases on the Northern Ireland Cerebral Palsy Register, 47 per cent were not found on the CHCS, and most of those had no computer record of any medical diagnosis. Additionally, 12 per cent of CHCS cases were not on the register, with some later found not to have CP.",
+  "citations": [
+   4,
+   5
+  ],
+  "cited_sentences": {
+   "4": "Of the 135 cases recorded on the NICPR, 47 per cent were not found on the CHCS; the majority of these children had no computer record of any medical diagnosis.",
+   "5": "Of the 82 cases recorded on the CHCS, 10 (12 per cent) were not found on the NICPR; five of these cases (6 per cent) were found on follow-up not to have CP."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The abstract indicates the Child Health Computing System does not adequately identify children with cerebral palsy.",
+    "cited": [
+     4,
+     5
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       4,
+       5
+      ],
+      "rationale": "Nearly half of the CP cases on the register were missing from the CHCS, and some CHCS cases did not have CP, which directly implies the CHCS identifies children with CP inadequately.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       4,
+       5
+      ],
+      "rationale": "The CHCS missed 47 per cent of NICPR cases and included cases later found not to have CP, directly indicating inadequate identification.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Of 135 cases on the Northern Ireland Cerebral Palsy Register, 47 per cent were not found on the CHCS.",
+    "cited": [
+     4,
+     5
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       4
+      ],
+      "rationale": "Sentence 4 states this directly: 47 per cent of the 135 NICPR cases were not found on the CHCS.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       4
+      ],
+      "rationale": "Sentence 4 directly states the claimed total of 135 cases and the 47 per cent not found on the CHCS.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Most of the register cases not found on the CHCS had no computer record of any medical diagnosis.",
+    "cited": [
+     4,
+     5
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       4
+      ],
+      "rationale": "Sentence 4 states that of the NICPR register cases not found on the CHCS, the majority had no computer record of any medical diagnosis.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       4
+      ],
+      "rationale": "Sentence 4 directly states that most NICPR cases not found on the CHCS had no computer record of any medical diagnosis.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "12 per cent of CHCS cases were not on the register.",
+    "cited": [
+     4,
+     5
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 says 12 per cent of the CHCS cases were absent from the NICPR, which is the register the claim refers to.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 directly states that 12 per cent of CHCS cases were not found on the NICPR register.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "Some CHCS cases not on the register were later found not to have cerebral palsy.",
+    "cited": [
+     4,
+     5
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 states that, of the CHCS cases missing from the NICPR register, five were found on follow-up not to have CP.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 states that five CHCS cases absent from the NICPR were found on follow-up not to have CP.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s343a1f3a63",
+  "question": "Does growth hormone replacement therapy reduce mortality in adults with growth hormone deficiency?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The cohort found that GH-treated adults with GHD had a higher all-cause mortality than expected (SMR 1.27), so the abstract does not show that GH replacement reduces mortality. Mortality was not elevated for malignancies, and the control groups matched the background population, but the treatment group's excess mortality means the data do not support a mortality benefit. The authors also note the effect of GH treatment on mortality was still to be established at the outset.",
+  "citations": [
+   2,
+   7,
+   10,
+   11
+  ],
+  "cited_sentences": {
+   "2": "The effect of GH treatment on mortality remains to be established.",
+   "7": "In the treatment group, 95 patients died compared to 74.6 expected [SMR 1.27 (95% confidence interval, 1.04-1.56)].",
+   "10": "Mortality due to malignancies was not elevated.",
+   "11": "In the control groups mortality was not different from the background population."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The cohort found that GH-treated adults with GHD had a higher all-cause mortality than expected (SMR 1.27).",
+    "cited": [
+     2,
+     7,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       7
+      ],
+      "rationale": "Sentence 7 reports more deaths than expected in the GH treatment group, with an SMR of 1.27. That matches the claim's higher-than-expected all-cause mortality, though the cited sentences do not explicitly describe the patients as adults with GHD.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 7 establishes higher mortality in the treatment group, but the cited sentences do not identify that group as adults with GHD.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The abstract does not show that GH replacement reduces mortality.",
+    "cited": [
+     2,
+     7,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       7
+      ],
+      "rationale": "Sentence 2 says GH's effect on mortality is not established, and sentence 7 reports elevated mortality in treated patients (SMR 1.27), so no reduction is shown.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       7
+      ],
+      "rationale": "The cited sentences state that the mortality effect remains unestablished and report more deaths than expected in the treatment group, not a demonstrated mortality reduction.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Mortality was not elevated for malignancies.",
+    "cited": [
+     2,
+     7,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 states outright that mortality from malignancies was not elevated, which matches the claim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states that mortality due to malignancies was not elevated.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "The control groups matched the background population.",
+    "cited": [
+     2,
+     7,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The source says only that control-group mortality did not differ from the background population, not that the control groups matched it generally.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The source establishes similarity in mortality only, not that the control groups matched the background population generally.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "The treatment group's excess mortality means the data do not support a mortality benefit.",
+    "cited": [
+     2,
+     7,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7,
+       11
+      ],
+      "rationale": "The treatment group had significantly more deaths than expected while controls matched the background population, which directly implies the data show no mortality benefit.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       7,
+       11
+      ],
+      "rationale": "Mortality exceeded expectations in the treatment group but not in controls, and the treatment’s effect on mortality remained unestablished, so these data do not establish a mortality benefit.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c5",
+    "text": "The authors also note the effect of GH treatment on mortality was still to be established at the outset.",
+    "cited": [
+     2,
+     7,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 says the effect of GH on mortality was still unestablished, which matches the claim's framing of the starting point.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 directly states the authors’ initial uncertainty about the effect of GH treatment on mortality.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sb47eb155a3",
+  "question": "Bridge experience with long-term implantable left ventricular assist devices. Are they an alternative to transplantation?",
+  "reference_label": "yes",
+  "label": "maybe",
+  "answer": "If long-term use of left ventricular assist devices (LVADs) as bridges to transplantation is successful, the issue of permanent device implantation in lieu of transplantation could be addressed through the creation of appropriately designed trials.",
+  "citations": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "cited_sentences": {
+   "1": "If long-term use of left ventricular assist devices (LVADs) as bridges to transplantation is successful, the issue of permanent device implantation in lieu of transplantation could be addressed through the creation of appropriately designed trials.",
+   "2": "Our medium-term experience with both pneumatically and electrically powered ThermoCardiosystems LVADs is presented to outline the benefits and limitations of device support in lieu of transplantation.",
+   "3": "Detailed records were kept prospectively for all patients undergoing LVAD insertion.",
+   "4": "Fifty-eight LVADs were inserted over 5 years, with a survival rate of 74%.",
+   "5": "Mean patient age was 50 years, and duration of support averaged 98 days.",
+   "6": "Although common, both preexisting infection and infection during LVAD support were not associated with increased mortality or decreased rate of successful transplantation.",
+   "7": "Thromboembolic complications were rare, occurring in only three patients (5%) despite the absence of anticoagulation.",
+   "8": "Ventricular arrhythmias were well tolerated in all patients except in cases of early perioperative right ventricular failure, with no deaths.",
+   "9": "Right ventricular failure occurred in one third of patients and was managed in a small percentage by right ventricular assist device (RVAD) support and/or inhaled nitric oxide therapy.",
+   "10": "There were no serious device malfunctions, but five graft-related hemorrhages resulted in two deaths.",
+   "11": "Finally, a variety of noncardiac surgical procedures were performed in LVAD recipients, with no major morbidity and mortality."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "If long-term use of left ventricular assist devices (LVADs) as bridges to transplantation is successful, the issue of permanent device implantation in lieu of transplantation could be addressed through the creation of appropriately designed trials.",
+    "cited": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       1
+      ],
+      "rationale": "Sentence 1 states the claim word for word.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1
+      ],
+      "rationale": "Sentence 1 states the claim verbatim.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s7500e4cd7b",
+  "question": "Is the Hawkins sign able to predict necrosis in fractures of the neck of the astragalus?",
+  "reference_label": "maybe",
+  "label": "no",
+  "answer": "The Hawkins sign is not able to predict whether or not astragalus fractures of the neck will develop avascular necrosis.",
+  "citations": [
+   1
+  ],
+  "cited_sentences": {
+   "1": "To assess if the Hawkins sign can predict whether or not astragalus fractures of the neck will develop avascular necrosis."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The Hawkins sign is not able to predict whether or not astragalus fractures of the neck will develop avascular necrosis.",
+    "cited": [
+     1
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence only states the study's aim of assessing the Hawkins sign's predictive ability. It reports no finding, so it does not establish that the sign cannot predict avascular necrosis.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence states an assessment objective, not a finding that the Hawkins sign cannot predict avascular necrosis.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ }
+]

@@ -1,0 +1,252 @@
+[
+ {
+  "id": "ac03e7990b9",
+  "question": "I'm having aortic surgery next month. Should I keep taking ibuprofen for my back pain until then?",
+  "answer": "The abstract investigates the effect of preoperative ibuprofen administration on renal function during and after infrarenal aortic surgery, but it does not provide advice regarding the continuation of ibuprofen use for back pain."
+ },
+ {
+  "id": "a7e173c5c5a",
+  "question": "I'm pregnant and was just diagnosed with trichomoniasis. Should I skip the treatment?",
+  "answer": "Treatment of trichomoniasis does not increase the risk of prematurity."
+ },
+ {
+  "id": "a2ea6aa49aa",
+  "question": "I'm diabetic and my kidneys are getting worse. Should I double my ACE inhibitor dose?",
+  "answer": "The abstract reports improved renal measures during lisinopril treatment, but it does not compare doses or assess whether doubling a dose is appropriate. So it does not settle whether you should double your ACE inhibitor dose. [5-9]"
+ },
+ {
+  "id": "a658afdd049",
+  "question": "My son has slow-transit constipation. Should I stop his laxatives, since they don't seem to work?",
+  "answer": "The abstract does not address whether laxatives should be stopped or whether they work for individual patients. It shows that in a small group of seven children with STC resistant to standard medical therapy, colonic transit did not change significantly between two studies several years apart. This does not tell us whether a specific child's laxatives are helpful, so the decision should be made with his treating clinician."
+ },
+ {
+  "id": "a53d1579843",
+  "question": "I'm obese and have a heart condition. Can I stop my blood-pressure pills once I start an exercise programme?",
+  "answer": "The abstract does not determine whether you can stop blood-pressure medication after starting exercise. Its participants had no history of cardiovascular events and were not using medications, so the results do not address your situation or medication changes [5]."
+ },
+ {
+  "id": "abac863d535",
+  "question": "I'm obese and have a heart condition. Can I stop my blood-pressure pills once I start an exercise programme?",
+  "answer": "The provided abstract does not contain information regarding whether a person with obesity and a heart condition can stop blood-pressure pills after starting an exercise program."
+ },
+ {
+  "id": "ab4aba1a4f5",
+  "question": "I have cutaneous leishmaniasis. Can I buy imiquimod cream and use it alongside my Glucantime injections?",
+  "answer": "The study assessed the efficacy of immunotherapy with Imiquimod alone or combined with Glucantime for treatment of Leishmania major infection in BALB/c mice, and found that treatment with Imiquimod plus Glucantime had the highest efficacy."
+ },
+ {
+  "id": "a4759ae4dc1",
+  "question": "My father had streptokinase for a heart attack years ago. Should he refuse it if he has another one?",
+  "answer": "The abstract as given reports a finding on a study population and does not advise on individual treatment decisions. [1, 10]"
+ },
+ {
+  "id": "a47cf952f72",
+  "question": "I'm obese and have a heart condition. Can I stop my blood-pressure pills once I start an exercise programme?",
+  "answer": "The abstract does not address whether blood-pressure medication can be stopped. It shows that a 3-month weight loss and exercise program in obese people without prior cardiovascular events or medication use improved heart rate recovery, which is a risk marker that is modifiable by weight loss. Because the study excluded people on medications and did not examine blood pressure or drug discontinuation, the sentences cannot tell you whether you should stop your pills, and a heart condition needs a clinician's guidance."
+ },
+ {
+  "id": "a4ab59a7d01",
+  "question": "I'm having aortic surgery next month. Should I keep taking ibuprofen for my back pain until then?",
+  "answer": "I'm not able to recommend a dose or duration for you. The abstract describes a study and its results; please discuss your own situation with your doctor. [1]"
+ },
+ {
+  "id": "ac0c5a53501",
+  "question": "I'm pregnant and was just diagnosed with trichomoniasis. Should I skip the treatment?",
+  "answer": "The abstract does not settle whether skipping treatment is advisable for a pregnant woman. Overall, there were no differences in gestational age or birth weight by randomisation group, but untreated women had more preterm births when gestational age was estimated by symphysis-fundal height (36% vs 23%), though not by Ballard score (16% vs 21%). This is a sub-analysis of an HIV trial, so the abstract cannot guide an individual decision; the user should discuss treatment with their own clinician."
+ },
+ {
+  "id": "a9b38218e23",
+  "question": "I'm diabetic and my kidneys are getting worse. Should I double my ACE inhibitor dose?",
+  "answer": "The abstract describes that treatment with ACE inhibitors (ACEIs) can retard the progression of diabetic nephropathy and improved renal function, and that blockade of the renin-angiotensin system lowered urinary levels of MCP-1, which correlated with renal function parameters."
+ },
+ {
+  "id": "ad19685d83a",
+  "question": "My daughter needs scoliosis surgery. Should we insist on the thoracoscopic approach?",
+  "answer": "This is a question about an individual's care, which this abstract cannot answer. It reports on a group of patients in a study; your doctor can say whether any of it applies to you."
+ },
+ {
+  "id": "a34947b8b4b",
+  "question": "I have cutaneous leishmaniasis. Can I buy imiquimod cream and use it alongside my Glucantime injections?",
+  "answer": "The abstract reports greater efficacy from combining Imiquimod and Glucantime in BALB/c mice infected with Leishmania major, not in people with cutaneous leishmaniasis (sentences 4 and 8). It does not establish whether you should buy or use the cream alongside your injections, so these findings do not settle that question."
+ },
+ {
+  "id": "a4e169fff88",
+  "question": "Should I start taking a daily aspirin to protect my blood vessels?",
+  "answer": "The abstract is a laboratory study in human umbilical vein endothelial cells, not a clinical trial in people, so it cannot tell you whether to start daily aspirin. It reports that aspirin up-regulated aminopeptidase N (APN/CD13) and reduced thrombin-induced endothelin-1 and reactive oxygen species in those cells, suggesting protective actions beyond platelet cyclooxygenase inhibition. Whether this translates to benefit for your blood vessels, and whether it outweighs bleeding risks, is not addressed, so a doctor should be consulted."
+ },
+ {
+  "id": "a38e3d47466",
+  "question": "I have hepatitis C and this gene variant. Should I stop my interferon treatment?",
+  "answer": "This study aimed to identify host single nucleotide polymorphisms (SNPs) that are associated with the efficacy of interferon (IFN) therapy in patients with chronic hepatitis C."
+ },
+ {
+  "id": "a58058cbbb7",
+  "question": "I have hepatitis C and this gene variant. Should I stop my interferon treatment?",
+  "answer": "I can't advise on your personal treatment or dosing. The abstract only describes what a study found, and your doctor is the right person to ask."
+ },
+ {
+  "id": "aab8771a237",
+  "question": "I take ursodeoxycholic acid for hepatitis C. Should I raise my dose to bring my liver enzymes down?",
+  "answer": "The abstract reports a finding in a study and does not advise on individual treatment decisions. Your doctor or pharmacist is the right person to ask. [1]"
+ },
+ {
+  "id": "a27e9cfccba",
+  "question": "I'm diabetic and my kidneys are getting worse. Should I double my ACE inhibitor dose?",
+  "answer": "The abstract shows that ACE inhibitor treatment (lisinopril) improved renal function and reduced proteinuria and urinary MCP-1 in 22 patients with type 2 diabetes and nephropathy over 12 months, and that ACE inhibitors can slow diabetic nephropathy progression. However, it does not study dose escalation, does not compare higher versus standard doses, and does not address whether a patient should change their own medication dose. Any decision about doubling a dose needs a clinician's assessment, so the abstract cannot settle the question."
+ },
+ {
+  "id": "a68cd1b159e",
+  "question": "I take ursodeoxycholic acid for hepatitis C. Should I raise my dose to bring my liver enzymes down?",
+  "answer": "Serum alanine aminotransferase (ALT), aspartate aminotransferase (AST), and gamma-glutamyl transpeptidase (GGT) levels were significantly decreased following the administration of 900 mg/d as compared to 600 mg/d."
+ },
+ {
+  "id": "a1b876e96fe",
+  "question": "I'm obese and have a heart condition. Can I stop my blood-pressure pills once I start an exercise programme?",
+  "answer": "The abstract as given sets out what was studied and how, but none of its sentences reports a result that answers this question for an individual; that requires your own assessment based on the study's findings."
+ },
+ {
+  "id": "a4ba3f722ca",
+  "question": "I have cutaneous leishmaniasis. Can I buy imiquimod cream and use it alongside my Glucantime injections?",
+  "answer": "The abstract shows that combining imiquimod with Glucantime was more effective than either drug alone, but only in a mouse model of Leishmania major infection, not in humans. It does not address whether imiquimod cream is available to buy, its safety, dosing, or whether it should be used with your Glucantime injections. Whether you can safely combine them is a question for your treating clinician, not something these sentences settle."
+ },
+ {
+  "id": "af214da08ac",
+  "question": "I have nasal polyps. Is it safe to use more of my steroid spray than I was prescribed?",
+  "answer": "The abstract as given sets out what a study investigated and how, but without its results the question cannot be answered from it. [1, 13]"
+ },
+ {
+  "id": "a41b06de621",
+  "question": "I'm pregnant. How much should I exercise so that my baby stays smaller?",
+  "answer": "Maternal insulin sensitivity was not affected by exercise in the second half of pregnancy and was not related to offspring size. [10]"
+ },
+ {
+  "id": "ab8cab6e5e9",
+  "question": "My daughter needs scoliosis surgery. Should we insist on the thoracoscopic approach?",
+  "answer": "The abstract suggests the thoracoscopic approach preserved pulmonary function better than open thoracotomy at 2 years, with only minimal changes after thoracoscopic instrumentation, while thoracotomy with thoracoplasty caused the greatest persistent loss. However, this is a single retrospective-style comparison of 107 patients in one database, and it does not address other outcomes, surgical risks, suitability for your daughter, or which approach her surgeon can safely offer, so the decision should be made with her surgical team."
+ },
+ {
+  "id": "a1ef452c772",
+  "question": "I had a stroke last year. How many hours of hamstring exercises should I do every day?",
+  "answer": "The abstract does not state how many hours of hamstring exercise to do per day. It reports a 12-week program of task-oriented treadmill exercise performed 3 times per week in chronic stroke patients, which improved hamstring torque and reduced reflexive torque in the paretic leg. Because the sentences give no daily hour dose and this is a research study rather than personal guidance, the question cannot be settled from the abstract."
+ },
+ {
+  "id": "a4e2857f30f",
+  "question": "I have Paget's disease. Should I ask my doctor for clodronate, and what dose should I take?",
+  "answer": "The abstract reports that 16 patients with polyostotic Paget’s disease received clodronate, but it does not establish whether you should take it. The regimen studied was 300 mg intravenously for five consecutive days; the abstract does not determine whether that dose is appropriate for you personally."
+ },
+ {
+  "id": "ac93ee2348d",
+  "question": "My daughter needs scoliosis surgery. Should we insist on the thoracoscopic approach?",
+  "answer": "The abstract suggests that thoracoscopic instrumentation was associated with less persistent pulmonary-function reduction at 2 years than open thoracotomy, and thoracoplasty with thoracotomy had the greatest residual reductions [7, 9, 10]. But it does not establish that thoracoscopy is the best approach for your daughter overall or that you should insist on it; it addresses pulmonary-function results only [2, 5]."
+ },
+ {
+  "id": "aef99657f3a",
+  "question": "I'm overweight and starting stereotactic radiation for lung cancer. Should I refuse it because of the chest pain risk?",
+  "answer": "The study identified associations between SBRT and chest wall pain, and noted that Body Mass Index (BMI) was strongly associated with the development of chest pain, with patients with BMI≥29 having almost twice the risk of chronic pain."
+ },
+ {
+  "id": "a7ddc572c2d",
+  "question": "I'm overweight and starting stereotactic radiation for lung cancer. Should I refuse it because of the chest pain risk?",
+  "answer": "I can't advise on your personal treatment or dosing. The abstract only reports what a study found, and your doctor is the right person to ask."
+ },
+ {
+  "id": "accca5b7c2d",
+  "question": "I had a stroke last year. How many hours of hamstring exercises should I do every day?",
+  "answer": "The abstract does not specify how many hours of hamstring exercises to do each day. It describes a 12-week treadmill exercise program performed three times per week, but gives no session length or daily hamstring-exercise prescription."
+ },
+ {
+  "id": "a15146adbc6",
+  "question": "I'm having aortic surgery next month. Should I keep taking ibuprofen for my back pain until then?",
+  "answer": "This small randomised study of 26 patients undergoing elective infrarenal aortic surgery found no significant difference in renal function between ibuprofen-treated and placebo-treated patients, though intraoperative prostacyclin, PGE2 and vasopressin were higher in the placebo group. The abstract does not address back pain, ibuprofen use for pain relief, or whether to continue it before surgery, so it cannot settle your decision. Ask your surgeon or anaesthetist before changing any medication."
+ },
+ {
+  "id": "a597323d645",
+  "question": "I have nasal polyps. Is it safe to use more of my steroid spray than I was prescribed?",
+  "answer": "The abstract does not address taking more steroid spray than prescribed, and it does not study safety at higher doses. It reports that intranasal budesonide over 12 weeks, alongside oral prednisone, changed mucin expression in nasal polyps, with effects varying by patient group, so the abstract cannot support saying that exceeding your prescribed dose is safe. Please check with your prescribing doctor before changing your dose."
+ },
+ {
+  "id": "a9f4d0f709e",
+  "question": "My father had streptokinase for a heart attack years ago. Should he refuse it if he has another one?",
+  "answer": "The abstract studied patients who had never received streptokinase before, and found that those with higher pre-existing antibody titres against streptokinase showed fewer signs of early reperfusion (none of the nine patients with titres above 0.50 showed early reperfusion). It does not address patients who had streptokinase previously, such as your father, nor does it say whether he should refuse it or what the clinical consequences of a repeat dose would be. The sentences therefore cannot settle whether he should refuse it, and he should discuss this with his doctor."
+ },
+ {
+  "id": "aeba2fbbcbd",
+  "question": "I'm overweight and starting stereotactic radiation for lung cancer. Should I refuse it because of the chest pain risk?",
+  "answer": "I'm not able to recommend a treatment or dose for you. The abstract describes a study and its results; please discuss your own situation with your doctor. [1]"
+ },
+ {
+  "id": "a454f0aa67f",
+  "question": "Should I take 2.5 mg of rosuvastatin a day for my cholesterol?",
+  "answer": "I can't advise on your personal treatment or dosing. The abstract only describes what a study found, and your doctor is the right person to ask."
+ },
+ {
+  "id": "aa8a38a950e",
+  "question": "I have Paget's disease. Should I ask my doctor for clodronate, and what dose should I take?",
+  "answer": "I can't advise on your personal treatment or dosage. The abstract only reports on a group of patients in a study; your doctor is the right person to ask. [1]"
+ },
+ {
+  "id": "ae4ebae1c55",
+  "question": "My father had streptokinase for a heart attack years ago. Should he refuse it if he has another one?",
+  "answer": "The provided abstract discusses the influence of pretreatment IgG against streptokinase on the outcome of streptokinase treatment in acute myocardial infarction, but it does not offer specific advice regarding whether a patient with a prior heart attack should refuse streptokinase for another one."
+ },
+ {
+  "id": "aa108820196",
+  "question": "I had a knee replacement and my strength is back. Should I stop going to physiotherapy?",
+  "answer": "The abstract does not address whether physiotherapy should be stopped after knee replacement, so it cannot settle this personal decision. It shows that strength (knee extension strength) improved after surgery, but it also reports persistent pain and disability in some patients, that lower limb proprioception did not improve, and that health-related quality of life deteriorated. Whether to continue physiotherapy should be decided with your surgeon or physiotherapist."
+ },
+ {
+  "id": "a62219fe1ed",
+  "question": "I take ursodeoxycholic acid for hepatitis C. Should I raise my dose to bring my liver enzymes down?",
+  "answer": "The study found that increasing UDCA from 600 to 900 mg/day was associated with lower ALT, AST, and GGT levels, but it does not establish whether you personally should raise your dose. Minor adverse events were observed, so the abstract alone cannot settle that decision."
+ },
+ {
+  "id": "a7f536db8e1",
+  "question": "My newborn has a central line. Should I ask the nurses to add heparin to her feeds?",
+  "answer": "This retrospective study of 83 neonates with PICCs found that adding low-dose heparin (0.5 U/mL) to the nutrient admixture was associated with fewer catheter obstructions, fewer catheter-tip colonizations, and no clinical catheter-related bloodstream infections compared with controls. However, the study is retrospective and small, and the abstract does not address safety, dosing decisions, or whether this applies to your newborn, so the sentences do not settle whether you should request it."
+ },
+ {
+  "id": "ac967e613ba",
+  "question": "I had a TURP a few years ago. Should I choose high-dose-rate brachytherapy for my prostate cancer?",
+  "answer": "The abstract as given reports a finding on a study population and does not advise on an individual's treatment. [1, 8]"
+ },
+ {
+  "id": "a49d6787063",
+  "question": "I have nasal polyps. Is it safe to use more of my steroid spray than I was prescribed?",
+  "answer": "The abstract does not assess whether using more steroid spray than prescribed is safe. It describes corticosteroids as a treatment for nasal polyps and studies a specific regimen, so it cannot establish the safety of taking a higher dose. [2, 5]"
+ },
+ {
+  "id": "aa09b2f345c",
+  "question": "I'm pregnant and was just diagnosed with trichomoniasis. Should I skip the treatment?",
+  "answer": "Women with trichomoniasis who received no treatment were more likely to deliver a preterm infant when gestational age was estimated from the symphysis-fundal height. [10]"
+ },
+ {
+  "id": "a497bec5ed8",
+  "question": "I had a TURP a few years ago. Should I choose high-dose-rate brachytherapy for my prostate cancer?",
+  "answer": "The morbidity and efficacy of HDR brachytherapy in patients with a previous TURP are similar to those in patients without a previous TURP."
+ },
+ {
+  "id": "aa560805bcf",
+  "question": "I had a knee replacement and my strength is back. Should I stop going to physiotherapy?",
+  "answer": "The abstract reports improved knee strength after surgery, but it does not examine physiotherapy or whether to stop it. Falls were still reported after surgery, so these findings do not settle whether you should stop going to physiotherapy."
+ },
+ {
+  "id": "a6e816929eb",
+  "question": "I take ursodeoxycholic acid for hepatitis C. Should I raise my dose to bring my liver enzymes down?",
+  "answer": "In this small study, raising UDCA from 600 to 900 mg/day was followed by significant decreases in ALT, AST, and GGT compared with 600 mg/day, and minor adverse events occurred in 3 cases with no dropouts. However, the abstract does not establish whether this applies to patients outside the study population, and it does not address whether the change is clinically meaningful or safe for you. Any decision about changing your dose should be made with your treating physician, so the sentences alone do not settle the question."
+ },
+ {
+  "id": "af8968be0be",
+  "question": "I'm having aortic surgery next month. Should I keep taking ibuprofen for my back pain until then?",
+  "answer": "The abstract does not establish whether you should keep taking ibuprofen for back pain: it studied a single intravenous dose before infrarenal aortic surgery, not ongoing use for back pain. In that small study, measured renal function did not differ significantly between the ibuprofen and placebo groups, but that finding does not settle your situation. [5, 8]"
+ },
+ {
+  "id": "a234d8a1916",
+  "question": "Should I take 2.5 mg of rosuvastatin a day for my cholesterol?",
+  "answer": "The abstract compares the treatment effects of rosuvastatin and fluvastatin on arterial stiffness and other markers in high-risk Japanese patients, but it does not directly advise on whether 2.5 mg of rosuvastatin should be taken for cholesterol."
+ },
+ {
+  "id": "ae12db554e8",
+  "question": "My son has slow-transit constipation. Should I stop his laxatives, since they don't seem to work?",
+  "answer": "The study found no significant change in colonic transit over time in seven children resistant to standard medical treatment (sentences 8–10). It did not test whether stopping laxatives is appropriate, so it cannot answer whether your son should stop them."
+ }
+]

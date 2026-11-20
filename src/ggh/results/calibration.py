@@ -132,6 +132,13 @@ def evalkit_report(
             f"{JUDGE_PROMPT_HASH}"
         )
         return None
+    for a in report.agreements:
+        if a.split != "heldout" or a.judge_prompt_hash != JUDGE_PROMPT_HASH:
+            problems.append(
+                f"calibration: {rel}: {a.judge}'s agreement is on split {a.split!r} under rubric "
+                f"{a.judge_prompt_hash}, not held-out under {JUDGE_PROMPT_HASH}"
+            )
+            return None
     have = {a.judge for a in report.agreements}
     for j in judges:
         if j not in have:

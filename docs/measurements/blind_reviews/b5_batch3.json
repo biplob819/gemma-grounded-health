@@ -1,0 +1,3248 @@
+[
+ {
+  "key": "s411afc6d96",
+  "question": "Is fluoroscopy essential for retrieval of lower ureteric stones?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The study shows that ureteroscopic retrieval of lower ureteric stones can be done without fluoroscopy: complete clearance without fluoroscopy was achieved in 94.2% of 110 patients, and a fluoroscope was only kept on standby. Fluoroscopy was needed in just 6 patients for specific reasons such as calcified stricture or a duplex system, so it is not essential.",
+  "citations": [
+   1,
+   6,
+   9,
+   10
+  ],
+  "cited_sentences": {
+   "1": "The aim of this study was to assess the efficacy of ureteroscopy for lower ureteric stones without the use of fluoroscopy.",
+   "6": "A fluoroscope was kept standby.",
+   "9": "Complete clearance without the use of fluoroscopy was achieved in 99 patients (94.2%).",
+   "10": "Fluoroscopy was required in 6 patients (4%) for calcified stricture (n = 1), duplex system (n = 1), narrow and tortuous meatus causing difficulty in passing the 5-Fr balloon dilator (n = 3), and confirmation of spontaneous passage of the stone (n = 1)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study shows that ureteroscopic retrieval of lower ureteric stones can be done without fluoroscopy.",
+    "cited": [
+     1,
+     6,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       9
+      ],
+      "rationale": "The study assessed ureteroscopy for lower ureteric stones without fluoroscopy and achieved clearance without it in 94.2% of patients, which shows the procedure is feasible without fluoroscopy.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       9
+      ],
+      "rationale": "The study assessed ureteroscopy for lower ureteric stones and reported successful clearance without fluoroscopy in 99 patients, establishing that it can be done.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Complete clearance without fluoroscopy was achieved in 94.2% of 110 patients.",
+    "cited": [
+     1,
+     6,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The cited sentences never give a total of 110 patients, and 99 of 110 would be 90%, not 94.2%, so the claim's denominator is unsupported.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 9 supports the 94.2% clearance rate, but none of the cited sentences establishes a total of 110 patients.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "A fluoroscope was only kept on standby.",
+    "cited": [
+     1,
+     6,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 6 says a fluoroscope was kept on standby, but sentence 10 shows it was actually used in 6 patients, which contradicts the claim's 'only'.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Although a fluoroscope was kept on standby, sentence 10 states that fluoroscopy was required in six patients, so it was not only kept on standby.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "Fluoroscopy was needed in just 6 patients for specific reasons such as calcified stricture or a duplex system.",
+    "cited": [
+     1,
+     6,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 states that fluoroscopy was required in 6 patients and lists specific reasons, including calcified stricture and duplex system, which the claim gives as examples.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states that fluoroscopy was required in 6 patients and lists the specific reasons, including calcified stricture and a duplex system.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "Fluoroscopy is therefore not essential for retrieval of lower ureteric stones.",
+    "cited": [
+     1,
+     6,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9,
+       10
+      ],
+      "rationale": "Most lower ureteric stones were cleared without fluoroscopy, with only a few cases needing it, which supports the conclusion that fluoroscopy is not essential.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9,
+       10
+      ],
+      "rationale": "Successful clearance without fluoroscopy in 94.2% of patients establishes that it is not routinely essential, although it was required in some cases.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sd63f9d6352",
+  "question": "Is it Crohn's disease?",
+  "reference_label": "maybe",
+  "label": "no",
+  "answer": "The abstract describes a severe systemic reaction to sulfasalazine in a patient with rheumatoid arthritis, characterized by eosinophilia, granulomatous enteritis and myelotoxicity, cholestatic hepatitis, and seizures.",
+  "citations": [
+   4
+  ],
+  "cited_sentences": {
+   "4": "The clinical course and management of this patient are presented as well as a review of the incidence and outcome of severe systemic reactions to sulfasalazine."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The abstract describes a severe systemic reaction to sulfasalazine in a patient with rheumatoid arthritis.",
+    "cited": [
+     4
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence refers to a patient and to severe systemic reactions to sulfasalazine, but never says the patient had rheumatoid arthritis, so the claim is only partly supported.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence mentions severe systemic reactions to sulfasalazine but does not establish that this patient had rheumatoid arthritis.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The reaction is characterized by eosinophilia, granulomatous enteritis and myelotoxicity, cholestatic hepatitis, and seizures.",
+    "cited": [
+     4
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence only says severe systemic reactions to sulfasalazine are reviewed. It does not mention eosinophilia, granulomatous enteritis, myelotoxicity, cholestatic hepatitis, or seizures.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The cited sentence mentions severe systemic reactions to sulfasalazine but does not identify any of the claimed manifestations.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s4b0864ae7c",
+  "question": "Chemical shift MRI: is there any contribution to morphologic evaluation of solid breast masses?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The abstract indicates that chemical shift MRI contributes to morphologic evaluation of solid breast masses. It was assessed for demonstrating lesion margins separate from surrounding parenchyma, and chemical shift subtraction images were valuable for demonstrating and differentiating benign and malignant lesions in dense breasts and benign lesions in fatty breasts. However, it was not valuable for malignant lesions in fatty breasts.",
+  "citations": [
+   1,
+   4,
+   9,
+   10,
+   11
+  ],
+  "cited_sentences": {
+   "1": "To investigate the contribution of chemical shift magnetic resonance imaging for assessment of the margins of solid breast masses by benefiting from India ink artifact.",
+   "4": "Each sequence was scored using a scale of 1 to 5 according to its ability to demonstrate margins separate from surrounding parenchyma.",
+   "9": "In fatty breast, chemical shift subtraction and T1-weighted images were valuable both for the demonstration and differentiation of benign lesions (P<.05).",
+   "10": "None of the sequence was valuable for both the demonstration and differentiation of malignant lesions in fatty breasts (P>.05).",
+   "11": "In dense breasts, chemical shift subtraction and dynamic contrast subtraction images were valuable for both the demonstration and differentiation of benign and malignant lesions."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The abstract indicates that chemical shift MRI contributes to morphologic evaluation of solid breast masses.",
+    "cited": [
+     1,
+     4,
+     9,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       9,
+       11
+      ],
+      "rationale": "The abstract studies chemical shift MRI for assessing the margins of solid breast masses, which is a morphologic evaluation, and reports that chemical shift subtraction was valuable in fatty and dense breasts.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       4,
+       9,
+       11
+      ],
+      "rationale": "Assessment of mass margins is morphologic evaluation, and the cited findings establish a contribution from chemical shift imaging in specified breast and lesion contexts.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Chemical shift MRI was assessed for demonstrating lesion margins separate from surrounding parenchyma.",
+    "cited": [
+     1,
+     4,
+     9,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       4
+      ],
+      "rationale": "The study investigated chemical shift MRI for assessing mass margins (sentence 1). Sequences were scored on their ability to demonstrate margins separate from surrounding parenchyma (sentence 4).",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       4
+      ],
+      "rationale": "Sentence 1 identifies chemical shift MRI as being investigated for mass-margin assessment, and sentence 4 specifies assessment of margins separate from surrounding parenchyma.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Chemical shift subtraction images were valuable for demonstrating and differentiating benign and malignant lesions in dense breasts.",
+    "cited": [
+     1,
+     4,
+     9,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 says directly that chemical shift subtraction images were valuable for demonstrating and differentiating benign and malignant lesions in dense breasts.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 explicitly states that chemical shift subtraction images were valuable for demonstrating and differentiating benign and malignant lesions in dense breasts.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "Chemical shift subtraction images were valuable for differentiating benign lesions in fatty breasts.",
+    "cited": [
+     1,
+     4,
+     9,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 directly states that chemical shift subtraction images were valuable for differentiating benign lesions in fatty breasts.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 explicitly states that chemical shift subtraction images were valuable for differentiating benign lesions in fatty breasts.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "Chemical shift subtraction images were not valuable for malignant lesions in fatty breasts.",
+    "cited": [
+     1,
+     4,
+     9,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 says no sequence was valuable for both demonstrating and differentiating malignant lesions in fatty breasts, and that includes chemical shift subtraction images.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 states that no sequence, which includes chemical shift subtraction imaging, was valuable for demonstrating and differentiating malignant lesions in fatty breasts.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s14dd890eef",
+  "question": "Does coronary angiography before emergency aortic surgery affect in-hospital mortality?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "In this retrospective study of 122 patients undergoing emergency aortic surgery, in-hospital mortality was 16% without coronary angiography versus 22% with it, a difference that was not statistically significant (p = 0.46). Multivariate analysis found that coronary angiography had no impact on in-hospital mortality, and a prior myocardial infarction was the only predictor of mortality. The sentences therefore do not support a mortality benefit or harm from preoperative coronary angiography, though this is a single-center retrospective analysis.",
+  "citations": [
+   6,
+   7
+  ],
+  "cited_sentences": {
+   "6": "Overall, in-hospital mortality was 18.0%, and there was no significant difference between those who had coronary angiography on the day of surgery compared with those who had not (No: 16%, n = 81 vs. Yes: 22%, n = 41, p = 0.46).",
+   "7": "Multivariate analysis revealed that a history of myocardial infarction (MI) was the only predictor of in-hospital mortality (relative risk: 4.98 95% confidence interval: 1.48-16.75, p = 0.009); however, coronary angiography had no impact on in-hospital mortality in patients with a history of MI."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "In this retrospective study of 122 patients undergoing emergency aortic surgery, in-hospital mortality was 16% without coronary angiography versus 22% with it.",
+    "cited": [
+     6,
+     7
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 gives in-hospital mortality of 16% without and 22% with same-day coronary angiography, and the group sizes (81 + 41) total 122 patients; the 'retrospective' and 'emergency aortic surgery' framing is not stated in the cited sentences.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 6 supports the mortality percentages and implies 122 patients, but neither sentence establishes that this was a retrospective study of emergency aortic surgery.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The difference in in-hospital mortality between patients with and without coronary angiography was not statistically significant (p = 0.46).",
+    "cited": [
+     6,
+     7
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 states directly that in-hospital mortality did not differ significantly by coronary angiography status, with p = 0.46.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly reports no significant difference in in-hospital mortality between the angiography and no-angiography groups, with p = 0.46.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Multivariate analysis found that coronary angiography had no impact on in-hospital mortality.",
+    "cited": [
+     6,
+     7
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 says the multivariate analysis found history of MI was the only predictor and that coronary angiography had no impact on in-hospital mortality, which directly implies the claim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The explicit no-impact finding is limited to patients with a history of MI, while the claim omits that restriction; sentence 6 does not report a multivariate result.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "A prior myocardial infarction was the only predictor of mortality.",
+    "cited": [
+     6,
+     7
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 states that on multivariate analysis, prior MI was the only predictor of in-hospital mortality, which matches the claim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 explicitly identifies prior myocardial infarction as the only predictor of mortality, specifically in-hospital mortality.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "The sentences do not support a mortality benefit or harm from preoperative coronary angiography.",
+    "cited": [
+     6,
+     7
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       6,
+       7
+      ],
+      "rationale": "Both sentences report no significant mortality difference with angiography, either overall or in patients with prior MI, so neither benefit nor harm is shown.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6,
+       7
+      ],
+      "rationale": "The sentences report no significant mortality difference with angiography and no mortality impact in patients with prior MI, supporting neither a mortality benefit nor harm.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c5",
+    "text": "The study is a single-center retrospective analysis.",
+    "cited": [
+     6,
+     7
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The cited sentences report mortality results and the multivariate analysis, but they say nothing about whether the study was single-center or retrospective.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The cited sentences report mortality outcomes and predictors but do not establish that the study was single-center or retrospective.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sc265abe213",
+  "question": "Can we rely on arterial line sampling in performing activated plasma thromboplastin time after cardiac surgery?",
+  "reference_label": "no",
+  "label": "maybe",
+  "answer": "The study investigated the assumption that aspiration and discard of blood from the line clear heparin contamination before sampling. While INR values were statistically similar by both routes, the thromboelastogram analysis suggested a difference in heparin contamination between arterial and peripheral samples.",
+  "citations": [
+   6,
+   8,
+   9,
+   10
+  ],
+  "cited_sentences": {
+   "6": "Also, a thromboelastogram analysis (TEG) (n = 7) was made.",
+   "8": "The median arterial APTT ratio value was 1.32 +/- 0.52 as compared to the median peripheral APTT ratio value which was 1.1 +/- 0.24 (P<0.001).",
+   "9": "INR values were statistically similar by both routes.",
+   "10": "Heparin contamination was confirmed by TEG which revealed that the R-value for arterial catheter blood samples without heparinase in the cup was higher (406.00 +/- 64.44 s) compared with the value for arterial samples with heparinase in the cup (318.28 +/- 47.26s, P<0.05)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study investigated the assumption that aspiration and discard of blood from the line clear heparin contamination before sampling.",
+    "cited": [
+     6,
+     8,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The cited sentences describe APTT, INR and TEG results showing heparin contamination, but never mention an assumption that aspirating and discarding blood from the line clears heparin, or that the study set out to test it.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences report coagulation measurements and confirmed heparin contamination but do not mention aspiration, blood discard, or investigating an assumption that these clear contamination before sampling.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "While INR values were statistically similar by both routes, the thromboelastogram analysis suggested a difference in heparin contamination between arterial and peripheral samples.",
+    "cited": [
+     6,
+     8,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The INR part is supported, but the TEG compared arterial samples with and without heparinase, not arterial versus peripheral samples.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 9 establishes similar INR values, but the TEG comparison in sentence 10 is between arterial samples with and without heparinase, not between arterial and peripheral samples.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s48313d1e15",
+  "question": "Can Flexible Instruments Create Adequate Femoral Tunnel Lengths at 90° of Knee Flexion in Anterior Cruciate Ligament Reconstruction?",
+  "reference_label": "yes",
+  "label": "maybe",
+  "answer": "The study aimed to determine whether femoral tunnel lengths of greater than 20 mm can be created with a flexible reamer system at 90° of knee flexion, and whether the lateral structures of the knee are safe with this technique.",
+  "citations": [
+   2
+  ],
+  "cited_sentences": {
+   "2": "The purpose of this cadaveric study was twofold: 1. to determine whether femoral tunnel lengths of greater than 20 mm can be created with a flexible reamer system at 90 ° of knee flexion and 2. to determine whether the lateral structures of the knee are safe with this technique."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study aimed to determine whether femoral tunnel lengths of greater than 20 mm can be created with a flexible reamer system at 90° of knee flexion.",
+    "cited": [
+     2
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 explicitly identifies the claimed aim as one of the study's two purposes.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": true,
+        "role": "aim"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The study aimed to determine whether the lateral structures of the knee are safe with this technique.",
+    "cited": [
+     2
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 explicitly states that assessing the safety of the lateral knee structures with this technique was a study aim.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": true,
+        "role": "aim"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s07934f9ac8",
+  "question": "Bridge experience with long-term implantable left ventricular assist devices. Are they an alternative to transplantation?",
+  "reference_label": "yes",
+  "label": "maybe",
+  "answer": "The abstract reports medium-term experience with ThermoCardiosystems LVADs used in lieu of transplantation, with a 74% survival rate, successful outcomes for infection and thromboembolism, and no serious device malfunctions. However, it also notes right ventricular failure in one third of patients, graft-related hemorrhages causing two deaths, and states that long-term use as bridges to transplantation must first prove successful in appropriately designed trials. Therefore the sentences suggest potential but do not definitively establish LVADs as an alternative to transplantation.",
+  "citations": [
+   1,
+   2,
+   4,
+   6,
+   7,
+   9,
+   10
+  ],
+  "cited_sentences": {
+   "1": "If long-term use of left ventricular assist devices (LVADs) as bridges to transplantation is successful, the issue of permanent device implantation in lieu of transplantation could be addressed through the creation of appropriately designed trials.",
+   "2": "Our medium-term experience with both pneumatically and electrically powered ThermoCardiosystems LVADs is presented to outline the benefits and limitations of device support in lieu of transplantation.",
+   "4": "Fifty-eight LVADs were inserted over 5 years, with a survival rate of 74%.",
+   "6": "Although common, both preexisting infection and infection during LVAD support were not associated with increased mortality or decreased rate of successful transplantation.",
+   "7": "Thromboembolic complications were rare, occurring in only three patients (5%) despite the absence of anticoagulation.",
+   "9": "Right ventricular failure occurred in one third of patients and was managed in a small percentage by right ventricular assist device (RVAD) support and/or inhaled nitric oxide therapy.",
+   "10": "There were no serious device malfunctions, but five graft-related hemorrhages resulted in two deaths."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The abstract reports medium-term experience with ThermoCardiosystems LVADs used in lieu of transplantation.",
+    "cited": [
+     1,
+     2,
+     4,
+     6,
+     7,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sources present medium-term LVAD experience to inform the question of support in lieu of transplantation, but the devices were bridges to transplantation (sentence 6 reports transplantation rates), not used in lieu of it.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 explicitly reports medium-term experience with ThermoCardiosystems LVADs as support in lieu of transplantation.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The abstract reports a 74% survival rate with ThermoCardiosystems LVADs.",
+    "cited": [
+     1,
+     2,
+     4,
+     6,
+     7,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       4
+      ],
+      "rationale": "Sentence 2 identifies the devices as ThermoCardiosystems LVADs, and sentence 4 reports a 74% survival rate.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       4
+      ],
+      "rationale": "Sentence 2 identifies the devices as ThermoCardiosystems LVADs, and sentence 4 reports a 74% survival rate.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The abstract reports successful outcomes for infection and thromboembolism with the devices.",
+    "cited": [
+     1,
+     2,
+     4,
+     6,
+     7,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       6,
+       7
+      ],
+      "rationale": "Sentence 6 reports that infection was not associated with increased mortality or reduced transplantation, and sentence 7 reports that thromboembolism was rare. Together these describe favorable outcomes for both complications.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6,
+       7
+      ],
+      "rationale": "The abstract reports that infection did not worsen mortality or transplantation success and that thromboembolic complications were rare.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "The abstract reports no serious device malfunctions.",
+    "cited": [
+     1,
+     2,
+     4,
+     6,
+     7,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 states outright that there were no serious device malfunctions, which matches the claim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly reports that there were no serious device malfunctions.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "The abstract notes right ventricular failure in one third of patients.",
+    "cited": [
+     1,
+     2,
+     4,
+     6,
+     7,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 states directly that right ventricular failure occurred in one third of patients.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 explicitly states that right ventricular failure occurred in one third of patients.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c5",
+    "text": "The abstract notes graft-related hemorrhages causing two deaths.",
+    "cited": [
+     1,
+     2,
+     4,
+     6,
+     7,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 directly states that graft-related hemorrhages resulted in two deaths.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states that graft-related hemorrhages resulted in two deaths.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c6",
+    "text": "The abstract states that long-term use as bridges to transplantation must first prove successful in appropriately designed trials.",
+    "cited": [
+     1,
+     2,
+     4,
+     6,
+     7,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "In the source, the appropriately designed trials are for permanent implantation and depend on bridge success; it does not say bridge use itself must be proven in such trials.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 1 proposes trials to address permanent implantation after successful bridge use, not trials in which bridge use must first prove successful.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c7",
+    "text": "The sentences suggest potential for LVADs as an alternative to transplantation.",
+    "cited": [
+     1,
+     2,
+     4,
+     6,
+     7,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       2
+      ],
+      "rationale": "Sentences 1 and 2 explicitly discuss permanent LVAD implantation in lieu of transplantation as a possibility worth investigating, which supports the claim that LVADs have potential as an alternative to transplantation.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       2
+      ],
+      "rationale": "Sentences 1 and 2 explicitly discuss evaluating permanent LVAD support in lieu of transplantation, establishing its potential as an alternative.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c8",
+    "text": "The sentences do not definitively establish LVADs as an alternative to transplantation.",
+    "cited": [
+     1,
+     2,
+     4,
+     6,
+     7,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       2
+      ],
+      "rationale": "Sentence 1 frames permanent LVAD use instead of transplantation as an open question for future trials, and sentence 2 presents both benefits and limitations, so the sources do not definitively establish LVADs as an alternative.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       2
+      ],
+      "rationale": "The sentences frame permanent LVAD use instead of transplantation as a question for future trials and describe only medium-term experience, not definitive establishment as an alternative.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s05e9b3f8c3",
+  "question": "Does having a regular primary care clinician improve quality of preventive care for young children?",
+  "reference_label": "yes",
+  "label": "no",
+  "answer": "Having a regular clinician for preventive care is associated with higher interpersonal quality and content of anticipatory guidance for young children.",
+  "citations": [
+   5
+  ],
+  "cited_sentences": {
+   "5": "Content of anticipatory guidance received was slightly greater for children with a regular clinician (82 vs. 80 on a 0-100 scale, P = 0.03)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Having a regular clinician for preventive care is associated with higher interpersonal quality and content of anticipatory guidance for young children.",
+    "cited": [
+     5
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence supports higher anticipatory guidance content but does not establish higher interpersonal quality or specify a regular clinician for preventive care.",
+      "citation_support": [
+       {
+        "n": 5,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s1f7b23d57e",
+  "question": "Does coronary angiography before emergency aortic surgery affect in-hospital mortality?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "In patients with a history of MI, coronary angiography does not affect in-hospital mortality.",
+  "citations": [
+   7
+  ],
+  "cited_sentences": {
+   "7": "Multivariate analysis revealed that a history of myocardial infarction (MI) was the only predictor of in-hospital mortality (relative risk: 4.98 95% confidence interval: 1.48-16.75, p = 0.009); however, coronary angiography had no impact on in-hospital mortality in patients with a history of MI."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "In patients with a history of MI, coronary angiography does not affect in-hospital mortality.",
+    "cited": [
+     7
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 states directly that coronary angiography had no impact on in-hospital mortality in patients with a prior MI.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 explicitly states that coronary angiography had no impact on in-hospital mortality in patients with a history of MI.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s8b23c9e288",
+  "question": "Is fluoroscopy essential for retrieval of lower ureteric stones?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Complete clearance without the use of fluoroscopy was achieved in 99 patients (94.2%). Fluoroscopy was only required in 6 patients (4%) for specific conditions.",
+  "citations": [
+   6,
+   9,
+   10
+  ],
+  "cited_sentences": {
+   "6": "A fluoroscope was kept standby.",
+   "9": "Complete clearance without the use of fluoroscopy was achieved in 99 patients (94.2%).",
+   "10": "Fluoroscopy was required in 6 patients (4%) for calcified stricture (n = 1), duplex system (n = 1), narrow and tortuous meatus causing difficulty in passing the 5-Fr balloon dilator (n = 3), and confirmation of spontaneous passage of the stone (n = 1)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Complete clearance without the use of fluoroscopy was achieved in 99 patients (94.2%).",
+    "cited": [
+     6,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 states the claim verbatim: complete clearance without fluoroscopy in 99 patients (94.2%).",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 states the claim verbatim.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Fluoroscopy was only required in 6 patients (4%) for specific conditions.",
+    "cited": [
+     6,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 states that fluoroscopy was needed in 6 patients (4%) and lists the specific conditions, and sentence 9 shows the rest were cleared without it.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states that fluoroscopy was required in 6 patients (4%) and lists the specific conditions.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s3a3a2991f2",
+  "question": "Are intraoperative precursor events associated with postoperative major adverse events?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The study found that the primary outcome, a composite of major adverse cardiac events, occurred more frequently in patients with intraoperative precursor events than in matched controls (33% vs 24%; P = .015). The incidence of bleeding and difficulty weaning from cardiopulmonary bypass, two of the precursor events, was significantly higher in the MACE group. Precursor events were thus associated with postoperative major adverse events in this low- to medium-risk cohort.",
+  "citations": [
+   6,
+   9,
+   10
+  ],
+  "cited_sentences": {
+   "6": "The operative notes, for both groups, were scored by 5 surgeons to determine the frequency of 4 precursor events: bleeding, difficulty weaning from cardiopulmonary bypass, repair or regrafting, and incomplete revascularization or repair.",
+   "9": "The primary outcome occurred more frequently in the MACE group than in the non-MACE group (33% vs 24%; P = .015).",
+   "10": "The incidence of the individual events of bleeding and difficulty weaning from cardiopulmonary bypass was significantly higher in the MACE group."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study found that the primary outcome, a composite of major adverse cardiac events, occurred more frequently in patients with intraoperative precursor events than in matched controls (33% vs 24%; P = .015).",
+    "cited": [
+     6,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The source compares the MACE group with the non-MACE group, with MACE as the grouping variable rather than the outcome. The claim reverses this, treating MACE as the primary outcome and precursor events as the exposure.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The cited sentences compare MACE and non-MACE groups, not patients with precursor events and matched controls, and do not define the primary outcome as a composite of major adverse cardiac events.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The incidence of bleeding and difficulty weaning from cardiopulmonary bypass, two of the precursor events, was significantly higher in the MACE group.",
+    "cited": [
+     6,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       6,
+       10
+      ],
+      "rationale": "Sentence 10 states the claim directly, and sentence 6 identifies bleeding and difficulty weaning from bypass as two of the four precursor events.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6,
+       10
+      ],
+      "rationale": "Sentence 6 identifies bleeding and difficulty weaning as precursor events, and sentence 10 states that their incidence was significantly higher in the MACE group.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Precursor events were thus associated with postoperative major adverse events in this low- to medium-risk cohort.",
+    "cited": [
+     6,
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences show bleeding and difficulty weaning from bypass were more frequent in the MACE group, but nothing describes the cohort as low- to medium-risk, so part of the claim is not established.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences indicate an association between certain precursor events and MACE, but do not establish that the cohort was low- to medium-risk or that MACE occurred postoperatively.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sd33df9ab7e",
+  "question": "Ovarian torsion in children: is oophorectomy necessary?",
+  "reference_label": "no",
+  "label": "maybe",
+  "answer": "Most pediatric surgeons perform oophorectomy in girls presenting with ovarian torsion in which the ovary appears necrotic, but adult gynecology literature suggests that many ovaries can be treated by detorsion alone.",
+  "citations": [
+   1,
+   2
+  ],
+  "cited_sentences": {
+   "1": "Most pediatric surgeons perform oophorectomy in girls presenting with ovarian torsion in which the ovary appears necrotic.",
+   "2": "However, the adult gynecology literature suggests that many ovaries can be treated by detorsion alone."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Most pediatric surgeons perform oophorectomy in girls presenting with ovarian torsion in which the ovary appears necrotic.",
+    "cited": [
+     1,
+     2
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1
+      ],
+      "rationale": "Sentence 1 states the claim verbatim.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": true,
+        "role": "background"
+       },
+       {
+        "n": 2,
+        "supports": false,
+        "role": "background"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Adult gynecology literature suggests that many ovaries can be treated by detorsion alone.",
+    "cited": [
+     1,
+     2
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 explicitly states the claim.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "background"
+       },
+       {
+        "n": 2,
+        "supports": true,
+        "role": "background"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s10822bfffa",
+  "question": "Does the Child Health Computing System adequately identify children with cerebral palsy?",
+  "reference_label": "no",
+  "label": "maybe",
+  "answer": "The paper assesses the usefulness of the Child Health Computing System as a source of information about children with cerebral palsy, but the provided data compares information between the CHCS and the NICPR without directly assessing the adequacy of the CHCS in identifying CP.",
+  "citations": [
+   1,
+   2,
+   4,
+   5
+  ],
+  "cited_sentences": {
+   "1": "This paper assesses the usefulness of the Child Health Computing System as a source of information about children with cerebral palsy.",
+   "2": "A comparative survey of information held on the Child Health Computing System (CHCS) and the Northern Ireland Cerebral Palsy Register (NICPR) in one Health and Social Services Board in Northern Ireland was carried out.",
+   "4": "Of the 135 cases recorded on the NICPR, 47 per cent were not found on the CHCS; the majority of these children had no computer record of any medical diagnosis.",
+   "5": "Of the 82 cases recorded on the CHCS, 10 (12 per cent) were not found on the NICPR; five of these cases (6 per cent) were found on follow-up not to have CP."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The paper assesses the usefulness of the Child Health Computing System as a source of information about children with cerebral palsy.",
+    "cited": [
+     1,
+     2,
+     4,
+     5
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       1
+      ],
+      "rationale": "Sentence 1 states the claim nearly verbatim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1
+      ],
+      "rationale": "Sentence 1 explicitly states the claim.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The provided data compares information between the CHCS and the NICPR.",
+    "cited": [
+     1,
+     2,
+     4,
+     5
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       4,
+       5
+      ],
+      "rationale": "Sentence 2 describes a comparative survey of the information held on the CHCS and the NICPR, and sentences 4 and 5 report how cases on each system matched against the other.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       4,
+       5
+      ],
+      "rationale": "Sentence 2 explicitly describes a comparison of information held by CHCS and NICPR, and sentences 4 and 5 provide comparative case data.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The provided data does not directly assess the adequacy of the CHCS in identifying children with cerebral palsy.",
+    "cited": [
+     1,
+     2,
+     4,
+     5
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sources directly assess the CHCS's adequacy, finding that 47% of NICPR cases were missing from it, which contradicts the claim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The comparison directly assesses CHCS case identification by reporting missed cerebral palsy cases and cases incorrectly recorded as having CP.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s5603d20931",
+  "question": "Does the Child Health Computing System adequately identify children with cerebral palsy?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The CHCS did not adequately identify children with cerebral palsy: 47% of the 135 cases recorded on the NICPR were not found on the CHCS. In addition, 10 CHCS cases were absent from the NICPR, and five of those were found not to have cerebral palsy on follow-up.",
+  "citations": [
+   4,
+   5
+  ],
+  "cited_sentences": {
+   "4": "Of the 135 cases recorded on the NICPR, 47 per cent were not found on the CHCS; the majority of these children had no computer record of any medical diagnosis.",
+   "5": "Of the 82 cases recorded on the CHCS, 10 (12 per cent) were not found on the NICPR; five of these cases (6 per cent) were found on follow-up not to have CP."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The CHCS did not adequately identify children with cerebral palsy.",
+    "cited": [
+     4,
+     5
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       4
+      ],
+      "rationale": "Nearly half of the CP cases on the register were missing from the CHCS, which shows it did not adequately identify children with CP.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       4,
+       5
+      ],
+      "rationale": "The CHCS missed 47 per cent of NICPR cases and included cases subsequently found not to have CP, directly indicating inadequate identification.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "47% of the 135 cases recorded on the NICPR were not found on the CHCS.",
+    "cited": [
+     4,
+     5
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       4
+      ],
+      "rationale": "Sentence 4 says outright that 47% of the 135 NICPR cases were not found on the CHCS, which matches the claim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       4
+      ],
+      "rationale": "Sentence 4 explicitly states the same percentage, case total, and registry comparison as the claim.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "10 CHCS cases were absent from the NICPR.",
+    "cited": [
+     4,
+     5
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 states that 10 of the CHCS cases were not found on the NICPR.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 explicitly states that 10 cases recorded on the CHCS were not found on the NICPR.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "Five of the 10 CHCS cases absent from the NICPR were found not to have cerebral palsy on follow-up.",
+    "cited": [
+     4,
+     5
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 states that 10 CHCS cases were absent from the NICPR and that five of these were found on follow-up not to have CP.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 directly states that five of the 10 CHCS cases absent from the NICPR were found on follow-up not to have CP.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sb3237d5db9",
+  "question": "Does anterior laxity of the uninjured knee influence clinical outcomes of ACL reconstruction?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The study evaluated the association between postoperative outcomes of ACL reconstruction and the anterior laxity of the uninjured knee, dividing patients based on the anterior laxity of the contralateral knee. Post hoc testing indicated that Group 3, which had greater anterior laxity of the uninjured knee, had significantly lower functional scores compared with Groups 1 and 2.",
+  "citations": [
+   1,
+   3,
+   7,
+   11
+  ],
+  "cited_sentences": {
+   "1": "The purpose of this study was to evaluate the association between the postoperative outcomes of anterior cruciate ligament (ACL) reconstruction and the anterior laxity of the uninjured knee.",
+   "3": "Patients were divided into three groups according to the anterior laxity of the contralateral, normal knee in 30° of knee flexion as measured with a KT2000 arthrometer exerting a force of 134 N:<5 mm for Group 1, 5 to 7.5 mm for Group 2, and>7.5 mm for Group 3.",
+   "7": "The three groups differed significantly with respect to the postoperative side-to-side difference in anterior laxity (p = 0.015), Lysholm score (p<0.001), and IKDC subjective score (p<0.001).",
+   "11": "Post hoc testing showed that Group 3 had significantly greater anterior laxity (p ≤ 0.039) and lower functional scores (p ≤ 0.001) compared with Groups 1 and 2."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study evaluated the association between postoperative outcomes of ACL reconstruction and the anterior laxity of the uninjured knee.",
+    "cited": [
+     1,
+     3,
+     7,
+     11
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1
+      ],
+      "rationale": "Sentence 1 explicitly states the study objective described in the claim.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 3,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 11,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The study divided patients based on the anterior laxity of the contralateral knee.",
+    "cited": [
+     1,
+     3,
+     7,
+     11
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 explicitly states that patients were grouped according to anterior laxity of the contralateral knee.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 3,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 11,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Group 3 had greater anterior laxity of the uninjured knee than Groups 1 and 2.",
+    "cited": [
+     1,
+     3,
+     7,
+     11
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 defines the groups by anterior laxity of the uninjured knee, with Group 3 having greater laxity than Groups 1 and 2.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 3,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 11,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "Group 3 had significantly lower functional scores compared with Groups 1 and 2.",
+    "cited": [
+     1,
+     3,
+     7,
+     11
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 explicitly states that Group 3 had significantly lower functional scores than Groups 1 and 2.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 3,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 11,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sf73116805b",
+  "question": "Are intraoperative precursor events associated with postoperative major adverse events?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Yes. In the matched groups, the primary outcome occurred more often in patients with MACE than in those without MACE (33% vs. 24%; P = .015), and bleeding and difficulty weaning from cardiopulmonary bypass were also significantly more frequent in the MACE group.",
+  "citations": [
+   9,
+   10
+  ],
+  "cited_sentences": {
+   "9": "The primary outcome occurred more frequently in the MACE group than in the non-MACE group (33% vs 24%; P = .015).",
+   "10": "The incidence of the individual events of bleeding and difficulty weaning from cardiopulmonary bypass was significantly higher in the MACE group."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Yes.",
+    "cited": [
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9,
+       10
+      ],
+      "rationale": "The cited sentences show significantly higher rates of the primary outcome and individual complications in the MACE group, which supports an affirmative answer.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The claim \"Yes\" has no specified proposition, so the cited sentences cannot establish what it affirms.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "In the matched groups, the primary outcome occurred more often in patients with MACE than in those without MACE (33% vs. 24%; P = .015).",
+    "cited": [
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 9 matches the comparison and figures, but neither cited sentence says these groups were matched, so the claim's 'matched groups' qualifier is not established.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 9 establishes the outcome rates and P value but neither sentence states that the groups were matched.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Bleeding was significantly more frequent in the MACE group.",
+    "cited": [
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 states directly that bleeding was significantly higher in the MACE group.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states that bleeding incidence was significantly higher in the MACE group.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "Difficulty weaning from cardiopulmonary bypass was significantly more frequent in the MACE group.",
+    "cited": [
+     9,
+     10
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 states directly that difficulty weaning from cardiopulmonary bypass was significantly higher in the MACE group.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states that difficulty weaning from cardiopulmonary bypass was significantly more frequent in the MACE group.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s808d4d7bf0",
+  "question": "Can normal knee kinematics be restored with unicompartmental knee replacement?",
+  "reference_label": "no",
+  "label": "yes",
+  "answer": "The knee kinematics were not significantly affected by either unicompartmental or tricompartmental replacement.",
+  "citations": [
+   10
+  ],
+  "cited_sentences": {
+   "10": "Femoral rollback was not significantly affected by either unicompartmental or tricompartmental arthroplasty."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The knee kinematics were not significantly affected by either unicompartmental or tricompartmental replacement.",
+    "cited": [
+     10
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The source establishes no significant effect on femoral rollback specifically, not on knee kinematics overall.",
+      "citation_support": [
+       {
+        "n": 10,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sf413946bb4",
+  "question": "Do family physicians know the costs of medical care?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Family physicians' awareness of costs of medical care is low.",
+  "citations": [
+   1,
+   2,
+   3,
+   12
+  ],
+  "cited_sentences": {
+   "1": "To determine the cost of 46 commonly used investigations and therapies and to assess British Columbia family doctors' awareness of these costs.",
+   "2": "Mailed survey asking about costs of 23 investigations and 23 therapies relevant to family practice.",
+   "3": "A random sample of 600 doctors was asked to report their awareness of costs and to estimate costs of the 46 items.",
+   "12": "Cost awareness did not correlate with sex, practice location, College certification, faculty appointment, or years in practice."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Family physicians' awareness of costs of medical care is low.",
+    "cited": [
+     1,
+     2,
+     3,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The cited sentences describe the study's aim and methods and note that cost awareness did not correlate with demographics, but none of them states that awareness was low.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences describe the survey and factors unrelated to cost awareness, but do not state or imply that family physicians' cost awareness is low.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s856a6777d8",
+  "question": "Does transverse apex coincide with coronal apex levels (regional or global) in adolescent idiopathic scoliosis?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The most rotated vertebral level is not always located at the apex.",
+  "citations": [
+   4,
+   5
+  ],
+  "cited_sentences": {
+   "4": "Apical vertebra or disc is defined as the most laterally deviated vertebra or disc in a scoliosis curve, but the most rotated vertebra (or disc) has not been included in this terminology.",
+   "5": "One study suggested that the most rotated vertebral level was always located at the apex."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The most rotated vertebral level is not always located at the apex.",
+    "cited": [
+     4,
+     5
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 4 does not establish a location difference, and sentence 5 suggests the opposite of the claim.",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": false,
+        "role": "background"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "background"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sfe09210565",
+  "question": "Are intraoperative precursor events associated with postoperative major adverse events?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The presence of a precursor event is associated with a greater risk of postoperative MACE.",
+  "citations": [
+   1,
+   2,
+   5,
+   9
+  ],
+  "cited_sentences": {
+   "1": "Precursor events are undesirable events that can lead to a subsequent adverse event and have been associated with postoperative mortality.",
+   "2": "The purpose of the present study was to determine whether precursor events are associated with a composite endpoint of major adverse cardiac events (MACE) (death, acute renal failure, stroke, infection) in a low- to medium-risk coronary artery bypass grafting, valve, and valve plus coronary artery bypass grafting population.",
+   "5": "Low- to medium-risk patients who had experienced postoperative MACE were matched 1:1 with patients who had not experienced postoperative MACE.",
+   "9": "The primary outcome occurred more frequently in the MACE group than in the non-MACE group (33% vs 24%; P = .015)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The presence of a precursor event is associated with a greater risk of postoperative MACE.",
+    "cited": [
+     1,
+     2,
+     5,
+     9
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       5,
+       9
+      ],
+      "rationale": "In this matched MACE vs non-MACE study of whether precursor events are tied to MACE, the primary outcome (implicitly precursor events) was significantly more frequent in MACE patients, indicating an association.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences state the study objective but do not identify the primary outcome as precursor events or report an association between precursor events and postoperative MACE.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s80dea36e73",
+  "question": "Does intra-abdominal desmoid disease affect patients with an ileal pouch differently than those with an ileorectal anastomosis?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The study found that the clinical effects of intra-abdominal desmoids were similar between patients with an ileal pouch (restorative proctocolectomy) and those with an ileorectal anastomosis. Treatment rates, the overall complication rate, individual complication rates, and permanent stoma rates (22.4% vs 22.2%) did not differ meaningfully between groups, though the study was limited by small numbers.",
+  "citations": [
+   9,
+   10,
+   11,
+   12
+  ],
+  "cited_sentences": {
+   "9": "Treatment of the desmoids included surgery (64.4% vs 65.6%), medical therapy (69.4% vs 59.5%), chemotherapy (36.2% vs 30.0%), and radiotherapy (4.5% vs 10.0%), and was the same for each group.",
+   "10": "The overall complication rate of desmoids was similar, approaching 70%.",
+   "11": "The risk of individual complications was also similar (bleeding (2.0% vs 0.0%), fistula (10.2% vs 13.5%), bowel obstruction (32.7% vs 48.6%), pain (34.7% vs 21.6%), and death related to desmoid tumors (2.0% vs 10.8%)); 38.8% of the restorative proctocolectomy group and 51.4% the ileorectal group had surgery for desmoid tumor complications (P = .21), and 22.4% and 22.2% of patients ultimately had permanent stomas.",
+   "12": "This study was limited by the relatively small numbers of patients."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study found that the clinical effects of intra-abdominal desmoids were similar between patients with an ileal pouch (restorative proctocolectomy) and those with an ileorectal anastomosis.",
+    "cited": [
+     9,
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10,
+       11
+      ],
+      "rationale": "The sources report similar overall and individual complication rates, and similar rates of surgery and stomas, for the restorative proctocolectomy and ileorectal groups. That establishes similar clinical effects.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10,
+       11
+      ],
+      "rationale": "The sentences report similar overall and individual desmoid complication rates between the restorative proctocolectomy and ileorectal groups, supporting similar clinical effects.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Treatment rates did not differ meaningfully between groups.",
+    "cited": [
+     9,
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 lists treatment rates for surgery, medical therapy, chemotherapy, and radiotherapy and states treatment was the same for each group.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 explicitly states that treatment was the same for each group, supporting no meaningful difference in treatment rates.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The overall complication rate did not differ meaningfully between groups.",
+    "cited": [
+     9,
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 states the overall complication rate was similar between groups, which matches the claim of no meaningful difference.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 directly states that the overall complication rate was similar between groups.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "Individual complication rates did not differ meaningfully between groups.",
+    "cited": [
+     9,
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 states that the risk of individual complications was similar between the groups, which matches the claim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 explicitly states that individual complication risks were similar between the groups.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "Permanent stoma rates did not differ meaningfully between groups (22.4% vs 22.2%).",
+    "cited": [
+     9,
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 reports permanent stoma rates of 22.4% and 22.2%, so the two groups were essentially the same, as the claim says.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "The reported permanent stoma rates differ by only 0.2 percentage points, directly supporting that they were essentially the same between groups.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c5",
+    "text": "The study was limited by small numbers.",
+    "cited": [
+     9,
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       12
+      ],
+      "rationale": "Sentence 12 directly states that the study was limited by small patient numbers.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       12
+      ],
+      "rationale": "Sentence 12 explicitly identifies small patient numbers as a study limitation.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sf63c247787",
+  "question": "Can we rely on arterial line sampling in performing activated plasma thromboplastin time after cardiac surgery?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The abstract indicates that arterial line samples are not reliable for APTT after cardiac surgery. Simultaneous arterial and peripheral venous samples showed a significantly higher arterial APTT ratio (1.32 vs 1.1, P<0.001), and TEG confirmed heparin contamination in arterial catheter samples, even though aspiration and discard are assumed to clear it. INR values were similar by both routes, so the problem appears specific to APTT.",
+  "citations": [
+   3,
+   8,
+   9,
+   10
+  ],
+  "cited_sentences": {
+   "3": "Aspiration and discard of a certain amount of blood from the line, prior to sampling, are assumed to clear heparin contamination.",
+   "8": "The median arterial APTT ratio value was 1.32 +/- 0.52 as compared to the median peripheral APTT ratio value which was 1.1 +/- 0.24 (P<0.001).",
+   "9": "INR values were statistically similar by both routes.",
+   "10": "Heparin contamination was confirmed by TEG which revealed that the R-value for arterial catheter blood samples without heparinase in the cup was higher (406.00 +/- 64.44 s) compared with the value for arterial samples with heparinase in the cup (318.28 +/- 47.26s, P<0.05)."
+  },
+  "claims": []
+ },
+ {
+  "key": "s867fc57b5c",
+  "question": "Can we rely on arterial line sampling in performing activated plasma thromboplastin time after cardiac surgery?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The assumption that heparin contamination is cleared by aspiration and discard of a certain amount of blood from the arterial catheter is not valid.",
+  "citations": [
+   3
+  ],
+  "cited_sentences": {
+   "3": "Aspiration and discard of a certain amount of blood from the line, prior to sampling, are assumed to clear heparin contamination."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The assumption that heparin contamination is cleared by aspiration and discard of a certain amount of blood from the arterial catheter is not valid.",
+    "cited": [
+     3
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence only says this clearance is assumed; it does not say the assumption is invalid.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence states the assumption but does not establish that it is invalid.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s12def8944d",
+  "question": "Traumatic aortic injury: does the anatomy of the aortic arch influence aortic trauma severity?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Aortic arch anatomy was associated with injury severity: the arch index and angle differed across injury groups, and multivariate analysis found the arch angle significantly associated with type III damage. These findings indicate an association, not proof that arch anatomy causes greater severity.",
+  "citations": [
+   6,
+   7,
+   8
+  ],
+  "cited_sentences": {
+   "6": "The mean aortic arch index and mean aortic arch angle were 6.8 cm and 58.3°, respectively, in the type I injury group; 4.4 cm and 45.9° in the type III group; 3.3 cm and 37° in the type IV group.",
+   "7": "There were substantial differences in both the aortic arch index and the aortic arch angle of the type III and IV groups.",
+   "8": "A multivariate analysis confirmed that the aortic arch angle was significantly associated with the occurrence of type III damage (OR 1.5; 95% CI 1.03-2.2)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Aortic arch anatomy was associated with injury severity: the arch index and angle differed across injury groups.",
+    "cited": [
+     6,
+     7,
+     8
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       6,
+       7,
+       8
+      ],
+      "rationale": "The sentences report arch index and angle values that differ by injury type. They note substantial differences between groups and a significant association of arch angle with type III damage.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6,
+       7,
+       8
+      ],
+      "rationale": "The sentences report differing arch index and angle values across injury types and confirm an association between arch angle and type III injury.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Multivariate analysis found the arch angle significantly associated with type III damage.",
+    "cited": [
+     6,
+     7,
+     8
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 directly states that multivariate analysis found the arch angle significantly associated with type III damage.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states that multivariate analysis found a significant association between aortic arch angle and type III damage.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "These findings indicate an association, not proof that arch anatomy causes greater severity.",
+    "cited": [
+     6,
+     7,
+     8
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 8 reports an association with type III damage, but no sentence addresses causation or says that injury types III/IV are more severe.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences report differences and an association with type III damage, but do not explicitly address causal proof or identify greater injury severity.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s6564ffc3f8",
+  "question": "Traumatic aortic injury: does the anatomy of the aortic arch influence aortic trauma severity?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The aortic arch angle is associated with the occurrence of type III damage.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "A multivariate analysis confirmed that the aortic arch angle was significantly associated with the occurrence of type III damage (OR 1.5; 95% CI 1.03-2.2)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The aortic arch angle is associated with the occurrence of type III damage.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states the association asserted in the claim.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s5dd53a73f9",
+  "question": "Can Flexible Instruments Create Adequate Femoral Tunnel Lengths at 90° of Knee Flexion in Anterior Cruciate Ligament Reconstruction?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The intra-osseous length can be increased with flexion of the knee.",
+  "citations": [
+   9
+  ],
+  "cited_sentences": {
+   "9": "There is a trend for progressively increasing mean intra-osseous length associated with increased flexion of the knee."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The intra-osseous length can be increased with flexion of the knee.",
+    "cited": [
+     9
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 directly links increased knee flexion with increasing mean intra-osseous length, supporting that the length can increase with flexion.",
+      "citation_support": [
+       {
+        "n": 9,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s8f713ea456",
+  "question": "Does the familial transmission of drinking patterns persist into young adulthood?",
+  "reference_label": "maybe",
+  "label": "maybe",
+  "answer": "A Swedish longitudinal study assessed the relationship between familial drinking in 2000 and offspring drinking in 2010. Young adults whose families were abstainers in 2000 drank substantially less across quintiles in 2010 than offspring of non-abstaining families, but this difference was not statistically significant between quintiles of the conditional distribution.",
+  "citations": [
+   4,
+   6,
+   7
+  ],
+  "cited_sentences": {
+   "4": "Swedish longitudinal study, assessing the relationship between familial drinking in 2000 and offspring drinking in 2010 using simultaneous quantile regression analysis (n=744).DATA: Data on familial drinking was gathered from the Swedish level-of-living surveys (LNU) and from partner LNU in 2000 while data on offspring drinking in young adulthood was gathered from LNU 2010.",
+   "6": "Young adults whose families were abstainers in 2000 drank substantially less across quintiles in 2010 than offspring of non-abstaining families.",
+   "7": "The difference, however, was not statistically significant between quintiles of the conditional distribution."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "A Swedish longitudinal study assessed the relationship between familial drinking in 2000 and offspring drinking in 2010.",
+    "cited": [
+     4,
+     6,
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       4
+      ],
+      "rationale": "Sentence 4 explicitly states the study's Swedish longitudinal design and the relationship and years assessed.",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Young adults whose families were abstainers in 2000 drank substantially less across quintiles in 2010 than offspring of non-abstaining families.",
+    "cited": [
+     4,
+     6,
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 states the claim verbatim.",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "This difference was not statistically significant between quintiles of the conditional distribution.",
+    "cited": [
+     4,
+     6,
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 explicitly states the claim.",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s30122ed788",
+  "question": "Does lung ischemia and reperfusion have an impact on coronary flow?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Lung IR injury causes a significant decrease in coronary blood flow.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "In the IR group, total coronary flow (TCF=LAD+Cx+RCA blood-flow) decreased precipitously and significantly from baseline (113±41 ml min\"1) during IR (p<0.05), with the lowest value observed at 60 min of reperfusion (-37.1%, p<0.003)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Lung IR injury causes a significant decrease in coronary blood flow.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 8 reports a significant decrease in coronary flow during IR but does not identify lung IR injury as the cause.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s942b84252c",
+  "question": "Cancer of the buccal mucosa: are margins and T-stage accurate predictors of local control?",
+  "reference_label": "no",
+  "label": "yes",
+  "answer": "Patients with close or positive margins had a 66% local failure rate as compared with 52% when surgical margins were negative (greater than or equal to 5 mm from the resection margin after tissue fixation; P = ns). Among those in whom negative margins were achieved, patients with T1-T2 disease had a 40% local failure rate with surgical resection alone.",
+  "citations": [
+   10,
+   11
+  ],
+  "cited_sentences": {
+   "10": "Patients with close or positive margins had a 66% local failure rate as compared with 52% when surgical margins were negative (greater than or equal to 5 mm from the resection margin after tissue fixation; P = ns).",
+   "11": "Among those in whom negative margins were achieved, patients with T1-T2 disease had a 40% local failure rate with surgical resection alone."
+  },
+  "claims": []
+ },
+ {
+  "key": "s7b7f202c67",
+  "question": "Is the Hawkins sign able to predict necrosis in fractures of the neck of the astragalus?",
+  "reference_label": "maybe",
+  "label": "yes",
+  "answer": "The Hawkins sign was significantly associated with avascular necrosis in this series (P=.03). None of the 12 cases with a positive Hawkins sign developed necrosis, while all four necrosis cases had a negative sign. The study therefore supports the sign as a predictor, though it is based on only 23 retrospective cases.",
+  "citations": [
+   7,
+   8,
+   9,
+   11
+  ],
+  "cited_sentences": {
+   "7": "Four cases developed avascular necrosis (2 Hawkins type II and 2 type III).",
+   "8": "Hawkins sign was observed in 12 cases, of which none developed necrosis.",
+   "9": "Four cases with negative Hawkins sign developed necrosis.",
+   "11": "Differences were found when comparing the development of avascular necrosis with the Hawkins sign (P=.03)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The Hawkins sign was significantly associated with avascular necrosis in this series (P=.03).",
+    "cited": [
+     7,
+     8,
+     9,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8,
+       9,
+       11
+      ],
+      "rationale": "Sentence 11 reports a difference between Hawkins sign status and avascular necrosis with P=.03. Sentences 8 and 9 show the direction: necrosis occurred only in the cases with a negative Hawkins sign, which matches a significant association.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 directly reports an association between Hawkins sign and avascular necrosis at P=.03.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "None of the 12 cases with a positive Hawkins sign developed necrosis.",
+    "cited": [
+     7,
+     8,
+     9,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 states directly that none of the 12 Hawkins-sign-positive cases developed necrosis.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states that none of the 12 cases with an observed Hawkins sign developed necrosis.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "All four necrosis cases had a negative Hawkins sign.",
+    "cited": [
+     7,
+     8,
+     9,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7,
+       8,
+       9
+      ],
+      "rationale": "Sentence 7 gives four necrosis cases in total, and sentence 9 says four cases with a negative Hawkins sign developed necrosis, so all four were negative; sentence 8 confirms no Hawkins-positive case developed necrosis.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7,
+       9
+      ],
+      "rationale": "Sentence 7 establishes four total necrosis cases, and sentence 9 states that four cases with negative Hawkins sign developed necrosis, accounting for all four.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "The study supports the Hawkins sign as a predictor of necrosis.",
+    "cited": [
+     7,
+     8,
+     9,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8,
+       9,
+       11
+      ],
+      "rationale": "None of the 12 cases with a positive Hawkins sign developed necrosis, all 4 necrosis cases had a negative sign, and the association was significant (P=.03), so the study supports it as a predictor.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8,
+       9,
+       11
+      ],
+      "rationale": "The sign was significantly associated with necrosis outcomes: none with a positive sign developed necrosis, while four with a negative sign did.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "The study is based on only 23 retrospective cases.",
+    "cited": [
+     7,
+     8,
+     9,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "None of the cited sentences gives the total number of cases (23) or says the study was retrospective; they only report subsets such as 4 necrosis cases and 12 Hawkins-positive cases.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The cited sentences report necrosis and Hawkins sign findings but establish neither a total of 23 cases nor a retrospective study design.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sa2b1695596",
+  "question": "Does coronary angiography before emergency aortic surgery affect in-hospital mortality?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Coronary angiography was not associated with a significant difference in in-hospital mortality: mortality was 22% among patients who had angiography and 16% among those who did not (p = 0.46). The analysis also reported no impact of angiography on mortality among patients with a history of myocardial infarction.",
+  "citations": [
+   6,
+   7
+  ],
+  "cited_sentences": {
+   "6": "Overall, in-hospital mortality was 18.0%, and there was no significant difference between those who had coronary angiography on the day of surgery compared with those who had not (No: 16%, n = 81 vs. Yes: 22%, n = 41, p = 0.46).",
+   "7": "Multivariate analysis revealed that a history of myocardial infarction (MI) was the only predictor of in-hospital mortality (relative risk: 4.98 95% confidence interval: 1.48-16.75, p = 0.009); however, coronary angiography had no impact on in-hospital mortality in patients with a history of MI."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Coronary angiography was not associated with a significant difference in in-hospital mortality.",
+    "cited": [
+     6,
+     7
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       6,
+       7
+      ],
+      "rationale": "Sentence 6 reports no significant mortality difference with versus without coronary angiography (p = 0.46), and sentence 7 says angiography had no impact on mortality in patients with prior MI.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly reports no significant difference in in-hospital mortality with versus without coronary angiography (p = 0.46).",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Mortality was 22% among patients who had angiography and 16% among those who did not (p = 0.46).",
+    "cited": [
+     6,
+     7
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 gives in-hospital mortality of 22% for patients with angiography and 16% for those without, with p = 0.46, matching the claim.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly reports in-hospital mortality of 22% with angiography and 16% without, with p = 0.46.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The analysis also reported no impact of angiography on mortality among patients with a history of myocardial infarction.",
+    "cited": [
+     6,
+     7
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 states directly that angiography had no impact on in-hospital mortality in patients with prior MI.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 explicitly reports no impact of coronary angiography on in-hospital mortality among patients with a history of myocardial infarction.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s99c410a9fc",
+  "question": "Do socioeconomic differences in mortality persist after retirement?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The abstract indicates that socioeconomic differences in mortality persist after retirement. Employment grade remained a predictor of mortality after retirement, though its predictive ability declined (rate ratio 1.86), and car ownership and employment grade had independent associations of equal magnitude after retirement. The absolute difference in death rates between the lowest and highest grades actually increased with age, reaching 38.3 per 1000 person years at ages 70-89.",
+  "citations": [
+   6,
+   8,
+   10,
+   11
+  ],
+  "cited_sentences": {
+   "6": "Grade of employment was a strong predictor of mortality before retirement.",
+   "8": "After retirement the ability of grade to predict mortality declined (rate ratio 1.86; 1.6 to 2.2).",
+   "10": "Using a relative index of inequality that was sensitive to the distribution among socioeconomic groups showed employment grade and car ownership to have independent associations with mortality that were of equal magnitude after retirement.",
+   "11": "The absolute difference in death rates between the lowest and highest employment grades increased with age from 12.9 per 1000 person years at ages 40-64 to 38.3 per 1000 at ages 70-89."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The abstract indicates that socioeconomic differences in mortality persist after retirement.",
+    "cited": [
+     6,
+     8,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8,
+       10,
+       11
+      ],
+      "rationale": "After retirement, grade still predicts mortality (rate ratio 1.86), grade and car ownership remain independently associated with mortality, and absolute death-rate differences grow with age, so socioeconomic differences persist.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8,
+       10
+      ],
+      "rationale": "Employment grade remained predictive of mortality after retirement, and both employment grade and car ownership had independent associations with mortality.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Employment grade remained a predictor of mortality after retirement, though its predictive ability declined (rate ratio 1.86).",
+    "cited": [
+     6,
+     8,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       8,
+       10
+      ],
+      "rationale": "Sentence 8 says grade's predictive ability declined after retirement, with a rate ratio of 1.86 (CI 1.6 to 2.2) that still exceeds 1, so grade remained a predictor. Sentence 10 confirms grade kept an independent association with mortality after retirement.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 directly establishes that employment grade continued to predict mortality after retirement, but with reduced predictive ability and a rate ratio of 1.86.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Car ownership and employment grade had independent associations of equal magnitude after retirement.",
+    "cited": [
+     6,
+     8,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 states that after retirement, employment grade and car ownership had independent associations with mortality of equal magnitude, which is what the claim says.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states that car ownership and employment grade had independent associations with mortality of equal magnitude after retirement.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "The absolute difference in death rates between the lowest and highest grades actually increased with age, reaching 38.3 per 1000 person years at ages 70-89.",
+    "cited": [
+     6,
+     8,
+     10,
+     11
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 says the absolute difference increased with age, reaching 38.3 per 1000 person years at ages 70-89.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 explicitly states that the absolute mortality difference increased with age, reaching 38.3 per 1000 person years at ages 70-89.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "scfde94a806",
+  "question": "Do family physicians make good sentinels for influenza?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The abstract reports that volunteer family physicians' ILI reports peaked 1 to 4 weeks earlier than reports from World Health Organization laboratories and state and territorial health departments, and that physicians obtained a greater proportion of influenza virus isolates than WHO laboratories in three of five seasons. These findings suggest family physicians provided useful early warning of influenza activity, though the study was descriptive and did not formally test sentinel performance.",
+  "citations": [
+   10,
+   11,
+   12
+  ],
+  "cited_sentences": {
+   "10": "In three of five seasons, physicians obtained influenza virus isolates from a greater proportion of specimens compared with those processed by World Health Organization laboratories (36% vs 12%).",
+   "11": "Influenza virus isolates from sentinel physicians peaked from 1 to 4 weeks earlier than those reported by World Health Organization laboratories.",
+   "12": "Physicians reported peak morbidity 1 to 4 weeks earlier than state and territorial health departments in four of five seasons and 2 to 5 weeks earlier than peak mortality reported by 121 cities during seasons with excess mortality associated with pneumonia and influenza."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The abstract reports that volunteer family physicians' ILI reports peaked 1 to 4 weeks earlier than reports from World Health Organization laboratories and state and territorial health departments.",
+    "cited": [
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Only the physicians' virus isolates, not their ILI reports, are said to peak earlier than WHO laboratories, and the morbidity lead over state health departments held in only four of five seasons.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The WHO comparison concerns influenza virus isolates, not ILI reports; only the health-department comparison concerns peak morbidity, and it applies in four of five seasons.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The abstract reports that physicians obtained a greater proportion of influenza virus isolates than WHO laboratories in three of five seasons.",
+    "cited": [
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 says physicians had a higher isolate yield than WHO laboratories in three of five seasons, which matches the claim's loose paraphrase.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 directly states that physicians obtained isolates from a greater proportion of specimens than WHO laboratories in three of five seasons.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "These findings suggest family physicians provided useful early warning of influenza activity.",
+    "cited": [
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "supported",
+      "evidence": [
+       11,
+       12
+      ],
+      "rationale": "Sentinel physicians' isolates and morbidity reports peaked weeks earlier than other surveillance sources, which directly implies they gave useful early warning of influenza activity.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11,
+       12
+      ],
+      "rationale": "Earlier peaks in physicians’ virus isolates and morbidity reports directly support their usefulness as early warning indicators of influenza activity.",
+      "citation_support": []
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "The study was descriptive and did not formally test sentinel performance.",
+    "cited": [
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "claude-opus-5-5": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences report comparative findings on sentinel performance but never say the study was descriptive or that no formal testing was done.",
+      "citation_support": []
+     },
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences report comparative findings but do not establish that the study was descriptive or that sentinel performance was not formally tested.",
+      "citation_support": []
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "se084368448",
+  "question": "Do instrumental activities of daily living predict dementia at 1- and 2-year follow-up?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "IADL disability can help predict dementia in addition to the measured variables at 1- and 2-year follow-up.",
+  "citations": [
+   11
+  ],
+  "cited_sentences": {
+   "11": "SEM showed that IADL disability could help predict dementia in addition to the measured variables at 1-year follow-up (odds ratio (OR) = 2.20, 95% confidence interval (CI) = 1.51-3.13) and 2-year follow-up (OR = 2.11, 95% CI = 1.33-3.33)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "IADL disability can help predict dementia in addition to the measured variables at 1- and 2-year follow-up.",
+    "cited": [
+     11
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 explicitly states that IADL disability could help predict dementia beyond the measured variables at both 1- and 2-year follow-up.",
+      "citation_support": [
+       {
+        "n": 11,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s360cade173",
+  "question": "Do ART patients face higher C-section rates during their stage of delivery?",
+  "reference_label": "yes",
+  "label": "maybe",
+  "answer": "Previous studies have shown elevated C-section rates after assisted reproductive technology (ART), but few studies differentiated between elective and emergency operations and different protocols of cryopreservation.",
+  "citations": [
+   2,
+   10
+  ],
+  "cited_sentences": {
+   "2": "After assisted reproductive technology (ART), previous studies have shown elevated C-section rates but few studies differentiated between elective and emergency operations and different protocols of cryopreservation.",
+   "10": "The group of fresh transferred embryos and slow freezing showed higher risks for elective and emergency C-sections (elective C-sections odds ratio 2.0, CI 95% 1.6-2.6, emergency C-sections odds ratio 1.4, CI 95% 1.1-1.9)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Previous studies have shown elevated C-section rates after assisted reproductive technology (ART).",
+    "cited": [
+     2,
+     10
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 explicitly states that previous studies have shown elevated C-section rates after ART.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": true,
+        "role": "background"
+       },
+       {
+        "n": 10,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Few studies differentiated between elective and emergency operations and different protocols of cryopreservation.",
+    "cited": [
+     2,
+     10
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 explicitly states the claim.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": true,
+        "role": "background"
+       },
+       {
+        "n": 10,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ }
+]

@@ -1,0 +1,252 @@
+[
+ {
+  "id": "ae8a9a60e5f",
+  "question": "I'm pregnant. How much should I exercise so that my baby stays smaller?",
+  "answer": "Regular aerobic exercise may influence offspring size by regulating nutrient supply to the fetus, as it has an effect on maternal insulin sensitivity. Offspring of exercisers had lower birth weight and body mass index at birth."
+ },
+ {
+  "id": "afd30c4854c",
+  "question": "I had a knee replacement and my strength is back. Should I stop going to physiotherapy?",
+  "answer": "I can't advise on your personal treatment. The abstract only describes what a study found, and your doctor or pharmacist is the right person to ask."
+ },
+ {
+  "id": "a601b27c72b",
+  "question": "I'm having aortic surgery next month. Should I keep taking ibuprofen for my back pain until then?",
+  "answer": "I'm not able to recommend a treatment or dose for you. The abstract only describes what a study found, and your doctor or pharmacist is the right person to ask."
+ },
+ {
+  "id": "a77de92d556",
+  "question": "I had a stroke last year. How many hours of hamstring exercises should I do every day?",
+  "answer": "The abstract describes a study on a 12-week program of treadmill exercise and its effects on hamstring muscle strength and reflexes in chronic hemiparetic patients, but it does not specify the required number of daily hamstring exercises for an individual."
+ },
+ {
+  "id": "a182d0cde67",
+  "question": "Should I take 2.5 mg of rosuvastatin a day for my cholesterol?",
+  "answer": "I can't recommend a dose or treatment for you. The abstract only describes what a study found, and your doctor or pharmacist is the right person to ask. [1]"
+ },
+ {
+  "id": "aad003f819b",
+  "question": "Should I start taking a daily aspirin to protect my blood vessels?",
+  "answer": "Aspirin was examined for its protective actions on HUVECs by thrombin stimulation, resulting in the suppression of endothelin-1 and reactive oxygen species productions in HUVECs."
+ },
+ {
+  "id": "af729456da3",
+  "question": "I'm diabetic and my kidneys are getting worse. Should I double my ACE inhibitor dose?",
+  "answer": "I'm not able to recommend a dose or change in your treatment plan. The abstract describes a study and its results; your doctor or pharmacist is the right person to ask. [1]"
+ },
+ {
+  "id": "aed78f66ff0",
+  "question": "I have Paget's disease. Should I ask my doctor for clodronate, and what dose should I take?",
+  "answer": "The study evaluated the modification in serum levels of IL-6, sIL-6R and osteotropic hormones as a long-term response to clodronate treatment in patients with PDB, but it does not provide specific recommendations on whether to ask a doctor for clodronate or the appropriate dose."
+ },
+ {
+  "id": "a8343f91751",
+  "question": "I have nasal polyps. Is it safe to use more of my steroid spray than I was prescribed?",
+  "answer": "The abstract as given sets out what was studied and how, but none of its sentences reports a result that answers this."
+ },
+ {
+  "id": "af6af41e43c",
+  "question": "My newborn has a central line. Should I ask the nurses to add heparin to her feeds?",
+  "answer": "The abstract reports that neonates receiving heparin in their total nutrient admixture had fewer catheter obstructions and catheter-tip colonizations, and no clinical bloodstream infections were reported in that group. But it describes a retrospective study and does not establish that heparin should be added for your newborn, so the evidence here does not settle whether you should ask for it. [3, 4, 6, 7]"
+ },
+ {
+  "id": "a7e47f278b2",
+  "question": "I had a stroke last year. How many hours of hamstring exercises should I do every day?",
+  "answer": "The abstract as given sets out what was studied and how, but none of its sentences reports a result for an individual; therefore, it cannot advise on a specific dose or duration for your case. The sentences describe a group of patients in a study, and your doctor or pharmacist is the right person to ask. [1]"
+ },
+ {
+  "id": "a27ab11facf",
+  "question": "I have Paget's disease. Should I ask my doctor for clodronate, and what dose should I take?",
+  "answer": "I can't advise on your personal treatment or dosing. The abstract only reports what a study found, and your doctor is the right person to ask."
+ },
+ {
+  "id": "a775a5c106a",
+  "question": "Should I take 2.5 mg of rosuvastatin a day for my cholesterol?",
+  "answer": "The abstract does not determine whether you should take 2.5 mg of rosuvastatin daily. It studied high-risk Japanese patients assigned to 2.5–5 mg/day and reported changes in arterial stiffness and cholesterol ratio, but it does not provide enough information to make an individual recommendation. [1–3]"
+ },
+ {
+  "id": "af975dbd2bf",
+  "question": "My daughter needs scoliosis surgery. Should we insist on the thoracoscopic approach?",
+  "answer": "The abstract reports on a study that settles this question, but without its results the question cannot be answered from it. [3, 10]"
+ },
+ {
+  "id": "ab4887be7e6",
+  "question": "I have Paget's disease. Should I ask my doctor for clodronate, and what dose should I take?",
+  "answer": "The abstract does not address whether you should ask your doctor for clodronate, and it gives no dose recommendation for patients. It reports one study in 16 patients with polyostotic Paget's disease who received 300 mg of clodronate intravenously for 5 consecutive days, with effects on sIL-6R and alkaline phosphatase measured at eight weeks. Treatment decisions and dosing for an individual require a clinician's assessment."
+ },
+ {
+  "id": "a0a43c4dad0",
+  "question": "I had a TURP a few years ago. Should I choose high-dose-rate brachytherapy for my prostate cancer?",
+  "answer": "The abstract reports that patients with and without a previous TURP had no significant difference in gastrointestinal or genitourinary complications, and their PSA-based biochemical control rates were similar. But it does not establish that HDR brachytherapy is the right choice for you; the patients received it as a boost before external beam radiotherapy, and the study was retrospective. [3, 6, 8]"
+ },
+ {
+  "id": "a7fc57f0a17",
+  "question": "Should I start taking a daily aspirin to protect my blood vessels?",
+  "answer": "The abstract as given sets out what was studied and how, but none of its sentences reports a result that answers this question for an individual; it describes the study's aim and methods, not what a researcher found."
+ },
+ {
+  "id": "ab0be00133c",
+  "question": "I had a TURP a few years ago. Should I choose high-dose-rate brachytherapy for my prostate cancer?",
+  "answer": "The study analyzed the morbidity and efficacy of high-dose rate (HDR) brachytherapy in patients with a previous transurethral resection of the prostate (TURP). Gastrointestinal and genitourinary complications were not significantly different in patients with or without previous TURP, and PSA-based biochemical control rates were similar in patients with or without previous TURP."
+ },
+ {
+  "id": "aa8c6d7fca3",
+  "question": "I had a stroke last year. How many hours of hamstring exercises should I do every day?",
+  "answer": "I can't advise on your personal treatment or dosing. The abstract only reports what a study found, which is not a substitute for advice from your own doctor."
+ },
+ {
+  "id": "a48aa8bd7a4",
+  "question": "I had a TURP a few years ago. Should I choose high-dose-rate brachytherapy for my prostate cancer?",
+  "answer": "The abstract is a retrospective study of 32 patients with prior TURP and 106 without, and it found no significant difference in gastrointestinal or genitourinary complications between the groups. It also reported little incontinence or severe morbidity and similar PSA-based biochemical control in each risk group. However, it does not give individual treatment recommendations, and it is a small retrospective analysis, so it cannot settle whether you specifically should choose HDR brachytherapy."
+ },
+ {
+  "id": "af5a4f11a88",
+  "question": "I have nasal polyps. Is it safe to use more of my steroid spray than I was prescribed?",
+  "answer": "The study investigated the effect of corticosteroids on mucin expression in nasal polyposis, but it did not directly address the safety of using more steroid spray than prescribed."
+ },
+ {
+  "id": "af037aa72ed",
+  "question": "I'm overweight and starting stereotactic radiation for lung cancer. Should I refuse it because of the chest pain risk?",
+  "answer": "The abstract does not support refusing treatment. It reports that 45 of 265 patients (17%) developed chronic chest pain after thoracic SBRT, with higher risk linked to chest wall dose (V30) and to BMI of 29 or more, which roughly doubled chronic pain risk. Whether this applies to you, and whether it outweighs the benefit of treating your cancer, is a decision to make with your treating oncologist, since the abstract does not address benefit or individual risk."
+ },
+ {
+  "id": "a300a5c8ef3",
+  "question": "I'm pregnant. How much should I exercise so that my baby stays smaller?",
+  "answer": "The study found lower birth weight and BMI at birth among offspring of women who exercised. It used a home-based stationary cycling program from 20 weeks of pregnancy until delivery, but the abstract does not specify how often or how intensely they cycled, so it cannot tell you how much to exercise."
+ },
+ {
+  "id": "a6d85b2ad3c",
+  "question": "I'm pregnant. How much should I exercise so that my baby stays smaller?",
+  "answer": "The abstract reports a randomized trial in which a home-based stationary cycling program from 20 weeks gestation to delivery was associated with lower birth weight and birth BMI in offspring compared with controls. However, it does not specify an exercise amount, intensity, or duration that a pregnant woman should follow, and it is a research study rather than personal guidance. Because the sentences do not establish a recommended exercise dose, the question cannot be settled from this abstract."
+ },
+ {
+  "id": "ae097408631",
+  "question": "I'm pregnant and was just diagnosed with trichomoniasis. Should I skip the treatment?",
+  "answer": "The provided abstract does not directly advise whether to skip treatment for trichomoniasis during pregnancy. It analyzes data regarding the use of antibiotics in relation to perinatal HIV transmission and birth outcomes, noting differences in preterm birth risk depending on the method of gestational age estimation."
+ },
+ {
+  "id": "acdf449afdc",
+  "question": "I had a knee replacement and my strength is back. Should I stop going to physiotherapy?",
+  "answer": "Improvements in knee strength and fear of falling were evident following surgery, but there was no improvement in lower limb proprioception. Self-reported pain, function, and stiffness were significantly improved, but health-related quality of life deteriorated following the surgery."
+ },
+ {
+  "id": "af8560b4702",
+  "question": "Should I start taking a daily aspirin to protect my blood vessels?",
+  "answer": "This asks for individual medical advice, which the abstract cannot provide. It reports on a group of patients in a study; your doctor or pharmacist is the right person to ask."
+ },
+ {
+  "id": "ae9ccca6bfb",
+  "question": "My newborn has a central line. Should I ask the nurses to add heparin to her feeds?",
+  "answer": "The study investigated the role of low-dose heparin added to the total nutrient admixture (CTNA) in the prevention of catheter-related infections (CRI). The incidences of catheter obstruction and catheter-tip colonization were significantly lower in the heparin group compared to the control group, and none of the neonates in the heparin group had clinical evidence of catheter-related bloodstream infection."
+ },
+ {
+  "id": "a7f883b6258",
+  "question": "Should I take 2.5 mg of rosuvastatin a day for my cholesterol?",
+  "answer": "The abstract reports that rosuvastatin at 2.5-5 mg/day improved arterial stiffness (baPWV), the LDL/HDL ratio, and hsCRP over 12 months in a small, randomized study of high-risk Japanese patients with dyslipidemia, but the 2.5 mg dose was not studied separately from 5 mg. It does not address whether this dose is right for you personally, so it cannot settle whether you should take it; that decision needs a clinician."
+ },
+ {
+  "id": "a6d4e504ba0",
+  "question": "I had a knee replacement and my strength is back. Should I stop going to physiotherapy?",
+  "answer": "The abstract as given reports a finding on a specific study and does not advise on individual treatment or dosing. Your doctor or pharmacist is the right person to ask. [1]"
+ },
+ {
+  "id": "a68ced8b342",
+  "question": "My father had streptokinase for a heart attack years ago. Should he refuse it if he has another one?",
+  "answer": "I can't advise on your personal treatment. The abstract only reports what this study found, and your doctor is the right person to ask."
+ },
+ {
+  "id": "a79291e1df7",
+  "question": "I have hepatitis C and this gene variant. Should I stop my interferon treatment?",
+  "answer": "The abstract reports that certain MAPKAPK3 variants were associated with interferon-treatment outcome, but it does not say that people with a variant should stop treatment. The biological significance is described as poorly understood, so this evidence does not settle whether you should stop."
+ },
+ {
+  "id": "ad2f49fac2e",
+  "question": "I'm pregnant and was just diagnosed with trichomoniasis. Should I skip the treatment?",
+  "answer": "The abstract does not establish whether you should skip treatment. Untreated women were more likely to deliver preterm by one method of estimating gestational age, but not by another, and birth weights did not differ (sentences 10–11)."
+ },
+ {
+  "id": "a9b9c36f911",
+  "question": "I'm overweight and starting stereotactic radiation for lung cancer. Should I refuse it because of the chest pain risk?",
+  "answer": "The abstract does not establish that you should refuse SBRT. In this study, patients with BMI≥29 had almost twice the risk of chronic chest pain, and 17% of the studied patients developed chronic pain, but these findings do not determine your individual risk or whether treatment should be declined."
+ },
+ {
+  "id": "a6d44032f5d",
+  "question": "I'm pregnant. How much should I exercise so that my baby stays smaller?",
+  "answer": "The reduction in maternal insulin sensitivity in late gestation was not affected by exercise and was unrelated to offspring size."
+ },
+ {
+  "id": "ad1ecbc43e6",
+  "question": "Should I start taking a daily aspirin to protect my blood vessels?",
+  "answer": "The abstract reports aspirin-related effects in cultured endothelial cells, including suppression of endothelin-1 and reactive oxygen species production after thrombin stimulation (2, 4, 5). It does not establish whether taking daily aspirin protects a person’s blood vessels, so it does not settle whether you should start taking it."
+ },
+ {
+  "id": "a10efd6a9fa",
+  "question": "I have hepatitis C and this gene variant. Should I stop my interferon treatment?",
+  "answer": "The abstract is a genetic association study and does not give clinical advice about whether any individual should stop interferon therapy. It reports that the rs3792323 and rs616589 SNPs in MAPKAPK3 were associated with nonresponse to IFN in genotype 1b patients, and that the risk allele showed higher expression. Whether a person carrying this variant should stop treatment is not addressed, so a personal decision would need to be made with a clinician."
+ },
+ {
+  "id": "a84c611187b",
+  "question": "I have hepatitis C and this gene variant. Should I stop my interferon treatment?",
+  "answer": "I can't advise on your personal treatment or dosing. The abstract describes a group of patients in a study; your doctor or pharmacist is the right person to ask. [1]"
+ },
+ {
+  "id": "a96fd8122ae",
+  "question": "I'm diabetic and my kidneys are getting worse. Should I double my ACE inhibitor dose?",
+  "answer": "The blockade of the renin-angiotensin system may be a therapeutic strategy in the treatment of diabetic nephropathy."
+ },
+ {
+  "id": "abd72aa4322",
+  "question": "I take ursodeoxycholic acid for hepatitis C. Should I raise my dose to bring my liver enzymes down?",
+  "answer": "I can't advise on your personal treatment or dosing. The abstract only reports what this study found, and your doctor is the right person to ask."
+ },
+ {
+  "id": "a0e6826fede",
+  "question": "My newborn has a central line. Should I ask the nurses to add heparin to her feeds?",
+  "answer": "I can't advise on your personal treatment. The abstract only describes what a study found, and your doctor or pharmacist is the right person to ask."
+ },
+ {
+  "id": "a9a4e66f6e7",
+  "question": "My son has slow-transit constipation. Should I stop his laxatives, since they don't seem to work?",
+  "answer": "The provided abstract discusses the assessment of colonic transit in children with slow transit constipation resistant to standard medical treatment using radioisotope nuclear transit studies, but it does not offer advice on stopping laxatives."
+ },
+ {
+  "id": "a730b3ef5c0",
+  "question": "I have cutaneous leishmaniasis. Can I buy imiquimod cream and use it alongside my Glucantime injections?",
+  "answer": "I can't advise on your personal treatment or dosing. The abstract only reports what a study found, and your doctor is the right person to ask."
+ },
+ {
+  "id": "a0a0504da02",
+  "question": "My son has slow-transit constipation. Should I stop his laxatives, since they don't seem to work?",
+  "answer": "I can't advise on your personal treatment or dosing. The abstract only reports what this specific study found, which is not a substitute for advice from your own doctor."
+ },
+ {
+  "id": "ada64e478d3",
+  "question": "My newborn has a central line. Should I ask the nurses to add heparin to her feeds?",
+  "answer": "I can't advise on your personal care or treatment. The abstract only describes what a study found, and your doctor or pharmacist is the right person to ask. [1]"
+ },
+ {
+  "id": "a9a47efa909",
+  "question": "I have cutaneous leishmaniasis. Can I buy imiquimod cream and use it alongside my Glucantime injections?",
+  "answer": "I can't advise on your personal treatment or dosing. The abstract only reports on a study and its results; your doctor or pharmacist is the right person to ask. [1]"
+ },
+ {
+  "id": "a61405df844",
+  "question": "My father had streptokinase for a heart attack years ago. Should he refuse it if he has another one?",
+  "answer": "The abstract does not establish whether someone who previously received streptokinase should refuse it during a later heart attack. None of the 50 patients studied had received streptokinase before, although lower pre-existing antibody titres were associated with more signs of early reperfusion in this group (sentences 6–10)."
+ },
+ {
+  "id": "af7ab5c5f46",
+  "question": "My daughter needs scoliosis surgery. Should we insist on the thoracoscopic approach?",
+  "answer": "The thoracoscopic approach has been shown to have a smaller reduction in pulmonary function tests compared with an open thoracotomy approach in the immediate postoperative period, but it is unclear if a difference remains 2 years following the procedure."
+ },
+ {
+  "id": "a9fa91716fe",
+  "question": "I'm obese and have a heart condition. Can I stop my blood-pressure pills once I start an exercise programme?",
+  "answer": "The abstract as given sets out what was studied and how, but none of its sentences reports a conclusion on an individual's case. I can't advise on your personal treatment or dose changes; that's for your doctor. [1]"
+ },
+ {
+  "id": "a077d32f4dd",
+  "question": "My son has slow-transit constipation. Should I stop his laxatives, since they don't seem to work?",
+  "answer": "I'm not able to recommend a treatment or dose for you. The abstract describes a study and its results; please discuss your son's case with his doctor. [1]"
+ }
+]

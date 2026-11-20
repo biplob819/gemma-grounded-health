@@ -8,12 +8,17 @@ measured each pattern over the whole run. **None is a code or alignment bug**: e
 verdict belongs to the claim and sentence it names (`parse_citations` stamps the claim id from
 the call's own input and requires each cited sentence answered once; batch results are matched by
 a hash that includes the claim id). They are judge and extractor behaviour. One of them changes a
-published conclusion, disclosed under OWNER D-62. The counts below are in
-`docs/measurements/aim_rule_check.json`, written by `ggh results aim-check`.
+published conclusion, disclosed under OWNER D-62. The aim-rule, extractor-drop and label-only
+counts are in `docs/measurements/aim_rule_check.json`, written by `ggh results aim-check`; the
+label-correct split of the extractor drops and the judge-error rate were computed from the same
+records as defined in their sections. The blind batches the reviewers saw, their outputs and the
+keys that map them back are in `docs/measurements/blind_reviews/`.
 
 ## aim-rule
 
-Records: `main_v2` base pqa-21550158, pqa-15588538, pqa-24695920.
+Records: `main_v2` base pqa-21550158, pqa-15588538, pqa-24695920 (pqa-21550158's note also names
+result sentences marked supporting for its scope claim: that half is the part-of-claim behaviour
+below).
 
 EvalKit's citation rubric (hash `be34ebe577bc96ae`) says a sentence that only states an aim
 "does not establish" a claim. GPT-6.1 Sol applies this even when the claim only restates the
@@ -65,8 +70,10 @@ Haiku's extraction in v1's `main` run sometimes made a bare label ("Yes.") a cla
 5.5 marks it supported, GPT-6.1 Sol unsupported ("no specified proposition"). It occurs only for
 the comparator models (Luna 70 claims, Haiku 9) and costs Luna's Sol headline about 4.4 points
 (44 answers) and Haiku's about 0.5. It does not touch the Gemma models or `main_v2`. Disclosed
-in v1's results; the v1-vs-Luna comparison under Sol is affected, the v1-vs-Luna comparison
-under Opus is not.
+in v1's results. Without these claims Luna's Sol headline would be 0.334 against v1's 0.330,
+which reverses the published v1-beats-Luna comparison under Sol (separated in the bundle); the
+v1-vs-Luna comparison under Opus is unaffected. No published text may claim v1 beats Luna under
+Sol.
 
 ## judge-error
 
@@ -74,6 +81,8 @@ Record: `main_v2` v2 pqa-27131771.
 
 The claim judge marked unsupported a claim its cited sentence plainly states, while the citation
 check (a separate call) marked that sentence as supporting it. Measured over `main_v2`, a
-supported verdict whose evidence the citation check marks non-supporting for that claim happens
-for 2 to 6% of supported claims per model, and the mirror case occurs too. Judge noise, within
+supported verdict all of whose evidence sentences the citation check marks non-supporting for
+that same claim happens for 4.7% (base), 5.9% (v1) and 2.3% (v2) of supported claims, and the
+mirror case occurs too. (A looser definition, any non-aim evidence sentence marked
+non-supporting, gives higher rates, up to 18.9% for v1.) Judge noise, within
 what the calibration (Sol held-out kappa 0.598 [0.468, 0.711]) already reports.

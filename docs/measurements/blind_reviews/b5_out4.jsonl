@@ -1,0 +1,35 @@
+{"key": "sd26a02b3c9", "finding": "model_fault", "note": "Cites aim sentence 1 ('We tested the hypothesis that ... would be improved') as a finding and states the opposite as a result; judge correctly marks unsupported, role aim."}
+{"key": "s6f697ef037", "finding": "ok", "note": "Judges split only on the 'senior' qualifier; 76% agreement in sentence 9 reasonably supports 'similar'. Borderline."}
+{"key": "s1ec090b936", "finding": "pipeline_fault", "note": "Claims list is empty although the answer makes several grounded claims (HR 1.6, 60% higher 5-year mortality, survival differences); extraction produced nothing to score."}
+{"key": "s066e4d69f9", "finding": "model_fault", "note": "Answer just copies the hypothesis (aim, sentence 3) and method (sentence 4) and never answers whether kinematics were restored; claims are correctly scored as faithful restatements."}
+{"key": "s6170b3cfee", "finding": "model_fault", "note": "Cites background sentence 5 ('most rotated vertebral level was always located at the apex') for the opposite claim 'not always at the apex'; correctly unsupported."}
+{"key": "s78d569ef05", "finding": "model_fault", "note": "Claim about 'aortic arch index' and type III vs IV differences is not supported by sentence 8, which only links arch angle to type III damage; both judges correctly mark unsupported."}
+{"key": "s90c360497a", "finding": "model_fault", "note": "Answer misattributes the 44% figure (blood isolates) to 'bacteremic patients' (actual patient figure is 65%); correctly unsupported."}
+{"key": "sc3d8d9ac77", "finding": "model_fault", "note": "Answer copies 'The rate of local recurrence was 56% for the group as a whole', which does not address whether margins or T-stage predict local control; scoring is correct."}
+{"key": "s24906d9448", "finding": "model_fault", "note": "Claim c0 ('aimed to assess British Columbia family doctors' awareness of ... 46 commonly used investigations') is not in any cited sentence; correctly unsupported. c1 split on 'British Columbia' is a fine point."}
+{"key": "s5ee6a5d709", "finding": "ok", "note": "gpt-6.1-sol marks c0/c1 unsupported only because cited sentences say 'respondents' not 'family physicians'; a fine point, other verdicts correct."}
+{"key": "s44626c5330", "finding": "ok", "note": "Verbatim copy of sentence 12, correctly supported."}
+{"key": "s70f06ae637", "finding": "model_fault", "note": "Answer reverses sentence 7 ('interpersonal quality but not anticipatory guidance content was higher'); c2 and c3 correctly unsupported."}
+{"key": "se573b11296", "finding": "ok", "note": "Judges split only on the '(mother or oldest sister)' detail; association claim is supported by sentences 8-9."}
+{"key": "sf08fd01bc8", "finding": "ok", "note": "All three claims match sentences 6 and 7 and are correctly supported."}
+{"key": "s5cb4b08181", "finding": "ok", "note": "c0 split on 'solid masses'/'morphologic evaluation' is borderline; c1 and c2 correctly supported."}
+{"key": "s21f5b67253", "finding": "model_fault", "note": "Cites background sentence 2 ('previous studies have shown elevated C-section rates') as the finding rather than the study's own results."}
+{"key": "s432e4aadb5", "finding": "model_fault", "note": "Label 'no' contradicts its own answer, which reports grade and car ownership still having independent associations with mortality after retirement (i.e. differences persist)."}
+{"key": "sb1ebb5ca0c", "finding": "ok", "note": "Both claims match sentence 11 with ORs and CIs; roles labelled correctly."}
+{"key": "s30d9a8b8ad", "finding": "model_fault", "note": "Cites aim sentence 1 ('The purpose of this study was to evaluate the association') as a finding that an association existed; correctly unsupported."}
+{"key": "sb36bd97b6d", "finding": "ok", "note": "47% of registry cases missing from CHCS (sentence 4) supports 'does not adequately identify'."}
+{"key": "s3d812313e4", "finding": "ok", "note": "Both claims supported by sentence 8."}
+{"key": "s198d203d5a", "finding": "ok", "note": "Claims faithfully split and supported; c5 overstates physician-visit correlation (only AMI and bronchitis/asthma per sentence 13), a fine point. Answer about 96 words, somewhat over 80."}
+{"key": "s8d613dd2e7", "finding": "model_fault", "note": "Claim 'Familial drinking patterns do not persist' contradicts sentence 6 (abstainer families' offspring drank substantially less) and cites aim sentence 3; correctly unsupported."}
+{"key": "sf29ca7d1bc", "finding": "ok", "note": "Supported by sentence 8."}
+{"key": "s84ef041fb8", "finding": "model_fault", "note": "c0 adds 'influenza-like illness (ILI)', which no cited sentence mentions; both judges correctly mark unsupported. Other claims verbatim and supported."}
+{"key": "s9fb623a327", "finding": "pipeline_fault", "note": "c0 verdict 'unsupported' is clearly wrong: sentence 9 plainly says 'a larger left atrial (LA) diameter was detected ... during follow-up visit at 6months when compared with pre-operation', and the judge's own citation_support marks sentence 9 supports=true. (Label 'no' also contradicts the answer, which reports changes.)"}
+{"key": "s4e22863591", "finding": "model_fault", "note": "Answer copies background sentence 1 ('alterations ... are still unclear') as part of its answer; claims are correctly scored as verbatim support."}
+{"key": "sf685b98c73", "finding": "model_fault", "note": "Claim that PRP 'did not significantly affect' healing contradicts cited sentence 13 ('scores ... were better among patients in the PRP group'); correctly unsupported."}
+{"key": "s790700af9b", "finding": "ok", "note": "Verbatim from sentence 11, supported."}
+{"key": "s9838572051", "finding": "ok", "note": "Both claims supported by sentence 8."}
+{"key": "s5fb9629120", "finding": "ok", "note": "c0 split between judges is a genuine borderline reading; other claims correctly supported."}
+{"key": "s4490c72b16", "finding": "model_fault", "note": "Answer says flow fell 'during ischemia' while sentence 8 says 'during IR'; c1 unsupported is defensible, though the judge's citation_support marks sentence 8 supports=true for that unsupported claim."}
+{"key": "sd4e9d7d1ce", "finding": "ok", "note": "Splits on c1 and c4 (whether the gradient varies with deprivation) are borderline readings of sentences 8-9; other claims correct."}
+{"key": "saf96afe7a7", "finding": "model_fault", "note": "Answer adds 'intravenous', which no cited sentence states; c1 correctly unsupported by both judges. c5 split is borderline."}
+{"key": "s57a7303890", "finding": "model_fault", "note": "Cites aim sentence 1 ('We tested the hypothesis ...') as a finding and asserts the opposite; correctly unsupported, role aim."}

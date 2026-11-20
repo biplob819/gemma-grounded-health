@@ -155,6 +155,21 @@ def test_a_calibration_under_another_rubric_is_refused(files, runs):
     assert s.release_status([SOL]) == "uncalibrated"
 
 
+def test_an_agreement_on_the_tuning_split_or_another_rubric_is_refused(files, runs):
+    original = (files / CAL["evalkit"]).read_text(encoding="utf-8")
+    for field, value in (("split", "tuning"), ("judge_prompt_hash", "1111111111111111")):
+        (files / CAL["evalkit"]).write_text(original, encoding="utf-8")
+
+        def change(d, field=field, value=value):
+            d["current"]["agreements"][-1][field] = value
+
+        _edit(files, CAL["evalkit"], change)
+        s = _stamp(files, runs)
+        # EvalKit's own schema or GGH's check refuses it; either way nothing is stamped
+        why = ("not held-out under", "is not an EvalKit calibration report")
+        assert s.judges == () and any(w in p for p in s.problems for w in why), field
+
+
 def test_a_run_judged_under_another_rubric_is_a_blocker(files, runs, monkeypatch):
     monkeypatch.setattr(C, "verdict_hashes", lambda r: {"1111111111111111"})
     s = _stamp(files, runs)

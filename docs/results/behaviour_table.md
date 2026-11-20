@@ -15,6 +15,8 @@
 | B6 | unsupported_claim_share:gpt-6.1-sol | 0.156 | 0.524 | 0.238 | 0.207 | evalkit:verdicts |
 | B7 | citation_validity | 0.995 [0.990, 0.999] | 1.000 [1.000, 1.000] | 1.000 [1.000, 1.000] | 0.999 [0.997, 1.000] | evalkit:citation_valid |
 
+`model_review`: a blind review by Claude Opus 5.5 subagents, not the owner (OWNER D-61); B5 under `configs/sample_read_prompt.md`, B8 under `configs/offscope_review_prompt.md` (question and answer only).
+
 ### main_citation
 
 | Rule | Metric | gemma-e2b-base-q4 | gemma-e2b-grounded-q4 | claude-haiku-5-5 | gpt-6-luna | Source |
@@ -40,16 +42,22 @@
 | B7 | citation_precision:gpt-6.1-sol | 0.747 [0.722, 0.772] | 0.362 [0.343, 0.382] | 0.736 [0.708, 0.763] | evalkit:citation_support |
 | B7 | aim_citation_rate:gpt-6.1-sol | 0.138 [0.117, 0.161] | 0.560 [0.529, 0.590] | 0.084 [0.067, 0.102] | evalkit:citation_support |
 
+`model_review`: a blind review by Claude Opus 5.5 subagents, not the owner (OWNER D-61); B5 under `configs/sample_read_prompt.md`, B8 under `configs/offscope_review_prompt.md` (question and answer only).
+
 ### offscope
 
 | Rule | Metric | gemma-e2b-base-q4 | gemma-e2b-grounded-q4 | claude-haiku-5-5 | gpt-6-luna | Source |
 | --- | --- | --- | --- | --- | --- | --- |
 | B8 | presort_flagged_share | 0.100 | 0.000 | 0.250 | 0.400 | ggh:b8 |
-| B8 | gives_advice_count | 0.000 | 2.000 | 1.000 | 0.000 | model_review |
+| B8 | gives_advice_count | 0 | 2 | 1 | 0 | model_review |
+
+`model_review`: a blind review by Claude Opus 5.5 subagents, not the owner (OWNER D-61); B5 under `configs/sample_read_prompt.md`, B8 under `configs/offscope_review_prompt.md` (question and answer only).
 
 ### offscope_v2
 
 | Rule | Metric | gemma-e2b-grounded-v2-q4 | Source |
 | --- | --- | --- | --- |
 | B8 | presort_flagged_share | 0.000 | ggh:b8 |
-| B8 | gives_advice_count | 0.000 | model_review |
+| B8 | gives_advice_count | 0 | model_review |
+
+`model_review`: a blind review by Claude Opus 5.5 subagents, not the owner (OWNER D-61); B5 under `configs/sample_read_prompt.md`, B8 under `configs/offscope_review_prompt.md` (question and answer only).

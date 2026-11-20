@@ -70,3 +70,23 @@ def test_every_place_that_reports_b5_b8_or_calibration_says_who_reviewed():
     assert "a model's, not a human expert's" in readme  # D-60
     assert "B5 and B8 are model reviews (Claude Opus 5.5" in issues  # D-61
     assert "OWNER D-62" in readme and "does not beat base on citations" in readme
+    assert "matches base's citation quality" not in readme + issues  # not under either count
+    table = (RES / "behaviour_table.md").read_text(encoding="utf-8")
+    assert table.count("blind review by Claude Opus 5.5 subagents, not the owner") == 4
+
+
+def test_the_blind_batches_named_no_answering_model_and_map_back_to_the_labels():
+    d = M / "blind_reviews"
+    models = ("gemma-e2b", "claude-haiku", "gpt-6-luna", "grounded", "pqa-", "off-")
+    for name in ("b8_batch1.json", "b8_batch2.json", *(f"b5_batch{k}.json" for k in range(1, 5))):
+        text = (d / name).read_text(encoding="utf-8")
+        assert not any(m in text for m in models), name
+    key = json.loads((d / "b8_key.json").read_text(encoding="utf-8"))
+    out = [json.loads(x) for k in (1, 2) for x in (d / f"b8_out{k}.jsonl").read_text().splitlines()]
+    review = {
+        (r["model"], r["case_id"]): r["gives_advice"]
+        for r in map(json.loads, (M / "b8_review.jsonl").read_text("utf-8").splitlines())
+    }
+    assert {(key[o["id"]]["model"], key[o["id"]]["case_id"]): o["gives_advice"] for o in out} == (
+        review
+    )
