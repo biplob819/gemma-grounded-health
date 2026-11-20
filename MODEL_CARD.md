@@ -54,7 +54,7 @@ model-index:
 
 ## Summary
 
-`google/gemma-4-E2B-it` fine-tuned with LoRA to answer a research question from a supplied abstract only, as JSON with a label, a short answer and the numbers of the sentences it relied on. It is trained on PubMedQA's artificial set and scored with EvalKit on the expert set, against its own base model and v1 (`gemma-e2b-grounded-q4`), all scored in one run with the same claim extractor and judges. The published v1 numbers are shown beside them, labelled with their own extractor and judges, and not compared. On 1000 expert questions the fine-tune (`gemma-e2b-grounded-v2-q4`) has accuracy 0.678 [0.649, 0.706] against 0.501 [0.469, 0.532] for the base model (`gemma-e2b-base-q4`) and 0.728 [0.700, 0.755] for `gemma-e2b-grounded-q4` (v2 is separated lower); the full table, with the judges' headline, is under Evaluation. Against v1 (`gemma-e2b-grounded-q4`), pre-registered: a tie on correct and fully grounded, better on citation precision, better on aim-citation rate. Against the base model (`gemma-e2b-base-q4`), pre-registered: worse on correct and fully grounded; citation precision and aim-citation rate depend on how the judge applies the citation check's aim rule, so v2 is not claimed to beat it on citations (OWNER D-62). Research only, not medical advice.
+`google/gemma-4-E2B-it` fine-tuned with LoRA to answer a research question from a supplied abstract only, as JSON with a label, a short answer and the numbers of the sentences it relied on. It is trained on PubMedQA's artificial set and scored with EvalKit on the expert set, against its own base model and v1 (`gemma-e2b-grounded-q4`), all scored in one run with the same claim extractor and judge set. The published v1 numbers are shown beside them, labelled with their own extractor and judges, and not compared. On 1000 expert questions the fine-tune (`gemma-e2b-grounded-v2-q4`) has accuracy 0.678 [0.649, 0.706] against 0.501 [0.469, 0.532] for the base model (`gemma-e2b-base-q4`) and 0.728 [0.700, 0.755] for `gemma-e2b-grounded-q4` (v2 is separated lower); the full table, with the judges' headline, is under Evaluation. Against v1 (`gemma-e2b-grounded-q4`), pre-registered: a tie on correct and fully grounded, better on citation precision, better on aim-citation rate. Against the base model (`gemma-e2b-base-q4`), pre-registered: worse on correct and fully grounded; citation precision and aim-citation rate depend on how the judge applies the citation check's aim rule, so v2 is not claimed to beat it on citations (OWNER D-62). Research only, not medical advice.
 
 ## Intended use
 
@@ -80,7 +80,7 @@ PubMedQA `qiaojin/PubMedQA` at revision `9001f2853fb87cab8d220904e0de81ac6973b31
 | train_pool | no 14942, yes 193827 |
 | val | no 140, yes 1860 |
 
-Targets: 2722 training and 272 validation examples from 39252 scored rows. Citations are chosen by rule, not checked by hand: each cited sentence must on its own entail the claim under the pinned NLI model, the cited set must entail it (≥ 0.500) and share its content words (≥ 0.500), with at most 4 citations and at most 80 words. A selection rule is not a guarantee: the audit below found some answer citations weak or pointing at an aim or method sentence.
+Targets: 2722 training and 272 validation examples from 39252 scored rows. Citations are chosen by rule, not checked by hand: each cited sentence must on its own reach a minimum entailment of the claim under the pinned NLI model (a higher one unless it reports a result), the cited set must entail it (≥ 0.500) and share its content words (≥ 0.500), with at most 4 citations and at most 80 words. A selection rule is not a guarantee: the audit below found some answer citations weak or pointing at an aim or method sentence.
 
 Label mix:
 
@@ -264,7 +264,7 @@ Sample read findings (B5). A pipeline fault is a scoring problem, not the model'
 
 ### Parity: demo weights against benchmark weights
 
-The demo runs merged bf16 weights; the benchmark scores the Q4_K_M GGUF. On 500 dev prompts, greedy, the two agree on the label for 0.920 of prompts and cite exactly the same sentences for 0.730. That is under the plan's bar of 0.950 (`configs/eval_plan_v2.yaml`, `dev_parity`); the release went ahead at Q4_K_M with the miss disclosed (OWNER D-55).
+The published merged bf16 weights are for GPU use; the benchmark scores, and the local demo serves, the Q4_K_M GGUF (OWNER D-63). On 500 dev prompts, greedy, the two agree on the label for 0.920 of prompts and cite exactly the same sentences for 0.730. The label agreement is under the plan's bar of 0.950 (`configs/eval_plan_v2.yaml`, `dev_parity`); the release went ahead at Q4_K_M with the miss disclosed (OWNER D-55).
 
 | Weights | Schema valid |
 |---|---|
@@ -291,7 +291,7 @@ v2's GGUF (`gemma-e2b-grounded-v2-q4`), variant `ft2-Q4_K_M` in `docs/measuremen
 | Generation (p50 / p95) | 73.1 / 80.1 tokens/s |
 | Time to first token (p50) | 185 ms |
 | Answer latency (p50 / p95) | 840 / 1011 ms |
-| Peak memory | 4506.6 MB |
+| Peak memory (server RSS) | 4506.6 MB |
 | llama-bench pp512 | 7066.7 tokens/s |
 | llama-bench tg128 | 129.2 tokens/s |
 
@@ -299,7 +299,7 @@ v2's GGUF (`gemma-e2b-grounded-v2-q4`), variant `ft2-Q4_K_M` in `docs/measuremen
 
 - One benchmark's question style: PubMedQA questions are mostly titles turned into yes or no questions, so other phrasings may do worse.
 - English only, and abstracts only.
-- The `maybe` label was learned from 299 constructed examples (an abstract with its deciding sentences removed, OWNER D-15), not from real maybe-labelled questions.
+- The `maybe` label was learned from 272 constructed training examples, 27 more held out for validation (an abstract with its deciding sentences removed, OWNER D-15), not from real maybe-labelled questions.
 - Contamination probe `ggh_probe_original` (run `r-1ba7c0e6a17c`): accuracy gemma-e2b-grounded-v2-q4 0.760 [0.680, 0.840].
 - Contamination probe `ggh_probe_paraphrase` (run `r-49fbcc60b2a1`): accuracy gemma-e2b-grounded-v2-q4 0.760 [0.680, 0.840].
 - Paraphrase drop (original minus paraphrased accuracy, 100 questions): 0.000 [-0.030, 0.030]; contamination signal: no.

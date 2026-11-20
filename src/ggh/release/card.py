@@ -608,12 +608,13 @@ def parity(src: Sources) -> str:
     if isinstance(bar, int | float) and p.label_agreement < bar:
         how = (src.dev_check or {}).get("decision")
         miss = (
-            f" That is under the plan's bar of {f3(bar)} (`{src.bundle.shipped.plan}`, "
-            f"`dev_parity`); the release went ahead at Q4_K_M with the miss disclosed"
-            + (f" ({how})." if how else ".")
+            f" The label agreement is under the plan's bar of {f3(bar)} "
+            f"(`{src.bundle.shipped.plan}`, `dev_parity`); the release went ahead at Q4_K_M "
+            "with the miss disclosed" + (f" ({how})." if how else ".")
         )
     lines = [
-        f"The demo runs merged bf16 weights; the benchmark scores the Q4_K_M GGUF. On {p.n} dev "
+        "The published merged bf16 weights are for GPU use; the benchmark scores, and the local "
+        f"demo serves, the Q4_K_M GGUF (OWNER D-63). On {p.n} dev "
         f"prompts, greedy, the two agree on the label for {f3(p.label_agreement)} of prompts and "
         f"cite exactly the same sentences for {f3(p.citation_exact_match)}.{miss}",
         "",
@@ -668,7 +669,7 @@ def bench(src: Sources) -> str:
         ["Generation (p50 / p95)", f"{b.gen_tps_p50:.1f} / {b.gen_tps_p95:.1f} tokens/s"],
         ["Time to first token (p50)", f"{b.ttft_ms_p50} ms"],
         ["Answer latency (p50 / p95)", f"{b.answer_latency_ms_p50} / {b.answer_latency_ms_p95} ms"],
-        ["Peak memory", f"{b.peak_rss_mb:.1f} MB"],
+        ["Peak memory (server RSS)", f"{b.peak_rss_mb:.1f} MB"],
         *[[f"llama-bench {k}", f"{v:.1f} tokens/s"] for k, v in sorted(b.llama_bench.items())],
     ]
     return head + table(["", "Value"], rows)
@@ -694,8 +695,9 @@ def training_data(src: Sources) -> str:
             "",
             f"Targets: {t['train']} training and {t['val']} validation examples from "
             f"{t['rows_scored']} scored rows. Citations are chosen by rule, not checked by "
-            "hand: each cited sentence must on its own entail the claim under the pinned NLI "
-            f"model, the cited set must entail it (≥ {f3(t['thresholds']['entail_min'])}) and "
+            "hand: each cited sentence must on its own reach a minimum entailment of the claim "
+            "under the pinned NLI model (a higher one unless it reports a result), the cited "
+            f"set must entail it (≥ {f3(t['thresholds']['entail_min'])}) and "
             f"share its content words (≥ {f3(t['thresholds']['support_min'])}), with at most "
             f"{t['thresholds']['max_cites']} citations and at most "
             f"{t['thresholds']['max_words']} words. A selection rule is not a guarantee: the "
@@ -768,10 +770,14 @@ def training_procedure(src: Sources) -> str:
 
 def limits(src: Sources) -> str:
     lines: list[str] = []
-    insufficient = sum(int(q.get("insufficient", 0)) for q in src.targets["quotas"].values())
+    quotas = src.targets["quotas"]
+    insufficient = int((quotas.get("train") or {}).get("insufficient", 0))
+    held = sum(int(q.get("insufficient", 0)) for k, q in quotas.items() if k != "train")
     if insufficient:
+        more = f", {held} more held out for validation" if held else ""
         lines.append(
-            f"- The `maybe` label was learned from {insufficient} constructed examples (an "
+            f"- The `maybe` label was learned from {insufficient} constructed training "
+            f"examples{more} (an "
             "abstract with its deciding sentences removed, OWNER D-15), not from real "
             "maybe-labelled questions."
         )
@@ -864,7 +870,7 @@ def summary(src: Sources) -> str:
         prev = ", ".join(r.version for r in earlier)
         against = (
             f"against its own base model{f' and {names}' if names else ''}, all scored in one "
-            f"run with the same claim extractor and judges. The published {prev} numbers are "
+            f"run with the same claim extractor and judge set. The published {prev} numbers are "
             "shown beside them, labelled with their own extractor and judges, and not compared."
         )
     lines = [

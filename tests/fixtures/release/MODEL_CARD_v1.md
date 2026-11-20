@@ -77,7 +77,7 @@ PubMedQA `qiaojin/PubMedQA` at revision `9001f2853fb87cab8d220904e0de81ac6973b31
 | train_pool | no 14942, yes 193827 |
 | val | no 140, yes 1860 |
 
-Targets: 8436 training and 843 validation examples from 35538 scored rows. Citations are chosen by rule, not checked by hand: each cited sentence must on its own entail the claim under the pinned NLI model, the cited set must entail it (≥ 0.500) and share its content words (≥ 0.500), with at most 4 citations and at most 80 words. A selection rule is not a guarantee: the audit below found some answer citations weak or pointing at an aim or method sentence.
+Targets: 8436 training and 843 validation examples from 35538 scored rows. Citations are chosen by rule, not checked by hand: each cited sentence must on its own reach a minimum entailment of the claim under the pinned NLI model (a higher one unless it reports a result), the cited set must entail it (≥ 0.500) and share its content words (≥ 0.500), with at most 4 citations and at most 80 words. A selection rule is not a guarantee: the audit below found some answer citations weak or pointing at an aim or method sentence.
 
 Label mix:
 
@@ -249,7 +249,7 @@ Label accuracy (yes, no or maybe matches the reference), secondary: differences 
 
 ### Parity: demo weights against benchmark weights
 
-The demo runs merged bf16 weights; the benchmark scores the Q4_K_M GGUF. On 500 dev prompts, greedy, the two agree on the label for 0.956 of prompts and cite exactly the same sentences for 0.500.
+The published merged bf16 weights are for GPU use; the benchmark scores, and the local demo serves, the Q4_K_M GGUF (OWNER D-63). On 500 dev prompts, greedy, the two agree on the label for 0.956 of prompts and cite exactly the same sentences for 0.500.
 
 | Weights | Schema valid |
 |---|---|
@@ -277,7 +277,7 @@ v1's GGUF (`gemma-e2b-grounded-q4`), variant `ft-Q4_K_M` in `docs/measurements/l
 | Generation (p50 / p95) | 105.1 / 107.6 tokens/s |
 | Time to first token (p50) | 137 ms |
 | Answer latency (p50 / p95) | 604 / 759 ms |
-| Peak memory | 4462.2 MB |
+| Peak memory (server RSS) | 4462.2 MB |
 | llama-bench pp512 | 7018.0 tokens/s |
 | llama-bench tg128 | 124.9 tokens/s |
 
@@ -285,7 +285,7 @@ v1's GGUF (`gemma-e2b-grounded-q4`), variant `ft-Q4_K_M` in `docs/measurements/l
 
 - One benchmark's question style: PubMedQA questions are mostly titles turned into yes or no questions, so other phrasings may do worse.
 - English only, and abstracts only.
-- The `maybe` label was learned from 928 constructed examples (an abstract with its deciding sentences removed, OWNER D-15), not from real maybe-labelled questions.
+- The `maybe` label was learned from 844 constructed training examples, 84 more held out for validation (an abstract with its deciding sentences removed, OWNER D-15), not from real maybe-labelled questions.
 - Contamination probe `ggh_probe_original` (run `r-f98be6681636`): accuracy gemma-e2b-base-q4 0.560 [0.460, 0.660], gemma-e2b-grounded-q4 0.790 [0.710, 0.860].
 - Contamination probe `ggh_probe_paraphrase` (run `r-5bd60094cf2d`): accuracy gemma-e2b-base-q4 0.590 [0.490, 0.690], gemma-e2b-grounded-q4 0.840 [0.760, 0.910].
 - Paraphrase drop (original minus paraphrased accuracy, 100 questions): -0.050 [-0.100, 0.000]; contamination signal: no.

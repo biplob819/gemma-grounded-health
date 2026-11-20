@@ -7,4 +7,4 @@
 - [x] 5. Licence, NOTICE, credits re-read
 - [x] 6. MODEL_CARD.md generated and committed; read it (D-18)
 - [x] 7. Proof cells, records
-- [ ] 8. Converge, verifier, green
+- [x] 8. Converge, verifier, green
