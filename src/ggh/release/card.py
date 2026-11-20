@@ -28,6 +28,7 @@ PIPELINE_TAG = "text-generation"
 TAGS = ("gemma", "medical", "biomedical", "pubmedqa", "grounded-generation", "citations", "lora")
 MODEL_NAME = "gemma-4-e2b-grounded-health"
 BANNER = "Research only, not medical advice"
+BASE_MODEL_RELATION = "finetune"
 REQUIRED_META = (
     "license",
     "base_model",
@@ -1063,6 +1064,9 @@ def metadata(src: Sources) -> dict[str, Any]:
     return {
         "license": HUB_LICENSE,
         "base_model": src.recipe.base_model,
+        # the main repo holds merged weights, not an adapter: without this the Hub lists it
+        # as an adapter of the base (known issue R4.2, fixed in R4.5)
+        "base_model_relation": BASE_MODEL_RELATION,
         "datasets": [src.data.dataset],
         "language": list(LANGUAGE),
         "pipeline_tag": PIPELINE_TAG,
@@ -1076,6 +1080,8 @@ def metadata_problems(meta: Mapping[str, Any]) -> list[str]:
     """Structural checks on the Hub metadata: the keys §10.1 names and a well-formed
     model-index (each result has a task type, a dataset type and name, numeric metrics)."""
     problems = [f"missing {k}" for k in REQUIRED_META if not meta.get(k)]
+    if meta.get("base_model_relation") not in (None, BASE_MODEL_RELATION):
+        problems.append(f"base_model_relation must be {BASE_MODEL_RELATION!r} (merged weights)")
     for entry in meta.get("model-index") or []:
         if not entry.get("name"):
             problems.append("model-index entry without a name")
@@ -1113,12 +1119,40 @@ def split_front_matter(card: str) -> tuple[dict[str, Any], str]:
     return yaml.safe_load(head), body
 
 
+EXAMPLE_SENTENCES = ("<sentence 1>", "<sentence 2>", "<sentence 3>")
+
+
+def how_to_use(owner: str = "biplob123") -> str:
+    """The prompt the model was trained and benchmarked on: EvalKit's PubMedQA template,
+    rendered by the same code the demo uses (known issue R4.2: a bare question gets prose,
+    not the JSON answer). The placeholders stand for the question and the abstract's
+    sentences, numbered from 1."""
+    from ggh.space.engine import build_prompt
+
+    prompt = build_prompt("<question>", EXAMPLE_SENTENCES)
+    gguf = f"hf.co/{owner}/gemma-4-e2b-grounded-health-GGUF:Q4_K_M"
+    return (
+        "The model answers as JSON only when it gets EvalKit's PubMedQA prompt, the prompt it "
+        "was trained and benchmarked on: the question and the abstract split into numbered "
+        "sentences. A bare question gets free text. Send this as the user message (Gemma's "
+        "chat template, thinking off), with the real question and one numbered line per "
+        "sentence:\n\n"
+        f"```text\n{prompt.rstrip()}\n```\n\n"
+        'The reply is one JSON object, for example `{"label": "no", "answer": "...", '
+        '"citations": [2]}`. The benchmark decoded greedily (temperature 0) with thinking '
+        "off. Offline, the Q4_K_M GGUF runs with "
+        f"`ollama run --think=false {gguf}`; the repository's `ggh space --local` demo and "
+        "`ggh serve` build the prompt for you."
+    )
+
+
 def render(src: Sources, template: str | None = None) -> str:
     tpl = Template(template if template is not None else TEMPLATE.read_text(encoding="utf-8"))
     front = yaml.safe_dump(metadata(src), sort_keys=False, allow_unicode=True).rstrip("\n")
     return tpl.substitute(
         front_matter=front,
         summary=summary(src),
+        how_to_use=how_to_use(),
         training_data=training_data(src),
         training_procedure=training_procedure(src),
         stamps=stamps(src),

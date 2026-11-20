@@ -1,5 +1,5 @@
-"""`ggh` commands for the release (R4.1, R4.2, R4.3, R4.5): `card`, `readme-table`, `release`
-(dry run unless `--push`), `space`, `space-samples` and `passkey set`.
+"""`ggh` commands for the release (R4.1, R4.2, R4.3, R4.5): `card`, `readme-table`,
+`release-notes`, `release` (dry run unless `--push`), `space`, `space-samples` and `passkey set`.
 
 Every document is generated from the results bundle (D-20); `--bundle` and the other path flags
 let v2 point at its own files. `release` never pushes without `--push`, a token in the
@@ -85,6 +85,29 @@ def _cmd_readme_table(args: argparse.Namespace) -> int:
     except (sources.SourceError, readme.SpliceError, ValueError, OSError) as exc:
         return _fail("readme-table", exc)
     sys.stdout.write(block)
+    return 0
+
+
+def _cmd_release_notes(args: argparse.Namespace) -> int:
+    from ggh.release import notes, sources
+
+    root = Path(args.root)
+    try:
+        text = notes.render(_sources(args), root)
+    except (sources.SourceError, ValueError, OSError, KeyError) as exc:
+        return _fail("release-notes", exc)
+    if args.stdout:
+        sys.stdout.write(text)
+        return 0
+    out = root / args.out
+    if args.check:
+        if not out.is_file() or out.read_text(encoding="utf-8") != text:
+            return _fail("release-notes", f"{args.out} is not the generator's output")
+        print(f"release-notes: {args.out} is current")
+        return 0
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(text, encoding="utf-8")
+    print(f"release-notes: wrote {args.out}")
     return 0
 
 
@@ -267,6 +290,14 @@ def register(sub: argparse._SubParsersAction) -> None:  # pyright: ignore[report
     _source_flags(rt)
     rt.add_argument("--write", default=None, help="splice the block into this file's markers")
     rt.set_defaults(func=_cmd_readme_table)
+    from ggh.release.notes import OUT as NOTES_OUT
+
+    rn = sub.add_parser("release-notes", help="GitHub release notes from the bundle (R4.5)")
+    _source_flags(rn)
+    rn.add_argument("--out", default=str(NOTES_OUT))
+    rn.add_argument("--stdout", action="store_true", help="print instead of writing")
+    rn.add_argument("--check", action="store_true", help="fail if --out is not current")
+    rn.set_defaults(func=_cmd_release_notes)
     rl = sub.add_parser("release", help="Hub release plan; dry run unless --push (R4.2)")
     _source_flags(rl)
     rl.add_argument("--dry-run", action="store_true", help="the default; listed for clarity")

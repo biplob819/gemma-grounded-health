@@ -1,7 +1,10 @@
 """OSS-06, SPC-04: every link the README, the Space footer and the release notes need (OWNER
 D-37), in one place. A link that does not exist yet is `None` and renders as a visible
-placeholder; R4.2 to R4.5 fill them in as each thing is published. The README link test fails
-on any placeholder once the release is tagged.
+placeholder; R4.2 to R4.5 filled them in as each thing was published. Two R4.5 links point at
+pages that go live with an outward step the builder takes after the merge: the v1.0.0 GitHub
+release (the tag) and the EvalKit report page (live once EvalKit PR #1 merges). The write-up
+(P5.1) may stay pending. `tests/release/test_links.py` checks every link offline: https on an
+allowed host, and every local or repo path exists.
 """
 
 from __future__ import annotations
@@ -12,7 +15,7 @@ PENDING = "(link pending)"
 # name -> (label, url or None until published)
 LINKS: dict[str, tuple[str, str | None]] = {
     "repo": ("GitHub repository", REPO),
-    "release": ("GitHub release v1.0.0", None),  # R4.5
+    "release": ("GitHub release v1.0.0", f"{REPO}/releases/tag/v1.0.0"),  # R4.5: the tag
     "hf_model": (
         "Hugging Face model",
         "https://huggingface.co/biplob123/gemma-4-e2b-grounded-health",
@@ -37,12 +40,29 @@ LINKS: dict[str, tuple[str, str | None]] = {
     "citation": ("CITATION.cff", "CITATION.cff"),
     "writeup": ("Write-up", None),  # P5.1
     "case_study": ("Case study: the v1 grounding failure", "docs/case-study.md"),
+    "reproduce": ("Reproduce from scratch", "docs/reproduce.md"),
+    "release_notes": ("Release notes v1.0.0", "docs/release_notes_v1.0.0.md"),
+    "known_issues": ("Known issues", "docs/known-issues.md"),
+    "evalkit": ("EvalKit", "https://github.com/biplob819/evalkit"),
 }
 
 
 def md(name: str) -> str:
     label, url = LINKS[name]
     return f"[{label}]({url})" if url else f"{label} {PENDING}"
+
+
+def absolute(url: str) -> str:
+    """A repo-relative path as its GitHub URL on main (for text read outside the repo, such
+    as the GitHub release body); a full URL is returned as it is."""
+    if url.startswith(("https://", "http://")):
+        return url
+    return f"{REPO}/blob/main/{url}"
+
+
+def md_abs(name: str) -> str:
+    label, url = LINKS[name]
+    return f"[{label}]({absolute(url)})" if url else f"{label} {PENDING}"
 
 
 def pending() -> list[str]:

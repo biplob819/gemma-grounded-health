@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this project (the recipe from build node T2.1, the benchmark from E3.2 or the model from R4.2, once released), please cite it as below."
+message: "If you use this project (the training recipe, the benchmark or the released model), please cite it as below."
 title: "Gemma Grounded Health: a small open model that answers only from the abstract and cites it"
 type: software
 authors:
@@ -7,7 +7,20 @@ authors:
     given-names: Biplob
 license: Apache-2.0
 repository-code: "https://github.com/biplob819/gemma-grounded-health"
-version: 0.0.1
+url: "https://huggingface.co/biplob123/gemma-4-e2b-grounded-health"
+version: 1.0.0
+date-released: "2026-11-21"
+abstract: "Gemma 4 E2B fine-tuned with LoRA to answer a biomedical research question only from a given abstract, as JSON with a yes, no or maybe label, a short answer and the numbers of the sentences it relied on, scored with EvalKit on all 1,000 expert-labelled PubMedQA questions. Research only, not medical advice."
+identifiers:
+  - type: url
+    value: "https://github.com/biplob819/gemma-grounded-health/releases/tag/v1.0.0"
+    description: "GitHub release v1.0.0"
+  - type: url
+    value: "https://huggingface.co/biplob123/gemma-4-e2b-grounded-health"
+    description: "Model weights and card on Hugging Face"
+  - type: url
+    value: "https://huggingface.co/biplob123/gemma-4-e2b-grounded-health-GGUF"
+    description: "GGUF builds (Q4_K_M, Q8_0) on Hugging Face"
 keywords:
   - gemma
   - grounded question answering

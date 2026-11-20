@@ -2,8 +2,7 @@
 the links block, generated from `ggh.release.links` (OWNER D-37).
 
 `ggh readme-table` prints the results block; `--write FILE` replaces the text between each
-pair of markers in FILE (the README, or docs/README_release_draft.md while the release is being
-built).
+pair of markers in FILE (`uv run ggh readme-table --write README.md`).
 """
 
 from __future__ import annotations
