@@ -1,0 +1,4 @@
+[{"comment": "# Laptop benchmark: v1 and v2 Q4_K_M, back to back (Apple M3 Max, mains power)"},
+ {"show": "uptime", "run": "uptime"},
+ {"show": "uv run ggh bench --model ft2 --allow-idle-port 8081 --allow-idle-port 8083", "run": "uv run ggh bench --model ft2 --allow-idle-port 8081 --allow-idle-port 8083", "cwd": "."},
+ {"show": "uptime", "run": "uptime"}]

@@ -1,0 +1,24 @@
+You are answering a research question using only the numbered sentences from a
+scientific abstract below. This is a research benchmark, not medical advice.
+
+Question: Is increased circulating levels of immunoreactive beta-endorphin in polycystic ovary syndrome caused by increased pituitary secretion?
+
+Abstract sentences:
+[1] Our purpose was to investigate the source and role of elevated levels of immunoreactive beta-endorphin in polycystic ovary syndrome.
+[2] We wished to determine whether immunoreactive beta-endorphin secretion in patients with polycystic ovary syndrome is influenced by body weight and whether the pituitary release of immunoreactive beta-endorphin with corticotropin-releasing hormone is related to luteinizing hormone levels or adrenal androgen secretion.
+[3] Eighteen patients with polycystic ovary syndrome and 10 ovulatory controls were studied.
+[4] Each subject received 1 microgram/kg intravenous corticotropin-releasing hormone and an oral glucose tolerance test on alternate days.
+[5] Levels of plasma immunoreactive beta-endorphin, corticotropin, luteinizing hormone, cortisol, adrenal androgens, and insulin were measured.
+[6] Although immunoreactive beta-endorphin levels were elevated in patients with polycystic ovary syndrome (p < 0.01), incremental responses after corticotropin-releasing hormone were similar to controls and were not influenced by body weight.
+[7] Serum luteinizing hormone levels were not affected by corticotropin-releasing hormone and did not correlate with immunoreactive beta-endorphin levels.
+[8] Adrenal androgen responses after corticotropin-releasing hormone were increased in patients with polycystic ovary syndrome (p < 0.01) but were not correlated with immunoreactive beta-endorphin secretion.
+[9] After oral glucose was given, elevated fasting insulin levels increased significantly in patients with polycystic ovary syndrome (p < 0.01), as did immunoreactive beta-endorphin levels (p < 0.05).
+[10] The increases in insulin and immunoreactive beta-endorphin levels were correlated (p < 0.05).
+
+Reply with JSON only, in this shape:
+{"label": one of yes / no / maybe, "answer": "two to four sentences", "citations": [sentence numbers]}
+
+Rules:
+- Base every statement on the sentences above, not on outside knowledge.
+- Cite the sentence numbers (1 to 10) that support your answer.
+- Choose "maybe" when the sentences do not settle the question.

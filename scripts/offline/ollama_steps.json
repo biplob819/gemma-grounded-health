@@ -1,0 +1,8 @@
+[{"comment": "# Offline: every command below runs under this macOS sandbox profile (no internet, localhost only)"},
+ {"show": "cat offline.sb", "run": "cat scripts/offline/offline.sb"},
+ {"show": "curl -sS -m 5 https://huggingface.co", "run": "sandbox-exec -f scripts/offline/offline.sb curl -sS -m 5 -o /dev/null https://huggingface.co"},
+ {"comment": "# The published v2 Q4_K_M file, with greedy decoding as in the benchmark"},
+ {"show": "cat Modelfile", "run": "cat scripts/offline/Modelfile"},
+ {"show": "ollama create ggh-v2-greedy -f Modelfile", "run": "sandbox-exec -f scripts/offline/offline.sb ollama create ggh-v2-greedy -f scripts/offline/Modelfile 2>&1 | tail -1"},
+ {"show": "sed -n 4p sample.txt   # the question; 10 numbered abstract sentences follow", "run": "sed -n 4p scripts/offline/sample.txt"},
+ {"show": "ollama run --think=false --nowordwrap ggh-v2-greedy \"$(cat sample.txt)\"", "run": "sandbox-exec -f scripts/offline/offline.sb ollama run --think=false --nowordwrap ggh-v2-greedy \"$(cat scripts/offline/sample.txt)\" 2>/dev/null"}]

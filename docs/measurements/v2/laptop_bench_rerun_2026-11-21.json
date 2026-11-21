@@ -1,0 +1,208 @@
+{
+  "measured_at": "2026-11-21T05:22:47Z",
+  "host_platform": "arm64",
+  "protocol": {
+    "section": "Tech Spec \u00a78",
+    "prompts": "50 dev_eval prompts drawn with seed 7, 3 more as warm-ups",
+    "repetitions": 3,
+    "request": "chat completions with EvalKit's answer schema (response_format json_schema)",
+    "max_tokens": 256,
+    "deviations": [
+      "context 8192 (ggh serve's --ctx-size), not llama-server's default: \u00a78 asks for both",
+      "cache_prompt false, so every prompt is processed fresh (EvalKit's request leaves the server default, prompt caching on)",
+      "max_tokens 256 per \u00a78 (EvalKit sends max_completion_tokens 2048) and temperature 0 (the server is already greedy: --temp 0 --top-k 1)",
+      "output laptop_bench.json with a measured_at stamp, not \u00a78's laptop-bench-<date>.json"
+    ],
+    "llama_bench": "-p 512 -n 128 -ngl 999 -r 5, run on every variant in turn for 3 rounds before the workloads; each value is the median across rounds",
+    "metrics": {
+      "ttft_ms": "server prompt_ms plus one generated token's mean time",
+      "gen_tps": "server predicted_per_second per request; its p95 is the fast tail",
+      "latency_ms": "wall time around the request",
+      "aggregate": "median across repetitions of each repetition's p50 (or p95)",
+      "peak_rss_mb": "ps rss of the llama-server process every 50 ms from /health to shutdown; on Apple Silicon it may leave out Metal private buffers such as the KV cache"
+    }
+  },
+  "variants": {
+    "ft-Q4_K_M": {
+      "chip": "Apple M3 Max",
+      "ram_gb": 64,
+      "os": "macOS 26.5.2",
+      "power": "ac",
+      "llama_cpp_commit": "b12421",
+      "quant": "Q4_K_M",
+      "model_file_mb": 3269.1,
+      "n_prompts": 50,
+      "repetitions": 3,
+      "prompt_tps_p50": 3440.2,
+      "gen_tps_p50": 87.2,
+      "gen_tps_p95": 100.9,
+      "ttft_ms_p50": 149,
+      "answer_latency_ms_p50": 716,
+      "answer_latency_ms_p95": 920,
+      "peak_rss_mb": 4140.4,
+      "llama_bench": {
+        "pp512": 6909.666817,
+        "tg128": 111.102099
+      }
+    },
+    "ft2-Q4_K_M": {
+      "chip": "Apple M3 Max",
+      "ram_gb": 64,
+      "os": "macOS 26.5.2",
+      "power": "ac",
+      "llama_cpp_commit": "b12421",
+      "quant": "Q4_K_M",
+      "model_file_mb": 3269.1,
+      "n_prompts": 50,
+      "repetitions": 3,
+      "prompt_tps_p50": 3468.6,
+      "gen_tps_p50": 74.2,
+      "gen_tps_p95": 84.4,
+      "ttft_ms_p50": 157,
+      "answer_latency_ms_p50": 799,
+      "answer_latency_ms_p95": 993,
+      "peak_rss_mb": 4480.5,
+      "llama_bench": {
+        "pp512": 7037.359183,
+        "tg128": 112.859622
+      }
+    },
+    "ft-Q8_0": {
+      "chip": "Apple M3 Max",
+      "ram_gb": 64,
+      "os": "macOS 26.5.2",
+      "power": "ac",
+      "llama_cpp_commit": "b12421",
+      "quant": "Q8_0",
+      "model_file_mb": 4737.4,
+      "n_prompts": 50,
+      "repetitions": 3,
+      "prompt_tps_p50": 3326.3,
+      "gen_tps_p50": 67.5,
+      "gen_tps_p95": 78.4,
+      "ttft_ms_p50": 155,
+      "answer_latency_ms_p50": 850,
+      "answer_latency_ms_p95": 1163,
+      "peak_rss_mb": 5818.1,
+      "llama_bench": {
+        "pp512": 6781.428749,
+        "tg128": 89.442858
+      }
+    },
+    "ft2-Q8_0": {
+      "chip": "Apple M3 Max",
+      "ram_gb": 64,
+      "os": "macOS 26.5.2",
+      "power": "ac",
+      "llama_cpp_commit": "b12421",
+      "quant": "Q8_0",
+      "model_file_mb": 4737.4,
+      "n_prompts": 50,
+      "repetitions": 3,
+      "prompt_tps_p50": 3347.8,
+      "gen_tps_p50": 68.7,
+      "gen_tps_p95": 79.9,
+      "ttft_ms_p50": 153,
+      "answer_latency_ms_p50": 811,
+      "answer_latency_ms_p95": 1178,
+      "peak_rss_mb": 5861.6,
+      "llama_bench": {
+        "pp512": 5996.821402,
+        "tg128": 87.810302
+      }
+    }
+  },
+  "details": {
+    "ft-Q4_K_M": {
+      "prompt_tokens_p50": 486.0,
+      "answer_tokens_p50": 49.5,
+      "answer_tokens_mean": 49.5,
+      "rss_samples": 1408,
+      "llama_bench_rounds": [
+        {
+          "pp512": 6973.445389,
+          "tg128": 115.188604
+        },
+        {
+          "pp512": 6908.832599,
+          "tg128": 111.102099
+        },
+        {
+          "pp512": 6909.666817,
+          "tg128": 110.997502
+        }
+      ]
+    },
+    "ft2-Q4_K_M": {
+      "prompt_tokens_p50": 486.0,
+      "answer_tokens_p50": 47.5,
+      "answer_tokens_mean": 48.7,
+      "rss_samples": 1664,
+      "llama_bench_rounds": [
+        {
+          "pp512": 7091.532242,
+          "tg128": 113.528893
+        },
+        {
+          "pp512": 6955.15254,
+          "tg128": 112.859622
+        },
+        {
+          "pp512": 7037.359183,
+          "tg128": 108.002662
+        }
+      ]
+    },
+    "ft-Q8_0": {
+      "prompt_tokens_p50": 486.0,
+      "answer_tokens_p50": 48.5,
+      "answer_tokens_mean": 49.3,
+      "rss_samples": 1657,
+      "llama_bench_rounds": [
+        {
+          "pp512": 6781.428749,
+          "tg128": 89.500893
+        },
+        {
+          "pp512": 6823.783546,
+          "tg128": 89.442858
+        },
+        {
+          "pp512": 6494.449616,
+          "tg128": 80.602588
+        }
+      ]
+    },
+    "ft2-Q8_0": {
+      "prompt_tokens_p50": 486.0,
+      "answer_tokens_p50": 45.0,
+      "answer_tokens_mean": 47.5,
+      "rss_samples": 1595,
+      "llama_bench_rounds": [
+        {
+          "pp512": 5808.361901,
+          "tg128": 87.810302
+        },
+        {
+          "pp512": 7118.346547,
+          "tg128": 88.084744
+        },
+        {
+          "pp512": 5996.821402,
+          "tg128": 83.573225
+        }
+      ]
+    }
+  },
+  "conditions": {
+    "idle_servers_listening": [
+      8081,
+      8083
+    ]
+  },
+  "rerun_note": "Re-run on 2026-11-21 to test the R4.1 gap; NOT a quiet machine: load average 8.65 at start, 78.93 at end (another project's iOS Simulator and Expo bundler on port 8081 were running). Kept beside laptop_bench.json, which stays the published measurement.",
+  "load_average_1m": {
+    "start": 8.65,
+    "end": 78.93
+  }
+}
