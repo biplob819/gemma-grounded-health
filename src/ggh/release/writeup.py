@@ -601,8 +601,9 @@ SEGMENTS: tuple[Segment, ...] = (
     Segment(
         18,
         "Offline laptop: `docs/assets/demo.gif` (the local demo against the ${quant} GGUF), "
-        "then a terminal capture, Wi-Fi off, of `ollama run --think=false "
-        "hf.co/${gguf_repo}:${quant}` (*to record*)",
+        "then `docs/assets/ollama_offline.gif`: inside a macOS sandbox that blocks the "
+        "internet, the published hf.co/${gguf_repo}:${quant} file, set to greedy decoding "
+        "by a Modelfile, answers a sample through `ollama run --think=false`",
         "Offline on a laptop, the ${quant} file answers through llama-server or Ollama, with "
         "thinking off. On an ${chip} it generates ${gen_tps} tokens a second. The demo serves "
         "exactly the file that was benchmarked.",
@@ -631,7 +632,7 @@ def video_script(src: Sources, root: Path, values: dict[str, str] | None = None)
         + HEADER.format(source="SEGMENTS in src/ggh/release/writeup.py")
         + "\n\n"
         f"About {total} seconds, {words} words of narration. Every visual is a recorded "
-        "asset in `docs/assets/` except the Ollama terminal capture, marked *to record*. "
+        "asset in `docs/assets/`. "
         "Every claim is one the results bundle or the model card makes.\n\n"
         "| Time | Visual | Narration |\n|---|---|---|\n" + "\n".join(rows) + "\n"
     )
