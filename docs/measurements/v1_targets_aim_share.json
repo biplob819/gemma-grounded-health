@@ -1,0 +1,20 @@
+{
+  "input": "artifacts/targets/train.jsonl (v1, local copy artifacts/targets_v1_local/)",
+  "input_sha256": "5b9a225df93f7824ccf230175e63f7177e006a594d51837f62f2a2642595ce4f",
+  "classifier": "ggh.targets.rules_r10.is_aim_sentence (TGT-R10)",
+  "classifier_sha256": "12fa92c8f2bfc7e093386ba96e7a8bdb1754dd5eae9ce4d01347cbbd2a52d70f",
+  "rows": 8436,
+  "kinds": {
+    "answer": 7508,
+    "insufficient": 844,
+    "offscope": 84
+  },
+  "answer_labels": {
+    "no": 3003,
+    "yes": 4505
+  },
+  "answers": 7508,
+  "answers_citing_an_aim_sentence": 3776,
+  "share": 0.5029,
+  "note": "The 43 % phrase-based share is the figure recorded in OWNER D-43 at E3.2; its phrase list was not committed, so it is cited, not recomputed. An earlier figure of 3,785 did not reproduce under either version of rules_r10 (both give this count)."
+}
