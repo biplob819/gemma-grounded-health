@@ -67,3 +67,27 @@ def test_selection_is_on_dev_with_hack_guards_and_scoring_runs_once():
     assert "dev_eval" in sel and "test" not in plan["training_data"].replace("no dev or test", "")
     assert [r["name"] for r in plan["runs"]] == ["main_v3"] and plan["runs"][0]["n"] == 1000
     assert "owner" in plan["spend"] and "max_cost_usd" in plan["spend"]
+
+
+def test_the_plan_row_is_recorded_before_the_trial_notebook():
+    import json as _json
+    import subprocess
+
+    rows = [
+        _json.loads(x)
+        for x in (ROOT / "docs/measurements/preregistrations.jsonl").read_text("utf-8").splitlines()
+        if x.strip()
+    ]
+    v3 = [r for r in rows if r["plan"] == "configs/eval_plan_v3.yaml"]
+    assert len(v3) == 1 and v3[0]["sha256"] == hashlib.sha256(PLAN.read_bytes()).hexdigest()
+    nb = (ROOT / "notebooks/v3/trial/train_kaggle.ipynb").read_text("utf-8")
+    from ggh.rl.notebook import render
+    from ggh.train.notebook import dumps
+
+    commit = nb.split("git checkout -q ")[1][:40]
+    assert nb == dumps(render(commit, 40))
+    git = subprocess.run(  # the plan's hash commit is an ancestor of the notebook's commit
+        ["git", "merge-base", "--is-ancestor", v3[0]["commit"], commit], cwd=ROOT, check=False
+    )
+    if git.returncode in (0, 1):  # 128: shallow clone without the history, nothing to check
+        assert git.returncode == 0
