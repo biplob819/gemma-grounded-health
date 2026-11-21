@@ -68,3 +68,11 @@ Generated from the Tech Spec §13.2 on 2026-11-15; edit here from now on and kee
 ## Wave 6 — cut
 
 O6.1 (optional DPO: rule-based preference pairs, one DPO run, an exploratory EvalKit result in its own table) was cut by OWNER D-58; its capabilities DPO-01..04 are removed from the catalog.
+
+## Wave 7 — v3 (OWNER D-66)
+
+| Node | Title | Depends on | Verified by | Deliverable | Stories |
+| --- | --- | --- | --- | --- | --- |
+| **V3.1** | v3 GRPO: reward, recipe, pre-registration and Kaggle runner | R4.5 | node_converge + verifier | Programmatic GRPO reward proven against planted hacks, a recipe continuing v2's adapter, `ggh grpo` and `ggh rl-dev`, the v3 plan hashed before training, a pinned Kaggle notebook | US1, US3 |
+
+V3.2 (the trial and main GRPO runs on Kaggle, dev selection under the plan's hack guards, frozen v3 `TrainRun`) and V3.3 (export, parity, the one scoring run, release after the owner's go-ahead) are added when V3.1 is green.

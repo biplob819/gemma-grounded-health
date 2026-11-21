@@ -1,0 +1,4 @@
+# Kaggle packages for the v3 GRPO runs (OWNER D-66): the unsloth set plus TRL for GRPOTrainer.
+# Unsloth 2026.11.5 accepts trl >= 0.18.2, <= 1.15.0 and caps transformers at 5.17.0.
+-r requirements-kaggle-unsloth.txt
+trl==1.15.0

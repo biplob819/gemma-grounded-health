@@ -79,6 +79,7 @@ Each decision below seeds `docs/decisions.md` as D-1 to D-33; later rulings are 
 | OWNER D-63 | The demo is the free local alternative D-14 names, not a ZeroGPU Space (owner: "I don't want to spend money on ZeroGPU - do the local alternative"): the same app run on the owner's laptop against `ggh serve`'s llama-server with the Q4_K_M GGUF, passcode-gated (OWNER D-36), recorded as screenshots and a GIF for the README, the project page and the video. The merged bf16 weights are still published for GPU users; the card says the demo serves the benchmarked GGUF | A ZeroGPU Space (likely needs HF PRO); a CPU Space | No spend; the local app serves exactly the weights that were benchmarked, so the demo and the numbers match |
 | OWNER D-64 | R4.4's EvalKit contribution goes ahead as a pull request plus the Gemma report page (ask widget: "PR + Gemma page"): EvalKit node B5.17 on branch `ggh-gemma-example`, built under EvalKit's own harness, adds a "Gemma through llama-server" worked example to docs/plugins.md, an example config, and a `/gemma/` page on EvalKit's GitHub Pages rendered by EvalKit's own report code from GGH's v2 main-run summary (no per-case data). The citation rubric's aim-rule ambiguity goes upstream as an issue only (ask widget: "Open an issue only"), with no rubric change, since a change makes a new hash and drops every cached verdict. Merging into EvalKit's main needs the owner's approval in EvalKit's own session | PR only, no Pages; skip R4.4; propose a rubric fix in the PR | Owner ruling via the ask widget: the contribution shows EvalKit used on a real local model, and an issue records the rubric finding without invalidating EvalKit's cache |
 | OWNER D-65 | The v1.0.0 open-source release is published once R4.5 is green: the tag `v1.0.0` on the GitHub repo, a GitHub release whose notes are generated from the results bundle (`ggh release-notes`), and the two corrected Hugging Face cards re-uploaded (the main card's `base_model_relation: finetune` and How-to-use prompt section; the GGUF card's prompt-format line), each checked by download-back (ask widget: "Approve both"). The owner asks for every future approval through the ask widget | Release only, cards unchanged; ask again with the final notes | Owner ruling via the ask widget, given before the node finished so the release does not wait |
+| OWNER D-66 | Build v3 in this repo as Wave 7: GRPO from v2's own adapter with a programmatic, verifiable reward (no judge in the training loop), relayed from the portfolio-site session and confirmed in this session's ask widget ("Yes, build v3"). The Kaggle GPU runs are pushed by the portfolio-site session through the Kaggle API (owner-approved there); this session prepares the kernels. The full-size GRPO run goes ahead even if it slips past the 2–3 day target ("Full run, take longer"). The Hugging Face release is prepared and the owner is asked before publishing ("Ask before release"). Scoring uses the OpenAI API only ("Use open AI API", as OWNER D-57); the owner did not approve the relayed $15 cap, so the cap is asked again before the scoring run and nothing is spent until then | Build v3 in a spin-off repo; DPO on judged pairs (judge spend to build pairs); a scaled-down run to keep to 2–3 days; publish the result automatically | Owner ruling via the ask widget: an honest, measured RL result on the released model, under the same pre-registration discipline as v1 and v2 |
 
 ---
 
@@ -611,10 +612,11 @@ gemma-grounded-health/
 
 Status vocabulary: `not-started | spec | building | green`.
 
-### 13.2 Build graph: 19 nodes in six waves (O6.1 cut, OWNER D-58)
+### 13.2 Build graph: 20 nodes in seven waves (O6.1 cut, OWNER D-58; V3.1 added, OWNER D-66)
 
 **Release (all Must and Should stories): 18 nodes.** W0.1, N1.1–N1.3, E3.1, T2.1, T2.2, X3.1, X3.2, E3.2, V2.1, V2.2 (OWNER D-43), E3.3, R4.1–R4.5.
 **Full scope: 19 nodes**, adding P5.1 (write-up). O6.1 (DPO, Could) was cut by OWNER D-58.
+**Wave 7 (after v1.0.0, OWNER D-66):** V3.1 (v3 GRPO groundwork); V3.2 (the GRPO runs) and V3.3 (export, scoring, release) are added when V3.1 is green.
 
 | Node | Title | Depends on | Deliverable (what exists when it is green) | Stories |
 | --- | --- | --- | --- | --- |
@@ -637,6 +639,7 @@ Status vocabulary: `not-started | spec | building | green`.
 | **R4.4** | EvalKit upstream | E3.3, R4.2 | EvalKit PR (docs, example config) and the Gemma report page, built under EvalKit's harness | US6 |
 | **R4.5** | Open-source release v1.0.0 | R4.3, R4.4 | Reproduce-from-scratch docs, README with results, CITATION.cff, tagged v1.0.0 GitHub release with notes linking model, GGUF, Space and results | US3, US4, US7 |
 | **P5.1** | Write-up | R4.5 | "How I built it" note, decision log summary, project page text with generated numbers, video script | — |
+| **V3.1** | v3 GRPO: reward, recipe, pre-registration and Kaggle runner | R4.5 | Programmatic GRPO reward proven against planted hacks, a recipe continuing v2's adapter, `ggh grpo` and `ggh rl-dev`, the v3 plan hashed before training, a pinned Kaggle notebook (Wave 7, OWNER D-66) | US1, US3 |
 
 Waves: **W0** harness → **N1** data → **T2** training, alongside **E3.1** serving → **X3** export and laptop → **E3** evaluation → **R4** release, ending in the v1.0.0 open-source release (R4.5) → **P5/O6** write-up and optional DPO.
 
@@ -942,6 +945,18 @@ Each row becomes one line in `docs/graph/catalog.tsv` with status `not-started`.
 | PUB-02 | Project page text with every number generated from the bundle | D-20 |
 | PUB-03 | Decision log summary and one-page PRD link | PRD deliverables |
 | PUB-04 | 90-second video script, including the offline laptop segment | PRD deliverables |
+
+**V3.1 v3 GRPO groundwork (OWNER D-66)**
+
+| Cap | Capability | Trace |
+| --- | --- | --- |
+| RLR-01 | Programmatic, deterministic GRPO reward: label, grounded citations, aim penalty, parse floor | OWNER D-66 |
+| RLR-02 | Planted reward hacks earn less than honest answers | OWNER D-66 |
+| RLR-03 | GRPO recipe continuing v2's adapter, pinned by Hub revision and TrainRun hash | OWNER D-66 |
+| RLR-04 | `ggh grpo` with the reward logged by component and hack probes | OWNER D-66 |
+| RLR-05 | `ggh rl-dev`: v2 and each checkpoint scored on dev prompts | OWNER D-66 |
+| RLR-06 | Thin Kaggle notebook for the v3 runs, pinned to a commit | D-10, OWNER D-66 |
+| RLR-07 | v3 pre-registration hashed before training | D-4, OWNER D-66 |
 
 **O6.1 DPO** was cut (OWNER D-58); its capabilities DPO-01..04 are removed.
 
