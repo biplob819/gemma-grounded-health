@@ -63,11 +63,37 @@ def test_the_components_sum_to_the_reward():
 def test_grpo_args_follow_the_recipe(tmp_path):
     g, base = load_grpo(RECIPE, ROOT)
     a = G.grpo_args(g, base, tmp_path, max_steps=None)
-    assert a["max_prompt_length"] + a["max_completion_length"] == base.max_seq_len
+    assert a["max_completion_length"] < base.max_seq_len and "max_prompt_length" not in a
+    assert a["warmup_steps"] == 0.05 and "warmup_ratio" not in a
+    assert (a["loss_type"], a["scale_rewards"], a["epsilon"], a["num_iterations"]) == (
+        "dapo", "group", 0.2, 1,
+    )  # fmt: skip
     assert a["max_steps"] == -1 and a["num_train_epochs"] == 1.0 and a["beta"] == 0.0
     assert a["fp16"] and not a["bf16"] and a["save_only_model"]
     assert a["reward_weights"] == list(G.REWARD_WEIGHTS) and a["seed"] == 7
     assert G.grpo_args(g, base, tmp_path, max_steps=40)["max_steps"] == 40
+
+
+# Field names read from trl v1.15.0 trl/trainer/grpo_config.py and transformers v5.17.0
+# training_args.py (the Kaggle pins); `warmup_ratio` and `max_prompt_length` are in neither.
+TRL_115_GRPO_FIELDS = {
+    "learning_rate", "remove_unused_columns", "num_generations", "max_completion_length",
+    "temperature", "top_p", "beta", "num_iterations", "epsilon", "reward_weights",
+    "scale_rewards", "loss_type", "mask_truncated_completions",
+}  # fmt: skip
+TRANSFORMERS_517_FIELDS = {
+    "output_dir", "lr_scheduler_type", "warmup_steps", "per_device_train_batch_size",
+    "gradient_accumulation_steps", "num_train_epochs", "max_steps", "save_strategy", "save_steps",
+    "save_only_model", "logging_steps", "seed", "fp16", "bf16", "report_to",
+}  # fmt: skip
+
+
+def test_every_trainer_argument_is_a_field_of_the_pinned_versions(tmp_path):
+    g, base = load_grpo(RECIPE, ROOT)
+    keys = set(G.grpo_args(g, base, tmp_path, max_steps=None))
+    assert keys <= TRL_115_GRPO_FIELDS | TRANSFORMERS_517_FIELDS, keys - (
+        TRL_115_GRPO_FIELDS | TRANSFORMERS_517_FIELDS
+    )
 
 
 def test_check_init_refuses_an_adapter_that_is_not_v2s(tmp_path):

@@ -33,6 +33,10 @@ class GRPORecipe(Model):
     scheduler: NonBlank
     warmup_ratio: Annotated[float, Field(ge=0.0, lt=1.0, allow_inf_nan=False, strict=True)]
     beta: Annotated[float, Field(ge=0.0, le=1.0, allow_inf_nan=False, strict=True)]
+    loss_type: Literal["dapo", "grpo", "dr_grpo", "bnpo"]  # pinned, not left to TRL's default
+    scale_rewards: Literal["group", "batch", "none"]
+    epsilon: Annotated[float, Field(gt=0.0, lt=1.0, allow_inf_nan=False, strict=True)]
+    num_iterations: PosInt
     num_generations: Annotated[int, Field(ge=2, le=16, strict=True)]
     temperature: Annotated[float, Field(gt=0.0, le=2.0, allow_inf_nan=False, strict=True)]
     top_p: Unit

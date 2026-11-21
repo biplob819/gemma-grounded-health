@@ -8,27 +8,35 @@ version: v3
 node: V3.1
 built_after_test_seen: true    # v3 is built after v1's and v2's PQA-L results were seen (D-43)
 method: GRPO from v2's adapter with the programmatic reward; no judge in the training loop
-reward:
-  module: src/ggh/rl/reward.py
-  sha256: 2866755b0aa35b601d51b8b081f6ad8c3f55e637b16b1429395ef5b4e961c7fe
-recipe:
-  file: configs/recipe_v3_grpo.yaml
-  sha256: c1255d8a1ca90675131bbf14bd65b9e41e0e585ae3f2a4c184d455e7ec33c9d0
+pinned:                        # everything that shapes training, by sha256 (none may change after this)
+  reward: {file: src/ggh/rl/reward.py, sha256: e75ca0f559e3114484af39c16bae00fe49c336c0193e333bf2fcf42ca5470624}
+  trainer: {file: src/ggh/rl/grpo.py, sha256: 7c7f9976db1412ec938776bbe952dde3a314d80aadbb69c32b2d7680df7f346b}
+  rules: {file: src/ggh/targets/rules.py, sha256: fc644b6bc104e141538429e236c0a83bebb88b7344fba3a95d9fd5d60cd75eca}
+  recipe_schema: {file: src/ggh/rl/config.py, sha256: 0583a1b9a87286d4c93e28d31a9786ba63c1dc6f7691003e987902181269ecac}
+  recipe: {file: configs/recipe_v3_grpo.yaml, sha256: 62b5ade563d8e0283a4ed70970465f3ab3eb8b0f2e88bfe89267ce97f001620a}
+  packages: {file: notebooks/requirements-kaggle-grpo.txt, sha256: 8217e0e06094d79cdff42b6fa9a6fd35dd0eaee55532668c87271c3a84bcd8c4}
 training_data: the 2,722 v2 train prompts and gold labels (train split only; no dev or test use)
 trial: >-
   one short run (40 GRPO steps) before the main run, on the train prompts, read on the first 200
-  dev prompts with the reward: it may stop the plan (reward falls, a hack appears in the logged
-  components, parse failures rise) but may not change the reward, the recipe or this plan; a
-  change would need a new plan and hash before the main run, recorded as a decision
+  dev prompts with the reward. It stops the plan, with the owner told, if the trial's final
+  adapter against v2's replies in the same session has: parse failures above 0.02; mean reward
+  more than 0.05 below v2's; or any selection guard below failing. It may not change the reward,
+  the recipe or this plan; a change needs a new plan and hash before the main run, recorded as a
+  decision
 checkpoint_selection: >-
-  on the first 500 dev_eval prompts (greedy, unconstrained, scored by the reward in the same
-  Kaggle session as v2's own replies): the saved checkpoint with the highest mean reward among
-  those that keep every hack guard, ties to the earlier step. Guards, each against v2's replies
-  in that session: parse failures at most 0.01; "maybe" share at most v2's plus 0.05; mean
-  answer words at least 0.8 of v2's; label accuracy at least v2's minus 0.02; aim-citation share
-  at most v2's. If no checkpoint beats v2's mean reward under the guards, v3 is reported as not
-  improving on dev, the owner is asked whether to score it, and the result is published either
-  way. The selected adapter's hash and its Q4_K_M GGUF hash are committed before the main run.
+  candidates are every saved checkpoint-N and the final adapter of the main run. On the first 500
+  dev_eval prompts (greedy, unconstrained, scored by the reward in the same Kaggle session as
+  v2's own replies), pick the candidate with the highest mean reward among those that keep every
+  hack guard, ties to the earlier step (the final adapter counts as its last step). Guards, each
+  against v2's replies in that session: parse failures at most 0.01; "maybe" share within v2's
+  plus or minus 0.05; "yes" share at most v2's plus 0.05; accuracy on the gold-"no" rows at least
+  v2's minus 0.05; mean answer words at least 0.8 of v2's; label accuracy at least v2's minus
+  0.02; aim-citation share at most v2's. dev_eval has no gold "maybe" rows (457 yes, 43 no), so
+  dev cannot show whether v3 answers "maybe" well; the reward pays the most likely label (no
+  premium for yes/no over maybe) and PQA-L's maybe cases are measured only in the scoring run.
+  If no candidate beats v2's mean reward under the guards, v3 is reported as not improving on
+  dev, the owner is asked whether to score it (the result is published either way). The
+  selected adapter's hash and its Q4_K_M GGUF hash are committed before the main run.
 evalkit: f9cbc8e5396c4fc638021cb426cc34e2d6853d78   # evalkit-harness==0.4.0, as V2.2 (D-56)
 provider: openai_only          # owner, 2026-11-21: "Use open AI API" (as OWNER D-57)
 task: pubmedqa

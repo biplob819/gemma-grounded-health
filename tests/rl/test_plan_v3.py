@@ -26,9 +26,10 @@ def test_the_plan_is_final_and_its_hash_is_committed():
 
 
 def test_the_reward_and_recipe_are_the_ones_registered():
-    plan = _plan()
-    assert _sha(plan["reward"]["module"]) == plan["reward"]["sha256"]
-    assert _sha(plan["recipe"]["file"]) == plan["recipe"]["sha256"]
+    pinned = _plan()["pinned"]
+    assert set(pinned) == {"reward", "trainer", "rules", "recipe_schema", "recipe", "packages"}
+    for name, pin in pinned.items():
+        assert _sha(pin["file"]) == pin["sha256"], name
 
 
 def test_the_primary_test_guardrails_and_stretch_are_as_briefed():
@@ -60,7 +61,8 @@ def test_the_registered_baselines_are_v2s_published_numbers():
 def test_selection_is_on_dev_with_hack_guards_and_scoring_runs_once():
     plan = _plan()
     sel = plan["checkpoint_selection"]
-    for guard in ("parse failures", '"maybe" share', "answer words", "label accuracy", "aim"):
+    for guard in ("parse failures", '"maybe" share', '"yes" share', 'gold-"no" rows',
+                  "answer words", "label accuracy", "aim-citation share"):  # fmt: skip
         assert guard in sel, guard
     assert "dev_eval" in sel and "test" not in plan["training_data"].replace("no dev or test", "")
     assert [r["name"] for r in plan["runs"]] == ["main_v3"] and plan["runs"][0]["n"] == 1000

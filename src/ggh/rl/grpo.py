@@ -47,7 +47,8 @@ def r_label(
 def r_grounded(
     completions: Sequence[Any], gold_label: Sequence[str], context: Sequence[Any], **_: Any
 ):
-    return [R.R_GROUNDED * s.grounded for s in _scores(completions, gold_label, context)]
+    scores = _scores(completions, gold_label, context)
+    return [R.R_GROUNDED * (s.grounded and s.label_correct) for s in scores]
 
 
 def r_aim(completions: Sequence[Any], gold_label: Sequence[str], context: Sequence[Any], **_: Any):
@@ -96,18 +97,23 @@ def label_mix(rows: Sequence[dict[str, Any]]) -> dict[str, int]:
 def grpo_args(
     g: GRPORecipe, base: RecipeConfig, out: Path, max_steps: int | None
 ) -> dict[str, Any]:
-    """Keyword arguments for TRL's `GRPOConfig` (TRL 1.15)."""
+    """Keyword arguments for TRL 1.15's `GRPOConfig` (every key a field of it or of transformers
+    5.17's `TrainingArguments`, pinned by a test). TRL has no prompt-length cap: `run` drops
+    prompts longer than `max_seq_len - max_completion_len` before training."""
     return {
         "output_dir": str(out),
         "learning_rate": g.learning_rate,
         "lr_scheduler_type": g.scheduler,
-        "warmup_ratio": g.warmup_ratio,
+        "warmup_steps": g.warmup_ratio,  # transformers 5: a float below 1 is a ratio of the steps
         "beta": g.beta,
+        "loss_type": g.loss_type,
+        "scale_rewards": g.scale_rewards,
+        "epsilon": g.epsilon,
+        "num_iterations": g.num_iterations,
         "num_generations": g.num_generations,
         "temperature": g.temperature,
         "top_p": g.top_p,
         "max_completion_length": g.max_completion_len,
-        "max_prompt_length": base.max_seq_len - g.max_completion_len,
         "per_device_train_batch_size": g.per_device_batch,
         "gradient_accumulation_steps": g.grad_accum,
         "num_train_epochs": g.epochs,
@@ -221,7 +227,7 @@ def run(
         "trl_args": {
             k: v
             for k, v in trainer.args.to_dict().items()
-            if k in grpo_args(g, base, out, max_steps) or k == "loss_type"
+            if k in grpo_args(g, base, out, max_steps)
         },
         "reward_trace": trace,
     }

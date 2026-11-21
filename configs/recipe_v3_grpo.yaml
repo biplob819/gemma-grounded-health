@@ -12,10 +12,14 @@ scheduler: cosine
 warmup_ratio: 0.05
 beta: 0.0                       # no KL term: with a PEFT model TRL's reference is the adapter-free
                                 # base, not v2, so a KL term would pull v3 back toward the base
+loss_type: dapo                 # TRL 1.15's defaults, pinned here so they cannot drift
+scale_rewards: group
+epsilon: 0.2
+num_iterations: 1
 num_generations: 8              # completions per prompt (the group GRPO compares within)
 temperature: 1.0
 top_p: 1.0
-max_completion_len: 160         # v2 answers average about 50 tokens; a truncated reply scores -1
+max_completion_len: 160         # v2 answers average about 50 tokens; truncated replies are masked
 per_device_batch: 8             # completions per device step: one prompt's group
 grad_accum: 4                   # 4 prompts (32 completions) per optimizer step
 epochs: 1.0                     # one pass over the train prompts, about 680 steps

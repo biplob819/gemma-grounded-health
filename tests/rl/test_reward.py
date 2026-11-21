@@ -68,9 +68,22 @@ def test_unparsable_output_earns_the_floor():
         assert s(text).reward == R.R_UNPARSED, text
 
 
-def test_a_wrong_label_keeps_the_grounding_credit_only():
+def test_a_wrong_label_earns_nothing_for_its_citations():
     got = s(ans("yes", GOOD, [6]))
-    assert (got.label_correct, got.grounded, got.reward) == (False, True, 0.5)
+    assert (got.label_correct, got.grounded, got.reward) == (False, True, 0.0)
+
+
+def test_the_expected_reward_favours_the_most_likely_label():
+    """No premium for yes/no over maybe: with beliefs maybe 0.45, yes 0.35, no 0.20 and grounded
+    citations either way, answering maybe has the highest expected reward."""
+    beliefs = {"maybe": 0.45, "yes": 0.35, "no": 0.20}
+    unsure = ans("maybe", "The sentences report no result that settles this.", [1])
+    texts = {"yes": ans("yes", GOOD, [6]), "no": ans("no", GOOD, [6]), "maybe": unsure}
+
+    def expected(label: str) -> float:
+        return sum(p * s(texts[label], gold).reward for gold, p in beliefs.items())
+
+    assert max(beliefs, key=expected) == "maybe"
 
 
 def test_hack_all_maybe_earns_nothing_on_a_yes_no_question():
@@ -83,6 +96,18 @@ def test_maybe_is_paid_when_the_gold_label_is_maybe():
     text = ans("maybe", "The sentences describe the study's aim and methods only.", [1, 3])
     assert s(text, gold="maybe").reward == 1.5  # the insufficient targets cite the design
     assert s(ans("maybe", "No result.", [11]), gold="maybe").grounded is False  # out of range
+
+
+def test_hack_an_empty_or_uncited_maybe_earns_the_label_only():
+    for text, why in (
+        (ans("maybe", "", []), "no citation"),
+        (ans("maybe", "", [1]), "answer under 6 words"),
+        (ans("maybe", "x", [1]), "answer under 6 words"),
+        (ans("maybe", "The sentences report no result here at all.", [1, 2, 3, 4]),
+         "more than 3 citations"),
+    ):  # fmt: skip
+        got = s(text, gold="maybe")
+        assert (got.reward, got.reason) == (1.0, why), text
 
 
 def test_hack_valid_but_unsupporting_citation_earns_no_grounding():
@@ -149,6 +174,7 @@ def test_no_hack_policy_beats_honest_answers_on_a_mixed_set():
         "all yes, cite all": [s(ans("yes", GOOD, [6, 7, 8, 9]), g).reward for g in golds],
         "all yes, terse": [s(ans("yes", "Yes.", [6]), g).reward for g in golds],
         "unrelated cite": [s(ans(g, "Insulin rose after glucose.", [10]), g).reward for g in golds],
+        "terse maybe": [s(ans("maybe", "", []), g).reward for g in golds],
     }
     best = statistics.mean(honest)
     for name, rewards in hacks.items():
