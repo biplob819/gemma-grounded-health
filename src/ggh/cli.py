@@ -378,6 +378,9 @@ def build_parser() -> argparse.ArgumentParser:
     from ggh.cli_calibrate import register as register_calibrate  # E3.3: OWNER D-24 check
 
     register_calibrate(sub)
+    from ggh.cli_rl import register as register_rl  # V3.1: v3 GRPO (OWNER D-66)
+
+    register_rl(sub)
     return ap
 
 
