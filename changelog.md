@@ -3,6 +3,7 @@
 Format: `[TYPE] [NODE] — summary`. Types: FEAT, FIX, DOCS, HARNESS, RELEASE.
 
 ## 2026-11-21
+- [FIX] [P5.1] — the case study's "7,508 training answers" traced (v1's 4,505 yes + 3,003 no answers); TGT-R10's aim count on v1's training set re-derived as 3,776 (50.3 %), not 3,785, in the case study and DATA_CARD; `docs/measurements/v1_targets_aim_share.json` from `scripts/v1_aim_share.py`; the known-issues row closed
 - [FIX] [P5.1] — CI: pyright on runners without Pillow (the demo group) ignores the recorder's PIL import
 - [DOCS] [P5.1] — the video's offline segment is recorded: `docs/assets/ollama_offline.gif` (the published v2 Q4_K_M answering through `ollama run --think=false` inside a macOS sandbox that blocks the internet, greedy decoding set by a Modelfile; the sample cites sentence 6, llama-server cites 8) and `docs/assets/laptop_bench.gif` (the bench re-run, kept apart from the published measurement because the machine was busy); `scripts/termgif.py` records real commands and renders them; the video script no longer has a shot to record
 - [FIX] [P5.1] — the 4-bit file size in `docs/case-study.md` and `docs/assets/dataflow.svg` reads 3.43 GB (3,427,874,336 bytes, `release_plan_v2.json`); the old "3.3 GB" was GiB labelled as GB
