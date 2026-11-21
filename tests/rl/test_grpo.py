@@ -136,9 +136,11 @@ def test_dev_summary_reports_reward_and_hack_signals():
     texts = [ans("no", GOOD, [6]), ans("no", GOOD, [2]), ans("maybe", "Unclear here.", []), "x"]
     s = G.dev_summary(texts, rows)
     assert s["n"] == 4 and s["mean_reward"] == round((1.5 + 0.5 + 0.0 - 1.0) / 4, 4)
-    assert (s["label_accuracy"], s["grounded"], s["aim_cited"], s["unparsed"]) == (
+    assert (s["label_accuracy"], s["citations_pass"], s["aim_cited"], s["unparsed"]) == (
         0.5, 0.25, 0.25, 0.25,
     )  # fmt: skip
+    assert (s["grounded_paid"], s["no_accuracy"], s["n_gold_no"]) == (0.25, 0.5, 4)
+    assert (s["yes_share"], s["maybe_share"]) == (0.0, 0.25)
     assert s["label_mix"] == {"maybe": 1, "no": 2} and s["max_words"] == 13
     with pytest.raises(ValueError):
         G.dev_summary(texts[:2], rows)

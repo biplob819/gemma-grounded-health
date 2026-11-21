@@ -15,14 +15,15 @@ One completion is scored against its example's gold label and its numbered abstr
 
 Grounded is stricter than "every index is in range", because the planted hacks (citing valid but
 unrelated sentences, citing many sentences, a few words or none) pass a range check. Citations
-must be 1 to `MAX_CITES` distinct indices in range and the answer `MIN_WORDS` to `MAX_WORDS` words
-long, for every label. A yes/no answer must also cite no aim or method sentence (TGT-R12's
+must be 1 to `MAX_CITES` distinct indices in range and the answer `MIN_WORDS` to `MAX_WORDS`
+words long, for every label. A yes/no answer must also cite no aim or method sentence (TGT-R12's
 exclusion) and share at least `MIN_SHARED_WORDS` content words with each cited sentence. A
-"maybe" answer is grounded only when the gold label is "maybe". The text check is lexical, not a
-support judgement: word salad built from a cited sentence's words passes it (known issue V3.1).
-A first draft that also required each cited sentence to report a result was dropped before the
-plan was hashed: it withheld the credit from 459 of v2's 2,423 gold answers, whose cited
-sentences entail them.
+"maybe" answer is grounded only when the gold label is "maybe", and its text is not checked
+against the cited sentences (the insufficient targets describe what is missing). The text check
+is lexical, not a support judgement: word salad built from a cited sentence's words passes it
+(known issue V3.1). A first draft that also required each cited sentence to report a result was
+dropped before the plan was hashed: it withheld the credit from 459 of v2's 2,423 gold answers,
+whose cited sentences entail them.
 
 Every constant is pinned by a test and pre-registered with the v3 plan; changing one changes what
 v3 was trained on.

@@ -239,22 +239,37 @@ def run(
 
 
 def dev_summary(texts: Sequence[str], rows: Sequence[dict[str, Any]]) -> dict[str, Any]:
-    """Reward and hack signals over dev replies: mean reward, label accuracy and mix, grounded
-    and aim-citation shares, parse failures and answer length."""
+    """Reward and the plan's hack guards over dev replies. Every share is over all `n` rows (an
+    unparsed reply counts as no label). `grounded_paid` is the reward's grounding credit (right
+    label and grounded citations); `citations_pass` counts replies whose citations pass the check
+    whatever their label."""
     if len(texts) != len(rows) or not rows:
         raise ValueError("one reply per dev row, and at least one row")
     scores = [R.score(t, r["label"], r["sentences"]) for t, r in zip(texts, rows, strict=True)]
     parsed = [R.parse(t) for t in texts]
+    labels = [a.label if a is not None else None for a in parsed]
     words = [len(a.answer.split()) for a in parsed if a is not None]
     n = len(rows)
+    no_rows = [i for i, r in enumerate(rows) if r["label"] == "no"]
+
+    def share(k: int) -> float:
+        return round(k / n, 4)
+
     return {
         "n": n,
         "mean_reward": round(statistics.fmean(s.reward for s in scores), 4),
-        "label_accuracy": round(sum(s.label_correct for s in scores) / n, 4),
-        "grounded": round(sum(s.grounded for s in scores) / n, 4),
-        "aim_cited": round(sum(s.aim_cited for s in scores) / n, 4),
-        "unparsed": round(sum(not s.parsed for s in scores) / n, 4),
-        "label_mix": dict(sorted(Counter(a.label for a in parsed if a is not None).items())),
+        "label_accuracy": share(sum(s.label_correct for s in scores)),
+        "no_accuracy": round(sum(scores[i].label_correct for i in no_rows) / len(no_rows), 4)
+        if no_rows
+        else None,
+        "n_gold_no": len(no_rows),
+        "yes_share": share(labels.count("yes")),
+        "maybe_share": share(labels.count("maybe")),
+        "grounded_paid": share(sum(s.grounded and s.label_correct for s in scores)),
+        "citations_pass": share(sum(s.grounded for s in scores)),
+        "aim_cited": share(sum(s.aim_cited for s in scores)),
+        "unparsed": share(sum(not s.parsed for s in scores)),
+        "label_mix": dict(sorted(Counter(x for x in labels if x is not None).items())),
         "mean_words": round(statistics.fmean(words), 2) if words else 0.0,
         "max_words": max(words, default=0),
     }
