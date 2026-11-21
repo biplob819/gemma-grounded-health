@@ -6,6 +6,9 @@ table and its pre-registered comparisons, with the OWNER D-62 caveat), every art
 sha256 from the Hub release plan (`docs/measurements/release_plan_v2.json`), compared with
 what the R4.2 push downloaded back (`release_record_v2.json`), and every known limit from
 `docs/known-issues.md`. Links are absolute, since the release page is read outside the repo.
+The notes are those of the published v1.0.0 release: a link added to the registry after it (the
+P5.1 write-up, `links.AFTER_RELEASE`) renders as it did then, so regenerating never changes the
+file the release used.
 """
 
 from __future__ import annotations
@@ -115,7 +118,9 @@ def render(src: Sources, root: Path) -> str:
     shipped = src.bundle.shipped
     limit_lines = "\n".join(f"- **{i.node}.** {i.finding} *Status:* {i.status}" for i in issues)
     link_lines = "\n".join(
-        f"- {links.md_abs(name)}" for name in links.LINKS if name != "release_notes"
+        f"- {links.md_abs(name, as_released=True)}"
+        for name in links.LINKS
+        if name != "release_notes"
     )
     return (
         f"# Gemma Grounded Health v{__version__}\n\n"

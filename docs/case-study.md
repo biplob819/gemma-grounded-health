@@ -1,6 +1,6 @@
 Gemma Grounded Health is a small open model (Gemma 4 E2B, 3.3 GB at 4-bit) fine-tuned to answer a research question only from the numbered sentences of a given abstract, with a yes / no / maybe label, a short answer and the sentences it relied on. It runs offline on a laptop. Research only, not medical advice.
 
-The first fine-tune raised label accuracy on all 1,000 expert-labelled PubMedQA questions from 0.501 to 0.728, but it did not beat its own base model on the metric that matters, "correct and fully grounded" (0.388 against 0.418, Claude Opus 5.5 judging), because its citations often pointed at the study's aim instead of its results. The project measured that failure, traced it to the training data, and is building a v2 chosen on dev data only. Results for v2 are pending; v1's stay published.
+The first fine-tune raised label accuracy on all 1,000 expert-labelled PubMedQA questions from 0.501 to 0.728, but it did not beat its own base model on the metric that matters, "correct and fully grounded" (0.388 against 0.418, Claude Opus 5.5 judging), because its citations often pointed at the study's aim instead of its results. The project measured that failure, traced it to the training data, and built a v2 chosen on dev data only. v2, retrained on cleaner citation targets, fixed the citations against v1 (citation precision 0.736 against 0.362 in the same run) but tied v1 on the headline (0.329 against 0.331), and base stays ahead (0.404); v1's published numbers stay as published, and v2 is not claimed to beat base on citations (OWNER D-62).
 
 ## My role
 
@@ -14,7 +14,7 @@ I set the goals, wrote the PRD and made every product call recorded as an owner 
 
 ## How it is evaluated: EvalKit
 
-Every evaluation runs through [EvalKit](https://github.com/biplob819/evalkit), my open-source grounded-answer benchmark harness, pinned to one commit (`06591f8`) so every number can be rerun. What it does for this project:
+Every evaluation runs through [EvalKit](https://github.com/biplob819/evalkit), my open-source grounded-answer benchmark harness, pinned to one commit per run so every number can be rerun (v1's runs: `06591f8`; the v2 run: evalkit-harness 0.4.0, OWNER D-56). What it did for v1's main run (the v2 run used GPT-6 Luna to extract claims and GPT-6.1 Sol alone to judge them, OWNER D-57):
 
 - **One task, four models, one prompt.** EvalKit's built-in `pubmedqa` task renders the same prompt for every model. The two Gemma models are reached through its `endpoints` adapter (a local llama.cpp server), Haiku 5.5 and GPT-6 Luna through their APIs, all with the same JSON schema enforced (structured output).
 - **Claim-level judging against the cited sentences.** Claude Haiku 5.5 splits each answer into claims; Claude Opus 5.5 and GPT-6.1 Sol each judge every claim **only against the sentences the answer cites**. Two judges from different model families, so no model is judged only by its own family.
@@ -25,7 +25,7 @@ Every evaluation runs through [EvalKit](https://github.com/biplob819/evalkit), m
 
 ## What failed
 
-**The fine-tuned model got much better at the label and worse at grounding, so it did not beat its own base model on the metric that matters.** Status: the failure and its cause are measured; the v2 fix is in progress, and its numbers will be added here from its own published run.
+**The fine-tuned model got much better at the label and worse at grounding, so it did not beat its own base model on the metric that matters.** Status: the failure and its cause are measured, and the v2 retrain fixed the citations against v1 without moving the headline; its numbers are in the table below, from its own pre-registered run.
 
 ### The result (v1, main run `r-f0f3b432a413`, 1,000 PQA-L questions)
 
@@ -68,12 +68,12 @@ Accuracy rose 22.7 points over the base (separated, paired bootstrap), but the h
 
 How it is watched: every build step has to pass 13 automated gates and an independent reviewer before it is marked done; CI runs on Linux and macOS; every API dollar goes into a spend ledger and every Kaggle GPU hour into a GPU ledger; and 20 answers are read by hand at each stage.
 
-### What I changed (v2: trained, dev-checked, test run next)
+### What I changed (v2: trained, dev-checked, tested)
 
 1. Training answers never cite an aim, objective or study-description sentence; citations must come from result sentences that the entailment check confirms (rule tested on fixtures, drops counted).
-2. A dev grounding bar, judged by the same EvalKit judges on 200 dev questions, measured for v1 first as the baseline, with the v2 bars fixed before v2 is measured.
+2. A dev grounding bar on 200 dev questions (judged by GPT-6.1 Sol alone once the Anthropic credit ran out, OWNER D-54), measured for v1 first as the baseline, with the v2 bars fixed before v2 is measured.
 3. One retrain on Kaggle, the checkpoint chosen by validation loss, the existing bars and the new grounding bar.
-4. A second, separately pre-registered run on the same 1,000 questions (v2 against base, v1, Haiku and Luna). Only v2's answers are new; the other models come from EvalKit's cache.
+4. A second, separately pre-registered run on the same 1,000 questions (v2 against base and v1, judged by GPT-6.1 Sol alone; Haiku and Luna are not compared with it, OWNER D-57). Only v2's answers are new; base and v1 come from EvalKit's cache.
 
 | Measure | v1 | v2 |
 | --- | --- | --- |
@@ -82,9 +82,11 @@ How it is watched: every build step has to pass 13 automated gates and an indepe
 | Dev aim-citation rate (Sol) | 0.590 | 0.067 |
 | Dev headline (Sol / Opus) | 0.355 / 0.465 | 0.350 / 0.440–0.445 (2 claims unjudged) |
 | Dev label accuracy | 0.880 | 0.795 (bar 0.80; Q4 quantization drift, OWNER D-55) |
-| Test label accuracy | 0.728 | pending |
-| Test headline (Opus / Sol) | 0.388 / 0.330 | pending |
-| Test claims supported (Opus) | 0.519 | pending |
+| Test label accuracy | 0.728 | 0.678 (v1 0.728 in the same run) |
+| Test headline (Opus / Sol) | 0.388 / 0.330 | not run / 0.329 (v1 0.331 in the same run) |
+| Test claims supported (Opus) | 0.519 | not run (Sol, per-answer mean: 0.493; v1 0.457 in the same run) |
+
+The v2 column comes from the V2.2 main run (`docs/results/main_v2`): GPT-6 Luna extracted the claims and GPT-6.1 Sol judged them alone, because the Anthropic credit had run out (OWNER D-57). It re-scored base and v1 from their cached answers in the same run, so compare v2 with the "same run" figures, not with the v1 column, which used other extractors and judges. In that run v2 ties v1 on the headline and beats it on citation precision (0.736 against 0.362) and on the aim-citation rate (0.084 against 0.560); base stays ahead on the headline (0.404), and v2 is not claimed to beat base on citations (OWNER D-62). The full write-up is in [docs/writeup/how-i-built-it.md](writeup/how-i-built-it.md).
 
 ## Cost and how to reproduce
 

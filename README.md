@@ -166,7 +166,7 @@ Generated from `ggh.release.links` (OWNER D-37); `tests/release/test_links.py` c
 - [Tech Spec](Gemma%20Grounded%20Health%20Tech%20Spec.md)
 - [Results bundle](docs/results/results_bundle.json)
 - [CITATION.cff](CITATION.cff)
-- Write-up (link pending)
+- [Write-up](docs/writeup/how-i-built-it.md)
 - [Case study: the v1 grounding failure](docs/case-study.md)
 - [Reproduce from scratch](docs/reproduce.md)
 - [Release notes v1.0.0](docs/release_notes_v1.0.0.md)

@@ -1,5 +1,6 @@
-"""`ggh` commands for the release (R4.1, R4.2, R4.3, R4.5): `card`, `readme-table`,
-`release-notes`, `release` (dry run unless `--push`), `space`, `space-samples` and `passkey set`.
+"""`ggh` commands for the release (R4.1, R4.2, R4.3, R4.5, P5.1): `card`, `readme-table`,
+`release-notes`, `writeup`, `release` (dry run unless `--push`), `space`, `space-samples` and
+`passkey set`.
 
 Every document is generated from the results bundle (D-20); `--bundle` and the other path flags
 let v2 point at its own files. `release` never pushes without `--push`, a token in the
@@ -108,6 +109,27 @@ def _cmd_release_notes(args: argparse.Namespace) -> int:
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(text, encoding="utf-8")
     print(f"release-notes: wrote {args.out}")
+    return 0
+
+
+def _cmd_writeup(args: argparse.Namespace) -> int:
+    from ggh.release import sources, writeup
+
+    root = Path(args.root)
+    out_dir = Path(args.out_dir)
+    try:
+        src = _sources(args)
+        if args.check:
+            stale = writeup.stale(src, root, out_dir)
+            if stale:
+                return _fail("writeup", f"not the generator's output: {', '.join(stale)}")
+            print(f"writeup: {out_dir.as_posix()} is current")
+            return 0
+        written = writeup.write(src, root, out_dir)
+    except (sources.SourceError, writeup.WriteupError, ValueError, OSError, KeyError) as exc:
+        return _fail("writeup", exc)
+    for name in written:
+        print(f"writeup: wrote {name}")
     return 0
 
 
@@ -298,6 +320,13 @@ def register(sub: argparse._SubParsersAction) -> None:  # pyright: ignore[report
     rn.add_argument("--stdout", action="store_true", help="print instead of writing")
     rn.add_argument("--check", action="store_true", help="fail if --out is not current")
     rn.set_defaults(func=_cmd_release_notes)
+    from ggh.release.writeup import OUT_DIR as WRITEUP_OUT
+
+    wu = sub.add_parser("writeup", help="the write-up files from the bundle and evidence (P5.1)")
+    _source_flags(wu)
+    wu.add_argument("--out-dir", default=str(WRITEUP_OUT))
+    wu.add_argument("--check", action="store_true", help="fail if a file is not current")
+    wu.set_defaults(func=_cmd_writeup)
     rl = sub.add_parser("release", help="Hub release plan; dry run unless --push (R4.2)")
     _source_flags(rl)
     rl.add_argument("--dry-run", action="store_true", help="the default; listed for clarity")
