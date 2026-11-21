@@ -19,7 +19,7 @@ import sys
 import time
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont  # pyright: ignore[reportMissingImports]  # dev tool; Pillow comes with the demo group
 
 FONT = "/System/Library/Fonts/Menlo.ttc"
 BG, FG, DIM, PROMPT, TITLE_BG = (

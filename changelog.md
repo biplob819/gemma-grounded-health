@@ -3,6 +3,7 @@
 Format: `[TYPE] [NODE] — summary`. Types: FEAT, FIX, DOCS, HARNESS, RELEASE.
 
 ## 2026-11-21
+- [FIX] [P5.1] — CI: pyright on runners without Pillow (the demo group) ignores the recorder's PIL import
 - [DOCS] [P5.1] — the video's offline segment is recorded: `docs/assets/ollama_offline.gif` (the published v2 Q4_K_M answering through `ollama run --think=false` inside a macOS sandbox that blocks the internet, greedy decoding set by a Modelfile; the sample cites sentence 6, llama-server cites 8) and `docs/assets/laptop_bench.gif` (the bench re-run, kept apart from the published measurement because the machine was busy); `scripts/termgif.py` records real commands and renders them; the video script no longer has a shot to record
 - [FIX] [P5.1] — the 4-bit file size in `docs/case-study.md` and `docs/assets/dataflow.svg` reads 3.43 GB (3,427,874,336 bytes, `release_plan_v2.json`); the old "3.3 GB" was GiB labelled as GB
 - [DOCS] [P5.1] — green after 2 verifier rounds. The write-up: `docs/writeup/how-i-built-it.md` (the build, the v1 failure, what v2 fixed and did not, every caveat), `project-page.md` (generated), `decisions-summary.md` with a one-page PRD summary, and a 90-second `video-script.md` with the offline laptop segment; all numbers rendered by `ggh writeup` from the bundle and evidence; the README links the write-up; the published v1.0.0 notes stay as released; the case study's v2 test rows filled
