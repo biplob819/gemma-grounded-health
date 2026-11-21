@@ -5,4 +5,5 @@
 - [x] 3. GRPO recipe, trainer, dev check, Kaggle notebook renderer; tests
 - [x] 4. Pre-registration written and hashed
 - [x] 5. Spec, criteria, catalog rows, node_start GO
-- [ ] 6. Converge x2, merge; trial notebook rendered at the merge commit and sent to the portfolio session
+- [x] 6. Verifier: round 1 FAIL (4 blockers fixed), round 2 PASS
+- [ ] 7. Converge x2, merge, pre-registration row; trial notebook rendered at the merge commit and sent to the portfolio session
