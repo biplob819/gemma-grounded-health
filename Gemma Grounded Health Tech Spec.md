@@ -82,6 +82,7 @@ Each decision below seeds `docs/decisions.md` as D-1 to D-33; later rulings are 
 | OWNER D-66 | Build v3 in this repo as Wave 7: GRPO from v2's own adapter with a programmatic, verifiable reward (no judge in the training loop), relayed from the portfolio-site session and confirmed in this session's ask widget ("Yes, build v3"). The Kaggle GPU runs are pushed by the portfolio-site session through the Kaggle API (owner-approved there); this session prepares the kernels. The full-size GRPO run goes ahead even if it slips past the 2–3 day target ("Full run, take longer"). The Hugging Face release is prepared and the owner is asked before publishing ("Ask before release"). Scoring uses the OpenAI API only ("Use open AI API", as OWNER D-57); the owner did not approve the relayed $15 cap, so the cap is asked again before the scoring run and nothing is spent until then | Build v3 in a spin-off repo; DPO on judged pairs (judge spend to build pairs); a scaled-down run to keep to 2–3 days; publish the result automatically | Owner ruling via the ask widget: an honest, measured RL result on the released model, under the same pre-registration discipline as v1 and v2 |
 | D-67 | Re-register the v3 plan after the trial died before its first GRPO step: `ggh grpo` read `artifacts/targets/artifacts/targets/train.jsonl` (the trainer joined the targets folder twice), so no training step, checkpoint or v3 measurement exists. Only the trainer changes (prompts now read through `train_prompts(root)`, with a test); its pin moves from `2813e430…` to `3d184b70…` and the plan hash from `353e7cbe…` to `174e6f75…`. The reward, recipe, rules, schema, packages, primary test, guardrails and selection rule are unchanged. The plan's single row in `preregistrations.jsonl` is replaced with the new commit (the superseded row is in git history), and the trial is pushed again from the new commit. The owner's $15 scoring cap moves to OWNER D-69 (D-68 went to the second re-registration) | Patch the path outside the pinned trainer to keep the old hash; keep two rows for one plan; drop the trial | The plan says a change to a pinned file needs a new plan and hash before training, recorded as a decision; nothing was trained or measured, so re-registering keeps the pre-registration honest |
 | D-68 | Re-register the v3 plan a second time, before the main run, as its trial clause allows: trial attempt 2 (kernel version 2, repo at 84d5dc4) trained all 40 GRPO steps, then `ggh rl-dev` scored v2 and failed to load the next adapter, because v2's model was still held on the T4 (5.51 GB free; `release()` dropped only its own reference). No trial adapter was scored on dev, so no stop or go reading exists. `rl_dev` now scores each adapter in its own process (`ggh rl-dev-one`), with tests; training code is unchanged. Trainer pin `3d184b70…` to `4fd400ec…`, plan hash `174e6f75…` to `57c8a10d…`, the single v3 row replaced. Attempt 2's training record is kept in `docs/measurements/v3/trial-attempt-2/` and the trial runs again in full from the fixed commit. The owner's $15 scoring cap moves to OWNER D-69 | Score attempt 2's saved adapters in a separate scoring-only kernel; free GPU memory in-process with del, gc and empty_cache only; skip the trial read | A full re-run tests the exact train-then-score path the main run uses, for about 50 GPU minutes; a separate process returns all GPU memory, whatever Unsloth keeps referenced; attempt 2 was never read on dev, so re-running it selects nothing |
+| OWNER D-69 | The v3 scoring run (main_v3, node V3.4) may spend up to $15 on the OpenAI API, enforced by EvalKit's `max_cost_usd: 15`; the owner wrote "15 dollar cap is fine" in this session's chat on 2026-11-21, after choosing OpenAI-only scoring in the ask widget (OWNER D-66). Recorded as D-69 because D-67 and D-68 went to the plan's re-registrations | No cap set before the run; the relayed $25 project ceiling; a larger cap for re-runs | The owner's ruling; $15 covers one run of v3's 1,000 answers judged once (V2.2 cost $4.50 for a larger run), with no re-runs |
 
 ---
 
@@ -614,11 +615,11 @@ gemma-grounded-health/
 
 Status vocabulary: `not-started | spec | building | green`.
 
-### 13.2 Build graph: 20 nodes in seven waves (O6.1 cut, OWNER D-58; V3.1 added, OWNER D-66)
+### 13.2 Build graph: 21 nodes in seven waves (O6.1 cut, OWNER D-58; V3.1 and V3.2 added, OWNER D-66)
 
 **Release (all Must and Should stories): 18 nodes.** W0.1, N1.1–N1.3, E3.1, T2.1, T2.2, X3.1, X3.2, E3.2, V2.1, V2.2 (OWNER D-43), E3.3, R4.1–R4.5.
 **Full scope: 19 nodes**, adding P5.1 (write-up). O6.1 (DPO, Could) was cut by OWNER D-58.
-**Wave 7 (after v1.0.0, OWNER D-66):** V3.1 (v3 GRPO groundwork); V3.2 (the GRPO runs) and V3.3 (export, scoring, release) are added when V3.1 is green.
+**Wave 7 (after v1.0.0, OWNER D-66):** V3.1 (v3 GRPO groundwork); V3.2 (trial verdict, main-run kernels, selection rule); V3.3 (main-run outputs, selection, export) and V3.4 (scoring, release) are added when V3.2 is green.
 
 | Node | Title | Depends on | Deliverable (what exists when it is green) | Stories |
 | --- | --- | --- | --- | --- |
@@ -642,6 +643,7 @@ Status vocabulary: `not-started | spec | building | green`.
 | **R4.5** | Open-source release v1.0.0 | R4.3, R4.4 | Reproduce-from-scratch docs, README with results, CITATION.cff, tagged v1.0.0 GitHub release with notes linking model, GGUF, Space and results | US3, US4, US7 |
 | **P5.1** | Write-up | R4.5 | "How I built it" note, decision log summary, project page text with generated numbers, video script | — |
 | **V3.1** | v3 GRPO: reward, recipe, pre-registration and Kaggle runner | R4.5 | Programmatic GRPO reward proven against planted hacks, a recipe continuing v2's adapter, `ggh grpo` and `ggh rl-dev`, the v3 plan hashed before training, a pinned Kaggle notebook (Wave 7, OWNER D-66) | US1, US3 |
+| **V3.2** | v3 trial verdict, main-run kernels and the selection rule | V3.1 | The trial's outputs frozen with every stop rule recomputed (passed), the main run split into a train kernel and a score kernel rendered at one commit, the plan's dev checkpoint-selection rule as tested code, the owner's $15 scoring cap recorded | US1, US3 |
 
 Waves: **W0** harness → **N1** data → **T2** training, alongside **E3.1** serving → **X3** export and laptop → **E3** evaluation → **R4** release, ending in the v1.0.0 open-source release (R4.5) → **P5/O6** write-up and optional DPO.
 
@@ -959,6 +961,14 @@ Each row becomes one line in `docs/graph/catalog.tsv` with status `not-started`.
 | RLR-05 | `ggh rl-dev`: v2 and each checkpoint scored on dev prompts | OWNER D-66 |
 | RLR-06 | Thin Kaggle notebook for the v3 runs, pinned to a commit | D-10, OWNER D-66 |
 | RLR-07 | v3 pre-registration hashed before training | D-4, OWNER D-66 |
+
+**V3.2 v3 trial verdict, main-run kernels and selection (OWNER D-66)**
+
+| Cap | Capability | Trace |
+| --- | --- | --- |
+| RLM-01 | The trial's outputs frozen and its stop rules recomputed from the committed replies | OWNER D-66, D-67, D-68 |
+| RLM-02 | The main run split into a train kernel and a score kernel, rendered at one commit | D-10, OWNER D-66 |
+| RLM-03 | The plan's dev checkpoint selection as tested code: seven guards, ties to the earlier step | D-4, OWNER D-66 |
 
 **O6.1 DPO** was cut (OWNER D-58); its capabilities DPO-01..04 are removed.
 

@@ -74,5 +74,6 @@ O6.1 (optional DPO: rule-based preference pairs, one DPO run, an exploratory Eva
 | Node | Title | Depends on | Verified by | Deliverable | Stories |
 | --- | --- | --- | --- | --- | --- |
 | **V3.1** | v3 GRPO: reward, recipe, pre-registration and Kaggle runner | R4.5 | node_converge + verifier | Programmatic GRPO reward proven against planted hacks, a recipe continuing v2's adapter, `ggh grpo` and `ggh rl-dev`, the v3 plan hashed before training, a pinned Kaggle notebook | US1, US3 |
+| **V3.2** | v3 trial verdict, main-run kernels and the selection rule | V3.1 | node_converge + verifier | The trial's outputs frozen with every stop rule recomputed (passed), the main run split into a train kernel and a score kernel rendered at one commit, the plan's dev checkpoint-selection rule as tested code, the owner's $15 scoring cap recorded | US1, US3 |
 
-V3.2 (the trial and main GRPO runs on Kaggle, dev selection under the plan's hack guards, frozen v3 `TrainRun`) and V3.3 (export, parity, the one scoring run, release after the owner's go-ahead) are added when V3.1 is green.
+V3.3 (the main run's outputs frozen, the checkpoint selected under the plan, v3's `TrainRun`, export and parity) and V3.4 (the one scoring run, the release after the owner's go-ahead) are added when V3.2 is green.
