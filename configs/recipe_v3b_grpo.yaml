@@ -1,0 +1,29 @@
+# v3b GRPO recipe (OWNER D-70, RLB-04): v3's recipe unchanged except checkpoints every 25 steps
+# (v3b's main run is 300 steps, set in its notebook). v3b continues v2's own adapter with the
+# checker reward in src/ggh/rl/reward_b.py; two local models, no judge or API call in training.
+# Base model, revision, LoRA shape, dtype and max_seq_len come from the v2 recipe below.
+init_recipe: configs/recipe_v2.yaml
+init_repo: biplob123/gemma-4-e2b-grounded-health           # v2.0.0 on the Hub (R4.2)
+init_revision: adb5838b41fe597aa551a25aef21e43621fa7060    # tag v2.0.0
+init_subfolder: adapter
+init_adapter_sha256: e5f97861693346623bf55305c0b911e10fe9a9dcc0985e535db30dad74f4e3db  # TrainRun v2
+prompts: targets_train          # the 2,722 v2 train prompts and their gold labels (train split only)
+learning_rate: 0.000005         # write decimals: PyYAML reads 5e-6 as text
+scheduler: cosine
+warmup_ratio: 0.05
+beta: 0.0                       # no KL term: with a PEFT model TRL's reference is the adapter-free
+                                # base, not v2, so a KL term would pull v3 back toward the base
+loss_type: dapo                 # TRL 1.15's defaults, pinned here so they cannot drift
+scale_rewards: group
+epsilon: 0.2
+num_iterations: 1
+num_generations: 8              # completions per prompt (the group GRPO compares within)
+temperature: 1.0
+top_p: 1.0
+max_completion_len: 160         # v2 answers average about 50 tokens; truncated replies are masked
+per_device_batch: 8             # completions per device step: one prompt's group
+grad_accum: 4                   # 4 prompts (32 completions) per optimizer step
+epochs: 1.0                     # one pass over the train prompts, about 680 steps
+save_every_steps: 25
+mask_truncated_completions: true
+seed: 7

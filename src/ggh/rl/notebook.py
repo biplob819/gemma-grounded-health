@@ -22,6 +22,15 @@ CONFIG = "configs/recipe_v3_grpo.yaml"
 TRIAL_STEPS = 40
 TRIAL_DEV = 200
 MAIN_DEV = 500
+# v3b (OWNER D-70): the checker reward, its own commands, a 300-step main run, and dev scoring
+# on the dev rows outside the checker's tuning set (300 of them)
+VARIANTS = {
+    "v3": {"config": CONFIG, "grpo": "grpo", "rl_dev": "rl-dev", "main_steps": None,
+           "main_dev": MAIN_DEV, "title": "v3", "reward": "a programmatic reward"},
+    "v3b": {"config": "configs/recipe_v3b_grpo.yaml", "grpo": "grpo-b", "rl_dev": "rl-dev-b",
+            "main_steps": 300, "main_dev": 300, "title": "v3b",
+            "reward": "a reward checked by two local models"},
+}  # fmt: skip
 
 
 def render(
@@ -29,6 +38,7 @@ def render(
     max_steps: int | None,
     evalkit: str = EVALKIT_REQUIREMENT,
     part: Literal["all", "train", "score"] = "all",
+    variant: Literal["v3", "v3b"] = "v3",
 ) -> dict[str, Any]:
     """The v3 runner for repo `commit`: a dev trial when `max_steps` is set, else the main run.
     `part` splits the main run in two kernels so neither nears Kaggle's 12-hour limit (V3.2):
@@ -40,16 +50,21 @@ def render(
         raise ValueError("commit must be a full 40-character git sha")
     if not evalkit.startswith("evalkit-harness") or "==" not in evalkit:
         raise ValueError(f"evalkit must pin evalkit-harness exactly, got {evalkit!r}")
-    steps = f" --max-steps {max_steps}" if max_steps else ""
-    n_dev = TRIAL_DEV if max_steps else MAIN_DEV
+    v = VARIANTS[variant]
+    config = v["config"]
+    run_steps = max_steps or v["main_steps"]
+    steps = f" --max-steps {run_steps}" if run_steps else ""
+    n_dev = TRIAL_DEV if max_steps else v["main_dev"]
     run, dev = f"{WORK}/run", f"{WORK}/dev"
     kind = f"dev trial, {max_steps} steps" if max_steps else "main run"
+    if not max_steps and v["main_steps"]:
+        kind += f", {v['main_steps']} steps"
     kind += {"all": "", "train": ", training", "score": ", dev scoring"}[part]
     cells = [
         _md(
-            "# Gemma Grounded Health v3: GRPO\n\n"
-            f"Thin runner (D-10): repo at `{commit[:12]}`, recipe `{CONFIG}`, {kind}. v3 "
-            "continues training v2's adapter with a programmatic reward (no judge, no API "
+            f"# Gemma Grounded Health {v['title']}: GRPO\n\n"
+            f"Thin runner (D-10): repo at `{commit[:12]}`, recipe `{config}`, {kind}. "
+            f"{v['title']} continues training v2's adapter with {v['reward']} (no judge, no API "
             "call). All logic lives in the tested `ggh` package; any failing step stops the run."
         ),
         _code(
@@ -80,10 +95,10 @@ def render(
             'sh("ggh targets --replay")'
         ),
     ]
-    grpo = _code(f'sh("ggh grpo --config {CONFIG} --out {run}{steps}")')
+    grpo = _code(f'sh("ggh {v["grpo"]} --config {config} --out {run}{steps}")')
     rl_dev = _code(
         "# v2 and each checkpoint, greedy, on the first dev prompts, scored by the reward\n"
-        f'sh("ggh rl-dev --config {CONFIG} --run {run} --out {dev} --n {n_dev}")'
+        f'sh("ggh {v["rl_dev"]} --config {config} --run {run} --out {dev} --n {n_dev}")'
     )
     show_report = (
         f'report = json.load(open("{run}/report.json"))\n'
@@ -122,7 +137,7 @@ def render(
             ),
             _code(
                 "# v2 and each checkpoint, greedy, on the first dev prompts, scored by the reward\n"
-                f'sh(f"ggh rl-dev --config {CONFIG} --run {{run}} --out {dev} --n {n_dev}")'
+                f'sh(f"ggh {v["rl_dev"]} --config {config} --run {{run}} --out {dev} --n {n_dev}")'
             ),
             _code(
                 f'shutil.copy("{dev}/rl_dev.json", "{WORK}/rl_dev.json")\n'

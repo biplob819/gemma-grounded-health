@@ -35,16 +35,17 @@ def trial_verdict(rl_dev: dict[str, Any]) -> Verdict:
     return Verdict(all(checks.values()), checks, reported)
 
 
-def guards(c: dict[str, Any], v2: dict[str, Any]) -> dict[str, bool]:
-    """The plan's seven hack guards for one candidate against v2."""
+def guards(c: dict[str, Any], v2: dict[str, Any], no_slack: float = 0.05) -> dict[str, bool]:
+    """The plan's seven hack guards for one candidate against v2. v3b's plan widens the gold-"no"
+    slack to 0.10, because its 300 held-out dev rows hold only 21 gold "no" rows."""
     no_c, no_v2 = c["no_accuracy"], v2["no_accuracy"]
     return {
         "parse_failures_at_most_0.01": c["unparsed"] <= 0.01 + EPS,
         "maybe_share_within_0.05_of_v2": abs(c["maybe_share"] - v2["maybe_share"]) <= 0.05 + EPS,
         "yes_share_at_most_v2_plus_0.05": c["yes_share"] <= v2["yes_share"] + 0.05 + EPS,
-        "no_accuracy_at_least_v2_minus_0.05": no_c is not None
+        f"no_accuracy_at_least_v2_minus_{no_slack:.2f}": no_c is not None
         and no_v2 is not None
-        and no_c >= no_v2 - 0.05 - EPS,
+        and no_c >= no_v2 - no_slack - EPS,
         "mean_words_at_least_0.8_of_v2": c["mean_words"] >= 0.8 * v2["mean_words"] - EPS,
         "label_accuracy_at_least_v2_minus_0.02": c["label_accuracy"]
         >= v2["label_accuracy"] - 0.02 - EPS,
@@ -67,20 +68,20 @@ class Selection:
     table: list[dict[str, Any]]  # every candidate in step order, with its guards
 
 
-def select_checkpoint(rl_dev: dict[str, Any]) -> Selection:
+def select_checkpoint(rl_dev: dict[str, Any], rows: int = 500, no_slack: float = 0.05) -> Selection:
     """The highest mean reward among candidates keeping every guard; ties go to the earlier step
     (the final adapter counts as the run's last step)."""
     a = rl_dev["adapters"]
     if "v2" not in a or len(a) < 2:
         raise ValueError("rl_dev.json needs v2 and at least one candidate")
-    if rl_dev.get("dev_rows") != 500:
-        raise ValueError(f"selection is on the first 500 dev rows, not {rl_dev.get('dev_rows')}")
+    if rl_dev.get("dev_rows") != rows:
+        raise ValueError(f"selection is on {rows} dev rows, not {rl_dev.get('dev_rows')}")
     v2, last = a["v2"], int(rl_dev["run_steps"])
     table = []
     for name, c in a.items():
         if name == "v2":
             continue
-        g = guards(c, v2)
+        g = guards(c, v2, no_slack)
         table.append(
             {"name": name, "step": step_of(name, last), "mean_reward": c["mean_reward"],
              "keeps_guards": all(g.values()), "guards": g}

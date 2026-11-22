@@ -107,3 +107,12 @@ def test_selection_is_on_500_dev_rows_and_named_candidates():
     assert step_of("final", 679) == 679 and step_of("checkpoint-650", 679) == 650
     with pytest.raises(ValueError):
         step_of("v3", 679)
+
+
+def test_v3b_selects_on_300_held_out_rows_with_a_wider_no_slack():
+    rl = _rl({"final": _cand(no_accuracy=0.72)}, rows=300)  # two of 21 gold-"no" rows fewer
+    with pytest.raises(ValueError, match="300"):
+        select_checkpoint(rl)  # v3's default stays 500 rows
+    s = select_checkpoint(rl, rows=300, no_slack=0.10)
+    assert s.selected == "final" and "no_accuracy_at_least_v2_minus_0.10" in s.table[0]["guards"]
+    assert select_checkpoint(_rl({"final": _cand(no_accuracy=0.72)})).selected is None
