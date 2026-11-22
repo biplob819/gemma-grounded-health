@@ -87,6 +87,13 @@ def prompt_rows(examples: Sequence[TrainExample]) -> list[dict[str, Any]]:
     ]
 
 
+def train_prompts(root: Path) -> list[dict[str, Any]]:
+    """The GRPO rows from the v2 train targets under the repository root `root`."""
+    from ggh.train.run import load_examples  # it adds artifacts/targets itself
+
+    return prompt_rows(load_examples(root, "train"))
+
+
 def label_mix(rows: Sequence[dict[str, Any]]) -> dict[str, int]:
     return dict(sorted(Counter(r["gold_label"] for r in rows).items()))
 
@@ -167,7 +174,7 @@ def run(
     from huggingface_hub import snapshot_download  # pyright: ignore[reportMissingImports]
 
     from ggh.rl.config import load_grpo
-    from ggh.train.run import check_source, config_hash, load_examples, load_unsloth, peak_vram_gb
+    from ggh.train.run import check_source, config_hash, load_unsloth, peak_vram_gb
 
     g, base = load_grpo(config, root)
     out.mkdir(parents=True, exist_ok=True)
@@ -193,11 +200,10 @@ def run(
     if n_lora != len(state):
         raise InitError(f"the model has {n_lora} LoRA tensors, v2's adapter {len(state)}")
 
-    examples = load_examples(root / "artifacts" / "targets", "train")
     tok = loaded.tokenizer
     limit = base.max_seq_len - g.max_completion_len
     rows, dropped = [], []
-    for row in prompt_rows(examples):
+    for row in train_prompts(root):
         ids = tok.apply_chat_template(row["prompt"], tokenize=True, add_generation_prompt=True)
         n = len(ids["input_ids"] if hasattr(ids, "keys") else ids)
         (rows if n <= limit else dropped).append(row)

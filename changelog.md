@@ -2,6 +2,9 @@
 
 Format: `[TYPE] [NODE] — summary`. Types: FEAT, FIX, DOCS, HARNESS, RELEASE.
 
+## 2026-11-22
+- [FIX] [V3.1] — the v3 trial died before its first GRPO step on a doubled targets path (`artifacts/targets/artifacts/targets/train.jsonl`); the trainer reads prompts through `train_prompts(root)` (tested on the real 2,722 targets). The plan is re-registered under D-67 before any training: trainer pin `3d184b70…`, plan hash `174e6f75…`, the v3 pre-registration row replaced; the trial notebook re-rendered at the fix commit
+
 ## 2026-11-21
 - [FEAT] [V3.1] — green after 2 verifier rounds (round 1: two trainer arguments TRL 1.15 / transformers 5.17 would reject, an empty "maybe" earning the maximum, and a grounding premium for yes/no over maybe; all fixed before training and the plan re-hashed). v3 GRPO groundwork (OWNER D-66): `src/ggh/rl/reward.py` (programmatic reward: label, grounded citations, aim penalty; planted hacks tested), `configs/recipe_v3_grpo.yaml` continuing v2's adapter, `ggh grpo` and `ggh rl-dev`, the v3 Kaggle notebook renderer, and the v3 plan `configs/eval_plan_v3.yaml` hashed before any training
 - [FIX] [P5.1] — the case study's "7,508 training answers" traced (v1's 4,505 yes + 3,003 no answers); TGT-R10's aim count on v1's training set re-derived as 3,776 (50.3 %), not 3,785, in the case study and DATA_CARD; `docs/measurements/v1_targets_aim_share.json` from `scripts/v1_aim_share.py`; the known-issues row closed
