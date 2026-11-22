@@ -119,6 +119,23 @@ def test_prompt_rows_carry_the_gold_label_and_sentences():
     assert G.label_mix(rows) == {"no": 1}
 
 
+def test_train_prompts_read_the_targets_under_the_repo_root(tmp_path):
+    # the trial died on artifacts/targets/artifacts/targets/train.jsonl (D-67)
+    row = {
+        "id": "pqa-a-1", "pmid": "1", "kind": "answer", "split": "train", "question": "Q?",
+        "context": list(CONTEXT), "prompt": "P", "source_label": "no",
+        "target": {"label": "no", "answer": GOOD, "citations": [6]},
+        "rule_ids": ["TGT-R1"], "support": 0.5, "nli_entail": 0.9,
+    }  # fmt: skip
+    (tmp_path / "artifacts/targets").mkdir(parents=True)
+    (tmp_path / "artifacts/targets/train.jsonl").write_text(json.dumps(row) + "\n", "utf-8")
+    rows = G.train_prompts(tmp_path)
+    assert [r["id"] for r in rows] == ["pqa-a-1"] and rows[0]["gold_label"] == "no"
+    real = ROOT / "artifacts/targets/train.jsonl"
+    if real.is_file():  # built locally and on Kaggle by `ggh targets --replay`, not in CI
+        assert len(G.train_prompts(ROOT)) == 2722
+
+
 def test_reward_trace_keeps_reward_rows_and_components():
     hist = [
         {"step": 1, "loss": 0.1},

@@ -3,6 +3,8 @@
 # docs/measurements/eval_plan_v3.sha256 and its commit in docs/measurements/preregistrations.jsonl;
 # tests/results/test_preregistration.py checks every run below started after that commit.
 # The reward and the training recipe are pinned here by hash, so neither can change after this.
+# Re-registered under D-67 before any GRPO step: the trial died before step 1 on a doubled
+# targets path in the trainer, so only the trainer's pin changed (was 2813e430..., plan 353e7cbe...).
 status: final
 version: v3
 node: V3.1
@@ -10,7 +12,7 @@ built_after_test_seen: true    # v3 is built after v1's and v2's PQA-L results w
 method: GRPO from v2's adapter with the programmatic reward; no judge in the training loop
 pinned:                        # everything that shapes training, by sha256 (none may change after this)
   reward: {file: src/ggh/rl/reward.py, sha256: 3e79e634b3f137e5f33a6489ffae31fecd7eb326592ce6090074c650f6d5db69}
-  trainer: {file: src/ggh/rl/grpo.py, sha256: 2813e430e12a320d0606d30c577fc62b69bd051b5475ef62860fa0279628ef53}
+  trainer: {file: src/ggh/rl/grpo.py, sha256: 3d184b701766025f5a3d8596976951524b2eb9cb2affb5d5aa0e0af0c8063d9f}
   rules: {file: src/ggh/targets/rules.py, sha256: fc644b6bc104e141538429e236c0a83bebb88b7344fba3a95d9fd5d60cd75eca}
   recipe_schema: {file: src/ggh/rl/config.py, sha256: 0583a1b9a87286d4c93e28d31a9786ba63c1dc6f7691003e987902181269ecac}
   recipe: {file: configs/recipe_v3_grpo.yaml, sha256: 62b5ade563d8e0283a4ed70970465f3ab3eb8b0f2e88bfe89267ce97f001620a}
