@@ -63,7 +63,8 @@ def test_decisions_d1_onwards_with_owner_rulings():
     # D-1..33 seeded; 34-35 N1.3; 36-39 owner; 40 T2.1; 41 X3.1; 42 E3.2; 43-50 owner;
     # 51-52 V2.1; 53-55 owner; 56 the EvalKit 0.4.0 pin; 57-62 owner (OpenAI, O6.1 cut, calibration,
     # model reviews, the aim rule, the local demo,
-    # the EvalKit contribution, the v1.0.0 release), 66 owner (v3 GRPO), 67-68 the v3 re-registrations
+    # the EvalKit contribution, the v1.0.0 release), 66 owner (v3 GRPO),
+    # 67-68 the v3 re-registrations
     assert ids == set(range(1, 69))
     owner = {int(n) for n in re.findall(r"^\| OWNER D-(\d+) \|", text, re.M)}
     assert owner == {

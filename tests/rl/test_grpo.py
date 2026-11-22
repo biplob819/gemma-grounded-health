@@ -197,7 +197,9 @@ def test_each_adapter_is_scored_in_its_own_process(tmp_path):
 
 def test_collect_dev_keeps_the_scoring_order_and_checks_row_counts(tmp_path):
     for name, r in (("v2", 1.3), ("checkpoint-40", 1.4), ("final", 1.4)):
-        (tmp_path / f"dev_{name}.json").write_text(json.dumps({"n": 200, "mean_reward": r}))
+        (tmp_path / f"dev_{name}.json").write_text(
+            json.dumps({"n": 200, "mean_reward": r}), encoding="utf-8"
+        )
     got = G.collect_dev(tmp_path, ["v2", "checkpoint-40", "final"], 40, 200)
     assert list(got["adapters"]) == ["v2", "checkpoint-40", "final"]
     assert got["run_steps"] == 40 and got["dev_rows"] == 200
@@ -210,5 +212,7 @@ def test_collect_dev_keeps_the_scoring_order_and_checks_row_counts(tmp_path):
 def test_dev_rows_are_the_first_n_dev_eval_rows(tmp_path):
     (tmp_path / "artifacts/data").mkdir(parents=True)
     lines = [json.dumps({"pmid": str(i)}) for i in range(5)]
-    (tmp_path / "artifacts/data/dev_eval.jsonl").write_text("\n".join(lines) + "\n")
+    (tmp_path / "artifacts/data/dev_eval.jsonl").write_text(
+        "\n".join(lines) + "\n", encoding="utf-8"
+    )
     assert [r["pmid"] for r in G.dev_rows(tmp_path, 3)] == ["0", "1", "2"]
