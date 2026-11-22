@@ -1,0 +1,69 @@
+{
+  "cases": 200,
+  "gold_mix": {
+    "yes": 178,
+    "no": 22
+  },
+  "judge": "gpt-6.1-sol",
+  "models": {
+    "base": {
+      "mean_reward": 0.875,
+      "sol_headline": 0.52,
+      "label_accuracy": 0.665,
+      "reward_grounding_paid": 0.52,
+      "aim_cited": 0.1,
+      "at_max_reward": 104,
+      "sol_headline_among_max_reward": 0.8077
+    },
+    "v1": {
+      "mean_reward": 0.7725,
+      "sol_headline": 0.355,
+      "label_accuracy": 0.88,
+      "reward_grounding_paid": 0.32,
+      "aim_cited": 0.535,
+      "at_max_reward": 64,
+      "sol_headline_among_max_reward": 0.5156
+    },
+    "v2": {
+      "mean_reward": 1.1125,
+      "sol_headline": 0.35,
+      "label_accuracy": 0.795,
+      "reward_grounding_paid": 0.7,
+      "aim_cited": 0.065,
+      "at_max_reward": 140,
+      "sol_headline_among_max_reward": 0.4786
+    }
+  },
+  "sol_headline_by_reward_value": {
+    "-0.5": {
+      "answers": 17,
+      "sol_headline": 0.0
+    },
+    "0.0": {
+      "answers": 115,
+      "sol_headline": 0.0
+    },
+    "0.5": {
+      "answers": 123,
+      "sol_headline": 0.3821
+    },
+    "1.0": {
+      "answers": 37,
+      "sol_headline": 0.3784
+    },
+    "1.5": {
+      "answers": 308,
+      "sol_headline": 0.5974
+    }
+  },
+  "rank_by_reward": [
+    "v2",
+    "base",
+    "v1"
+  ],
+  "rank_by_sol_headline": [
+    "base",
+    "v1",
+    "v2"
+  ]
+}
