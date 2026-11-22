@@ -126,7 +126,7 @@ def test_decisions_equal_tech_spec_section_1():
         for line in text.splitlines()
         if re.match(r"^\| (OWNER )?D-\d+ \|", line)
     ]
-    assert len(spec_rows) == 66
+    assert len(spec_rows) == 67  # D-67 the v3 re-registration
     assert [r[:1] + r[2:] for r in log_rows] == spec_rows  # drop the date column
     assert "DeepMind" not in text
 
