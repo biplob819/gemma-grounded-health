@@ -2,6 +2,9 @@
 
 Format: `[TYPE] [NODE] — summary`. Types: FEAT, FIX, DOCS, HARNESS, RELEASE.
 
+## 2026-11-23
+- [FEAT] [V3.2] — v3 trial verdict and main-run kernels. Trial attempt 3 (repo at aa1b5f5) passed every pre-registered stop rule, recomputed from its committed replies (`docs/measurements/v3/trial/`): v2 1.2975, final adapter 1.2875, no parse failures, no maybe or yes drift. The main run is split into a train kernel (`biplob819/ggh-v3-grpo`) and a score kernel (`biplob819/ggh-v3-grpo-score`, reading the train kernel's output) so neither nears Kaggle's 12-hour limit; training and scoring code unchanged. `ggh.rl.select` holds the plan's trial stop rules and dev checkpoint selection as tested code. OWNER D-69 records the $15 scoring cap. GPU hours for the three trial attempts logged
+
 ## 2026-11-22
 - [FIX] [V3.1] — trial attempt 2 trained its 40 steps but `ggh rl-dev` ran out of T4 memory loading the second adapter (the first was still referenced); each adapter is now scored in its own process (`ggh rl-dev-one`). The plan is re-registered under D-68 before the main run: trainer pin `4fd400ec…`, plan hash `57c8a10d…`; attempt 2's training record in `docs/measurements/v3/trial-attempt-2/`
 - [FIX] [V3.1] — the v3 trial died before its first GRPO step on a doubled targets path (`artifacts/targets/artifacts/targets/train.jsonl`); the trainer reads prompts through `train_prompts(root)` (tested on the real 2,722 targets). The plan is re-registered under D-67 before any training: trainer pin `3d184b70…`, plan hash `174e6f75…`, the v3 pre-registration row replaced; the trial notebook re-rendered at the fix commit

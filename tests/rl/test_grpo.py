@@ -3,6 +3,7 @@ scoring and the Kaggle notebook (no GPU needed)."""
 
 import json
 from pathlib import Path
+from typing import Literal
 
 import pytest
 
@@ -196,7 +197,11 @@ def test_the_main_kernels_are_rendered_at_one_commit_with_their_metadata():
     from ggh.train.notebook import dumps
 
     commits = set()
-    for part, slug in (("train", "ggh-v3-grpo"), ("score", "ggh-v3-grpo-score")):
+    parts: tuple[tuple[Literal["train", "score"], str], ...] = (
+        ("train", "ggh-v3-grpo"),
+        ("score", "ggh-v3-grpo-score"),
+    )
+    for part, slug in parts:
         nb = (main / part / "train_kaggle.ipynb").read_text("utf-8")
         commit = nb.split("git checkout -q ")[1][:40]
         commits.add(commit)
