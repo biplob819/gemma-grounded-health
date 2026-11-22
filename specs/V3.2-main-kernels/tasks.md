@@ -5,5 +5,5 @@
 - [x] 3. Selection rule and trial verdict as code; tests
 - [x] 4. Train and score kernels rendered from code; tests
 - [x] 5. Spec, criteria, catalog rows, Tech Spec mirror, OWNER D-69
-- [ ] 6. Verifier
+- [x] 6. Verifier: round 1 PASS (no blockers; notes applied or carried to V3.3)
 - [ ] 7. Converge x2, merge; both kernels sent to the portfolio session (train first, score after it completes)
