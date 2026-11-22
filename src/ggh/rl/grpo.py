@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import statistics
+import sys
 import time
 from collections import Counter
 from collections.abc import Sequence
@@ -281,41 +282,82 @@ def dev_summary(texts: Sequence[str], rows: Sequence[dict[str, Any]]) -> dict[st
     }
 
 
+def adapter_cmd(config: Path, adapter: Path, name: str, root: Path, out: Path, n: int) -> list[str]:
+    """The command scoring one adapter in its own process, so each model's GPU memory is
+    returned to the T4 when that process exits (a second model loaded in-process left 5.5 GB)."""
+    return [
+        sys.executable, "-m", "ggh.cli", "rl-dev-one", "--config", str(config),
+        "--adapter", str(adapter), "--name", name, "--root", str(root), "--out", str(out),
+        "--n", str(n),
+    ]  # fmt: skip
+
+
+def collect_dev(out: Path, names: Sequence[str], run_steps: int, n: int) -> dict[str, Any]:
+    """rl_dev.json from each adapter's `dev_<name>.json`, in scoring order."""
+    adapters = {}
+    for name in names:
+        summary = json.loads((out / f"dev_{name}.json").read_text(encoding="utf-8"))
+        if summary.get("n") != n:
+            raise ValueError(f"dev_{name}.json scored {summary.get('n')} rows, not {n}")
+        adapters[name] = summary
+    return {"run_steps": run_steps, "dev_rows": n, "adapters": adapters}
+
+
+def dev_rows(root: Path, n: int) -> list[dict[str, Any]]:
+    with open(root / "artifacts" / "data" / "dev_eval.jsonl", encoding="utf-8") as f:
+        return [json.loads(line) for line in f][:n]
+
+
+def rl_dev_one(
+    config: Path, adapter: Path, name: str, root: Path, out: Path, n: int
+) -> dict[str, Any]:  # pragma: no cover - CUDA and Kaggle only
+    """Greedy replies from one adapter on the first `n` dev prompts, scored with the reward;
+    writes `dev_<name>.jsonl` (the replies) and `dev_<name>.json` (the summary)."""
+    from ggh.rl.config import load_grpo
+    from ggh.train.devrun import load_for_inference
+    from ggh.train.generate import generate
+
+    _, base = load_grpo(config, root)
+    rows = dev_rows(root, n)
+    model, tok = load_for_inference(base, adapter)
+    texts = generate(model, tok, [r["prompt"] for r in rows])
+    summary = dev_summary(texts, rows)
+    out.mkdir(parents=True, exist_ok=True)
+    with open(out / f"dev_{name}.jsonl", "w", encoding="utf-8") as f:
+        for r, t in zip(rows, texts, strict=True):
+            f.write(json.dumps({"pmid": r["pmid"], "label": r["label"], "reply": t}) + "\n")
+    (out / f"dev_{name}.json").write_text(json.dumps(summary) + "\n", encoding="utf-8")
+    print(name, json.dumps(summary), flush=True)
+    return summary
+
+
 def rl_dev(
     config: Path, run_dir: Path, root: Path, out: Path, n: int
 ) -> dict[str, Any]:  # pragma: no cover - CUDA and Kaggle only
-    """Greedy replies on the first `n` dev prompts from the start adapter (v2, downloaded and
-    hash-checked) and each saved checkpoint, scored with the reward."""
+    """The start adapter (v2, downloaded and hash-checked), each saved checkpoint and the final
+    adapter, each scored by `rl_dev_one` in its own process; writes rl_dev.json."""
+    import subprocess
+
     from huggingface_hub import snapshot_download  # pyright: ignore[reportMissingImports]
 
     from ggh.rl.config import load_grpo
-    from ggh.train.devrun import load_for_inference, release
-    from ggh.train.generate import generate
 
-    g, base = load_grpo(config, root)
+    g, _ = load_grpo(config, root)
     snap = Path(snapshot_download(g.init_repo, revision=g.init_revision,
                                   allow_patterns=[f"{g.init_subfolder}/*"]))  # fmt: skip
     init = snap / g.init_subfolder
     check_init(init, g.init_adapter_sha256)
     report = json.loads((run_dir / "report.json").read_text(encoding="utf-8"))
-    with open(root / "artifacts" / "data" / "dev_eval.jsonl", encoding="utf-8") as f:
-        rows = [json.loads(line) for line in f][:n]
-    prompts = [r["prompt"] for r in rows]
     adapters: list[tuple[str, Path]] = [("v2", init)]
     cks = sorted(run_dir.glob("checkpoint-*"), key=lambda p: int(p.name.split("-")[1]))
     adapters += [(p.name, p) for p in cks]
     if (run_dir / "final").is_dir():
         adapters.append(("final", run_dir / "final"))
     out.mkdir(parents=True, exist_ok=True)
-    results: dict[str, Any] = {"run_steps": report["steps"], "dev_rows": n, "adapters": {}}
     for name, path in adapters:
-        model, tok = load_for_inference(base, path)
-        texts = generate(model, tok, prompts)
-        release(model)
-        results["adapters"][name] = dev_summary(texts, rows)
-        with open(out / f"dev_{name}.jsonl", "w", encoding="utf-8") as f:
-            for r, t in zip(rows, texts, strict=True):
-                f.write(json.dumps({"pmid": r["pmid"], "label": r["label"], "reply": t}) + "\n")
-        print(name, json.dumps(results["adapters"][name]), flush=True)
+        done = subprocess.run(adapter_cmd(config, path, name, root, out, n), check=False)
+        if done.returncode:
+            raise ValueError(f"scoring {name} failed (exit {done.returncode})")
+    results = collect_dev(out, [a for a, _ in adapters], report["steps"], n)
     (out / "rl_dev.json").write_text(json.dumps(results, indent=2) + "\n", encoding="utf-8")
     return results

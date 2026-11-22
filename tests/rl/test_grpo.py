@@ -178,3 +178,41 @@ def test_the_notebook_pins_the_commit_and_runs_trial_or_main():
 def test_the_grpo_requirements_pin_trl_inside_unsloths_range():
     req = (ROOT / "notebooks/requirements-kaggle-grpo.txt").read_text("utf-8")
     assert "-r requirements-kaggle-unsloth.txt" in req and "trl==1.15.0" in req
+
+
+def test_each_adapter_is_scored_in_its_own_process(tmp_path):
+    # trial 2 died loading a second model in one process with 5.51 GB free (D-68)
+    import sys
+
+    from ggh.cli import build_parser
+
+    cmd = G.adapter_cmd(Path("c.yaml"), tmp_path / "checkpoint-40", "checkpoint-40",
+                        Path("."), tmp_path / "dev", 200)  # fmt: skip
+    assert cmd[:4] == [sys.executable, "-m", "ggh.cli", "rl-dev-one"]
+    args = build_parser().parse_args(cmd[3:])
+    assert (args.adapter, args.name, args.n) == (str(tmp_path / "checkpoint-40"),
+                                                 "checkpoint-40", 200)  # fmt: skip
+    assert args.func.__name__ == "_cmd_rl_dev_one"
+
+
+def test_collect_dev_keeps_the_scoring_order_and_checks_row_counts(tmp_path):
+    for name, r in (("v2", 1.3), ("checkpoint-40", 1.4), ("final", 1.4)):
+        (tmp_path / f"dev_{name}.json").write_text(
+            json.dumps({"n": 200, "mean_reward": r}), encoding="utf-8"
+        )
+    got = G.collect_dev(tmp_path, ["v2", "checkpoint-40", "final"], 40, 200)
+    assert list(got["adapters"]) == ["v2", "checkpoint-40", "final"]
+    assert got["run_steps"] == 40 and got["dev_rows"] == 200
+    with pytest.raises(ValueError, match="not 500"):
+        G.collect_dev(tmp_path, ["v2"], 40, 500)
+    with pytest.raises(OSError):
+        G.collect_dev(tmp_path, ["checkpoint-80"], 40, 200)
+
+
+def test_dev_rows_are_the_first_n_dev_eval_rows(tmp_path):
+    (tmp_path / "artifacts/data").mkdir(parents=True)
+    lines = [json.dumps({"pmid": str(i)}) for i in range(5)]
+    (tmp_path / "artifacts/data/dev_eval.jsonl").write_text(
+        "\n".join(lines) + "\n", encoding="utf-8"
+    )
+    assert [r["pmid"] for r in G.dev_rows(tmp_path, 3)] == ["0", "1", "2"]

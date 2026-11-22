@@ -42,6 +42,22 @@ def _cmd_rl_dev(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_rl_dev_one(args: argparse.Namespace) -> int:
+    from ggh.config import ConfigError
+    from ggh.rl.grpo import rl_dev_one
+
+    try:
+        rl_dev_one(Path(args.config), Path(args.adapter), args.name, Path(args.root),
+                   Path(args.out), n=args.n)  # fmt: skip
+    except ImportError as exc:
+        print(f"rl-dev-one: FAIL: {exc}; needs the Kaggle GRPO packages")
+        return EXIT_ERROR
+    except (ConfigError, ValueError, OSError) as exc:
+        print(f"rl-dev-one: FAIL: {exc}")
+        return EXIT_ERROR
+    return 0
+
+
 def register(sub: argparse._SubParsersAction) -> None:
     g = sub.add_parser("grpo", help="v3: GRPO from v2's adapter with the programmatic reward")
     g.add_argument("--config", default="configs/recipe_v3_grpo.yaml")
@@ -56,3 +72,11 @@ def register(sub: argparse._SubParsersAction) -> None:
     d.add_argument("--out", required=True, help="folder for rl_dev.json and the replies")
     d.add_argument("--n", type=int, default=200, help="first N dev prompts")
     d.set_defaults(func=_cmd_rl_dev)
+    o = sub.add_parser("rl-dev-one", help="v3: score one adapter on dev prompts (run by rl-dev)")
+    o.add_argument("--config", default="configs/recipe_v3_grpo.yaml")
+    o.add_argument("--adapter", required=True, help="the adapter folder")
+    o.add_argument("--name", required=True, help="its name in rl_dev.json")
+    o.add_argument("--root", default=".", help="repo root holding artifacts/data")
+    o.add_argument("--out", required=True, help="folder for dev_<name>.json and the replies")
+    o.add_argument("--n", type=int, required=True, help="first N dev prompts")
+    o.set_defaults(func=_cmd_rl_dev_one)
