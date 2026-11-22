@@ -9,7 +9,7 @@ hash checked, then runs `ggh grpo` (which downloads v2's adapter and checks its 
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from ggh.evals.config import EVALKIT_REQUIREMENT
 from ggh.train.notebook import CHECKOUT, REPO, WORK, _code, _md
@@ -25,9 +25,17 @@ MAIN_DEV = 500
 
 
 def render(
-    commit: str, max_steps: int | None, evalkit: str = EVALKIT_REQUIREMENT
+    commit: str,
+    max_steps: int | None,
+    evalkit: str = EVALKIT_REQUIREMENT,
+    part: Literal["all", "train", "score"] = "all",
 ) -> dict[str, Any]:
-    """The v3 runner for repo `commit`: a dev trial when `max_steps` is set, else the main run."""
+    """The v3 runner for repo `commit`: a dev trial when `max_steps` is set, else the main run.
+    `part` splits the main run in two kernels so neither nears Kaggle's 12-hour limit (V3.2):
+    "train" runs `ggh grpo` only; "score" runs `ggh rl-dev` on the train kernel's output,
+    attached as a kernel source under /kaggle/input."""
+    if part != "all" and max_steps:
+        raise ValueError("only the main run is split into train and score kernels")
     if len(commit) != 40 or any(c not in "0123456789abcdef" for c in commit):
         raise ValueError("commit must be a full 40-character git sha")
     if not evalkit.startswith("evalkit-harness") or "==" not in evalkit:
@@ -36,6 +44,7 @@ def render(
     n_dev = TRIAL_DEV if max_steps else MAIN_DEV
     run, dev = f"{WORK}/run", f"{WORK}/dev"
     kind = f"dev trial, {max_steps} steps" if max_steps else "main run"
+    kind += {"all": "", "train": ", training", "score": ", dev scoring"}[part]
     cells = [
         _md(
             "# Gemma Grounded Health v3: GRPO\n\n"
@@ -70,20 +79,56 @@ def render(
             'sh("git diff --exit-code docs/measurements/data_manifest.json")\n'
             'sh("ggh targets --replay")'
         ),
-        _code(f'sh("ggh grpo --config {CONFIG} --out {run}{steps}")'),
-        _code(
-            "# v2 and each checkpoint, greedy, on the first dev prompts, scored by the reward\n"
-            f'sh("ggh rl-dev --config {CONFIG} --run {run} --out {dev} --n {n_dev}")'
-        ),
-        _code(
-            f'shutil.copy("{run}/report.json", "{WORK}/report.json")\n'
-            f'shutil.copy("{dev}/rl_dev.json", "{WORK}/rl_dev.json")\n'
-            f'report = json.load(open("{run}/report.json"))\n'
-            "short = {k: v for k, v in report.items() if k != 'reward_trace'}\n"
-            "print(json.dumps(short, indent=2))\n"
-            f'print(open("{dev}/rl_dev.json").read())'
-        ),
     ]
+    grpo = _code(f'sh("ggh grpo --config {CONFIG} --out {run}{steps}")')
+    rl_dev = _code(
+        "# v2 and each checkpoint, greedy, on the first dev prompts, scored by the reward\n"
+        f'sh("ggh rl-dev --config {CONFIG} --run {run} --out {dev} --n {n_dev}")'
+    )
+    show_report = (
+        f'report = json.load(open("{run}/report.json"))\n'
+        "short = {k: v for k, v in report.items() if k != 'reward_trace'}\n"
+        "print(json.dumps(short, indent=2))\n"
+    )
+    if part == "all":
+        cells += [
+            grpo,
+            rl_dev,
+            _code(
+                f'shutil.copy("{run}/report.json", "{WORK}/report.json")\n'
+                f'shutil.copy("{dev}/rl_dev.json", "{WORK}/rl_dev.json")\n'
+                + show_report
+                + f'print(open("{dev}/rl_dev.json").read())'
+            ),
+        ]
+    elif part == "train":
+        cells += [grpo, _code(show_report.rstrip("\n"))]
+    else:
+        cells[-1] = _code(
+            "# rebuild N1.2 data (the dev prompts); every committed hash is checked\n"
+            'sh("ggh data")\n'
+            'sh("git diff --exit-code docs/measurements/data_manifest.json")'
+        )
+        cells += [
+            _code(
+                "# the train kernel's run folder: the one holding report.json and final/\n"
+                "import glob\n"
+                'found = [os.path.dirname(p) for p in glob.glob("/kaggle/input/**/report.json",'
+                " recursive=True)\n"
+                '         if os.path.isdir(os.path.join(os.path.dirname(p), "final"))]\n'
+                'assert len(found) == 1, f"want one GRPO run under /kaggle/input, got {found}"\n'
+                "run = found[0]\n"
+                "print(run, sorted(os.listdir(run)))"
+            ),
+            _code(
+                "# v2 and each checkpoint, greedy, on the first dev prompts, scored by the reward\n"
+                f'sh(f"ggh rl-dev --config {CONFIG} --run {{run}} --out {dev} --n {n_dev}")'
+            ),
+            _code(
+                f'shutil.copy("{dev}/rl_dev.json", "{WORK}/rl_dev.json")\n'
+                f'print(open("{dev}/rl_dev.json").read())'
+            ),
+        ]
     return {
         "cells": cells,
         "metadata": {

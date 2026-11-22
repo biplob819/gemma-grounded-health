@@ -175,6 +175,41 @@ def test_the_notebook_pins_the_commit_and_runs_trial_or_main():
         render("abc", 40)
 
 
+def test_the_main_run_splits_into_train_and_score_kernels():
+    sha = "b" * 40
+
+    def text(part):
+        return "".join("".join(c["source"]) for c in render(sha, None, part=part)["cells"])
+
+    train, score = text("train"), text("score")
+    assert "ggh grpo" in train and "ggh rl-dev" not in train and "--max-steps" not in train
+    assert "ggh targets --replay" in train
+    assert "ggh rl-dev" in score and "ggh grpo" not in score and "--n 500" in score
+    assert "/kaggle/input/**/report.json" in score and '"final"' in score
+    assert "ggh targets" not in score and "HF_TOKEN" not in train + score
+    with pytest.raises(ValueError):
+        render(sha, 40, part="train")
+
+
+def test_the_main_kernels_are_rendered_at_one_commit_with_their_metadata():
+    main = ROOT / "notebooks/v3/main"
+    from ggh.train.notebook import dumps
+
+    commits = set()
+    for part, slug in (("train", "ggh-v3-grpo"), ("score", "ggh-v3-grpo-score")):
+        nb = (main / part / "train_kaggle.ipynb").read_text("utf-8")
+        commit = nb.split("git checkout -q ")[1][:40]
+        commits.add(commit)
+        assert nb == dumps(render(commit, None, part=part))
+        meta = json.loads((main / part / "kernel-metadata.json").read_text("utf-8"))
+        assert meta["id"] == f"biplob819/{slug}" and meta["is_private"] is True
+        assert meta["machine_shape"] == "NvidiaTeslaT4" and meta["enable_internet"] is True
+        assert meta["code_file"] == "train_kaggle.ipynb"
+        want = ["biplob819/ggh-v3-grpo"] if part == "score" else []
+        assert meta["kernel_sources"] == want
+    assert len(commits) == 1
+
+
 def test_the_grpo_requirements_pin_trl_inside_unsloths_range():
     req = (ROOT / "notebooks/requirements-kaggle-grpo.txt").read_text("utf-8")
     assert "-r requirements-kaggle-unsloth.txt" in req and "trl==1.15.0" in req

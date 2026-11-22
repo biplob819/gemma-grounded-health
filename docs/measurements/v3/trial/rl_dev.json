@@ -1,0 +1,63 @@
+{
+  "run_steps": 40,
+  "dev_rows": 200,
+  "adapters": {
+    "v2": {
+      "n": 200,
+      "mean_reward": 1.2975,
+      "label_accuracy": 0.915,
+      "no_accuracy": 0.8095,
+      "n_gold_no": 21,
+      "yes_share": 0.85,
+      "maybe_share": 0.0,
+      "grounded_paid": 0.8,
+      "citations_pass": 0.88,
+      "aim_cited": 0.035,
+      "unparsed": 0.0,
+      "label_mix": {
+        "no": 30,
+        "yes": 170
+      },
+      "mean_words": 13.87,
+      "max_words": 42
+    },
+    "checkpoint-40": {
+      "n": 200,
+      "mean_reward": 1.2875,
+      "label_accuracy": 0.915,
+      "no_accuracy": 0.8095,
+      "n_gold_no": 21,
+      "yes_share": 0.85,
+      "maybe_share": 0.0,
+      "grounded_paid": 0.79,
+      "citations_pass": 0.87,
+      "aim_cited": 0.045,
+      "unparsed": 0.0,
+      "label_mix": {
+        "no": 30,
+        "yes": 170
+      },
+      "mean_words": 13.79,
+      "max_words": 42
+    },
+    "final": {
+      "n": 200,
+      "mean_reward": 1.2875,
+      "label_accuracy": 0.915,
+      "no_accuracy": 0.8095,
+      "n_gold_no": 21,
+      "yes_share": 0.85,
+      "maybe_share": 0.0,
+      "grounded_paid": 0.79,
+      "citations_pass": 0.87,
+      "aim_cited": 0.045,
+      "unparsed": 0.0,
+      "label_mix": {
+        "no": 30,
+        "yes": 170
+      },
+      "mean_words": 13.79,
+      "max_words": 42
+    }
+  }
+}
