@@ -1,0 +1,1 @@
+{"n": 500, "mean_reward": 1.369, "label_accuracy": 0.932, "no_accuracy": 0.8605, "n_gold_no": 43, "yes_share": 0.868, "maybe_share": 0.01, "grounded_paid": 0.884, "citations_pass": 0.938, "aim_cited": 0.01, "unparsed": 0.0, "label_mix": {"maybe": 5, "no": 61, "yes": 434}, "mean_words": 15.92, "max_words": 43}

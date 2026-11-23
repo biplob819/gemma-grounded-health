@@ -44,7 +44,7 @@ def _spec_caps() -> list[tuple[str, str]]:
 def test_graph_matches_tech_spec():
     nodes = load_graph()
     spec = _spec_nodes()
-    assert len(nodes) == len(spec) == 22  # V2.1-2 OWNER D-43; O6.1 cut D-58; V3.1-2 D-66; V3.3 D-70
+    assert len(nodes) == len(spec) == 23  # V2.1-2 D-43; O6.1 cut D-58; V3.1-2 D-66; V3.3 D-70; V3.4
     assert {n: (v.title, v.depends_on) for n, v in nodes.items()} == spec
 
 
@@ -52,7 +52,7 @@ def test_graph_matches_tech_spec():
 def test_catalog_matches_tech_spec():
     caps = load_catalog()
     assert (
-        len(caps) == 139
+        len(caps) == 142
     )  # SPC-08, OSS-06 (D-36, D-37); VTG, VEV (D-43); no DPO; RL* (D-66, D-70)
     assert [(c.cap_id, c.node) for c in caps] == _spec_caps()
     nodes = load_graph()
@@ -66,8 +66,8 @@ def test_decisions_d1_onwards_with_owner_rulings():
     # 51-52 V2.1; 53-55 owner; 56 the EvalKit 0.4.0 pin; 57-62 owner (OpenAI, O6.1 cut, calibration,
     # model reviews, the aim rule, the local demo,
     # the EvalKit contribution, the v1.0.0 release), 66 owner (v3 GRPO),
-    # 67-68 the v3 re-registrations, 69-70 owner (the $15 scoring cap, v3b)
-    assert ids == set(range(1, 71))
+    # 67-68 the v3 re-registrations, 69-71 owner (the $15 scoring cap, v3b, v3 at Q4_K_M)
+    assert ids == set(range(1, 72))
     owner = {int(n) for n in re.findall(r"^\| OWNER D-(\d+) \|", text, re.M)}
     assert owner == {
         15,
@@ -106,6 +106,7 @@ def test_decisions_d1_onwards_with_owner_rulings():
         66,
         69,
         70,
+        71,
     }
 
 
@@ -131,7 +132,7 @@ def test_decisions_equal_tech_spec_section_1():
         for line in text.splitlines()
         if re.match(r"^\| (OWNER )?D-\d+ \|", line)
     ]
-    assert len(spec_rows) == 70  # D-67, D-68 re-registrations; OWNER D-69, D-70
+    assert len(spec_rows) == 71  # D-67, D-68 re-registrations; OWNER D-69, D-70, D-71
     assert [r[:1] + r[2:] for r in log_rows] == spec_rows  # drop the date column
     assert "DeepMind" not in text
 

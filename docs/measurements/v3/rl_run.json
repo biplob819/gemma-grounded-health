@@ -1,0 +1,56 @@
+{
+  "reward": "v3",
+  "config_hash": "62b5ade563d8e0283a4ed70970465f3ab3eb8b0f2e88bfe89267ce97f001620a",
+  "init_adapter_sha256": "e5f97861693346623bf55305c0b911e10fe9a9dcc0985e535db30dad74f4e3db",
+  "repo_commit": "305bcac86e5c9add61909801dbd3535d88019a1f",
+  "kaggle_kernel_version": "ggh-v3-grpo v1",
+  "score_kernel_version": "ggh-v3-grpo-score v1",
+  "gpu": "Tesla T4",
+  "wall_clock_s": 32365.13,
+  "peak_vram_gb": 13.433719296,
+  "steps": 678,
+  "selected": "checkpoint-550",
+  "selected_step": 550,
+  "adapter_sha256": "61670d6c3c7771ef8b6427dc614d4e6b7b327c8336950c738906992db4429033",
+  "dev_rows": 500,
+  "dev_metrics": {
+    "n": 500,
+    "mean_reward": 1.372,
+    "label_accuracy": 0.934,
+    "no_accuracy": 0.8605,
+    "n_gold_no": 43,
+    "yes_share": 0.87,
+    "maybe_share": 0.01,
+    "grounded_paid": 0.886,
+    "citations_pass": 0.938,
+    "aim_cited": 0.01,
+    "unparsed": 0.0,
+    "label_mix": {
+      "maybe": 5,
+      "no": 60,
+      "yes": 435
+    },
+    "mean_words": 15.93,
+    "max_words": 43
+  },
+  "v2_dev_metrics": {
+    "n": 500,
+    "mean_reward": 1.318,
+    "label_accuracy": 0.93,
+    "no_accuracy": 0.8605,
+    "n_gold_no": 43,
+    "yes_share": 0.866,
+    "maybe_share": 0.01,
+    "grounded_paid": 0.82,
+    "citations_pass": 0.876,
+    "aim_cited": 0.044,
+    "unparsed": 0.0,
+    "label_mix": {
+      "maybe": 5,
+      "no": 62,
+      "yes": 433
+    },
+    "mean_words": 13.66,
+    "max_words": 52
+  }
+}

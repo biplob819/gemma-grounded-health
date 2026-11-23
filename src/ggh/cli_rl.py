@@ -108,6 +108,34 @@ def _cmd_rl_dev_one_b(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_rl_freeze(args: argparse.Namespace) -> int:
+    from ggh.export.merge import frozen_hash
+    from ggh.rl.freeze import FreezeError, freeze_rl
+    from ggh.versions import version
+
+    root, v = Path(args.root), version(args.model)
+    try:
+        run = freeze_rl(
+            root,
+            json.loads(Path(args.rl_dev).read_text(encoding="utf-8")),
+            json.loads(Path(args.report).read_text(encoding="utf-8")),
+            Path(args.checkpoint),
+            recipe=v.recipe,
+            init_adapter_sha256=frozen_hash(root, "ft2"),  # v2's frozen adapter
+            adapter_dir=v.adapter_dir,
+            measurements=v.measurements,
+            kernel_version=args.kernel_version,
+            score_kernel_version=args.score_kernel_version,
+            repo_commit=args.repo_commit,
+            gpu=args.gpu,
+        )
+    except (FreezeError, ValueError, OSError, KeyError) as exc:
+        print(f"rl-freeze: FAIL: {exc}")
+        return EXIT_ERROR
+    print(f"froze {run.selected} (step {run.selected_step}), adapter sha256 {run.adapter_sha256}")
+    return 0
+
+
 def register(sub: argparse._SubParsersAction) -> None:
     g = sub.add_parser("grpo", help="v3: GRPO from v2's adapter with the programmatic reward")
     g.add_argument("--config", default="configs/recipe_v3_grpo.yaml")
@@ -151,3 +179,14 @@ def register(sub: argparse._SubParsersAction) -> None:
     ob.add_argument("--out", required=True, help="folder for dev_<name>.json and the replies")
     ob.add_argument("--n", type=int, required=True, help="first N held-out dev prompts")
     ob.set_defaults(func=_cmd_rl_dev_one_b)
+    fz = sub.add_parser("rl-freeze", help="v3: freeze the checkpoint the plan selects (V3.4)")
+    fz.add_argument("--model", default="ft3", choices=["ft3"], help="ft3: v3 (V3.4)")
+    fz.add_argument("--root", default=".", help="repo root")
+    fz.add_argument("--rl-dev", required=True, help="the score kernel's rl_dev.json")
+    fz.add_argument("--report", required=True, help="the train kernel's run/report.json")
+    fz.add_argument("--checkpoint", required=True, help="the downloaded selected checkpoint")
+    fz.add_argument("--kernel-version", required=True, help="train kernel, e.g. ggh-v3-grpo v1")
+    fz.add_argument("--score-kernel-version", required=True, help="score kernel and version")
+    fz.add_argument("--repo-commit", required=True, help="the commit the train notebook pins")
+    fz.add_argument("--gpu", default="Tesla T4", help="the Kaggle GPU")
+    fz.set_defaults(func=_cmd_rl_freeze)
