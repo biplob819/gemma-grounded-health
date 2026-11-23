@@ -34,7 +34,8 @@ def score(text, gold="no", ctx=CONTEXT, checker=None):
 
 
 def test_constants_and_checker_are_pinned():
-    assert (RB.R_LABEL, RB.R_GROUNDED, RB.COPY_RATIO) == (0.25, 1.0, 0.9)
+    assert (RB.R_LABEL, RB.R_GROUNDED, RB.R_GROUNDED_MAYBE, RB.COPY_RATIO) == (0.25, 1.0, 0.5, 0.9)
+    assert C.CANARY_TOLERANCE == 0.01
     assert C.THRESHOLD == 0.65 and C.MAX_TOKENS == 512
     assert [m["repo"] for m in C.MODELS] == [
         "lytang/MiniCheck-RoBERTa-Large", "cross-encoder/nli-deberta-v3-large"]  # fmt: skip
@@ -88,15 +89,58 @@ def test_maybe_answers_to_maybe_questions_skip_the_checker():
     fake = FakeChecker()
     text = ans("maybe", "The abstract does not report whether the pituitary is the source.", [6])
     sc = score(text, gold="maybe", checker=fake)
-    assert sc.reward == 1.25 and fake.calls == [] and sc.support is None
+    assert sc.reward == 0.75 and fake.calls == [] and sc.support is None
     empty = score(ans("maybe", "", []), gold="maybe")
     assert empty.reward == 0.25  # an empty maybe earns the label only
 
 
-def test_copying_a_cited_result_sentence_is_paid_and_probed():
+def test_maybe_carries_no_premium_over_a_typical_yes_no():
+    # a right maybe (0.75) earns less than a right yes/no's expected reward at the 56 % pass rate
+    # of v2's yes/no gold answers (0.25 + 0.56 x 1.0 = 0.81)
+    gold = json.loads((ROOT / "docs/measurements/v3/gold_checker.json").read_text("utf-8"))
+    yes_no = [gold["by_label"][k] for k in ("yes", "no")]
+    rate = sum(b["pass"] for b in yes_no) / sum(b["targets"] for b in yes_no)
+    assert RB.R_LABEL + rate * RB.R_GROUNDED > RB.R_LABEL + RB.R_GROUNDED_MAYBE
+
+
+def test_hack_maybe_filler_or_aim_citation_on_a_maybe_question_is_bounded():
+    filler = score(ans("maybe", "Further studies are needed to know more about this.", [6]),
+                   gold="maybe")  # fmt: skip
+    aim = score(ans("maybe", "The study wished to determine the role of beta-endorphin.", [2]),
+                gold="maybe")  # fmt: skip
+    assert filler.reward == aim.reward == 0.75  # not checked by design; the maybe guard bounds it
+
+
+def test_copying_a_cited_result_sentence_is_paid_and_measured():
     sc = score(ans("no", CONTEXT[6], [7]))
-    assert sc.copied and sc.reward == 1.25  # supported by construction; logged, not penalised
-    assert not score(ans("no", GOOD, [6])).copied
+    assert sc.copied and sc.copy_similarity == 1.0 and sc.reward == 1.25  # guarded in the plan
+    good = score(ans("no", GOOD, [6]))
+    assert not good.copied and 0 < good.copy_similarity < RB.COPY_RATIO
+
+
+def test_the_real_checkers_copy_blind_spot_is_recorded():
+    probes = {p["probe"]: p["support"] for p in json.loads(
+        (ROOT / "docs/measurements/v3/checker_probes.json").read_text("utf-8"))}  # fmt: skip
+    assert probes["verbatim copy of the cited sentence"] >= C.THRESHOLD
+    assert probes["copy of an unrelated result sentence"] >= C.THRESHOLD
+    assert probes["honest answer drawing the question's conclusion"] < C.THRESHOLD
+
+
+def test_the_canary_catches_a_checker_that_scores_differently():
+    canary = json.loads((ROOT / C.CANARY).read_text(encoding="utf-8"))
+    table = {(p["evidence"], p["claim"]): p["support"] for p in canary["pairs"]}
+
+    class Replay:
+        def __init__(self, shift=0.0):
+            self.shift = shift
+
+        def support(self, pairs):
+            return [table[p] + self.shift for p in pairs]
+
+    assert len(canary["pairs"]) == 3 and C.canary_problem(Replay(), canary) == ""
+    assert "canary" in C.canary_problem(Replay(0.02), canary)
+    for p in canary["pairs"]:  # the committed per-answer scores back each canary
+        assert p["support"] == round((p["minicheck_roberta"] + p["deberta_large"]) / 2, 4)
 
 
 def test_the_checker_runs_once_per_batch_for_eligible_replies_only():
@@ -111,15 +155,21 @@ def test_the_checker_runs_once_per_batch_for_eligible_replies_only():
 
 
 def test_no_hack_policy_beats_an_honest_policy_with_a_third_wrong():
-    honest = [1.25, 1.25, 0.0]  # right and supported twice, wrong once
+    def mean(texts):
+        return statistics.fmean(s.reward for s in RB.score_batch(
+            texts, ["no"] * len(texts), [CONTEXT] * len(texts), FakeChecker()))  # fmt: skip
+
+    honest = mean([ans("no", GOOD, [6]), ans("no", GOOD, [6]), ans("yes", GOOD, [6])])
     hacks = {
-        "always maybe on yes/no": [0.0, 0.0, 0.0],
-        "right label, unsupported text": [0.25, 0.25, 0.25],
-        "right label, aim citation": [-0.25, -0.25, -0.25],
-        "unparsed": [-1.0, -1.0, -1.0],
+        "always maybe on yes/no": [ans("maybe", GOOD, [6])] * 3,
+        "right label, unsupported text": [ans("no", "Insulin causes every case seen here.", [7])]
+        * 3,
+        "right label, aim citation": [ans("no", AIM_ANSWER, [2])] * 3,
+        "right label, many citations": [ans("no", GOOD, [6, 7, 8, 9])] * 3,
+        "unparsed": ["no"] * 3,
     }
-    for name, rewards in hacks.items():
-        assert statistics.fmean(rewards) < statistics.fmean(honest), name
+    for name, texts in hacks.items():
+        assert mean(texts) < honest, name
 
 
 def test_the_tuning_ids_are_the_200_dev_grounding_cases():

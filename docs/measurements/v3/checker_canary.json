@@ -1,0 +1,32 @@
+{
+ "what": "three committed dev answers the v3b checker must reproduce at startup (within 0.01) before training or dev scoring",
+ "pairs": [
+  {
+   "case": "dev-15534113",
+   "model": "v1",
+   "evidence": "The development of novel and potent iron chelators as clinically useful antitumor agents is an area of active interest. Antiproliferative activity of chelators often relates to iron deprivation or stimulation of iron-dependent free radical damage. In this study, we assessed the effects of the PKIH analogues on the redox activity of iron in terms of understanding their antitumor activity. PKIH markedly increased the intracellular generation of reactive oxygen species, and this was inhibited by catalase.",
+   "claim": "The PKIH analogues are potent antitumor agents, and their antitumor activity is related to the generation of reactive oxygen species.",
+   "minicheck_roberta": 0.9182,
+   "deberta_large": 0.9817,
+   "support": 0.95
+  },
+  {
+   "case": "dev-22024640",
+   "model": "base",
+   "evidence": "Mitochondrial respiration (state 3) in the presence of lipid substrate (palmitoyl carnitine) increased by almost twofold after lipid incubation in HSkMC from lean, but not obese subjects, indicative of metabolic inflexibility with obesity.",
+   "claim": "Mitochondrial respiration in myotubes from lean individuals increased by almost twofold after lipid incubation, but not in obese subjects, indicating metabolic inflexibility with obesity.",
+   "minicheck_roberta": 0.3056,
+   "deberta_large": 0.9955,
+   "support": 0.6505
+  },
+  {
+   "case": "dev-22691109",
+   "model": "v1",
+   "evidence": "In vitro measures of particle deposition were found to be largely independent of the inhalation maneuver (flow rate, inhaled volume, ramp time) across the broad range of inhalation profiles observed in the breathing study.",
+   "claim": "The dose emission characteristics of placebo PulmoSphere\u00ae particles are largely unaffected by the inhalation maneuver.",
+   "minicheck_roberta": 0.0986,
+   "deberta_large": 0.0001,
+   "support": 0.0493
+  }
+ ]
+}

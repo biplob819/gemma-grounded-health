@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from ggh.rl.select import guards, select_checkpoint, step_of, trial_verdict
+from ggh.rl.select import guards, select_checkpoint, step_of, trial_verdict, trial_verdict_b
 
 ROOT = Path(__file__).resolve().parents[2]
 TRIAL = ROOT / "docs/measurements/v3/trial"
@@ -116,3 +116,20 @@ def test_v3b_selects_on_300_held_out_rows_with_a_wider_no_slack():
     s = select_checkpoint(rl, rows=300, no_slack=0.10)
     assert s.selected == "final" and "no_accuracy_at_least_v2_minus_0.10" in s.table[0]["guards"]
     assert select_checkpoint(_rl({"final": _cand(no_accuracy=0.72)})).selected is None
+
+
+def test_v3b_guards_the_copy_share_and_the_trial_step_time():
+    v2 = dict(V2, copied=0.10)
+    rl = {"run_steps": 300, "dev_rows": 300,
+          "adapters": {"v2": v2, "checkpoint-25": dict(v2, copied=0.21, mean_reward=1.5),
+                       "final": dict(v2, copied=0.15, mean_reward=1.4)}}  # fmt: skip
+    s = select_checkpoint(rl, rows=300, no_slack=0.10, copy_slack=0.10)
+    assert s.selected == "final"  # checkpoint-25 copies more than v2 + 0.10
+    assert "copy_share_at_most_v2_plus_0.10" not in guards(V2, V2)  # v3 unchanged
+    trial = {"run_steps": 40, "dev_rows": 200,
+             "adapters": {"v2": v2, "final": dict(v2, copied=0.15)}}  # fmt: skip
+    ok = trial_verdict_b(trial, {"wall_clock_s": 4000.0, "steps": 40})
+    assert ok.passed and ok.reported["seconds_per_step"] == 100.0
+    assert not trial_verdict_b(trial, {"wall_clock_s": 4800.0, "steps": 40}).passed  # 120 s
+    trial["adapters"]["final"]["copied"] = 0.25
+    assert not trial_verdict_b(trial, {"wall_clock_s": 4000.0, "steps": 40}).passed

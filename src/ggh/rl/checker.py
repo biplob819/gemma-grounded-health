@@ -10,8 +10,14 @@ The pair and the threshold were chosen on 600 committed dev answers (base, v1 an
 dev grounding cases) against GPT-6.1 Sol's correct-and-grounded verdict
 (`scripts/v3b_checker_eval.py`, `docs/measurements/v3/checker_eval.json`). The pair had the best
 AUC (0.868) and 5-fold cross-validated agreement with Sol (0.82), against 0.69 for v3's lexical
-check, and its folds chose 0.65 four times out of five. Those 200 dev cases are left out of v3b's
-checkpoint selection (`TUNING_IDS`).
+check, and its folds chose the threshold 0.65 four times out of five (agreement is flat, 0.815 to
+0.828, from 0.50 to 0.80). The pair itself was picked from nine variants on the same answers
+without nested cross-validation, so its lead over the next best (0.81, 0.80) is within noise.
+Those 200 dev cases are left out of v3b's checkpoint selection (`TUNING_IDS`).
+
+Known blind spot (V3.3 verifier): the checker never sees the question, so a copied or generic
+result sentence passes while an answer that draws the question's conclusion often fails. Sol's
+headline shares it. v3b's plan guards and reports the copy share (OWNER D-70).
 
 No API call: the weights download once from the public Hub (no token) and run locally. The
 MiniCheck weights are a pickled .bin; transformers 5 loads it with torch's weights-only loader.
@@ -42,6 +48,8 @@ MODELS = (
     },
 )
 TUNING_IDS = "docs/measurements/v3/checker_tuning_ids.json"  # the 200 dev cases it was chosen on
+CANARY = "docs/measurements/v3/checker_canary.json"  # three committed pairs it must reproduce
+CANARY_TOLERANCE = 0.01
 
 Pair = tuple[str, str]  # (evidence: the cited sentences joined, claim: the answer)
 
@@ -58,6 +66,26 @@ def label_index(id2label: dict[Any, str], want: str) -> int:
     if len(hits) != 1:
         raise ValueError(f"model id2label {dict(id2label)} has no single {want!r} label")
     return hits[0]
+
+
+def prefetch() -> None:  # pragma: no cover - network
+    """Download both models without importing transformers: `ggh grpo-b` calls this before
+    loading Unsloth (which must be imported before transformers), so a failed download stops the
+    run before any GPU work."""
+    from huggingface_hub import snapshot_download  # pyright: ignore[reportMissingImports]
+
+    for spec in MODELS:
+        snapshot_download(spec["repo"], revision=spec["revision"], allow_patterns=spec["files"])
+
+
+def canary_problem(checker: Checker, canary: dict[str, Any]) -> str:
+    """ "" when the checker reproduces the committed canary scores, else what differs (a
+    different transformers or device on Kaggle must not silently change the reward)."""
+    pairs = canary["pairs"]
+    got = checker.support([(p["evidence"], p["claim"]) for p in pairs])
+    bad = [(p["case"], p["support"], round(g, 4)) for p, g in zip(pairs, got, strict=True)
+           if abs(g - p["support"]) > CANARY_TOLERANCE]  # fmt: skip
+    return f"checker canary off by more than {CANARY_TOLERANCE}: {bad}" if bad else ""
 
 
 class HFChecker:  # pragma: no cover - downloads two models; checked on real dev answers

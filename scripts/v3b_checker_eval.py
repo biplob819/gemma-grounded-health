@@ -7,11 +7,14 @@ deberta-v3-base prototype: one row per answer, 200 dev cases x 3 models, each ch
 probability with the cited sentences or the whole abstract as evidence). Pure analysis, no model:
 the AUC among right-label answers, 5-fold cross-validated agreement of "right label, checker at or
 above its threshold, no aim citation" with Sol, and that proxy's headline per model.
+It also scores the committed answers with the actual v3b reward (`ggh.rl.reward_b`), replaying
+the committed checker scores instead of the models.
 Writes docs/measurements/v3/checker_eval.json.
 """
 
 from __future__ import annotations
 
+import gzip
 import json
 import random
 import statistics as st
@@ -21,6 +24,9 @@ ROOT = Path(__file__).resolve().parents[1]
 SCORES = ROOT / "docs/measurements/v3/checker_scores.jsonl"
 OUT = ROOT / "docs/measurements/v3/checker_eval.json"
 MODELS = ("base", "v1", "v2")
+RUNS = ("dev_ground_v1", "dev_ground_v2_sol")
+NAMES = {"gemma-e2b-base-q4": "base", "gemma-e2b-grounded-q4": "v1",
+         "gemma-e2b-grounded-v2-q4": "v2"}  # fmt: skip
 GRID = [i / 100 for i in range(5, 100, 5)]
 
 
@@ -77,8 +83,44 @@ def main() -> dict:
                 for m in MODELS
             },
         }
+    out["v3b_reward_by_model"] = v3b_reward(rows)
     OUT.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
     return out
+
+
+def _gz(path: Path) -> list[dict]:
+    with gzip.open(path, "rt", encoding="utf-8") as f:
+        return [json.loads(line) for line in f]
+
+
+def v3b_reward(rows: list[dict]) -> dict[str, float]:
+    """The v3b reward's mean per model on the committed answers, the checker replayed from the
+    committed per-answer scores (the mean of MiniCheck-RoBERTa-L and deberta-v3-large)."""
+    from ggh.rl import reward as R
+    from ggh.rl import reward_b as RB
+
+    support = {
+        (r["case"], r["model"]): r["ens_minicheck_roberta_deberta_large_cited"] for r in rows
+    }
+    cases = {c["id"]: c for d in RUNS for c in _gz(ROOT / "docs/results" / d / "cases.jsonl.gz")}
+    out: dict[str, list[float]] = {m: [] for m in MODELS}
+    for d in RUNS:
+        for rec in _gz(ROOT / "docs/results" / d / "records.jsonl.gz"):
+            key = (rec["case_id"], NAMES[rec["completion"]["model"]])
+            c, text = cases[rec["case_id"]], rec["completion"]["raw_text"] or ""
+            a = R.parse(text)
+            table = {}
+            if a is not None:
+                table[(RB.evidence(a, c["context"]) if all(1 <= i <= len(c["context"])
+                       for i in a.citations) else "", a.answer)] = support[key]  # fmt: skip
+
+            class Replay:
+                def support(self, pairs, table=table):
+                    return [table[p] for p in pairs]
+
+            s = RB.score_batch([text], [c["reference_label"]], [c["context"]], Replay())[0]
+            out[key[1]].append(s.reward)
+    return {m: round(st.fmean(v), 4) for m, v in out.items()}
 
 
 if __name__ == "__main__":

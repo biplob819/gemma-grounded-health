@@ -23,7 +23,7 @@ from typing import Any
 from ggh.rl import grpo as G
 from ggh.rl import reward as R
 from ggh.rl import reward_b as RB
-from ggh.rl.checker import TUNING_IDS, Checker
+from ggh.rl.checker import CANARY, TUNING_IDS, Checker, canary_problem
 from ggh.rl.config import GRPORecipe
 from ggh.schemas.train import RecipeConfig
 
@@ -38,19 +38,34 @@ def set_checker(checker: Checker | None) -> None:
     _CACHE.update(key=None, scores=None)
 
 
-def checker() -> Checker:  # pragma: no cover - the real checker downloads two models
+class CheckerError(ValueError):
+    pass
+
+
+def check_canary(check: Checker, root: Path) -> None:
+    canary = json.loads((root / CANARY).read_text(encoding="utf-8"))
+    problem = canary_problem(check, canary)
+    if problem:
+        raise CheckerError(problem)
+
+
+def checker(root: Path | None = None) -> Checker:  # pragma: no cover - downloads two models
+    """The real checker, built once and, when `root` is given, checked against the committed
+    canary. Training builds it only after Unsloth has loaded (transformers must come second)."""
     global _CHECKER
     if _CHECKER is None:
         from ggh.rl.checker import HFChecker
 
         _CHECKER = HFChecker(device=os.environ.get("GGH_CHECKER_DEVICE", "cpu"))
+        if root is not None:
+            check_canary(_CHECKER, root)
     return _CHECKER
 
 
 def _scores(completions: Sequence[Any], gold_label: Sequence[str], context: Sequence[Any]):
     """TRL calls every reward function on the same batch: the checker runs once per batch."""
     texts = [R._text(c) for c in completions]
-    key = json.dumps([texts, list(gold_label)])
+    key = json.dumps([texts, list(gold_label), [list(c) for c in context]])
     if _CACHE["key"] != key:
         _CACHE.update(key=key, scores=RB.score_batch(texts, gold_label, context, checker()))
     return _CACHE["scores"]
@@ -94,8 +109,9 @@ def grpo_args(g: GRPORecipe, base: RecipeConfig, out: Path, max_steps: int | Non
 def run(
     config: Path, root: Path, out: Path, max_steps: int | None = None
 ) -> dict[str, Any]:  # pragma: no cover - CUDA and Kaggle only
-    """v3's `ggh.rl.grpo.run` with v3b's reward; the checker loads before the base model, so a
-    failed download stops the run before any GPU work."""
+    """v3's `ggh.rl.grpo.run` with v3b's reward. The checker's weights download first (no
+    transformers import), so a failed download stops the run before any GPU work; the checker is
+    built and canary-checked after Unsloth has loaded, before training."""
     import torch  # pyright: ignore[reportMissingImports]
     from huggingface_hub import snapshot_download  # pyright: ignore[reportMissingImports]
 
@@ -104,7 +120,9 @@ def run(
 
     g, base = load_grpo(config, root)
     out.mkdir(parents=True, exist_ok=True)
-    checker()
+    from ggh.rl.checker import prefetch
+
+    prefetch()
     snap = Path(snapshot_download(g.init_repo, revision=g.init_revision,
                                   allow_patterns=[f"{g.init_subfolder}/*"]))  # fmt: skip
     init_hash = G.check_init(snap / g.init_subfolder, g.init_adapter_sha256)
@@ -116,6 +134,7 @@ def run(
     from safetensors.torch import load_file  # pyright: ignore[reportMissingImports]
     from trl import GRPOConfig, GRPOTrainer  # pyright: ignore[reportMissingImports]
 
+    checker(root)
     state = load_file(str(snap / g.init_subfolder / "adapter_model.safetensors"))
     res = set_peft_model_state_dict(loaded.model, state)
     unexpected = list(getattr(res, "unexpected_keys", []) or [])
@@ -215,6 +234,14 @@ def dev_summary(texts: Sequence[str], rows: Sequence[dict[str, Any]], check: Che
         "grounded_paid": share(sum(s.grounded and s.label_correct for s in scores)),
         "aim_cited": share(sum(s.aim_cited for s in scores)),
         "copied": share(sum(s.copied for s in scores)),
+        "copied_close": share(sum(s.copy_similarity >= 0.7 for s in scores)),
+        "v3_reward": round(
+            statistics.fmean(
+                R.score(t, r["label"], r["sentences"]).reward
+                for t, r in zip(texts, rows, strict=True)
+            ),
+            4,
+        ),  # v3's lexical reward, an independent signal beside the checker
         "unparsed": share(sum(not s.parsed for s in scores)),
         "mean_support": round(statistics.fmean(supports), 4) if supports else None,
         "label_mix": dict(sorted(Counter(x for x in labels if x is not None).items())),
@@ -251,7 +278,7 @@ def rl_dev_one(
     gc.collect()
     torch.cuda.empty_cache()
     os.environ.setdefault("GGH_CHECKER_DEVICE", "cuda" if torch.cuda.is_available() else "cpu")
-    summary = dev_summary(texts, rows, checker())
+    summary = dev_summary(texts, rows, checker(root))
     out.mkdir(parents=True, exist_ok=True)
     with open(out / f"dev_{name}.jsonl", "w", encoding="utf-8") as f:
         for r, t in zip(rows, texts, strict=True):

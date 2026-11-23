@@ -27,7 +27,7 @@ def test_everything_that_shapes_training_is_pinned():
     pinned = _plan()["pinned"]
     assert set(pinned) == {"reward", "checker", "trainer", "trainer_v3_parts", "reward_v3_parts",
                            "rules", "recipe_schema", "recipe", "packages",
-                           "checker_tuning_ids"}  # fmt: skip
+                           "checker_tuning_ids", "checker_canary"}  # fmt: skip
     for name, pin in pinned.items():
         got = hashlib.sha256((ROOT / pin["file"]).read_bytes()).hexdigest()
         assert got == pin["sha256"], name
@@ -52,7 +52,11 @@ def test_selection_is_on_held_out_dev_with_hack_guards():
               "answer words", "label accuracy", "aim-citation share", "copy share")  # fmt: skip
     for guard in guards:
         assert guard in sel, guard
-    assert "minus 0.10" in sel and "115 seconds" in plan["trial"]
+    assert (
+        "minus 0.10" in sel and "115 seconds" in plan["trial"] and "wall_clock_s" in plan["trial"]
+    )
+    assert "plus 0.10" in sel and "copy share" in plan["trial"] and "canary" in plan["trial"]
+    assert "not copies" in plan["report_beside_headline"]
     assert plan["main_run"].startswith("300 GRPO steps")
     assert [r["name"] for r in plan["runs"]] == ["main_v3b"] and plan["runs"][0]["n"] == 1000
     assert "owner" in plan["spend"] and "max_cost_usd" in plan["spend"]

@@ -47,6 +47,15 @@ def test_the_components_sum_to_the_v3b_reward_with_one_checker_call(fake):
     assert len(GB.REWARD_FUNCS) == len(GB.REWARD_WEIGHTS) and GB.REWARD_WEIGHTS[4:] == (0, 0, 0)
 
 
+def test_the_batch_cache_is_keyed_by_context_too(fake):
+    text = [[{"role": "assistant", "content": ans("no", GOOD, [6])}]]
+    other = list(CONTEXT)
+    other[5] = "Insulin levels rose after glucose in every subject."
+    first = GB.r_grounded(text, gold_label=["no"], context=[list(CONTEXT)])
+    second = GB.r_grounded(text, gold_label=["no"], context=[other])
+    assert first == [1.0] and second == [0.0]
+
+
 def test_v3b_trainer_arguments_are_v3s_with_its_own_reward_weights(tmp_path):
     g, base = load_grpo(RECIPE_B, ROOT)
     a = GB.grpo_args(g, base, tmp_path, max_steps=300)
@@ -88,6 +97,7 @@ def test_dev_summary_has_every_selection_guard_key(fake):
                 "mean_words", "label_accuracy", "aim_cited"):  # fmt: skip
         assert key in s, key
     assert s["n"] == 3 and s["unparsed"] == round(1 / 3, 4) and s["copied"] == 0.0
+    assert "copied_close" in s and "v3_reward" in s  # an independent lexical signal beside it
     assert s["mean_reward"] == round((1.25 - 0.25 - 1.0) / 3, 4)
     with pytest.raises(ValueError):
         GB.dev_summary(texts[:2], rows, fake)
