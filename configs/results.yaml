@@ -3,6 +3,9 @@
 # `primary_run` has a summary under docs/results/; once included, every non-optional file must
 # exist or the bundle refuses. v2 (V2.2) appears automatically when docs/results/main_v2/ lands.
 ledger: docs/measurements/spend-ledger.jsonl
+# Wave 7 (v3 and v3b, OWNER D-66) is not in this bundle's releases, so its scoring spend (V3.5 on)
+# stays out of `spend_usd` until a v3 release joins the bundle; the ledger itself keeps every row.
+ledger_exclude_node_prefixes: ["V3."]
 bench: docs/measurements/laptop_bench.json   # default for a release that names no `bench`
 b8_review: docs/measurements/b8_review.jsonl          # optional until RES-02
 gemma_family_check: docs/measurements/gemma_family_check.json   # optional until RES-03

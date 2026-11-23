@@ -108,3 +108,16 @@ def test_the_result_file_matches_the_run():
     committed = json.loads((ROOT / R.RESULT).read_text(encoding="utf-8"))
     assert committed == R.result(ROOT)
     assert committed["run_id"] == run_json()["run_id"] == "r-63dbbdfd4b9e"
+
+
+def test_the_published_bundle_leaves_wave_7_spend_out():
+    from ggh import ledger
+    from ggh.results.bundle import _in_scope
+
+    path = ROOT / "docs/measurements/spend-ledger.jsonl"
+    cfg = yaml.safe_load((ROOT / "configs/results.yaml").read_text(encoding="utf-8"))
+    keep = _in_scope(cfg)
+    assert keep is not None and not keep({"node": "V3.5"}) and keep({"node": "V2.2"})
+    bundle = json.loads((RES / "results_bundle.json").read_text(encoding="utf-8"))
+    assert bundle["spend_usd"] == round(ledger.total(path, "spent_usd", keep), 6) == 118.035054
+    assert round(ledger.total(path, "spent_usd"), 6) == round(118.035054 + 1.815194, 6)

@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -370,6 +371,14 @@ def _evalkit_versions(root: Path, run_ids: set[str]) -> str:
     return ", ".join(shas)
 
 
+def _in_scope(cfg: dict[str, Any]) -> Callable[[dict], bool] | None:
+    """Ledger rows outside the bundle: nodes whose id starts with a listed prefix (Wave 7)."""
+    prefixes = tuple(cfg.get("ledger_exclude_node_prefixes") or ())
+    if not prefixes:
+        return None
+    return lambda row: not str(row.get("node", "")).startswith(prefixes)
+
+
 def _ledger_rows(root: Path) -> list[dict[str, Any]]:
     path = root / "docs/measurements/spend-ledger.jsonl"
     return [json.loads(x) for x in path.read_text(encoding="utf-8").splitlines() if x.strip()]
@@ -508,7 +517,7 @@ def build(
                 k: LaptopBench.model_validate(v).model_dump() for k, v in sorted(bench_raw.items())
             },
             "sample_read": [s.model_dump() for s in sample_sums],
-            "spend_usd": round(ledger.total(root / cfg["ledger"], "spent_usd"), 6),
+            "spend_usd": round(ledger.total(root / cfg["ledger"], "spent_usd", _in_scope(cfg)), 6),
             "lineage_ok": not lineage_problems,
             "lineage_scope": "full" if full_lineage else "committed",
             "lineage_problems": sorted(set(lineage_problems)),

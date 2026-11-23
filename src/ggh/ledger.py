@@ -12,6 +12,7 @@ import datetime as dt
 import json
 import math
 import os
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
@@ -156,12 +157,17 @@ def count(path: Path) -> int:
     return len(_entries(path))
 
 
-def total(path: Path, amount_field: str) -> float:
-    """Sum of one amount field across the ledger; 0.0 for a missing file."""
+def total(path: Path, amount_field: str, keep: Callable[[dict], bool] | None = None) -> float:
+    """Sum of one amount field across the ledger (the rows `keep` accepts, if given); 0.0 for a
+    missing file. Every row is still checked for the field."""
     path = Path(path)
     _check_amount_field(amount_field)
     values: list[float] = []
     for lineno, entry in _entries(path):
+        if keep is not None and not keep(entry):
+            if amount_field not in entry:
+                raise LedgerError(f"{path.name} line {lineno}: no {amount_field}")
+            continue
         if amount_field not in entry:
             raise LedgerError(f"{path.name} line {lineno}: no {amount_field}")
         values.append(_check_amount(f"line {lineno} {amount_field}", entry[amount_field]))
