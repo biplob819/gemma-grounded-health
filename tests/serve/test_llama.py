@@ -139,7 +139,7 @@ def test_server_args_pin_metal_one_slot_seed_threads_and_greedy():
 
 
 def test_model_paths_and_ports():
-    assert llama.PORTS == {"base": 8080, "ft": 8081, "ft2": 8083, "ft3": 8085}  # v2 V2.1, v3 V3.4
+    assert llama.PORTS == {"base": 8080, "ft": 8081, "ft2": 8083, "ft3": 8085, "ft3b": 8086}
     assert llama.model_path(Path("/r"), "ft", "Q8_0") == Path("/r/artifacts/gguf/ft-Q8_0.gguf")
     with pytest.raises(llama.LlamaError):
         llama.model_path(Path("/r"), "large", "Q4_K_M")

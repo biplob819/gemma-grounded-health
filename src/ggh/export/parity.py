@@ -32,16 +32,17 @@ REPORT = MEASURE / "parity_report.json"
 GENERATIONS = MEASURE / "parity_generations.jsonl.gz"
 SAMPLE = MEASURE / "parity_sample.jsonl"
 Q4_NAME = "gemma-e2b-ft-q4"
-# v2 (`ft2`, V2.1) and v3 (`ft3`, V3.4) write beside their other records, under the same bars
+# v2 (`ft2`, V2.1), v3 (`ft3`, V3.4) and v3b (`ft3b`, V3.6) write beside their other records,
+# under the same bars
 V2_FILES = ("parity.json", "parity_generations.jsonl.gz", "parity_sample.jsonl")
 
 
 def paths(model: str = "ft") -> tuple[Path, Path, Path]:
-    """The report, all generations and the every-25th sample for `model` (ft, ft2 or ft3)."""
+    """The report, all generations and the every-25th sample for `model` (ft, ft2, ft3, ft3b)."""
     if model == "ft":
         return REPORT, GENERATIONS, SAMPLE
-    if model not in ("ft2", "ft3"):
-        raise ValueError(f"parity runs on ft, ft2 or ft3, got {model!r}")
+    if model not in ("ft2", "ft3", "ft3b"):
+        raise ValueError(f"parity runs on ft, ft2, ft3 or ft3b, got {model!r}")
     folder = measurements(model)
     return folder / V2_FILES[0], folder / V2_FILES[1], folder / V2_FILES[2]
 
