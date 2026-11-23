@@ -59,6 +59,17 @@ def test_total_raises_on_malformed_lines(tmp_path):
         ledger.total(path, ledger.SPEND_FIELD)
 
 
+def test_total_keeps_only_the_rows_asked_for_and_still_checks_the_rest(tmp_path):
+    path = tmp_path / "l.jsonl"
+    rows = [{"spent_usd": 1.5, "node": "V2.2"}, {"spent_usd": 2.0, "node": "V3.5"}]
+    path.write_text("".join(json.dumps(r) + "\n" for r in rows), encoding="utf-8")
+    assert ledger.total(path, ledger.SPEND_FIELD) == 3.5
+    assert ledger.total(path, ledger.SPEND_FIELD, lambda r: r["node"] != "V3.5") == 1.5
+    path.write_text(json.dumps({"spent_usd": -1, "node": "V3.5"}) + "\n", encoding="utf-8")
+    with pytest.raises(ledger.LedgerError):  # an excluded row is still validated
+        ledger.total(path, ledger.SPEND_FIELD, lambda r: r["node"] != "V3.5")
+
+
 @settings(deadline=None)  # file I/O per example; timing varies under load, the result does not
 @given(st.lists(st.floats(min_value=0, max_value=1e4, allow_nan=False), max_size=20))
 def test_total_is_exact_fsum_of_appended_amounts(amounts):

@@ -47,7 +47,7 @@ On an ${chip} (${ram} GB) the v2 file (${file_mb} MB) generates ${gen_tps} token
 
 Every benchmark number comes from EvalKit, my open-source grounded-answer benchmark. One model splits each answer into claims; a judge rules on each claim using only the sentences the answer cites. Every metric gets a bootstrap interval, comparisons are paired and Holm-corrected, and a gap is "separated" only when its Holm-corrected interval excludes zero. The comparisons are hashed before each run.
 
-v1's main run compared ${v1_models} models (base, v1, Claude Haiku 5.5 and GPT-6 Luna), judged by ${v1_judges}, for ${v1_spend}. All paid runs together cost ${total_spend}. Against the frontier models, v1 was level with Claude Haiku 5.5 under Claude Opus 5.5 and ahead of it under GPT-6.1 Sol, and level with GPT-6 Luna under Claude Opus 5.5 (the Sol comparison with Luna is not claimed, see below).
+v1's main run compared ${v1_models} models (base, v1, Claude Haiku 5.5 and GPT-6 Luna), judged by ${v1_judges}, for ${v1_spend}. v1's and v2's paid runs cost ${total_spend} in all. Against the frontier models, v1 was level with Claude Haiku 5.5 under Claude Opus 5.5 and ahead of it under GPT-6.1 Sol, and level with GPT-6 Luna under Claude Opus 5.5 (the Sol comparison with Luna is not claimed, see below).
 
 ## v1: the failure
 

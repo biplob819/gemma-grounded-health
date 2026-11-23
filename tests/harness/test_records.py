@@ -44,7 +44,7 @@ def _spec_caps() -> list[tuple[str, str]]:
 def test_graph_matches_tech_spec():
     nodes = load_graph()
     spec = _spec_nodes()
-    assert len(nodes) == len(spec) == 24  # V2.1-2 D-43; O6.1 cut D-58; V3.1-2 D-66; V3.3 D-70; V3.4-5
+    assert len(nodes) == len(spec) == 24  # V2.1-2 D-43; O6.1 cut D-58; V3.1-2 D-66; V3.3-5
     assert {n: (v.title, v.depends_on) for n, v in nodes.items()} == spec
 
 
