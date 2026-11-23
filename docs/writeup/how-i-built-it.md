@@ -18,12 +18,12 @@ The score that matters is "correct and fully grounded": the label is right and e
 
 I set the goals, wrote the PRD and made the product calls. Claude Code wrote the code, under the same lean Kova harness that built EvalKit (D-11):
 
-- **A build graph** of 22 nodes; a node starts only when the nodes it depends on are green.
-- **A capability catalog** of 139 rows, each with proof cells naming the tests that prove it.
+- **A build graph** of 23 nodes; a node starts only when the nodes it depends on are green.
+- **A capability catalog** of 142 rows, each with proof cells naming the tests that prove it.
 - **Converge gates**: 13 automated checks per node, from lint and tests to the secret scan and the records.
 - **A skeptical verifier**: a fresh agent that tries to break each node. After the harness node took many rounds, rounds were capped (OWNER D-33); what is left goes into the known-issues file.
 
-Across 22 nodes the verifiers ran 62 rounds; the harness node alone took 17. Any node that touches real data or a real model also reads real outputs before it can turn green (D-18).
+Across 23 nodes the verifiers ran 63 rounds; the harness node alone took 17. Any node that touches real data or a real model also reads real outputs before it can turn green (D-18).
 
 ## Data and targets
 

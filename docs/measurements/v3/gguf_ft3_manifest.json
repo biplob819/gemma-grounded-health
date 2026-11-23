@@ -1,0 +1,32 @@
+{
+  "built_at": "2026-11-23T10:59:29Z",
+  "files": {
+    "ft3-Q4_K_M.gguf": {
+      "bytes": 3427874336,
+      "sha256": "2dec4ede9b6166d8f8e54fa55aa390eb7c9d220e0b0c3d2b564fa09f0f5027a8"
+    },
+    "ft3-Q8_0.gguf": {
+      "bytes": 4967491104,
+      "sha256": "02a21870ca415f127cd2773e0b442032f161d009696ecb4d86f82915c3ac3441"
+    },
+    "ft3-f16.gguf": {
+      "bytes": 9311299104,
+      "sha256": "31056ae9583d0e3ebbe9cf3c0bb003e00ed2192110af5f43b17266c336e596a0"
+    }
+  },
+  "llama_cpp": {
+    "release_sha256": "bdeff25d862f1c9b9526ce2c373492e67656659b2ac386308c28b4808f4d074d",
+    "source_sha256": "5ff59287cab5dd3d9c90444f7d3692db5b51e5e4a4c6d3eb086cfa3b834ff9de",
+    "tag": "b12421"
+  },
+  "name": "ft3",
+  "source": {
+    "id": "google/gemma-4-E2B-it+adapter",
+    "revision": "61670d6c3c7771ef8b6427dc614d4e6b7b327c8336950c738906992db4429033"
+  },
+  "steps": [
+    "convert_hf_to_gguf.py --outtype f16",
+    "llama-quantize Q4_K_M",
+    "llama-quantize Q8_0"
+  ]
+}
