@@ -1,0 +1,20 @@
+# V3.5 main_v3 run (configs/eval_plan_v3.yaml), OpenAI only (OWNER D-57, D-66): base, v2 and v3
+# on the E3.2 cases. Base and v2 answers, claims and verdicts come from EvalKit's store (the
+# V2.2 run's cache; their servers stay stopped, so a miss fails); only v3 is new. Every new
+# claim is extracted by GPT-6 Luna and judged by GPT-6.1 Sol. v3 is the checkpoint the plan
+# selected (V3.4, adapter 61670d6c...), Q4_K_M 2dec4ede..., served by `ggh serve --model ft3`.
+models: [gemma-e2b-base-q4, gemma-e2b-grounded-v2-q4, gemma-e2b-grounded-v3-q4]
+endpoints:
+  gemma-e2b-base-q4: http://127.0.0.1:8080/v1
+  gemma-e2b-grounded-v2-q4: http://127.0.0.1:8083/v1
+  gemma-e2b-grounded-v3-q4: http://127.0.0.1:8085/v1
+judges: [gpt-6.1-sol]            # OWNER D-57: Sol alone
+extractor: gpt-6-luna             # OWNER D-57
+structured_output: true          # D-6
+max_output_tokens: 2048
+concurrency: {openai: 8, openai_compatible: 1}
+seed: 7                          # the E3.2 main run's seed, so the cached cases are the same 1,000
+default_effort: medium
+judge_effort: medium
+extractor_effort: medium
+max_cost_usd: 15  # OWNER D-69, re-confirmed in OWNER D-71

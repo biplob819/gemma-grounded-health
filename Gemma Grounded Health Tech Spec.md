@@ -617,11 +617,11 @@ gemma-grounded-health/
 
 Status vocabulary: `not-started | spec | building | green`.
 
-### 13.2 Build graph: 23 nodes in seven waves (O6.1 cut, OWNER D-58; V3.1 and V3.2 added, OWNER D-66; V3.3, OWNER D-70; V3.4)
+### 13.2 Build graph: 24 nodes in seven waves (O6.1 cut, OWNER D-58; V3.1 and V3.2 added, OWNER D-66; V3.3, OWNER D-70; V3.4, V3.5)
 
 **Release (all Must and Should stories): 18 nodes.** W0.1, N1.1–N1.3, E3.1, T2.1, T2.2, X3.1, X3.2, E3.2, V2.1, V2.2 (OWNER D-43), E3.3, R4.1–R4.5.
 **Full scope: 19 nodes**, adding P5.1 (write-up). O6.1 (DPO, Could) was cut by OWNER D-58.
-**Wave 7 (after v1.0.0, OWNER D-66):** V3.1 (v3 GRPO groundwork); V3.2 (trial verdict, main-run kernels, selection rule); V3.3 (v3b, a checker reward aligned with the headline, OWNER D-70); V3.4 (v3's main run frozen, selected checkpoint, export and parity); V3.5 (v3's scoring) and the v3b nodes are added when their inputs exist.
+**Wave 7 (after v1.0.0, OWNER D-66):** V3.1 (v3 GRPO groundwork); V3.2 (trial verdict, main-run kernels, selection rule); V3.3 (v3b, a checker reward aligned with the headline, OWNER D-70); V3.4 (v3's main run frozen, selected checkpoint, export and parity); V3.5 (v3's scoring run); the v3b nodes are added when their inputs exist.
 
 | Node | Title | Depends on | Deliverable (what exists when it is green) | Stories |
 | --- | --- | --- | --- | --- |
@@ -648,6 +648,7 @@ Status vocabulary: `not-started | spec | building | green`.
 | **V3.2** | v3 trial verdict, main-run kernels and the selection rule | V3.1 | The trial's outputs frozen with every stop rule recomputed (passed), the main run split into a train kernel and a score kernel rendered at one commit, the plan's dev checkpoint-selection rule as tested code, the owner's $15 scoring cap recorded | US1, US3 |
 | **V3.3** | v3b: a checker reward aligned with the headline, plan and kernels | V3.2 | A reward that tracks the headline: two local grounding checkers chosen against Sol on committed dev answers, a headline-shaped v3b reward proven against planted hacks, its trainer and held-out dev check, v3b's Kaggle kernels, and the v3b plan hashed before training | US1, US3 |
 | **V3.4** | v3: main run frozen, the selected checkpoint, export and parity | V3.3 | v3's main-run outputs frozen with every dev summary recomputed, the checkpoint the v3 plan selects frozen with its hash (`ggh rl-freeze`, an `RLRun` record), merged bf16 and Q4_K_M, Q8_0 and F16 GGUFs tied to that hash, dev parity under X3.1's bars, GPU hours logged | US1, US2 |
+| **V3.5** | v3 scoring: the pre-registered main_v3 run and its primary test | V3.4 | The main_v3 run on the 1,000 PQA-L cases under configs/eval_plan_v3.yaml within the owner's $15 cap (v3 new; base and v2 answers, claims and verdicts from the V2.2 cache), the primary test v3 minus v2 on the headline with EvalKit's paired bootstrap, the guardrails, the stretch goal and the label and length report, spend logged | US1 |
 
 Waves: **W0** harness → **N1** data → **T2** training, alongside **E3.1** serving → **X3** export and laptop → **E3** evaluation → **R4** release, ending in the v1.0.0 open-source release (R4.5) → **P5/O6** write-up and optional DPO.
 
@@ -991,6 +992,13 @@ Each row becomes one line in `docs/graph/catalog.tsv` with status `not-started`.
 | RLX-01 | v3's main run frozen and the plan's selection applied again; `ggh rl-freeze` copies and hashes only the selected checkpoint's adapter, from v2's adapter under the pinned recipe, into an `RLRun` record | D-4, OWNER D-66 |
 | RLX-02 | v3 (`ft3`) has its own adapter, merged, GGUF and measurement paths and port; merged bf16 and GGUFs tied to the frozen adapter hash | D-10, OWNER D-66 |
 | RLX-03 | v3 dev parity, Q4_K_M against merged bf16, under X3.1's bars | D-10, OWNER D-66 |
+
+**V3.5 v3 scoring (OWNER D-69, D-71)**
+
+| Cap | Capability | Trace |
+| --- | --- | --- |
+| RLS-01 | The main_v3 run as the v3 plan registers it: the plan's models, judge, extractor, seed and cases, v3 at the frozen Q4_K_M, base and v2 from the V2.2 cache, within the $15 cap, spend logged | D-4, OWNER D-69 |
+| RLS-02 | v3's primary test (v3 minus v2 headline, EvalKit's paired bootstrap, Holm over a family of one), guardrails, stretch goal and label and length report, computed from the committed run | D-4, OWNER D-66 |
 
 **O6.1 DPO** was cut (OWNER D-58); its capabilities DPO-01..04 are removed.
 
