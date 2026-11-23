@@ -60,8 +60,8 @@ def trial_verdict_b(
 def guards(
     c: dict[str, Any], v2: dict[str, Any], no_slack: float = 0.05, copy_slack: float | None = None
 ) -> dict[str, bool]:
-    """The plan's seven hack guards for one candidate against v2. v3b's plan widens the gold-"no"
-    slack to 0.10, because its 300 held-out dev rows hold only 21 gold "no" rows."""
+    """The plan's seven hack guards for one candidate against v2, eight with v3b's copy guard.
+    v3b's plan widens the gold-"no" slack to 0.10: its 300 held-out dev rows hold 21 gold "no"."""
     no_c, no_v2 = c["no_accuracy"], v2["no_accuracy"]
     g = {
         "parse_failures_at_most_0.01": c["unparsed"] <= 0.01 + EPS,
