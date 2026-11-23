@@ -13,4 +13,6 @@ v3's main run (Kaggle `ggh-v3-grpo` v1, 678 GRPO steps, 9.19 GPU hours) and its 
 
 ## Result
 - Selection: checkpoint-550, mean reward 1.372 against v2's 1.318, every guard kept (labels unchanged: accuracy 0.934 vs 0.93, gold-"no" 0.8605 both, "maybe" 0.01 both; aim citations 0.010 vs 0.044; lexical grounding paid 0.886 vs 0.82; 15.9 words vs 13.7).
-- v3b's checker on the 300 held-out rows: supported 0.450 vs v2's 0.453; near-copies (similarity ≥ 0.7) 0.22 vs 0.19. The lexical gain does not show under the stronger proxy.
+- Export: adapter 61670d6c…, 205 LoRA layers merged, Q4_K_M 2dec4ede… (sizes equal v2's).
+- Parity: label agreement 0.936, a miss on the 0.95 bar (v2 0.920), one-way yes→no drift; OWNER D-71 scores v3 at Q4_K_M as registered and discloses the miss.
+- Exploratory: v3b's checker on the 300 held-out rows (the other 200 were its tuning set): right label and checker-supported 0.450 vs v2's 0.453 (all 500 rows: 0.444 vs 0.426); near-copies (similarity ≥ 0.7) 0.22 vs 0.19. The lexical gain barely shows under the stronger proxy.

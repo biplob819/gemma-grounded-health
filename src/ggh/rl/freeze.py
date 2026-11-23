@@ -79,6 +79,12 @@ def freeze_rl(
     missing = [f for f in ADAPTER_FILES if not (checkpoint / f).is_file()]
     if missing:
         raise FreezeError(f"{checkpoint} is missing {missing}")
+    step = step_of(sel.selected, int(report["steps"]))
+    state = checkpoint / "trainer_state.json"
+    if state.is_file():  # Trainer's own record of the step the checkpoint was saved at
+        saved = json.loads(state.read_text(encoding="utf-8")).get("global_step")
+        if saved != step:
+            raise FreezeError(f"{checkpoint.name} was saved at step {saved}, not {step}")
     dest = root / adapter_dir
     if dest.exists():
         shutil.rmtree(dest)
@@ -87,7 +93,6 @@ def freeze_rl(
         shutil.copy2(checkpoint / f, dest / f)
     sha = adapter_hash(dest)
     a = rl_dev["adapters"]
-    step = step_of(sel.selected, int(report["steps"]))
     run = RLRun(
         reward=str(report.get("reward", "v3")),  # v3's report predates the field (v3b sets it)
         config_hash=report["config_hash"],

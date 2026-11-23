@@ -23,14 +23,15 @@ def _load(p: Path):
 
 def _fake_run(tmp_path: Path, name: str = "checkpoint-550"):
     """A repo root holding the v3 recipe, and a checkpoint folder with the two adapter files."""
-    (tmp_path / "configs").mkdir()
+    (tmp_path / "configs").mkdir(parents=True, exist_ok=True)
     recipe = ROOT / "configs/recipe_v3_grpo.yaml"
     (tmp_path / "configs/recipe_v3_grpo.yaml").write_bytes(recipe.read_bytes())
     ck = tmp_path / "dl" / name
     ck.mkdir(parents=True)
     (ck / "adapter_config.json").write_text('{"r": 16}', encoding="utf-8")
     (ck / "adapter_model.safetensors").write_bytes(b"weights")
-    (ck / "trainer_state.json").write_text("{}", encoding="utf-8")  # never copied
+    step = 550 if name == "checkpoint-550" else 600
+    (ck / "trainer_state.json").write_text(json.dumps({"global_step": step}), "utf-8")  # not copied
     return ck
 
 
@@ -131,6 +132,12 @@ def test_freeze_refuses_anything_but_the_selected_checkpoint_from_v2(tmp_path):
             c["unparsed"] = 0.5  # every candidate breaks a guard
     with pytest.raises(FreezeError, match="nothing to freeze"):
         _freeze(tmp_path, ck, rl=rl)
+    with pytest.raises(FreezeError, match="missing"):  # an empty download
+        _freeze_at(tmp_path, ck, report)
+    real = _fake_run(tmp_path / "w")
+    (real / "trainer_state.json").write_text('{"global_step": 600}', encoding="utf-8")
+    with pytest.raises(FreezeError, match="saved at step 600"):  # a misnamed folder
+        _freeze(tmp_path / "w", real)
 
 
 def _freeze_at(tmp_path, ck, report):
