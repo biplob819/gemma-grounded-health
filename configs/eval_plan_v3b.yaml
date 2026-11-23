@@ -1,0 +1,120 @@
+# v3b pre-registration (RLB-05, OWNER D-70), fixed and hashed BEFORE any v3b training step and
+# before any v3b measurement. v3 (configs/eval_plan_v3.yaml) is a separate attempt under its own
+# plan; its main run is reported under that plan whatever it shows, and so is this one. The
+# reward, its checker and the training recipe are pinned here by hash.
+status: final
+version: v3b
+node: V3.3
+built_after_test_seen: true    # built after v1's and v2's PQA-L results were seen (D-43)
+why: >-
+  a free dev check (docs/measurements/v3/reward_alignment.json) showed v3's reward ranks v2 above
+  base while GPT-6.1 Sol's headline ranks base far above v2; v3b's reward pays mostly for a right
+  label supported by its cited sentences, read by two local models chosen against Sol on 600
+  committed dev answers (docs/measurements/v3/checker_eval.json)
+method: GRPO from v2's adapter with the v3b checker reward; no judge or API call in training
+pinned:                        # everything that shapes training, by sha256 (none may change after this)
+  reward: {file: src/ggh/rl/reward_b.py, sha256: 42542de3dd7dab71cb5ae6c3f751b64089999754d0c22c243bdd78b75b285a8b}
+  checker: {file: src/ggh/rl/checker.py, sha256: 702b592fc40b52320d395c5dc454629afc8746fd1ff7a76634b2c9f6594af6e5}
+  trainer: {file: src/ggh/rl/grpo_b.py, sha256: 9907d876352437316975c08baa4e783e40430377fdd236110aee33e3797dfff7}
+  trainer_v3_parts: {file: src/ggh/rl/grpo.py, sha256: 4fd400ecf2ae16287ca8028a8d922c8fa36e408f9ed8eb98f0c71a3100efa6b7}
+  reward_v3_parts: {file: src/ggh/rl/reward.py, sha256: 3e79e634b3f137e5f33a6489ffae31fecd7eb326592ce6090074c650f6d5db69}
+  rules: {file: src/ggh/targets/rules.py, sha256: fc644b6bc104e141538429e236c0a83bebb88b7344fba3a95d9fd5d60cd75eca}
+  recipe_schema: {file: src/ggh/rl/config.py, sha256: 0583a1b9a87286d4c93e28d31a9786ba63c1dc6f7691003e987902181269ecac}
+  recipe: {file: configs/recipe_v3b_grpo.yaml, sha256: f21041a5d784cc6f770a2d2adde7b7d44dc812eaad45f0b32fd5bafbb4a7f61d}
+  packages: {file: notebooks/requirements-kaggle-grpo.txt, sha256: 8217e0e06094d79cdff42b6fa9a6fd35dd0eaee55532668c87271c3a84bcd8c4}
+  checker_tuning_ids: {file: docs/measurements/v3/checker_tuning_ids.json, sha256: 5ff21f27a416b4d1de93091d634a0eaf8c61633ee14132eb8291e4085b8cb70f}
+  checker_canary: {file: docs/measurements/v3/checker_canary.json, sha256: 77320a074152eead85eaca2d00f0c2622bbceb36dcd15777445253f923516433}
+training_data: the 2,722 v2 train prompts and gold labels (train split only; no dev or test use)
+held_out_dev: >-
+  the checker and its threshold were chosen on the 200 dev grounding cases listed in
+  docs/measurements/v3/checker_tuning_ids.json; v3b's trial and selection use only the other 300
+  dev_eval rows (279 yes, 21 no), in file order
+trial: >-
+  one short run (40 GRPO steps) before the main run, read on the first 200 held-out dev rows with
+  the v3b reward. It stops the plan, with the owner told, if the trial's final adapter against
+  v2's replies in the same session has: parse failures above 0.02; mean v3b reward more than 0.05
+  below v2's; a "maybe" share outside v2's plus or minus 0.05; a "yes" share above v2's plus 0.05;
+  a copy share (answers at similarity 0.9 or more to one cited sentence) above v2's plus 0.10; or a
+  mean training step time, report.json's wall_clock_s divided by steps, above 115 seconds (300
+  steps would then take 9.6 hours). The gold-"no" accuracy is reported, not applied (about 16 such
+  rows). Before training and before dev scoring the checker must reproduce the four committed
+  canary pairs (each model and their mean) (docs/measurements/v3/checker_canary.json) within 0.01, or the run stops. The trial may not change the reward,
+  the checker, the recipe or this plan; a change needs a new plan and hash, recorded as a decision
+main_run: 300 GRPO steps (notebooks/v3b/main/train), checkpoints every 25 steps
+reward_notes: >-
+  a right "maybe" earns 0.25 + 0.4 without the checker (v2's insufficient targets say what is
+  missing, which a support checker rejects), below a right yes/no's expected reward at the 56 %
+  pass rate of v2's yes/no gold answers (0.81) and at v2's 43 % on its right-label dev answers
+  (0.68), so "maybe" carries no premium; its text and citations are not
+  checked, and the "maybe" share guard bounds any drift
+node_numbers: >-
+  v3's plan (configs/eval_plan_v3.yaml) books its scoring run to "node V3.3" and OWNER D-69 to
+  "V3.4"; after OWNER D-70 V3.3 is v3b and both scoring runs fall in V3.5
+checkpoint_selection: >-
+  candidates are every saved checkpoint-N and the final adapter of the main run. On the 300
+  held-out dev rows (greedy, unconstrained, scored by the v3b reward in the same Kaggle session as
+  v2's own replies), pick the candidate with the highest mean v3b reward among those that keep
+  every hack guard (each as `ggh rl-dev-b` computes it, every share over all rows), ties to the
+  earlier step (the final adapter counts as its last step). Guards, each against v2's replies in
+  that session: parse failures at most 0.01; "maybe" share within v2's plus or minus 0.05; "yes"
+  share at most v2's plus 0.05; accuracy on the gold-"no" rows at least v2's minus 0.10 (21 rows,
+  so 0.10 is two rows; v3's 0.05 would be one); mean answer words at least 0.8 of v2's; label
+  accuracy at least v2's minus 0.02; aim-citation share at most v2's; copy share (answers at
+  similarity 0.9 or more to one cited sentence) at most v2's plus 0.10 (OWNER D-70: the checker
+  never sees the question, so it passes copied and generic result sentences). The share at
+  similarity 0.7 or more, the mean checker support and v3's lexical reward are reported beside
+  them as independent signals. If no
+  candidate beats v2's mean v3b reward under the guards, v3b is reported as not improving on dev
+  and the owner is asked whether to score it (the result is published either way). The selected
+  adapter's hash and its Q4_K_M GGUF hash are committed before the scoring run.
+evalkit: f9cbc8e5396c4fc638021cb426cc34e2d6853d78   # evalkit-harness==0.4.0, as V2.2 (D-56)
+provider: openai_only          # as OWNER D-57 and D-69
+task: pubmedqa
+task_file: configs/tasks/pubmedqa_cit.yaml
+n_cases: 1000                  # the same 1,000 PQA-L cases as E3.2, V2.2 and v3 (seed 7)
+seed: 7
+quantization: Q4_K_M
+metric: headline
+judges: [gpt-6.1-sol]
+extractor: gpt-6-luna
+primary:                       # one primary comparison: v3b minus v2
+  - [gemma-e2b-grounded-v3b-q4, gemma-e2b-grounded-v2-q4]
+primary_metrics:
+  - {metric: headline, better: higher}   # v2 0.329 (V2.2)
+guardrails:
+  - {metric: citation_precision, min: 0.70}
+  - {metric: aim_citation_rate, max: 0.10}
+stretch:
+  - {metric: headline, reach: 0.404}      # the base model's V2.2 headline
+holm: family                   # a family of one primary test, so Holm leaves its p-value unchanged
+bootstrap: {resamples: 10000, seed: 7, alpha: 0.05}
+rule: >-
+  v3b "improves on v2" only if v3b's headline is above v2's (0.329 in V2.2) and the paired
+  bootstrap 95% interval of v3b minus v2 on the shared 1,000 cases (10,000 resamples, seed 7,
+  EvalKit's stats functions) excludes zero, with Holm applied over the primary family (one test);
+  otherwise the gap is reported as a tie, whichever way the point estimate falls. Guardrails are
+  bars on v3b's own values: citation precision at least 0.70 and aim-citation rate at most 0.10.
+  Reaching 0.404 is a stretch goal, reported, not tested. If v3 is also scored, both results are
+  reported, each under its own plan, and neither is chosen after the fact as "the" v3.
+report_beside_headline: >-
+  v3b's label distribution and mean and maximum answer length, next to v2's and base's; its copy
+  share; and the headline among answers that are not copies (similarity under 0.9 to every cited
+  sentence) for v3b, v2 and base, so a gain that comes from copying is visible (OWNER D-70)
+secondary: >-
+  v3b minus base on the V2.2 outcomes (exploratory), accuracy, groundedness, citation validity,
+  B1-B7 for v3b, and the training trace of the reward, its grounding credit and the copy probe
+runs:
+  - name: main_v3b
+    purpose: the primary comparison, guardrails and the stretch goal for v3b
+    config: configs/evalkit_v3b.yaml
+    task: configs/tasks/pubmedqa_cit.yaml
+    n: 1000
+    new_models: [gemma-e2b-grounded-v3b-q4]
+    cached_models: [gemma-e2b-base-q4, gemma-e2b-grounded-v2-q4]
+    citation_support: true
+    results: docs/results/main_v3b
+    command: uv run evalkit run configs/evalkit_v3b.yaml --task configs/tasks/pubmedqa_cit.yaml --n 1000
+spend: >-
+  the main_v3b run's cost into docs/measurements/spend-ledger.jsonl; its cap is set by the owner
+  before the run (asked with the ask widget) and EvalKit's max_cost_usd enforces it. Training
+  costs no API money (Kaggle T4, GPU hours logged)

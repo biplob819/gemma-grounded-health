@@ -83,6 +83,7 @@ Each decision below seeds `docs/decisions.md` as D-1 to D-33; later rulings are 
 | D-67 | Re-register the v3 plan after the trial died before its first GRPO step: `ggh grpo` read `artifacts/targets/artifacts/targets/train.jsonl` (the trainer joined the targets folder twice), so no training step, checkpoint or v3 measurement exists. Only the trainer changes (prompts now read through `train_prompts(root)`, with a test); its pin moves from `2813e430…` to `3d184b70…` and the plan hash from `353e7cbe…` to `174e6f75…`. The reward, recipe, rules, schema, packages, primary test, guardrails and selection rule are unchanged. The plan's single row in `preregistrations.jsonl` is replaced with the new commit (the superseded row is in git history), and the trial is pushed again from the new commit. The owner's $15 scoring cap moves to OWNER D-69 (D-68 went to the second re-registration) | Patch the path outside the pinned trainer to keep the old hash; keep two rows for one plan; drop the trial | The plan says a change to a pinned file needs a new plan and hash before training, recorded as a decision; nothing was trained or measured, so re-registering keeps the pre-registration honest |
 | D-68 | Re-register the v3 plan a second time, before the main run, as its trial clause allows: trial attempt 2 (kernel version 2, repo at 84d5dc4) trained all 40 GRPO steps, then `ggh rl-dev` scored v2 and failed to load the next adapter, because v2's model was still held on the T4 (5.51 GB free; `release()` dropped only its own reference). No trial adapter was scored on dev, so no stop or go reading exists. `rl_dev` now scores each adapter in its own process (`ggh rl-dev-one`), with tests; training code is unchanged. Trainer pin `3d184b70…` to `4fd400ec…`, plan hash `174e6f75…` to `57c8a10d…`, the single v3 row replaced. Attempt 2's training record is kept in `docs/measurements/v3/trial-attempt-2/` and the trial runs again in full from the fixed commit. The owner's $15 scoring cap moves to OWNER D-69 | Score attempt 2's saved adapters in a separate scoring-only kernel; free GPU memory in-process with del, gc and empty_cache only; skip the trial read | A full re-run tests the exact train-then-score path the main run uses, for about 50 GPU minutes; a separate process returns all GPU memory, whatever Unsloth keeps referenced; attempt 2 was never read on dev, so re-running it selects nothing |
 | OWNER D-69 | The v3 scoring run (main_v3, node V3.4) may spend up to $15 on the OpenAI API, enforced by EvalKit's `max_cost_usd: 15`; the owner wrote "15 dollar cap is fine" in this session's chat on 2026-11-21, after choosing OpenAI-only scoring in the ask widget (OWNER D-66). Recorded as D-69 because D-67 and D-68 went to the plan's re-registrations | No cap set before the run; the relayed $25 project ceiling; a larger cap for re-runs | The owner's ruling; $15 covers one run of v3's 1,000 answers judged once (V2.2 cost $4.50 for a larger run), with no re-runs |
+| OWNER D-70 | Owner rulings in this session's ask widget on 2026-11-23, after a free dev check showed v3's reward ranks v2 (1.11) above base (0.88) while Sol's headline ranks base (0.52) far above v2 (0.35): let v3's pre-registered main run finish and report it under its own plan; build v3b around a local entailment check ("Local entailment check"), strengthened before building ("Strengthen the proxy"), with owner-approved downloads of cross-encoder/nli-deberta-v3-large, lytang/MiniCheck-RoBERTa-Large and lytang/MiniCheck-Flan-T5-Large; then "Build v3b now". v3b's reward pays 0.25 for the label and 1.0 more when the checker (the mean of MiniCheck-RoBERTa-L and nli-deberta-v3-large on the cited sentences, threshold 0.65) supports a right answer; it is trained under its own plan hashed before training, selected on dev rows the checker was not chosen on, and scored only with a cap the owner sets before that run; mid-run checkpoint uploads are decided after results; after the V3.3 verifier showed the checker passes copied and generic result sentences, the owner chose "Guard + report": copy share at most v2's plus 0.10 as a v3b trial stop rule and selection guard, and the headline among non-copied answers reported beside the headline. Node numbering after this ruling: V3.3 is v3b, and v3's scoring run (booked to "node V3.3" in its hashed plan, V3.4 in OWNER D-69) falls in V3.5; a right "maybe" earns 0.25 + 0.4 without the checker, so "maybe" carries no premium over a right yes/no (0.81 expected at the gold pass rate, 0.68 at v2's dev pass rate) | Cancel v3's main run; keep v3's reward; an API judge in the training loop; a single checker; no further reward work until v3's result | Owner rulings via the ask widget; a reward that ranks models against the measured headline cannot be expected to raise it |
 
 ---
 
@@ -615,11 +616,11 @@ gemma-grounded-health/
 
 Status vocabulary: `not-started | spec | building | green`.
 
-### 13.2 Build graph: 21 nodes in seven waves (O6.1 cut, OWNER D-58; V3.1 and V3.2 added, OWNER D-66)
+### 13.2 Build graph: 22 nodes in seven waves (O6.1 cut, OWNER D-58; V3.1 and V3.2 added, OWNER D-66; V3.3, OWNER D-70)
 
 **Release (all Must and Should stories): 18 nodes.** W0.1, N1.1–N1.3, E3.1, T2.1, T2.2, X3.1, X3.2, E3.2, V2.1, V2.2 (OWNER D-43), E3.3, R4.1–R4.5.
 **Full scope: 19 nodes**, adding P5.1 (write-up). O6.1 (DPO, Could) was cut by OWNER D-58.
-**Wave 7 (after v1.0.0, OWNER D-66):** V3.1 (v3 GRPO groundwork); V3.2 (trial verdict, main-run kernels, selection rule); V3.3 (main-run outputs, selection, export) and V3.4 (scoring, release) are added when V3.2 is green.
+**Wave 7 (after v1.0.0, OWNER D-66):** V3.1 (v3 GRPO groundwork); V3.2 (trial verdict, main-run kernels, selection rule); V3.3 (v3b, a checker reward aligned with the headline, OWNER D-70); V3.4 (run outputs, selection, export) and V3.5 (scoring, release) are added when their inputs exist.
 
 | Node | Title | Depends on | Deliverable (what exists when it is green) | Stories |
 | --- | --- | --- | --- | --- |
@@ -644,6 +645,7 @@ Status vocabulary: `not-started | spec | building | green`.
 | **P5.1** | Write-up | R4.5 | "How I built it" note, decision log summary, project page text with generated numbers, video script | — |
 | **V3.1** | v3 GRPO: reward, recipe, pre-registration and Kaggle runner | R4.5 | Programmatic GRPO reward proven against planted hacks, a recipe continuing v2's adapter, `ggh grpo` and `ggh rl-dev`, the v3 plan hashed before training, a pinned Kaggle notebook (Wave 7, OWNER D-66) | US1, US3 |
 | **V3.2** | v3 trial verdict, main-run kernels and the selection rule | V3.1 | The trial's outputs frozen with every stop rule recomputed (passed), the main run split into a train kernel and a score kernel rendered at one commit, the plan's dev checkpoint-selection rule as tested code, the owner's $15 scoring cap recorded | US1, US3 |
+| **V3.3** | v3b: a checker reward aligned with the headline, plan and kernels | V3.2 | A reward that tracks the headline: two local grounding checkers chosen against Sol on committed dev answers, a headline-shaped v3b reward proven against planted hacks, its trainer and held-out dev check, v3b's Kaggle kernels, and the v3b plan hashed before training | US1, US3 |
 
 Waves: **W0** harness → **N1** data → **T2** training, alongside **E3.1** serving → **X3** export and laptop → **E3** evaluation → **R4** release, ending in the v1.0.0 open-source release (R4.5) → **P5/O6** write-up and optional DPO.
 
@@ -969,6 +971,16 @@ Each row becomes one line in `docs/graph/catalog.tsv` with status `not-started`.
 | RLM-01 | The trial's outputs frozen and its stop rules recomputed from the committed replies | OWNER D-66, D-67, D-68 |
 | RLM-02 | The main run split into a train kernel and a score kernel, rendered at one commit | D-10, OWNER D-66 |
 | RLM-03 | The plan's dev checkpoint selection as tested code: seven guards, ties to the earlier step | D-4, OWNER D-66 |
+
+**V3.3 v3b: a checker reward aligned with the headline (OWNER D-70)**
+
+| Cap | Capability | Trace |
+| --- | --- | --- |
+| RLB-01 | Local grounding checker (MiniCheck-RoBERTa-L and nli-deberta-v3-large, cited sentences), chosen against Sol on committed dev answers | OWNER D-70 |
+| RLB-02 | Headline-shaped v3b reward proven against planted hacks | OWNER D-70 |
+| RLB-03 | v3b trainer and dev check on dev rows outside the checker's tuning set | OWNER D-70 |
+| RLB-04 | v3b recipe and Kaggle kernels (trial, train, score) rendered at one commit | D-10, OWNER D-70 |
+| RLB-05 | v3b pre-registration hashed before training | D-4, OWNER D-70 |
 
 **O6.1 DPO** was cut (OWNER D-58); its capabilities DPO-01..04 are removed.
 

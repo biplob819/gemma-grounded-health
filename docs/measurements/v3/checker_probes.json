@@ -1,0 +1,42 @@
+[
+  {
+    "probe": "verbatim copy of the cited sentence",
+    "claim": "Serum luteinizing hormone levels were not affected by corticotropin-releasing hormone and did not correlate with immunoreactive beta-endorphin levels.",
+    "citations": [
+      7
+    ],
+    "support": 0.991
+  },
+  {
+    "probe": "copy of an unrelated result sentence",
+    "claim": "The increases in insulin and immunoreactive beta-endorphin levels were correlated (p < 0.05).",
+    "citations": [
+      10
+    ],
+    "support": 0.9841
+  },
+  {
+    "probe": "generic study description",
+    "claim": "The study measured immunoreactive beta-endorphin levels in patients with polycystic ovary syndrome and controls.",
+    "citations": [
+      6
+    ],
+    "support": 0.8063
+  },
+  {
+    "probe": "honest answer drawing the question's conclusion",
+    "claim": "Elevated immunoreactive beta-endorphin in polycystic ovary syndrome is not caused by increased pituitary secretion.",
+    "citations": [
+      6
+    ],
+    "support": 0.024
+  },
+  {
+    "probe": "the reward tests' good answer",
+    "claim": "The pituitary response of immunoreactive beta-endorphin to corticotropin-releasing hormone was similar to controls.",
+    "citations": [
+      6
+    ],
+    "support": 0.5919
+  }
+]
