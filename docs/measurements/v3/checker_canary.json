@@ -1,5 +1,5 @@
 {
- "what": "three committed dev answers the v3b checker must reproduce at startup (within 0.01) before training or dev scoring",
+ "what": "four committed dev answers the v3b checker must reproduce at startup (each model and their mean, within 0.01) before training or dev scoring; the fourth has a mid-range deberta score so drift in that model alone shows",
  "pairs": [
   {
    "case": "dev-15534113",
@@ -27,6 +27,15 @@
    "minicheck_roberta": 0.0986,
    "deberta_large": 0.0001,
    "support": 0.0493
+  },
+  {
+   "case": "dev-16716359",
+   "model": "v1",
+   "evidence": "The aim of the present study was to examine the predictive value of cognitive impairment in the acute phase after stroke as a risk factor for long-term (six to ten months after stroke) depressive symptoms (DS) and a reduced quality of life (QOL), independent of demographic and neurological predictors.",
+   "claim": "Cognitive impairment in the acute phase after stroke is a risk factor for long-term DS and QOL.",
+   "minicheck_roberta": 0.9321,
+   "deberta_large": 0.4898,
+   "support": 0.7109
   }
  ]
 }

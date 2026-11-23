@@ -21,8 +21,9 @@ A wrong label earns no grounding credit.
 "Maybe" answers are not sent to the checker: v2's insufficient targets say what the abstract
 does not report, which a support checker rejects by design (none of the 299 passes,
 `docs/measurements/v3/gold_checker.json`). Their credit is smaller so that "maybe" carries no
-premium: a right "maybe" earns 0.75, below a right yes/no's expected 0.81 at the 56 % pass rate
-of v2's yes/no gold answers. Their text and an aim citation are not checked (v2's insufficient
+premium: a right "maybe" earns 0.65, below a right yes/no's expected reward both at the 56 % pass
+rate of v2's yes/no gold answers (0.81) and at v2's own 43 % on its right-label dev answers
+(0.68, 69 of 159). Their text and an aim citation are not checked (v2's insufficient
 targets cite design sentences on purpose); the plan's "maybe" share guard bounds any drift.
 
 The checker never sees the question, so copying a cited result sentence passes it (V3.3
@@ -44,7 +45,7 @@ from ggh.targets.rules import is_aim_sentence, is_excluded_from_answers
 
 R_LABEL = 0.25
 R_GROUNDED = 1.0
-R_GROUNDED_MAYBE = 0.5
+R_GROUNDED_MAYBE = 0.4
 COPY_RATIO = 0.9  # an answer this close to one cited sentence counts as copied (guarded)
 
 

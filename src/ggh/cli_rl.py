@@ -61,14 +61,14 @@ def _cmd_rl_dev_one(args: argparse.Namespace) -> int:
 def _cmd_grpo_b(args: argparse.Namespace) -> int:
     from ggh.config import ConfigError
     from ggh.rl.grpo import InitError
-    from ggh.rl.grpo_b import run
+    from ggh.rl.grpo_b import CheckerError, run
 
     try:
         report = run(Path(args.config), Path(args.root), Path(args.out), max_steps=args.max_steps)
     except ImportError as exc:
         print(f"grpo-b: FAIL: {exc}; needs the Kaggle GRPO packages")
         return EXIT_ERROR
-    except (ConfigError, InitError, OSError) as exc:
+    except (ConfigError, InitError, CheckerError, OSError) as exc:
         print(f"grpo-b: FAIL: {exc}")
         return EXIT_ERROR
     short = {k: v for k, v in report.items() if k not in ("reward_trace", "trl_args")}

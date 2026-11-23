@@ -1,7 +1,7 @@
 # V3.3 run state
 
-**Now:** building v3b. Verifier round 1's blockers are fixed and the plan is re-hashed.
-**Next:** verifier round 2, then record the plan, render the kernels, converge x2 and merge.
+**Now:** verifier round 2 PASS. The plan is recorded and the three v3b kernels are rendered.
+**Next:** converge x2 and merge. The v3b trial goes to the portfolio session only with the owner's go-ahead.
 
 ## Log
 - 2026-11-23 — The owner asked whether RL is improving and how to know early. The free checks ran with the owner's go-ahead in the widget. Reward alignment on the 200 dev grounding cases: v3's reward ranks v2 > base > v1, while Sol's headline ranks base > v1 ≈ v2. More than half of v2's maximum-reward answers are claims Sol judges unsupported (over-generalisation). Headroom: 41–46 % of trial steps had zero-spread groups. Owner ruling (OWNER D-70): finish v3's main run and build v3b around a local entailment check.
@@ -29,3 +29,9 @@
   - the provenance scripts for gold_checker.json and the deberta-base column are committed (checker_scores.jsonl merges their outputs by case and model);
   - node numbering: v3's scoring now falls in V3.5.
   The plan was re-hashed before any v3b training.
+- 2026-11-23 — Verifier round 2 PASS with no blockers. It confirmed all six fixes and the Unsloth import order end to end, and the canary reproduces within about 4e-5 on CPU and MPS. Notes applied before recording the plan:
+  - a fourth canary pair whose deberta score sits mid-range (0.49), checked per model and as the mean, so drift in deberta alone shows (the real checker passes it);
+  - the "maybe" credit cut to 0.4, since a right maybe at 0.75 still beat v2's own dev pass rate (69 of 159, an expected 0.68); recorded in OWNER D-70;
+  - `grpo-b` reports a canary failure as a FAIL line;
+  - the spec's generic-probe figure corrected (0.81).
+  Notes left as they are: the copy guard covers near-verbatim copies only (the owner chose guard + report; `copied_close` at 0.7 and the non-copy headline make paraphrases visible), and the merge into checker_scores.jsonl is described, not scripted. Plan re-hashed to ec30faf7… before any v3b training.

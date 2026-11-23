@@ -22,18 +22,18 @@ Two causes: the reward pays a full point for the label alone, and its word-overl
   - **Rejected:** whole-abstract evidence is much worse (AUC 0.50–0.73).
   - **Threshold:** 0.65, chosen in 4 of 5 folds. Agreement is flat from 0.50 to 0.80, so the exact value matters little.
   - **Caveat:** the pair itself was picked from nine variants on the same answers without nested cross-validation, so its lead over the next best (0.81, 0.80) is within noise.
-  - **Blind spot (verifier):** the checker never sees the question. Copied or generic result sentences pass (0.98–0.99), while an answer that draws the question's conclusion fails (0.02) (`docs/measurements/v3/checker_probes.json`). Sol's headline shares this. OWNER D-70 adds a copy guard and a non-copy headline.
-  - **Startup check:** before training and before dev scoring, the checker must reproduce three committed canary pairs within 0.01.
+  - **Blind spot (verifier):** the checker never sees the question. Copied result sentences pass (0.98–0.99) and a generic one passes (0.81), while an answer that draws the question's conclusion fails (0.02) (`docs/measurements/v3/checker_probes.json`). Sol's headline shares this. OWNER D-70 adds a copy guard and a non-copy headline.
+  - **Startup check:** before training and before dev scoring, the checker must reproduce four committed canary pairs within 0.01, for each model and for their mean.
   - **Implementation:** `src/ggh/rl/checker.py`, revisions pinned, and it reproduces the experiment's scores exactly.
   - **Held out:** the 200 tuning cases (`docs/measurements/v3/checker_tuning_ids.json`) are excluded from v3b's selection.
 - **Reward (RLB-02).** `src/ggh/rl/reward_b.py`:
   - unparsed −1;
   - +0.25 for the gold label;
   - +1.0 more when the label is right, the structure passes (v3's checks without word overlap) and the checker's support is ≥ 0.65;
-  - +0.5 instead of +1.0 for a right "maybe" with sound structure, which is not sent to the checker;
+  - +0.4 instead of +1.0 for a right "maybe" with sound structure, which is not sent to the checker;
   - −0.5 for an aim citation.
 
-  On the 600 committed dev answers, with the checker replayed from the committed scores, this reward averages base 0.546 > v2 0.511 > v1 0.143 (`scripts/v3b_checker_eval.py`); label credit 0.5 would nearly tie base and v2. "Maybe" answers skip the checker because none of v2's 299 maybe targets pass it: they say what is missing. Their smaller credit removes a premium: a right maybe earns 0.75, below a right yes/no's expected 0.81. Of v2's 2,423 yes/no gold answers, 56 % pass, which leaves headroom that v3's reward lacked. Copying a cited result sentence is paid, since it is supported. The answer's similarity to its nearest cited sentence is recorded, and the plan guards the copy share. The checker runs once per batch, and only for right-label yes/no replies with sound structure.
+  On the 600 committed dev answers, with the checker replayed from the committed scores, this reward averages base 0.546 > v2 0.511 > v1 0.143 (`scripts/v3b_checker_eval.py`); label credit 0.5 would nearly tie base and v2. "Maybe" answers skip the checker because none of v2's 299 maybe targets pass it: they say what is missing. Their smaller credit removes a premium: a right maybe earns 0.65, below a right yes/no's expected reward at the gold pass rate (0.81) and at v2's own dev pass rate (0.68). Of v2's 2,423 yes/no gold answers, 56 % pass, which leaves headroom that v3's reward lacked. Copying a cited result sentence is paid, since it is supported. The answer's similarity to its nearest cited sentence is recorded, and the plan guards the copy share. The checker runs once per batch, and only for right-label yes/no replies with sound structure.
 - **Trainer and dev check (RLB-03).** `src/ggh/rl/grpo_b.py` reuses v3's pinned trainer pieces with v3b's reward, so v3's pinned files are untouched.
   - **Where the checker runs:** on the CPU during training, adding about 4 s per step locally and an estimated 12–20 s on Kaggle; on the GPU during the dev check.
   - **Dev check:** `ggh rl-dev-b` scores v2 and each checkpoint, each in its own process, on the 300 dev rows outside the tuning set.

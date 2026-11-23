@@ -80,11 +80,21 @@ def prefetch() -> None:  # pragma: no cover - network
 
 def canary_problem(checker: Checker, canary: dict[str, Any]) -> str:
     """ "" when the checker reproduces the committed canary scores, else what differs (a
-    different transformers or device on Kaggle must not silently change the reward)."""
+    different transformers or device on Kaggle must not silently change the reward). The mean is
+    always checked; each model is checked too when the checker reports per-model scores."""
     pairs = canary["pairs"]
-    got = checker.support([(p["evidence"], p["claim"]) for p in pairs])
-    bad = [(p["case"], p["support"], round(g, 4)) for p, g in zip(pairs, got, strict=True)
-           if abs(g - p["support"]) > CANARY_TOLERANCE]  # fmt: skip
+    inputs = [(p["evidence"], p["claim"]) for p in pairs]
+    bad = []
+    for p, g in zip(pairs, checker.support(inputs), strict=True):
+        if abs(g - p["support"]) > CANARY_TOLERANCE:
+            bad.append((p["case"], "mean", p["support"], round(g, 4)))
+    per_model = getattr(checker, "support_by_model", None)
+    if per_model is not None:
+        keys = ("minicheck_roberta", "deberta_large")  # MODELS order
+        for k, scores in zip(keys, per_model(inputs), strict=True):
+            for p, g in zip(pairs, scores, strict=True):
+                if abs(g - p[k]) > CANARY_TOLERANCE:
+                    bad.append((p["case"], k, p[k], round(g, 4)))
     return f"checker canary off by more than {CANARY_TOLERANCE}: {bad}" if bad else ""
 
 
@@ -107,19 +117,31 @@ class HFChecker:  # pragma: no cover - downloads two models; checked on real dev
             model = AutoModelForSequenceClassification.from_pretrained(path).eval().to(device)
             self.models.append((tok, model, label_index(model.config.id2label, spec["label"])))
 
+    def support_by_model(self, pairs: Sequence[Pair]) -> list[list[float]]:
+        """Each model's support probability for each pair, in MODELS order."""
+        order = sorted(range(len(pairs)), key=lambda i: len(pairs[i][0]) + len(pairs[i][1]))
+        out = []
+        with self._torch.no_grad():
+            for tok, model, idx in self.models:
+                scores = [0.0] * len(pairs)
+                for i in range(0, len(order), BATCH):
+                    rows = order[i : i + BATCH]
+                    enc = tok(
+                        [pairs[j][0] for j in rows],
+                        [pairs[j][1] for j in rows],
+                        truncation=True,
+                        max_length=MAX_TOKENS,
+                        padding=True,
+                        return_tensors="pt",
+                    ).to(self.device)
+                    probs = self._torch.softmax(model(**enc).logits.float(), dim=-1)[:, idx]
+                    for j, q in zip(rows, probs.cpu().tolist(), strict=True):
+                        scores[j] = q
+                out.append(scores)
+        return out
+
     def support(self, pairs: Sequence[Pair]) -> list[float]:
         if not pairs:
             return []
-        order = sorted(range(len(pairs)), key=lambda i: len(pairs[i][0]) + len(pairs[i][1]))
-        total = [0.0] * len(pairs)
-        with self._torch.no_grad():
-            for tok, model, idx in self.models:
-                for i in range(0, len(order), BATCH):
-                    rows = order[i : i + BATCH]
-                    enc = tok([pairs[j][0] for j in rows], [pairs[j][1] for j in rows],
-                              truncation=True, max_length=MAX_TOKENS, padding=True,
-                              return_tensors="pt").to(self.device)  # fmt: skip
-                    probs = self._torch.softmax(model(**enc).logits.float(), dim=-1)[:, idx]
-                    for j, p in zip(rows, probs.cpu().tolist(), strict=True):
-                        total[j] += p
-        return [t / len(self.models) for t in total]
+        per_model = self.support_by_model(pairs)
+        return [sum(col) / len(per_model) for col in zip(*per_model, strict=True)]

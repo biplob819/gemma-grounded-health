@@ -34,7 +34,7 @@ def score(text, gold="no", ctx=CONTEXT, checker=None):
 
 
 def test_constants_and_checker_are_pinned():
-    assert (RB.R_LABEL, RB.R_GROUNDED, RB.R_GROUNDED_MAYBE, RB.COPY_RATIO) == (0.25, 1.0, 0.5, 0.9)
+    assert (RB.R_LABEL, RB.R_GROUNDED, RB.R_GROUNDED_MAYBE, RB.COPY_RATIO) == (0.25, 1.0, 0.4, 0.9)
     assert C.CANARY_TOLERANCE == 0.01
     assert C.THRESHOLD == 0.65 and C.MAX_TOKENS == 512
     assert [m["repo"] for m in C.MODELS] == [
@@ -89,18 +89,19 @@ def test_maybe_answers_to_maybe_questions_skip_the_checker():
     fake = FakeChecker()
     text = ans("maybe", "The abstract does not report whether the pituitary is the source.", [6])
     sc = score(text, gold="maybe", checker=fake)
-    assert sc.reward == 0.75 and fake.calls == [] and sc.support is None
+    assert sc.reward == 0.65 and fake.calls == [] and sc.support is None
     empty = score(ans("maybe", "", []), gold="maybe")
     assert empty.reward == 0.25  # an empty maybe earns the label only
 
 
 def test_maybe_carries_no_premium_over_a_typical_yes_no():
-    # a right maybe (0.75) earns less than a right yes/no's expected reward at the 56 % pass rate
-    # of v2's yes/no gold answers (0.25 + 0.56 x 1.0 = 0.81)
+    # a right maybe (0.65) earns less than a right yes/no's expected reward at the 56 % pass rate
+    # of v2's yes/no gold answers (0.81) and at v2's own 69 of 159 right-label dev answers (0.68)
     gold = json.loads((ROOT / "docs/measurements/v3/gold_checker.json").read_text("utf-8"))
     yes_no = [gold["by_label"][k] for k in ("yes", "no")]
     rate = sum(b["pass"] for b in yes_no) / sum(b["targets"] for b in yes_no)
     assert RB.R_LABEL + rate * RB.R_GROUNDED > RB.R_LABEL + RB.R_GROUNDED_MAYBE
+    assert RB.R_LABEL + 69 / 159 * RB.R_GROUNDED > RB.R_LABEL + RB.R_GROUNDED_MAYBE
 
 
 def test_hack_maybe_filler_or_aim_citation_on_a_maybe_question_is_bounded():
@@ -108,7 +109,7 @@ def test_hack_maybe_filler_or_aim_citation_on_a_maybe_question_is_bounded():
                    gold="maybe")  # fmt: skip
     aim = score(ans("maybe", "The study wished to determine the role of beta-endorphin.", [2]),
                 gold="maybe")  # fmt: skip
-    assert filler.reward == aim.reward == 0.75  # not checked by design; the maybe guard bounds it
+    assert filler.reward == aim.reward == 0.65  # not checked by design; the maybe guard bounds it
 
 
 def test_copying_a_cited_result_sentence_is_paid_and_measured():
@@ -137,8 +138,18 @@ def test_the_canary_catches_a_checker_that_scores_differently():
         def support(self, pairs):
             return [table[p] + self.shift for p in pairs]
 
-    assert len(canary["pairs"]) == 3 and C.canary_problem(Replay(), canary) == ""
+    assert len(canary["pairs"]) == 4 and C.canary_problem(Replay(), canary) == ""
     assert "canary" in C.canary_problem(Replay(0.02), canary)
+
+    class PerModel(Replay):  # the mean is right but deberta alone drifted
+        def support_by_model(self, pairs):
+            mc = [p["minicheck_roberta"] for p in canary["pairs"]]
+            db = [p["deberta_large"] + (0.05 if i == 3 else 0.0)
+                  for i, p in enumerate(canary["pairs"])]  # fmt: skip
+            return [mc, db]
+
+    assert "deberta_large" in C.canary_problem(PerModel(), canary)
+    assert any(0.2 < p["deberta_large"] < 0.8 for p in canary["pairs"])  # deberta drift shows
     for p in canary["pairs"]:  # the committed per-answer scores back each canary
         assert p["support"] == round((p["minicheck_roberta"] + p["deberta_large"]) / 2, 4)
 
