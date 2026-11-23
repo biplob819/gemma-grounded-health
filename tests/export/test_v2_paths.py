@@ -31,7 +31,7 @@ def test_v1_paths_are_unchanged_and_v2_has_its_own():
     assert measurements("base") == measurements("ft") == Path("docs/measurements")
     assert measurements("ft2") == Path("docs/measurements/v2")
     with pytest.raises(ValueError, match="must be one of"):
-        version("ft3")
+        version("ft4")  # ft3 is v3 (V3.4)
 
 
 def test_ft2_serves_on_8083_from_its_own_ggufs():
