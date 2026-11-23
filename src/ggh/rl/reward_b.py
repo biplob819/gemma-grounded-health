@@ -134,10 +134,10 @@ def score_batch(
         if a is None:
             out.append(ScoreB(False, False, False, False, False, 0.0, None, R_UNPARSED, ""))
             continue
-        ctx = contexts[i]
+        sentences: Sequence[str] = contexts[i]
         correct = a.label == golds[i]
-        in_range = [c for c in a.citations if 1 <= c <= len(ctx)]
-        aim = a.label != "maybe" and any(is_aim_sentence(ctx[c - 1]) for c in in_range)
+        in_range = [int(c) for c in a.citations if 1 <= c <= len(sentences)]
+        aim = a.label != "maybe" and any(is_aim_sentence(sentences[c - 1]) for c in in_range)
         support = got.get(i)
         if problem:
             reason = problem
@@ -150,7 +150,7 @@ def score_batch(
         grounded = not reason
         bonus = R_GROUNDED_MAYBE if a.label == "maybe" else R_GROUNDED
         reward = R_LABEL * correct + bonus * (correct and grounded) - P_AIM * aim
-        sim = copy_similarity(a, ctx)
+        sim = copy_similarity(a, sentences)
         out.append(
             ScoreB(True, correct, grounded, aim, sim >= COPY_RATIO, sim, support, reward, reason)
         )

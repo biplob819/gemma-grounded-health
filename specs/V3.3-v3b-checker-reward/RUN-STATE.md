@@ -35,3 +35,4 @@
   - `grpo-b` reports a canary failure as a FAIL line;
   - the spec's generic-probe figure corrected (0.81).
   Notes left as they are: the copy guard covers near-verbatim copies only (the owner chose guard + report; `copied_close` at 0.7 and the non-copy headline make paraphrases visible), and the merge into checker_scores.jsonl is described, not scripted. Plan re-hashed to ec30faf7… before any v3b training.
+- 2026-11-23 — Converge failed on pyright in reward_b.py: a citation index typed as Any picked Sequence's slice overload. Fixed with a renamed variable and an explicit int, behaviour unchanged (all reward tests pass). The plan was re-pinned and re-hashed to 03ece981…, the v3b row replaced and the kernels re-rendered, still before any v3b training.

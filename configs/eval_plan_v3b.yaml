@@ -13,7 +13,7 @@ why: >-
   committed dev answers (docs/measurements/v3/checker_eval.json)
 method: GRPO from v2's adapter with the v3b checker reward; no judge or API call in training
 pinned:                        # everything that shapes training, by sha256 (none may change after this)
-  reward: {file: src/ggh/rl/reward_b.py, sha256: cd5cb721264277ee2292327db4512a9d62fad45490aeaf09810d6f5d807a9423}
+  reward: {file: src/ggh/rl/reward_b.py, sha256: 42542de3dd7dab71cb5ae6c3f751b64089999754d0c22c243bdd78b75b285a8b}
   checker: {file: src/ggh/rl/checker.py, sha256: 702b592fc40b52320d395c5dc454629afc8746fd1ff7a76634b2c9f6594af6e5}
   trainer: {file: src/ggh/rl/grpo_b.py, sha256: 9907d876352437316975c08baa4e783e40430377fdd236110aee33e3797dfff7}
   trainer_v3_parts: {file: src/ggh/rl/grpo.py, sha256: 4fd400ecf2ae16287ca8028a8d922c8fa36e408f9ed8eb98f0c71a3100efa6b7}

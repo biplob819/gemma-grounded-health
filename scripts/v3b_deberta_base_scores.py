@@ -55,7 +55,7 @@ for d in RUNS:
             head=bool(r["scores"]["correct_and_grounded"].get("gpt-6.1-sol")),
             gold=c["reference_label"],
         )
-        if cites:
+        if cites and a is not None:
             joined = " ".join(c["context"][i - 1] for i in cites)
             hs = sents(a.answer)
             row["pairs_joined_whole"] = (joined, a.answer)
