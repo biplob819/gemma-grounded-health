@@ -133,3 +133,33 @@ def test_v3b_guards_the_copy_share_and_the_trial_step_time():
     assert not trial_verdict_b(trial, {"wall_clock_s": 4800.0, "steps": 40}).passed  # 120 s
     trial["adapters"]["final"]["copied"] = 0.25
     assert not trial_verdict_b(trial, {"wall_clock_s": 4000.0, "steps": 40}).passed
+
+
+TRIAL_B = ROOT / "docs/measurements/v3/trial_v3b"
+
+
+def test_the_committed_v3b_trial_passes_every_stop_rule():
+    rl = json.loads((TRIAL_B / "rl_dev.json").read_text(encoding="utf-8"))
+    report = json.loads((TRIAL_B / "report.json").read_text(encoding="utf-8"))
+    v = trial_verdict_b(rl, report)
+    assert v.passed and all(v.checks.values()) and len(v.checks) == 6
+    assert rl["run_steps"] == report["steps"] == 40 and rl["dev_rows"] == 200
+    assert report["reward"] == "v3b" and v.reported["seconds_per_step"] == 67.09
+    assert list(rl["adapters"]) == ["v2", "checkpoint-25", "checkpoint-40", "final"]
+
+
+def test_the_v3b_trial_replies_are_the_held_out_dev_rows():
+    # the summaries were recomputed from these replies with the real checker (all four matched);
+    # CI has neither the checker weights nor dev_eval.jsonl, so it checks files and row order
+    from ggh.rl.grpo_b import dev_rows, tuning_ids
+
+    dev = ROOT / "artifacts/data/dev_eval.jsonl"
+    rl = json.loads((TRIAL_B / "rl_dev.json").read_text(encoding="utf-8"))
+    held = tuning_ids(ROOT)
+    for name, summary in rl["adapters"].items():
+        assert json.loads((TRIAL_B / f"dev_{name}.json").read_text(encoding="utf-8")) == summary
+        lines = (TRIAL_B / f"dev_{name}.jsonl").read_text(encoding="utf-8").splitlines()
+        replies = [json.loads(x) for x in lines]
+        assert len(replies) == 200 and not {r["pmid"] for r in replies} & held
+        if dev.is_file():  # built by `ggh data`, not in CI
+            assert [r["pmid"] for r in replies] == [r["pmid"] for r in dev_rows(ROOT, 200)]
