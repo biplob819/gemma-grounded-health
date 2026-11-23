@@ -3,6 +3,7 @@
 import json
 import sys
 from pathlib import Path
+from typing import Any, cast
 
 import pytest
 
@@ -49,7 +50,7 @@ def test_the_components_sum_to_the_v3b_reward_with_one_checker_call(fake):
 
 def test_the_batch_cache_is_keyed_by_context_too(fake):
     text = [[{"role": "assistant", "content": ans("no", GOOD, [6])}]]
-    other = list(CONTEXT)
+    other: list[str] = list(CONTEXT)
     other[5] = "Insulin levels rose after glucose in every subject."
     first = GB.r_grounded(text, gold_label=["no"], context=[list(CONTEXT)])
     second = GB.r_grounded(text, gold_label=["no"], context=[other])
@@ -147,7 +148,7 @@ def test_v3b_kernels_are_rendered_at_one_commit_with_their_metadata():
         nb = (d / "train_kaggle.ipynb").read_text("utf-8")
         commit = nb.split("git checkout -q ")[1][:40]
         commits.add(commit)
-        assert nb == dumps(render(commit, variant="v3b", **kwargs))
+        assert nb == dumps(render(commit, variant="v3b", **cast(dict[str, Any], kwargs)))
         meta = json.loads((d / "kernel-metadata.json").read_text("utf-8"))
         assert meta["id"] == f"biplob819/{slug}" and meta["is_private"] is True
         assert meta["machine_shape"] == "NvidiaTeslaT4" and meta["kernel_sources"] == src
