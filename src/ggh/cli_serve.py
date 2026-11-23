@@ -383,7 +383,7 @@ def register(sub: Any) -> None:
 
     mg = sub.add_parser("merge", help="merge the frozen adapter into the bf16 base on CPU (X3.1)")
     mg.add_argument("--model", default="ft", choices=sorted(VERSIONS),
-                    help="ft (v1), ft2 (v2) or ft3 (v3)")  # fmt: skip
+                    help="ft (v1), ft2 (v2), ft3 (v3) or ft3b (v3b)")  # fmt: skip
     mg.add_argument("--root", default=".", help="repo root")
     mg.set_defaults(func=_cmd_merge)
 
@@ -391,8 +391,8 @@ def register(sub: Any) -> None:
     pa.add_argument(
         "--model",
         default="ft",
-        choices=("ft", "ft2", "ft3"),
-        help="ft (v1), ft2 (v2) or ft3 (v3): ft2 and ft3 write to docs/measurements/v2 or v3",
+        choices=("ft", "ft2", "ft3", "ft3b"),
+        help="ft (v1), ft2, ft3 or ft3b: each but ft writes to its docs/measurements folder",
     )
     pa.add_argument(
         "--port",
@@ -452,7 +452,9 @@ def register(sub: Any) -> None:
     bn.add_argument("--root", default=".", help="repo root")
     bn.set_defaults(func=_cmd_bench)
 
-    sv = sub.add_parser("serve", help="start llama-server: base 8080, ft 8081, ft2 8083, ft3 8085")
+    sv = sub.add_parser(
+        "serve", help="start llama-server: base 8080, ft 8081, ft2 8083, ft3 8085, ft3b 8086"
+    )
     sv.add_argument("--model", default="base", choices=sorted(llama.PORTS))
     sv.add_argument("--quant", default="Q4_K_M", choices=llama.QUANTS)
     sv.add_argument("--port", type=int, default=None)

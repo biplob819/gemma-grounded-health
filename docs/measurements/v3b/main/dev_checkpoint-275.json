@@ -1,0 +1,1 @@
+{"n": 300, "mean_reward": 0.885, "label_accuracy": 0.94, "no_accuracy": 0.8571, "n_gold_no": 21, "yes_share": 0.89, "maybe_share": 0.0067, "grounded_paid": 0.6533, "aim_cited": 0.0067, "copied": 0.1533, "copied_close": 0.29, "v3_reward": 1.3733, "unparsed": 0.0, "mean_support": 0.739, "label_mix": {"maybe": 2, "no": 31, "yes": 267}, "mean_words": 13.95, "max_words": 43}
