@@ -31,30 +31,30 @@ Both GGUFs ship. Q4_K_M is the registered, benchmarked file; Q8_0 (4737.4 MB aga
 
 ## Artifacts
 
-Release `v3b` (`gemma-e2b-grounded-v3b-q4`), 20 files, 18,771,084,543 bytes, lineage verified from `artifacts/parity_v3b/manifest.json` (6 stages), plan problems: 0. The Hub push under tag `v3b.0.0` waits for the owner's go-ahead; each file is then downloaded back and checked against this sha256.
+Release `v3b` (`gemma-e2b-grounded-v3b-q4`), 20 files, 18,771,084,543 bytes, lineage verified from `artifacts/parity_v3b/manifest.json` (6 stages), plan problems: 0. "published" means the file on the Hub was downloaded back with this sha256 (tag `v3b.0.0`).
 
 | File | Size | sha256 | Hub |
 |---|---|---|---|
-| `biplob123/gemma-4-e2b-grounded-health/chat_template.jinja` | 18.57 KB | `0a2c8073c878ab1da004bee933a998606537bbb62016310352c7285c3f01c5b5` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health/config.json` | 4.54 KB | `44d5e8d9938ed73b132bbdb17f0902860d585400b706615aab648baf69d4243a` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health/model.safetensors` | 10.25 GB | `d882d65011f648b1ea66b4cc220d1a57bbf694407fbc81c2693350c6ab1509b2` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health/tokenizer.json` | 32.16 MB | `ab26b2add729e6f645bd869f228f14190a06615538f3be6f7786f33d13d78ad2` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health/tokenizer_config.json` | 3.08 KB | `9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health/generation_config.json` | 208 B | `d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health/processor_config.json` | 1.69 KB | `32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health/ggh_merge.json` | 4.07 KB | `7e4c3ff236f5b660b88558f031335ddbe3484681cc7f8b36bf44b953a668e754` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health/adapter/adapter_config.json` | 1.58 KB | `17c0c0526c410b1a2aecbf74d67594f8f5f961993b7c9d7a955341674274bcf9` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health/adapter/adapter_model.safetensors` | 96.69 MB | `f6d2ccecddaf4c95dd83102c4f817acea0fa982ded9fb9263fe271964ea73a35` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health/README.md` | 30.26 KB | `e6ef8fb11218c96f10c767238abcee3f30bb9b9ba875b827f4a191fa276e8d49` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health/results_bundle.json` | 147.70 KB | `2061e6914f5961cb2885c631a45f749487fccdec57fbcda80112f9bebc46c432` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health/lineage.json` | 10.47 KB | `6e9eafb05f03b294751db870eddad1f205bf61a28f0ffb51204f6cd7840dd40e` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health-GGUF/gemma-4-e2b-grounded-health-Q4_K_M.gguf` | 3.43 GB | `2befee8344d5d7ad610f118017d7743903a35adacd0ab3c2a8fdfac497d09d10` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health-GGUF/gemma-4-e2b-grounded-health-Q8_0.gguf` | 4.97 GB | `5faa9fb14347a86da3a25fea0c291f49f2e9b96853a7c9f6a678795605990824` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health-GGUF/README.md` | 2.00 KB | `f5b4526f94a9dcf501a19925c5c9d9d70a2e3ca40ae419dcb78a9f3dc88faf80` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health/LICENSE` | 11.36 KB | `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health-GGUF/LICENSE` | 11.36 KB | `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health/NOTICE` | 604 B | `808f130d75b533804bdf328dc5a530cbce3176af011d51e03edacd75a8f05ee3` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health-GGUF/NOTICE` | 604 B | `808f130d75b533804bdf328dc5a530cbce3176af011d51e03edacd75a8f05ee3` | push pending |
+| `biplob123/gemma-4-e2b-grounded-health/chat_template.jinja` | 18.57 KB | `0a2c8073c878ab1da004bee933a998606537bbb62016310352c7285c3f01c5b5` | published |
+| `biplob123/gemma-4-e2b-grounded-health/config.json` | 4.54 KB | `44d5e8d9938ed73b132bbdb17f0902860d585400b706615aab648baf69d4243a` | published |
+| `biplob123/gemma-4-e2b-grounded-health/model.safetensors` | 10.25 GB | `d882d65011f648b1ea66b4cc220d1a57bbf694407fbc81c2693350c6ab1509b2` | published |
+| `biplob123/gemma-4-e2b-grounded-health/tokenizer.json` | 32.16 MB | `ab26b2add729e6f645bd869f228f14190a06615538f3be6f7786f33d13d78ad2` | published |
+| `biplob123/gemma-4-e2b-grounded-health/tokenizer_config.json` | 3.08 KB | `9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633` | published |
+| `biplob123/gemma-4-e2b-grounded-health/generation_config.json` | 208 B | `d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de` | published |
+| `biplob123/gemma-4-e2b-grounded-health/processor_config.json` | 1.69 KB | `32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c` | published |
+| `biplob123/gemma-4-e2b-grounded-health/ggh_merge.json` | 4.07 KB | `7e4c3ff236f5b660b88558f031335ddbe3484681cc7f8b36bf44b953a668e754` | published |
+| `biplob123/gemma-4-e2b-grounded-health/adapter/adapter_config.json` | 1.58 KB | `17c0c0526c410b1a2aecbf74d67594f8f5f961993b7c9d7a955341674274bcf9` | published |
+| `biplob123/gemma-4-e2b-grounded-health/adapter/adapter_model.safetensors` | 96.69 MB | `f6d2ccecddaf4c95dd83102c4f817acea0fa982ded9fb9263fe271964ea73a35` | published |
+| `biplob123/gemma-4-e2b-grounded-health/README.md` | 30.26 KB | `e6ef8fb11218c96f10c767238abcee3f30bb9b9ba875b827f4a191fa276e8d49` | published |
+| `biplob123/gemma-4-e2b-grounded-health/results_bundle.json` | 147.70 KB | `2061e6914f5961cb2885c631a45f749487fccdec57fbcda80112f9bebc46c432` | published |
+| `biplob123/gemma-4-e2b-grounded-health/lineage.json` | 10.47 KB | `6e9eafb05f03b294751db870eddad1f205bf61a28f0ffb51204f6cd7840dd40e` | published |
+| `biplob123/gemma-4-e2b-grounded-health-GGUF/gemma-4-e2b-grounded-health-Q4_K_M.gguf` | 3.43 GB | `2befee8344d5d7ad610f118017d7743903a35adacd0ab3c2a8fdfac497d09d10` | published |
+| `biplob123/gemma-4-e2b-grounded-health-GGUF/gemma-4-e2b-grounded-health-Q8_0.gguf` | 4.97 GB | `5faa9fb14347a86da3a25fea0c291f49f2e9b96853a7c9f6a678795605990824` | published |
+| `biplob123/gemma-4-e2b-grounded-health-GGUF/README.md` | 2.00 KB | `f5b4526f94a9dcf501a19925c5c9d9d70a2e3ca40ae419dcb78a9f3dc88faf80` | published |
+| `biplob123/gemma-4-e2b-grounded-health/LICENSE` | 11.36 KB | `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30` | published |
+| `biplob123/gemma-4-e2b-grounded-health-GGUF/LICENSE` | 11.36 KB | `cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30` | published |
+| `biplob123/gemma-4-e2b-grounded-health/NOTICE` | 604 B | `808f130d75b533804bdf328dc5a530cbce3176af011d51e03edacd75a8f05ee3` | published |
+| `biplob123/gemma-4-e2b-grounded-health-GGUF/NOTICE` | 604 B | `808f130d75b533804bdf328dc5a530cbce3176af011d51e03edacd75a8f05ee3` | published |
 
 ## Known limits
 
