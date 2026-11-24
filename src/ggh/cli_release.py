@@ -94,12 +94,15 @@ def _cmd_release_notes(args: argparse.Namespace) -> int:
 
     root = Path(args.root)
     try:
-        text = notes.render(_sources(args), root)
+        src = _sources(args)
+        text = notes.render(src, root)
+        rel_out = Path(args.out) if args.out else notes.out_path(src)
     except (sources.SourceError, ValueError, OSError, KeyError) as exc:
         return _fail("release-notes", exc)
     if args.stdout:
         sys.stdout.write(text)
         return 0
+    args.out = rel_out.as_posix()
     out = root / args.out
     if args.check:
         if not out.is_file() or out.read_text(encoding="utf-8") != text:
@@ -159,6 +162,7 @@ def _cmd_release(args: argparse.Namespace) -> int:
     except (sources.SourceError, ValueError, OSError) as exc:
         return _fail("release", exc)
     print("\n".join(hub.describe(p)))
+    print(f"release: tag {args.tag or hub.release_tag(p.release)}")
     if args.plan_json:
         out = root / args.plan_json
         out.parent.mkdir(parents=True, exist_ok=True)
@@ -185,7 +189,7 @@ def _cmd_release(args: argparse.Namespace) -> int:
             p,
             root,
             hub.HfHubApi(token, staging / "download"),
-            tag=args.tag or f"{p.release}.0.0",
+            tag=args.tag or hub.release_tag(p.release),
             staging=staging,
             ollama=None if args.no_ollama else check,
             record=record,
@@ -312,11 +316,11 @@ def register(sub: argparse._SubParsersAction) -> None:  # pyright: ignore[report
     _source_flags(rt)
     rt.add_argument("--write", default=None, help="splice the block into this file's markers")
     rt.set_defaults(func=_cmd_readme_table)
-    from ggh.release.notes import OUT as NOTES_OUT
-
     rn = sub.add_parser("release-notes", help="GitHub release notes from the bundle (R4.5)")
     _source_flags(rn)
-    rn.add_argument("--out", default=str(NOTES_OUT))
+    rn.add_argument(
+        "--out", default=None, help="default: docs/release_notes_v<version>.md of the release"
+    )
     rn.add_argument("--stdout", action="store_true", help="print instead of writing")
     rn.add_argument("--check", action="store_true", help="fail if --out is not current")
     rn.set_defaults(func=_cmd_release_notes)
@@ -332,7 +336,9 @@ def register(sub: argparse._SubParsersAction) -> None:  # pyright: ignore[report
     rl.add_argument("--dry-run", action="store_true", help="the default; listed for clarity")
     rl.add_argument("--push", action="store_true", help="push (needs HF_TOKEN and a clean plan)")
     rl.add_argument("--owner", default=OWNER_PLACEHOLDER, help="Hub user or organisation")
-    rl.add_argument("--tag", default=None, help="Hub tag (default: the release, e.g. v2.0.0)")
+    rl.add_argument(
+        "--tag", default=None, help="Hub tag (default: the release's, e.g. v2.0.0, v3b.0.0)"
+    )
     rl.add_argument(
         "--release", choices=sorted(LAYOUTS), default=None, help="default: the shipped release"
     )

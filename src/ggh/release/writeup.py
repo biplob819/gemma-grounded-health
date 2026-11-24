@@ -20,7 +20,7 @@ from __future__ import annotations
 import json
 import re
 from collections.abc import Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from string import Template
 from typing import Any
@@ -29,7 +29,7 @@ from ggh.release import links
 from ggh.release.card import DISPLAY, aim_outcome, f3, iv, outcome_table, shipped_bench
 from ggh.release.readme import disclosures
 from ggh.release.sources import Sources
-from ggh.schemas import Comparison, ModelResult, TrainRun
+from ggh.schemas import Comparison, LaptopBench, ModelResult, TrainRun
 
 OUT_DIR = Path("docs") / "writeup"
 TEMPLATES = Path(__file__).parent / "templates" / "writeup"
@@ -184,10 +184,48 @@ def _count(n: int) -> str:
     return f"{n:,}"
 
 
+def story_view(src: Sources, root: Path) -> Sources:
+    """The write-up tells the v1-to-v2 story: with a later release shipped (v3b, V3.8) it reads
+    the bundle as it stood at v2 (v1 and v2 picked by version), with v2's plan, aim-rule count
+    and dev check; the spend sentence still reads the full bundle (`paid_runs`)."""
+    from ggh.release.sources import _read_aim_check, _read_dev_check, _read_plan
+
+    b = src.bundle
+    if b.shipped.version == "v2":
+        return src
+    upto = tuple(r for r in b.releases if r.version in ("v1", "v2"))
+    if [r.version for r in upto] != ["v1", "v2"]:
+        raise WriteupError("the write-up needs v1 and v2 in the bundle")
+    view = b.model_copy(update={"releases": upto})
+    v2 = upto[-1]
+    return replace(
+        src,
+        bundle=view,
+        paths=replace(src.paths, ft_model=None),
+        plan=_read_plan(root, v2.plan, v2.plan_sha256),
+        aim_check=_read_aim_check(root, view),
+        dev_check=_read_dev_check(root, "v2"),
+        rl_recipe=None,
+        result=None,
+        parity_stage=None,
+    )
+
+
+def paid_runs(bundle_versions: list[str]) -> str:
+    """Whose paid runs the bundle's spend covers: v1's and v2's, or, once v3b is a release,
+    every ledger row (OWNER D-75, D-76)."""
+    if set(bundle_versions) <= {"v1", "v2"}:
+        return "v1's and v2's paid runs"
+    return "All the project's paid runs, the GRPO scoring runs included,"
+
+
 def facts(src: Sources, root: Path) -> dict[str, str]:
     """Every value the templates name, formatted from the bundle or committed evidence."""
+    full = src.bundle
+    src = story_view(src, root)
     b = src.bundle
-    v1, v2 = b.releases[0], b.shipped
+    rel = {r.version: r for r in b.releases}
+    v1, v2 = rel["v1"], rel["v2"]
     base = src.paths.base_model
     sol, opus = "gpt-6.1-sol", "claude-opus-5-5"
     refs = {r.name: r for r in b.runs}
@@ -225,7 +263,8 @@ def facts(src: Sources, root: Path) -> dict[str, str]:
     f["base_cp_v1run"] = f3(aim.citation_precision[sol].point)
     f["base_aim_v1run"] = f3(aim.aim_citation_rate[sol].point)
     f["v1_spend"] = f"${refs[v1_run].spent_usd or 0:.2f}"
-    f["total_spend"] = f"${b.spend_usd:.2f}"
+    f["total_spend"] = f"${full.spend_usd:.2f}"
+    f["paid_runs"] = paid_runs([r.version for r in full.releases])
 
     # v2's pre-registered run
     for who, m in (("base", base), ("v1", v1.model), ("v2", v2.model)):
@@ -319,6 +358,10 @@ def facts(src: Sources, root: Path) -> dict[str, str]:
     f["rss"] = f"{bench.peak_rss_mb:.1f}"
     f["tg128"] = f"{bench.llama_bench['tg128']:.0f}" if bench.llama_bench else "?"
     v1_bench = b.bench_variants.get("ft-Q4_K_M")
+    if v1_bench is None and v2.bench_source:  # a later release's bench file: v2's own file
+        variants = _json(root, Path(v2.bench_source.partition("#")[0]))["variants"]
+        if "ft-Q4_K_M" in variants:
+            v1_bench = LaptopBench.model_validate(variants["ft-Q4_K_M"])
     if v1_bench is None or v1_bench.llama_bench is None:
         raise WriteupError("the bundle has no v1 Q4_K_M laptop bench")
     f["v1_gen_tps"] = f"{v1_bench.gen_tps_p50:.1f}"
@@ -410,6 +453,7 @@ def how_i_built_it(src: Sources, root: Path, values: dict[str, str] | None = Non
 
 def project_page(src: Sources, root: Path, values: dict[str, str] | None = None) -> str:
     v = dict(values or facts(src, root))
+    src = story_view(src, root)
     v["header"] = HEADER.format(source="src/ggh/release/templates/writeup/project_page.md")
     v["table"] = outcome_table(src, src.ref(src.main()), bold=src.ft_model)
     v["caveats"] = "\n".join(f"- {c}." for c in disclosures(src))

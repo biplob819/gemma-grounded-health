@@ -18,8 +18,16 @@ import yaml
 from evalkit.pipeline.aggregate import stamp_lines
 from evalkit.schemas import Interval, RunSummary
 
-from ggh.release.sources import AIM_CHECK, LICENCE_RECORD, Sources
-from ggh.schemas import BehaviourRow, Comparison, LaptopBench, ReleaseEntry, RunRef, TrainRun
+from ggh.release.sources import AIM_CHECK, LICENCE_RECORD, RESULTS, Sources
+from ggh.schemas import (
+    BehaviourRow,
+    Comparison,
+    LaptopBench,
+    ReleaseEntry,
+    RLRun,
+    RunRef,
+    TrainRun,
+)
 
 TEMPLATE = Path(__file__).parent / "templates" / "model_card.md"
 HUB_LICENSE = "apache-2.0"
@@ -29,6 +37,11 @@ TAGS = ("gemma", "medical", "biomedical", "pubmedqa", "grounded-generation", "ci
 MODEL_NAME = "gemma-4-e2b-grounded-health"
 BANNER = "Research only, not medical advice"
 BASE_MODEL_RELATION = "finetune"
+# the decision under which each release's parity miss was disclosed rather than gated
+PARITY_DECISIONS = {"v2": "OWNER D-55", "v3b": "OWNER D-73"}
+# releases whose card summary leads with the pre-registered headline result (OWNER D-75); the
+# earlier cards are frozen as published (D-76)
+HEADLINE_LEAD = frozenset({"v3b"})
 REQUIRED_META = (
     "license",
     "base_model",
@@ -222,7 +235,36 @@ def benchmark(src: Sources) -> str:
         if r.name != ref.name:
             lines += [f"Run `{r.name}` (`{r.run_id}`), {scoring(r)}:", ""]
         lines += [outcome_table(src, r, bold=src.ft_model), ""]
+        if r.name == ref.name and exploratory(src):
+            lines += [exploratory_note(src), ""]
     return "\n".join([*lines, *earlier_tables(src)])
+
+
+def exploratory(src: Sources) -> list[str]:
+    """Models the shipped run scored outside the pre-registered test (v3b at Q8_0, OWNER D-73),
+    as the release's result file lists them."""
+    return list((src.result or {}).get("exploratory_models") or [])
+
+
+def model_label(src: Sources, model: str) -> str:
+    """A model as the summary names it: a release, the shipped release's Q8_0, or its id."""
+    rel = next((r for r in src.bundle.releases if r.model == model), None)
+    if rel is not None:
+        return f"{rel.version} (`{model}`)"
+    if model == src.q8_model:
+        tail = ", exploratory" if model in exploratory(src) else ""
+        return f"{src.bundle.shipped.version} at Q8_0 (`{model}`{tail})"
+    return f"`{model}`"
+
+
+def exploratory_note(src: Sources) -> str:
+    v = src.bundle.shipped.version
+    names = " and ".join(f"`{m}`" for m in exploratory(src))
+    what = f"{v} at Q8_0" if exploratory(src) == [src.q8_model] else "an extra model"
+    return (
+        f"{names} is {what}, scored in the same run as an exploratory model outside the "
+        f"pre-registered test (OWNER D-73): no {v} claim rests on it."
+    )
 
 
 # model ids as reports name them (OWNER D-60, D-61: say which model labelled or reviewed)
@@ -478,6 +520,8 @@ def primary_table(src: Sources) -> str:
         how = "; ".join(f"run `{n}`, {scoring(refs[n])}" for n in runs if n in refs)
         sizes = sorted({c.family_size for c in comps if c.family_size})
         holm = f" Holm runs over the plan's {sizes[0]} tests." if len(sizes) == 1 else ""
+        if sizes == [1]:
+            holm = " The plan has a single primary test, so Holm leaves its p-value unchanged."
         family = f" Every model on both sides was scored the same way: {how}.{holm}"
     out = (
         f"From `{shipped.plan}` ({shipped.plan_status}). Differences with 95% paired bootstrap "
@@ -600,27 +644,55 @@ def model_review(src: Sources, rows: Sequence[BehaviourRow]) -> str:
     return text
 
 
+def parity_bar(src: Sources) -> tuple[float, str, str] | None:
+    """The label-agreement bar, its name and where it is written: the shipped plan's
+    `dev_parity` (v2), else the parity stage's committed lineage record (v3b: X3.1's
+    `agreement_bar`)."""
+    bar = ((src.plan.get("dev_parity") or {}).get("bars") or {}).get("label_agreement_min")
+    if isinstance(bar, int | float):
+        return float(bar), "the plan's bar", f"`{src.bundle.shipped.plan}`, `dev_parity`"
+    stage = (src.parity_stage or {}).get("agreement_bar")
+    if isinstance(stage, int | float):
+        from ggh.release.sources import PARITY_LINEAGE
+
+        where = PARITY_LINEAGE[src.bundle.shipped.version].as_posix()
+        return float(stage), "the export check's bar", f"`{where}`, `agreement_bar`"
+    return None
+
+
 def parity(src: Sources) -> str:
     p = src.bundle.parity
     if p is None:
         return "No parity check is recorded for this release."
-    bar = ((src.plan.get("dev_parity") or {}).get("bars") or {}).get("label_agreement_min")
+    shipped = src.bundle.shipped
+    q8 = shipped.parity_q8_0
+    bar = parity_bar(src)
     miss = ""
-    if isinstance(bar, int | float) and p.label_agreement < bar:
-        how = (src.dev_check or {}).get("decision")
-        miss = (
-            f" The label agreement is under the plan's bar of {f3(bar)} "
-            f"(`{src.bundle.shipped.plan}`, `dev_parity`); the release went ahead at Q4_K_M "
-            "with the miss disclosed" + (f" ({how})." if how else ".")
+    if bar is not None and p.label_agreement < bar[0]:
+        how = PARITY_DECISIONS.get(shipped.version)
+        went = (
+            f"{shipped.version} was scored at Q4_K_M, as its plan registers,"
+            if q8 is not None
+            else "the release went ahead at Q4_K_M"
         )
+        miss = (
+            f" The label agreement is under {bar[1]} of {f3(bar[0])} ({bar[2]}); {went} with the "
+            "miss disclosed" + (f" ({how})." if how else ".")
+        )
+    serves = (
+        "the benchmark scored the Q4_K_M GGUF, the file its plan registers"
+        if q8 is not None
+        else "the benchmark scores, and the local demo serves, the Q4_K_M GGUF (OWNER D-63)"
+    )
     lines = [
-        "The published merged bf16 weights are for GPU use; the benchmark scores, and the local "
-        f"demo serves, the Q4_K_M GGUF (OWNER D-63). On {p.n} dev "
+        f"The published merged bf16 weights are for GPU use; {serves}. On {p.n} dev "
         f"prompts, greedy, the two agree on the label for {f3(p.label_agreement)} of prompts and "
         f"cite exactly the same sentences for {f3(p.citation_exact_match)}.{miss}",
         "",
         table(["Weights", "Schema valid"], [[k, f3(v)] for k, v in sorted(p.schema_valid.items())]),
     ]
+    if q8 is not None:
+        lines += ["", q8_parity(src)]
     if p.judged_headline_delta:
         how = ""
         if src.earlier():
@@ -644,6 +716,33 @@ def parity(src: Sources) -> str:
             )
         )
     return "\n".join(lines)
+
+
+def q8_parity(src: Sources) -> str:
+    """The shipped release's Q8_0 against the same bf16 weights (OWNER D-73: exploratory, after
+    Q4_K_M's miss), and why the card recommends it (OWNER D-75)."""
+    p, q8 = src.bundle.shipped.parity, src.bundle.shipped.parity_q8_0
+    assert p is not None and q8 is not None
+    ok = ""
+    bar = parity_bar(src)
+    if bar is not None and q8.label_agreement >= bar[0]:
+        ok = f", within {bar[1]} of {f3(bar[0])}"
+    return (
+        f"Q8_0 against the same bf16 weights on the same {q8.n} prompts (an exploratory check "
+        f"after Q4_K_M's miss, OWNER D-73): label agreement {f3(q8.label_agreement)}{ok}, "
+        f"exactly the same sentences cited for {f3(q8.citation_exact_match)}. Q4_K_M's drift "
+        "comes from its quantisation, so the Q8_0 file, closer to the merged weights, is the "
+        "recommended download where it fits (OWNER D-75); the registered result is Q4_K_M's."
+    )
+
+
+def q8_bench(src: Sources) -> LaptopBench | None:
+    """The shipped release's Q8_0 variant in its bench file, when it was measured."""
+    rel = src.bundle.shipped
+    if src.q8_model is None or not rel.bench_source:
+        return None
+    variant = rel.bench_source.partition("#")[2]
+    return src.bundle.bench_variants.get(variant.replace("Q4_K_M", "Q8_0"))
 
 
 def shipped_bench(src: Sources) -> LaptopBench:
@@ -673,7 +772,17 @@ def bench(src: Sources) -> str:
         ["Peak memory (server RSS)", f"{b.peak_rss_mb:.1f} MB"],
         *[[f"llama-bench {k}", f"{v:.1f} tokens/s"] for k, v in sorted(b.llama_bench.items())],
     ]
-    return head + table(["", "Value"], rows)
+    out = head + table(["", "Value"], rows)
+    q = q8_bench(src)
+    if q is not None:
+        variant = rel.bench_source.partition("#")[2].replace("Q4_K_M", "Q8_0")  # type: ignore[union-attr]
+        out += (
+            f"\n\nThe recommended Q8_0 file (variant `{variant}`, same session and protocol): "
+            f"{q.model_file_mb:.1f} MB, generation {q.gen_tps_p50:.1f} / {q.gen_tps_p95:.1f} "
+            f"tokens/s (p50 / p95), answer latency {q.answer_latency_ms_p50} / "
+            f"{q.answer_latency_ms_p95} ms, peak memory {q.peak_rss_mb:.1f} MB."
+        )
+    return out
 
 
 def _counts(d: Mapping[str, Any]) -> str:
@@ -682,10 +791,19 @@ def _counts(d: Mapping[str, Any]) -> str:
 
 def training_data(src: Sources) -> str:
     d, t = src.data, src.targets
+    grpo = ""
+    if isinstance(src.bundle.train, RLRun):
+        v, sft = src.bundle.shipped.version, src.sft.version
+        used = src.plan.get("training_data") or f"{sft}'s training prompts and gold labels"
+        grpo = (
+            f"{v} trained on no new data: its GRPO run used only {used}, as "
+            f"`{src.bundle.shipped.plan}` registers, so the data, targets and audits below are "
+            f"{sft}'s.\n\n"
+        )
     split_rows = [[s, _counts(c)] for s, c in sorted(d.counts.items())]
     mix = [[s, _counts(q)] for s, q in sorted(t["quotas"].items())]
     drops = {**t.get("row_drops", {}), **t.get("sentence_drops", {})}
-    return "\n".join(
+    return grpo + "\n".join(
         [
             f"PubMedQA `{d.dataset}` at revision `{d.dataset_revision}`: the artificial set "
             "(PQA-A) for training and dev, never the expert set (PQA-L), which is the benchmark. "
@@ -726,23 +844,103 @@ BUNDLE_URL = (
 def audit_line(src: Sources) -> str:
     """The audit the shipped release's training data was cleared on, with its bar result: an
     audit that missed its bar says so (the overall share alone would overstate it)."""
-    a = src.bundle.shipped.audits[-1]
+    shipped = src.bundle.shipped
+    a = shipped.audits[-1]
     head = (
         f"Hand audit (Tech Spec §4.6), {a.name}: {a.labelled} sampled training examples, "
         f"{f3(a.pass_rate)} judged ok overall"
     )
+    grpo = isinstance(shipped.train, RLRun)
+    who = f"{src.sft.version} trained" if grpo else "the release trained"
     if a.passed:
-        return head + "; the audit passed its bar."
-    return (
-        head + f"; the audit did not pass its bar (the failed checks are in `{a.path}`), and the "
-        "release trained on these targets with the miss disclosed in `DATA_CARD.md`."
-    )
+        out = head + "; the audit passed its bar."
+    else:
+        out = (
+            head + f"; the audit did not pass its bar (the failed checks are in `{a.path}`), and "
+            f"{who} on these targets with the miss disclosed in `DATA_CARD.md`."
+        )
+    if grpo:
+        out += (
+            f" {shipped.version}'s audits are {src.sft.version}'s (D-76): it started from "
+            f"{src.sft.version}'s adapter and its GRPO run used only {src.sft.version}'s audited "
+            "training prompts and gold labels, so a new audit would repeat "
+            f"{src.sft.version}'s."
+        )
+    return out
 
 
 def training_procedure(src: Sources) -> str:
-    r, tr = src.recipe, src.bundle.train
-    if not isinstance(tr, TrainRun):
-        raise ValueError(f"{src.bundle.shipped.version}'s training record is not an SFT run")
+    tr = src.bundle.train
+    if isinstance(tr, RLRun):
+        return grpo_procedure(src, tr)
+    return sft_procedure(src, tr)
+
+
+def grpo_procedure(src: Sources, run: RLRun) -> str:
+    """A GRPO release (v3b): the supervised stage it started from (the SFT release's recipe and
+    run, as that release's card has them), then its own GRPO run."""
+    shipped, sft = src.bundle.shipped, src.sft
+    assert isinstance(sft.train, TrainRun)
+    rc = src.rl_recipe or {}
+    pinned = src.plan.get("pinned") or {}
+    reward = pinned.get("reward") or {}
+    from ggh.release.sources import RL_RECIPES
+
+    recipe = RL_RECIPES[shipped.version].as_posix()
+    rows = [
+        ["Started from", f"{sft.version}'s frozen adapter `{run.init_adapter_sha256}`"],
+        ["Method", f"GRPO on the LoRA adapter, recipe `{recipe}`"],
+        [
+            "Reward",
+            f"`{reward.get('file', run.reward)}` ({run.reward}): {src.plan.get('method', '')}",
+        ],
+        ["Prompts", str(src.plan.get("training_data", ""))],
+        [
+            "Learning rate, schedule, warm-up",
+            f"{rc.get('learning_rate')}, {rc.get('scheduler')}, {rc.get('warmup_ratio')}",
+        ],
+        [
+            "Completions per prompt, temperature",
+            f"{rc.get('num_generations')}, {rc.get('temperature')}",
+        ],
+        ["Batch", f"{rc.get('per_device_batch')} × {rc.get('grad_accum')} gradient accumulation"],
+        ["Max completion length", str(rc.get("max_completion_len"))],
+        ["KL coefficient (beta), loss", f"{rc.get('beta')}, {rc.get('loss_type')}"],
+        ["Seed", str(rc.get("seed"))],
+        ["GPU", f"{run.gpu} (Kaggle kernel {run.kaggle_kernel_version})"],
+        ["Wall-clock", f"{run.wall_clock_s:.1f} s"],
+        ["Peak VRAM", f"{run.peak_vram_gb:.2f} GB"],
+        ["Steps (selected)", f"{run.steps} ({run.selected_step}, `{run.selected}`)"],
+        ["Adapter", f"`{run.adapter_sha256}`"],
+        ["Repo commit", f"`{run.repo_commit}`"],
+    ]
+    dm, v2 = run.dev_metrics, run.v2_dev_metrics
+    pairs = [
+        ("mean reward", "mean_reward"),
+        ("right label and checker-supported", "grounded_paid"),
+        ("label accuracy", "label_accuracy"),
+        ("copy share", "copied"),
+    ]
+    said = [
+        f"{what} {f3(dm[k])} against {f3(v2[k])}"
+        for what, k in pairs
+        if isinstance(dm.get(k), int | float) and isinstance(v2.get(k), int | float)
+    ]
+    dev = (
+        f"Checkpoint selection on {run.dev_rows} held-out PQA-A dev prompts (scored by the "
+        f"{run.reward} reward's local checker, no judge), {shipped.version}'s `{run.selected}` "
+        f"against {sft.version}'s own replies in the same session: " + "; ".join(said) + "."
+    )
+    return (
+        f"Two stages. First {sft.version}'s supervised fine-tune, as {sft.version}'s card "
+        f"describes it:\n\n{sft_procedure(src, sft.train)}\n\n"
+        f"Then {shipped.version}'s GRPO run from {sft.version}'s adapter (no judge or API call "
+        f"in training):\n\n{table(['', 'Value'], rows)}\n\n{dev}"
+    )
+
+
+def sft_procedure(src: Sources, tr: TrainRun) -> str:
+    r = src.recipe
     rows = [
         ["Base model", f"`{r.base_model}` at `{r.base_revision}`"],
         ["Method", f"{'QLoRA (4-bit base)' if r.load_in_4bit else 'LoRA'} with {r.tool}"],
@@ -796,7 +994,56 @@ def limits(src: Sources) -> str:
             f"{iv(pr.drop)}; contamination signal: {'yes' if pr.contamination_signal else 'no'}."
         )
     lines += dev_check_lines(src)
+    lines += release_caveats(src)
     return "\n".join(lines)
+
+
+def release_caveats(src: Sources) -> list[str]:
+    """What the shipped release's result file adds (V3.7, v3b): the copy share beside the
+    headline (OWNER D-70), unjudged citations, the parity miss, the exploratory Q8_0 and that it
+    was built after the test results were seen (D-43)."""
+    res = src.result
+    if not res:
+        return []
+    shipped, ft = src.bundle.shipped, src.ft_model
+    v, sft = shipped.version, src.sft.model
+    copies = res.get("copies") or {}
+    out = []
+    mine, theirs, base = copies.get(ft), copies.get(sft), copies.get(src.paths.base_model)
+    if mine and theirs:
+        nc = f"{f3(mine['non_copy_headline'])} against {f3(theirs['non_copy_headline'])} for v2"
+        if base:
+            nc += f" and {f3(base['non_copy_headline'])} for base"
+        out.append(
+            f"- {v} restates cited result sentences closely: {f3(mine['copied'])} of its answers "
+            f"are copies (similarity 0.9 or more to one cited sentence) against "
+            f"{f3(theirs['copied'])} for v2, and {f3(mine['near_copied'])} are near-copies (0.7 "
+            f"or more) against {f3(theirs['near_copied'])}. Among answers that are not copies its "
+            f"headline is {nc}. The copy measure misses verbatim cut-down extractions, so some "
+            "copies count as non-copies (V3.6, V3.7)."
+        )
+    un = (res.get("unjudged_citations") or {}).get(ft)
+    if un:
+        out.append(
+            f"- {un} of {v}'s cited sentences at Q4_K_M went unjudged in the scoring run "
+            f"(`{RESULTS[v].as_posix()}`)."
+        )
+    p = shipped.parity
+    bar = parity_bar(src)
+    if p is not None and bar is not None and p.label_agreement < bar[0]:
+        out.append(
+            f"- Q4_K_M's label agreement with the merged weights is {f3(p.label_agreement)}, "
+            f"under {bar[1]} of {f3(bar[0])} ({PARITY_DECISIONS.get(v, '')}); see Parity."
+        )
+    if exploratory(src):
+        out.append(f"- {exploratory_note(src)}")
+    if shipped.built_after_test_seen:
+        prev = " and ".join(f"{r.version}'s" for r in src.earlier())
+        out.append(
+            f"- {v} was built after {prev} test results were seen (D-43); its plan "
+            f"(`{shipped.plan}`) was hashed before any {v} training step."
+        )
+    return out
 
 
 def dev_check_lines(src: Sources) -> list[str]:
@@ -867,8 +1114,7 @@ def summary(src: Sources) -> str:
     earlier = src.earlier()
     if earlier:
         skip = {src.ft_model, src.paths.base_model}
-        label = {r.model: f"{r.version} (`{r.model}`)" for r in earlier}
-        others = [label.get(m.model, f"`{m.model}`") for m in main.models if m.model not in skip]
+        others = [model_label(src, m.model) for m in main.models if m.model not in skip]
         names = ", ".join(others)
         prev = ", ".join(r.version for r in earlier)
         against = (
@@ -876,12 +1122,20 @@ def summary(src: Sources) -> str:
             f"run with the same claim extractor and judge set. The published {prev} numbers are "
             "shown beside them, labelled with their own extractor and judges, and not compared."
         )
+    how = "with LoRA"
+    if isinstance(src.bundle.train, RLRun):
+        how = (
+            f"with LoRA, first supervised (as {src.sft.version}) and then by GRPO reinforcement "
+            f"learning from {src.sft.version}'s adapter,"
+        )
     lines = [
-        f"`{src.recipe.base_model}` fine-tuned with LoRA to answer a research question from a "
+        f"`{src.recipe.base_model}` fine-tuned {how} to answer a research question from a "
         "supplied abstract only, as JSON with a label, a short answer and the numbers of the "
         "sentences it relied on. It is trained on PubMedQA's artificial set and scored with "
         f"EvalKit on the expert set, {against}"
     ]
+    if src.bundle.shipped.version in HEADLINE_LEAD:
+        lines += headline_lead(src)
     if ft is not None:
         line = (
             f"On {ft.n} expert questions the fine-tune (`{ft.model}`) has accuracy "
@@ -891,13 +1145,96 @@ def summary(src: Sources) -> str:
             line += f" against {iv(base.accuracy)} for the base model (`{base.model}`)"
             prev = next((by[r.model] for r in src.earlier() if r.model in by), None)
             if prev is not None:
-                line += f" and {iv(prev.accuracy)} for `{prev.model}` (v2 is separated lower)"
+                line += f" and {iv(prev.accuracy)} for `{prev.model}`"
+                line += accuracy_verdict(src, prev.model)
         line += "; the full table, with the judges' headline, is under Evaluation."
         lines.append(line)
     if earlier:
         lines += comparison_summary(src)
+    lines += q8_recommendation(src)
     lines.append(f"{BANNER}.")
     return " ".join(lines)
+
+
+def accuracy_verdict(src: Sources, other: str) -> str:
+    """The shipped model against `other` on label accuracy, from EvalKit's run-wide
+    comparison in the primary run (" (v2 is separated lower)", " (not separated)")."""
+    ft, v = src.ft_model, src.bundle.shipped.version
+    run = src.ref(src.main()).name
+    c = next(
+        (
+            c
+            for c in src.bundle.secondary
+            if c.run == run and c.metric == "accuracy" and {c.model_a, c.model_b} == {ft, other}
+        ),
+        None,
+    )
+    if c is None:
+        return ""
+    if not c.separated:
+        return " (not separated)"
+    point = c.diff.point if c.model_a == ft else -c.diff.point
+    return f" ({v} is separated {'higher' if point > 0 else 'lower'})"
+
+
+def headline_lead(src: Sources) -> list[str]:
+    """The registered result first (OWNER D-75): the headline of the shipped model, the
+    release it is tested against and the base model, and the pre-registered difference."""
+    shipped = src.bundle.shipped
+    comps = [c for c in src.bundle.primary_comparisons if c.plan == shipped.plan]
+    run = src.ref(src.main()).name
+    rows = {r.model: r for r in src.bundle.results if r.run == run}
+    out = []
+    for c in comps:
+        if c.metric != "headline" or c.judge is None or c.model_a != shipped.model:
+            continue
+        a, b = rows.get(c.model_a), rows.get(c.model_b)
+        if a is None or b is None or c.judge not in a.headline or c.judge not in b.headline:
+            continue
+        base = rows.get(src.paths.base_model)
+        vs_base = (
+            f" and {iv(base.headline[c.judge])} for the base model"
+            if base is not None and c.judge in base.headline
+            else ""
+        )
+        out.append(
+            f"Its registered result, at Q4_K_M (`{shipped.plan}`): correct and fully grounded "
+            f"(`{c.judge}`) {iv(a.headline[c.judge])} against {iv(b.headline[c.judge])} for "
+            f"{model_label(src, c.model_b)}{vs_base}; {shipped.version} minus "
+            f"{model_label(src, c.model_b).split(' ')[0]} is {iv(c.diff)}, "
+            + (
+                "separated under the plan's rule."
+                if c.separated
+                else "a tie under the plan's rule (not separated)."
+            )
+        )
+    return out
+
+
+def q8_recommendation(src: Sources) -> list[str]:
+    """Which GGUF to use (OWNER D-75): the registered Q4_K_M, and Q8_0 where it fits."""
+    shipped, q8m = src.bundle.shipped, src.q8_model
+    p, q8 = shipped.parity, shipped.parity_q8_0
+    if q8m is None or p is None or q8 is None:
+        return []
+    run = src.ref(src.main()).name
+    row = next((r for r in src.bundle.results if r.run == run and r.model == q8m), None)
+    qb, b = q8_bench(src), shipped_bench(src)
+    size = f" ({qb.model_file_mb:.1f} MB against {b.model_file_mb:.1f} MB)" if qb else ""
+    head = ""
+    if row is not None:
+        judges = sorted(row.headline)
+        head = "; its headline in the same run is " + ", ".join(
+            f"{iv(row.headline[j])} (`{j}`)" for j in judges
+        )
+        head += ", exploratory and outside the pre-registered test (OWNER D-73)"
+    decision = PARITY_DECISIONS.get(shipped.version, "")
+    return [
+        f"Both GGUFs ship. Q4_K_M is the registered, benchmarked file; Q8_0{size} is recommended "
+        f"where it fits: it agrees with the merged bf16 weights on the label for "
+        f"{f3(q8.label_agreement)} of dev prompts against Q4_K_M's {f3(p.label_agreement)} (a "
+        f"parity miss disclosed under {decision}){head}."
+    ]
 
 
 def comparison_summary(src: Sources) -> list[str]:
@@ -1073,7 +1410,7 @@ def metadata(src: Sources) -> dict[str, Any]:
         "language": list(LANGUAGE),
         "pipeline_tag": PIPELINE_TAG,
         "library_name": "transformers",
-        "tags": list(TAGS),
+        "tags": [*TAGS, *(["grpo"] if isinstance(src.bundle.train, RLRun) else [])],
         "model-index": model_index(src),
     }
 
@@ -1124,7 +1461,7 @@ def split_front_matter(card: str) -> tuple[dict[str, Any], str]:
 EXAMPLE_SENTENCES = ("<sentence 1>", "<sentence 2>", "<sentence 3>")
 
 
-def how_to_use(owner: str = "biplob123") -> str:
+def how_to_use(owner: str = "biplob123", q8: bool = False) -> str:
     """The prompt the model was trained and benchmarked on: EvalKit's PubMedQA template,
     rendered by the same code the demo uses (known issue R4.2: a bare question gets prose,
     not the JSON answer). The placeholders stand for the question and the abstract's
@@ -1145,6 +1482,12 @@ def how_to_use(owner: str = "biplob123") -> str:
         "off. Offline, the Q4_K_M GGUF runs with "
         f"`ollama run --think=false {gguf}`; the repository's `ggh space --local` demo and "
         "`ggh serve` build the prompt for you."
+        + (
+            " Where it fits, the Q8_0 file is recommended (closer to the merged weights; see "
+            f"Parity): `ollama run --think=false {gguf.removesuffix('Q4_K_M')}Q8_0`."
+            if q8
+            else ""
+        )
     )
 
 
@@ -1154,7 +1497,7 @@ def render(src: Sources, template: str | None = None) -> str:
     return tpl.substitute(
         front_matter=front,
         summary=summary(src),
-        how_to_use=how_to_use(),
+        how_to_use=how_to_use(q8=src.bundle.shipped.parity_q8_0 is not None),
         training_data=training_data(src),
         training_procedure=training_procedure(src),
         stamps=stamps(src),

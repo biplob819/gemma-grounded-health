@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from ggh.release import links
 from ggh.release.card import (
+    PARITY_DECISIONS,
     aim_dependent,
     aim_outcome,
     display,
@@ -84,13 +85,22 @@ def results_block(src: Sources) -> str:
     notes = [*evalkit_stamps(src), *disclosures(src)]
     caveats = "; ".join(notes) or calibrated
     bench = shipped_bench(src)
-    p = b.parity
+    p, q8 = b.parity, b.shipped.parity_q8_0
     parity = (
         "The local demo serves the benchmarked Q4_K_M GGUF (OWNER D-63); the published bf16 "
         f"weights agree with it on the label for {f3(p.label_agreement)} of {p.n} dev prompts."
         if p is not None
         else "The local demo serves the benchmarked Q4_K_M GGUF (OWNER D-63)."
     )
+    if p is not None and q8 is not None:  # two GGUFs ship, Q8_0 recommended (OWNER D-75)
+        miss = PARITY_DECISIONS.get(b.shipped.version)
+        parity = (
+            f"The registered result is the Q4_K_M GGUF's; the published bf16 weights agree with "
+            f"it on the label for {f3(p.label_agreement)} of {p.n} dev prompts"
+            + (f" (a parity miss, {miss})" if miss else "")
+            + f" and with the Q8_0 GGUF for {f3(q8.label_agreement)}, so Q8_0 is the "
+            "recommended download where it fits."
+        )
     lines = [
         START,
         *_intro(src, n),

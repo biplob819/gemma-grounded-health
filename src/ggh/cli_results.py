@@ -16,7 +16,8 @@ def _cmd_bundle(args: argparse.Namespace) -> int:
 
     root = Path(args.root)
     try:
-        built = B.build(root, full_lineage=args.full_lineage)
+        versions = tuple(v.strip() for v in args.versions.split(",")) if args.versions else None
+        built = B.build(root, full_lineage=args.full_lineage, versions=versions)
     except (ResultsError, ValueError, OSError) as exc:
         print(f"results bundle: FAIL: {exc}")
         return EXIT_ERROR
@@ -100,6 +101,12 @@ def register(sub: argparse._SubParsersAction) -> None:
     b.add_argument("--root", default=".", help="repo root")
     b.add_argument("--out", default="docs/results", help="folder for the outputs")
     b.add_argument("--full-lineage", action="store_true", help="also verify artifacts/ manifests")
+    b.add_argument(
+        "--versions",
+        default=None,
+        help="comma-separated releases to include, e.g. v1,v2,v3b (a `held` release only when "
+        "named); default: every committed release that is not held",
+    )
     b.set_defaults(func=_cmd_bundle)
     s = rsub.add_parser("sample", help="draw the 20-per-model sample-read sheet for a run (§7.6)")
     s.add_argument("--run", required=True, help="a folder under docs/results/")

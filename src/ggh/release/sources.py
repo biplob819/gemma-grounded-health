@@ -54,6 +54,15 @@ SHIPPED_INPUTS: dict[str, tuple[Path, Path, Path]] = {
 }
 
 
+# a release's own result file beside its run summaries (V3.7: the copy share, the exploratory
+# models, unjudged citations), read only while it names the bundle's primary run and plan
+RESULTS: dict[str, Path] = {"v3b": Path("docs") / "results" / "main_v3b" / "result.json"}
+# a release shipping a second GGUF: its EvalKit name at Q8_0 and the parity stage's committed
+# lineage copy whose `agreement_bar` the card quotes (OWNER D-73, D-75)
+Q8_MODELS: dict[str, str] = {"v3b": "gemma-e2b-grounded-v3b-q8"}
+PARITY_LINEAGE: dict[str, Path] = {
+    "v3b": Path("docs") / "measurements" / "lineage" / "parity_v3b.json"
+}
 # a GRPO release's own recipe (its SFT recipe, data and targets are those of the release whose
 # adapter it started from, `sft_release`)
 RL_RECIPES: dict[str, Path] = {"v3b": Path("configs") / "recipe_v3b_grpo.yaml"}
@@ -122,6 +131,13 @@ class Sources:
     licence: dict[str, Any] | None = None  # LICENCE_RECORD
     dev_check: dict[str, Any] | None = None  # {"summary", "bars", "decision", "path", ...}
     rl_recipe: dict[str, Any] | None = None  # a GRPO release's recipe (RL_RECIPES), as parsed
+    result: dict[str, Any] | None = None  # the shipped release's result file (RESULTS)
+    parity_stage: dict[str, Any] | None = None  # PARITY_LINEAGE's params, for the bar
+
+    @property
+    def q8_model(self) -> str | None:
+        """The shipped release's Q8_0 model, when it ships one (v3b, OWNER D-75)."""
+        return Q8_MODELS.get(self.bundle.shipped.version)
 
     @property
     def sft(self) -> ReleaseEntry:
@@ -294,9 +310,36 @@ def load(root: Path, paths: Paths | None = None) -> Sources:
     rl = _read_rl_recipe(root, bundle)
     if rl is not None:
         raw["rl_recipe"] = rl
+    result = _read_result(root, bundle)
+    if result is not None:
+        raw["result"] = result
+    stage = _read_parity_stage(root, version)
+    if stage is not None:
+        raw["parity_stage"] = stage
     return Sources(
-        bundle, tuple(summaries), data, targets, recipe, p, raw, plan, aim, licence, dev, rl
-    )
+        bundle, tuple(summaries), data, targets, recipe, p, raw, plan, aim, licence, dev, rl,
+        result, stage,
+    )  # fmt: skip
+
+
+def _read_result(root: Path, bundle: ResultsBundle) -> dict[str, Any] | None:
+    rel = RESULTS.get(bundle.shipped.version)
+    if rel is None or not (root / rel).is_file():
+        return None
+    res = _read_json(root / rel)
+    ids = {r.name: r.run_id for r in bundle.runs}
+    if res.get("plan") != bundle.shipped.plan or res.get("run_id") not in (
+        ids.get(n) for n in bundle.shipped.runs
+    ):
+        raise SourceError(f"{rel} is not the result of the bundle's {bundle.shipped.version} run")
+    return res
+
+
+def _read_parity_stage(root: Path, version: str) -> dict[str, Any] | None:
+    rel = PARITY_LINEAGE.get(version)
+    if rel is None or not (root / rel).is_file():
+        return None
+    return dict(read_manifest(root / rel).params)
 
 
 def _read_rl_recipe(root: Path, bundle: ResultsBundle) -> dict[str, Any] | None:
