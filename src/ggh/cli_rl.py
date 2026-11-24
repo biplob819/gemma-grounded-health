@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+from typing import Any
 
 EXIT_ERROR = 2
 
@@ -108,6 +109,14 @@ def _cmd_rl_dev_one_b(args: argparse.Namespace) -> int:
     return 0
 
 
+# each plan's checkpoint-selection rule: dev rows, gold-"no" slack and copy guard
+# (configs/eval_plan_v3.yaml; configs/eval_plan_v3b.yaml, OWNER D-70)
+SELECTION_RULES: dict[str, dict[str, Any]] = {
+    "ft3": {"rows": 500, "no_slack": 0.05, "copy_slack": None},
+    "ft3b": {"rows": 300, "no_slack": 0.10, "copy_slack": 0.10},
+}
+
+
 def _cmd_rl_freeze(args: argparse.Namespace) -> int:
     from ggh.export.merge import frozen_hash
     from ggh.rl.freeze import FreezeError, freeze_rl
@@ -128,6 +137,7 @@ def _cmd_rl_freeze(args: argparse.Namespace) -> int:
             score_kernel_version=args.score_kernel_version,
             repo_commit=args.repo_commit,
             gpu=args.gpu,
+            **SELECTION_RULES[args.model],
         )
     except (FreezeError, ValueError, OSError, KeyError) as exc:
         print(f"rl-freeze: FAIL: {exc}")
@@ -179,8 +189,9 @@ def register(sub: argparse._SubParsersAction) -> None:
     ob.add_argument("--out", required=True, help="folder for dev_<name>.json and the replies")
     ob.add_argument("--n", type=int, required=True, help="first N held-out dev prompts")
     ob.set_defaults(func=_cmd_rl_dev_one_b)
-    fz = sub.add_parser("rl-freeze", help="v3: freeze the checkpoint the plan selects (V3.4)")
-    fz.add_argument("--model", default="ft3", choices=["ft3"], help="ft3: v3 (V3.4)")
+    fz = sub.add_parser("rl-freeze", help="v3, v3b: freeze the checkpoint the plan selects")
+    fz.add_argument("--model", default="ft3", choices=sorted(SELECTION_RULES),
+                    help="ft3: v3 (V3.4); ft3b: v3b (V3.6)")  # fmt: skip
     fz.add_argument("--root", default=".", help="repo root")
     fz.add_argument("--rl-dev", required=True, help="the score kernel's rl_dev.json")
     fz.add_argument("--report", required=True, help="the train kernel's run/report.json")
