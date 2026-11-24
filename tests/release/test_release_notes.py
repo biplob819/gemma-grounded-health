@@ -13,12 +13,17 @@ from ggh.release import links, notes, sources
 from tests.release.test_card import DECIMAL, _numbers
 
 ROOT = Path(__file__).resolve().parents[2]
-NOTES = ROOT / notes.OUT
+NOTES = ROOT / "docs" / "release_notes_v1.0.0.md"
+
+
+# v1.0.0's notes, from its frozen bundle (D-76): they stay what the generator writes after
+# a later release regenerates the live bundle
+FROZEN_BUNDLE = Path("docs") / "results" / "releases" / "v1.0.0" / "results_bundle.json"
 
 
 @pytest.fixture(scope="module")
 def src():
-    return sources.load(ROOT)
+    return sources.load(ROOT, sources.Paths(bundle=FROZEN_BUNDLE))
 
 
 @pytest.fixture(scope="module")
@@ -28,14 +33,14 @@ def text():
 
 def test_committed_notes_are_the_generator_output(src, text):
     assert text == notes.render(src, ROOT), "run: uv run ggh release-notes"
-    assert notes.OUT.as_posix() == "docs/release_notes_v1.0.0.md"
+    assert notes.out_path(src).as_posix() == "docs/release_notes_v1.0.0.md"
 
 
 def test_cli_check_and_write(tmp_path, capsys):
-    assert main(["release-notes", "--check"]) == 0
+    assert main(["release-notes", "--check"]) == 0  # the live bundle's release
+    assert main(["release-notes", "--bundle", str(FROZEN_BUNDLE), "--check"]) == 0  # v1.0.0's
     out = tmp_path / "n.md"
-    rel = Path("docs") / "results" / "results_bundle.json"
-    args = ["release-notes", "--root", str(ROOT), "--bundle", str(rel), "--out", str(out)]
+    args = ["release-notes", "--root", str(ROOT), "--bundle", str(FROZEN_BUNDLE), "--out", str(out)]
     assert main(args) == 0 and main([*args, "--check"]) == 0
     out.write_text("stale\n", encoding="utf-8")
     assert main([*args, "--check"]) == 2
@@ -96,7 +101,8 @@ def test_hub_status_follows_the_download_back_record():
 
 def test_known_limits_are_the_open_and_disclosed_release_rows(text):
     table = (ROOT / notes.KNOWN_ISSUES).read_text(encoding="utf-8")
-    issues = notes.known_limits(table)
+    issues = notes.known_limits(table)  # v1.0.0's release path (notes.NOTES["v2"])
+    assert notes.NOTES["v2"].nodes == notes.RELEASE_NODES
     assert issues and all(i.node in notes.RELEASE_NODES for i in issues)
     assert all(i.status.startswith(notes.LIMIT_STATUS) for i in issues)
     for i in issues:
@@ -117,4 +123,4 @@ def test_links_are_absolute(text):
     body = text[text.index("## Links") :]
     for label, url in re.findall(r"\[([^\]]+)\]\(([^)]+)\)", body):
         assert url.startswith("https://"), (label, url)
-    assert links.LINKS["release"][1] in body
+    assert links.links_at("1.0.0")["release"][1] in body

@@ -29,7 +29,9 @@ def test_every_planned_file_was_downloaded_back_with_its_planned_hash():
     assert {k: got[k] for k in same} == same
     for k in AWAITING_REUPLOAD:  # the plan already holds the regenerated card's hash
         assert planned[k] != got[k], f"{k} was re-uploaded: record it and empty the set"
-    card = hashlib.sha256((ROOT / "MODEL_CARD.md").read_bytes()).hexdigest()
+    # v1.0.0's card, frozen as published (D-76)
+    frozen = ROOT / "docs/results/releases/v1.0.0/MODEL_CARD.md"
+    card = hashlib.sha256(frozen.read_bytes()).hexdigest()
     assert planned[f"{MAIN}/README.md"] == card
     assert rec["release"] == "v2" and rec["tag"] == "v2.0.0"
 

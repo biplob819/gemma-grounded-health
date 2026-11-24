@@ -1,6 +1,8 @@
-"""CRD-01..06 on the real card: MODEL_CARD.md for the shipped release (v2), generated from the
-committed results bundle (D-20), with the stamps and disclosures of OWNER D-55, D-59, D-60,
-D-61 and D-62 word for word and none of the claims they rule out."""
+"""CRD-01..06 on the real card of v1.0.0 (v2): the card v1.0.0 published, frozen under
+docs/results/releases/v1.0.0/ (D-76) and still generated from v1.0.0's frozen results bundle
+(D-20), with the stamps and disclosures of OWNER D-55, D-59, D-60, D-61 and D-62 word for word
+and none of the claims they rule out. The live MODEL_CARD.md is checked against the live bundle
+in tests/release/test_release_v3b.py once it ships v3b; until then it is this file."""
 
 import json
 import re
@@ -14,8 +16,13 @@ from tests.release import build_v1_bundle as B
 from tests.release.test_card import DECIMAL, SECTIONS, _numbers
 
 ROOT = Path(__file__).resolve().parents[2]
-CARD = ROOT / "MODEL_CARD.md"
+FROZEN = ROOT / "docs" / "results" / "releases" / "v1.0.0"
+CARD = FROZEN / "MODEL_CARD.md"  # v1.0.0's published card (v2)
+PATHS = sources.Paths(bundle=(FROZEN / "results_bundle.json").relative_to(ROOT))
 README = ROOT / "README.md"
+LIVE_IS_V1_0_0 = (ROOT / "docs/results/results_bundle.json").read_bytes() == (
+    FROZEN / "results_bundle.json"
+).read_bytes()
 BASE, V1, V2 = "gemma-e2b-base-q4", "gemma-e2b-grounded-q4", "gemma-e2b-grounded-v2-q4"
 SOL, OPUS, LUNA, HAIKU = "gpt-6.1-sol", "claude-opus-5-5", "gpt-6-luna", "claude-haiku-5-5"
 ORDER = (
@@ -43,7 +50,7 @@ INTEGER = re.compile(r"(?<![\w§.\-/:`#@])\d{2,}(?![\w.\-/:`%])")
 
 @pytest.fixture(scope="module")
 def src():
-    return sources.load(ROOT)
+    return sources.load(ROOT, PATHS)
 
 
 @pytest.fixture(scope="module")
@@ -248,9 +255,10 @@ def test_research_only_in_summary_and_footer(text):  # CRD-06
 
 
 def test_readme_block_carries_the_same_stamps():  # OSS-02 with R4.1's disclosures
-    src = sources.load(ROOT)
+    src = sources.load(ROOT, PATHS)
     block = readme.results_block(src)
-    assert block in README.read_text(encoding="utf-8")
+    if LIVE_IS_V1_0_0:  # the README carries the live bundle's block (test_readme checks it)
+        assert block in README.read_text(encoding="utf-8")
     assert "calibration of v2: calibrated" in block and "uncalibrated" not in block
     sol = next(c for c in src.bundle.calibration if c.judge == SOL)
     assert sol.wording in block
@@ -267,22 +275,21 @@ def test_the_cards_audit_is_the_one_on_the_targets_the_release_trained_on():
     from pathlib import Path as _Path
 
     root = _Path(__file__).resolve().parents[2]
-    bundle = _json.loads((root / "docs/results/results_bundle.json").read_text("utf-8"))
+    bundle = _json.loads((FROZEN / "results_bundle.json").read_text("utf-8"))
     shipped = bundle["releases"][-1]
     last = shipped["audits"][-1]
     result = _json.loads((root / last["path"]).read_text("utf-8"))
     lineage = _json.loads((root / "docs/measurements/lineage/targets_v2.json").read_text("utf-8"))
     assert result["sample_sha256"] == lineage["outputs"]["artifacts/targets/audit_sample.jsonl"]
     ok = result["overall"]["ok"] / result["labelled"]
-    card = (root / "MODEL_CARD.md").read_text("utf-8")
+    card = CARD.read_text("utf-8")
     assert f"{ok:.3f} judged ok overall" in card and "blind Claude reviewer" in card
 
 
 def test_the_targets_line_describes_the_rule_not_a_guarantee():
     """The audit found weak and aim/method answer citations (OWNER D-50), so the card may not
     say every citation supports its answer."""
-    from pathlib import Path as _Path
-
-    card = (_Path(__file__).resolve().parents[2] / "MODEL_CARD.md").read_text("utf-8")
-    assert "cites only sentences that support it" not in card
-    assert "Citations are chosen by rule" in card and "A selection rule is not a guarantee" in card
+    for text in (CARD.read_text("utf-8"), (ROOT / "MODEL_CARD.md").read_text("utf-8")):
+        assert "cites only sentences that support it" not in text
+        assert "Citations are chosen by rule" in text
+        assert "A selection rule is not a guarantee" in text

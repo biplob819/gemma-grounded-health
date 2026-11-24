@@ -33,7 +33,8 @@ MERGED = (
 EXTRA = ("generation_config.json", "processor_config.json", "ggh_merge.json")
 ADAPTER = ("adapter_config.json", "adapter_model.safetensors")
 MERGE_RECORD = Path("docs/measurements/v2/merge_record.json")
-REAL_BUNDLE = ROOT / "docs" / "results" / "results_bundle.json"
+# v1.0.0's bundle (v2 shipped), frozen as published (D-76)
+REAL_BUNDLE = ROOT / "docs" / "results" / "releases" / "v1.0.0" / "results_bundle.json"
 
 
 def put(root: Path, rel: str, data: bytes | None = None) -> str:
@@ -356,7 +357,8 @@ def test_committed_plan_matches_the_records():
             assert f["sha256"] == sha256_file(ROOT / f["local"])
     assert seen == 9  # five merged files, two adapter files, two GGUFs
     card = next(f for f in d["files"] if f["path_in_repo"] == "README.md" and f["record"])
-    assert card["sha256"] == sha256_file(ROOT / "MODEL_CARD.md")
+    # v1.0.0's card, frozen as published (D-76)
+    assert card["sha256"] == sha256_file(ROOT / "docs/results/releases/v1.0.0/MODEL_CARD.md")
     assert {f["repo"] for f in d["files"]} == {
         "biplob123/gemma-4-e2b-grounded-health",
         "biplob123/gemma-4-e2b-grounded-health-GGUF",
