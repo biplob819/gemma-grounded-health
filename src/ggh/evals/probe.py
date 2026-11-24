@@ -221,6 +221,7 @@ def paired_drop(orig: dict[str, bool], para: dict[str, bool], seed: int = SEED,
 
 
 REPORT_V2 = Path("docs") / "measurements" / "probe_report_v2.json"
+REPORT_V3B = Path("docs") / "measurements" / "probe_report_v3b.json"  # V3.8 (OWNER D-75)
 METHOD = ("accuracy on original minus paraphrased wording, paired bootstrap 95% interval, "
           "10,000 resamples, seed 7 (EvalKit DATA_CARD, D-42)")  # fmt: skip
 # per release: the two EvalKit runs, the models compared, and where the report goes
@@ -228,6 +229,8 @@ RELEASES: dict[str, tuple[str, str, tuple[str, ...], Path]] = {
     "v1": ("probe_original", "probe_paraphrase",
            ("gemma-e2b-base-q4", "gemma-e2b-grounded-q4"), REPORT),
     "v2": ("probe_original_v2", "probe_paraphrase_v2", ("gemma-e2b-grounded-v2-q4",), REPORT_V2),
+    "v3b": ("probe_original_v3b", "probe_paraphrase_v3b", ("gemma-e2b-grounded-v3b-q4",),
+            REPORT_V3B),
 }  # fmt: skip
 
 

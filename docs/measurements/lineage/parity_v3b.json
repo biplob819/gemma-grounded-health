@@ -1,0 +1,30 @@
+{
+  "stage": "parity",
+  "code_version": "1",
+  "key": "459d5a1799dbf5a49f55678272dd65ecb2f3f923111ac0b9ab1ed58dec81bdd5",
+  "inputs": {
+    "artifacts/merged/ft3b-bf16/model.safetensors": "d882d65011f648b1ea66b4cc220d1a57bbf694407fbc81c2693350c6ab1509b2",
+    "artifacts/gguf/ft3b-Q4_K_M.gguf": "2befee8344d5d7ad610f118017d7743903a35adacd0ab3c2a8fdfac497d09d10",
+    "artifacts/data/dev_eval.jsonl": "4210c085a0046271bc346c988723982a59683811bb45b0fe5201801f97b58316",
+    "artifacts/gguf/ft3b-Q8_0.gguf": "5faa9fb14347a86da3a25fea0c291f49f2e9b96853a7c9f6a678795605990824"
+  },
+  "outputs": {
+    "docs/measurements/v3b/parity.json": "66e5d290ed1c442f2c4c44fb61e6b2f362da873df01f422ebd4c53ea7d5ce04c",
+    "docs/measurements/v3b/parity_generations.jsonl.gz": "fd932b444fceedcc152e8eb3181837ce45a45cfb0a4fc7ad5bba4fa8c911d6c3",
+    "docs/measurements/v3b/parity_sample.jsonl": "10105e82f2c131a3f90df9468cd2a0c6b6e724f1d787084518177d8b22b2ef2f",
+    "docs/measurements/v3b/parity_q8_0.json": "39b0122a31dbf3a45471de8f83169dafe08b2db5d543c3cc531cb8259bf8dd6b",
+    "docs/measurements/v3b/parity_q8_0_generations.jsonl.gz": "6cc7f83262c9e20716ef2f619e4117375b625a1aed6d764b198f05f4e6d4ebf3"
+  },
+  "params": {
+    "agreement_bar": 0.95,
+    "schema_gap": 0.01
+  },
+  "seed": 7,
+  "parents": [
+    "078f352988f8def13f22a11fe93800ae595472d5cf87ff7c84b1a1cfa3140965",
+    "e1a3f6bc37ab7be4e335b18e76b0b3bf442607f196d61546a0466ffa92378066"
+  ],
+  "started_at": "2026-11-24T08:58:38.399031Z",
+  "finished_at": "2026-11-24T08:58:38.399031Z",
+  "host": "local"
+}

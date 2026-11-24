@@ -11,6 +11,12 @@ and `parity_v2` beside v1's, with the v2 targets stage committed as `targets_v2`
 of the file on disk; the GGUF and adapter hashes must also equal the ones V2.1 recorded
 (docs/measurements/v2/gguf_ft2_manifest.json, merge_record.json). The base GGUFs are v1's,
 unchanged, so v2's base records come from v1's export_base manifest once their files re-hash.
+
+v3b (`ft3b`, V3.8, `write_v3b`, `ggh export-records --model ft3b`) is a GRPO run from v2's frozen
+adapter: its train stage (`train_v3b`) reads v2's adapter (train_v2's outputs), the v2 targets'
+training prompts, its GRPO recipe and the reward and checker its plan pins, with train_v2 and
+the targets stage as parents; `export_ft3b` and `parity_v3b` follow v2's, the parity stage also
+recording the exploratory Q8_0 check (OWNER D-73). Every record names the frozen v3b adapter.
 """
 
 from __future__ import annotations
@@ -21,11 +27,13 @@ from collections.abc import Callable, Mapping
 from pathlib import Path
 from typing import Any, Literal
 
+import yaml
+
 from ggh.export import parity
 from ggh.export.gguf import BASE_ID, BASE_REVISION
 from ggh.export.merge import ADAPTER_DIR, MERGED_DIR, SELECTION
 from ggh.lineage import StageManifest, read_manifest, sha256_file, stage_key, write_manifest
-from ggh.schemas import ExportArtifact, TrainRun
+from ggh.schemas import ExportArtifact, RLRun, TrainRun
 from ggh.serve import llama
 from ggh.train.devrun import DEV_EVAL, TRAIN_RUN
 from ggh.train.run import config_hash
@@ -51,6 +59,21 @@ V2_STAGE_DIRS = {
 RECORDS_V2 = Path("docs") / "measurements" / "export_artifacts_v2.json"
 GGUF_RECORD_V2 = version("ft2").measurements / "gguf_ft2_manifest.json"
 MERGE_RECORD_V2 = version("ft2").measurements / "merge_record.json"
+# v3b (`ft3b`): its own stage folders, committed copies and records
+V3B_STAGE_DIRS = {
+    "train_v3b": Path("artifacts") / "train_v3b",
+    "export_ft3b": Path("artifacts") / "export" / "ft3b",
+    "parity_v3b": Path("artifacts") / "parity_v3b",
+}
+RECORDS_V3B = Path("docs") / "measurements" / "export_artifacts_v3b.json"
+V3B = version("ft3b")
+RL_RUN_V3B = V3B.measurements / "rl_run.json"
+GGUF_RECORD_V3B = V3B.measurements / "gguf_ft3b_manifest.json"
+MERGE_RECORD_V3B = V3B.measurements / "merge_record.json"
+PLAN_V3B = Path("configs") / "eval_plan_v3b.yaml"
+PINNED_V3B = ("reward", "checker")  # the plan's pinned files the train stage reads
+PARITY_Q8_V3B = (V3B.measurements / "parity_q8_0.json",
+                 V3B.measurements / "parity_q8_0_generations.jsonl.gz")  # fmt: skip
 KERNELS = {"ft": "ggh-t22-train", "ft2": "ggh-v21-train"}  # the Kaggle kernel per version
 LEDGER = Path("docs") / "measurements" / "gpu-ledger.jsonl"
 LINEAGE_COPY = Path("docs") / "measurements" / "lineage"  # committed copies (artifacts/ is not)
@@ -162,23 +185,27 @@ def _dirs(model: str) -> tuple[Path, Path]:
 
 
 def export_ft_manifest(root: Path, base_dir: Path, train: StageManifest, now: Clock = _now,
-                       model: str = "ft") -> StageManifest:  # fmt: skip
+                       model: str = "ft", adapter_sha256: str | None = None
+                       ) -> StageManifest:  # fmt: skip
     adapter, merged = _dirs(model)
     inputs = {base_uri(): sha256_file(base_dir / BASE_WEIGHTS),
               **hashes(root, [adapter / f for f in ADAPTER_FILES])}  # fmt: skip
     outputs = hashes(root, [merged / f for f in MERGED_FILES] + _gguf_rels(model))
     params = {**_gguf_params(), "merge": "bf16 on CPU, peft merge_and_unload"}
+    if adapter_sha256 is not None:  # v3b on: the export names the frozen adapter it merged
+        params["adapter_sha256"] = adapter_sha256
     t = now()
     return _manifest("export", inputs, outputs, params, (train.key,), t, t, "local")
 
 
-def parity_manifest(root: Path, export_ft: StageManifest, now: Clock = _now, model: str = "ft"
+def parity_manifest(root: Path, export_ft: StageManifest, now: Clock = _now, model: str = "ft",
+                    extra_inputs: tuple[Path, ...] = (), extra_outputs: tuple[Path, ...] = ()
                     ) -> StageManifest:  # fmt: skip
     data = read_manifest(root / DATA_MANIFEST)
     merged = _dirs(model)[1]
     inputs = hashes(root, [merged / "model.safetensors", llama.GGUF_DIR / f"{model}-Q4_K_M.gguf",
-                           DEV_EVAL])  # fmt: skip
-    outputs = hashes(root, list(parity.paths(model)))
+                           DEV_EVAL, *extra_inputs])  # fmt: skip
+    outputs = hashes(root, [*parity.paths(model), *extra_outputs])
     params = {"agreement_bar": parity.AGREEMENT_BAR, "schema_gap": parity.SCHEMA_GAP}
     t = now()
     return _manifest("parity", inputs, outputs, params, (export_ft.key, data.key), t, t, "local")
@@ -209,7 +236,7 @@ def records(root: Path, train: StageManifest, base: StageManifest, ft: StageMani
 
 
 def _write(root: Path, name: str, m: StageManifest) -> None:
-    path = write_manifest(root / {**STAGE_DIRS, **V2_STAGE_DIRS}[name], m)
+    path = write_manifest(root / {**STAGE_DIRS, **V2_STAGE_DIRS, **V3B_STAGE_DIRS}[name], m)
     copy = root / LINEAGE_COPY / f"{name}.json"
     copy.parent.mkdir(parents=True, exist_ok=True)
     copy.write_bytes(path.read_bytes())
@@ -270,4 +297,98 @@ def write_v2(root: Path, base_dir: Path, now: Clock = _now) -> list[ExportArtifa
     recs = records(root, train, base, ft, "ft2")
     text = json.dumps([r.model_dump(mode="json") for r in recs], indent=2) + "\n"
     (root / RECORDS_V2).write_text(text, encoding="utf-8")
+    return recs
+
+
+def rl_train_manifest(root: Path) -> StageManifest:
+    """v3b's GRPO run on Kaggle, recorded locally from `RLRun` (D-10). Its inputs: v2's adapter
+    (train_v2's outputs, the adapter the run started from), the v2 targets' training prompts,
+    the GRPO recipe and the reward and checker files the v3b plan pins by sha256."""
+    run = RLRun.model_validate_json((root / RL_RUN_V3B).read_text(encoding="utf-8"))
+    v2 = version("ft2")
+    train_v2 = read_manifest(root / V2_STAGE_DIRS["train_v2"] / "manifest.json")
+    targets = read_manifest(root / TARGETS_MANIFEST)
+    if targets.key not in train_v2.parents:
+        raise ValueError(f"{TARGETS_MANIFEST} is not the targets stage v2 trained on")
+    plan = yaml.safe_load((root / PLAN_V3B).read_text(encoding="utf-8"))
+    pinned = [(Path(plan["pinned"][k]["file"]), plan["pinned"][k]["sha256"]) for k in PINNED_V3B]
+    prompts = Path("artifacts/targets/train.jsonl")
+    v2_adapter = [v2.adapter_dir / f for f in ADAPTER_FILES]
+    rels = [prompts, V3B.recipe, *v2_adapter, *(f for f, _ in pinned)]
+    inputs = hashes(root, rels)
+    if targets.outputs.get(prompts.as_posix()) != inputs[prompts.as_posix()]:
+        raise ValueError(f"{prompts} differs from what the targets stage recorded")
+    for rel in v2_adapter:
+        if train_v2.outputs.get(rel.as_posix()) != inputs[rel.as_posix()]:
+            raise ValueError(f"{rel} differs from what train_v2 recorded")
+    if adapter_hash(root / v2.adapter_dir) != run.init_adapter_sha256:
+        raise ValueError(f"{v2.adapter_dir} is not the adapter the GRPO run started from")
+    v2_sel = json.loads((root / v2.selection).read_text(encoding="utf-8"))["adapter_sha256"]
+    if v2_sel != run.init_adapter_sha256:
+        raise ValueError("the GRPO run did not start from v2's frozen adapter")
+    if inputs[V3B.recipe.as_posix()] != run.config_hash:
+        raise ValueError(f"{V3B.recipe.as_posix()} is not the recipe the run recorded")
+    for rel, want in pinned:
+        if inputs[rel.as_posix()] != want:
+            raise ValueError(f"{rel} is not the file {PLAN_V3B} pins")
+    frozen = json.loads((root / V3B.selection).read_text(encoding="utf-8"))["adapter_sha256"]
+    if adapter_hash(root / V3B.adapter_dir) != frozen or frozen != run.adapter_sha256:
+        raise ValueError(f"{V3B.adapter_dir} is not the frozen v3b adapter")
+    outputs = hashes(root, [V3B.adapter_dir / f for f in ADAPTER_FILES] + [RL_RUN_V3B])
+    kernel = run.kaggle_kernel_version  # "ggh-v3b-grpo v1": the kernel and version, as logged
+    params = {"kaggle_kernel": kernel, "repo_commit": run.repo_commit,
+              "selected_step": run.selected_step, "base": f"{BASE_ID}@{BASE_REVISION}",
+              "method": "grpo", "reward": run.reward,
+              "init_adapter_sha256": run.init_adapter_sha256,
+              "adapter_sha256": run.adapter_sha256}  # fmt: skip
+    started, finished = session_times(root, kernel)
+    return _manifest("train", inputs, outputs, params, (train_v2.key, targets.key), started,
+                     finished, HOST_KAGGLE)  # fmt: skip
+
+
+def check_v3b_records(root: Path, train: StageManifest, ft: StageManifest) -> None:
+    """The hashes just taken must be the ones V3.6 recorded when it built v3b, and every record
+    must name the frozen adapter: the selection, the run, the GGUF manifest and the merge."""
+    sel = json.loads((root / V3B.selection).read_text(encoding="utf-8"))
+    run = json.loads((root / RL_RUN_V3B).read_text(encoding="utf-8"))
+    gg = json.loads((root / GGUF_RECORD_V3B).read_text(encoding="utf-8"))
+    merge = json.loads((root / MERGE_RECORD_V3B).read_text(encoding="utf-8"))
+    frozen = sel["adapter_sha256"]
+    named = {
+        RL_RUN_V3B.as_posix(): run["adapter_sha256"],
+        GGUF_RECORD_V3B.as_posix(): gg["source"]["revision"],
+        MERGE_RECORD_V3B.as_posix(): merge["adapter_sha256"],
+        "train_v3b": train.params["adapter_sha256"],
+        "export_ft3b": ft.params["adapter_sha256"],
+    }
+    bad = sorted(k for k, v in named.items() if v != frozen)
+    if bad:
+        raise ValueError(f"{', '.join(bad)} name another adapter than {frozen[:12]}…")
+    for rel in _gguf_rels("ft3b"):
+        if gg["files"][rel.name]["sha256"] != ft.outputs[rel.as_posix()]:
+            raise ValueError(f"{rel} differs from what {GGUF_RECORD_V3B} recorded")
+    if gg["llama_cpp"]["tag"] != llama.TAG or gg["llama_cpp"]["release_sha256"] != llama.BIN_SHA256:
+        raise ValueError(f"{GGUF_RECORD_V3B} was built with another llama.cpp")
+    if train.params["selected_step"] != sel["selected_step"]:
+        raise ValueError(f"{V3B.selection} selected another step than the run")
+
+
+def write_v3b(root: Path, base_dir: Path, now: Clock = _now) -> list[ExportArtifact]:
+    """v3b's train, export and parity manifests, their committed lineage copies and
+    `export_artifacts_v3b.json`. The base GGUFs are v1's, unchanged."""
+    train = rl_train_manifest(root)
+    base = read_manifest(root / STAGE_DIRS["export_base"] / "manifest.json")
+    if hashes(root, _gguf_rels("base")) != base.outputs:
+        raise ValueError("the base GGUFs differ from v1's export_base manifest")
+    frozen = train.params["adapter_sha256"]
+    ft = export_ft_manifest(root, base_dir, train, now, "ft3b", adapter_sha256=frozen)
+    check_v3b_records(root, train, ft)
+    q8 = (llama.GGUF_DIR / "ft3b-Q8_0.gguf",)
+    par = parity_manifest(root, ft, now, "ft3b", extra_inputs=q8, extra_outputs=PARITY_Q8_V3B)
+    _write(root, "train_v3b", train)
+    _write(root, "export_ft3b", ft)
+    _write(root, "parity_v3b", par)
+    recs = records(root, train, base, ft, "ft3b")
+    text = json.dumps([r.model_dump(mode="json") for r in recs], indent=2) + "\n"
+    (root / RECORDS_V3B).write_text(text, encoding="utf-8")
     return recs

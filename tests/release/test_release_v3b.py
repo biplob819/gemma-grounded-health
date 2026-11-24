@@ -146,3 +146,144 @@ def test_v3b_bundle_numbers_come_from_the_runs(with_v3b):
     assert s.train.model_dump() == rl
     run_ids = {r.name: r.run_id for r in b.runs}
     assert run_ids["main_v3b"] == result["run_id"]
+
+
+# RBR-02: export and lineage records
+
+LINEAGE = ROOT / "docs" / "measurements" / "lineage"
+RECORDS_V3B = ROOT / "docs" / "measurements" / "export_artifacts_v3b.json"
+
+
+def _copy(name: str):
+    from ggh.lineage import read_manifest
+
+    return read_manifest(LINEAGE / f"{name}.json")
+
+
+def test_v3b_records_name_the_frozen_adapter_everywhere():
+    """D-20: every record of v3b names adapter 0537933d…, and its run started from v2's."""
+    train, export = _copy("train_v3b"), _copy("export_ft3b")
+    v2_sel = json.loads((ROOT / "docs/measurements/v2/train_selection.json").read_text("utf-8"))
+
+    def load(name: str) -> dict:
+        return json.loads((V3B / name).read_text(encoding="utf-8"))
+
+    rl, sel, merge, gguf = (
+        load(n)
+        for n in (
+            "rl_run.json",
+            "train_selection.json",
+            "merge_record.json",
+            "gguf_ft3b_manifest.json",
+        )
+    )
+    named = {
+        "train_v3b": train.params["adapter_sha256"],
+        "export_ft3b": export.params["adapter_sha256"],
+        "rl_run": rl["adapter_sha256"],
+        "train_selection": sel["adapter_sha256"],
+        "merge_record": merge["adapter_sha256"],
+        "gguf manifest": gguf["source"]["revision"],
+    }
+    assert named == dict.fromkeys(named, ADAPTER)
+    assert train.params["init_adapter_sha256"] == rl["init_adapter_sha256"]
+    assert rl["init_adapter_sha256"] == v2_sel["adapter_sha256"]
+    assert train.params["kaggle_kernel"] == rl["kaggle_kernel_version"] == "ggh-v3b-grpo v1"
+    assert train.params["selected_step"] == sel["selected_step"] == rl["selected_step"]
+    # the adapter files the export merged are the ones the GRPO run produced
+    adapter_files = {k: v for k, v in train.outputs.items() if "adapter_v3b/" in k}
+    assert len(adapter_files) == 2 and adapter_files.items() <= export.inputs.items()
+    adapter = ROOT / "artifacts" / "adapter_v3b"
+    if adapter.is_dir():  # not in CI: artifacts/ is not committed
+        from ggh.train.select import adapter_hash
+
+        assert adapter_hash(adapter) == ADAPTER
+
+
+def test_v3b_lineage_chain_reaches_v2_and_the_data():
+    """parity → export → GRPO training → v2's training → v2's targets → data, every committed
+    output still matching (`ggh lineage verify artifacts/parity_v3b/manifest.json` checks the
+    artifacts/ outputs too)."""
+    from ggh.release.hub import lineage_chain
+
+    copies = [_copy(p.stem) for p in sorted(LINEAGE.glob("*.json"))]
+    chain = lineage_chain(_copy("parity_v3b").key, copies)
+    keys = [m.key for m in chain]
+    want = ["parity_v3b", "export_ft3b", "train_v3b", "train_v2", "targets_v2", "data"]
+    assert keys == [_copy(n).key for n in want]
+    train, train_v2, targets = _copy("train_v3b"), _copy("train_v2"), _copy("targets_v2")
+    assert train.parents == (train_v2.key, targets.key)
+    for rel, digest in train.inputs.items():  # what a parent produced, it produced so
+        for parent in (train_v2, targets):
+            if rel in parent.outputs:
+                assert parent.outputs[rel] == digest, rel
+    plan = yaml.safe_load((ROOT / "configs/eval_plan_v3b.yaml").read_text(encoding="utf-8"))
+    for k in ("reward", "checker", "recipe"):
+        pin = plan["pinned"][k]
+        assert train.inputs[pin["file"]] == pin["sha256"], k
+    problems = B.committed_lineage_problems(
+        ROOT,
+        ["docs/measurements/lineage/train_v3b.json", "docs/measurements/lineage/parity_v3b.json"],
+    )
+    assert problems == []
+    par = _copy("parity_v3b")
+    assert {"docs/measurements/v3b/parity.json", "docs/measurements/v3b/parity_q8_0.json"} <= set(
+        par.outputs
+    )
+    assert "artifacts/gguf/ft3b-Q8_0.gguf" in par.inputs
+
+
+def test_the_v3b_export_records_match_the_manifests():
+    from ggh.schemas import ExportArtifact
+
+    recs = [ExportArtifact.model_validate(r) for r in json.loads(RECORDS_V3B.read_text("utf-8"))]
+    by_key = {m.key: m for m in (_copy(n) for n in ("train_v3b", "export_ft3b", "export_base"))}
+    gguf = json.loads((V3B / "gguf_ft3b_manifest.json").read_text(encoding="utf-8"))
+    for r in recs:
+        m = by_key[r.parent_key]
+        rel = f"{r.path}/adapter_model.safetensors" if r.kind == "adapter" else r.path
+        assert m.outputs[rel] == r.sha256, r.path
+        if r.kind == "gguf" and r.model == "ft":
+            assert gguf["files"][Path(r.path).name]["sha256"] == r.sha256
+    ft = {(r.kind, r.quant) for r in recs if r.model == "ft"}
+    assert ft == {
+        ("adapter", None),
+        ("merged_bf16", None),
+        ("gguf", "F16"),
+        ("gguf", "Q4_K_M"),
+        ("gguf", "Q8_0"),
+    }
+    v1 = {
+        r["path"]: r
+        for r in json.loads((ROOT / "docs/measurements/export_artifacts.json").read_text("utf-8"))
+    }
+    for r in recs:
+        if r.model == "base":  # v1's base GGUFs, unchanged
+            assert r.model_dump(mode="json") == v1[r.path]
+    paths = {r.path for r in recs if r.model == "ft"}
+    assert {"artifacts/gguf/ft3b-Q4_K_M.gguf", "artifacts/gguf/ft3b-Q8_0.gguf"} <= paths
+
+
+def test_ft3b_bench_probe_and_records_are_wired():
+    """`ggh bench --model ft3b`, `ggh probe report --release v3b` and `ggh export-records
+    --model ft3b` reach v3b's files (RBR-05's and RBR-01's runs are the main session's)."""
+    from ggh.evals import probe
+    from ggh.serve import bench
+
+    variants, out = bench.RUNS["ft3b"]
+    assert variants == (("ft3b", "Q4_K_M"), ("ft3b", "Q8_0"))
+    assert out == Path("docs/measurements/v3b/laptop_bench.json")
+    assert bench.RUNS["ft"] == (bench.VARIANTS, bench.OUT)
+    assert bench.RUNS["ft2"] == (bench.V2_VARIANTS, bench.V2_OUT)
+    orig, para, models, report = probe.RELEASES["v3b"]
+    assert (orig, para, models) == ("probe_original_v3b", "probe_paraphrase_v3b", (Q4,))
+    assert report == Path("docs/measurements/probe_report_v3b.json")
+    cfg = {r["version"]: r for r in _cfg()["releases"]}["v3b"]
+    assert cfg["probe"] == report.as_posix() and cfg["bench"] == out.as_posix()
+    assert cfg["artifacts"] == RECORDS_V3B.relative_to(ROOT).as_posix()
+    from ggh.cli import build_parser
+
+    p = build_parser()
+    assert p.parse_args(["bench", "--model", "ft3b"]).model == "ft3b"
+    assert p.parse_args(["probe", "report", "--release", "v3b"]).release == "v3b"
+    assert p.parse_args(["export-records", "--model", "ft3b"]).model == "ft3b"
