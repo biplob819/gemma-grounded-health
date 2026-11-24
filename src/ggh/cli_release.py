@@ -238,7 +238,7 @@ def _cmd_space(args: argparse.Namespace) -> int:  # pragma: no cover - starts a 
     try:
         env = app.passkey_env(os.environ, Path(args.env_file) if args.env_file else None)
         space = app.make_space(env, app.local_generators(ft_url, args.base_url), path)
-        bundle = Path(args.bundle) if args.bundle else sources.BUNDLE
+        bundle = Path(args.bundle) if args.bundle else ui.SERVED_BUNDLE  # v1.0.0's: v2 served
         summary = ui.results_summary(sources.load(root, sources.Paths(bundle=bundle)))
     except (sources.SourceError, passkey.PasskeyError, ValueError, OSError) as exc:
         return _fail("space", exc)
@@ -366,7 +366,11 @@ def register(sub: argparse._SubParsersAction) -> None:  # pyright: ignore[report
     sp.add_argument(
         "--env-file", default=None, help="read GGH_SPACE_PASSKEY from this file if unset"
     )
-    sp.add_argument("--bundle", default=None, help="results_bundle.json (default: docs/results/)")
+    sp.add_argument(
+        "--bundle",
+        default=None,
+        help="results_bundle.json (default: v1.0.0's frozen bundle, the release the demo serves)",
+    )
     sp.set_defaults(func=_cmd_space)
     ss = sub.add_parser("space-samples", help="pick the six demo samples from a dev run (R4.3)")
     ss.add_argument("--root", default=".")

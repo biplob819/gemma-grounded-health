@@ -14,6 +14,7 @@ handler by its evaluated annotation, and a string annotation hides it.
 """
 
 from html import escape
+from pathlib import Path
 from typing import Any
 
 from ggh.release.card import outcome_table, scoring
@@ -24,6 +25,8 @@ from ggh.space.engine import BANNER, card_html, highlight
 from ggh.space.service import Result, Space
 
 SERVED_MODEL = "gemma-e2b-grounded-v2-q4"  # EvalKit's name for v2's Q4_K_M GGUF
+# the demo still serves v2, the v1.0.0 model (owner, V3.8), so it reads v1.0.0's frozen bundle
+SERVED_BUNDLE = Path("docs") / "results" / "releases" / "v1.0.0" / "results_bundle.json"
 TITLES = {"base": "Base Gemma 4 E2B (Q4_K_M)", "ft": "Fine-tuned v2 (Q4_K_M GGUF)"}
 
 CSS = """

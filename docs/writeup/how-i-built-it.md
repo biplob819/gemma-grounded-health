@@ -47,7 +47,7 @@ On an Apple M3 Max (64 GB) the v2 file (3269.1 MB) generates 73.1 tokens a secon
 
 Every benchmark number comes from EvalKit, my open-source grounded-answer benchmark. One model splits each answer into claims; a judge rules on each claim using only the sentences the answer cites. Every metric gets a bootstrap interval, comparisons are paired and Holm-corrected, and a gap is "separated" only when its Holm-corrected interval excludes zero. The comparisons are hashed before each run.
 
-v1's main run compared 4 models (base, v1, Claude Haiku 5.5 and GPT-6 Luna), judged by Claude Opus 5.5 and GPT-6.1 Sol, for $53.68. All the project's paid runs, the GRPO scoring runs included, cost $123.52 in all. Against the frontier models, v1 was level with Claude Haiku 5.5 under Claude Opus 5.5 and ahead of it under GPT-6.1 Sol, and level with GPT-6 Luna under Claude Opus 5.5 (the Sol comparison with Luna is not claimed, see below).
+v1's main run compared 4 models (base, v1, Claude Haiku 5.5 and GPT-6 Luna), judged by Claude Opus 5.5 and GPT-6.1 Sol, for $53.68. All paid runs cost $123.52 in all. Against the frontier models, v1 was level with Claude Haiku 5.5 under Claude Opus 5.5 and ahead of it under GPT-6.1 Sol, and level with GPT-6 Luna under Claude Opus 5.5 (the Sol comparison with Luna is not claimed, see below).
 
 ## v1: the failure
 

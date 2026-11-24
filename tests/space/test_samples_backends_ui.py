@@ -99,7 +99,14 @@ def test_local_footer_says_the_demo_serves_the_benchmarked_gguf():
 
 
 def test_results_summary_comes_from_the_committed_bundle():
-    src = sources.load(ROOT)
+    # the demo serves v2, the v1.0.0 model, so it reads v1.0.0's frozen bundle (V3.8)
+    src = sources.load(ROOT, sources.Paths(bundle=ui.SERVED_BUNDLE))
+    assert src.bundle.shipped.version == "v2"
+    assert (ROOT / ui.SERVED_BUNDLE).read_bytes() == (
+        ROOT / "docs/results/releases/v1.0.0/results_bundle.json"
+    ).read_bytes()
+    with pytest.raises(ValueError, match="demo serves"):  # the live bundle ships v3b
+        ui.results_summary(sources.load(ROOT))
     text = ui.results_summary(src)
     main = src.main()
     assert main.run_id in text and src.bundle.shipped.version in text

@@ -216,7 +216,7 @@ def paid_runs(bundle_versions: list[str]) -> str:
     every ledger row (OWNER D-75, D-76)."""
     if set(bundle_versions) <= {"v1", "v2"}:
         return "v1's and v2's paid runs"
-    return "All the project's paid runs, the GRPO scoring runs included,"
+    return "All paid runs"
 
 
 def facts(src: Sources, root: Path) -> dict[str, str]:
