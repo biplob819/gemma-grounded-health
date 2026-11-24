@@ -117,7 +117,7 @@ uv run ggh llama fetch
 uv run ggh serve --model ft3b
 ```
 
-The `v3b.0.0` revision exists once v1.1.0 is published on Hugging Face; until then use `--revision v2.0.0`, rename the file to `ft2-Q4_K_M.gguf` and serve it with `--model ft2`.
+For the recommended Q8_0, download `gemma-4-e2b-grounded-health-Q8_0.gguf` the same way, rename it to `ft3b-Q8_0.gguf` and add `--quant Q8_0`. The `v3b.0.0` revision exists once v1.1.0 is published on Hugging Face; until then use `--revision v2.0.0`, rename the file to `ft2-Q4_K_M.gguf` and serve it with `--model ft2`.
 
 `ggh llama fetch` downloads and verifies the pinned llama.cpp release; `ggh serve --model ft3b` starts `llama-server` with v3b's Q4_K_M on `http://127.0.0.1:8086` (`--quant Q8_0` for the recommended Q8_0; `--model ft2` serves v2 on 8083), greedy, thinking off. Send EvalKit's PubMedQA prompt to `/v1/chat/completions`.
 

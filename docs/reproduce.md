@@ -138,7 +138,7 @@ make release
 uv run ggh release --release v3b --owner biplob123 --plan-json docs/measurements/release_plan_v3b.json
 ```
 
-The release dry run lists every file for the two Hub repos with its size and sha256, verifies the lineage, and pushes nothing (`docs/measurements/release_plan_v3b.json`, tag v3b.0.0; v1.0.0's was `release_plan_v2.json`). With `--push` it uploads, downloads every file back to check its sha256 and runs the GGUF through Ollama on one sample (`docs/measurements/release_record_v2.json`).
+The release dry run lists every file for the two Hub repos with its size and sha256, verifies the lineage, and pushes nothing (`docs/measurements/release_plan_v3b.json`, tag v3b.0.0; v1.0.0's was `release_plan_v2.json`). With `--push` it uploads, downloads every file back to check its sha256 and runs the GGUF through Ollama on one sample (v1.0.0's is `docs/measurements/release_record_v2.json`; a v3b push writes v3b's own record).
 
 ## 8. v3 and v3b: GRPO from v2's adapter (Wave 7)
 

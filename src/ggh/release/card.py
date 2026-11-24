@@ -1033,7 +1033,8 @@ def release_caveats(src: Sources) -> list[str]:
     if p is not None and bar is not None and p.label_agreement < bar[0]:
         out.append(
             f"- Q4_K_M's label agreement with the merged weights is {f3(p.label_agreement)}, "
-            f"under {bar[1]} of {f3(bar[0])} ({PARITY_DECISIONS.get(v, '')}); see Parity on the model card."
+            f"under {bar[1]} of {f3(bar[0])} ({PARITY_DECISIONS.get(v, '')}); "
+            "see Parity on the model card."
         )
     if exploratory(src):
         out.append(f"- {exploratory_note(src)}")
