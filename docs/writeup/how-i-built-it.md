@@ -23,7 +23,7 @@ I set the goals, wrote the PRD and made the product calls. Claude Code wrote the
 - **Converge gates**: 13 automated checks per node, from lint and tests to the secret scan and the records.
 - **A skeptical verifier**: a fresh agent that tries to break each node. After the harness node took many rounds, rounds were capped (OWNER D-33); what is left goes into the known-issues file.
 
-Across 23 nodes the verifiers ran 63 rounds; the harness node alone took 17. Any node that touches real data or a real model also reads real outputs before it can turn green (D-18).
+Across 24 nodes the verifiers ran 66 rounds; the harness node alone took 17. Any node that touches real data or a real model also reads real outputs before it can turn green (D-18).
 
 ## Data and targets
 
