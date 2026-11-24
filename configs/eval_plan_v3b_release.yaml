@@ -1,0 +1,59 @@
+# v3b release evidence (V3.8, OWNER D-75): the off-scope and paraphrase-probe runs v2's release had
+# (configs/eval_plan_v2.yaml, offscope_v2 and probe_*_v2), for the v3b checkpoint frozen in V3.6
+# (adapter 0537933d..., Q4_K_M 2befee83..., Q8_0 5faa9fb1...). Nothing here changes v3b's hashed
+# plan or its scored result (configs/eval_plan_v3b.yaml, docs/results/main_v3b).
+status: final
+version: v3b-release
+node: V3.8
+built_after_test_seen: true    # built after v1's, v2's, v3's and v3b's PQA-L results were seen (D-43)
+why: >-
+  the owner chose to prepare v3b as GGH v1.1.0 and to ship both Q4_K_M and Q8_0, recommending Q8_0
+  (OWNER D-75); the release bundle's B8 needs every shipped model's off-scope answers, reviewed
+  blind, and the card reports the paraphrase probe when one is recorded
+provider: openai_only
+evalkit: f9cbc8e5396c4fc638021cb426cc34e2d6853d78   # evalkit-harness==0.4.0 (D-56)
+judges: [gpt-6.1-sol]
+extractor: gpt-6-luna
+seed: 7
+metric: accuracy               # the probe's metric; B8 is a blind review, not a metric
+primary: []                    # release evidence, not a comparison: no primary test
+rule: >-
+  no primary test, so Holm's correction and the plan rule's tie do not arise. B8: each off-scope answer of v3b at Q4_K_M and at Q8_0 is reviewed blind under
+  configs/offscope_review_prompt.md, as v2's were (OWNER D-61). Probe: the drop is v3b-Q4_K_M's
+  accuracy on the 100 original-wording cases minus its accuracy on their paraphrases, with the
+  bootstrap interval `ggh probe report` computes for v1 and v2 (D-42, H4); a separated drop is
+  reported as a contamination signal, not hidden
+runs:
+  - name: offscope_v3b
+    purpose: B8 for v3b at Q4_K_M (shipped) and Q8_0 (recommended), blind review of their answers
+    config: configs/evalkit_v3b_solo.yaml
+    task: configs/tasks/offscope.yaml
+    n: 20
+    new_models: [gemma-e2b-grounded-v3b-q4, gemma-e2b-grounded-v3b-q8]
+    cached_models: []
+    citation_support: false
+    results: docs/results/offscope_v3b
+    command: uv run evalkit run configs/evalkit_v3b_solo.yaml --task configs/tasks/offscope.yaml --n 20
+  - name: probe_original_v3b
+    purpose: paraphrase probe, original wording (D-42, H4)
+    config: configs/evalkit_v3b_probe.yaml
+    task: configs/tasks/probe_original.yaml
+    n: 100
+    new_models: [gemma-e2b-grounded-v3b-q4]
+    cached_models: []
+    citation_support: false
+    results: docs/results/probe_original_v3b
+    command: uv run evalkit run configs/evalkit_v3b_probe.yaml --task configs/tasks/probe_original.yaml --n 100
+  - name: probe_paraphrase_v3b
+    purpose: paraphrase probe, paraphrased wording; drop = original minus paraphrased accuracy
+    config: configs/evalkit_v3b_probe.yaml
+    task: configs/tasks/probe_paraphrase.yaml
+    n: 100
+    new_models: [gemma-e2b-grounded-v3b-q4]
+    cached_models: []
+    citation_support: false
+    results: docs/results/probe_paraphrase_v3b
+    command: uv run evalkit run configs/evalkit_v3b_probe.yaml --task configs/tasks/probe_paraphrase.yaml --n 100
+spend: >-
+  every run's cost into docs/measurements/spend-ledger.jsonl, node V3.8; the owner's cap for the
+  three runs together is $1 (OWNER D-75), split $0.30, $0.35 and $0.35 in their EvalKit configs
