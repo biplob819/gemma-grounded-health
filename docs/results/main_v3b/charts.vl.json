@@ -1,0 +1,134 @@
+{
+  "headline": {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+      "values": [
+        {
+          "cost_per_100_usd": 0.0,
+          "headline": 0.404,
+          "hi": 0.434,
+          "judge": "gpt-6.1-sol",
+          "lo": 0.373,
+          "model": "gemma-e2b-base-q4"
+        },
+        {
+          "cost_per_100_usd": 0.0,
+          "headline": 0.329,
+          "hi": 0.358,
+          "judge": "gpt-6.1-sol",
+          "lo": 0.3,
+          "model": "gemma-e2b-grounded-v2-q4"
+        },
+        {
+          "cost_per_100_usd": 0.0,
+          "headline": 0.503,
+          "hi": 0.5340249999999996,
+          "judge": "gpt-6.1-sol",
+          "lo": 0.472,
+          "model": "gemma-e2b-grounded-v3b-q4"
+        },
+        {
+          "cost_per_100_usd": 0.0,
+          "headline": 0.541,
+          "hi": 0.572,
+          "judge": "gpt-6.1-sol",
+          "lo": 0.51,
+          "model": "gemma-e2b-grounded-v3b-q8"
+        }
+      ]
+    },
+    "description": "Headline (correct and fully grounded) against cost, 95% CIs",
+    "layer": [
+      {
+        "encoding": {
+          "x": {
+            "field": "cost_per_100_usd",
+            "scale": {
+              "type": "linear"
+            },
+            "title": "Cost per 100 cases (USD)",
+            "type": "quantitative"
+          },
+          "y": {
+            "field": "lo",
+            "title": "Correct and grounded",
+            "type": "quantitative"
+          },
+          "y2": {
+            "field": "hi"
+          }
+        },
+        "mark": "rule"
+      },
+      {
+        "encoding": {
+          "color": {
+            "field": "model",
+            "type": "nominal"
+          },
+          "shape": {
+            "field": "judge",
+            "type": "nominal"
+          },
+          "tooltip": [
+            {
+              "field": "model"
+            },
+            {
+              "field": "judge"
+            },
+            {
+              "field": "headline"
+            },
+            {
+              "field": "lo"
+            },
+            {
+              "field": "hi"
+            },
+            {
+              "field": "cost_per_100_usd"
+            }
+          ],
+          "x": {
+            "field": "cost_per_100_usd",
+            "scale": {
+              "type": "linear"
+            },
+            "title": "Cost per 100 cases (USD)",
+            "type": "quantitative"
+          },
+          "y": {
+            "field": "headline",
+            "scale": {
+              "domain": [
+                0,
+                1
+              ]
+            },
+            "type": "quantitative"
+          }
+        },
+        "mark": {
+          "filled": true,
+          "size": 80,
+          "type": "point"
+        }
+      },
+      {
+        "encoding": {
+          "y": {
+            "datum": 0.6
+          }
+        },
+        "mark": {
+          "strokeDash": [
+            6,
+            4
+          ],
+          "type": "rule"
+        }
+      }
+    ]
+  }
+}

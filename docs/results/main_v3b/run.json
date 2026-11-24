@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "run_id": "r-66616600de17",
+  "task": "pubmedqa",
+  "task_ref": "configs/tasks/pubmedqa_cit.yaml",
+  "config_hash": "5a7722fcb0de80bd",
+  "seed": 7,
+  "n": 1000,
+  "models": [
+    "gemma-e2b-base-q4",
+    "gemma-e2b-grounded-v2-q4",
+    "gemma-e2b-grounded-v3b-q4",
+    "gemma-e2b-grounded-v3b-q8"
+  ],
+  "judges": [
+    "gpt-6.1-sol"
+  ],
+  "judge_mode": "single",
+  "families": {
+    "gemma-e2b-base-q4": "other",
+    "gemma-e2b-grounded-v2-q4": "other",
+    "gemma-e2b-grounded-v3b-q4": "other",
+    "gemma-e2b-grounded-v3b-q8": "other"
+  },
+  "thresholds": [
+    {
+      "metric": "headline",
+      "op": ">=",
+      "value": 0.6
+    }
+  ],
+  "live_judges": false,
+  "started_at": "2026-11-24T06:33:08.434072Z",
+  "finished_at": "2026-11-24T07:27:48.158013Z",
+  "spent_usd": 3.4724391999999975
+}

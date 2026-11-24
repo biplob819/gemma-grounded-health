@@ -44,7 +44,7 @@ def _spec_caps() -> list[tuple[str, str]]:
 def test_graph_matches_tech_spec():
     nodes = load_graph()
     spec = _spec_nodes()
-    assert len(nodes) == len(spec) == 25  # V2.1-2 D-43; O6.1 cut D-58; V3.1-2 D-66; V3.3-6
+    assert len(nodes) == len(spec) == 26  # V2.1-2 D-43; O6.1 cut D-58; V3.1-2 D-66; V3.3-7
     assert {n: (v.title, v.depends_on) for n, v in nodes.items()} == spec
 
 
@@ -52,7 +52,7 @@ def test_graph_matches_tech_spec():
 def test_catalog_matches_tech_spec():
     caps = load_catalog()
     assert (
-        len(caps) == 147
+        len(caps) == 150
     )  # SPC-08, OSS-06 (D-36, D-37); VTG, VEV (D-43); no DPO; RL* (D-66, D-70)
     assert [(c.cap_id, c.node) for c in caps] == _spec_caps()
     nodes = load_graph()
@@ -67,8 +67,8 @@ def test_decisions_d1_onwards_with_owner_rulings():
     # model reviews, the aim rule, the local demo,
     # the EvalKit contribution, the v1.0.0 release), 66 owner (v3 GRPO),
     # 67-68 the v3 re-registrations, 69-71 owner (the $15 scoring cap, v3b, v3 at Q4_K_M),
-    # 72 v3b's node numbering
-    assert ids == set(range(1, 73))
+    # 72 v3b's node numbering, 73-74 owner (v3b's scoring: Q8_0 check, $5 cap; $8 cap)
+    assert ids == set(range(1, 75))
     owner = {int(n) for n in re.findall(r"^\| OWNER D-(\d+) \|", text, re.M)}
     assert owner == {
         15,
@@ -108,6 +108,8 @@ def test_decisions_d1_onwards_with_owner_rulings():
         69,
         70,
         71,
+        73,
+        74,
     }
 
 
@@ -133,7 +135,7 @@ def test_decisions_equal_tech_spec_section_1():
         for line in text.splitlines()
         if re.match(r"^\| (OWNER )?D-\d+ \|", line)
     ]
-    assert len(spec_rows) == 72  # D-67, D-68; OWNER D-69, D-70, D-71; D-72
+    assert len(spec_rows) == 74  # D-67, D-68; OWNER D-69, D-70, D-71; D-72; OWNER D-73, D-74
     assert [r[:1] + r[2:] for r in log_rows] == spec_rows  # drop the date column
     assert "DeepMind" not in text
 

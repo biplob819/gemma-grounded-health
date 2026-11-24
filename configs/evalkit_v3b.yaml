@@ -1,0 +1,24 @@
+# V3.7 main_v3b run (configs/eval_plan_v3b.yaml), OpenAI only (OWNER D-57, D-66, D-70): base, v2
+# and v3b on the E3.2 cases. Base and v2 answers, claims and verdicts come from EvalKit's store
+# (the V2.2 run's cache; their servers stay stopped, so a miss fails); v3b is new. Every new claim
+# is extracted by GPT-6 Luna and judged by GPT-6.1 Sol. v3b is the checkpoint the v3b plan selected
+# (V3.6, adapter 0537933d...): Q4_K_M 2befee83..., served by `ggh serve --model ft3b` (8086), is
+# the registered model. Q8_0 5faa9fb1... (`ggh serve --model ft3b --quant Q8_0 --port 8087`) is an
+# exploratory extra the owner added after the Q8_0 parity check (OWNER D-73); it is not in the
+# primary test.
+models: [gemma-e2b-base-q4, gemma-e2b-grounded-v2-q4, gemma-e2b-grounded-v3b-q4, gemma-e2b-grounded-v3b-q8]
+endpoints:
+  gemma-e2b-base-q4: http://127.0.0.1:8080/v1
+  gemma-e2b-grounded-v2-q4: http://127.0.0.1:8083/v1
+  gemma-e2b-grounded-v3b-q4: http://127.0.0.1:8086/v1
+  gemma-e2b-grounded-v3b-q8: http://127.0.0.1:8087/v1
+judges: [gpt-6.1-sol]            # OWNER D-57: Sol alone
+extractor: gpt-6-luna             # OWNER D-57
+structured_output: true          # D-6
+max_output_tokens: 2048
+concurrency: {openai: 8, openai_compatible: 1}
+seed: 7                          # the E3.2 main run's seed, so the cached cases are the same 1,000
+default_effort: medium
+judge_effort: medium
+extractor_effort: medium
+max_cost_usd: 5  # OWNER D-73
