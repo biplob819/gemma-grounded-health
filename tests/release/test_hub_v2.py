@@ -308,16 +308,35 @@ def test_push_refuses_a_plan_with_problems(repo, tmp_path):
 # CLI on the real repo: the default bundle is v1 + v2, so the plan is v2's
 
 
-def test_cli_defaults_to_v2_and_never_pushes_on_a_dry_run(monkeypatch, capsys, tmp_path):
+@pytest.mark.parametrize(
+    ("bundle", "release", "model", "gguf"),
+    [
+        # v1.0.0's frozen bundle ships v2 (D-76)
+        (str(REAL_BUNDLE.relative_to(ROOT)), "v2", "gemma-e2b-grounded-v2-q4", "ft2"),
+        # the live bundle ships v3b (V3.8, OWNER D-75)
+        ("docs/results/results_bundle.json", "v3b", "gemma-e2b-grounded-v3b-q4", "ft3b"),
+    ],
+    ids=("v1.0.0", "live"),
+)
+def test_cli_defaults_to_v2_and_never_pushes_on_a_dry_run(
+    monkeypatch, capsys, tmp_path, bundle, release, model, gguf
+):
+    """The default release is the bundle's shipped one: v2 for v1.0.0's bundle, v3b now."""
     monkeypatch.setattr(hub, "push", lambda *a, **k: (_ for _ in ()).throw(AssertionError()))
     monkeypatch.setenv("HF_TOKEN", "secret-value-123")
     out_json = tmp_path / "plan.json"
-    code = cli.main(["release", "--root", str(ROOT), "--owner", "x", "--plan-json", str(out_json)])
+    args = ["release", "--root", str(ROOT), "--owner", "x", "--plan-json", str(out_json)]
+    card = []
+    if release == "v2":  # v1.0.0's committed card is its frozen copy
+        card = ["--card", "docs/results/releases/v1.0.0/MODEL_CARD.md"]
+    code = cli.main([*args, "--bundle", bundle, *card])
     out = capsys.readouterr().out
-    assert "release v2 (gemma-e2b-grounded-v2-q4)" in out
+    assert f"release {release} ({model})" in out
     assert "dry run, nothing pushed" in out and "secret-value-123" not in out
-    assert "artifacts/gguf/ft2-Q4_K_M.gguf" in out and "artifacts/gguf/ft-Q4_K_M.gguf" not in out
-    assert json.loads(out_json.read_text(encoding="utf-8"))["release"] == "v2"
+    assert (
+        f"artifacts/gguf/{gguf}-Q4_K_M.gguf" in out and "artifacts/gguf/ft-Q4_K_M.gguf" not in out
+    )
+    assert json.loads(out_json.read_text(encoding="utf-8"))["release"] == release
     assert code in (0, 2)  # 2 without artifacts/ (CI): the plan lists missing files
 
 

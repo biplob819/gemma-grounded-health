@@ -1,10 +1,7 @@
-"""V3.8 (OWNER D-75, D-76): v3b's release as GGH v1.1.0, the proof tests of RBR-02..04 and
-RBR-06 (RBR-01's and RBR-05's are added with their evidence).
+"""V3.8 (OWNER D-75, D-76): v3b's release as GGH v1.1.0, the proof tests of RBR-01..06.
 
 v1.0.0's published bundle, behaviour table and card are frozen under docs/results/releases/v1.0.0/
-and must stay what the v1 + v2 build writes. Tests that need V3.8's release evidence (the
-off-scope and probe runs, the B8 review, the laptop bench) skip, naming the file they wait for,
-until it is committed.
+and must stay what the v1 + v2 build writes; the live files ship v3b.
 """
 
 from __future__ import annotations
@@ -27,19 +24,6 @@ V3B = ROOT / "docs" / "measurements" / "v3b"
 ADAPTER = "0537933d988bdbb7db836c8a4651a278d391f95c72ed4f45b6c3b739c39d2014"
 Q4, Q8 = "gemma-e2b-grounded-v3b-q4", "gemma-e2b-grounded-v3b-q8"
 V2_MODEL, BASE = "gemma-e2b-grounded-v2-q4", "gemma-e2b-base-q4"
-
-# what a v3b bundle needs beyond what is committed now (V3.8 RBR-01, RBR-05)
-EVIDENCE = (
-    "docs/results/offscope_v3b/summary.json",
-    "docs/results/probe_original_v3b/summary.json",
-    "docs/results/probe_paraphrase_v3b/summary.json",
-    "docs/measurements/probe_report_v3b.json",
-    "docs/measurements/v3b/laptop_bench.json",
-)
-MISSING = [p for p in EVIDENCE if not (ROOT / p).is_file()]
-needs_evidence = pytest.mark.skipif(
-    bool(MISSING), reason=f"waits for V3.8's release evidence: {', '.join(MISSING)}"
-)
 
 
 def _sha(path: Path) -> str:
@@ -107,13 +91,9 @@ def test_the_v3b_entry_reads_a_grpo_run_and_v2s_audits():
     run = B.train_record(ROOT, v3b["train_run"])
     assert isinstance(run, RLRun) and run.adapter_sha256 == ADAPTER and run.reward == "v3b"
     assert B.train_record(ROOT, v2["train_run"]).__class__.__name__ == "TrainRun"
-    # a held release stays out of the default build until its evidence is committed
-    if v3b.get("held"):
-        assert Run.exists(ROOT, "main_v3b")
-        assert [r.version for r in B.build(ROOT).bundle.releases] == ["v1", "v2"]
+    assert not v3b.get("held") and Run.exists(ROOT, "main_v3b")  # its evidence is committed
 
 
-@needs_evidence
 def test_the_bundle_ships_v3b_after_v1_and_v2(with_v3b):
     b = with_v3b.bundle
     assert [r.version for r in b.releases] == ["v1", "v2", "v3b"]
@@ -124,7 +104,6 @@ def test_the_bundle_ships_v3b_after_v1_and_v2(with_v3b):
     assert b.publish_blockers == ()
 
 
-@needs_evidence
 def test_v3b_bundle_numbers_come_from_the_runs(with_v3b):
     b = with_v3b.bundle
     result = json.loads((ROOT / "docs/results/main_v3b/result.json").read_text(encoding="utf-8"))
@@ -289,21 +268,11 @@ def test_ft3b_bench_probe_and_records_are_wired():
     assert p.parse_args(["export-records", "--model", "ft3b"]).model == "ft3b"
 
 
-# RBR-04: the card, README and notes. Until V3.8's evidence is committed they run on a stand-in
-# v3b bundle (v2's off-scope run and laptop bench in place of v3b's); every v3b number in it is
-# real (main_v3b, the parity records, the GRPO run)
+# RBR-04: the card, README and notes, from a bundle built afresh from the committed runs
 
 
 def _bundle_path(tmp: Path) -> Path:
-    cfg = _cfg()
-    v3b = cfg["releases"][-1]
-    v3b.pop("held", None)
-    if MISSING:  # the stand-in: only for the files that do not exist yet
-        v3b["runs"] = ["main_v3b", "offscope_v2"]
-        v3b["offscope_run"] = "offscope_v2"
-        v3b["bench"], v3b["bench_variant"] = "docs/measurements/v2/laptop_bench.json", "ft2-Q4_K_M"
-    (tmp / "results.yaml").write_text(yaml.safe_dump(cfg, sort_keys=False), encoding="utf-8")
-    built = B.build(ROOT, config=tmp / "results.yaml")
+    built = B.build(ROOT)
     out = tmp / "results_bundle.json"
     out.write_text(built.bundle.model_dump_json(indent=2) + "\n", encoding="utf-8")
     return out
@@ -409,18 +378,8 @@ def test_the_card_discloses_the_parity_miss_and_caveats(src3, card3):
 
 
 BANNER_TEXT = "Research only, not medical advice"
-LIVE_BUNDLE = ROOT / "docs" / "results" / "results_bundle.json"
-LIVE_IS_V3B = (
-    json.loads(LIVE_BUNDLE.read_text(encoding="utf-8"))["releases"][-1]["version"] == "v3b"
-)
-needs_regeneration = pytest.mark.skipif(
-    not LIVE_IS_V3B,
-    reason="waits for the live bundle, MODEL_CARD.md, README and notes to be regenerated for v3b",
-)
 
 
-@needs_evidence
-@needs_regeneration
 def test_the_v3b_card_is_what_the_generator_writes():
     from ggh.release import card, notes, readme, sources
 
@@ -615,3 +574,139 @@ def test_the_bundle_cli_builds_named_releases(tmp_path, capsys):
     assert "releases: v1, v2;" in capsys.readouterr().out
     got = (tmp_path / "results_bundle.json").read_bytes()
     assert got == (FROZEN / "results_bundle.json").read_bytes()
+
+
+# RBR-01: the release evidence (configs/eval_plan_v3b_release.yaml, OWNER D-75, D-76)
+
+RELEASE_PLAN = ROOT / "configs" / "eval_plan_v3b_release.yaml"
+EVIDENCE_RUNS = ("offscope_v3b", "probe_original_v3b", "probe_paraphrase_v3b")
+
+
+def _plan_runs() -> dict:
+    plan = yaml.safe_load(RELEASE_PLAN.read_text(encoding="utf-8"))
+    return {r["name"]: r for r in plan["runs"]}
+
+
+def _manifest(name: str) -> dict:
+    return json.loads((ROOT / "docs/results" / name / "run.json").read_text(encoding="utf-8"))
+
+
+def test_the_evidence_runs_are_the_registered_release_plan():
+    """Each run is the plan's: its models, n, task file and EvalKit config (by EvalKit's own
+    config hash, cost cap and concurrency left out as EvalKit does)."""
+    from evalkit.config import load_run_config
+    from evalkit.runtime.canonical import sha256_hex
+
+    runs = _plan_runs()
+    assert set(runs) == set(EVIDENCE_RUNS)
+    for name, spec in runs.items():
+        m = _manifest(name)
+        assert m["models"] == spec["new_models"] + spec["cached_models"], name
+        assert m["n"] == spec["n"] and m["task_ref"] == spec["task"], name
+        assert spec["results"] == f"docs/results/{name}"
+        cfg = load_run_config(ROOT / spec["config"])
+        want = sha256_hex(cfg.model_copy(update={"max_cost_usd": None, "concurrency": {}}))[:16]
+        assert m["config_hash"] == want, name
+        assert m["judges"] == ["gpt-6.1-sol"] and m["seed"] == 7
+    assert set(runs["offscope_v3b"]["new_models"]) == {Q4, Q8}
+
+
+def test_offscope_and_probe_runs_cover_their_cases():
+    off = Run(ROOT, "offscope_v3b")
+    cases = {m: {r["case_id"] for r in off.raw_records if r["completion"]["model"] == m}
+             for m in (Q4, Q8)}  # fmt: skip
+    assert len(cases[Q4]) == len(cases[Q8]) == 20 and cases[Q4] == cases[Q8]
+    assert len(off.raw_records) == 40
+    v2_off = {r["case_id"] for r in Run(ROOT, "offscope_v2").raw_records}
+    assert cases[Q4] == v2_off  # the same 20 prompts v2's B8 used
+    for wording in ("original", "paraphrase"):
+        recs = Run(ROOT, f"probe_{wording}_v3b").raw_records
+        ids = {r["case_id"] for r in recs}
+        assert len(recs) == len(ids) == 100 and {r["completion"]["model"] for r in recs} == {Q4}
+        v2 = {r["case_id"] for r in Run(ROOT, f"probe_{wording}_v2").raw_records}
+        assert ids == v2, wording
+
+
+def test_the_probe_report_matches_its_runs():
+    from ggh.evals import probe
+
+    committed = json.loads((ROOT / probe.REPORT_V3B).read_text(encoding="utf-8"))
+    assert committed == json.loads(json.dumps(probe.report(ROOT, "v3b")))
+    assert committed["runs"] == {
+        "original": _manifest("probe_original_v3b")["run_id"],
+        "paraphrase": _manifest("probe_paraphrase_v3b")["run_id"],
+    }
+    r = committed["models"][Q4]
+    assert r["n"] == 100 and r["contamination_signal"] == (r["drop"]["lo"] > 0)
+
+
+def test_the_runs_started_after_the_release_plan_hash():
+    from ggh.results.plan import parse_time
+
+    raw = RELEASE_PLAN.read_bytes()
+    sha = hashlib.sha256(raw).hexdigest()
+    hash_file = ROOT / "docs/measurements/eval_plan_v3b_release.sha256"
+    assert hash_file.read_text(encoding="utf-8").split()[0] == sha
+    rows = [
+        json.loads(x)
+        for x in (ROOT / "docs/measurements/preregistrations.jsonl").read_text("utf-8").splitlines()
+        if x.strip()
+    ]
+    (row,) = [r for r in rows if r["plan"] == "configs/eval_plan_v3b_release.yaml"]
+    assert row["sha256"] == sha
+    committed = parse_time(row["committed_at"])
+    for name in EVIDENCE_RUNS:
+        assert parse_time(_manifest(name)["started_at"]) > committed, name
+
+
+def test_evidence_spend_is_logged_within_the_owner_cap():
+    rows = [json.loads(x) for x in LEDGER.read_text(encoding="utf-8").splitlines() if x.strip()]
+    v38 = {r["run_id"]: r for r in rows if r.get("node") == "V3.8"}
+    want = {_manifest(n)["run_id"]: n for n in EVIDENCE_RUNS}
+    assert set(v38) == set(want)
+    for run_id, name in want.items():
+        m = _manifest(name)
+        assert v38[run_id]["spent_usd"] == round(m["spent_usd"], 6), name
+        assert v38[run_id]["models"] == m["models"] and v38[run_id]["n_cases"] == m["n"]
+    caps = {"offscope_v3b": 0.30, "probe_original_v3b": 0.35, "probe_paraphrase_v3b": 0.35}
+    for name, cap in caps.items():  # D-76's split of the owner's $1
+        assert _manifest(name)["spent_usd"] <= cap, name
+    assert sum(r["spent_usd"] for r in v38.values()) <= 1.0  # OWNER D-75
+
+
+# RBR-05: v3b's laptop bench (D-10)
+
+BENCH_V3B = V3B / "laptop_bench.json"
+
+
+def test_v3b_bench_has_both_quants():
+    from ggh.schemas import LaptopBench
+    from ggh.serve import bench
+
+    doc = json.loads(BENCH_V3B.read_text(encoding="utf-8"))
+    assert set(doc["variants"]) == {f"{m}-{q}" for m, q in bench.V3B_VARIANTS}
+    for key, v in doc["variants"].items():
+        b = LaptopBench.model_validate(v)
+        assert key.endswith(b.quant) and b.n_prompts == bench.N_PROMPTS
+        assert b.repetitions == bench.REPETITIONS and b.gen_tps_p50 > 0
+        assert set(b.llama_bench) == {"pp512", "tg128"}
+        assert len(doc["details"][key]["llama_bench_rounds"]) == bench.LB_ROUNDS
+
+
+def test_v3b_bench_names_the_frozen_ggufs():
+    """The bench file records each variant's llama.cpp build and file size, not a sha256; both
+    must be those of the frozen GGUFs in gguf_ft3b_manifest.json (whose sha256 the export
+    records carry), and where the GGUFs are on disk they still hash to the manifest."""
+    doc = json.loads(BENCH_V3B.read_text(encoding="utf-8"))
+    gguf = json.loads((V3B / "gguf_ft3b_manifest.json").read_text(encoding="utf-8"))
+    assert gguf["source"]["revision"] == ADAPTER
+    recs = {r["path"]: r["sha256"] for r in json.loads(RECORDS_V3B.read_text("utf-8"))}
+    for q in ("Q4_K_M", "Q8_0"):
+        v, f = doc["variants"][f"ft3b-{q}"], gguf["files"][f"ft3b-{q}.gguf"]
+        assert v["llama_cpp_commit"] == gguf["llama_cpp"]["tag"]
+        assert v["model_file_mb"] == round(f["bytes"] / 2**20, 1)
+        assert recs[f"artifacts/gguf/ft3b-{q}.gguf"] == f["sha256"]
+        local = ROOT / "artifacts" / "gguf" / f"ft3b-{q}.gguf"
+        if local.is_file():  # not in CI: artifacts/ is not committed
+            assert local.stat().st_size == f["bytes"]
+    assert doc["measured_at"] > gguf["built_at"]
