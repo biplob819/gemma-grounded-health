@@ -8,4 +8,5 @@
 - [x] 6. Laptop bench
 - [x] 7. results.yaml v3b entry; bundle; card, README, notes, writeup
 - [x] 8. Hub v3b layout; dry run; release plan record
-- [ ] 9. Tests; verifier; converge x2; merge; ask the owner before any push
+- [x] 9. Tests; verifier round 3 PASS (rounds 1-2: text and lint fixes)
+- [ ] 10. Converge x2; merge; ask the owner before any push
