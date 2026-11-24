@@ -127,4 +127,6 @@ def test_the_published_bundle_leaves_wave_7_spend_out():
     assert keep is not None and not keep({"node": "V3.5"}) and keep({"node": "V2.2"})
     bundle = json.loads((RES / "results_bundle.json").read_text(encoding="utf-8"))
     assert bundle["spend_usd"] == round(ledger.total(path, "spent_usd", keep), 6) == 118.035054
-    assert round(ledger.total(path, "spent_usd"), 6) == round(118.035054 + 1.815194, 6)
+    wave7 = ledger.total(path, "spent_usd", lambda r: str(r.get("node", "")).startswith("V3."))
+    assert round(ledger.total(path, "spent_usd"), 6) == round(118.035054 + wave7, 6)
+    assert wave7 >= 1.815194  # main_v3's row is in the ledger, not in the bundle

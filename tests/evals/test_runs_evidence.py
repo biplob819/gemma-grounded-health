@@ -86,7 +86,9 @@ RUN_DIRS = {"main": "main", "offscope": "offscope", "probe_original": "probe_ori
             "probe_original_v2": "probe_original_v2", "probe_paraphrase_v2": "probe_paraphrase_v2",
             "parity_v2": "parity_v2",
             # V3.5 (OWNER D-69, D-71)
-            "main_v3": "main_v3"}  # fmt: skip
+            "main_v3": "main_v3",
+            # V3.7 (OWNER D-73, D-74)
+            "main_v3b": "main_v3b"}  # fmt: skip
 
 
 def test_every_paid_run_is_in_the_ledger_with_its_own_cost():
