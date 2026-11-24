@@ -1,0 +1,124 @@
+{
+  "ollama": {
+    "ref": "hf.co/biplob123/gemma-4-e2b-grounded-health-GGUF:Q4_K_M",
+    "ok": true,
+    "label": "no",
+    "citations": [
+      8
+    ],
+    "error": null,
+    "started_server": true,
+    "sample_id": "dev-1471704"
+  },
+  "release": "v3b",
+  "tag": "v3b.0.0",
+  "repos": {
+    "main": "biplob123/gemma-4-e2b-grounded-health",
+    "gguf": "biplob123/gemma-4-e2b-grounded-health-GGUF"
+  },
+  "downloads": [
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/chat_template.jinja",
+      "sha256": "0a2c8073c878ab1da004bee933a998606537bbb62016310352c7285c3f01c5b5",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/config.json",
+      "sha256": "44d5e8d9938ed73b132bbdb17f0902860d585400b706615aab648baf69d4243a",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/model.safetensors",
+      "sha256": "d882d65011f648b1ea66b4cc220d1a57bbf694407fbc81c2693350c6ab1509b2",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/tokenizer.json",
+      "sha256": "ab26b2add729e6f645bd869f228f14190a06615538f3be6f7786f33d13d78ad2",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/tokenizer_config.json",
+      "sha256": "9f4fec4b1dc6ecddf8f4a92e9caea5971c0e67d81309f3f9066a2bee8c362633",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/generation_config.json",
+      "sha256": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/processor_config.json",
+      "sha256": "32bdf45d2ad4cc29a0822ddd157a182de76644f0419a6228d151495256e9813c",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/ggh_merge.json",
+      "sha256": "7e4c3ff236f5b660b88558f031335ddbe3484681cc7f8b36bf44b953a668e754",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/adapter/adapter_config.json",
+      "sha256": "17c0c0526c410b1a2aecbf74d67594f8f5f961993b7c9d7a955341674274bcf9",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/adapter/adapter_model.safetensors",
+      "sha256": "f6d2ccecddaf4c95dd83102c4f817acea0fa982ded9fb9263fe271964ea73a35",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/README.md",
+      "sha256": "e6ef8fb11218c96f10c767238abcee3f30bb9b9ba875b827f4a191fa276e8d49",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/results_bundle.json",
+      "sha256": "2061e6914f5961cb2885c631a45f749487fccdec57fbcda80112f9bebc46c432",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/lineage.json",
+      "sha256": "6e9eafb05f03b294751db870eddad1f205bf61a28f0ffb51204f6cd7840dd40e",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health-GGUF/gemma-4-e2b-grounded-health-Q4_K_M.gguf",
+      "sha256": "2befee8344d5d7ad610f118017d7743903a35adacd0ab3c2a8fdfac497d09d10",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health-GGUF/gemma-4-e2b-grounded-health-Q8_0.gguf",
+      "sha256": "5faa9fb14347a86da3a25fea0c291f49f2e9b96853a7c9f6a678795605990824",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health-GGUF/README.md",
+      "sha256": "f5b4526f94a9dcf501a19925c5c9d9d70a2e3ca40ae419dcb78a9f3dc88faf80",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health-GGUF/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health/NOTICE",
+      "sha256": "808f130d75b533804bdf328dc5a530cbce3176af011d51e03edacd75a8f05ee3",
+      "ok": true
+    },
+    {
+      "file": "biplob123/gemma-4-e2b-grounded-health-GGUF/NOTICE",
+      "sha256": "808f130d75b533804bdf328dc5a530cbce3176af011d51e03edacd75a8f05ee3",
+      "ok": true
+    }
+  ],
+  "ollama_ref": "hf.co/biplob123/gemma-4-e2b-grounded-health-GGUF:Q4_K_M",
+  "ollama_answer": "{\"label\": \"no\", \"answer\": \"The results did not demonstrate an increase in the pituitary secretion of immunoreactive beta-endorphin in patients with polycystic ovary syndrome.\", \"citations\": [8]}",
+  "problems": []
+}
