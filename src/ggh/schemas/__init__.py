@@ -21,7 +21,7 @@ from ggh.schemas.release import (
     SampleReadSummary,
     primary_key,
 )
-from ggh.schemas.train import UNPINNED, DevMetrics, RecipeConfig, TrainRun
+from ggh.schemas.train import UNPINNED, DevMetrics, RecipeConfig, RLRun, TrainRun
 
 __all__ = [
     "SCHEMA_VERSION",
@@ -43,6 +43,7 @@ __all__ = [
     "ModelResult",
     "ParityReport",
     "ProbeResult",
+    "RLRun",
     "RecipeConfig",
     "ReleaseEntry",
     "ResultsBundle",

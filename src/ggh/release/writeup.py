@@ -29,7 +29,7 @@ from ggh.release import links
 from ggh.release.card import DISPLAY, aim_outcome, f3, iv, outcome_table, shipped_bench
 from ggh.release.readme import disclosures
 from ggh.release.sources import Sources
-from ggh.schemas import Comparison, ModelResult
+from ggh.schemas import Comparison, ModelResult, TrainRun
 
 OUT_DIR = Path("docs") / "writeup"
 TEMPLATES = Path(__file__).parent / "templates" / "writeup"
@@ -304,6 +304,7 @@ def facts(src: Sources, root: Path) -> dict[str, str]:
         f[f"{key}_vram"] = str(rel.train.peak_vram_gb)
         f[f"{key}_gpu_hours"] = f"{_gpu_hours(root, TRAIN_KERNELS[key]):.2f}"
     f["gpu"] = v1.train.gpu.removeprefix("Tesla ")
+    assert isinstance(v1.train, TrainRun)
     dm = v1.train.dev_metrics
     f["v1_dev_n"] = str(dm.n)
     f["v1_schema"] = f3(dm.schema_valid)

@@ -19,7 +19,7 @@ from evalkit.pipeline.aggregate import stamp_lines
 from evalkit.schemas import Interval, RunSummary
 
 from ggh.release.sources import AIM_CHECK, LICENCE_RECORD, Sources
-from ggh.schemas import BehaviourRow, Comparison, LaptopBench, ReleaseEntry, RunRef
+from ggh.schemas import BehaviourRow, Comparison, LaptopBench, ReleaseEntry, RunRef, TrainRun
 
 TEMPLATE = Path(__file__).parent / "templates" / "model_card.md"
 HUB_LICENSE = "apache-2.0"
@@ -741,6 +741,8 @@ def audit_line(src: Sources) -> str:
 
 def training_procedure(src: Sources) -> str:
     r, tr = src.recipe, src.bundle.train
+    if not isinstance(tr, TrainRun):
+        raise ValueError(f"{src.bundle.shipped.version}'s training record is not an SFT run")
     rows = [
         ["Base model", f"`{r.base_model}` at `{r.base_revision}`"],
         ["Method", f"{'QLoRA (4-bit base)' if r.load_in_4bit else 'LoRA'} with {r.tool}"],

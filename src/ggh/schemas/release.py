@@ -2,10 +2,15 @@
 
 from __future__ import annotations
 
-from typing import Annotated, Literal
+from typing import Annotated, Any, Literal
 
 from evalkit.schemas import Interval
-from pydantic import StringConstraints, model_validator
+from pydantic import (
+    SerializerFunctionWrapHandler,
+    StringConstraints,
+    model_serializer,
+    model_validator,
+)
 
 from ggh.schemas._base import (
     SCHEMA_VERSION,
@@ -18,7 +23,7 @@ from ggh.schemas._base import (
     Prob,
     Sha256,
 )
-from ggh.schemas.train import TrainRun
+from ggh.schemas.train import RLRun, TrainRun
 
 
 class ExportArtifact(Model):
@@ -87,7 +92,9 @@ class BehaviourRow(Model):
     review_prompt: NonBlank | None = None
 
 
-Version = Literal["v1", "v2"]
+Version = Literal["v1", "v2", "v3b"]
+# releases in the order they shipped (a bundle lists them so; never sorted as strings)
+VERSION_ORDER: tuple[str, ...] = ("v1", "v2", "v3b")
 Finding = Literal["ok", "model_fault", "pipeline_fault", "unclear"]
 
 
@@ -250,7 +257,7 @@ class AuditSummary(Model):
 
 
 class ReleaseEntry(Model):
-    """Everything about one fine-tune version the card reports (v1, and v2 once it is run)."""
+    """Everything about one fine-tune version the card reports (v1, v2, v3b)."""
 
     version: Version
     model: NonBlank  # the EvalKit model id of its Q4_K_M GGUF
@@ -259,7 +266,7 @@ class ReleaseEntry(Model):
     plan_status: Literal["draft", "final"]
     built_after_test_seen: bool  # OWNER D-43: v2 was built after v1's test results were seen
     runs: tuple[NonBlank, ...]  # RunRef names that belong to this version
-    train: TrainRun
+    train: TrainRun | RLRun  # SFT (v1, v2) or GRPO (v3b, V3.8)
     adapter_sha256: Sha256 | None = None
     audits: tuple[AuditSummary, ...]
     parity: ParityReport | None = None  # judged_headline_delta: bf16 minus Q4_K_M, per judge
@@ -273,6 +280,17 @@ class ReleaseEntry(Model):
     # `bench_variant`), so the card quotes the shipped model's speed, not an earlier one's
     bench: LaptopBench | None = None
     bench_source: NonBlank | None = None  # "<file>#<variant>"
+    # a second shipped quantisation's parity against bf16 (v3b's Q8_0, exploratory, OWNER D-73,
+    # D-75). Left out of the JSON when unset, so bundles written before it (v1.0.0's, D-76) keep
+    # their bytes.
+    parity_q8_0: ParityReport | None = None
+
+    @model_serializer(mode="wrap")
+    def _omit_unset_q8_0(self, handler: SerializerFunctionWrapHandler) -> dict[str, Any]:
+        d = handler(self)
+        if d.get("parity_q8_0") is None:
+            d.pop("parity_q8_0", None)
+        return d
 
 
 class CitedSentenceVerdict(Model):
@@ -371,7 +389,9 @@ class ResultsBundle(Model):
     bench: LaptopBench  # the shipped release's own bench (its ReleaseEntry.bench)
     bench_variants: FrozenMap[LaptopBench]  # every variant in the shipped release's bench file
     sample_read: tuple[SampleReadSummary, ...]
-    spend_usd: NonNegFloat  # the spend ledger's total for this bundle's releases (no Wave 7 rows)
+    # the spend ledger's total for this bundle's releases: Wave 7 rows (V3.*) only once v3b is a
+    # release in it (OWNER D-75, D-76)
+    spend_usd: NonNegFloat
     lineage_ok: bool
     lineage_scope: Literal["committed", "full"]  # committed manifests only, or artifacts/ too
     lineage_problems: tuple[str, ...]
@@ -412,8 +432,9 @@ class ResultsBundle(Model):
                 raise ValueError("a primary comparison must name its plan")
         if set(self.primary) != {primary_key(c) for c in self.primary_comparisons}:
             raise ValueError("primary must hold exactly the primary comparisons")
-        if [r.version for r in self.releases] != sorted({r.version for r in self.releases}):
-            raise ValueError("releases must be unique and ordered v1, v2")
+        got = [r.version for r in self.releases]
+        if got != sorted(set(got), key=VERSION_ORDER.index):
+            raise ValueError(f"releases must be unique and ordered {', '.join(VERSION_ORDER)}")
         if not self.releases:
             raise ValueError("a bundle needs at least one release")
         return self
@@ -425,7 +446,7 @@ class ResultsBundle(Model):
         return self.releases[-1]
 
     @property
-    def train(self) -> TrainRun:
+    def train(self) -> TrainRun | RLRun:
         return self.shipped.train
 
     @property

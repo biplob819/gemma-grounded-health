@@ -5,6 +5,7 @@ are known (tests/results/fake.py). No artifacts/, no network, no torch."""
 import json
 
 import pytest
+import yaml
 
 from ggh.cli import main
 from ggh.results import bundle as B
@@ -211,8 +212,15 @@ def test_spend_is_the_ledger_total(real):
         if x
     ]
     in_scope = [r for r in rows if not str(r.get("node", "")).startswith("V3.")]  # Wave 7 out
-    assert real.bundle.spend_usd == pytest.approx(sum(r["spent_usd"] for r in in_scope))
-    assert len(in_scope) < len(rows)  # the V3.5 scoring run is in the ledger, not the bundle
+    versions = tuple(r.version for r in real.bundle.releases)
+    if "v3b" in versions:  # OWNER D-75: with v3b a release, every paid run counts
+        assert real.bundle.spend_usd == pytest.approx(sum(r["spent_usd"] for r in rows))
+    else:  # D-76: the v1 + v2 bundle leaves Wave 7 out, as v1.0.0 published it
+        assert real.bundle.spend_usd == pytest.approx(sum(r["spent_usd"] for r in in_scope))
+    assert len(in_scope) < len(rows)  # the V3.5 scoring run is in the ledger either way
+    cfg = yaml.safe_load((ROOT / B.CONFIG).read_text(encoding="utf-8"))
+    assert B._in_scope(cfg, ("v1", "v2")) is not None
+    assert B._in_scope(cfg, ("v1", "v2", "v3b")) is None
 
 
 def test_the_bundle_is_deterministic_and_round_trips(real, tmp_path):
