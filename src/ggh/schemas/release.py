@@ -371,7 +371,7 @@ class ResultsBundle(Model):
     bench: LaptopBench  # the shipped release's own bench (its ReleaseEntry.bench)
     bench_variants: FrozenMap[LaptopBench]  # every variant in the shipped release's bench file
     sample_read: tuple[SampleReadSummary, ...]
-    spend_usd: NonNegFloat  # the spend ledger's total
+    spend_usd: NonNegFloat  # the spend ledger's total for this bundle's releases (no Wave 7 rows)
     lineage_ok: bool
     lineage_scope: Literal["committed", "full"]  # committed manifests only, or artifacts/ too
     lineage_problems: tuple[str, ...]

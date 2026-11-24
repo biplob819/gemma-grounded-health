@@ -18,12 +18,12 @@ The score that matters is "correct and fully grounded": the label is right and e
 
 I set the goals, wrote the PRD and made the product calls. Claude Code wrote the code, under the same lean Kova harness that built EvalKit (D-11):
 
-- **A build graph** of 23 nodes; a node starts only when the nodes it depends on are green.
-- **A capability catalog** of 142 rows, each with proof cells naming the tests that prove it.
+- **A build graph** of 24 nodes; a node starts only when the nodes it depends on are green.
+- **A capability catalog** of 144 rows, each with proof cells naming the tests that prove it.
 - **Converge gates**: 13 automated checks per node, from lint and tests to the secret scan and the records.
 - **A skeptical verifier**: a fresh agent that tries to break each node. After the harness node took many rounds, rounds were capped (OWNER D-33); what is left goes into the known-issues file.
 
-Across 23 nodes the verifiers ran 63 rounds; the harness node alone took 17. Any node that touches real data or a real model also reads real outputs before it can turn green (D-18).
+Across 24 nodes the verifiers ran 66 rounds; the harness node alone took 17. Any node that touches real data or a real model also reads real outputs before it can turn green (D-18).
 
 ## Data and targets
 
@@ -47,7 +47,7 @@ On an Apple M3 Max (64 GB) the v2 file (3269.1 MB) generates 73.1 tokens a secon
 
 Every benchmark number comes from EvalKit, my open-source grounded-answer benchmark. One model splits each answer into claims; a judge rules on each claim using only the sentences the answer cites. Every metric gets a bootstrap interval, comparisons are paired and Holm-corrected, and a gap is "separated" only when its Holm-corrected interval excludes zero. The comparisons are hashed before each run.
 
-v1's main run compared 4 models (base, v1, Claude Haiku 5.5 and GPT-6 Luna), judged by Claude Opus 5.5 and GPT-6.1 Sol, for $53.68. All paid runs together cost $118.04. Against the frontier models, v1 was level with Claude Haiku 5.5 under Claude Opus 5.5 and ahead of it under GPT-6.1 Sol, and level with GPT-6 Luna under Claude Opus 5.5 (the Sol comparison with Luna is not claimed, see below).
+v1's main run compared 4 models (base, v1, Claude Haiku 5.5 and GPT-6 Luna), judged by Claude Opus 5.5 and GPT-6.1 Sol, for $53.68. v1's and v2's paid runs cost $118.04 in all. Against the frontier models, v1 was level with Claude Haiku 5.5 under Claude Opus 5.5 and ahead of it under GPT-6.1 Sol, and level with GPT-6 Luna under Claude Opus 5.5 (the Sol comparison with Luna is not claimed, see below).
 
 ## v1: the failure
 

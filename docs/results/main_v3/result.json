@@ -1,0 +1,120 @@
+{
+  "run_id": "r-63dbbdfd4b9e",
+  "plan": "configs/eval_plan_v3.yaml",
+  "primary": {
+    "model_a": "gemma-e2b-grounded-v3-q4",
+    "model_b": "gemma-e2b-grounded-v2-q4",
+    "metric": "headline",
+    "judge": "gpt-6.1-sol",
+    "family_size": 1,
+    "point": 0.038,
+    "lo": 0.014,
+    "hi": 0.063,
+    "p_value": 0.0024,
+    "separated": true
+  },
+  "verdict": "improves on v2",
+  "headline": {
+    "gemma-e2b-base-q4": 0.404,
+    "gemma-e2b-grounded-v2-q4": 0.329,
+    "gemma-e2b-grounded-v3-q4": 0.367
+  },
+  "guardrails": {
+    "citation_precision": {
+      "min": 0.7,
+      "value": 0.8472762645914397,
+      "ok": true
+    },
+    "aim_citation_rate": {
+      "max": 0.1,
+      "value": 0.021042084168336674,
+      "ok": true
+    }
+  },
+  "stretch": {
+    "reach": 0.404,
+    "value": 0.367,
+    "reached": false
+  },
+  "answers": {
+    "gemma-e2b-base-q4": {
+      "labels": {
+        "yes": 334,
+        "no": 242,
+        "maybe": 424
+      },
+      "unparsed": 0,
+      "mean_words": 33.93,
+      "max_words": 103
+    },
+    "gemma-e2b-grounded-v2-q4": {
+      "labels": {
+        "yes": 419,
+        "no": 556,
+        "maybe": 25
+      },
+      "unparsed": 0,
+      "mean_words": 15.03,
+      "max_words": 39
+    },
+    "gemma-e2b-grounded-v3-q4": {
+      "labels": {
+        "yes": 453,
+        "no": 525,
+        "maybe": 22
+      },
+      "unparsed": 0,
+      "mean_words": 17.23,
+      "max_words": 50
+    }
+  },
+  "exploratory": {
+    "gemma-e2b-grounded-v3-q4 minus gemma-e2b-grounded-v2-q4": {
+      "headline": {
+        "point": 0.038,
+        "lo": 0.014,
+        "hi": 0.063,
+        "p_value": 0.0024,
+        "separated": true
+      },
+      "citation_precision": {
+        "point": 0.111354,
+        "lo": 0.085367,
+        "hi": 0.137021,
+        "p_value": 0.0002,
+        "separated": true
+      },
+      "aim_citation_rate": {
+        "point": -0.063295,
+        "lo": -0.079264,
+        "hi": -0.048247,
+        "p_value": 0.0002,
+        "separated": true
+      }
+    },
+    "gemma-e2b-grounded-v3-q4 minus gemma-e2b-base-q4": {
+      "headline": {
+        "point": -0.037,
+        "lo": -0.076,
+        "hi": 0.003,
+        "p_value": 0.072793,
+        "separated": false
+      },
+      "citation_precision": {
+        "point": 0.100042,
+        "lo": 0.067877,
+        "hi": 0.131578,
+        "p_value": 0.0002,
+        "separated": true
+      },
+      "aim_citation_rate": {
+        "point": -0.117342,
+        "lo": -0.140878,
+        "hi": -0.094442,
+        "p_value": 0.0002,
+        "separated": true
+      }
+    }
+  },
+  "spent_usd": 1.815194
+}

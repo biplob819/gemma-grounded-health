@@ -210,7 +210,9 @@ def test_spend_is_the_ledger_total(real):
         .splitlines()
         if x
     ]
-    assert real.bundle.spend_usd == pytest.approx(sum(r["spent_usd"] for r in rows))
+    in_scope = [r for r in rows if not str(r.get("node", "")).startswith("V3.")]  # Wave 7 out
+    assert real.bundle.spend_usd == pytest.approx(sum(r["spent_usd"] for r in in_scope))
+    assert len(in_scope) < len(rows)  # the V3.5 scoring run is in the ledger, not the bundle
 
 
 def test_the_bundle_is_deterministic_and_round_trips(real, tmp_path):
