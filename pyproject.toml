@@ -1,6 +1,6 @@
 [project]
 name = "gemma-grounded-health"
-version = "1.0.0"
+version = "1.1.0"
 description = "A small open Gemma model fine-tuned to answer health questions only from a given abstract and cite its sentences, scored with EvalKit."
 readme = "README.md"
 license = "Apache-2.0"

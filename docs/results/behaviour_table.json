@@ -1435,5 +1435,645 @@
     "run": "offscope_v2",
     "reviewer": "claude-opus-5-5 (blind subagent, OWNER D-61)",
     "review_prompt": "configs/offscope_review_prompt.md"
+  },
+  {
+    "rule": "B1",
+    "model": "gemma-e2b-base-q4",
+    "metric": "schema_failures_or_zero_citations",
+    "value": 0.005,
+    "n": 1000,
+    "source": "ggh:b1",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-base-q4",
+    "metric": "headline:gpt-6.1-sol",
+    "value": {
+      "point": 0.404,
+      "lo": 0.373,
+      "hi": 0.434
+    },
+    "n": 1000,
+    "source": "evalkit:headline",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-base-q4",
+    "metric": "groundedness_mean:gpt-6.1-sol",
+    "value": {
+      "point": 0.8397261904761905,
+      "lo": 0.8197924404761905,
+      "hi": 0.8586261904761905
+    },
+    "n": 1000,
+    "source": "evalkit:groundedness",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B3",
+    "model": "gemma-e2b-base-q4",
+    "metric": "maybe_recall",
+    "value": {
+      "point": 0.4909090909090909,
+      "lo": 0.3978494623655914,
+      "hi": 0.5855855855855856
+    },
+    "n": 110,
+    "source": "ggh:b3",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B3",
+    "model": "gemma-e2b-base-q4",
+    "metric": "maybe_precision",
+    "value": {
+      "point": 0.12735849056603774,
+      "lo": 0.09523809523809523,
+      "hi": 0.16080402010050251
+    },
+    "n": 424,
+    "source": "ggh:b3",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B4",
+    "model": "gemma-e2b-base-q4",
+    "metric": "over_80_words_share",
+    "value": 0.013,
+    "n": 1000,
+    "source": "ggh:b4",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B6",
+    "model": "gemma-e2b-base-q4",
+    "metric": "unsupported_claim_share:gpt-6.1-sol",
+    "value": 0.1422813381700927,
+    "n": 2481,
+    "source": "evalkit:verdicts",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-base-q4",
+    "metric": "citation_validity",
+    "value": {
+      "point": 0.995,
+      "lo": 0.99,
+      "hi": 0.999
+    },
+    "n": 1000,
+    "source": "evalkit:citation_valid",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-base-q4",
+    "metric": "citation_precision:gpt-6.1-sol",
+    "value": {
+      "point": 0.7472340425531915,
+      "lo": 0.7218515429524603,
+      "hi": 0.7723722146446752
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-base-q4",
+    "metric": "aim_citation_rate:gpt-6.1-sol",
+    "value": {
+      "point": 0.1383838383838384,
+      "lo": 0.11717171717171718,
+      "hi": 0.16076845298281092
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B1",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "schema_failures_or_zero_citations",
+    "value": 0.0,
+    "n": 1000,
+    "source": "ggh:b1",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "headline:gpt-6.1-sol",
+    "value": {
+      "point": 0.329,
+      "lo": 0.3,
+      "hi": 0.358
+    },
+    "n": 1000,
+    "source": "evalkit:headline",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "groundedness_mean:gpt-6.1-sol",
+    "value": {
+      "point": 0.49275,
+      "lo": 0.46258124999999994,
+      "hi": 0.52325
+    },
+    "n": 1000,
+    "source": "evalkit:groundedness",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B3",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "maybe_recall",
+    "value": {
+      "point": 0.05454545454545454,
+      "lo": 0.01818181818181818,
+      "hi": 0.09803921568627451
+    },
+    "n": 110,
+    "source": "ggh:b3",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B3",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "maybe_precision",
+    "value": {
+      "point": 0.24,
+      "lo": 0.08695652173913043,
+      "hi": 0.4090909090909091
+    },
+    "n": 25,
+    "source": "ggh:b3",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B4",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "over_80_words_share",
+    "value": 0.0,
+    "n": 1000,
+    "source": "ggh:b4",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B6",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "unsupported_claim_share:gpt-6.1-sol",
+    "value": 0.46898263027295284,
+    "n": 1209,
+    "source": "evalkit:verdicts",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "citation_validity",
+    "value": {
+      "point": 1.0,
+      "lo": 1.0,
+      "hi": 1.0
+    },
+    "n": 1000,
+    "source": "evalkit:citation_valid",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "citation_precision:gpt-6.1-sol",
+    "value": {
+      "point": 0.7359223300970874,
+      "lo": 0.7083714171694171,
+      "hi": 0.7633365664403492
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "aim_citation_rate:gpt-6.1-sol",
+    "value": {
+      "point": 0.08433734939759036,
+      "lo": 0.06740442655935613,
+      "hi": 0.10230692076228685
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B1",
+    "model": "gemma-e2b-grounded-v3b-q4",
+    "metric": "schema_failures_or_zero_citations",
+    "value": 0.0,
+    "n": 1000,
+    "source": "ggh:b1",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-grounded-v3b-q4",
+    "metric": "headline:gpt-6.1-sol",
+    "value": {
+      "point": 0.503,
+      "lo": 0.472,
+      "hi": 0.5340249999999996
+    },
+    "n": 1000,
+    "source": "evalkit:headline",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-grounded-v3b-q4",
+    "metric": "groundedness_mean:gpt-6.1-sol",
+    "value": {
+      "point": 0.7288666666666667,
+      "lo": 0.7011666666666666,
+      "hi": 0.7561016666666667
+    },
+    "n": 1000,
+    "source": "evalkit:groundedness",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B3",
+    "model": "gemma-e2b-grounded-v3b-q4",
+    "metric": "maybe_recall",
+    "value": {
+      "point": 0.05454545454545454,
+      "lo": 0.01818181818181818,
+      "hi": 0.09803921568627451
+    },
+    "n": 110,
+    "source": "ggh:b3",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B3",
+    "model": "gemma-e2b-grounded-v3b-q4",
+    "metric": "maybe_precision",
+    "value": {
+      "point": 0.2727272727272727,
+      "lo": 0.09523809523809523,
+      "hi": 0.47058823529411764
+    },
+    "n": 22,
+    "source": "ggh:b3",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B4",
+    "model": "gemma-e2b-grounded-v3b-q4",
+    "metric": "over_80_words_share",
+    "value": 0.0,
+    "n": 1000,
+    "source": "ggh:b4",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B6",
+    "model": "gemma-e2b-grounded-v3b-q4",
+    "metric": "unsupported_claim_share:gpt-6.1-sol",
+    "value": 0.22814814814814816,
+    "n": 1350,
+    "source": "evalkit:verdicts",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-v3b-q4",
+    "metric": "citation_validity",
+    "value": {
+      "point": 1.0,
+      "lo": 1.0,
+      "hi": 1.0
+    },
+    "n": 1000,
+    "source": "evalkit:citation_valid",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-v3b-q4",
+    "metric": "citation_precision:gpt-6.1-sol",
+    "value": {
+      "point": 0.87279843444227,
+      "lo": 0.8511673151750972,
+      "hi": 0.8937023222974321
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-v3b-q4",
+    "metric": "aim_citation_rate:gpt-6.1-sol",
+    "value": {
+      "point": 0.032160804020100506,
+      "lo": 0.022066198595787363,
+      "hi": 0.0433031218529708
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B1",
+    "model": "gemma-e2b-grounded-v3b-q8",
+    "metric": "schema_failures_or_zero_citations",
+    "value": 0.0,
+    "n": 1000,
+    "source": "ggh:b1",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-grounded-v3b-q8",
+    "metric": "headline:gpt-6.1-sol",
+    "value": {
+      "point": 0.541,
+      "lo": 0.51,
+      "hi": 0.572
+    },
+    "n": 1000,
+    "source": "evalkit:headline",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B2",
+    "model": "gemma-e2b-grounded-v3b-q8",
+    "metric": "groundedness_mean:gpt-6.1-sol",
+    "value": {
+      "point": 0.7541666666666667,
+      "lo": 0.727,
+      "hi": 0.7805
+    },
+    "n": 1000,
+    "source": "evalkit:groundedness",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B3",
+    "model": "gemma-e2b-grounded-v3b-q8",
+    "metric": "maybe_recall",
+    "value": {
+      "point": 0.01818181818181818,
+      "lo": 0.0,
+      "hi": 0.045454545454545456
+    },
+    "n": 110,
+    "source": "ggh:b3",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B3",
+    "model": "gemma-e2b-grounded-v3b-q8",
+    "metric": "maybe_precision",
+    "value": {
+      "point": 0.14285714285714285,
+      "lo": 0.0,
+      "hi": 0.36363636363636365
+    },
+    "n": 14,
+    "source": "ggh:b3",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B4",
+    "model": "gemma-e2b-grounded-v3b-q8",
+    "metric": "over_80_words_share",
+    "value": 0.0,
+    "n": 1000,
+    "source": "ggh:b4",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B6",
+    "model": "gemma-e2b-grounded-v3b-q8",
+    "metric": "unsupported_claim_share:gpt-6.1-sol",
+    "value": 0.20313666915608664,
+    "n": 1339,
+    "source": "evalkit:verdicts",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-v3b-q8",
+    "metric": "citation_validity",
+    "value": {
+      "point": 1.0,
+      "lo": 1.0,
+      "hi": 1.0
+    },
+    "n": 1000,
+    "source": "evalkit:citation_valid",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-v3b-q8",
+    "metric": "citation_precision:gpt-6.1-sol",
+    "value": {
+      "point": 0.8914956011730205,
+      "lo": 0.8713450292397661,
+      "hi": 0.9108527131782945
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B7",
+    "model": "gemma-e2b-grounded-v3b-q8",
+    "metric": "aim_citation_rate:gpt-6.1-sol",
+    "value": {
+      "point": 0.029087261785356068,
+      "lo": 0.019076305220883535,
+      "hi": 0.040160642570281124
+    },
+    "n": 1000,
+    "source": "evalkit:citation_support",
+    "run": "main_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B5",
+    "model": "gemma-e2b-base-q4",
+    "metric": "sample_read_ok_share",
+    "value": 0.5,
+    "n": 20,
+    "source": "model_review",
+    "run": "main_v3b",
+    "reviewer": "claude-opus-5-5 (blind subagent, configs/sample_read_prompt.md, OWNER D-61)",
+    "review_prompt": "configs/sample_read_prompt.md"
+  },
+  {
+    "rule": "B5",
+    "model": "gemma-e2b-grounded-v2-q4",
+    "metric": "sample_read_ok_share",
+    "value": 0.4,
+    "n": 20,
+    "source": "model_review",
+    "run": "main_v3b",
+    "reviewer": "claude-opus-5-5 (blind subagent, configs/sample_read_prompt.md, OWNER D-61)",
+    "review_prompt": "configs/sample_read_prompt.md"
+  },
+  {
+    "rule": "B5",
+    "model": "gemma-e2b-grounded-v3b-q4",
+    "metric": "sample_read_ok_share",
+    "value": 0.65,
+    "n": 20,
+    "source": "model_review",
+    "run": "main_v3b",
+    "reviewer": "claude-opus-5-5 (blind subagent, configs/sample_read_prompt.md, OWNER D-61)",
+    "review_prompt": "configs/sample_read_prompt.md"
+  },
+  {
+    "rule": "B5",
+    "model": "gemma-e2b-grounded-v3b-q8",
+    "metric": "sample_read_ok_share",
+    "value": 0.55,
+    "n": 20,
+    "source": "model_review",
+    "run": "main_v3b",
+    "reviewer": "claude-opus-5-5 (blind subagent, configs/sample_read_prompt.md, OWNER D-61)",
+    "review_prompt": "configs/sample_read_prompt.md"
+  },
+  {
+    "rule": "B8",
+    "model": "gemma-e2b-grounded-v3b-q4",
+    "metric": "presort_flagged_share",
+    "value": 0.0,
+    "n": 20,
+    "source": "ggh:b8",
+    "run": "offscope_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B8",
+    "model": "gemma-e2b-grounded-v3b-q4",
+    "metric": "gives_advice_count",
+    "value": 0.0,
+    "n": 20,
+    "source": "model_review",
+    "run": "offscope_v3b",
+    "reviewer": "claude-opus-5-5 (blind subagent, OWNER D-61)",
+    "review_prompt": "configs/offscope_review_prompt.md"
+  },
+  {
+    "rule": "B8",
+    "model": "gemma-e2b-grounded-v3b-q8",
+    "metric": "presort_flagged_share",
+    "value": 0.0,
+    "n": 20,
+    "source": "ggh:b8",
+    "run": "offscope_v3b",
+    "reviewer": null,
+    "review_prompt": null
+  },
+  {
+    "rule": "B8",
+    "model": "gemma-e2b-grounded-v3b-q8",
+    "metric": "gives_advice_count",
+    "value": 0.0,
+    "n": 20,
+    "source": "model_review",
+    "run": "offscope_v3b",
+    "reviewer": "claude-opus-5-5 (blind subagent, OWNER D-61)",
+    "review_prompt": "configs/offscope_review_prompt.md"
   }
 ]

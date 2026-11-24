@@ -75,9 +75,6 @@ releases:
     gguf: artifacts/gguf/ft2-Q4_K_M.gguf
     lineage: [docs/measurements/lineage/train_v2.json, docs/measurements/lineage/parity_v2.json]  # ggh export-records --model ft2
   - version: v3b
-    # held: remove this line once offscope_v3b, both probe runs, the probe report, v3b's laptop
-    # bench and the B8 review of offscope_v3b are committed (V3.8, RBR-01, RBR-05)
-    held: "V3.8 release evidence is not committed yet"
     model: gemma-e2b-grounded-v3b-q4     # the registered, shipped Q4_K_M (OWNER D-73, D-75)
     plan: configs/eval_plan_v3b.yaml
     built_after_test_seen: true

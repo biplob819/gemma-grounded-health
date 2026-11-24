@@ -1,0 +1,113 @@
+{
+  "measured_at": "2026-11-24T09:32:04Z",
+  "host_platform": "arm64",
+  "protocol": {
+    "section": "Tech Spec \u00a78",
+    "prompts": "50 dev_eval prompts drawn with seed 7, 3 more as warm-ups",
+    "repetitions": 3,
+    "request": "chat completions with EvalKit's answer schema (response_format json_schema)",
+    "max_tokens": 256,
+    "deviations": [
+      "context 8192 (ggh serve's --ctx-size), not llama-server's default: \u00a78 asks for both",
+      "cache_prompt false, so every prompt is processed fresh (EvalKit's request leaves the server default, prompt caching on)",
+      "max_tokens 256 per \u00a78 (EvalKit sends max_completion_tokens 2048) and temperature 0 (the server is already greedy: --temp 0 --top-k 1)",
+      "output laptop_bench.json with a measured_at stamp, not \u00a78's laptop-bench-<date>.json"
+    ],
+    "llama_bench": "-p 512 -n 128 -ngl 999 -r 5, run on every variant in turn for 3 rounds before the workloads; each value is the median across rounds",
+    "metrics": {
+      "ttft_ms": "server prompt_ms plus one generated token's mean time",
+      "gen_tps": "server predicted_per_second per request; its p95 is the fast tail",
+      "latency_ms": "wall time around the request",
+      "aggregate": "median across repetitions of each repetition's p50 (or p95)",
+      "peak_rss_mb": "ps rss of the llama-server process every 50 ms from /health to shutdown; on Apple Silicon it may leave out Metal private buffers such as the KV cache"
+    }
+  },
+  "variants": {
+    "ft3b-Q4_K_M": {
+      "chip": "Apple M3 Max",
+      "ram_gb": 64,
+      "os": "macOS 26.5.2",
+      "power": "ac",
+      "llama_cpp_commit": "b12421",
+      "quant": "Q4_K_M",
+      "model_file_mb": 3269.1,
+      "n_prompts": 50,
+      "repetitions": 3,
+      "prompt_tps_p50": 4673.4,
+      "gen_tps_p50": 102.4,
+      "gen_tps_p95": 108.0,
+      "ttft_ms_p50": 112,
+      "answer_latency_ms_p50": 585,
+      "answer_latency_ms_p95": 741,
+      "peak_rss_mb": 4511.6,
+      "llama_bench": {
+        "pp512": 7085.690614,
+        "tg128": 131.619228
+      }
+    },
+    "ft3b-Q8_0": {
+      "chip": "Apple M3 Max",
+      "ram_gb": 64,
+      "os": "macOS 26.5.2",
+      "power": "ac",
+      "llama_cpp_commit": "b12421",
+      "quant": "Q8_0",
+      "model_file_mb": 4737.4,
+      "n_prompts": 50,
+      "repetitions": 3,
+      "prompt_tps_p50": 3087.9,
+      "gen_tps_p50": 78.4,
+      "gen_tps_p95": 83.0,
+      "ttft_ms_p50": 170,
+      "answer_latency_ms_p50": 736,
+      "answer_latency_ms_p95": 1089,
+      "peak_rss_mb": 5978.3,
+      "llama_bench": {
+        "pp512": 7233.984925,
+        "tg128": 99.53805
+      }
+    }
+  },
+  "details": {
+    "ft3b-Q4_K_M": {
+      "prompt_tokens_p50": 486.0,
+      "answer_tokens_p50": 48.5,
+      "answer_tokens_mean": 50.6,
+      "rss_samples": 1364,
+      "llama_bench_rounds": [
+        {
+          "pp512": 7072.817326,
+          "tg128": 131.833885
+        },
+        {
+          "pp512": 7140.691194,
+          "tg128": 131.619228
+        },
+        {
+          "pp512": 7085.690614,
+          "tg128": 128.388583
+        }
+      ]
+    },
+    "ft3b-Q8_0": {
+      "prompt_tokens_p50": 486.0,
+      "answer_tokens_p50": 44.0,
+      "answer_tokens_mean": 48.0,
+      "rss_samples": 1650,
+      "llama_bench_rounds": [
+        {
+          "pp512": 7233.984925,
+          "tg128": 101.480997
+        },
+        {
+          "pp512": 7240.600835,
+          "tg128": 99.53805
+        },
+        {
+          "pp512": 7194.808432,
+          "tg128": 97.552119
+        }
+      ]
+    }
+  }
+}

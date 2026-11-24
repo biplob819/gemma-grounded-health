@@ -18,8 +18,8 @@ The score that matters is "correct and fully grounded": the label is right and e
 
 I set the goals, wrote the PRD and made the product calls. Claude Code wrote the code, under the same lean Kova harness that built EvalKit (D-11):
 
-- **A build graph** of 26 nodes; a node starts only when the nodes it depends on are green.
-- **A capability catalog** of 150 rows, each with proof cells naming the tests that prove it.
+- **A build graph** of 27 nodes; a node starts only when the nodes it depends on are green.
+- **A capability catalog** of 156 rows, each with proof cells naming the tests that prove it.
 - **Converge gates**: 13 automated checks per node, from lint and tests to the secret scan and the records.
 - **A skeptical verifier**: a fresh agent that tries to break each node. After the harness node took many rounds, rounds were capped (OWNER D-33); what is left goes into the known-issues file.
 
@@ -47,7 +47,7 @@ On an Apple M3 Max (64 GB) the v2 file (3269.1 MB) generates 73.1 tokens a secon
 
 Every benchmark number comes from EvalKit, my open-source grounded-answer benchmark. One model splits each answer into claims; a judge rules on each claim using only the sentences the answer cites. Every metric gets a bootstrap interval, comparisons are paired and Holm-corrected, and a gap is "separated" only when its Holm-corrected interval excludes zero. The comparisons are hashed before each run.
 
-v1's main run compared 4 models (base, v1, Claude Haiku 5.5 and GPT-6 Luna), judged by Claude Opus 5.5 and GPT-6.1 Sol, for $53.68. v1's and v2's paid runs cost $118.04 in all. Against the frontier models, v1 was level with Claude Haiku 5.5 under Claude Opus 5.5 and ahead of it under GPT-6.1 Sol, and level with GPT-6 Luna under Claude Opus 5.5 (the Sol comparison with Luna is not claimed, see below).
+v1's main run compared 4 models (base, v1, Claude Haiku 5.5 and GPT-6 Luna), judged by Claude Opus 5.5 and GPT-6.1 Sol, for $53.68. All the project's paid runs, the GRPO scoring runs included, cost $123.52 in all. Against the frontier models, v1 was level with Claude Haiku 5.5 under Claude Opus 5.5 and ahead of it under GPT-6.1 Sol, and level with GPT-6 Luna under Claude Opus 5.5 (the Sol comparison with Luna is not claimed, see below).
 
 ## v1: the failure
 
@@ -73,7 +73,7 @@ On average per answer, only 0.493 of v2's claims are judged supported: many stil
 
 - **One judge, one provider (OWNER D-57).** The Anthropic credit ran out during the v2 dev check, so the v2 benchmark ran on OpenAI only: GPT-6 Luna extracted claims and GPT-6.1 Sol judged them. Claude Opus 5.5 never judged v2 on the test set, and v1's published numbers are not compared with v2's.
 - **Calibrated against a model, not a person (OWNER D-59, D-60).** I am not a domain expert, so Claude Opus 5.5 made the calibration labels, blind. GPT-6.1 Sol agrees with that reference labeller at kappa 0.598 [0.468, 0.711] on 231 held-out claims; the lower bound clears 0.4, so Sol is stamped calibrated, worded as agreement with a model labeller. Opus agreeing with its own labels (kappa 0.397) is never stamped.
-- **Model reviews, not mine (OWNER D-61).** The off-scope advice check (B8) and the sample reads (B5) are blind Claude Opus 5.5 reviews under committed prompts. They found advice in 2 of v1's 20 off-scope answers and 0 of v2's. The sample read flagged 12 of 140 records as possible pipeline faults; each was traced, and none was a code bug.
+- **Model reviews, not mine (OWNER D-61).** The off-scope advice check (B8) and the sample reads (B5) are blind Claude Opus 5.5 reviews under committed prompts. They found advice in 2 of v1's 20 off-scope answers and 0 of v2's. The sample read flagged 21 of 220 records as possible pipeline faults; each was traced, and none was a code bug.
 - **The aim rule (OWNER D-62).** The citation check marks an aim sentence as unsupporting even when the claim only restates the aim, which mostly hits base. The pre-registered numbers stand (aim-citation rate: base 0.138, v2 0.084). A post-hoc count that treats those sentences as supporting gives base 0.054 and citation precision 0.783, against v2's 0.083 and 0.737, so base is better on citation precision and aim-citation rate. v2 is therefore not claimed to beat base on citations; v2 against v1 holds under either count.
 - **A local demo (OWNER D-63).** A ZeroGPU Space would have cost money, so the demo is the same app on my laptop against the benchmarked Q4_K_M file, behind a passcode, recorded as screenshots and a GIF.
 - **Dev-check and parity misses (OWNER D-55).** On 200 dev questions v2 passed both citation bars (citation precision 0.768, bar 0.60; aim-citation rate 0.067, bar 0.20) but its headline was 0.350 against v1's 0.355, and its label accuracy 0.795 missed the 0.80 bar. The Q4_K_M file agrees with the merged weights on the label for 0.920 of 500 dev prompts, short of its bar (Q8_0: 0.996). These misses were disclosed, not tuned away.
