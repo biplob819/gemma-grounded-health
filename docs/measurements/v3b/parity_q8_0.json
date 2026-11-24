@@ -1,0 +1,44 @@
+{
+  "note": "exploratory (OWNER D-73); the registered parity is parity.json (Q4_K_M)",
+  "n": 500,
+  "bf16_label_accuracy": 0.906,
+  "q8_0_vs_bf16": {
+    "report": {
+      "n": 500,
+      "label_agreement": 0.99,
+      "citation_exact_match": 0.908,
+      "schema_valid": {
+        "bf16": 1.0,
+        "q4_k_m": 1.0
+      },
+      "judged_headline_delta": null
+    },
+    "failures": [],
+    "moves": {
+      "no->yes": 1,
+      "yes->no": 4
+    },
+    "label_accuracy": 0.904
+  },
+  "q4_k_m_vs_bf16": {
+    "report": {
+      "n": 500,
+      "label_agreement": 0.924,
+      "citation_exact_match": 0.808,
+      "schema_valid": {
+        "bf16": 1.0,
+        "q4_k_m": 1.0
+      },
+      "judged_headline_delta": null
+    },
+    "failures": [
+      "label agreement 0.924 < 0.95"
+    ],
+    "moves": {
+      "no->maybe": 1,
+      "no->yes": 3,
+      "yes->no": 34
+    },
+    "label_accuracy": 0.848
+  }
+}
