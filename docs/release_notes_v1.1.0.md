@@ -31,7 +31,7 @@ Both GGUFs ship. Q4_K_M is the registered, benchmarked file; Q8_0 (4737.4 MB aga
 
 ## Artifacts
 
-Release `v3b` (`gemma-e2b-grounded-v3b-q4`), 20 files, 18,771,084,525 bytes, lineage verified from `artifacts/parity_v3b/manifest.json` (6 stages), plan problems: 0. The Hub push under tag `v3b.0.0` waits for the owner's go-ahead; each file is then downloaded back and checked against this sha256.
+Release `v3b` (`gemma-e2b-grounded-v3b-q4`), 20 files, 18,771,084,543 bytes, lineage verified from `artifacts/parity_v3b/manifest.json` (6 stages), plan problems: 0. The Hub push under tag `v3b.0.0` waits for the owner's go-ahead; each file is then downloaded back and checked against this sha256.
 
 | File | Size | sha256 | Hub |
 |---|---|---|---|
@@ -45,7 +45,7 @@ Release `v3b` (`gemma-e2b-grounded-v3b-q4`), 20 files, 18,771,084,525 bytes, lin
 | `biplob123/gemma-4-e2b-grounded-health/ggh_merge.json` | 4.07 KB | `7e4c3ff236f5b660b88558f031335ddbe3484681cc7f8b36bf44b953a668e754` | push pending |
 | `biplob123/gemma-4-e2b-grounded-health/adapter/adapter_config.json` | 1.58 KB | `17c0c0526c410b1a2aecbf74d67594f8f5f961993b7c9d7a955341674274bcf9` | push pending |
 | `biplob123/gemma-4-e2b-grounded-health/adapter/adapter_model.safetensors` | 96.69 MB | `f6d2ccecddaf4c95dd83102c4f817acea0fa982ded9fb9263fe271964ea73a35` | push pending |
-| `biplob123/gemma-4-e2b-grounded-health/README.md` | 30.25 KB | `1374aba2e80c35a7b1f3418e226fae3e1462928f3651878a44d417ae3ae17dd5` | push pending |
+| `biplob123/gemma-4-e2b-grounded-health/README.md` | 30.26 KB | `e6ef8fb11218c96f10c767238abcee3f30bb9b9ba875b827f4a191fa276e8d49` | push pending |
 | `biplob123/gemma-4-e2b-grounded-health/results_bundle.json` | 147.70 KB | `2061e6914f5961cb2885c631a45f749487fccdec57fbcda80112f9bebc46c432` | push pending |
 | `biplob123/gemma-4-e2b-grounded-health/lineage.json` | 10.47 KB | `6e9eafb05f03b294751db870eddad1f205bf61a28f0ffb51204f6cd7840dd40e` | push pending |
 | `biplob123/gemma-4-e2b-grounded-health-GGUF/gemma-4-e2b-grounded-health-Q4_K_M.gguf` | 3.43 GB | `2befee8344d5d7ad610f118017d7743903a35adacd0ab3c2a8fdfac497d09d10` | push pending |
@@ -62,7 +62,7 @@ From [Known issues](https://github.com/biplob819/gemma-grounded-health/blob/main
 
 - v3b restates cited result sentences closely: 0.191 of its answers are copies (similarity 0.9 or more to one cited sentence) against 0.107 for v2, and 0.407 are near-copies (0.7 or more) against 0.238. Among answers that are not copies its headline is 0.461 against 0.283 for v2 and 0.306 for base. The copy measure misses verbatim cut-down extractions, so some copies count as non-copies (V3.6, V3.7).
 - 2 of v3b's cited sentences at Q4_K_M went unjudged in the scoring run (`docs/results/main_v3b/result.json`).
-- Q4_K_M's label agreement with the merged weights is 0.924, under the export check's bar of 0.950 (OWNER D-73); see Parity.
+- Q4_K_M's label agreement with the merged weights is 0.924, under the export check's bar of 0.950 (OWNER D-73); see Parity on the model card.
 - `gemma-e2b-grounded-v3b-q8` is v3b at Q8_0, scored in the same run as an exploratory model outside the pre-registered test (OWNER D-73): no v3b claim rests on it.
 - v3b was built after v1's and v2's test results were seen (D-43); its plan (`configs/eval_plan_v3b.yaml`) was hashed before any v3b training step.
 

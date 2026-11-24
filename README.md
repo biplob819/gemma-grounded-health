@@ -4,7 +4,7 @@
 
 This project fine-tunes a small open Gemma model (Gemma 4 E2B with LoRA; its 4-bit GGUF runs offline on a laptop) to answer health research questions **only from a given abstract**, as JSON with a yes / no / maybe label, a short answer and the numbered sentences it relied on. Every model is scored with [EvalKit](https://github.com/biplob819/evalkit) on all 1,000 expert-labelled PubMedQA questions.
 
-> **Status.** v1.1.0 is prepared: v3b, a GRPO fine-tune of v2, is the first version above its base model on the headline ([v3b result](#v3b-result-grounded-past-the-base-model)); its Hugging Face upload waits for the owner's go. Until then Hugging Face serves v1.0.0. v1.0.0: v2 is released on Hugging Face ([model](https://huggingface.co/biplob123/gemma-4-e2b-grounded-health), [GGUF](https://huggingface.co/biplob123/gemma-4-e2b-grounded-health-GGUF)), with a passcode-gated local demo, the EvalKit report and a [reproduce-from-scratch guide](docs/reproduce.md). [Release notes](docs/release_notes_v1.0.0.md) · [Known issues](docs/known-issues.md).
+> **Status.** v1.1.0 is prepared: v3b, a GRPO fine-tune of v2, is the first version above its base model on the headline, an exploratory comparison beside its registered win over v2 ([v3b result](#v3b-result-grounded-past-the-base-model)); its Hugging Face upload waits for the owner's go. Until then Hugging Face serves v1.0.0. v1.0.0: v2 is released on Hugging Face ([model](https://huggingface.co/biplob123/gemma-4-e2b-grounded-health), [GGUF](https://huggingface.co/biplob123/gemma-4-e2b-grounded-health-GGUF)), with a passcode-gated local demo, the EvalKit report and a [reproduce-from-scratch guide](docs/reproduce.md). [Release notes](docs/release_notes_v1.0.0.md) · [Known issues](docs/known-issues.md).
 
 **Contents:** [v3b result](#v3b-result-grounded-past-the-base-model) · [v2 result](#v2-result-the-citations-are-fixed-the-headline-is-not) · [Results](#results) · [Run it offline](#run-it-offline) · [Step-by-step guide](#step-by-step-guide) · [Screenshots](#screenshots) · [Links](#links) · [How it was built](#how-it-was-built) · [Licence and credits](#licence-and-credits)
 
@@ -111,17 +111,19 @@ You need Python 3.11+ and [uv](https://docs.astral.sh/uv/). `ggh doctor` lists w
 ### 2. Run the model with llama.cpp (greedy, as benchmarked)
 
 ```bash
-uv run hf download biplob123/gemma-4-e2b-grounded-health-GGUF gemma-4-e2b-grounded-health-Q4_K_M.gguf --local-dir artifacts/gguf
-mv artifacts/gguf/gemma-4-e2b-grounded-health-Q4_K_M.gguf artifacts/gguf/ft2-Q4_K_M.gguf
+uv run hf download biplob123/gemma-4-e2b-grounded-health-GGUF gemma-4-e2b-grounded-health-Q4_K_M.gguf --revision v3b.0.0 --local-dir artifacts/gguf
+mv artifacts/gguf/gemma-4-e2b-grounded-health-Q4_K_M.gguf artifacts/gguf/ft3b-Q4_K_M.gguf
 uv run ggh llama fetch
-uv run ggh serve --model ft2
+uv run ggh serve --model ft3b
 ```
+
+The `v3b.0.0` revision exists once v1.1.0 is published on Hugging Face; until then use `--revision v2.0.0`, rename the file to `ft2-Q4_K_M.gguf` and serve it with `--model ft2`.
 
 `ggh llama fetch` downloads and verifies the pinned llama.cpp release; `ggh serve --model ft3b` starts `llama-server` with v3b's Q4_K_M on `http://127.0.0.1:8086` (`--quant Q8_0` for the recommended Q8_0; `--model ft2` serves v2 on 8083), greedy, thinking off. Send EvalKit's PubMedQA prompt to `/v1/chat/completions`.
 
 ### 3. Use the demo locally, with a passcode
 
-The demo is a local app (OWNER D-63: no hosted GPU Space), recorded below. It still serves v2, the v1.0.0 model, and reads v1.0.0's frozen results bundle. With `ggh serve --model ft2` running:
+The demo is a local app (OWNER D-63: no hosted GPU Space), recorded below. It still serves v2, the v1.0.0 model, and reads v1.0.0's frozen results bundle: download v2's GGUF pinned to its tag (`--revision v2.0.0` in step 2's `hf download`), rename it to `artifacts/gguf/ft2-Q4_K_M.gguf`, and with `ggh serve --model ft2` running:
 
 ```bash
 uv run ggh passkey set

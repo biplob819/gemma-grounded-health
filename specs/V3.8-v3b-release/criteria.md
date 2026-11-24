@@ -4,5 +4,5 @@
 **RBR-02** — v3b's export and lineage records name the frozen adapter hash everywhere, and its lineage chain verifies from parity to v2's training and the data.
 **RBR-03** — The results bundle ships v3b after v1 and v2 with every number from the committed runs; v1.0.0's published bundle and card are frozen byte copies the v1+v2 build still reproduces; the bundle's spend counts every paid run.
 **RBR-04** — The model card, README and release notes are what the generators write: Q4_K_M's registered result first, Q8_0 recommended, the parity miss and v3b's caveats disclosed, every number from the bundle.
-**RBR-05** — v3b's laptop bench covers Q4_K_M and Q8_0 and names the frozen GGUF hashes.
+**RBR-05** — v3b's laptop bench covers Q4_K_M and Q8_0, measured on the frozen GGUFs (their sizes equal the frozen manifest's; the bench records no hash).
 **RBR-06** — The Hugging Face dry run for v3b ships both GGUFs, the adapter, the card and the records under tag v3b.0.0, and pushes nothing.

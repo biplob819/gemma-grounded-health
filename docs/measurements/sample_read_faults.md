@@ -121,15 +121,27 @@ model name was shown, but v2's answers were easier to tell apart in the blind ba
 
 ## role-label
 
-Records: `main_v3b` v2 pqa-23690198 and pqa-22012962, base pqa-21952349 (all three cached from
-`main_v2`).
+Records: `main_v3b` v2 pqa-23690198 and pqa-22012962 (both cached from `main_v2`); base
+pqa-21952349 (cached) is the judge-error case below.
 
-The citation check labelled an opening background or hypothesis sentence with the role
-"conclusion" (in pqa-23690198 the same sentence is labelled "background" in another claim's
-check). Every one of these sentences is also marked non-supporting, and EvalKit counts a cited
-sentence as an aim citation only when it supports no claim and its role is "aim", so a
-background sentence labelled "conclusion" rather than "background" moves no published metric:
-neither label is "aim". Judge behaviour, disclosed; not a code bug.
+The citation check labelled an opening background sentence with the role "conclusion" (in
+pqa-23690198 the same sentence is labelled "background" in another claim's check) and marked it
+supporting. EvalKit counts an aim citation only for a cited sentence whose role is "aim" and that
+supports no claim, and citation precision reads only the supporting marks, so relabelling a
+supporting sentence from "background" to "conclusion" moves no published metric. Whether
+background should support the claim at all is the claim judge's question (it rejected the claim in
+pqa-23690198, so the two calls disagree there: the judge-error pattern). Judge behaviour,
+disclosed; not a code bug.
+
+In base pqa-21952349 the sentence is the study's hypothesis ("might reduce the myocardial lesions
+..., but perhaps less so in diabetics"), placed before its aim and method sentences. EvalKit's
+citation rubric defines "aim" as the study's question, objective or hypothesis and says a
+hypothesis does not establish a claim; read that way the sentence is an aim citation that supports
+nothing. The citation check instead labelled it "conclusion" and supporting for both claims, so
+the error hides one aim citation and raises base's citation precision on that record. It is one
+base record of 1,000 (aim-citation rate about 0.001 lower and citation precision slightly higher
+than they should be for base, in `main_v2` and in the runs that cache it); no v2, v3 or v3b number
+moves.
 
 ## v3b-sample
 
@@ -140,7 +152,7 @@ possible pipeline faults. Six are base and v2 records, which `main_v3b` takes un
 the patterns above: judge-error (v3b-Q8_0 pqa-25501465; v2 pqa-25787073; base pqa-16249670 and
 pqa-20629769: the claim judge and the citation check disagree on a cited sentence), part-of-claim
 (base pqa-23690198: a sentence marked supporting for an efficacy claim it does not state),
-role-label (three records) and extractor-drop (v3b-Q4_K_M pqa-27989969). Measured over the whole
+role-label (two v2 records; base pqa-21952349's hypothesis labelled conclusion hides one aim citation, also described there) and extractor-drop (v3b-Q4_K_M pqa-27989969). Measured over the whole
 run, the extractor returned no claims for 4, 2, 3 and 1 yes/no answers of base, v2, v3b-Q4_K_M
 and v3b-Q8_0, of which 2, 1, 2 and 1 had the right label (at most 0.2 points of headline each).
 None is a code or alignment bug.

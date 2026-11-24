@@ -368,7 +368,7 @@ The recommended Q8_0 file (variant `ft3b-Q8_0`, same session and protocol): 4737
 - Paraphrase drop (original minus paraphrased accuracy, 100 questions): 0.000 [-0.030, 0.030]; contamination signal: no.
 - v3b restates cited result sentences closely: 0.191 of its answers are copies (similarity 0.9 or more to one cited sentence) against 0.107 for v2, and 0.407 are near-copies (0.7 or more) against 0.238. Among answers that are not copies its headline is 0.461 against 0.283 for v2 and 0.306 for base. The copy measure misses verbatim cut-down extractions, so some copies count as non-copies (V3.6, V3.7).
 - 2 of v3b's cited sentences at Q4_K_M went unjudged in the scoring run (`docs/results/main_v3b/result.json`).
-- Q4_K_M's label agreement with the merged weights is 0.924, under the export check's bar of 0.950 (OWNER D-73); see Parity.
+- Q4_K_M's label agreement with the merged weights is 0.924, under the export check's bar of 0.950 (OWNER D-73); see Parity on the model card.
 - `gemma-e2b-grounded-v3b-q8` is v3b at Q8_0, scored in the same run as an exploratory model outside the pre-registered test (OWNER D-73): no v3b claim rests on it.
 - v3b was built after v1's and v2's test results were seen (D-43); its plan (`configs/eval_plan_v3b.yaml`) was hashed before any v3b training step.
 
