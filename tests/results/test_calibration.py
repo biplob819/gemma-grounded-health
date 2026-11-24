@@ -29,6 +29,9 @@ EXEMPT = (
     "probe_original_v2",
     "probe_paraphrase",
     "probe_paraphrase_v2",
+    "offscope_v3b",  # V3.8
+    "probe_original_v3b",
+    "probe_paraphrase_v3b",
 )
 FILES = (CAL["evalkit"], CAL["labeller"], CAL["gemma_family_report"], CHECK, CAL["labeller_prompt"])
 
@@ -92,9 +95,12 @@ def test_sol_is_stamped_and_opus_is_reported_never_stamped(real):
 
 
 def test_v2_is_calibrated_and_v1s_opus_numbers_stay_uncalibrated(real):
-    v1, v2 = real.releases
+    v1, v2, v3b = real.releases
     assert v1.calibration_judges == (OPUS, SOL) and v1.calibration_status == "uncalibrated"
     assert v2.calibration_judges == (SOL,) and v2.calibration_status == "calibrated"
+    # V3.8: v3b's primary comparison relies on Sol alone, stamped as v2's
+    assert v3b.version == "v3b" and v3b.calibration_judges == (SOL,)
+    assert v3b.calibration_status == "calibrated"
     # the bundle as a whole holds v1's Opus-judged comparisons, so it is not calibrated
     assert real.calibration_status == "uncalibrated" and real.gemma_family_check is None
     # the summaries' own stamps are EvalKit's, never rewritten (OWNER D-59)
@@ -112,7 +118,7 @@ def test_offscope_and_probe_runs_are_exempt_and_say_so(real):
     for name in EXEMPT:
         note = by[name].calibration_exempt
         assert note and note.startswith("exempt:") and by[name].task in note and "D-59" in note
-    for name in ("main", "main_citation", "main_v2", "parity", "parity_v2"):
+    for name in ("main", "main_citation", "main_v2", "parity", "parity_v2", "main_v3b"):
         assert by[name].task == "pubmedqa" and by[name].calibration_exempt is None
 
 

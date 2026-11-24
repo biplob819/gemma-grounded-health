@@ -16,7 +16,12 @@ from ggh.release import links, notes, readme, sources
 from tests.release.test_card import DECIMAL, _numbers
 
 ROOT = Path(__file__).resolve().parents[2]
-DOCS = (ROOT / "README.md", ROOT / notes.OUT, ROOT / "docs" / "reproduce.md")
+DOCS = (
+    ROOT / "README.md",
+    ROOT / notes.OUT,  # v1.1.0's notes
+    ROOT / "docs" / "release_notes_v1.0.0.md",
+    ROOT / "docs" / "reproduce.md",
+)
 ALLOWED_HOSTS = {
     "github.com",
     "raw.githubusercontent.com",
@@ -93,7 +98,16 @@ def test_registry_links_and_the_readme_carries_every_one():
         assert links.md(name) in text, name
         if url:
             assert link_problems(f"[x]({url})", ROOT) == [], name
-    assert links.LINKS["release"][1] == f"{links.REPO}/releases/tag/v1.0.0"
+    assert links.LINKS["release"][1] == f"{links.REPO}/releases/tag/v1.1.0"  # V3.8: v3b
+    assert links.LINKS["release_notes"][1] == "docs/release_notes_v1.1.0.md"
+    # v1.0.0's links as published, for its notes (docs/release_notes_v1.0.0.md)
+    old = links.links_at("1.0.0")
+    assert old["release"][1] == f"{links.REPO}/releases/tag/v1.0.0"
+    assert old["release_notes"][1] == "docs/release_notes_v1.0.0.md"
+    assert old["parity"][1] == f"{links.REPO}/blob/main/docs/measurements/v2/parity.json"
+    for name, (_, url) in old.items():
+        if url:
+            assert link_problems(f"[x]({url})", ROOT) == [], name
     assert links.LINKS["evalkit_report"][1] == "https://biplob819.github.io/evalkit/gemma/"
     assert links.absolute("docs/x.md") == f"{links.REPO}/blob/main/docs/x.md"
 
@@ -103,11 +117,12 @@ def test_readme_has_every_important_link():  # OWNER D-37
     for url in (
         "https://huggingface.co/biplob123/gemma-4-e2b-grounded-health",
         "https://huggingface.co/biplob123/gemma-4-e2b-grounded-health-GGUF",
-        "https://github.com/biplob819/gemma-grounded-health/releases/tag/v1.0.0",
         "https://biplob819.github.io/evalkit/gemma/",
         "https://github.com/biplob819/evalkit/pull/1",
         "docs/reproduce.md",
         "docs/release_notes_v1.0.0.md",
+        "https://github.com/biplob819/gemma-grounded-health/releases/tag/v1.1.0",  # V3.8: v3b
+        "docs/release_notes_v1.1.0.md",
         "uv run --group demo ggh space --local --env-file .env",
         "ollama run --think=false hf.co/biplob123/gemma-4-e2b-grounded-health-GGUF:Q4_K_M",
     ):
@@ -131,6 +146,11 @@ def test_readme_prose_numbers_come_from_the_bundle():  # D-20
     _numbers(src.raw, allowed)
     pyproject = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
     allowed.add(pyproject["project"]["requires-python"].lstrip(">="))  # "Python 3.11+"
+    # V3.8: the v3b section names v3's headline; v3 is no release, so its committed result file
+    # (docs/results/main_v3/result.json, V3.5) is the source, not the bundle
+    import json
+
+    _numbers(json.loads((ROOT / "docs/results/main_v3/result.json").read_text("utf-8")), allowed)
     unsigned = {a.lstrip("-") for a in allowed}
     text = (ROOT / "README.md").read_text(encoding="utf-8")
     head, rest = text.split(readme.START, 1)

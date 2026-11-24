@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Annotated, Literal
+from typing import Annotated, Any, Literal
 
 from pydantic import Field, StrictBool, StringConstraints, field_validator, model_validator
 
@@ -99,3 +99,25 @@ class TrainRun(Model):
         if self.selected_step not in steps:
             raise ValueError(f"selected_step {self.selected_step} is not on val_loss_curve")
         return self
+
+
+class RLRun(Model):
+    """The GRPO counterpart of `TrainRun` (V3.4, `ggh.rl.freeze`): no validation-loss curve, a
+    dev reward instead. A release's training record is either (V3.8: v3b's is a GRPO run)."""
+
+    reward: NonBlank
+    config_hash: Sha256
+    init_adapter_sha256: Sha256
+    repo_commit: GitSha
+    kaggle_kernel_version: NonBlank
+    score_kernel_version: NonBlank
+    gpu: NonBlank
+    wall_clock_s: NonNegFloat
+    peak_vram_gb: NonNegFloat
+    steps: PosInt
+    selected: NonBlank
+    selected_step: PosInt
+    adapter_sha256: Sha256
+    dev_rows: PosInt
+    dev_metrics: dict[str, Any]
+    v2_dev_metrics: dict[str, Any]

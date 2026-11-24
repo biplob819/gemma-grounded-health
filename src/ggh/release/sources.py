@@ -21,7 +21,15 @@ from evalkit.schemas.summary import ModelSummary
 
 from ggh.config import load_recipe
 from ggh.lineage import committed_output, read_manifest, sha256_file
-from ggh.schemas import DataManifest, RecipeConfig, ReleaseEntry, ResultsBundle, RunRef
+from ggh.schemas import (
+    DataManifest,
+    RecipeConfig,
+    ReleaseEntry,
+    ResultsBundle,
+    RLRun,
+    RunRef,
+    TrainRun,
+)
 
 BUNDLE = Path("docs") / "results" / "results_bundle.json"
 DATA_MANIFEST = Path("docs") / "measurements" / "data_manifest.json"
@@ -44,6 +52,22 @@ SHIPPED_INPUTS: dict[str, tuple[Path, Path, Path]] = {
         TARGETS_REPORT,
     ),
 }
+
+
+# a release's own result file beside its run summaries (V3.7: the copy share, the exploratory
+# models, unjudged citations), read only while it names the bundle's primary run and plan
+RESULTS: dict[str, Path] = {"v3b": Path("docs") / "results" / "main_v3b" / "result.json"}
+# a release shipping a second GGUF: its EvalKit name at Q8_0 and the parity stage's committed
+# lineage copy whose `agreement_bar` the card quotes (OWNER D-73, D-75)
+Q8_MODELS: dict[str, str] = {"v3b": "gemma-e2b-grounded-v3b-q8"}
+PARITY_LINEAGE: dict[str, Path] = {
+    "v3b": Path("docs") / "measurements" / "lineage" / "parity_v3b.json"
+}
+# a GRPO release's own recipe (its SFT recipe, data and targets are those of the release whose
+# adapter it started from, `sft_release`)
+RL_RECIPES: dict[str, Path] = {"v3b": Path("configs") / "recipe_v3b_grpo.yaml"}
+# v3b (V3.8): GRPO from v2's adapter on v2's prompts and gold labels, so v2's training inputs
+SHIPPED_INPUTS["v3b"] = SHIPPED_INPUTS["v2"]
 
 
 # OWNER D-62: the post-hoc aim-rule count, read only for the release whose plan it names and
@@ -106,6 +130,19 @@ class Sources:
     aim_check: dict[str, Any] | None = None  # OWNER D-62, when it covers the shipped release
     licence: dict[str, Any] | None = None  # LICENCE_RECORD
     dev_check: dict[str, Any] | None = None  # {"summary", "bars", "decision", "path", ...}
+    rl_recipe: dict[str, Any] | None = None  # a GRPO release's recipe (RL_RECIPES), as parsed
+    result: dict[str, Any] | None = None  # the shipped release's result file (RESULTS)
+    parity_stage: dict[str, Any] | None = None  # PARITY_LINEAGE's params, for the bar
+
+    @property
+    def q8_model(self) -> str | None:
+        """The shipped release's Q8_0 model, when it ships one (v3b, OWNER D-75)."""
+        return Q8_MODELS.get(self.bundle.shipped.version)
+
+    @property
+    def sft(self) -> ReleaseEntry:
+        """The release whose supervised training the shipped one rests on (`sft_release`)."""
+        return sft_release(self.bundle)
 
     @property
     def ft_model(self) -> str:
@@ -160,6 +197,25 @@ class Sources:
 
     def probes(self) -> list[RunSummary]:
         return [s for s in self.shipped_summaries() if s.task.startswith(PROBE_TASK_PREFIX)]
+
+
+def sft_release(bundle: ResultsBundle) -> ReleaseEntry:
+    """The shipped release when it was trained by SFT (v1, v2); for a GRPO release (v3b), the
+    release whose frozen adapter its run started from (`RLRun.init_adapter_sha256`)."""
+    shipped = bundle.shipped
+    if isinstance(shipped.train, TrainRun):
+        return shipped
+    start = shipped.train.init_adapter_sha256
+    for r in bundle.releases:
+        if r.adapter_sha256 == start and isinstance(r.train, TrainRun):
+            return r
+    raise SourceError(f"no release in the bundle has {shipped.version}'s start {start[:12]}")
+
+
+def sft_train(bundle: ResultsBundle) -> TrainRun:
+    t = sft_release(bundle).train
+    assert isinstance(t, TrainRun)
+    return t
 
 
 def _read_json(path: Path) -> Any:
@@ -218,14 +274,15 @@ def load(root: Path, paths: Paths | None = None) -> Sources:
         summaries.append((rel, s))
         raw[f"summary:{rel}"] = _read_json(f)
 
+    sft = sft_train(bundle)
     data_file = root / p.data_manifest
-    if not data_file.is_file() or sha256_file(data_file) != bundle.train.data_manifest_hash:
+    if not data_file.is_file() or sha256_file(data_file) != sft.data_manifest_hash:
         raise SourceError(f"{p.data_manifest} is missing or not the manifest the run trained on")
     data = DataManifest.model_validate_json(data_file.read_text(encoding="utf-8"))
     raw["data"] = _read_json(data_file)
 
     recipe_file = root / p.recipe
-    if not recipe_file.is_file() or sha256_file(recipe_file) != bundle.train.config_hash:
+    if not recipe_file.is_file() or sha256_file(recipe_file) != sft.config_hash:
         raise SourceError(f"{p.recipe} is missing or not the recipe the run trained with")
     recipe = load_recipe(recipe_file)
     raw["recipe"] = recipe.model_dump(mode="json")
@@ -250,7 +307,53 @@ def load(root: Path, paths: Paths | None = None) -> Sources:
     dev = _read_dev_check(root, version)
     if dev is not None:
         raw["dev_check"] = dev
-    return Sources(bundle, tuple(summaries), data, targets, recipe, p, raw, plan, aim, licence, dev)
+    rl = _read_rl_recipe(root, bundle)
+    if rl is not None:
+        raw["rl_recipe"] = rl
+    result = _read_result(root, bundle)
+    if result is not None:
+        raw["result"] = result
+    stage = _read_parity_stage(root, version)
+    if stage is not None:
+        raw["parity_stage"] = stage
+    return Sources(
+        bundle, tuple(summaries), data, targets, recipe, p, raw, plan, aim, licence, dev, rl,
+        result, stage,
+    )  # fmt: skip
+
+
+def _read_result(root: Path, bundle: ResultsBundle) -> dict[str, Any] | None:
+    rel = RESULTS.get(bundle.shipped.version)
+    if rel is None or not (root / rel).is_file():
+        return None
+    res = _read_json(root / rel)
+    ids = {r.name: r.run_id for r in bundle.runs}
+    if res.get("plan") != bundle.shipped.plan or res.get("run_id") not in (
+        ids.get(n) for n in bundle.shipped.runs
+    ):
+        raise SourceError(f"{rel} is not the result of the bundle's {bundle.shipped.version} run")
+    return res
+
+
+def _read_parity_stage(root: Path, version: str) -> dict[str, Any] | None:
+    rel = PARITY_LINEAGE.get(version)
+    if rel is None or not (root / rel).is_file():
+        return None
+    return dict(read_manifest(root / rel).params)
+
+
+def _read_rl_recipe(root: Path, bundle: ResultsBundle) -> dict[str, Any] | None:
+    """A GRPO release's recipe, the file its run recorded (`RLRun.config_hash`)."""
+    run = bundle.shipped.train
+    if not isinstance(run, RLRun):
+        return None
+    rel = RL_RECIPES.get(bundle.shipped.version)
+    if rel is None:
+        raise SourceError(f"no GRPO recipe is registered for {bundle.shipped.version}")
+    f = root / rel
+    if not f.is_file() or sha256_file(f) != run.config_hash:
+        raise SourceError(f"{rel} is missing or not the recipe the GRPO run trained with")
+    return yaml.safe_load(f.read_text(encoding="utf-8")) or {}
 
 
 def _sha256(path: Path) -> str:

@@ -45,6 +45,7 @@ from ggh.schemas import (
     ProbeResult,
     ReleaseEntry,
     ResultsBundle,
+    RLRun,
     RunRef,
     SampleReadSummary,
     TrainRun,
@@ -371,12 +372,21 @@ def _evalkit_versions(root: Path, run_ids: set[str]) -> str:
     return ", ".join(shas)
 
 
-def _in_scope(cfg: dict[str, Any]) -> Callable[[dict], bool] | None:
-    """Ledger rows outside the bundle: nodes whose id starts with a listed prefix (Wave 7)."""
+def _in_scope(cfg: dict[str, Any], versions: tuple[str, ...] = ()) -> Callable[[dict], bool] | None:
+    """Ledger rows outside the bundle: nodes whose id starts with a listed prefix (Wave 7),
+    unless a release in `versions` is one of `ledger_every_row_with` (OWNER D-75, D-76: once v3b
+    is a release the bundle's spend counts every paid run, V3.5's v3 scoring included; the v1 and
+    v2 build still leaves Wave 7 out, so v1.0.0's bundle stays reproducible)."""
     prefixes = tuple(cfg.get("ledger_exclude_node_prefixes") or ())
-    if not prefixes:
+    if not prefixes or set(versions) & set(cfg.get("ledger_every_row_with") or ()):
         return None
     return lambda row: not str(row.get("node", "")).startswith(prefixes)
+
+
+def train_record(root: Path, rel: str) -> TrainRun | RLRun:
+    """A release's training record: a GRPO run's (`RLRun`, it names its reward) or SFT's."""
+    raw = _json(root, rel)
+    return RLRun.model_validate(raw) if "reward" in raw else TrainRun.model_validate(raw)
 
 
 def _ledger_rows(root: Path) -> list[dict[str, Any]]:
@@ -392,12 +402,14 @@ def build(
     versions: tuple[str, ...] | None = None,
 ) -> Built:
     """`versions` limits the bundle to those releases (the v1 release fixture is v1 alone);
-    by default every release whose primary run is committed is in it."""
+    by default every release whose primary run is committed and that is not `held` is in it.
+    A `held` release (its evidence still being produced) is in only when `versions` names it."""
     cfg = yaml.safe_load((root / config).read_text(encoding="utf-8"))
     included = [
         r
         for r in cfg["releases"]
-        if Run.exists(root, r["primary_run"]) and (versions is None or r["version"] in versions)
+        if Run.exists(root, r["primary_run"])
+        and (r["version"] in versions if versions is not None else not r.get("held"))
     ]
     if not included:
         raise ResultsError("no release has its primary run under docs/results/")
@@ -449,6 +461,7 @@ def build(
         parity = _opt_json(root, rel.get("parity"))
         if parity is not None and ph is not None:
             parity["judged_headline_delta"] = ph["bf16_minus_q4_headline"]
+        q8 = _opt_json(root, rel.get("parity_q8_0"))
         selection = _opt_json(root, rel.get("train_selection")) or {}
         bench, bench_source = release_bench(root, cfg, rel)
         if plan.status != "final":
@@ -463,7 +476,7 @@ def build(
                     "plan_status": plan.status,
                     "built_after_test_seen": rel["built_after_test_seen"],
                     "runs": rel["runs"],
-                    "train": TrainRun.model_validate(_json(root, rel["train_run"])),
+                    "train": train_record(root, rel["train_run"]).model_dump(),
                     "adapter_sha256": selection.get("adapter_sha256"),
                     "audits": [a.model_dump() for a in audits(root, rel["audits"])],
                     "parity": ParityReport.model_validate(parity) if parity else None,
@@ -475,6 +488,7 @@ def build(
                     "calibration_status": cal.release_status(relied),
                     "bench": bench.model_dump(),
                     "bench_source": bench_source,
+                    **({"parity_q8_0": q8["q8_0_vs_bf16"]["report"]} if q8 else {}),
                 }
             )
         )
@@ -494,6 +508,7 @@ def build(
         if row.value is None and row.source in ("owner_review", "model_review"):
             blockers.append(f"{row.run}: {row.rule} {row.metric} for {row.model} is not reviewed")
     shipped = included[-1]
+    keep = _in_scope(cfg, tuple(r["version"] for r in included))
     bench_raw = _json(root, shipped.get("bench", cfg["bench"]))["variants"]
     bundle = ResultsBundle.model_validate(
         {
@@ -517,7 +532,7 @@ def build(
                 k: LaptopBench.model_validate(v).model_dump() for k, v in sorted(bench_raw.items())
             },
             "sample_read": [s.model_dump() for s in sample_sums],
-            "spend_usd": round(ledger.total(root / cfg["ledger"], "spent_usd", _in_scope(cfg)), 6),
+            "spend_usd": round(ledger.total(root / cfg["ledger"], "spent_usd", keep), 6),
             "lineage_ok": not lineage_problems,
             "lineage_scope": "full" if full_lineage else "committed",
             "lineage_problems": sorted(set(lineage_problems)),

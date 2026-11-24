@@ -56,13 +56,13 @@ The demo is a local app against the same benchmarked file, behind a passcode (OW
 - [Video script](video-script.md).
 
 - [GitHub repository](https://github.com/biplob819/gemma-grounded-health)
-- [GitHub release v1.0.0](https://github.com/biplob819/gemma-grounded-health/releases/tag/v1.0.0)
+- [GitHub release v1.1.0](https://github.com/biplob819/gemma-grounded-health/releases/tag/v1.1.0)
 - [Hugging Face model](https://huggingface.co/biplob123/gemma-4-e2b-grounded-health)
 - [Hugging Face GGUF](https://huggingface.co/biplob123/gemma-4-e2b-grounded-health-GGUF)
 - [Demo (local, recorded; OWNER D-63)](../../docs/assets/demo.gif)
 - [EvalKit report page](https://biplob819.github.io/evalkit/gemma/)
 - [EvalKit upstream pull request](https://github.com/biplob819/evalkit/pull/1)
-- [Parity (Q4_K_M against the merged weights)](https://github.com/biplob819/gemma-grounded-health/blob/main/docs/measurements/v2/parity.json)
+- [Parity (Q4_K_M against the merged weights)](https://github.com/biplob819/gemma-grounded-health/blob/main/docs/measurements/v3b/parity.json)
 - [Benchmark results](https://github.com/biplob819/gemma-grounded-health/tree/main/docs/results)
 - [DATA_CARD.md](../../DATA_CARD.md)
 - [MODEL_CARD.md](../../MODEL_CARD.md)
@@ -72,6 +72,6 @@ The demo is a local app against the same benchmarked file, behind a passcode (OW
 - [CITATION.cff](../../CITATION.cff)
 - [Case study: the v1 grounding failure](../../docs/case-study.md)
 - [Reproduce from scratch](../../docs/reproduce.md)
-- [Release notes v1.0.0](../../docs/release_notes_v1.0.0.md)
+- [Release notes v1.1.0](../../docs/release_notes_v1.1.0.md)
 - [Known issues](../../docs/known-issues.md)
 - [EvalKit](https://github.com/biplob819/evalkit)

@@ -53,6 +53,12 @@ def src():
 
 
 @pytest.fixture(scope="module")
+def story(src):
+    """The write-up tells the v1-to-v2 story: the bundle as it stood at v2 (V3.8)."""
+    return writeup.story_view(src, ROOT)
+
+
+@pytest.fixture(scope="module")
 def facts(src):
     return writeup.facts(src, ROOT)
 
@@ -69,6 +75,8 @@ def _read(name: str) -> str:
 def _allowed(src) -> set[str]:
     allowed: set[str] = set()
     _numbers(src.raw, allowed)
+    story = writeup.story_view(src, ROOT)  # v2's dev check and aim-rule count (V3.8)
+    _numbers([story.dev_check, story.aim_check, story.plan], allowed)
     for rel in writeup.EVIDENCE:
         _numbers(json.loads((ROOT / rel).read_text(encoding="utf-8")), allowed)
     ledger = (ROOT / writeup.GPU_LEDGER).read_text(encoding="utf-8").splitlines()
@@ -128,13 +136,18 @@ def test_a_changed_input_changes_the_output(src, facts):
         writeup.fill("${no_such_fact}", facts)
 
 
-def test_facts_read_the_bundle(src, facts):
+def test_facts_read_the_bundle(src, story, facts):
     b = src.bundle
+    v2 = {r.version: r for r in b.releases}["v2"]
+    assert story.bundle.shipped == v2 and story.bundle.releases == b.releases[:2]
     main_v2 = {r.model: r for r in b.results if r.run == "main_v2"}
-    assert facts["v2_head_v2run"] == f"{main_v2[b.shipped.model].headline['gpt-6.1-sol'].point:.3f}"
-    assert facts["n"] == f"{main_v2[b.shipped.model].n:,}"
+    assert facts["v2_head_v2run"] == f"{main_v2[v2.model].headline['gpt-6.1-sol'].point:.3f}"
+    assert facts["n"] == f"{main_v2[v2.model].n:,}"
+    # the spend is the full bundle's: with v3b a release, every paid run (OWNER D-75)
     assert facts["total_spend"] == f"${b.spend_usd:.2f}"
-    assert facts["parity"] == f"{b.shipped.parity.label_agreement:.3f}"  # type: ignore[union-attr]
+    assert facts["paid_runs"] == "All paid runs" and b.shipped.version == "v3b"
+    assert writeup.paid_runs(["v1", "v2"]) == "v1's and v2's paid runs"
+    assert facts["parity"] == f"{v2.parity.label_agreement:.3f}"  # type: ignore[union-attr]
     assert int(facts["nodes"]) >= 19 and int(facts["gates"]) == 13
     assert int(facts["verifier_rounds"]) >= int(facts["verified_nodes"])
 
@@ -189,8 +202,9 @@ def test_note_covers_each_stage_and_every_caveat():
         assert need in text, need
 
 
-def test_note_claims_hold_in_the_bundle(src):
-    """The verdicts the prose states in words are the bundle's verdicts."""
+def test_note_claims_hold_in_the_bundle(story):
+    """The verdicts the prose states in words are the bundle's verdicts (the v1-to-v2 story)."""
+    src = story
     b = src.bundle
     base, v1, v2, sol = src.paths.base_model, b.releases[0].model, b.shipped.model, "gpt-6.1-sol"
     verdicts = {(c.model_a, c.model_b, c.metric, c.judge): c.verdict for c in b.primary_comparisons}
@@ -305,8 +319,13 @@ def test_writeup_link_is_live_in_the_readme_but_not_in_the_published_notes():
     assert "- [Write-up](docs/writeup/how-i-built-it.md)" in readme
     notes = (ROOT / "docs" / "release_notes_v1.0.0.md").read_text(encoding="utf-8")
     assert "- Write-up (link pending)" in notes  # v1.0.0's notes, exactly as published
-    assert links.md_abs("writeup", as_released=True) == "Write-up (link pending)"
+    pending = links.md_abs("writeup", as_released=True, version="1.0.0")
+    assert pending == "Write-up (link pending)"
     assert links.md_abs("writeup").startswith("[Write-up](https://github.com/")
+    # v1.1.0 shipped after the write-up, so its notes link it
+    assert links.md_abs("writeup", as_released=True).startswith("[Write-up](https://github.com/")
+    v1_1 = (ROOT / "docs" / "release_notes_v1.1.0.md").read_text(encoding="utf-8")
+    assert f"- {links.md_abs('writeup')}" in v1_1
 
 
 def test_frontier_sentence_matches_the_bundle_verdicts():

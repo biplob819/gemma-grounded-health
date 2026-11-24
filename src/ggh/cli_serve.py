@@ -130,14 +130,17 @@ def _cmd_export_records(args: argparse.Namespace) -> int:
     root = Path(args.root)
     try:
         base = gguf.hf_snapshot(gguf.BASE_ID, gguf.BASE_REVISION)
-        v2 = args.model == "ft2"
-        recs = (artifacts.write_v2 if v2 else artifacts.write_all)(root, base)
+        write, out = {
+            "ft": (artifacts.write_all, artifacts.RECORDS),
+            "ft2": (artifacts.write_v2, artifacts.RECORDS_V2),
+            "ft3b": (artifacts.write_v3b, artifacts.RECORDS_V3B),
+        }[args.model]
+        recs = write(root, base)
     except (OSError, ValueError, KeyError) as exc:
         return _fail("export-records", exc)
     for r in recs:
         q = r.quant or ""
         print(f"{r.kind:12} {r.model:4} {q:7} {r.sha256[:12]}…  parent {r.parent_key[:12]}…")
-    out = artifacts.RECORDS_V2 if v2 else artifacts.RECORDS
     print(f"export-records: {len(recs)} artifacts ({out})")
     return 0
 
@@ -180,8 +183,7 @@ def _cmd_bench(args: argparse.Namespace) -> int:
     from ggh.train.devrun import DEV_EVAL
 
     root = Path(args.root)
-    v2 = args.model == "ft2"
-    variants = bench.V2_VARIANTS if v2 else bench.VARIANTS
+    variants, out = bench.RUNS[args.model]
     try:
         hw = bench.hardware()
         bench.guard(hw, allow=args.allow_idle_port)
@@ -202,10 +204,13 @@ def _cmd_bench(args: argparse.Namespace) -> int:
         cond = ({"idle_servers_listening": sorted(args.allow_idle_port)}
                 if args.allow_idle_port else None)  # fmt: skip
         path = bench.write(root, results, details, started,
-                           bench.V2_OUT if v2 else bench.OUT, cond)  # fmt: skip
+                           out, cond)  # fmt: skip
     except (bench.BenchError, llama.LlamaError, OSError, ValueError) as exc:
         return _fail("bench", exc)
-    pair = ("ft", "ft2") if v2 else ("base", "ft")
+    pair = {"ft": ("base", "ft"), "ft2": ("ft", "ft2")}.get(args.model)
+    if pair is None:  # ft3b: one model at two quants, no pair to compare (RBR-05)
+        print(f"bench: wrote {path.relative_to(root)}")
+        return 0
     gaps = {on: bench.per_token_gap(results, on, pair) for on in ("tg128", "request")}
     print(
         f"bench: wrote {path.relative_to(root)}; {pair[0]}/{pair[1]} generation-speed gaps {gaps}"
@@ -405,8 +410,9 @@ def register(sub: Any) -> None:
     pa.set_defaults(func=_cmd_parity)
 
     er = sub.add_parser("export-records", help="stage manifests and ExportArtifact records (X3.1)")
-    er.add_argument("--model", default="ft", choices=("ft", "ft2"),
-                    help="ft (v1) or ft2 (v2: export_artifacts_v2.json, lineage *_v2)")  # fmt: skip
+    er.add_argument("--model", default="ft", choices=("ft", "ft2", "ft3b"),
+                    help="ft (v1), ft2 (v2: export_artifacts_v2.json, lineage *_v2) or ft3b "
+                         "(v3b: export_artifacts_v3b.json, lineage *_v3b)")  # fmt: skip
     er.add_argument("--root", default=".", help="repo root")
     er.set_defaults(func=_cmd_export_records)
 
@@ -422,8 +428,9 @@ def register(sub: Any) -> None:
     pbb.add_argument("--root", default=".", help="repo root")
     pbb.set_defaults(func=_cmd_probe_build)
     pbr = pbs.add_parser("report", help="the paraphrase drop from the committed probe runs ($0)")
-    pbr.add_argument("--release", default="v1", choices=("v1", "v2"),
-                     help="v1: probe_report.json; v2: probe_report_v2.json")  # fmt: skip
+    pbr.add_argument("--release", default="v1", choices=("v1", "v2", "v3b"),
+                     help="v1: probe_report.json; v2: probe_report_v2.json; "
+                          "v3b: probe_report_v3b.json")  # fmt: skip
     pbr.add_argument("--root", default=".", help="repo root")
     pbr.set_defaults(func=_cmd_probe_report)
 
@@ -439,8 +446,9 @@ def register(sub: Any) -> None:
     bn.add_argument(
         "--model",
         default="ft",
-        choices=("ft", "ft2"),
-        help="ft: base and ft (v1's file); ft2: ft and ft2 (docs/measurements/v2)",
+        choices=("ft", "ft2", "ft3b"),
+        help="ft: base and ft (v1's file); ft2: ft and ft2 (docs/measurements/v2); ft3b: v3b's "
+        "Q4_K_M and Q8_0 (docs/measurements/v3b)",
     )
     bn.add_argument(
         "--allow-idle-port",

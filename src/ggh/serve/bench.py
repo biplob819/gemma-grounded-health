@@ -42,6 +42,15 @@ VARIANTS = (("base", "Q4_K_M"), ("ft", "Q4_K_M"), ("base", "Q8_0"), ("ft", "Q8_0
 # V2.1: v2's GGUFs, each beside v1's measured in the same session; v1's file is left alone
 V2_OUT = Path("docs") / "measurements" / "v2" / "laptop_bench.json"
 V2_VARIANTS = (("ft", "Q4_K_M"), ("ft2", "Q4_K_M"), ("ft", "Q8_0"), ("ft2", "Q8_0"))
+# V3.8 (RBR-05): v3b's two shipped GGUFs, Q4_K_M (registered) and Q8_0 (recommended, OWNER D-75)
+V3B_OUT = Path("docs") / "measurements" / "v3b" / "laptop_bench.json"
+V3B_VARIANTS = (("ft3b", "Q4_K_M"), ("ft3b", "Q8_0"))
+# `ggh bench --model`: the variants measured together and the file they are written to
+RUNS: dict[str, tuple[tuple[tuple[str, str], ...], Path]] = {
+    "ft": (VARIANTS, OUT),
+    "ft2": (V2_VARIANTS, V2_OUT),
+    "ft3b": (V3B_VARIANTS, V3B_OUT),
+}
 METRICS = ("prompt_tps", "gen_tps", "ttft_ms", "latency_ms")
 
 Post = Callable[[str, dict[str, Any]], dict[str, Any]]

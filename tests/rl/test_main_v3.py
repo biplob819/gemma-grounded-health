@@ -118,14 +118,18 @@ def test_the_result_file_matches_the_run():
 
 
 def test_the_published_bundle_leaves_wave_7_spend_out():
+    """v1.0.0's bundle (v1 + v2) leaves Wave 7 out and stays so, frozen (D-76); a bundle with
+    v3b counts every row (OWNER D-75), tests/release/test_release_v3b.py."""
     from ggh import ledger
     from ggh.results.bundle import _in_scope
 
     path = ROOT / "docs/measurements/spend-ledger.jsonl"
     cfg = yaml.safe_load((ROOT / "configs/results.yaml").read_text(encoding="utf-8"))
-    keep = _in_scope(cfg)
+    keep = _in_scope(cfg, ("v1", "v2"))
     assert keep is not None and not keep({"node": "V3.5"}) and keep({"node": "V2.2"})
-    bundle = json.loads((RES / "results_bundle.json").read_text(encoding="utf-8"))
+    assert _in_scope(cfg, ("v1", "v2", "v3b")) is None
+    frozen = RES / "releases" / "v1.0.0" / "results_bundle.json"
+    bundle = json.loads(frozen.read_text(encoding="utf-8"))
     assert bundle["spend_usd"] == round(ledger.total(path, "spent_usd", keep), 6) == 118.035054
     wave7 = ledger.total(path, "spent_usd", lambda r: str(r.get("node", "")).startswith("V3."))
     assert round(ledger.total(path, "spent_usd"), 6) == round(118.035054 + wave7, 6)

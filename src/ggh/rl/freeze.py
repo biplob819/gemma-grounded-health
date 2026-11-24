@@ -16,33 +16,14 @@ from typing import Any
 
 from ggh.lineage import sha256_file
 from ggh.rl.select import select_checkpoint, step_of
-from ggh.schemas._base import GitSha, Model, NonBlank, NonNegFloat, PosInt, Sha256
+from ggh.schemas.train import RLRun
 from ggh.train.select import ADAPTER_FILES, adapter_hash
+
+__all__ = ["FreezeError", "RLRun", "freeze_rl"]
 
 
 class FreezeError(ValueError):
     pass
-
-
-class RLRun(Model):
-    """The GRPO counterpart of `TrainRun`: no validation-loss curve, a dev reward instead."""
-
-    reward: NonBlank
-    config_hash: Sha256
-    init_adapter_sha256: Sha256
-    repo_commit: GitSha
-    kaggle_kernel_version: NonBlank
-    score_kernel_version: NonBlank
-    gpu: NonBlank
-    wall_clock_s: NonNegFloat
-    peak_vram_gb: NonNegFloat
-    steps: PosInt
-    selected: NonBlank
-    selected_step: PosInt
-    adapter_sha256: Sha256
-    dev_rows: PosInt
-    dev_metrics: dict[str, Any]
-    v2_dev_metrics: dict[str, Any]
 
 
 def freeze_rl(

@@ -125,9 +125,11 @@ def test_cli_env_has_no_credentials(monkeypatch: pytest.MonkeyPatch):
 
 
 def test_v2_screens_show_the_release():
-    """R4.5: the default walkthrough is v2's run, with the pre-registered verdicts and the
-    aim-rule caveat, the Hugging Face page and the demo (screenshots inlined, no file path)."""
+    """R4.5: the default walkthrough is v2's run (v1.0.0's frozen bundle, D-76), with the
+    pre-registered verdicts and the aim-rule caveat, the Hugging Face page and the demo
+    (screenshots inlined, no file path)."""
     assert wt.Paths().summary == "docs/results/main_v2/summary.json"
+    assert wt.Paths().bundle == "docs/results/releases/v1.0.0/results_bundle.json"
     results = wt.screen_results(ctx())
     assert "Gemma fine-tuned v2 minus Gemma fine-tuned v1" in results
     assert results.count("depends on the aim rule (OWNER D-62)") == 2

@@ -60,6 +60,7 @@ def test_readme_is_in_sync_with_the_bundle():
 def test_readme_sections_and_screenshots():
     text = README.read_text(encoding="utf-8")
     for h in (
+        "## v3b result: grounded past the base model",  # V3.8: v1.1.0
         "## v2 result: the citations are fixed, the headline is not",
         "## Results",
         "## Run it offline",
@@ -118,7 +119,32 @@ def test_card_cli_writes_a_valid_card(tmp_path):
 
 
 def test_the_readme_says_the_demo_serves_the_benchmarked_gguf():
-    """OWNER D-63: the local demo serves the Q4_K_M GGUF that was benchmarked, not bf16."""
+    """OWNER D-63: the local demo serves the Q4_K_M GGUF that was benchmarked, not bf16; it
+    still serves v2 and reads v1.0.0's frozen bundle (owner, V3.8), whose README block said
+    so; v3b's block names Q4_K_M as the registered result and Q8_0 as the recommended file."""
+    from ggh.space import ui
+
     text = (ROOT / "README.md").read_text(encoding="utf-8")
     assert "demo runs bf16" not in text and "The demo runs" not in text
-    assert "The local demo serves the benchmarked Q4_K_M GGUF" in text
+    assert "It still serves v2, the v1.0.0 model, and reads v1.0.0's frozen results bundle" in text
+    v1_0_0 = readme.results_block(sources.load(ROOT, sources.Paths(bundle=ui.SERVED_BUNDLE)))
+    assert "The local demo serves the benchmarked Q4_K_M GGUF" in v1_0_0
+    block = readme.results_block(sources.load(ROOT))
+    assert block in text and "The registered result is the Q4_K_M GGUF's" in block
+    assert "so Q8_0 is the recommended download where it fits" in block
+
+
+def test_the_readme_reports_v3b_from_the_bundle():
+    """V3.8 (OWNER D-75): the v3b section's figures are the bundle's, Q4_K_M first."""
+    src = sources.load(ROOT)
+    text = (ROOT / "README.md").read_text(encoding="utf-8")
+    sec = text[text.index("## v3b result") : text.index("## v2 result")]
+    (c,) = [c for c in src.bundle.primary_comparisons if c.plan == "configs/eval_plan_v3b.yaml"]
+    assert f"+{c.diff.point:.3f} [+{c.diff.lo:.3f}, +{c.diff.hi:.3f}], separated" in sec
+    rows = {r.model: r for r in src.bundle.results if r.run == "main_v3b"}
+    sol = "gpt-6.1-sol"
+    for m in ("gemma-e2b-grounded-v3b-q4", "gemma-e2b-grounded-v2-q4", "gemma-e2b-base-q4"):
+        assert f"{rows[m].headline[sol].point:.3f}" in sec, m
+    q8 = src.bundle.shipped.parity_q8_0
+    assert q8 is not None and f"{q8.label_agreement:.3f}" in sec and "(OWNER D-73)" in sec
+    assert sec.index("Q4_K_M is the registered result") < sec.index("recommended download")

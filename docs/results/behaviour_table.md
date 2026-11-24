@@ -44,6 +44,24 @@
 
 `model_review`: a blind review by Claude Opus 5.5 subagents, not the owner (OWNER D-61); B5 under `configs/sample_read_prompt.md`, B8 under `configs/offscope_review_prompt.md` (question and answer only).
 
+### main_v3b
+
+| Rule | Metric | gemma-e2b-base-q4 | gemma-e2b-grounded-v2-q4 | gemma-e2b-grounded-v3b-q4 | gemma-e2b-grounded-v3b-q8 | Source |
+| --- | --- | --- | --- | --- | --- | --- |
+| B1 | schema_failures_or_zero_citations | 0.005 | 0.000 | 0.000 | 0.000 | ggh:b1 |
+| B2 | headline:gpt-6.1-sol | 0.404 [0.373, 0.434] | 0.329 [0.300, 0.358] | 0.503 [0.472, 0.534] | 0.541 [0.510, 0.572] | evalkit:headline |
+| B2 | groundedness_mean:gpt-6.1-sol | 0.840 [0.820, 0.859] | 0.493 [0.463, 0.523] | 0.729 [0.701, 0.756] | 0.754 [0.727, 0.780] | evalkit:groundedness |
+| B3 | maybe_recall | 0.491 [0.398, 0.586] | 0.055 [0.018, 0.098] | 0.055 [0.018, 0.098] | 0.018 [0.000, 0.045] | ggh:b3 |
+| B3 | maybe_precision | 0.127 [0.095, 0.161] | 0.240 [0.087, 0.409] | 0.273 [0.095, 0.471] | 0.143 [0.000, 0.364] | ggh:b3 |
+| B4 | over_80_words_share | 0.013 | 0.000 | 0.000 | 0.000 | ggh:b4 |
+| B5 | sample_read_ok_share | 0.500 | 0.400 | 0.650 | 0.550 | model_review |
+| B6 | unsupported_claim_share:gpt-6.1-sol | 0.142 | 0.469 | 0.228 | 0.203 | evalkit:verdicts |
+| B7 | citation_validity | 0.995 [0.990, 0.999] | 1.000 [1.000, 1.000] | 1.000 [1.000, 1.000] | 1.000 [1.000, 1.000] | evalkit:citation_valid |
+| B7 | citation_precision:gpt-6.1-sol | 0.747 [0.722, 0.772] | 0.736 [0.708, 0.763] | 0.873 [0.851, 0.894] | 0.891 [0.871, 0.911] | evalkit:citation_support |
+| B7 | aim_citation_rate:gpt-6.1-sol | 0.138 [0.117, 0.161] | 0.084 [0.067, 0.102] | 0.032 [0.022, 0.043] | 0.029 [0.019, 0.040] | evalkit:citation_support |
+
+`model_review`: a blind review by Claude Opus 5.5 subagents, not the owner (OWNER D-61); B5 under `configs/sample_read_prompt.md`, B8 under `configs/offscope_review_prompt.md` (question and answer only).
+
 ### offscope
 
 | Rule | Metric | gemma-e2b-base-q4 | gemma-e2b-grounded-q4 | claude-haiku-5-5 | gpt-6-luna | Source |
@@ -59,5 +77,14 @@
 | --- | --- | --- | --- |
 | B8 | presort_flagged_share | 0.000 | ggh:b8 |
 | B8 | gives_advice_count | 0 | model_review |
+
+`model_review`: a blind review by Claude Opus 5.5 subagents, not the owner (OWNER D-61); B5 under `configs/sample_read_prompt.md`, B8 under `configs/offscope_review_prompt.md` (question and answer only).
+
+### offscope_v3b
+
+| Rule | Metric | gemma-e2b-grounded-v3b-q4 | gemma-e2b-grounded-v3b-q8 | Source |
+| --- | --- | --- | --- | --- |
+| B8 | presort_flagged_share | 0.000 | 0.000 | ggh:b8 |
+| B8 | gives_advice_count | 0 | 0 | model_review |
 
 `model_review`: a blind review by Claude Opus 5.5 subagents, not the owner (OWNER D-61); B5 under `configs/sample_read_prompt.md`, B8 under `configs/offscope_review_prompt.md` (question and answer only).

@@ -1,11 +1,15 @@
 # What `ggh results bundle` reads (E3.3, RES-06, D-20). Every path is a committed file; nothing
 # under artifacts/ is read unless `--full-lineage` is given. A release is included only when its
-# `primary_run` has a summary under docs/results/; once included, every non-optional file must
-# exist or the bundle refuses. v2 (V2.2) appears automatically when docs/results/main_v2/ lands.
+# `primary_run` has a summary under docs/results/ and it is not `held`; once included, every
+# non-optional file must exist or the bundle refuses. v2 (V2.2) appeared when docs/results/main_v2/
+# landed. A `held` release is left out unless `--versions` names it (V3.8: v3b, until its release
+# evidence is committed).
 ledger: docs/measurements/spend-ledger.jsonl
-# Wave 7 (v3 and v3b, OWNER D-66) is not in this bundle's releases, so its scoring spend (V3.5 on)
-# stays out of `spend_usd` until a v3 release joins the bundle; the ledger itself keeps every row.
+# Wave 7 (v3 and v3b, OWNER D-66) rows stay out of `spend_usd` while no release of it is in the
+# bundle, so the v1 + v2 build still reproduces v1.0.0's published bundle (D-76); once v3b is a
+# release the bundle counts every ledger row, V3.5's v3 scoring included (OWNER D-75).
 ledger_exclude_node_prefixes: ["V3."]
+ledger_every_row_with: [v3b]
 bench: docs/measurements/laptop_bench.json   # default for a release that names no `bench`
 b8_review: docs/measurements/b8_review.jsonl          # optional until RES-02
 gemma_family_check: docs/measurements/gemma_family_check.json   # optional until RES-03
@@ -70,3 +74,28 @@ releases:
     artifacts: docs/measurements/export_artifacts_v2.json
     gguf: artifacts/gguf/ft2-Q4_K_M.gguf
     lineage: [docs/measurements/lineage/train_v2.json, docs/measurements/lineage/parity_v2.json]  # ggh export-records --model ft2
+  - version: v3b
+    model: gemma-e2b-grounded-v3b-q4     # the registered, shipped Q4_K_M (OWNER D-73, D-75)
+    plan: configs/eval_plan_v3b.yaml
+    built_after_test_seen: true
+    primary_run: main_v3b
+    behaviour_run: main_v3b
+    citation_run: main_v3b
+    offscope_run: offscope_v3b
+    runs: [main_v3b, offscope_v3b, probe_original_v3b, probe_paraphrase_v3b]
+    bench: docs/measurements/v3b/laptop_bench.json   # ggh bench --model ft3b (RBR-05)
+    bench_variant: ft3b-Q4_K_M
+    train_run: docs/measurements/v3b/rl_run.json     # a GRPO run record (RLRun)
+    train_selection: docs/measurements/v3b/train_selection.json
+    audits:
+      # v2's three (D-76): v3b started from v2's adapter and GRPO used only v2's audited train
+      # prompts and gold labels, so a new audit would repeat v2's
+      - {name: "v2 round 1 (AUD-R4, owner)", kind: result, path: docs/measurements/audit_v2r1_result.json}
+      - {name: "v2.1 round 2 (AUD-R4, blind Claude reviewer, OWNER D-47)", kind: result, path: docs/measurements/audit_v2r2_result.json}
+      - {name: "v2.2 round 3 (AUD-R4, blind Claude reviewer, OWNER D-47, D-50)", kind: result, path: docs/measurements/audit_v2_result.json}
+    parity: docs/measurements/v3b/parity.json   # V3.6, label agreement 0.924 < 0.95: disclosed (OWNER D-73)
+    parity_q8_0: docs/measurements/v3b/parity_q8_0.json   # 0.990, exploratory (OWNER D-73)
+    probe: docs/measurements/probe_report_v3b.json   # ggh probe report --release v3b
+    artifacts: docs/measurements/export_artifacts_v3b.json
+    gguf: artifacts/gguf/ft3b-Q4_K_M.gguf
+    lineage: [docs/measurements/lineage/train_v3b.json, docs/measurements/lineage/parity_v3b.json]  # ggh export-records --model ft3b

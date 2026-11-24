@@ -117,7 +117,7 @@ def test_validator_catches_broken_files():
 def test_version_and_links_match_the_release():
     cff = _cff()
     pyproject = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
-    assert str(cff["version"]) == "1.0.0" == __version__ == pyproject["project"]["version"]
+    assert str(cff["version"]) == "1.1.0" == __version__ == pyproject["project"]["version"]
     assert cff["repository-code"] == links.REPO
     values = {i["value"] for i in cff["identifiers"]}
     for name in ("release", "hf_model", "hf_gguf"):

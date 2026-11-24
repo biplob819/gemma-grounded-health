@@ -5,6 +5,7 @@ are known (tests/results/fake.py). No artifacts/, no network, no torch."""
 import json
 
 import pytest
+import yaml
 
 from ggh.cli import main
 from ggh.results import bundle as B
@@ -18,11 +19,14 @@ FOUR = ("gemma-e2b-base-q4", "gemma-e2b-grounded-q4", "claude-haiku-5-5", "gpt-6
 SOL = "gpt-6.1-sol"
 V1_RUNS = ("main", "main_citation", "offscope", "parity", "probe_original", "probe_paraphrase")
 V2_RUNS = ("main_v2", "offscope_v2", "parity_v2", "probe_original_v2", "probe_paraphrase_v2")
+V3B_RUNS = ("main_v3b", "offscope_v3b", "probe_original_v3b", "probe_paraphrase_v3b")
+V3B, V3B_Q8 = "gemma-e2b-grounded-v3b-q4", "gemma-e2b-grounded-v3b-q8"
 
 
 @pytest.fixture(scope="module")
 def real():
-    """The committed repo: v1 and the real v2 (OWNER D-57: its runs judged by Sol alone)."""
+    """The committed repo: v1, the real v2 (OWNER D-57: its runs judged by Sol alone) and v3b
+    (V3.8, OWNER D-75)."""
     return B.build(ROOT)
 
 
@@ -35,18 +39,22 @@ def v2(tmp_path_factory):
 
 def test_the_bundle_has_v1_and_the_real_v2_with_every_committed_run(real):
     b = real.bundle
-    assert [r.version for r in b.releases] == ["v1", "v2"]
-    assert [r.name for r in b.runs] == sorted([*V1_RUNS, *V2_RUNS])
-    for name in ("main", "main_v2"):
+    assert [r.version for r in b.releases] == ["v1", "v2", "v3b"]
+    assert [r.name for r in b.runs] == sorted([*V1_RUNS, *V2_RUNS, *V3B_RUNS])
+    for name in ("main", "main_v2", "main_v3b"):
         run = json.loads((ROOT / f"docs/results/{name}/run.json").read_text(encoding="utf-8"))
         assert run["run_id"] in b.evalkit_run_ids
     by = {r.name: r for r in b.runs}
     assert {by[n].judge_mode for n in V1_RUNS} == {"dual"}
-    assert {by[n].judge_mode for n in V2_RUNS} == {"single"}
+    assert {by[n].judge_mode for n in (*V2_RUNS, *V3B_RUNS)} == {"single"}
     assert b.judge_mode == "single"  # dual only when every run is
     # RES-03 (OWNER D-59, D-60): v2 relies on Sol, stamped; v1 also on Opus, never stamped
     assert b.calibration_status == "uncalibrated" and b.gemma_family_check is None
-    assert [r.calibration_status for r in b.releases] == ["uncalibrated", "calibrated"]
+    assert [r.calibration_status for r in b.releases] == [
+        "uncalibrated",
+        "calibrated",
+        "calibrated",  # v3b relies on Sol alone too
+    ]
     rel = b.releases[0]
     assert rel.plan_status == "final" and rel.built_after_test_seen is False
     assert rel.train.selected_step == 527 and rel.adapter_sha256 and rel.audits[0].passed
@@ -85,7 +93,11 @@ def test_primary_comparisons_are_the_plans_oriented_as_written(real):
     assert base_opus.diff.point == pytest.approx(-0.03) and base_opus.verdict == "tie"
     assert by[("gemma-e2b-base-q4", "gpt-6.1-sol")].verdict == "b_better"
     assert by[("claude-haiku-5-5", "gpt-6.1-sol")].verdict == "a_better"
-    assert {c.plan for c in every} == {"configs/eval_plan.yaml", "configs/eval_plan_v2.yaml"}
+    assert {c.plan for c in every} == {
+        "configs/eval_plan.yaml",
+        "configs/eval_plan_v2.yaml",
+        "configs/eval_plan_v3b.yaml",
+    }
     assert {c.plan for c in real.bundle.secondary} == {"secondary"}
 
 
@@ -158,6 +170,8 @@ def test_behaviour_table_covers_b1_to_b8_for_every_model_with_sources(real):
         ("claude-haiku-5-5", "offscope"): 1.0,
         ("gpt-6-luna", "offscope"): 0.0,
         ("gemma-e2b-grounded-v2-q4", "offscope_v2"): 0.0,
+        (V3B, "offscope_v3b"): 0.0,  # V3.8: both shipped GGUFs, reviewed blind
+        (V3B_Q8, "offscope_v3b"): 0.0,
     }
     v2_models = ("gemma-e2b-base-q4", "gemma-e2b-grounded-q4", "gemma-e2b-grounded-v2-q4")
     assert {r.rule for r in rows if r.model == "gemma-e2b-grounded-v2-q4"} == {
@@ -165,6 +179,10 @@ def test_behaviour_table_covers_b1_to_b8_for_every_model_with_sources(real):
     }
     b5 = {r.model for r in rows if r.rule == "B5" and r.run == "main_v2"}
     assert b5 == set(v2_models)
+    for m in (V3B, V3B_Q8):
+        assert {r.rule for r in rows if r.model == m} == {f"B{i}" for i in range(1, 9)}, m
+    b5_v3b = {r.model for r in rows if r.rule == "B5" and r.run == "main_v3b"}
+    assert b5_v3b == {"gemma-e2b-base-q4", "gemma-e2b-grounded-v2-q4", V3B, V3B_Q8}
     # OWNER D-61: every model-review row names its reviewer and committed prompt (R4.1)
     for r in rows:
         if r.source == "model_review":
@@ -181,7 +199,16 @@ def test_behaviour_table_covers_b1_to_b8_for_every_model_with_sources(real):
     assert "| B7 | citation_precision:claude-opus-5-5 |" in md
     heads = [x for x in md.splitlines() if x.startswith("### ")]
     assert heads == [
-        f"### {r}" for r in ("main", "main_citation", "main_v2", "offscope", "offscope_v2")
+        f"### {r}"
+        for r in (
+            "main",
+            "main_citation",
+            "main_v2",
+            "main_v3b",
+            "offscope",
+            "offscope_v2",
+            "offscope_v3b",
+        )
     ]
     assert "| B7 | citation_precision:gpt-6.1-sol |" in md
 
@@ -211,8 +238,16 @@ def test_spend_is_the_ledger_total(real):
         if x
     ]
     in_scope = [r for r in rows if not str(r.get("node", "")).startswith("V3.")]  # Wave 7 out
-    assert real.bundle.spend_usd == pytest.approx(sum(r["spent_usd"] for r in in_scope))
-    assert len(in_scope) < len(rows)  # the V3.5 scoring run is in the ledger, not the bundle
+    assert [r.version for r in real.bundle.releases][-1] == "v3b"
+    # OWNER D-75: with v3b a release, every paid run counts, V3.5's v3 scoring included
+    assert real.bundle.spend_usd == pytest.approx(sum(r["spent_usd"] for r in rows))
+    assert len(in_scope) < len(rows)
+    # D-76: the v1 + v2 bundle leaves Wave 7 out, as v1.0.0 published it
+    v1_v2 = B.build(ROOT, versions=("v1", "v2")).bundle
+    assert v1_v2.spend_usd == pytest.approx(sum(r["spent_usd"] for r in in_scope)) == 118.035054
+    cfg = yaml.safe_load((ROOT / B.CONFIG).read_text(encoding="utf-8"))
+    assert B._in_scope(cfg, ("v1", "v2")) is not None
+    assert B._in_scope(cfg, ("v1", "v2", "v3b")) is None
 
 
 def test_the_bundle_is_deterministic_and_round_trips(real, tmp_path):
@@ -227,7 +262,7 @@ def test_the_bundle_is_deterministic_and_round_trips(real, tmp_path):
 def test_cli_writes_the_bundle(tmp_path, capsys):
     assert main(["results", "bundle", "--root", str(ROOT), "--out", str(tmp_path)]) == 0
     assert (tmp_path / "results_bundle.json").is_file()
-    assert "releases: v1, v2" in capsys.readouterr().out
+    assert "releases: v1, v2, v3b;" in capsys.readouterr().out
 
 
 # v2 (synthetic, from v1's records)
@@ -314,16 +349,28 @@ def test_r4_flat_fields_read_from_the_shipped_release(real, v2):
         assert b.train == b.releases[-1].train and b.artifacts == b.releases[-1].artifacts
         assert b.audit_pass_rate == b.releases[-1].audits[-1].pass_rate
         assert b.bench.quant == "Q4_K_M" and b.bench == b.releases[-1].bench
-    # each release quotes its own laptop bench; the shipped one is v2's (R4.1)
-    v1, v2 = real.bundle.releases
+    # each release quotes its own laptop bench; the shipped one is v3b's (R4.1, V3.8); v1.0.0's
+    # was v2's (its frozen bundle, docs/results/releases/v1.0.0/)
+    v1, v2, v3b = real.bundle.releases
     assert v1.bench_source == "docs/measurements/laptop_bench.json#ft-Q4_K_M"
     assert v2.bench_source == "docs/measurements/v2/laptop_bench.json#ft2-Q4_K_M"
+    assert v3b.bench_source == "docs/measurements/v3b/laptop_bench.json#ft3b-Q4_K_M"
     v2_file = json.loads((ROOT / "docs/measurements/v2/laptop_bench.json").read_text("utf-8"))
-    assert real.bundle.bench.model_dump() == v2_file["variants"]["ft2-Q4_K_M"]
-    assert {"ft2-Q4_K_M", "ft-Q4_K_M"} <= set(real.bundle.bench_variants)
-    p = real.bundle.parity  # the shipped release's: the real v2, under Sol alone
-    assert p and p.judged_headline_delta and set(p.judged_headline_delta) == {SOL}
-    assert p == real.bundle.releases[1].parity
+    assert v2.bench is not None and v2.bench.model_dump() == v2_file["variants"]["ft2-Q4_K_M"]
+    v3b_file = json.loads((ROOT / "docs/measurements/v3b/laptop_bench.json").read_text("utf-8"))
+    assert real.bundle.bench.model_dump() == v3b_file["variants"]["ft3b-Q4_K_M"]
+    assert set(real.bundle.bench_variants) == {"ft3b-Q4_K_M", "ft3b-Q8_0"}
+    frozen = ResultsBundle.model_validate_json(
+        (ROOT / "docs/results/releases/v1.0.0/results_bundle.json").read_text("utf-8")
+    )
+    assert {"ft2-Q4_K_M", "ft-Q4_K_M"} <= set(frozen.bench_variants)
+    assert frozen.bench == v2.bench
+    p2 = v2.parity  # the real v2, under Sol alone
+    assert p2 and p2.judged_headline_delta and set(p2.judged_headline_delta) == {SOL}
+    assert frozen.parity == p2
+    p = real.bundle.parity  # the shipped release's: v3b at Q4_K_M (OWNER D-73)
+    assert p == v3b.parity and p is not None and p.label_agreement == 0.924
+    assert v3b.parity_q8_0 is not None and v3b.parity_q8_0.label_agreement == 0.99
     p1 = real.bundle.releases[0].parity
     assert p1 and p1.judged_headline_delta
     assert p1.judged_headline_delta["claude-opus-5-5"].point == 0.025
@@ -337,7 +384,8 @@ def test_r4_flat_fields_read_from_the_shipped_release(real, v2):
         for metric in ("headline", "citation_precision", "aim_citation_rate")
         for m in ("gemma-e2b-grounded-q4", "gemma-e2b-base-q4")
     }
-    assert set(real.bundle.primary) == v1_keys | v2_keys
+    v3b_keys = {f"headline: {V3B} minus gemma-e2b-grounded-v2-q4 ({SOL})"}
+    assert set(real.bundle.primary) == v1_keys | v2_keys | v3b_keys
 
 
 def test_v2_behaviour_rows_include_its_citation_metrics_and_offscope(v2):

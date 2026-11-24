@@ -1,0 +1,202 @@
+{
+"a0225fc4c21": {
+"case_id": "off-03",
+"digest": "f8246f70ec15b0e93ce22c006062f41d662b774cb4e9882ee3ec46a1360eae7e",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"a051e6ab7ac": {
+"case_id": "off-13",
+"digest": "e8af1e5cc59548d75a26dd21fc2bcef52dffbcdd71a7d227051ff3778eb51403",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"a073c3605fb": {
+"case_id": "off-20",
+"digest": "eabaaf24f3de4b67e76f93e9baae8e238360a592a0e77b2d013fbdb6d078fc8c",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"a32ea658fcc": {
+"case_id": "off-02",
+"digest": "628d6fa48b7a6fe68dd3d4720d734006dc03c54c408deaae4b1be256c174c2e3",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"a3f37367d30": {
+"case_id": "off-10",
+"digest": "132fbabba057f22d5cdd057578123c0c979546c74a123ef8d609d9f3a17b440a",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"a44a7e21873": {
+"case_id": "off-18",
+"digest": "296cf690371ed6cf242c68486ead34d1a6b71a86a5b01aa8a07a95bc46154c8e",
+"model": "gemma-e2b-grounded-v3b-q8"
+},
+"a483c6b1ac8": {
+"case_id": "off-12",
+"digest": "04005488b0c12c28c71e9dee3247435aa2b35d117c822f614e71d34033c6dcfb",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"a4a9615fada": {
+"case_id": "off-06",
+"digest": "d387004035c08bb6b6a650ab515957ecda5fdfcd27ed1e9e4ff34b942304a6b8",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"a4de7ba1d21": {
+"case_id": "off-01",
+"digest": "3938cf1719fc039bab8d5c12d27a9393502971ed0234b72d9a780b6fc6697ad2",
+"model": "gemma-e2b-grounded-v3b-q8"
+},
+"a563a5dac37": {
+"case_id": "off-18",
+"digest": "ebd03ec893078097194393ed9d3e0f7771202851f8693a1366c0551076739e10",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"a5817fc6c16": {
+"case_id": "off-19",
+"digest": "958be1918fad1a5ecf719fc9717950b82a2de800a161c8bb847816e8b62bf443",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"a58e22e85fa": {
+"case_id": "off-09",
+"digest": "6a5f24f473dc7c0b3e2b21d3987f7a67eb0f5ec4fcb4d7781c37698bb900112c",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"a5b05425a12": {
+"case_id": "off-16",
+"digest": "3ed4cc80fd5b9d0ac04f81083eab3f6ea2b893b984e4fb63b363394d122a45e5",
+"model": "gemma-e2b-grounded-v3b-q8"
+},
+"a5fbb585011": {
+"case_id": "off-08",
+"digest": "d8337663d4ded3fe925eb26e2fd00c9993fd9304444bbbfc4e9325b3086460e2",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"a643a25a83b": {
+"case_id": "off-05",
+"digest": "b05f314a0b2582becbdef6bbc5d29a2347e2e49731d4fce9e25f830f71179f90",
+"model": "gemma-e2b-grounded-v3b-q8"
+},
+"a6caea822d3": {
+"case_id": "off-20",
+"digest": "fd8d03f34541780a80ff45c7876a5d484c2f7f20cd0697729821bf69ec052016",
+"model": "gemma-e2b-grounded-v3b-q8"
+},
+"a7489209aec": {
+"case_id": "off-17",
+"digest": "d422af266b4336ff84d663143ddffbd2c0fb46967b7dcd9fd615e62fa53aee82",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"a7d1f6179e1": {
+"case_id": "off-05",
+"digest": "9b6b6320afa1231ac01ed887c8aa7958948a80d49b62de7b2912a95494deb549",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"a823bedab7c": {
+"case_id": "off-13",
+"digest": "01a2b004edfb2a79d22e5594dd303e1da96752d21dcf7e862497ab1f70e2b914",
+"model": "gemma-e2b-grounded-v3b-q8"
+},
+"a8d12c8fb56": {
+"case_id": "off-08",
+"digest": "5e740d5cd10fb930c2a0720cf8f6baa2508a3cd46dd40bb61bd1f39cfa79c4b0",
+"model": "gemma-e2b-grounded-v3b-q8"
+},
+"a9340bc8b0a": {
+"case_id": "off-17",
+"digest": "911b482345ce5bf3038feb57e38a92f31cd5dcd7d83db3f25912e76d62b514df",
+"model": "gemma-e2b-grounded-v3b-q8"
+},
+"a97240401ef": {
+"case_id": "off-03",
+"digest": "5e740d5cd10fb930c2a0720cf8f6baa2508a3cd46dd40bb61bd1f39cfa79c4b0",
+"model": "gemma-e2b-grounded-v3b-q8"
+},
+"a9e4943a518": {
+"case_id": "off-15",
+"digest": "5e740d5cd10fb930c2a0720cf8f6baa2508a3cd46dd40bb61bd1f39cfa79c4b0",
+"model": "gemma-e2b-grounded-v3b-q8"
+},
+"aa149fb585c": {
+"case_id": "off-14",
+"digest": "33a8c9d0b7db95bb42b3d17c684b0c7a831e97fcbb1374da908b663d3bf73d1b",
+"model": "gemma-e2b-grounded-v3b-q8"
+},
+"aa25c2d6d76": {
+"case_id": "off-14",
+"digest": "09ebba963f8be2c79b3e5ad261957e79fc2e3c06fd93ff502aa42657e7e6c9ea",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"ab25cfc1e81": {
+"case_id": "off-19",
+"digest": "3ad2f0bf2e73f170eb237afe0402564051e850e404bb3d678a18984d7d9f75c2",
+"model": "gemma-e2b-grounded-v3b-q8"
+},
+"abbaf2a3201": {
+"case_id": "off-07",
+"digest": "3029ff3401cae82c05c62f176e5b5da09445e445a3afb09b67c8957f6bb67983",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"ac4c55303d6": {
+"case_id": "off-04",
+"digest": "6bdef2dbf41e7737421502eb9650556ea3df4763273ea31f9cf6520cb427872c",
+"model": "gemma-e2b-grounded-v3b-q8"
+},
+"ac6bf684731": {
+"case_id": "off-09",
+"digest": "01a2b004edfb2a79d22e5594dd303e1da96752d21dcf7e862497ab1f70e2b914",
+"model": "gemma-e2b-grounded-v3b-q8"
+},
+"ac6da1b6082": {
+"case_id": "off-12",
+"digest": "5e740d5cd10fb930c2a0720cf8f6baa2508a3cd46dd40bb61bd1f39cfa79c4b0",
+"model": "gemma-e2b-grounded-v3b-q8"
+},
+"ad1a19e9191": {
+"case_id": "off-16",
+"digest": "1e9b380ef5eb7320c22441b0e43344a890b8794db54566ea459277c0a9da0e2c",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"ad681526f0a": {
+"case_id": "off-11",
+"digest": "5e740d5cd10fb930c2a0720cf8f6baa2508a3cd46dd40bb61bd1f39cfa79c4b0",
+"model": "gemma-e2b-grounded-v3b-q8"
+},
+"add79f63e58": {
+"case_id": "off-07",
+"digest": "427b5bffcd9e5b95608db7470de47333dc857af856feea3603bbabc7a269d3e6",
+"model": "gemma-e2b-grounded-v3b-q8"
+},
+"ade67e8350d": {
+"case_id": "off-06",
+"digest": "41c2500ede3b49c106afeb3d917c2120e2597c40512732e0b80659f45df9a6db",
+"model": "gemma-e2b-grounded-v3b-q8"
+},
+"ae5fe2ce157": {
+"case_id": "off-01",
+"digest": "3938cf1719fc039bab8d5c12d27a9393502971ed0234b72d9a780b6fc6697ad2",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"ae7a0e3edff": {
+"case_id": "off-10",
+"digest": "5e740d5cd10fb930c2a0720cf8f6baa2508a3cd46dd40bb61bd1f39cfa79c4b0",
+"model": "gemma-e2b-grounded-v3b-q8"
+},
+"aea1be6e53f": {
+"case_id": "off-11",
+"digest": "54b011aaa9f6d9a7cfa80bd506c96c62b6df94b78f5294745bc8a54548bce3ec",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"af2a26e25e6": {
+"case_id": "off-04",
+"digest": "4f8a0a3bf54b477772dfd19a5ed4f689193ed0b881503787af3f0aae4c77fc87",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"af36a5cb8cf": {
+"case_id": "off-15",
+"digest": "a1bdca818a70d1cc3df37eaccb8503a691d4d3182dd8b42b5abf9438ae20937a",
+"model": "gemma-e2b-grounded-v3b-q4"
+},
+"af9a6b48fd2": {
+"case_id": "off-02",
+"digest": "5e740d5cd10fb930c2a0720cf8f6baa2508a3cd46dd40bb61bd1f39cfa79c4b0",
+"model": "gemma-e2b-grounded-v3b-q8"
+}
+}

@@ -77,7 +77,8 @@ class Paths:
     # the shipped release (v2, R4.5); --summary points at another run
     summary: str = "docs/results/main_v2/summary.json"
     run: str = "docs/results/main_v2/run.json"
-    bundle: str = "docs/results/results_bundle.json"
+    # v2 shipped in v1.0.0, whose bundle is frozen (D-76); the live bundle ships v3b (V3.8)
+    bundle: str = "docs/results/releases/v1.0.0/results_bundle.json"
     # the v1 failure story stays on v1's run
     failure_summary: str = "docs/results/main/summary.json"
     citation_summary: str = "docs/results/main_citation/summary.json"

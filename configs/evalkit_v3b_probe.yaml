@@ -1,0 +1,15 @@
+# V3.8 paraphrase-probe runs (configs/eval_plan_v3b_release.yaml, OWNER D-75): v3b at Q4_K_M (8086),
+# the shipped model, as V3.7 served it (`ggh serve --model ft3b`).
+models: [gemma-e2b-grounded-v3b-q4]
+endpoints:
+  gemma-e2b-grounded-v3b-q4: http://127.0.0.1:8086/v1
+judges: [gpt-6.1-sol]            # OWNER D-57: Sol alone
+extractor: gpt-6-luna             # OWNER D-57
+structured_output: true          # D-6
+max_output_tokens: 2048
+concurrency: {openai: 8, openai_compatible: 1}
+seed: 7
+default_effort: medium
+judge_effort: medium
+extractor_effort: medium
+max_cost_usd: 0.35  # OWNER D-75: $1 for the three release-evidence runs together (0.30 + 0.35 + 0.35), per run

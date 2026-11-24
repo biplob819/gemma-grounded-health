@@ -5,7 +5,9 @@ from the lineage manifests (never recomputed into truth), checks each local file
 checks the bundle's artifact records agree with the manifests (and, for v2, with
 `export_artifacts_v2.json`), and runs `ggh lineage verify` on the release's chain: v1 from its
 export stage, v2 from `parity_v2` back through `export_ft2`, `train_v2` and `targets_v2` to the
-data. The release defaults to the bundle's shipped release (v2, OWNER D-63's benchmarked GGUF);
+data; v3b (V3.8, OWNER D-75) from `parity_v3b` back through `export_ft3b`, its GRPO run
+`train_v3b`, v2's `train_v2` and `targets_v2` to the data, with both GGUFs, Q8_0 recommended,
+under tag v3b.0.0. The release defaults to the bundle's shipped release;
 `layout="v1"` keeps v1's plan. `push()` is the only function that talks to the Hub, through an
 injected `HubApi`; the CLI calls it only with `--push`, a token from the environment and a plan
 with no problems. It uploads, tags, downloads every file back and checks its sha256 (NFR5),
@@ -71,6 +73,8 @@ class Layout:
     chain_from: str  # committed copy (stem) lineage.json starts from
     records: Path | None = None  # the export stage's committed artifact records
     extra_merged: tuple[tuple[str, Path | None], ...] = ()
+    tag: str | None = None  # the Hub tag, when the release fixes one (v3b, OWNER D-75)
+    recommended: str | None = None  # the GGUF the cards recommend, when not the benchmarked one
 
 
 LAYOUTS: dict[str, Layout] = {
@@ -98,7 +102,30 @@ LAYOUTS: dict[str, Layout] = {
             ("ggh_merge.json", Path("docs") / "measurements" / "v2" / "merge_record.json"),
         ),
     ),
+    "v3b": Layout(  # V3.8: v3b as GGH v1.1.0, both GGUFs, Q8_0 recommended (OWNER D-75)
+        name="v3b",
+        export_manifest=Path("artifacts") / "export" / "ft3b" / "manifest.json",
+        train_manifest=Path("artifacts") / "train_v3b" / "manifest.json",
+        export_copy="export_ft3b",
+        train_copy="train_v3b",
+        verify_from=Path("artifacts") / "parity_v3b" / "manifest.json",
+        chain_from="parity_v3b",
+        records=Path("docs") / "measurements" / "export_artifacts_v3b.json",
+        extra_merged=(
+            ("generation_config.json", None),
+            ("processor_config.json", None),
+            ("ggh_merge.json", Path("docs") / "measurements" / "v3b" / "merge_record.json"),
+        ),
+        tag="v3b.0.0",
+        recommended="Q8_0",
+    ),
 }
+
+
+def release_tag(release: str) -> str:
+    """The Hub tag of a release: its layout's own (v3b.0.0), else `<release>.0.0`."""
+    lay = LAYOUTS.get(release)
+    return (lay.tag if lay is not None else None) or f"{release}.0.0"
 
 
 @dataclass(frozen=True)
@@ -176,11 +203,14 @@ def gguf_card(
     bundle: ResultsBundle,
     artifacts: Sequence[ExportArtifact] | None = None,
     model: str | None = None,
+    recommended: str | None = None,
 ) -> str:
     rows = "\n".join(f"| `{f.path_in_repo}` | {_human(f.size)} | `{f.sha256}` |" for f in files)
     main = f"{owner}/{MAIN_REPO}"
     arts = bundle.artifacts if artifacts is None else artifacts
     name = f" (`{model}`)" if model else ""
+    if recommended is not None:
+        return _gguf_card_recommending(owner, rows, main, name, recommended, arts)
     return (
         "---\nlicense: apache-2.0\nbase_model: " + main + "\n"
         "tags: [gguf, gemma, pubmedqa, research-only]\n---\n\n"
@@ -193,6 +223,40 @@ def gguf_card(
         f"The local demo serves this {OLLAMA_QUANT} file through llama-server, the same bytes "
         "that were benchmarked (OWNER D-63), so the demo and the numbers match.\n\n"
         f"```bash\nollama run --think=false hf.co/{owner}/{GGUF_REPO}:{OLLAMA_QUANT}\n```\n\n"
+        "Run it with thinking off, as the benchmark did (llama-server `--reasoning off`): "
+        "with thinking on, Gemma 4 writes a reasoning block before the JSON answer. The "
+        "benchmark decoded greedily (temperature 0); Ollama's default sampling can give a "
+        "different answer to the same question.\n\n"
+        f"{PROMPT_FORMAT.format(main=main)}\n\n"
+        "| File | Size | sha256 |\n|---|---|---|\n" + rows + "\n\n"
+        f"Built with llama.cpp `{_gguf_commit(arts)}`. Licence: Apache-2.0 (see `NOTICE`).\n"
+    )
+
+
+def _gguf_card_recommending(
+    owner: str,
+    rows: str,
+    main: str,
+    name: str,
+    recommended: str,
+    arts: Sequence[ExportArtifact],
+) -> str:
+    """The GGUF card of a release that recommends another file than the benchmarked one (v3b:
+    Q4_K_M registered and benchmarked, Q8_0 recommended where it fits, OWNER D-75)."""
+    return (
+        "---\nlicense: apache-2.0\nbase_model: " + main + "\n"
+        "tags: [gguf, gemma, pubmedqa, research-only]\n---\n\n"
+        f"# {GGUF_REPO}\n\n"
+        "> **Research only, not medical advice.** Not for clinical use or personal health "
+        "decisions.\n\n"
+        f"GGUF builds of [{main}](https://huggingface.co/{main}){name} for llama.cpp, Ollama "
+        f"and LM Studio. The pre-registered benchmark result on the main model card is for the "
+        f"{OLLAMA_QUANT} file. The {recommended} file is recommended where it fits: it agrees "
+        "more closely with the merged weights (the main card's Parity section), and its "
+        "benchmark numbers there are exploratory. Read that card for training data, "
+        "evaluation and limits.\n\n"
+        f"```bash\nollama run --think=false hf.co/{owner}/{GGUF_REPO}:{recommended}\n"
+        f"ollama run --think=false hf.co/{owner}/{GGUF_REPO}:{OLLAMA_QUANT}\n```\n\n"
         "Run it with thinking off, as the benchmark did (llama-server `--reasoning off`): "
         "with thinking on, Gemma 4 writes a reasoning block before the JSON answer. The "
         "benchmark decoded greedily (temperature 0); Ollama's default sampling can give a "
@@ -384,7 +448,7 @@ def plan(
         # Ollama resolves hf.co/<owner>/<repo>:<quant> by the quant tag in the file name
         gguf_files.append(_local(root, "gguf", f"{MAIN_REPO}-{q}.gguf", a.path, want, export_rec))
     p.files += gguf_files
-    gguf_text = gguf_card(owner, gguf_files, bundle, artifacts, model)
+    gguf_text = gguf_card(owner, gguf_files, bundle, artifacts, model, lay.recommended)
     p.files.append(_generated("gguf", "README.md", gguf_text.encode("utf-8")))
     for name in LEGAL:
         for repo in ("main", "gguf"):
@@ -427,6 +491,8 @@ def plan_json(p: Plan) -> dict[str, Any]:
         "lineage_verified_from": p.lineage_verified,
         "lineage_chain": p.lineage_keys,
         "ollama_ref": f"hf.co/{p.repo_id('gguf')}:{OLLAMA_QUANT}",
+        # a release with its own tag records it (v3b.0.0); v2's plan predates the field
+        **({"tag": lay.tag} if (lay := LAYOUTS.get(p.release)) and lay.tag else {}),
         "files": [
             {
                 "repo": p.repo_id(f.repo),

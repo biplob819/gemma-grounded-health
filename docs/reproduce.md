@@ -130,15 +130,32 @@ uv run ggh readme-table --write README.md
 uv run ggh release-notes
 ```
 
-`MODEL_CARD.md`, the README's results and links blocks and `docs/release_notes_v1.0.0.md`, all generated from the bundle.
+`MODEL_CARD.md`, the README's results and links blocks and `docs/release_notes_v<version>.md` (v1.1.0 for v3b; v1.0.0's notes regenerate from its frozen bundle under `docs/results/releases/v1.0.0/`), all generated from the bundle.
 
 <!-- reproduce: dry-run: needs the merged weights and GGUFs in artifacts/; pushing also needs HF_TOKEN and the owner's go-ahead -->
 ```bash
 make release
-uv run ggh release --owner biplob123 --plan-json docs/measurements/release_plan_v2.json
+uv run ggh release --release v3b --owner biplob123 --plan-json docs/measurements/release_plan_v3b.json
 ```
 
-The release dry run lists every file for the two Hub repos with its size and sha256, verifies the lineage, and pushes nothing (`docs/measurements/release_plan_v2.json`). With `--push` it uploads, downloads every file back to check its sha256 and runs the GGUF through Ollama on one sample (`docs/measurements/release_record_v2.json`).
+The release dry run lists every file for the two Hub repos with its size and sha256, verifies the lineage, and pushes nothing (`docs/measurements/release_plan_v3b.json`, tag v3b.0.0; v1.0.0's was `release_plan_v2.json`). With `--push` it uploads, downloads every file back to check its sha256 and runs the GGUF through Ollama on one sample (v1.0.0's is `docs/measurements/release_record_v2.json`; a v3b push writes v3b's own record).
+
+## 8. v3 and v3b: GRPO from v2's adapter (Wave 7)
+
+<!-- reproduce: dry-run: needs a Kaggle T4 (training and dev scoring), local GPU memory for the merge and parity, and OpenAI spend under the owner's caps for scoring -->
+```bash
+uv run ggh rl-freeze --model ft3b --rl-dev docs/measurements/v3b/main/rl_dev.json --report docs/measurements/v3b/main/report.json --checkpoint artifacts/kaggle/ggh-v3b-grpo/run/checkpoint-250 --kernel-version "ggh-v3b-grpo v1" --score-kernel-version "ggh-v3b-grpo-score v1" --repo-commit a67891bbb351c45b513f4fac31d8a982d461af21
+uv run ggh merge --model ft3b
+uv run ggh export --model ft3b
+uv run ggh parity --model ft3b
+uv run python scripts/v3b_q8_parity.py
+uv run evalkit run configs/evalkit_v3b.yaml --task configs/tasks/pubmedqa_cit.yaml --n 1000
+uv run python -c "from pathlib import Path; from ggh.results import v3b; v3b.write(Path('.'))"
+uv run ggh export-records --model ft3b
+uv run ggh bench --model ft3b
+```
+
+The train and score notebooks are `notebooks/v3b/main/{train,score}`, pinned to commit a67891b (their outputs are committed under `docs/measurements/v3b/main/`; the checkpoint is downloaded from the train kernel); `configs/eval_plan_v3b.yaml` was hashed before any v3b training step. `ggh rl-freeze` re-applies the plan's checkpoint selection and refuses any other checkpoint. The scoring run needs `ggh serve --model ft3b` (8086) and `--quant Q8_0 --port 8087`, with base and v2 answered from EvalKit's cache. v3 (`ft3`, `configs/eval_plan_v3.yaml`, `docs/results/main_v3`) is built the same way from `notebooks/v3/main`. The release evidence (`configs/eval_plan_v3b_release.yaml`: off-scope and probe runs, `ggh probe report --release v3b`) and the blind reviews are listed in `specs/V3.8-v3b-release/RUN-STATE.md`.
 
 ## A fresh-clone check
 

@@ -1,0 +1,36 @@
+{
+  "stage": "train",
+  "code_version": "1",
+  "key": "47d25a475c176047798190bcbd00207afc074b68f4bf7947f90fadf1cea3435b",
+  "inputs": {
+    "artifacts/targets/train.jsonl": "93d8daa30b55b15f3b5fe41f443573cf94a81167c1f60e04140e2a3b63bfd13c",
+    "configs/recipe_v3b_grpo.yaml": "f21041a5d784cc6f770a2d2adde7b7d44dc812eaad45f0b32fd5bafbb4a7f61d",
+    "artifacts/adapter_v2/adapter_config.json": "17c0c0526c410b1a2aecbf74d67594f8f5f961993b7c9d7a955341674274bcf9",
+    "artifacts/adapter_v2/adapter_model.safetensors": "8ea0959ffae6cdc5122a5158112f84c6545857b64e6b4751825cc25a8ad9ee01",
+    "src/ggh/rl/reward_b.py": "42542de3dd7dab71cb5ae6c3f751b64089999754d0c22c243bdd78b75b285a8b",
+    "src/ggh/rl/checker.py": "702b592fc40b52320d395c5dc454629afc8746fd1ff7a76634b2c9f6594af6e5"
+  },
+  "outputs": {
+    "artifacts/adapter_v3b/adapter_config.json": "17c0c0526c410b1a2aecbf74d67594f8f5f961993b7c9d7a955341674274bcf9",
+    "artifacts/adapter_v3b/adapter_model.safetensors": "f6d2ccecddaf4c95dd83102c4f817acea0fa982ded9fb9263fe271964ea73a35",
+    "docs/measurements/v3b/rl_run.json": "4cfa4fcd310bd86741c6f7aa2ed98c7cfe9f5022441404989cc0c52a31758a45"
+  },
+  "params": {
+    "kaggle_kernel": "ggh-v3b-grpo v1",
+    "repo_commit": "a67891bbb351c45b513f4fac31d8a982d461af21",
+    "selected_step": 250,
+    "base": "google/gemma-4-E2B-it@4adf15748de9e1a0097b6274cee9c15836c41c37",
+    "method": "grpo",
+    "reward": "v3b",
+    "init_adapter_sha256": "e5f97861693346623bf55305c0b911e10fe9a9dcc0985e535db30dad74f4e3db",
+    "adapter_sha256": "0537933d988bdbb7db836c8a4651a278d391f95c72ed4f45b6c3b739c39d2014"
+  },
+  "seed": 7,
+  "parents": [
+    "fa11eddc3791fa601e277ba0219b1a721c220818af2a3fddc4b2ea2df13a8afb",
+    "11fec5f2fd418f86965412737cbbe11da5400db01bd5d9b1ee3442c75a114f9f"
+  ],
+  "started_at": "2026-11-23T05:57:48Z",
+  "finished_at": "2026-11-23T11:50:00Z",
+  "host": "kaggle"
+}
