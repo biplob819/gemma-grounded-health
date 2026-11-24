@@ -36,7 +36,7 @@ citations says this.
 ## part-of-claim
 
 Records: `main_v2` base pqa-27928673, pqa-27615402 (and the second halves of pqa-21550158 and
-pqa-15588538 above).
+pqa-15588538 above); `main_v3b` base pqa-23690198 (cached from `main_v2`).
 
 EvalKit gives every claim the answer's full citation list (`ground_on_answer_citations`, EvalKit
 D-52), and the rubric counts a sentence that supports "the part of the claim it is cited for".
@@ -63,7 +63,7 @@ the README already allows (OWNER D-62).
 
 ## extractor-drop
 
-Records: `main` Haiku pqa-17598882, pqa-15141797; `main_v2` base pqa-11713724.
+Records: `main` Haiku pqa-17598882, pqa-15141797; `main_v2` base pqa-11713724; `main_v3b` v3b-Q4_K_M pqa-27989969.
 
 The extractor returned no claims for an answer with factual content. The record then has
 coverage 0 and its headline counts as ungrounded. Measured over whole runs, in `main_v2` this
@@ -96,7 +96,7 @@ Sol.
 
 ## judge-error
 
-Record: `main_v2` v2 pqa-27131771.
+Records: `main_v2` v2 pqa-27131771; `main_v3b` v3b-Q8_0 pqa-25501465, v2 pqa-25787073 (cached from `main_v2`), base pqa-16249670 and pqa-20629769 (cached).
 
 The claim judge marked unsupported a claim its cited sentence largely states (Sol's rationale: the
 sentence reports 6 months only, the claim says "follow-up visits"), while the citation
@@ -118,3 +118,29 @@ its 20 answers; no other model's answers had citations appended, though all have
 their records (GPT-6 Luna's own answer text cites inline as "[n]" in at least 6 of its 20). No
 model name was shown, but v2's answers were easier to tell apart in the blind batches
 (`docs/measurements/blind_reviews/b8_batch*.json`). All 20 were labelled no advice.
+
+## role-label
+
+Records: `main_v3b` v2 pqa-23690198 and pqa-22012962, base pqa-21952349 (all three cached from
+`main_v2`).
+
+The citation check labelled an opening background or hypothesis sentence with the role
+"conclusion" (in pqa-23690198 the same sentence is labelled "background" in another claim's
+check). Every one of these sentences is also marked non-supporting, and EvalKit counts a cited
+sentence as an aim citation only when it supports no claim and its role is "aim", so a
+background sentence labelled "conclusion" rather than "background" moves no published metric:
+neither label is "aim". Judge behaviour, disclosed; not a code bug.
+
+## v3b-sample
+
+The V3.8 blind sample read of `main_v3b` (20 records per model: base, v2, v3b-Q4_K_M and
+v3b-Q8_0, 80 in all; `docs/measurements/sample_read_main_v3b.jsonl`) marked 9 records as
+possible pipeline faults. Six are base and v2 records, which `main_v3b` takes unchanged from
+`main_v2`'s cache, so they are faults of that run's judging, read again here. They fall under
+the patterns above: judge-error (v3b-Q8_0 pqa-25501465; v2 pqa-25787073; base pqa-16249670 and
+pqa-20629769: the claim judge and the citation check disagree on a cited sentence), part-of-claim
+(base pqa-23690198: a sentence marked supporting for an efficacy claim it does not state),
+role-label (three records) and extractor-drop (v3b-Q4_K_M pqa-27989969). Measured over the whole
+run, the extractor returned no claims for 4, 2, 3 and 1 yes/no answers of base, v2, v3b-Q4_K_M
+and v3b-Q8_0, of which 2, 1, 2 and 1 had the right label (at most 0.2 points of headline each).
+None is a code or alignment bug.

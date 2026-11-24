@@ -1,0 +1,2334 @@
+[
+ {
+  "key": "sa9710c8497",
+  "question": "Marital status, living arrangement and mortality: does the association vary by gender?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The benefit of being married was stronger for men than for women.",
+  "citations": [
+   6
+  ],
+  "cited_sentences": {
+   "6": "The benefit of being married was stronger for men than for women; however, mortality patterns were similar, with higher mortality in divorced and single individuals compared with widowed individuals (<80 years)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The benefit of being married was stronger for men than for women.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states the claim.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s9e05749470",
+  "question": "Evaluation of pediatric VCUG at an academic children's hospital: is the radiographic scout image necessary?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Scout images did not contribute to the interpretation or management of these cases.",
+  "citations": [
+   6
+  ],
+  "cited_sentences": {
+   "6": "No clinically significant or management-changing findings were present on scout images, and no radiopaque urinary tract calculi or concerning incidental finding was identified."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Scout images did not contribute to the interpretation or management of these cases.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence establishes the absence of significant findings, not that scout images made no contribution to interpretation or management.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s3d1e94a28f",
+  "question": "BCRABL transcript detection by quantitative real-time PCR : are correlated results possible from homebrew assays?",
+  "reference_label": "maybe",
+  "label": "yes",
+  "answer": "A strong correlation of results was suggested between the quantitative real-time PCR measurements, with a correlation coefficient of r(s) = 0.9435 (p<0.00001) for the 22 BCRABL-positive paired results.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "The correlation coefficient, r(s), was 0.9435 (p<0.00001), suggesting a strong correlation of the results."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "A strong correlation of results was suggested between the quantitative real-time PCR measurements.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence suggests a strong correlation of results but does not identify them as quantitative real-time PCR measurements.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The correlation coefficient for the 22 BCRABL-positive paired results was r(s) = 0.9435.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence gives r(s) = 0.9435 but does not establish that it applies to 22 BCRABL-positive paired results.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The correlation had p<0.00001 for the 22 BCRABL-positive paired results.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence [8] reports p<0.00001 but does not establish that the correlation involved 22 BCRABL-positive paired results.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sdbd5be3112",
+  "question": "Implementation of epidural analgesia for labor: is the standard of effective analgesia reachable in all women?",
+  "reference_label": "yes",
+  "label": "no",
+  "answer": "Epidural analgesia is not implemented for all women.",
+  "citations": [
+   1
+  ],
+  "cited_sentences": {
+   "1": "Social and cultural factors combined with little information may prevent the diffusion of epidural analgesia for pain relief during childbirth."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Epidural analgesia is not implemented for all women.",
+    "cited": [
+     1
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence describes factors that may hinder diffusion, but does not establish that epidural analgesia is not implemented for all women.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": true,
+        "role": "conclusion"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sde06dcef75",
+  "question": "Do episodic migraineurs selectively attend to headache-related visual stimuli?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "No within- or between-group differences were found for reaction time latencies to headache vs happy conditions.",
+  "citations": [
+   7
+  ],
+  "cited_sentences": {
+   "7": "No within-group differences for reaction time latencies to headache vs happy conditions were found among those with episodic migraine or among the non-migraine controls."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "No within- or between-group differences were found for reaction time latencies to headache vs happy conditions.",
+    "cited": [
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The source establishes no within-group differences but does not establish the absence of between-group differences.",
+      "citation_support": [
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sf0e0b85140",
+  "question": "Does depression diagnosis and antidepressant prescribing vary by location?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Black and minority ethnic groups are up to four times less likely to be newly diagnosed with depression or prescribed antidepressants compared to white British patients.",
+  "citations": [
+   5
+  ],
+  "cited_sentences": {
+   "5": "Black and minority ethnic groups are up to four times less likely to be newly diagnosed with depression or prescribed antidepressants compared to white British patients."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Black and minority ethnic groups are up to four times less likely to be newly diagnosed with depression compared to white British patients.",
+    "cited": [
+     5
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 explicitly includes the claimed disparity in new depression diagnoses compared to white British patients.",
+      "citation_support": [
+       {
+        "n": 5,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Black and minority ethnic groups are up to four times less likely to be prescribed antidepressants compared to white British patients.",
+    "cited": [
+     5
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 explicitly includes the claimed disparity in antidepressant prescribing.",
+      "citation_support": [
+       {
+        "n": 5,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sf3f7307d93",
+  "question": "The objective structured clinical examination: can physician-examiners participate from a distance?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The reOSCE method can be used to assess students remotely.",
+  "citations": [
+   1
+  ],
+  "cited_sentences": {
+   "1": "Currently, a 'pedagogical gap' exists in distributed medical education in that distance educators teach medical students but typically do not have the opportunity to assess them in large-scale examinations such as the objective structured clinical examination (OSCE)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The reOSCE method can be used to assess students remotely.",
+    "cited": [
+     1
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence describes a gap in distance educators' assessment opportunities but does not mention reOSCE or establish that it enables remote assessment.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "background"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sfffa80d256",
+  "question": "Does depression diagnosis and antidepressant prescribing vary by location?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Black and minority ethnic groups are up to four times less likely to be newly diagnosed with depression or prescribed antidepressants compared to white British patients.",
+  "citations": [
+   5
+  ],
+  "cited_sentences": {
+   "5": "Black and minority ethnic groups are up to four times less likely to be newly diagnosed with depression or prescribed antidepressants compared to white British patients."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Black and minority ethnic groups are up to four times less likely to be newly diagnosed with depression or prescribed antidepressants compared to white British patients.",
+    "cited": [
+     5
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 states the claim verbatim.",
+      "citation_support": [
+       {
+        "n": 5,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s2bda081aac",
+  "question": "Do preoperative serum C-reactive protein levels predict the definitive pathological stage in patients with clinically localized prostate cancer?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Poorly differentiated PC tends to be more common in patients with elevated CRP levels.",
+  "citations": [
+   5
+  ],
+  "cited_sentences": {
+   "5": "Poorly differentiated PC tends to be more common in patients with elevated CRP levels (15.5 vs. 9.5%, p = 0.08)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Poorly differentiated PC tends to be more common in patients with elevated CRP levels.",
+    "cited": [
+     5
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 explicitly states the claim.",
+      "citation_support": [
+       {
+        "n": 5,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "se48763359c",
+  "question": "Does depression diagnosis and antidepressant prescribing vary by location?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Neighbourhood effects were assessed independently of GP practice using a cross-classified multilevel model, and an inverse relationship between neighbourhood ethnic density and new depression diagnosis was found for some groups, where an increase of 10% own-ethnic density was associated with a statistically significant (p<0.05) reduced odds of depression for Pakistani, Indian, African, and Bangladeshi patients.",
+  "citations": [
+   6
+  ],
+  "cited_sentences": {
+   "6": "We found an inverse relationship between neighbourhood ethnic density and new depression diagnosis for some groups, where an increase of 10% own-ethnic density was associated with a statistically significant (p<0.05) reduced odds of depression for Pakistani [odds ratio (OR) 0.81, 95% confidence interval (CI) 0.70-0.93], Indian (OR 0.88, CI 0.81-0.95), African (OR 0.88, CI 0.78-0.99) and Bangladeshi (OR 0.94, CI 0.90-0.99) patients."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Neighbourhood effects were assessed independently of GP practice using a cross-classified multilevel model.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 6 reports associations between ethnic density and depression but does not mention GP practice adjustment or a cross-classified multilevel model.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "An inverse relationship between neighbourhood ethnic density and new depression diagnosis was found for some groups.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states the claimed inverse relationship for some groups.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "An increase of 10% own-ethnic density was associated with statistically significant (p<0.05) reduced odds of depression for Pakistani patients.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states the claimed association for Pakistani patients.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "An increase of 10% own-ethnic density was associated with statistically significant (p<0.05) reduced odds of depression for Indian patients.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly includes Indian patients among groups with statistically significant (p<0.05) reduced odds of depression associated with a 10% increase in own-ethnic density.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "An increase of 10% own-ethnic density was associated with statistically significant (p<0.05) reduced odds of depression for African patients.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly includes African patients among groups with statistically significant (p<0.05) reduced odds of depression associated with a 10% increase in own-ethnic density.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c5",
+    "text": "An increase of 10% own-ethnic density was associated with statistically significant (p<0.05) reduced odds of depression for Bangladeshi patients.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly includes Bangladeshi patients among groups with statistically significant reduced odds of depression per 10% increase in own-ethnic density.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s433846b959",
+  "question": "Artefacts in 24-h pharyngeal and oesophageal pH monitoring: is simplification of pH data analysis feasible?",
+  "reference_label": "maybe",
+  "label": "yes",
+  "answer": "Leaving out meals resulted in a concordant result with manually corrected data.",
+  "citations": [
+   9
+  ],
+  "cited_sentences": {
+   "9": "When examining the fraction of time supine, manually corrected data and data leaving out meals were fully concordant and detected 79% of patients with gastropharyngeal reflux."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Leaving out meals resulted in a concordant result with manually corrected data.",
+    "cited": [
+     9
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9
+      ],
+      "rationale": "Sentence 9 explicitly states that data leaving out meals were fully concordant with manually corrected data when examining the fraction of time supine.",
+      "citation_support": [
+       {
+        "n": 9,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s9f5d0ce76c",
+  "question": "Evaluation of pediatric VCUG at an academic children's hospital: is the radiographic scout image necessary?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "No clinically significant or management-changing findings were present on scout images, and no radiopaque urinary tract calculi or concerning incidental finding was identified.",
+  "citations": [
+   6
+  ],
+  "cited_sentences": {
+   "6": "No clinically significant or management-changing findings were present on scout images, and no radiopaque urinary tract calculi or concerning incidental finding was identified."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "No clinically significant findings were present on scout images.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that no clinically significant findings were present on scout images.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "No management-changing findings were present on scout images.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that no management-changing findings were present on scout images.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "No radiopaque urinary tract calculi were identified.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that no radiopaque urinary tract calculi were identified.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "No concerning incidental finding was identified.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that no concerning incidental finding was identified.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s319b2cf04b",
+  "question": "Does the Simultaneous Use of a Neuroendoscope Influence the Incidence of Ventriculoperitoneal Shunt Infection?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The infection rate was not significantly different between the groups in which an endoscope was used and those in which it was not used.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "The overall infection rate was 18.5%, including 22.4% in the groups in which an endoscope was used and 18% in those in which an endoscope was not used (P = 0.449)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The infection rate was not significantly different between the groups in which an endoscope was used and those in which it was not used.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "The reported P value of 0.449 indicates no statistically significant difference in infection rates between the groups.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s384b0783e3",
+  "question": "BCRABL transcript detection by quantitative real-time PCR : are correlated results possible from homebrew assays?",
+  "reference_label": "maybe",
+  "label": "yes",
+  "answer": "The results obtained from the two laboratories were strongly correlated.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "The correlation coefficient, r(s), was 0.9435 (p<0.00001), suggesting a strong correlation of the results."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The results obtained from the two laboratories were strongly correlated.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence states that the results were strongly correlated but does not establish that they came from two laboratories.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sef956a12d1",
+  "question": "Does the leukocyte count correlate with the severity of injury?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Statistical analysis revealed that WBC was correlated positively with ISS, but negatively with GCS and RTS.",
+  "citations": [
+   6
+  ],
+  "cited_sentences": {
+   "6": "Statistical analysis revealed that WBC was correlated positively with ISS, but negatively with GCS and RTS."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "WBC was positively correlated with ISS.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that WBC was positively correlated with ISS.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "WBC was negatively correlated with GCS and RTS.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that WBC was negatively correlated with GCS and RTS.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s488c638b95",
+  "question": "Marital status, living arrangement and mortality: does the association vary by gender?",
+  "reference_label": "yes",
+  "label": "no",
+  "answer": "The benefit of being married was stronger for men than for women.",
+  "citations": [
+   1
+  ],
+  "cited_sentences": {
+   "1": "Men appear to benefit more from being married than women with respect to mortality in middle age."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The benefit of being married was stronger for men than for women.",
+    "cited": [
+     1
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1
+      ],
+      "rationale": "Sentence 1 directly states that men benefit more than women from marriage, specifically regarding mortality in middle age.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": true,
+        "role": "conclusion"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s40d61d4c02",
+  "question": "Do preoperative serum C-reactive protein levels predict the definitive pathological stage in patients with clinically localized prostate cancer?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The preoperative CRP level does not predict the presence of a locally advanced tumor stage, lymph node metastases or a positive surgical margin in patients with clinically localized PC.",
+  "citations": [
+   7
+  ],
+  "cited_sentences": {
+   "7": "However, neither uni- nor multivariate analysis showed an association between the preoperative CRP level and the presence of a locally advanced tumor stage, lymph node metastases or a positive surgical margin."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The preoperative CRP level does not predict the presence of a locally advanced tumor stage in patients with clinically localized PC.",
+    "cited": [
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence reports no association but does not establish that the patients had clinically localized PC.",
+      "citation_support": [
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The preoperative CRP level does not predict the presence of lymph node metastases in patients with clinically localized PC.",
+    "cited": [
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence reports no association with lymph node metastases but does not specify that the patients had clinically localized PC.",
+      "citation_support": [
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The preoperative CRP level does not predict the presence of a positive surgical margin in patients with clinically localized PC.",
+    "cited": [
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence reports no association with positive surgical margins but does not establish that the patients had clinically localized PC.",
+      "citation_support": [
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s36a64c4246",
+  "question": "Does the leukocyte count correlate with the severity of injury?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "WBC was correlated positively with ISS, but negatively with GCS and RTS.",
+  "citations": [
+   6
+  ],
+  "cited_sentences": {
+   "6": "Statistical analysis revealed that WBC was correlated positively with ISS, but negatively with GCS and RTS."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "WBC was correlated positively with ISS.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that WBC was positively correlated with ISS.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "WBC was correlated negatively with GCS.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that WBC was negatively correlated with GCS.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "WBC was correlated negatively with RTS.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that WBC was negatively correlated with RTS.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sea27f54f6e",
+  "question": "Marital status, living arrangement and mortality: does the association vary by gender?",
+  "reference_label": "yes",
+  "label": "no",
+  "answer": "The benefit of being married was stronger for men than for women, but after adjustment for living arrangements, the gender difference by marital status disappeared.",
+  "citations": [
+   6,
+   7
+  ],
+  "cited_sentences": {
+   "6": "The benefit of being married was stronger for men than for women; however, mortality patterns were similar, with higher mortality in divorced and single individuals compared with widowed individuals (<80 years).",
+   "7": "After adjustment for living arrangements, the gender difference by marital status disappeared."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The benefit of being married was stronger for men than for women.",
+    "cited": [
+     6,
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states the claim; sentence 7 clarifies that the difference disappeared after adjustment for living arrangements.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "After adjustment for living arrangements, the gender difference by marital status disappeared.",
+    "cited": [
+     6,
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 states the claim verbatim.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sa874cfed82",
+  "question": "Hepatic arterial embolization for unresectable hepatocellular carcinomas: do technical factors affect prognosis?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Univariate analysis showed that factors such as selective embolization were significantly better prognostic factors, and in the multivariate Cox model, the benefit to survival of selective embolization remained significant.",
+  "citations": [
+   8,
+   1
+  ],
+  "cited_sentences": {
+   "8": "In the multivariate Cox model, the benefit to survival of selective embolization remained significant (hazard ratio 0.68; 95 % CI 0.48-0.97; p = 0.033).",
+   "1": "To evaluate retrospectively whether technical factors of hepatic arterial embolization affect the prognosis of patients with hepatocellular carcinoma (HCC)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Univariate analysis showed that selective embolization was a significantly better prognostic factor.",
+    "cited": [
+     1,
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The cited sentences report significance in a multivariate Cox model, not in a univariate analysis.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "In the multivariate Cox model, the survival benefit of selective embolization remained significant.",
+    "cited": [
+     1,
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states that the survival benefit of selective embolization remained significant in the multivariate Cox model.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sd522110d3a",
+  "question": "Do episodic migraineurs selectively attend to headache-related visual stimuli?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "No significant differences were found between episodic migraineurs and non-migraine controls.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "Migraine status was unrelated to attentional bias indices for both headache (F [1,306] = 0.56, P = .45) and happy facial stimuli (F [1,306] = 0.37, P = .54), indicating a lack of between-group differences."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "No significant differences were found between episodic migraineurs and non-migraine controls.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence reports no differences specifically in attentional bias indices but does not identify the groups as episodic migraineurs and non-migraine controls or establish a general absence of significant differences.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s073c72ee23",
+  "question": "Implementation of epidural analgesia for labor: is the standard of effective analgesia reachable in all women?",
+  "reference_label": "yes",
+  "label": "no",
+  "answer": "Epidural analgesia is not implemented for all women.",
+  "citations": [
+   1
+  ],
+  "cited_sentences": {
+   "1": "Social and cultural factors combined with little information may prevent the diffusion of epidural analgesia for pain relief during childbirth."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Epidural analgesia is not implemented for all women.",
+    "cited": [
+     1
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence describes factors that may hinder diffusion, but does not establish that epidural analgesia is not implemented for all women.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": true,
+        "role": "background"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sa4f877a9ea",
+  "question": "Does the investing layer of the deep cervical fascia exist?",
+  "reference_label": "no",
+  "label": "maybe",
+  "answer": "The study investigated the three-dimensional organization of connective tissues in the anterior region of the neck, and examined fascial structures in the anterior cervical triangle in 10 adult human cadavers.",
+  "citations": [
+   4,
+   5,
+   8
+  ],
+  "cited_sentences": {
+   "4": "The aim of this study was to investigate the three-dimensional organization of connective tissues in the anterior region of the neck.",
+   "5": "Using a combination of dissection, E12 sheet plastination, and confocal microscopy, fascial structures in the anterior cervical triangle were examined in 10 adult human cadavers.",
+   "8": "The fascial structure deep to platysma in the anterior cervical triangle comprised the strap fascia."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study investigated the three-dimensional organization of connective tissues in the anterior region of the neck.",
+    "cited": [
+     4,
+     5,
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       4
+      ],
+      "rationale": "Sentence 4 explicitly states the study's focus, matching the claim.",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 5,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The study examined fascial structures in the anterior cervical triangle in 10 adult human cadavers.",
+    "cited": [
+     4,
+     5,
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 explicitly states the structures examined, their location, and the number and type of cadavers.",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 5,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "se29c00744e",
+  "question": "Do episodic migraineurs selectively attend to headache-related visual stimuli?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Episodic migraineurs do not selectively attend to headache-related visual stimuli.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "Migraine status was unrelated to attentional bias indices for both headache (F [1,306] = 0.56, P = .45) and happy facial stimuli (F [1,306] = 0.37, P = .54), indicating a lack of between-group differences."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Episodic migraineurs do not selectively attend to headache-related visual stimuli.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "A lack of between-group differences does not establish that episodic migraineurs have no selective attention to headache-related visual stimuli.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s1e756743be",
+  "question": "Measurement of head and neck paragangliomas: is volumetric analysis worth the effort?",
+  "reference_label": "yes",
+  "label": "no",
+  "answer": "The linear dimension method is the most workable technique for measuring head and neck paragangliomas.",
+  "citations": [
+   1
+  ],
+  "cited_sentences": {
+   "1": "The aim of this study was to assess the reproducibility of different measurement methods and define the most workable technique for measuring head and neck paragangliomas, to determine the best method for evaluating tumour growth."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The linear dimension method is the most workable technique for measuring head and neck paragangliomas.",
+    "cited": [
+     1
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence states the study's aim to identify the most workable technique, but does not identify the linear dimension method as that technique.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s8bd65dde31",
+  "question": "Hepatic arterial embolization for unresectable hepatocellular carcinomas: do technical factors affect prognosis?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Selective embolization is a favorable prognostic factor.",
+  "citations": [
+   7
+  ],
+  "cited_sentences": {
+   "7": "Univariate analysis showed a Child-Pugh class-A, alpha-fetoprotein level lower than 100 ng/ml, tumor size of 3 cm or smaller, tumor number of 3 or fewer, one-lobe tumor distribution, nodular tumor type, within the Milan criteria, stage I or II, no portal venous invasion, use of iodized oil, and selective embolization were significantly better prognostic factors."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Selective embolization is a favorable prognostic factor.",
+    "cited": [
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 explicitly identifies selective embolization as a significantly better prognostic factor in univariate analysis.",
+      "citation_support": [
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sc58dbec6a6",
+  "question": "Fatigue in primary Sjögren's syndrome: is there a link with the fibromyalgia syndrome?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Fatigue is significantly more common in pSS than in lupus.",
+  "citations": [
+   6
+  ],
+  "cited_sentences": {
+   "6": "50 of 74 patients with pSS (68%) reported fatigue-a prevalence significantly higher than in the lupus group (108/216 (50%); p<0.0087)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Fatigue is significantly more common in pSS than in lupus.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly reports significantly higher fatigue prevalence in pSS than in lupus (68% versus 50%; p<0.0087).",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s3ebf6ad87e",
+  "question": "The objective structured clinical examination: can physician-examiners participate from a distance?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The study explored whether remote physician-examiners could replace on-site physician-examiners in an OSCE and determined the feasibility of this new examination method.",
+  "citations": [
+   4,
+   5,
+   3
+  ],
+  "cited_sentences": {
+   "4": "Forty Year 3 medical students were randomised into six reOSCE stations that were incorporated into two tracks of a 10-station traditional OSCE.",
+   "5": "For the reOSCE stations, student performance was assessed by both a local examiner (LE) in the room and a remote examiner (RE) who viewed the OSCE encounters from a distance.",
+   "3": "The purpose of this study was to explore whether remote physician-examiners can replace on-site physician-examiners in an OSCE, and to determine the feasibility of this new examination method."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study explored whether remote physician-examiners could replace on-site physician-examiners in an OSCE.",
+    "cited": [
+     3,
+     4,
+     5
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 explicitly states the study purpose described in the claim.",
+      "citation_support": [
+       {
+        "n": 3,
+        "supports": true,
+        "role": "aim"
+       },
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "method"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The study determined the feasibility of this new examination method.",
+    "cited": [
+     3,
+     4,
+     5
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences state that determining feasibility was a study objective, but do not establish that feasibility was determined.",
+      "citation_support": [
+       {
+        "n": 3,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "method"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s9bce6daaa4",
+  "question": "Can a practicing surgeon detect early lymphedema reliably?",
+  "reference_label": "maybe",
+  "label": "yes",
+  "answer": "A 10% increase in circumference at any site is a sensitive criterion for detecting lymphedema.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "Detection by a 5% increase in circumference at any site was 91% sensitive."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "A 10% increase in circumference at any site is a sensitive criterion for detecting lymphedema.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The source establishes sensitivity for a 5% increase, not the claimed 10% increase.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sacfccf2e58",
+  "question": "BCRABL transcript detection by quantitative real-time PCR : are correlated results possible from homebrew assays?",
+  "reference_label": "maybe",
+  "label": "yes",
+  "answer": "The results obtained from the two laboratories were strongly correlated.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "The correlation coefficient, r(s), was 0.9435 (p<0.00001), suggesting a strong correlation of the results."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The results obtained from the two laboratories were strongly correlated.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence states that the results were strongly correlated but does not identify them as results from two laboratories.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sa28815f65e",
+  "question": "Does body mass index (BMI) influence morbidity and long-term survival in gastric cancer patients after gastrectomy?",
+  "reference_label": "maybe",
+  "label": "yes",
+  "answer": "The long-term survival of patients with gastric cancer is influenced by the patient's BMI.",
+  "citations": [
+   1
+  ],
+  "cited_sentences": {
+   "1": "The long-term survival of patients with gastric cancer is governed by various factors, such as the clinical stage of the cancer, the patient's nutritional state, and the treatment and may be governed by the volume of intraperitoneal adipose tissue."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The long-term survival of patients with gastric cancer is influenced by the patient's BMI.",
+    "cited": [
+     1
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence identifies nutritional state and possibly intraperitoneal adipose tissue volume as factors, but does not state or directly imply that BMI influences long-term survival.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "background"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s5bed3a908b",
+  "question": "Does the Simultaneous Use of a Neuroendoscope Influence the Incidence of Ventriculoperitoneal Shunt Infection?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The use of an endoscope during VPS procedures does not appear to increase the infection rate.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "The overall infection rate was 18.5%, including 22.4% in the groups in which an endoscope was used and 18% in those in which an endoscope was not used (P = 0.449)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The use of an endoscope during VPS procedures does not appear to increase the infection rate.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Although the observed rate was higher with endoscope use, the difference was not statistically significant, supporting the qualified claim.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "scebf85184f",
+  "question": "Marital status, living arrangement and mortality: does the association vary by gender?",
+  "reference_label": "yes",
+  "label": "no",
+  "answer": "The benefit of being married was stronger for men than for women.",
+  "citations": [
+   6
+  ],
+  "cited_sentences": {
+   "6": "The benefit of being married was stronger for men than for women; however, mortality patterns were similar, with higher mortality in divorced and single individuals compared with widowed individuals (<80 years)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The benefit of being married was stronger for men than for women.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states the claim.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sb63da0618e",
+  "question": "Does the investing layer of the deep cervical fascia exist?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The investing cervical fascia does not exist in the anterior cervical triangle.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "The fascial structure deep to platysma in the anterior cervical triangle comprised the strap fascia."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The investing cervical fascia does not exist in the anterior cervical triangle.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence identifies strap fascia but does not state or directly imply that investing cervical fascia is absent from the anterior cervical triangle.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s5dbebd4525",
+  "question": "Is primary angioplasty an acceptable alternative to thrombolysis?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Carers accepted the inconvenience of visiting primary angioplasty sites in the context of this life-saving treatment.",
+  "citations": [
+   11
+  ],
+  "cited_sentences": {
+   "11": "During interviews, carers reported that they accepted the added inconvenience of visiting primary angioplasty sites in the context of this life-saving treatment."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Carers accepted the inconvenience of visiting primary angioplasty sites in the context of this life-saving treatment.",
+    "cited": [
+     11
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       11
+      ],
+      "rationale": "Sentence 11 explicitly states that carers accepted the inconvenience in the context of the life-saving treatment.",
+      "citation_support": [
+       {
+        "n": 11,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s0b7f05d323",
+  "question": "Artefacts in 24-h pharyngeal and oesophageal pH monitoring: is simplification of pH data analysis feasible?",
+  "reference_label": "maybe",
+  "label": "yes",
+  "answer": "The raw pH data were substantially influenced by artefacts of food intake and pseudoreflux.",
+  "citations": [
+   6
+  ],
+  "cited_sentences": {
+   "6": "The raw pH data were substantially influenced by artefacts of food intake and pseudoreflux."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The raw pH data were substantially influenced by artefacts of food intake and pseudoreflux.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 states the claim verbatim.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s906dcf043d",
+  "question": "Implementation of epidural analgesia for labor: is the standard of effective analgesia reachable in all women?",
+  "reference_label": "yes",
+  "label": "maybe",
+  "answer": "The study evaluated the acceptance and penetration of epidural analgesia into hospital practice, as well as its safety and efficacy during childbirth. Satisfaction levels reported by patients and caregivers were good, and the effectiveness of labor analgesia was assessed. Furthermore, a hierarchical clustering analysis showed significant decreases in VAS time course for epidural analgesia in different patient groups.",
+  "citations": [
+   4,
+   5,
+   7,
+   8
+  ],
+  "cited_sentences": {
+   "4": "This audit cycle measured epidural analgesia performance against 4 standards: (1) Implementation of epidural analgesia for labor to all patients; (2) Acceptance and good satisfaction level reported by patients and caregivers.",
+   "5": "(3) Effectiveness of labor analgesia; (4) No maternal or fetal side effects.",
+   "7": "Satisfaction levels reported by patients and care givers were good.",
+   "8": "A hierarchical clustering analysis identified two clusters based on VAS (Visual Analogue Scale) time course: in 226 patients (cluster 1) VAS decreased from 8.5±1.4 before to 4.1±1.3 after epidural analgesia; in 1002 patients (cluster 2) VAS decreased from 8.12±1.7 before (NS vs cluster 1), to 0.76±0.79 after (p<0.001 vs before and vs cluster 2 after)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study evaluated the acceptance of epidural analgesia in hospital practice.",
+    "cited": [
+     4,
+     5,
+     7,
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       4
+      ],
+      "rationale": "The audit evaluated epidural analgesia in clinical labor care against standards explicitly including acceptance.",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The study evaluated the penetration of epidural analgesia into hospital practice.",
+    "cited": [
+     4,
+     5,
+     7,
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       4
+      ],
+      "rationale": "The audit evaluated implementation of epidural analgesia for all labor patients, directly addressing its penetration into clinical practice.",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The study evaluated the safety of epidural analgesia during childbirth.",
+    "cited": [
+     4,
+     5,
+     7,
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       4,
+       5
+      ],
+      "rationale": "The audit evaluated epidural analgesia for labor against standards that included maternal and fetal side effects, directly establishing a safety evaluation.",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "The study evaluated the efficacy of epidural analgesia during childbirth.",
+    "cited": [
+     4,
+     5,
+     7,
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       4,
+       5,
+       8
+      ],
+      "rationale": "The audit assessed the effectiveness of epidural analgesia for labor and measured changes in pain scores before and after treatment.",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "Satisfaction levels reported by patients and caregivers were good.",
+    "cited": [
+     4,
+     5,
+     7,
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 explicitly states that satisfaction levels reported by patients and caregivers were good.",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c5",
+    "text": "The effectiveness of labor analgesia was assessed.",
+    "cited": [
+     4,
+     5,
+     7,
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       4,
+       5,
+       8
+      ],
+      "rationale": "The audit explicitly measured effectiveness as a standard and reported VAS scores before and after epidural analgesia.",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c6",
+    "text": "A hierarchical clustering analysis showed significant decreases in VAS time course for epidural analgesia in different patient groups.",
+    "cited": [
+     4,
+     5,
+     7,
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 reports decreased VAS scores after epidural analgesia in two patient clusters, with statistical significance explicitly reported for cluster 2 (p<0.001).",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s77bd1cce68",
+  "question": "Evaluation of pediatric VCUG at an academic children's hospital: is the radiographic scout image necessary?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "No clinically significant or management-changing findings were identified on scout images.",
+  "citations": [
+   6
+  ],
+  "cited_sentences": {
+   "6": "No clinically significant or management-changing findings were present on scout images, and no radiopaque urinary tract calculi or concerning incidental finding was identified."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "No clinically significant or management-changing findings were identified on scout images.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that scout images showed no clinically significant or management-changing findings.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s60dd622694",
+  "question": "Remote ischemic postconditioning: does it protect against ischemic damage in percutaneous coronary revascularization?",
+  "reference_label": "yes",
+  "label": "maybe",
+  "answer": "Remote postischemic conditioning might reduce the myocardial lesions that are associated with PCI, but perhaps less so in diabetics.",
+  "citations": [
+   2,
+   4
+  ],
+  "cited_sentences": {
+   "2": "Remote postischemic conditioning might reduce the myocardial lesions that are associated with PCI, but perhaps less so in diabetics.",
+   "4": "This randomized single-blinded single-center clinical trial involved 320 patients undergoing elective PCI who were randomized to either receive three 5-min cycles of ischemia by inflation of a cuff on the non-dominant arm to 200 mm Hg (remote postischemic conditioning) or to placebo (uninflated cuff)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Remote postischemic conditioning might reduce myocardial lesions associated with PCI.",
+    "cited": [
+     2,
+     4
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 explicitly states the claimed potential reduction in myocardial lesions associated with PCI.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": true,
+        "role": "conclusion"
+       },
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Remote postischemic conditioning might reduce myocardial lesions associated with PCI less so in diabetics.",
+    "cited": [
+     2,
+     4
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 directly states the potential reduction in PCI-associated myocardial lesions and the possibly smaller benefit in diabetics.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": true,
+        "role": "conclusion"
+       },
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s038b23898d",
+  "question": "Evaluation of pediatric VCUG at an academic children's hospital: is the radiographic scout image necessary?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "No clinically significant or management-changing findings were identified on scout images.",
+  "citations": [
+   6
+  ],
+  "cited_sentences": {
+   "6": "No clinically significant or management-changing findings were present on scout images, and no radiopaque urinary tract calculi or concerning incidental finding was identified."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "No clinically significant or management-changing findings were identified on scout images.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that scout images showed no clinically significant or management-changing findings.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ }
+]

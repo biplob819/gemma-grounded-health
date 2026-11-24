@@ -1,0 +1,40 @@
+{"key": "sa9710c8497", "finding": "ok", "note": ""}
+{"key": "s9e05749470", "finding": "pipeline_fault", "note": "Judge marks unsupported, but sentence 6 says \"No clinically significant or management-changing findings were present on scout images\", which plainly supports \"did not contribute to the interpretation or management\"; the judge's own citation_support also marks sentence 6 as supporting."}
+{"key": "s3d1e94a28f", "finding": "model_fault", "note": "The answer adds \"for the 22 BCRABL-positive paired results\", which sentence 8 does not state, so c1 and c2 are correctly unsupported. The c0 call (\"does not identify them as quantitative real-time PCR measurements\") is strict but only a fine point."}
+{"key": "sdbd5be3112", "finding": "pipeline_fault", "note": "Sentence 1 (\"Social and cultural factors ... may prevent the diffusion\") is opening background but is labelled role \"conclusion\"; the identical record s073c72ee23 labels it \"background\". The unsupported verdict is right, and the claim draws on a hedged background sentence."}
+{"key": "sde06dcef75", "finding": "model_fault", "note": "The answer claims \"No within- or between-group differences\", but sentence 7 reports only within-group differences. The judge is right to mark it unsupported."}
+{"key": "sf0e0b85140", "finding": "model_fault", "note": "The question asks whether diagnosis and prescribing vary \"by location\", but the answer copies a sentence about ethnic groups versus white British patients that does not address location. The verdicts themselves are correct."}
+{"key": "sf3f7307d93", "finding": "model_fault", "note": "It claims \"The reOSCE method can be used to assess students remotely\" from a background sentence about a 'pedagogical gap' that never mentions reOSCE. The judge correctly marks it unsupported."}
+{"key": "sfffa80d256", "finding": "model_fault", "note": "The answer copies the ethnic-group sentence verbatim, which does not answer whether prescribing varies \"by location\". The verdict is correct."}
+{"key": "s2bda081aac", "finding": "ok", "note": "The verdict is correct. The answer is about grade (\"poorly differentiated\", p=0.08) rather than stage, a weak basis for the label but scored faithfully."}
+{"key": "se48763359c", "finding": "model_fault", "note": "c0 (\"assessed independently of GP practice using a cross-classified multilevel model\") is method detail that sentence 6 does not contain, and the judge correctly marks it unsupported. The other claims are correctly supported."}
+{"key": "s433846b959", "finding": "ok", "note": "The answer drops the \"fraction of time supine\" qualifier. Supported is a defensible borderline call."}
+{"key": "s9f5d0ce76c", "finding": "ok", "note": ""}
+{"key": "s319b2cf04b", "finding": "ok", "note": ""}
+{"key": "s384b0783e3", "finding": "ok", "note": "Sentence 8 does not mention \"two laboratories\". Unsupported is strict but defensible."}
+{"key": "sef956a12d1", "finding": "ok", "note": ""}
+{"key": "s488c638b95", "finding": "pipeline_fault", "note": "Sentence 1 (\"Men appear to benefit more from being married ...\") is the abstract's opening background statement but is labelled role \"conclusion\". The model also fails: label \"no\" contradicts its own answer that the benefit was stronger for men."}
+{"key": "s40d61d4c02", "finding": "pipeline_fault", "note": "All three claims are marked unsupported only because sentence 7 \"does not establish that the patients had clinically localized PC\", though it plainly states no association with stage, nodes or margins. Clinically localized PC is the study's population named in the question, and citation_support marks sentence 7 as supporting each claim."}
+{"key": "s36a64c4246", "finding": "ok", "note": ""}
+{"key": "sea27f54f6e", "finding": "ok", "note": "Claims and verdicts are correct. Label \"no\" reflects the adjustment result and differs from the reference, which is scored separately."}
+{"key": "sa874cfed82", "finding": "model_fault", "note": "It cites aim sentence 1 and claims a univariate finding (\"Univariate analysis showed ... selective embolization\") that neither cited sentence supports. The judge correctly marks c0 unsupported."}
+{"key": "sd522110d3a", "finding": "ok", "note": "Sentence 8 covers only attentional bias indices, so the general \"No significant differences\" is an overgeneralization. Unsupported is a defensible fine-point call."}
+{"key": "s073c72ee23", "finding": "model_fault", "note": "The answer \"Epidural analgesia is not implemented for all women\" rests on a hedged background sentence (\"may prevent the diffusion\"). It is correctly unsupported, and the label contradicts the reference."}
+{"key": "sa4f877a9ea", "finding": "pipeline_fault", "note": "For c0 (study investigated three-dimensional organization), the evidence is [4] but citation_support marks sentence 4 supports=false and method sentence 5 supports=true, which points at the wrong sentence. The model also answers with aim and method only and never addresses whether the fascia exists."}
+{"key": "se29c00744e", "finding": "ok", "note": "Borderline: sentence 8 shows no between-group difference in headache attentional bias. The judge's strict reading that this does not prove an absence of selective attention is a fine point."}
+{"key": "s1e756743be", "finding": "model_fault", "note": "It cites aim sentence 1 for a finding (\"linear dimension method is the most workable technique\"); the aim names no method. The judge correctly marks it unsupported."}
+{"key": "s8bd65dde31", "finding": "ok", "note": ""}
+{"key": "sc58dbec6a6", "finding": "model_fault", "note": "The question asks about a link with fibromyalgia, but the answer reports only that fatigue is \"more common in pSS than in lupus\", which does not address it. The verdict is correct."}
+{"key": "s3ebf6ad87e", "finding": "model_fault", "note": "The answer restates the study aim (sentence 3) and cites method sentences 4 and 5 instead of giving a finding. The judge correctly marks \"determined the feasibility\" unsupported."}
+{"key": "s9bce6daaa4", "finding": "model_fault", "note": "The answer says a \"10% increase\" while sentence 8 reports a 5% increase being 91% sensitive. The judge correctly marks it unsupported."}
+{"key": "sacfccf2e58", "finding": "ok", "note": "Sentence 8 does not mention \"two laboratories\". Unsupported is strict but defensible."}
+{"key": "sa28815f65e", "finding": "model_fault", "note": "The BMI claim cites a background sentence that never mentions BMI (\"nutritional state ... intraperitoneal adipose tissue\"). The judge correctly marks it unsupported."}
+{"key": "s5bed3a908b", "finding": "ok", "note": ""}
+{"key": "scebf85184f", "finding": "model_fault", "note": "Label \"no\" contradicts the answer \"The benefit of being married was stronger for men than for women\", which implies the association varies by gender. The verdict is correct."}
+{"key": "sb63da0618e", "finding": "ok", "note": "\"comprised the strap fascia\" does not directly state that the investing fascia is absent. Unsupported is defensible."}
+{"key": "s5dbebd4525", "finding": "ok", "note": ""}
+{"key": "s0b7f05d323", "finding": "ok", "note": "The verdict is correct. The answer about artefacts does not really address whether simplification is feasible."}
+{"key": "s906dcf043d", "finding": "pipeline_fault", "note": "In c3 (efficacy), citation_support marks sentence 4 supports=true, but sentence 4 lists only implementation and acceptance; effectiveness is in sentence 5, and c5 marks sentence 4 false for the same content. The model also mostly describes audit methods (\"The study evaluated ...\") rather than answering."}
+{"key": "s77bd1cce68", "finding": "ok", "note": ""}
+{"key": "s60dd622694", "finding": "pipeline_fault", "note": "Sentence 2 (\"might reduce the myocardial lesions ... perhaps less so in diabetics\") comes before the methods in sentence 4, so it is the background hypothesis, yet it is labelled role \"conclusion\". This hides that the answer copies a hypothesis rather than a finding."}
+{"key": "s038b23898d", "finding": "ok", "note": ""}

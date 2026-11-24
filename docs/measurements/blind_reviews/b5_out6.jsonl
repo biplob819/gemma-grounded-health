@@ -1,0 +1,40 @@
+{"key": "s4a12d2e655", "finding": "model_fault", "note": "Answer overgeneralises sentence 9's \"higher ... for some aspects of care such as speed of treatment\" to satisfaction with treatment overall; unsupported is a fair call, though citation_support marks sentence 9 as supporting, which does not match the verdict."}
+{"key": "s61057bf9ad", "finding": "ok", "note": ""}
+{"key": "s8a8823bc5e", "finding": "model_fault", "note": "Cites a background sentence about a \"pedagogical gap\" as evidence that \"Remote examiners can participate in OSCEs\"; scored unsupported, correctly."}
+{"key": "s2552a15653", "finding": "ok", "note": "c0 (\"investigated the influence of meals\") is inferred from the result sentences; acceptable."}
+{"key": "se1ba215d06", "finding": "model_fault", "note": "Answer says \"the text describes the methods\" when it cites a background sentence and a hedged conclusion-style sentence (\"might reduce the myocardial lesions\"); c1 is scored unsupported, correctly. c0 supported is borderline, and labelling sentence 2's role \"aim\" is questionable."}
+{"key": "s2cb005646a", "finding": "pipeline_fault", "note": "For c0, the rationale and evidence rely on sentence 2 (\"Sentence 2 explicitly identifies the comparison\"), yet citation_support marks sentence 2 supports=false while marking 10 and 12 true. In c1, sentence 8 (no significant difference, P = 0.074) is marked as supporting \"differences\"."}
+{"key": "sfd0acb916e", "finding": "ok", "note": ""}
+{"key": "sa4e42d259b", "finding": "model_fault", "note": "Cites aim sentence 1 for the finding \"The linear dimension method is the most practical method\"; scored unsupported, correctly."}
+{"key": "s64661a6e23", "finding": "model_fault", "note": "\"CMV-IgG was positive in 80-90% of the newborns\" does not address whether low birth weight is a risk indicator; the claim is correctly supported, but the answer does not respond to the question."}
+{"key": "s054b76a4fc", "finding": "ok", "note": "Supported, but tangential: FM absence in SLE/sSS does not directly address the fatigue-FM link."}
+{"key": "se485a77754", "finding": "ok", "note": ""}
+{"key": "s0ae5f7ba83", "finding": "ok", "note": ""}
+{"key": "sd8ef063fa7", "finding": "ok", "note": "Long, mostly verbatim answer (~74 words), but the claims split it faithfully and every verdict holds."}
+{"key": "s672a40f3fb", "finding": "ok", "note": ""}
+{"key": "s092a0f3abb", "finding": "ok", "note": ""}
+{"key": "sf186ec20b4", "finding": "model_fault", "note": "\"can be used to bridge the gap between on-site and remote examination\" goes beyond sentence 11 (\"high acceptance ... despite technological issues\"); unsupported is fair. c0's citation_support marks sentence 11 as supporting, which does not match its unsupported verdict."}
+{"key": "seccbdd6ead", "finding": "model_fault", "note": "The question asks about variation by location, but the answer is about ethnicity (\"Black and minority ethnic groups are up to four times less likely\"); verbatim and correctly supported, but off the question."}
+{"key": "s110580a574", "finding": "ok", "note": ""}
+{"key": "s6be826790d", "finding": "model_fault", "note": "Cites aim sentence 2 for the finding \"Low birth weight is not a risk indicator\"; scored unsupported, correctly."}
+{"key": "s02cdf73b4b", "finding": "ok", "note": ""}
+{"key": "s6939c1bd39", "finding": "ok", "note": ""}
+{"key": "s4d3119730b", "finding": "ok", "note": ""}
+{"key": "sfbba22b583", "finding": "model_fault", "note": "Misstates the counts as \"2 out of 100\" when sentence 5 says \"four out of the 200\"; unsupported is correct (citation_support=true does not match it)."}
+{"key": "s6c9dfd11b8", "finding": "ok", "note": ""}
+{"key": "se83fa29b10", "finding": "ok", "note": ""}
+{"key": "sd2f02d0f26", "finding": "ok", "note": ""}
+{"key": "s6abc53cec8", "finding": "pipeline_fault", "note": "The claims list is empty although the answer makes clear factual claims (\"overall infection rate was 18.5%, including 22.4% ... and 18% ... (P = 0.449)\"), so this answer contributes no scored claims."}
+{"key": "s827684a2cb", "finding": "model_fault", "note": "Answer says \"the text describes the methods\" while citing background sentence 1 and a hedged effect statement in sentence 2; both claims are scored unsupported, defensibly. Sentence 2's role is labelled \"aim\" in c0 and \"background\" in c1."}
+{"key": "s78f2481681", "finding": "ok", "note": "Unsupported only because \"two laboratories\" is not in sentence 8; strict, but defensible."}
+{"key": "s553d3bc90f", "finding": "ok", "note": ""}
+{"key": "sdf4de39192", "finding": "model_fault", "note": "Misattributes the overall 18.5% to \"the groups in which an endoscope was not used\" (the source gives 18%); c0 is scored unsupported, correctly."}
+{"key": "sd3d47e6227", "finding": "model_fault", "note": "The answer only restates the study aim (\"The study aimed to assess the reproducibility ...\") and reports no finding, despite citing eight sentences that include results; the aim claims are correctly supported by sentence 1."}
+{"key": "s39a0f8d099", "finding": "model_fault", "note": "\"not correlated with GCS and RTS\" contradicts sentence 6 (\"negatively with GCS and RTS\"); scored unsupported, correctly."}
+{"key": "sf1308811f5", "finding": "ok", "note": ""}
+{"key": "s2d2422e9ac", "finding": "model_fault", "note": "Cites a background sentence on factors that \"may prevent the diffusion\" for the finding \"not implemented for all women\"; unsupported is correct (citation_support=true does not match it)."}
+{"key": "s7c8a27f103", "finding": "ok", "note": "Supported, though a downside (\"Convenience ... rated lower\") is a weak basis for the label yes."}
+{"key": "s6e6b6695b2", "finding": "ok", "note": ""}
+{"key": "s8d3e54f7cd", "finding": "ok", "note": ""}
+{"key": "s27f566d939", "finding": "ok", "note": "The cited sentences are background and method, so \"no finding\" is correctly supported, even though the label maybe is wrong."}
+{"key": "s1b4470f159", "finding": "model_fault", "note": "Cites a background sentence about equivalent anesthesia for the claim \"The investing layer ... does not exist\"; scored unsupported, correctly."}

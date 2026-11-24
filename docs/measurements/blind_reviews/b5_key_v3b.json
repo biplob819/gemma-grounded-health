@@ -1,0 +1,402 @@
+{
+"s02cdf73b4b": {
+"case_id": "pqa-22644412",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "fb9b96a6c24523976d5d740b08860fd35777bb4d4a0da77e7d498018e60700d4"
+},
+"s038b23898d": {
+"case_id": "pqa-25501465",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "63fae61f46df00b115cb52a74e933efc281f8157bb6e8b996e3d9420c61ec61e"
+},
+"s054b76a4fc": {
+"case_id": "pqa-11053064",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "9ed0e5ebad02ad06604f41a11900e6fc69f924fb82d9d72b213b2eb5781fdd32"
+},
+"s073c72ee23": {
+"case_id": "pqa-23690198",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "038b991bcacc652aef270669609a93e9b09c3922dbe760beca34a42d8f7e16a5"
+},
+"s092a0f3abb": {
+"case_id": "pqa-14599616",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "d84b1976d3b2b7b6049f8684232bab8076d3d62a9d640939cc3166f712917c2f"
+},
+"s0ae5f7ba83": {
+"case_id": "pqa-20130378",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "ba4aa703b4285a871695c255dcb39390c3d81c5ea13edd5b6e74d8f5a3fed9c1"
+},
+"s0b7f05d323": {
+"case_id": "pqa-14992556",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "743ae02b053244fae61db42d2a3485a02054a17e74b7de4db16cea54994aca54"
+},
+"s110580a574": {
+"case_id": "pqa-12630042",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "41886d89e4b3345f691ec896ad5353c5d66c26f2b6b468c90e3ad9ee555a0114"
+},
+"s1b4470f159": {
+"case_id": "pqa-16249670",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "989802ff3ca89242ce7cfd47a915f2f7ec2ad61d9d9f065f71954a0f85673814"
+},
+"s1e756743be": {
+"case_id": "pqa-26452334",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "8e56d530e1cda70c7aeb444af3d59712069fef968d3296e4c93b55ea00866808"
+},
+"s2552a15653": {
+"case_id": "pqa-14992556",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "f8741368673514973adb2af0deb78f377608e99e8c66463d61f472dadb2067e0"
+},
+"s27f566d939": {
+"case_id": "pqa-21952349",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "72f6cca1c08f38ff4d3b4e568ed7a0e6a4011346d87b7cd915c3bb7aa849daa7"
+},
+"s2bda081aac": {
+"case_id": "pqa-25787073",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "6b1a07d5202c8dccaada21f11dec0a43a9d43fcba56e6a2938d12db26b9553cc"
+},
+"s2cb005646a": {
+"case_id": "pqa-20629769",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "b847529ced8afa48f88f8da4822e5fbc455a85bfef01551a68ff10f139c99acf"
+},
+"s2d2422e9ac": {
+"case_id": "pqa-23690198",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "892f796daba8f9cc28a42f6431129f1dcf927eaa5ee56cddef67e849256327e3"
+},
+"s319b2cf04b": {
+"case_id": "pqa-27989969",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "4cbdc224e8cdb11e134313858161880f07c02a4a26868bc82953dcd2771a3b16"
+},
+"s36a64c4246": {
+"case_id": "pqa-12836106",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "8cdfcfbff011e71faae9a95b7ae0ec585bfc8c40a9c6c40a00a5cd25611cde14"
+},
+"s384b0783e3": {
+"case_id": "pqa-16392897",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "7ffdc3763c0d2f6f5c71ace4b4f175f86c4190d6690c88db95f68866343b35cd"
+},
+"s39a0f8d099": {
+"case_id": "pqa-12836106",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "f11a5678bd54b85fd9559c234515bd99326aa3c206d22f71100634b01f7d642f"
+},
+"s3d1e94a28f": {
+"case_id": "pqa-16392897",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "8e6a3c951cc83ffb394df925d7a4d876428695e1bb9fc77cb658f2f9ebfd8167"
+},
+"s3ebf6ad87e": {
+"case_id": "pqa-24606627",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "87c923a3e67d390bc8151a5e9f18c33980408b369f9762bdd38646e2a5e5151d"
+},
+"s40d61d4c02": {
+"case_id": "pqa-25787073",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "66d116b75c497c345c8d005e306178de1811fa6e6d4229d36539433584b02842"
+},
+"s433846b959": {
+"case_id": "pqa-14992556",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "4a478c2fe7ef0534e3a0bff2d1411254e8756f8d439cd2abd1de3ad3aa9d40a8"
+},
+"s488c638b95": {
+"case_id": "pqa-22012962",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "4876f76088b7dfef985301adfbc9e6a6113ff350040726b213a02291c97b6a71"
+},
+"s4a12d2e655": {
+"case_id": "pqa-20629769",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "9663684922ec67a2983590b8b5d413bcb5b4112982e0ceedf0d3ac62437275a2"
+},
+"s4d3119730b": {
+"case_id": "pqa-14599616",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "c48e4b1ffcb533c327355d32748de2ef96977c894517b54aef2d742002522db7"
+},
+"s553d3bc90f": {
+"case_id": "pqa-25787073",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "4df8d2671f3eea7a84510ed55bfca87e0fd061bd581ae6c6434f25071b9d2f45"
+},
+"s5bed3a908b": {
+"case_id": "pqa-27989969",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "f5628861d1274e728819d08c109ec2b3a4ee694af0a7f68c496a8a969d023181"
+},
+"s5dbebd4525": {
+"case_id": "pqa-20629769",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "802e28392cfd685577beecb0cad3630be8daaf96b67144e3f9903f133f8cac8d"
+},
+"s60dd622694": {
+"case_id": "pqa-21952349",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "a7f21d5d88cfdcb7b27d9c76a48657786e020a0fe7c619fdc6f891efc9dc4217"
+},
+"s61057bf9ad": {
+"case_id": "pqa-12836106",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "b2ba2a47684b07ebde3828b37c75e8af88ae0a6569516582b943ec814a146ab7"
+},
+"s64661a6e23": {
+"case_id": "pqa-20130378",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "f24df7366035f617f5a832983644be44583a48ccfdb40012f150acef86389cc5"
+},
+"s672a40f3fb": {
+"case_id": "pqa-14992556",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "8dc4811c805d58ffaee6119668a2a906a0727e6b83eba7edd0c19183573f57b4"
+},
+"s6939c1bd39": {
+"case_id": "pqa-14599616",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "f57e98df27cdc1c4c8f887e3e5e073fa14f986639c4c66e0453617e36cf99b27"
+},
+"s6abc53cec8": {
+"case_id": "pqa-27989969",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "dba5fb9bcb000b2d0b4f0254a9b0ce2082398ff8be6f37eb0057f95ced35f1f5"
+},
+"s6be826790d": {
+"case_id": "pqa-20130378",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "f054d6f32b01f9e2a9d32aa57057964ff01afaacf314419d0eec922ce8170a99"
+},
+"s6c9dfd11b8": {
+"case_id": "pqa-26452334",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "36753e9d846495717c54f8b52db206c6741fd921a6b3c53a3874b66184beda68"
+},
+"s6e6b6695b2": {
+"case_id": "pqa-25787073",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "decce34572f1c4df59a6432ae6d59b77822df373caaa27fcea736c7291b38fbd"
+},
+"s77bd1cce68": {
+"case_id": "pqa-25501465",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "2197e3bb27d92b39bf3d4fb69876795a2daff10ff9d0a8560e83b1f1895967a4"
+},
+"s78f2481681": {
+"case_id": "pqa-16392897",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "299b601a2aeb3c779dd3e3dc7b4a7de30a097de977b323f75a32089c84833ecb"
+},
+"s7c8a27f103": {
+"case_id": "pqa-20629769",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "b8486c5add0c47ce12c0c3c57b3b8e458e14f5bf49435f6a66c070a8c7104a15"
+},
+"s827684a2cb": {
+"case_id": "pqa-21952349",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "bcd60ca04fc241056e6cb6fe658789cad08f4fdc2da26cc22739217b9b98fc9a"
+},
+"s8a8823bc5e": {
+"case_id": "pqa-24606627",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "9a2ccab30bee0b0137fbdf7a3c2524203ba059ec2bc8910afffaeea20747e1b3"
+},
+"s8bd65dde31": {
+"case_id": "pqa-22644412",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "292d3e54d7f1199b6a425b9ab402f2d534f316403dd83046f6b11cddb3654bfd"
+},
+"s8d3e54f7cd": {
+"case_id": "pqa-12630042",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "3134f5dedc21f5b15f4725acc28903fe3065af41748abd2c674781c81b21b1a6"
+},
+"s906dcf043d": {
+"case_id": "pqa-23690198",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "d0c62add81a12d47fdfbd77dc5f6532fc2e257bd7744be494f1c154305f253fa"
+},
+"s9bce6daaa4": {
+"case_id": "pqa-14599616",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "7897bab2de5619d8fed0a0a253899128e7e84e3a3d32970420b31d7e08bd1a48"
+},
+"s9e05749470": {
+"case_id": "pqa-25501465",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "42347edaf79af4b61add8cc105a649febbb106c019dc948c22597f9401a2353a"
+},
+"s9f5d0ce76c": {
+"case_id": "pqa-25501465",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "16f295f947cd395316e9d158fd8f4ad8a24e9fd0e6bb5e96b00dce8650a219b5"
+},
+"sa28815f65e": {
+"case_id": "pqa-12630042",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "111aabd591fcf47233109e3eebf894a658cedc55e4e92b53707e6047ebbc860e"
+},
+"sa4e42d259b": {
+"case_id": "pqa-26452334",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "e92c55e81335e6511092a6174f08c0cf2fcdfa911fec10578d68b7db101ca8ba"
+},
+"sa4f877a9ea": {
+"case_id": "pqa-16249670",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "8ee3478cf4ea2680f03ee0fcafaf540db38176550cad3b7500ca9c3476878b0f"
+},
+"sa874cfed82": {
+"case_id": "pqa-22644412",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "b55bf3a16b9a427217dec4889ca8fa1983e399eb98404ceaf45879ddc9dd623e"
+},
+"sa9710c8497": {
+"case_id": "pqa-22012962",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "ab67f615508dfd0b04fa3313a2df88155c88155585882a646fbc466807a669a7"
+},
+"sacfccf2e58": {
+"case_id": "pqa-16392897",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "5e76138b5cda692e5d8c7c897cf5fa71274c13435f84651c27d061cebbf2d980"
+},
+"sb63da0618e": {
+"case_id": "pqa-16249670",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "63f0927ba2a7f7c8c6e6b44fb5a033a7a96ed655716c28e25df31f21fd5b1a85"
+},
+"sc58dbec6a6": {
+"case_id": "pqa-11053064",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "ac6042b2ee5e3a1e0ae9ad3f1804dee008a4cd87a7fabb83af3cb8dc6d91eefa"
+},
+"scebf85184f": {
+"case_id": "pqa-22012962",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "c9728b0f0c553c5ae00592c4a356f2a73175517e2d06756c4c64fbdbfd645cf5"
+},
+"sd2f02d0f26": {
+"case_id": "pqa-11053064",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "67876b287b277b85e072598cf11fe039157ab9bf175f3f08faa9f08c9f696d85"
+},
+"sd3d47e6227": {
+"case_id": "pqa-26452334",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "f91e588edf4dbc61bf1a2cd63bf2d1b4c2743ad62cb5401176b78b31fd14101d"
+},
+"sd522110d3a": {
+"case_id": "pqa-23252468",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "82d23f1bbd7c591e7bccdd6526ea66b9fb69dbe2af0cff8e479af2adbb36f840"
+},
+"sd8ef063fa7": {
+"case_id": "pqa-11053064",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "6eeea8a9db217f37d6f408509cb1769abfa24df9180b9a61e2eb4c95b23eb61a"
+},
+"sdbd5be3112": {
+"case_id": "pqa-23690198",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "6739932ff75055918a4d95dc08f8e6b82973637b615a6cd587763f49ffbdb659"
+},
+"sde06dcef75": {
+"case_id": "pqa-23252468",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "33aaafd3998ccf5bc7b3a940be079b85fc0e26829c3e6db19ec9ea33118a8476"
+},
+"sdf4de39192": {
+"case_id": "pqa-27989969",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "7f8019a623188fb68574903842f2147a20cad1f583551ba886f55a6baff11e08"
+},
+"se1ba215d06": {
+"case_id": "pqa-21952349",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "5ce9f19e298e52d840dcc803c1dc6a3a8b79d2888243ec8e25cd5df9a4ae9822"
+},
+"se29c00744e": {
+"case_id": "pqa-23252468",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "368028eec1aec1a7eb193fc4143e29ac7ec3b5a92ecb45ab9a38b32de61e5611"
+},
+"se485a77754": {
+"case_id": "pqa-16249670",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "3c90823e12d5a2983a8d5a1bf13d844851f30712882c17833eea0b1b8d1b8dce"
+},
+"se48763359c": {
+"case_id": "pqa-26879871",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "77ff4c344e64619d469fd51a7c27df32298ec0df1f6ca261982d993b9c8e6bbb"
+},
+"se83fa29b10": {
+"case_id": "pqa-22644412",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "c216377f9f1c3391ff99ca77fd2ba4382899a56bcd1c44135ce88f61b1952fbc"
+},
+"sea27f54f6e": {
+"case_id": "pqa-22012962",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "ffe1dc016893302c816244c98eac1bae4eba138a23d74b1e31184386c454fb41"
+},
+"seccbdd6ead": {
+"case_id": "pqa-26879871",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "a4feff792f0f9c810d7e855919193f2ab00dd51c62dc09a7a0fbfb31fb76d862"
+},
+"sef956a12d1": {
+"case_id": "pqa-12836106",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "c6b28e68d801bcbf1460ea05f44f22d7b0bbcc744ae3925a7e7d795a533c10f0"
+},
+"sf0e0b85140": {
+"case_id": "pqa-26879871",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "f577daaded44ffb5a368c7fbcebb1dd20165e9a755c7ebdc3bb4a31ac6977f9b"
+},
+"sf1308811f5": {
+"case_id": "pqa-23252468",
+"model": "gemma-e2b-base-q4",
+"record_sha256": "bb004f921e2cc8125f4b80a299639d51e4b8d3f34cf828febe0c1b6efb788595"
+},
+"sf186ec20b4": {
+"case_id": "pqa-24606627",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "918d9c3c7fc190b132613029d6efa3979e4a5808aafea4480c1a4a4884b537e8"
+},
+"sf3f7307d93": {
+"case_id": "pqa-24606627",
+"model": "gemma-e2b-grounded-v2-q4",
+"record_sha256": "edd96ec0ddaa7eab1d3e59b7a03a0237ffd849dfcba17adc477a6ad7db45ca52"
+},
+"sfbba22b583": {
+"case_id": "pqa-20130378",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "376d22aee87bd2a9eba44dbe020f1ed8845bfa964617cb4400ab94dd9769991e"
+},
+"sfd0acb916e": {
+"case_id": "pqa-12630042",
+"model": "gemma-e2b-grounded-v3b-q4",
+"record_sha256": "e44248198b6f539e903ca09a29c7170e07ce33d321268fd7f96d12dd63878f0f"
+},
+"sfffa80d256": {
+"case_id": "pqa-26879871",
+"model": "gemma-e2b-grounded-v3b-q8",
+"record_sha256": "3fb98738e34adc4fe0365d4b009799281c8079d2df3dc610ad005e3282e443c7"
+}
+}

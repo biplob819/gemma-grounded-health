@@ -1,0 +1,2795 @@
+[
+ {
+  "key": "s4a12d2e655",
+  "question": "Is primary angioplasty an acceptable alternative to thrombolysis?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Satisfaction with treatment was higher at intervention sites.",
+  "citations": [
+   9
+  ],
+  "cited_sentences": {
+   "9": "Patient satisfaction was higher at intervention sites for some aspects of care such as speed of treatment (80% vs. 67%'excellent', P = 0.001)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Satisfaction with treatment was higher at intervention sites.",
+    "cited": [
+     9
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The source establishes higher satisfaction only for some aspects of care, not satisfaction with treatment overall.",
+      "citation_support": [
+       {
+        "n": 9,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s61057bf9ad",
+  "question": "Does the leukocyte count correlate with the severity of injury?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "WBC was correlated positively with ISS, but negatively with GCS and RTS.",
+  "citations": [
+   6
+  ],
+  "cited_sentences": {
+   "6": "Statistical analysis revealed that WBC was correlated positively with ISS, but negatively with GCS and RTS."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "WBC was correlated positively with ISS.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that WBC was positively correlated with ISS.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "WBC was correlated negatively with GCS and RTS.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that WBC was negatively correlated with GCS and RTS.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s8a8823bc5e",
+  "question": "The objective structured clinical examination: can physician-examiners participate from a distance?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Remote examiners can participate in OSCEs.",
+  "citations": [
+   1
+  ],
+  "cited_sentences": {
+   "1": "Currently, a 'pedagogical gap' exists in distributed medical education in that distance educators teach medical students but typically do not have the opportunity to assess them in large-scale examinations such as the objective structured clinical examination (OSCE)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Remote examiners can participate in OSCEs.",
+    "cited": [
+     1
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence describes a lack of assessment opportunities for distance educators, not that remote examiners can participate in OSCEs.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "background"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s2552a15653",
+  "question": "Artefacts in 24-h pharyngeal and oesophageal pH monitoring: is simplification of pH data analysis feasible?",
+  "reference_label": "maybe",
+  "label": "maybe",
+  "answer": "The study investigated the influence of meals on the reliability of the test, and data obtained by leaving out meals agreed best with manually corrected data. However, leaving out meals plus a 2-h postprandrial period resulted in falsely negative tests.",
+  "citations": [
+   6,
+   7,
+   10
+  ],
+  "cited_sentences": {
+   "6": "The raw pH data were substantially influenced by artefacts of food intake and pseudoreflux.",
+   "7": "Data obtained by leaving out meals agreed best with manually corrected data.",
+   "10": "However, leaving out meals plus a 2-h postprandrial period resulted in 21%-50% falsely negative tests."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study investigated the influence of meals on the reliability of the test.",
+    "cited": [
+     6,
+     7,
+     10
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6,
+       7,
+       10
+      ],
+      "rationale": "The sentences directly imply investigation of meals' influence on test reliability by reporting food-related artefacts, agreement with corrected data, and false-negative rates.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 10,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Data obtained by leaving out meals agreed best with manually corrected data.",
+    "cited": [
+     6,
+     7,
+     10
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 states the claim verbatim.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 10,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Leaving out meals plus a 2-h postprandial period resulted in falsely negative tests.",
+    "cited": [
+     6,
+     7,
+     10
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states that excluding meals plus a 2-hour postprandial period resulted in falsely negative tests.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 10,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "se1ba215d06",
+  "question": "Remote ischemic postconditioning: does it protect against ischemic damage in percutaneous coronary revascularization?",
+  "reference_label": "yes",
+  "label": "maybe",
+  "answer": "No sentence here reports a finding on this question; the text describes the methods, not what the study found.",
+  "citations": [
+   1,
+   2
+  ],
+  "cited_sentences": {
+   "1": "Myocardial damage that is associated with percutaneous coronary intervention (PCI) partially affects the results of the procedure, and is related to medium-term cardiovascular death.",
+   "2": "Remote postischemic conditioning might reduce the myocardial lesions that are associated with PCI, but perhaps less so in diabetics."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "No sentence here reports a finding on this question.",
+    "cited": [
+     1,
+     2
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       2
+      ],
+      "rationale": "The sentences provide background and a tentative hypothesis about conditioning, not a reported finding on its efficacy.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "background"
+       },
+       {
+        "n": 2,
+        "supports": false,
+        "role": "aim"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The text describes the methods, not what the study found.",
+    "cited": [
+     1,
+     2
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences provide background and a possible effect of conditioning, but do not describe study methods or establish a methods-versus-findings distinction.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "background"
+       },
+       {
+        "n": 2,
+        "supports": false,
+        "role": "aim"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s2cb005646a",
+  "question": "Is primary angioplasty an acceptable alternative to thrombolysis?",
+  "reference_label": "yes",
+  "label": "maybe",
+  "answer": "The study compared satisfaction with angioplasty-based care and thrombolysis-based care, and found differences in satisfaction with various aspects of care between intervention and control sites.",
+  "citations": [
+   2,
+   6,
+   8,
+   9,
+   10,
+   11,
+   12
+  ],
+  "cited_sentences": {
+   "2": "We aimed to compare satisfaction at intervention hospitals offering angioplasty-based care and control hospitals offering thrombolysis-based care.",
+   "6": "Satisfaction with treatment.",
+   "8": "Satisfaction with overall care was high at both intervention and control sites (78% vs. 71% patients rated their care as 'excellent', P = 0.074).",
+   "9": "Patient satisfaction was higher at intervention sites for some aspects of care such as speed of treatment (80% vs. 67%'excellent', P = 0.001).",
+   "10": "Convenience of visiting was rated lower at intervention sites by carers (12% vs. 1%'poor', P = 0.001).",
+   "11": "During interviews, carers reported that they accepted the added inconvenience of visiting primary angioplasty sites in the context of this life-saving treatment.",
+   "12": "Patient satisfaction with discharge and aftercare was lower in both treatment groups than for other aspects of care."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study compared satisfaction with angioplasty-based care and thrombolysis-based care.",
+    "cited": [
+     2,
+     6,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       8
+      ],
+      "rationale": "Sentence 2 explicitly identifies the comparison, and sentence 8 reports satisfaction results for the intervention and control sites.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 6,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 9,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 10,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 11,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 12,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The study found differences in satisfaction with various aspects of care between intervention and control sites.",
+    "cited": [
+     2,
+     6,
+     8,
+     9,
+     10,
+     11,
+     12
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       9,
+       10
+      ],
+      "rationale": "The study reports higher patient satisfaction with treatment speed and lower carer ratings of visiting convenience at intervention sites than at control sites.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 9,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 10,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 11,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 12,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sfd0acb916e",
+  "question": "Does body mass index (BMI) influence morbidity and long-term survival in gastric cancer patients after gastrectomy?",
+  "reference_label": "maybe",
+  "label": "yes",
+  "answer": "The lower BMI group had a significantly longer survival rate in stage 2.",
+  "citations": [
+   5
+  ],
+  "cited_sentences": {
+   "5": "A significantly longer mean survival rate was observed for the lower body mass index group in stage 2 (1667 vs. 1322 days, P = 0.0240)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The lower BMI group had a significantly longer survival rate in stage 2.",
+    "cited": [
+     5
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 explicitly states that the lower BMI group had significantly longer mean survival in stage 2.",
+      "citation_support": [
+       {
+        "n": 5,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sa4e42d259b",
+  "question": "Measurement of head and neck paragangliomas: is volumetric analysis worth the effort?",
+  "reference_label": "yes",
+  "label": "no",
+  "answer": "The linear dimension method is the most practical method for measuring head and neck paragangliomas.",
+  "citations": [
+   1
+  ],
+  "cited_sentences": {
+   "1": "The aim of this study was to assess the reproducibility of different measurement methods and define the most workable technique for measuring head and neck paragangliomas, to determine the best method for evaluating tumour growth."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The linear dimension method is the most practical method for measuring head and neck paragangliomas.",
+    "cited": [
+     1
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence states the study’s aim but does not identify the linear dimension method as the most practical method.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "aim"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s64661a6e23",
+  "question": "Is low birth weight a risk indicator for congenital cytomegalovirus infection?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "CMV-IgG was positive in 80-90% of the newborns tested.",
+  "citations": [
+   4
+  ],
+  "cited_sentences": {
+   "4": "CMV-IgM was not detected, while CMV-IgG was positive in 80-90% of the two hundreds tested newborns."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "CMV-IgG was positive in 80-90% of the newborns tested.",
+    "cited": [
+     4
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       4
+      ],
+      "rationale": "Sentence 4 explicitly states that CMV-IgG was positive in 80-90% of the tested newborns.",
+      "citation_support": [
+       {
+        "n": 4,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s054b76a4fc",
+  "question": "Fatigue in primary Sjögren's syndrome: is there a link with the fibromyalgia syndrome?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "FM was not found in patients with SLE/sSS.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "FM was present in 9/74 patients with pSS (12%), compared with 11/216 lupus patients (5%), and in none of the patients with SLE/sSS."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "FM was not found in patients with SLE/sSS.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states that FM was present in none of the patients with SLE/sSS.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "se485a77754",
+  "question": "Does the investing layer of the deep cervical fascia exist?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The fascia of the strap muscles and the fasciae of the submandibular glands in the upper cervical region form a dumbbell-like sheet that does not continue with the sternocleidomastoid fascia.",
+  "citations": [
+   6
+  ],
+  "cited_sentences": {
+   "6": "In the upper cervical region, the fascia of strap muscles in the middle and the fasciae of the submandibular glands on both sides formed a dumbbell-like fascia sheet that had free lateral margins and did not continue with the sternocleidomastoid fascia."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The fascia of the strap muscles and the fasciae of the submandibular glands in the upper cervical region form a dumbbell-like sheet.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that these fasciae form a dumbbell-like sheet in the upper cervical region.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The dumbbell-like sheet does not continue with the sternocleidomastoid fascia.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that the dumbbell-like fascia sheet did not continue with the sternocleidomastoid fascia.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s0ae5f7ba83",
+  "question": "Is low birth weight a risk indicator for congenital cytomegalovirus infection?",
+  "reference_label": "no",
+  "label": "maybe",
+  "answer": "The study aimed to determine if low birth weight is an indicator of CMV congenital infection by detecting CMV-DNA in umbilical cord blood at the time of delivery. CMV-DNA was detected in four out of the 200 newborns, and one of these was over the adopted weight limit (>2700 gram).",
+  "citations": [
+   2,
+   3,
+   5,
+   6
+  ],
+  "cited_sentences": {
+   "2": "The aim of the study was to determine if low birth weight is an indicator of CMV congenital infection evidenced by detecting CMV-DNA in umbilical cord blood at the time of delivery.",
+   "3": "CMV-IgG and IgM antibodies and CMV-DNAemia were assessed in umbilical cord blood of two hundreds newborns, one hundred of whom had birth weight<or = 2700 gram and/or head circumference<or = 32 cm.",
+   "5": "CMV-DNA was detected in four out of the 200 newborns.",
+   "6": "One of them was over the adopted weight limit (>2700 gram)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study aimed to determine if low birth weight is an indicator of CMV congenital infection.",
+    "cited": [
+     2,
+     3,
+     5,
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2
+      ],
+      "rationale": "Sentence 2 explicitly states the study aim given in the claim.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": true,
+        "role": "aim"
+       },
+       {
+        "n": 3,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The study detected CMV-DNA in umbilical cord blood at the time of delivery.",
+    "cited": [
+     2,
+     3,
+     5,
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       3,
+       5
+      ],
+      "rationale": "The sentences identify umbilical cord blood at delivery as the specimen and timing, describe testing that blood, and report CMV-DNA detection in four newborns.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 3,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "CMV-DNA was detected in four out of the 200 newborns.",
+    "cited": [
+     2,
+     3,
+     5,
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 states the claim verbatim.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 3,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "One of these newborns was over the adopted weight limit (>2700 gram).",
+    "cited": [
+     2,
+     3,
+     5,
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that one of the newborns exceeded the adopted weight limit of 2700 grams.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": false,
+        "role": "aim"
+       },
+       {
+        "n": 3,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sd8ef063fa7",
+  "question": "Fatigue in primary Sjögren's syndrome: is there a link with the fibromyalgia syndrome?",
+  "reference_label": "no",
+  "label": "maybe",
+  "answer": "The study assessed the presence of fatigue and generalized pain in patients with primary Sjögren's syndrome (pSS) and lupus, and also studied the presence of fibromyalgia (FM) in these groups. 50 of 74 patients with pSS (68%) reported fatigue, which was a prevalence significantly higher than in the lupus group (108/216 (50%); p<0.0087). FM was present in 9/74 patients with pSS (12%), compared with 11/216 lupus patients (5%), and in none of the patients with SLE/sSS.",
+  "citations": [
+   2,
+   3,
+   5,
+   6,
+   8,
+   9
+  ],
+  "cited_sentences": {
+   "2": "The association and prevalence of fatigue and FM was recorded in a group of patients with pSS and a control group of lupus patients, a subset of whom had secondary Sjögren's syndrome (sSS).",
+   "3": "74 patients with pSS and 216 patients with lupus were assessed with a questionnaire to identify the presence of fatigue and generalised pain.",
+   "5": "All patients were studied for the presence of FM.",
+   "6": "50 of 74 patients with pSS (68%) reported fatigue-a prevalence significantly higher than in the lupus group (108/216 (50%); p<0.0087).",
+   "8": "FM was present in 9/74 patients with pSS (12%), compared with 11/216 lupus patients (5%), and in none of the patients with SLE/sSS.",
+   "9": "None of these values corresponds with previously reported figures of the incidence of FM in pSS."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study assessed the presence of fatigue and generalized pain in patients with primary Sjögren's syndrome (pSS) and lupus.",
+    "cited": [
+     2,
+     3,
+     5,
+     6,
+     8,
+     9
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3
+      ],
+      "rationale": "Sentence 3 explicitly states that patients with pSS and lupus were assessed for fatigue and generalized pain.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 3,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 9,
+        "supports": false,
+        "role": "conclusion"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The study also assessed the presence of fibromyalgia (FM) in these groups.",
+    "cited": [
+     2,
+     3,
+     5,
+     6,
+     8,
+     9
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       2,
+       5
+      ],
+      "rationale": "Sentence 2 identifies the patient groups, and sentence 5 explicitly states that all patients were assessed for FM.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 3,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 9,
+        "supports": false,
+        "role": "conclusion"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "50 of 74 patients with pSS (68%) reported fatigue.",
+    "cited": [
+     2,
+     3,
+     5,
+     6,
+     8,
+     9
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states the claimed number and percentage of patients with pSS who reported fatigue.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 3,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 9,
+        "supports": false,
+        "role": "conclusion"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c3",
+    "text": "Fatigue prevalence was significantly higher in the pSS group than in the lupus group (108/216 (50%); p<0.0087).",
+    "cited": [
+     2,
+     3,
+     5,
+     6,
+     8,
+     9
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that fatigue prevalence was significantly higher in pSS than in lupus, with the same lupus figures and p-value.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 3,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 9,
+        "supports": false,
+        "role": "conclusion"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c4",
+    "text": "FM was present in 9/74 patients with pSS (12%).",
+    "cited": [
+     2,
+     3,
+     5,
+     6,
+     8,
+     9
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states the claim.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 3,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 9,
+        "supports": false,
+        "role": "conclusion"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c5",
+    "text": "FM was present in 11/216 lupus patients (5%).",
+    "cited": [
+     2,
+     3,
+     5,
+     6,
+     8,
+     9
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states that FM was present in 11/216 lupus patients (5%).",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 3,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 9,
+        "supports": false,
+        "role": "conclusion"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c6",
+    "text": "FM was present in none of the patients with SLE/sSS.",
+    "cited": [
+     2,
+     3,
+     5,
+     6,
+     8,
+     9
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states that FM was present in none of the patients with SLE/sSS.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 3,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 9,
+        "supports": false,
+        "role": "conclusion"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s672a40f3fb",
+  "question": "Artefacts in 24-h pharyngeal and oesophageal pH monitoring: is simplification of pH data analysis feasible?",
+  "reference_label": "maybe",
+  "label": "yes",
+  "answer": "The raw pH data were substantially influenced by artefacts of food intake and pseudoreflux.",
+  "citations": [
+   6
+  ],
+  "cited_sentences": {
+   "6": "The raw pH data were substantially influenced by artefacts of food intake and pseudoreflux."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The raw pH data were substantially influenced by artefacts of food intake and pseudoreflux.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 states the claim verbatim.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s092a0f3abb",
+  "question": "Can a practicing surgeon detect early lymphedema reliably?",
+  "reference_label": "maybe",
+  "label": "yes",
+  "answer": "Detection of lymphedema can be done using circumference changes, and various criteria have been compared for detection.",
+  "citations": [
+   2,
+   3,
+   4,
+   6,
+   7,
+   8
+  ],
+  "cited_sentences": {
+   "2": "Ninety breast cancer patients were prospectively enrolled in an academic trial, and seven upper extremity circumferences were measured quarterly for 3 years.",
+   "3": "A 10% volume increase or greater than 1 cm increase in arm circumference identified lymphedema with verification by a lymphedema specialist.",
+   "4": "Sensitivity and specificity of several different criteria for detecting lymphedema were compared using the academic trial as the standard.",
+   "6": "Using a 10% increase in circumference at two sites as the criterion, half the lymphedema cases were detected (sensitivity 37%).",
+   "7": "When using a 10% increase in circumference at any site, 74.4% of cases were detected (sensitivity 49%).",
+   "8": "Detection by a 5% increase in circumference at any site was 91% sensitive."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Detection of lymphedema can be done using circumference changes.",
+    "cited": [
+     2,
+     3,
+     4,
+     6,
+     7,
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3,
+       6,
+       7,
+       8
+      ],
+      "rationale": "The cited sentences explicitly describe detecting lymphedema using increases in arm circumference.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 3,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Various criteria have been compared for detection.",
+    "cited": [
+     2,
+     3,
+     4,
+     6,
+     7,
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       4
+      ],
+      "rationale": "Sentence 4 explicitly states that several detection criteria were compared.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 3,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 4,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sf186ec20b4",
+  "question": "The objective structured clinical examination: can physician-examiners participate from a distance?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The reOSCE method is feasible and can be used to bridge the gap between on-site and remote examination.",
+  "citations": [
+   11
+  ],
+  "cited_sentences": {
+   "11": "Qualitative analysis of feedback from REs and students showed high acceptance of the reOSCE despite technological issues."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The reOSCE method is feasible.",
+    "cited": [
+     11
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "High acceptance despite technological issues does not establish that the reOSCE method is feasible.",
+      "citation_support": [
+       {
+        "n": 11,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The reOSCE method can be used to bridge the gap between on-site and remote examination.",
+    "cited": [
+     11
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence reports high acceptance despite technological issues but does not establish that reOSCE bridges on-site and remote examination.",
+      "citation_support": [
+       {
+        "n": 11,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "seccbdd6ead",
+  "question": "Does depression diagnosis and antidepressant prescribing vary by location?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Black and minority ethnic groups are up to four times less likely to be newly diagnosed with depression or prescribed antidepressants compared to white British patients.",
+  "citations": [
+   5
+  ],
+  "cited_sentences": {
+   "5": "Black and minority ethnic groups are up to four times less likely to be newly diagnosed with depression or prescribed antidepressants compared to white British patients."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Black and minority ethnic groups are up to four times less likely to be newly diagnosed with depression or prescribed antidepressants compared to white British patients.",
+    "cited": [
+     5
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 states the claim verbatim.",
+      "citation_support": [
+       {
+        "n": 5,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s110580a574",
+  "question": "Does body mass index (BMI) influence morbidity and long-term survival in gastric cancer patients after gastrectomy?",
+  "reference_label": "maybe",
+  "label": "yes",
+  "answer": "The study compared the morbidity and long-term survival rate between patients with a body mass index less than 0.185 (lower BMI group) and those with a body mass index greater than 0.210 (higher BMI group). A significantly longer mean survival rate was observed for the lower body mass index group in stage 2, and a significantly longer mean survival rate was observed for the higher BMI group in stage 3a.",
+  "citations": [
+   6,
+   5,
+   3,
+   4
+  ],
+  "cited_sentences": {
+   "6": "Also, a significantly longer mean survival rate was observed for the higher BMI group in stage 3a (1431 vs. 943, P = 0.0071).",
+   "5": "A significantly longer mean survival rate was observed for the lower body mass index group in stage 2 (1667 vs. 1322 days, P = 0.0240).",
+   "3": "Gastric cancer patients who had undergone a gastrectomy with D2-lymphadenectomy and with resection A and B according to the criteria of the Japanese Research Society for Gastric Cancer Rules were subgrouped into those patients with a body mass index<0.185 (the lower body mass index group) and those patients with a body mass index>0.210 (the higher body mass index group).",
+   "4": "The patient's morbidity and long-term survival rate was retrospectively compared between the 2 groups."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study compared morbidity and long-term survival rates between patients with a body mass index less than 0.185 and those with a body mass index greater than 0.210.",
+    "cited": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       3,
+       4
+      ],
+      "rationale": "Sentence 3 defines the groups using BMI <0.185 and >0.210, and sentence 4 states that morbidity and long-term survival were compared between them.",
+      "citation_support": [
+       {
+        "n": 3,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 4,
+        "supports": true,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "A significantly longer mean survival rate was observed for the lower body mass index group in stage 2.",
+    "cited": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 explicitly states the claim, including the stage, BMI group, and statistical significance.",
+      "citation_support": [
+       {
+        "n": 3,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": true,
+        "role": "result"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "A significantly longer mean survival rate was observed for the higher BMI group in stage 3a.",
+    "cited": [
+     3,
+     4,
+     5,
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states the claim.",
+      "citation_support": [
+       {
+        "n": 3,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s6be826790d",
+  "question": "Is low birth weight a risk indicator for congenital cytomegalovirus infection?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Low birth weight is not a risk indicator for CMV congenital infection.",
+  "citations": [
+   2
+  ],
+  "cited_sentences": {
+   "2": "The aim of the study was to determine if low birth weight is an indicator of CMV congenital infection evidenced by detecting CMV-DNA in umbilical cord blood at the time of delivery."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Low birth weight is not a risk indicator for CMV congenital infection.",
+    "cited": [
+     2
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence states the study's aim, not a finding that low birth weight is not a risk indicator.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": false,
+        "role": "aim"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s02cdf73b4b",
+  "question": "Hepatic arterial embolization for unresectable hepatocellular carcinomas: do technical factors affect prognosis?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Selective embolization was significantly better prognostic factor.",
+  "citations": [
+   7
+  ],
+  "cited_sentences": {
+   "7": "Univariate analysis showed a Child-Pugh class-A, alpha-fetoprotein level lower than 100 ng/ml, tumor size of 3 cm or smaller, tumor number of 3 or fewer, one-lobe tumor distribution, nodular tumor type, within the Milan criteria, stage I or II, no portal venous invasion, use of iodized oil, and selective embolization were significantly better prognostic factors."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Selective embolization was a significantly better prognostic factor.",
+    "cited": [
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 explicitly lists selective embolization among the significantly better prognostic factors in univariate analysis.",
+      "citation_support": [
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s6939c1bd39",
+  "question": "Can a practicing surgeon detect early lymphedema reliably?",
+  "reference_label": "maybe",
+  "label": "yes",
+  "answer": "Lymphedema can be detected by circumference changes.",
+  "citations": [
+   1
+  ],
+  "cited_sentences": {
+   "1": "Lymphedema may be identified by simpler circumference changes as compared with changes in limb volume."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Lymphedema can be detected by circumference changes.",
+    "cited": [
+     1
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1
+      ],
+      "rationale": "Sentence 1 directly states that circumference changes can identify lymphedema.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": true,
+        "role": "conclusion"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s4d3119730b",
+  "question": "Can a practicing surgeon detect early lymphedema reliably?",
+  "reference_label": "maybe",
+  "label": "yes",
+  "answer": "Lymphedema can be detected by circumference changes.",
+  "citations": [
+   1
+  ],
+  "cited_sentences": {
+   "1": "Lymphedema may be identified by simpler circumference changes as compared with changes in limb volume."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Lymphedema can be detected by circumference changes.",
+    "cited": [
+     1
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1
+      ],
+      "rationale": "Sentence 1 directly states that circumference changes can identify lymphedema.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": true,
+        "role": "conclusion"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sfbba22b583",
+  "question": "Is low birth weight a risk indicator for congenital cytomegalovirus infection?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "CMV-DNA was detected in only 2 out of 100 newborns.",
+  "citations": [
+   5
+  ],
+  "cited_sentences": {
+   "5": "CMV-DNA was detected in four out of the 200 newborns."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "CMV-DNA was detected in only 2 out of 100 newborns.",
+    "cited": [
+     5
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The source reports 4 detections among 200 newborns, not 2 among 100; an equivalent proportion does not establish the claimed counts.",
+      "citation_support": [
+       {
+        "n": 5,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s6c9dfd11b8",
+  "question": "Measurement of head and neck paragangliomas: is volumetric analysis worth the effort?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "The linear dimension method was significantly faster.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "The linear dimension method was significantly faster (median 4.27 versus 18.46 minutes, P<0.001)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The linear dimension method was significantly faster.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly states that the linear dimension method was significantly faster.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "se83fa29b10",
+  "question": "Hepatic arterial embolization for unresectable hepatocellular carcinomas: do technical factors affect prognosis?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Selective embolization was a significant prognostic factor.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "In the multivariate Cox model, the benefit to survival of selective embolization remained significant (hazard ratio 0.68; 95 % CI 0.48-0.97; p = 0.033)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Selective embolization was a significant prognostic factor.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "The significant survival benefit in the multivariate Cox model directly establishes selective embolization as a significant prognostic factor.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sd2f02d0f26",
+  "question": "Fatigue in primary Sjögren's syndrome: is there a link with the fibromyalgia syndrome?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Fatigue was significantly more common in patients with pSS than in the lupus group.",
+  "citations": [
+   6
+  ],
+  "cited_sentences": {
+   "6": "50 of 74 patients with pSS (68%) reported fatigue-a prevalence significantly higher than in the lupus group (108/216 (50%); p<0.0087)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Fatigue was significantly more common in patients with pSS than in the lupus group.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that fatigue prevalence was significantly higher in patients with pSS than in the lupus group.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s6abc53cec8",
+  "question": "Does the Simultaneous Use of a Neuroendoscope Influence the Incidence of Ventriculoperitoneal Shunt Infection?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The overall infection rate was 18.5%, including 22.4% in the groups in which an endoscope was used and 18% in those in which an endoscope was not used (P = 0.449).",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "The overall infection rate was 18.5%, including 22.4% in the groups in which an endoscope was used and 18% in those in which an endoscope was not used (P = 0.449)."
+  },
+  "claims": []
+ },
+ {
+  "key": "s827684a2cb",
+  "question": "Remote ischemic postconditioning: does it protect against ischemic damage in percutaneous coronary revascularization?",
+  "reference_label": "yes",
+  "label": "maybe",
+  "answer": "No sentence here reports a finding on this question; the text describes the methods, not what the study found.",
+  "citations": [
+   1,
+   2
+  ],
+  "cited_sentences": {
+   "1": "Myocardial damage that is associated with percutaneous coronary intervention (PCI) partially affects the results of the procedure, and is related to medium-term cardiovascular death.",
+   "2": "Remote postischemic conditioning might reduce the myocardial lesions that are associated with PCI, but perhaps less so in diabetics."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "No sentence here reports a finding on this question.",
+    "cited": [
+     1,
+     2
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Sentence 2 states a tentative effect and possible difference in diabetics, so the categorical claim that no sentence reports a finding is not established.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "background"
+       },
+       {
+        "n": 2,
+        "supports": false,
+        "role": "aim"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The text describes the methods, not what the study found.",
+    "cited": [
+     1,
+     2
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentences describe background associations and a possible treatment effect, not study methods, so they do not establish the claim.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "background"
+       },
+       {
+        "n": 2,
+        "supports": false,
+        "role": "background"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s78f2481681",
+  "question": "BCRABL transcript detection by quantitative real-time PCR : are correlated results possible from homebrew assays?",
+  "reference_label": "maybe",
+  "label": "yes",
+  "answer": "The results of the two laboratories were strongly correlated.",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "The correlation coefficient, r(s), was 0.9435 (p<0.00001), suggesting a strong correlation of the results."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The results of the two laboratories were strongly correlated.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence states that the results were strongly correlated but does not establish that they came from two laboratories.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s553d3bc90f",
+  "question": "Do preoperative serum C-reactive protein levels predict the definitive pathological stage in patients with clinically localized prostate cancer?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Poorly differentiated PC tends to be more common in patients with elevated CRP levels.",
+  "citations": [
+   5
+  ],
+  "cited_sentences": {
+   "5": "Poorly differentiated PC tends to be more common in patients with elevated CRP levels (15.5 vs. 9.5%, p = 0.08)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Poorly differentiated PC tends to be more common in patients with elevated CRP levels.",
+    "cited": [
+     5
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 explicitly states the claim.",
+      "citation_support": [
+       {
+        "n": 5,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sdf4de39192",
+  "question": "Does the Simultaneous Use of a Neuroendoscope Influence the Incidence of Ventriculoperitoneal Shunt Infection?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The overall infection rate was 18.5% in the groups in which an endoscope was not used, and 22.4% in the groups in which an endoscope was used (P = 0.449).",
+  "citations": [
+   8
+  ],
+  "cited_sentences": {
+   "8": "The overall infection rate was 18.5%, including 22.4% in the groups in which an endoscope was used and 18% in those in which an endoscope was not used (P = 0.449)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The overall infection rate was 18.5% in the groups in which an endoscope was not used.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence reports 18% for groups without an endoscope; 18.5% is the overall infection rate across groups.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The overall infection rate was 22.4% in the groups in which an endoscope was used.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly reports a 22.4% infection rate in the groups in which an endoscope was used.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "The difference in overall infection rates had a P value of 0.449.",
+    "cited": [
+     8
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       8
+      ],
+      "rationale": "Sentence 8 explicitly reports P = 0.449 for the comparison of overall infection rates between the groups.",
+      "citation_support": [
+       {
+        "n": 8,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sd3d47e6227",
+  "question": "Measurement of head and neck paragangliomas: is volumetric analysis worth the effort?",
+  "reference_label": "yes",
+  "label": "maybe",
+  "answer": "The study aimed to assess the reproducibility of different measurement methods and define the most workable technique for measuring head and neck paragangliomas to determine the best method for evaluating tumor growth.",
+  "citations": [
+   1,
+   2,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "cited_sentences": {
+   "1": "The aim of this study was to assess the reproducibility of different measurement methods and define the most workable technique for measuring head and neck paragangliomas, to determine the best method for evaluating tumour growth.",
+   "2": "The evaluation of tumour growth is vital for a 'wait-and-scan' policy, a management strategy that became increasingly important.",
+   "4": "Thirty tumours, including carotid body, vagal body, jugulotympanic tumours and conglomerates of multiple tumours, were measured in duplicate, using linear dimensions, manual area tracing and an automated segmentation method.",
+   "5": "Reproducibility was assessed using the Bland-Altman method.",
+   "6": "The smallest detectable difference using the linear dimension method was 11% for carotid body and 27% for vagal body tumours, compared with 17% and 20% for the manual area tracing method.",
+   "7": "Due to the irregular shape of paragangliomas in the temporal bone and conglomerates, the manual area tracing method showed better results in these tumours (26% and 8% versus 54% and 47%).",
+   "8": "The linear dimension method was significantly faster (median 4.27 versus 18.46 minutes, P<0.001).",
+   "9": "The automatic segmentation method yielded smallest detectable differences between 39% and 75%, and although fast (2.19 ± 1.49 minutes), it failed technically."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The study aimed to assess the reproducibility of different measurement methods.",
+    "cited": [
+     1,
+     2,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1
+      ],
+      "rationale": "Sentence 1 explicitly states the study aim described in the claim.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": true,
+        "role": "aim"
+       },
+       {
+        "n": 2,
+        "supports": false,
+        "role": "background"
+       },
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 9,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The study aimed to define the most workable technique for measuring head and neck paragangliomas to determine the best method for evaluating tumor growth.",
+    "cited": [
+     1,
+     2,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1
+      ],
+      "rationale": "Sentence 1 explicitly states the study aim described in the claim.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": true,
+        "role": "aim"
+       },
+       {
+        "n": 2,
+        "supports": false,
+        "role": "background"
+       },
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 5,
+        "supports": false,
+        "role": "method"
+       },
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 7,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 8,
+        "supports": false,
+        "role": "result"
+       },
+       {
+        "n": 9,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s39a0f8d099",
+  "question": "Does the leukocyte count correlate with the severity of injury?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "WBC count is correlated with ISS, but not with GCS and RTS.",
+  "citations": [
+   6
+  ],
+  "cited_sentences": {
+   "6": "Statistical analysis revealed that WBC was correlated positively with ISS, but negatively with GCS and RTS."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "WBC count is correlated with ISS.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       6
+      ],
+      "rationale": "Sentence 6 explicitly states that WBC was positively correlated with ISS.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "WBC count is not correlated with GCS and RTS.",
+    "cited": [
+     6
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The source states that WBC is negatively correlated with GCS and RTS, contradicting the claim of no correlation.",
+      "citation_support": [
+       {
+        "n": 6,
+        "supports": false,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "sf1308811f5",
+  "question": "Do episodic migraineurs selectively attend to headache-related visual stimuli?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "No within-group differences for reaction time latencies to headache vs happy conditions were found among those with episodic migraine or among the non-migraine controls.",
+  "citations": [
+   7
+  ],
+  "cited_sentences": {
+   "7": "No within-group differences for reaction time latencies to headache vs happy conditions were found among those with episodic migraine or among the non-migraine controls."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "No within-group differences for reaction time latencies to headache vs happy conditions were found among those with episodic migraine or among the non-migraine controls.",
+    "cited": [
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 states the claim verbatim.",
+      "citation_support": [
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s2d2422e9ac",
+  "question": "Implementation of epidural analgesia for labor: is the standard of effective analgesia reachable in all women?",
+  "reference_label": "yes",
+  "label": "no",
+  "answer": "Epidural analgesia is not implemented for all women.",
+  "citations": [
+   1
+  ],
+  "cited_sentences": {
+   "1": "Social and cultural factors combined with little information may prevent the diffusion of epidural analgesia for pain relief during childbirth."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Epidural analgesia is not implemented for all women.",
+    "cited": [
+     1
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "The sentence describes factors that may hinder diffusion, but does not establish that epidural analgesia is not implemented for all women.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": true,
+        "role": "background"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s7c8a27f103",
+  "question": "Is primary angioplasty an acceptable alternative to thrombolysis?",
+  "reference_label": "yes",
+  "label": "yes",
+  "answer": "Convenience of visiting was rated lower at intervention sites by carers.",
+  "citations": [
+   10
+  ],
+  "cited_sentences": {
+   "10": "Convenience of visiting was rated lower at intervention sites by carers (12% vs. 1%'poor', P = 0.001)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Convenience of visiting was rated lower at intervention sites by carers.",
+    "cited": [
+     10
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       10
+      ],
+      "rationale": "Sentence 10 explicitly states the claim.",
+      "citation_support": [
+       {
+        "n": 10,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s6e6b6695b2",
+  "question": "Do preoperative serum C-reactive protein levels predict the definitive pathological stage in patients with clinically localized prostate cancer?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "Neither uni- nor multivariate analysis showed an association between the preoperative CRP level and the presence of a locally advanced tumor stage, lymph node metastases or a positive surgical margin.",
+  "citations": [
+   7
+  ],
+  "cited_sentences": {
+   "7": "However, neither uni- nor multivariate analysis showed an association between the preoperative CRP level and the presence of a locally advanced tumor stage, lymph node metastases or a positive surgical margin."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "Neither univariate nor multivariate analysis showed an association between preoperative CRP level and the presence of a locally advanced tumor stage.",
+    "cited": [
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 explicitly states that neither analysis showed the claimed association.",
+      "citation_support": [
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "Neither univariate nor multivariate analysis showed an association between preoperative CRP level and lymph node metastases.",
+    "cited": [
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 explicitly states that neither univariate nor multivariate analysis showed an association between preoperative CRP level and lymph node metastases.",
+      "citation_support": [
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c2",
+    "text": "Neither univariate nor multivariate analysis showed an association between preoperative CRP level and a positive surgical margin.",
+    "cited": [
+     7
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       7
+      ],
+      "rationale": "Sentence 7 explicitly states that neither analysis showed an association between preoperative CRP level and a positive surgical margin.",
+      "citation_support": [
+       {
+        "n": 7,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s8d3e54f7cd",
+  "question": "Does body mass index (BMI) influence morbidity and long-term survival in gastric cancer patients after gastrectomy?",
+  "reference_label": "maybe",
+  "label": "yes",
+  "answer": "The lower BMI group had a significantly longer survival rate in stage 2.",
+  "citations": [
+   5
+  ],
+  "cited_sentences": {
+   "5": "A significantly longer mean survival rate was observed for the lower body mass index group in stage 2 (1667 vs. 1322 days, P = 0.0240)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The lower BMI group had a significantly longer survival rate in stage 2.",
+    "cited": [
+     5
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       5
+      ],
+      "rationale": "Sentence 5 explicitly states that the lower BMI group had significantly longer mean survival in stage 2.",
+      "citation_support": [
+       {
+        "n": 5,
+        "supports": true,
+        "role": "result"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s27f566d939",
+  "question": "Remote ischemic postconditioning: does it protect against ischemic damage in percutaneous coronary revascularization?",
+  "reference_label": "yes",
+  "label": "maybe",
+  "answer": "No sentence here reports a finding on this question; the text describes the methods, not what the study found.",
+  "citations": [
+   1,
+   4
+  ],
+  "cited_sentences": {
+   "1": "Myocardial damage that is associated with percutaneous coronary intervention (PCI) partially affects the results of the procedure, and is related to medium-term cardiovascular death.",
+   "4": "This randomized single-blinded single-center clinical trial involved 320 patients undergoing elective PCI who were randomized to either receive three 5-min cycles of ischemia by inflation of a cuff on the non-dominant arm to 200 mm Hg (remote postischemic conditioning) or to placebo (uninflated cuff)."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "No sentence here reports a finding on this question.",
+    "cited": [
+     1,
+     4
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       4
+      ],
+      "rationale": "Sentence 1 provides background and sentence 4 describes the trial design; neither reports findings on the effect of remote postischemic conditioning.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "background"
+       },
+       {
+        "n": 4,
+        "supports": false,
+        "role": "method"
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "c1",
+    "text": "The text describes the methods, not what the study found.",
+    "cited": [
+     1,
+     4
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "supported",
+      "evidence": [
+       1,
+       4
+      ],
+      "rationale": "Sentence 4 describes the trial design, participants, and interventions, while sentence 1 provides background; neither reports the study's findings.",
+      "citation_support": [
+       {
+        "n": 1,
+        "supports": false,
+        "role": "background"
+       },
+       {
+        "n": 4,
+        "supports": true,
+        "role": "method"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ },
+ {
+  "key": "s1b4470f159",
+  "question": "Does the investing layer of the deep cervical fascia exist?",
+  "reference_label": "no",
+  "label": "no",
+  "answer": "The investing layer of the deep cervical fascia does not exist.",
+  "citations": [
+   2
+  ],
+  "cited_sentences": {
+   "2": "Although the investing cervical fascia has been considered as an impenetrable barrier, clinically, the placement of the block deep or superficial to the fascia provides the same effective anesthesia."
+  },
+  "claims": [
+   {
+    "id": "c0",
+    "text": "The investing layer of the deep cervical fascia does not exist.",
+    "cited": [
+     2
+    ],
+    "verdicts": {
+     "gpt-6.1-sol": {
+      "verdict": "unsupported",
+      "evidence": [],
+      "rationale": "Equivalent anesthesia from blocks placed deep or superficial to the fascia does not establish that the fascia does not exist.",
+      "citation_support": [
+       {
+        "n": 2,
+        "supports": false,
+        "role": "background"
+       }
+      ]
+     }
+    }
+   }
+  ]
+ }
+]
