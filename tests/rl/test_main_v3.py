@@ -1,6 +1,7 @@
 """RLS-01, RLS-02 (V3.5): the committed main_v3 run, as configs/eval_plan_v3.yaml registers it, and
 v3's primary test, guardrails, stretch goal and label and length report."""
 
+import functools
 import gzip
 import json
 import subprocess
@@ -15,6 +16,12 @@ ROOT = Path(__file__).resolve().parents[2]
 RES = ROOT / "docs/results"
 V3, V2, BASE = (f"gemma-e2b-{m}-q4" for m in ("grounded-v3", "grounded-v2", "base"))
 PLAN = yaml.safe_load((ROOT / "configs/eval_plan_v3.yaml").read_text(encoding="utf-8"))
+
+
+@functools.cache
+def computed():
+    """v3's result recomputed from the committed run once per session (each takes ~45 s)."""
+    return R.result(ROOT)
 
 
 def records(run):
@@ -89,7 +96,7 @@ def test_spend_is_logged_and_within_the_owner_cap():
 
 
 def test_the_primary_test_follows_the_plan_rule():
-    result = R.result(ROOT)
+    result = computed()
     p = result["primary"]
     assert (p["model_a"], p["model_b"], p["family_size"]) == (V3, V2, 1)
     assert (p["point"], p["lo"], p["hi"]) == (0.038, 0.014, 0.063) and p["separated"]
@@ -106,7 +113,7 @@ def test_the_primary_test_follows_the_plan_rule():
 
 def test_the_result_file_matches_the_run():
     committed = json.loads((ROOT / R.RESULT).read_text(encoding="utf-8"))
-    assert committed == R.result(ROOT)
+    assert committed == computed()
     assert committed["run_id"] == run_json()["run_id"] == "r-63dbbdfd4b9e"
 
 
