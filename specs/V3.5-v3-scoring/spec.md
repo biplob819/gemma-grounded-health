@@ -11,4 +11,4 @@ configs/eval_plan_v3.yaml registers one scoring run (main_v3) and one primary te
 
 ## Result
 - main_v3 (`r-63dbbdfd4b9e`, $1.815 of the $15 cap): headline base 0.404, v2 0.329, v3 0.367; base and v2 from the cache (identical answers on every case).
-- Primary test: v3 minus v2 +0.038 [+0.014, +0.063], p 0.0024: **v3 improves on v2**. Guardrails pass (citation precision 0.847, aim-citation rate 0.021). Stretch not reached (0.367 < 0.404). Labels and length: v3 slightly more "yes" than v2 (453 vs 419) and slightly longer (17.2 vs 15.0 words), no drift toward "maybe" (22 vs 25).
+- Primary test: v3 minus v2 +0.038 [+0.014, +0.063], p 0.0024: **v3 improves on v2**. Guardrails pass (citation precision 0.847, aim-citation rate 0.021). Stretch not reached (0.367 < 0.404; v3 minus base −0.037 [−0.076, +0.003], exploratory, not Holm-corrected). Labels and length: v3 slightly more "yes" than v2 (453 vs 419) and slightly longer (17.2 vs 15.0 words), no drift toward "maybe" (22 vs 25).
